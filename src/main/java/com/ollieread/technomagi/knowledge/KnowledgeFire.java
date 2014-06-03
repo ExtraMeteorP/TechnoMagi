@@ -5,9 +5,9 @@ import com.ollieread.technomagi.api.research.Knowledge;
 public class KnowledgeFire extends Knowledge
 {
 
-	public KnowledgeFire(String name)
-	{
-		super(name);
-	}
+    public KnowledgeFire(String name)
+    {
+        super(name);
+    }
 
 }

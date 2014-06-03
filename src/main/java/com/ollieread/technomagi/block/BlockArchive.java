@@ -12,26 +12,27 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-public class BlockArchive extends BlockContainer {
+public class BlockArchive extends BlockContainer
+{
 
-	public BlockArchive(String name)
-	{
-		super(Material.iron);
+    public BlockArchive(String name)
+    {
+        super(Material.iron);
 
-		setBlockName(name);
-		setBlockTextureName(name);
-	}
-	
-	@SideOnly(Side.CLIENT)
+        setBlockName(name);
+        setBlockTextureName(name);
+    }
+
+    @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister register)
     {
         blockIcon = register.registerIcon(Reference.MODID.toLowerCase() + ":" + getTextureName());
     }
 
-	@Override
-	public TileEntity createNewTileEntity(World world, int var2)
-	{
-		return new TileEntityArchive();
-	}
+    @Override
+    public TileEntity createNewTileEntity(World world, int var2)
+    {
+        return new TileEntityArchive();
+    }
 
 }

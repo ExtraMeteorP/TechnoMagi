@@ -6,29 +6,30 @@ import com.ollieread.technomagi.api.TMRegistry;
 import com.ollieread.technomagi.api.research.Research;
 import com.ollieread.technomagi.player.PlayerKnowledge;
 
-public class ResearchFireInFire extends Research {
+public class ResearchFireInFire extends Research
+{
 
-	public ResearchFireInFire(String name, String knowledge, int progress)
-	{
-		super(name, knowledge, progress);
-	}
+    public ResearchFireInFire(String name, String knowledge, int progress)
+    {
+        super(name, knowledge, progress);
+    }
 
-	@Override
-	public int getEvent()
-	{
-		return TMRegistry.EVENT_IN_FIRE;
-	}
+    @Override
+    public int getEvent()
+    {
+        return TMRegistry.EVENT_IN_FIRE;
+    }
 
-	@Override
-	public boolean isRepeating()
-	{
-		return false;
-	}
+    @Override
+    public boolean isRepeating()
+    {
+        return false;
+    }
 
-	@Override
-	public boolean canPerform(PlayerKnowledge charon)
-	{
-		return !charon.hasResearched(getName());
-	}
+    @Override
+    public boolean canPerform(PlayerKnowledge charon)
+    {
+        return !charon.hasResearched(getName());
+    }
 
 }

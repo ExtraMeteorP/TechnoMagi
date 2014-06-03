@@ -15,32 +15,32 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class TMEventHandler
 {
-	
-	@SubscribeEvent
-	public void onSpecialisationChosen(SpecialisationChosenEvent event)
-	{ 	
-		if(!event.entity.worldObj.isRemote) {
-			PlayerKnowledge charon = PlayerKnowledge.get((EntityPlayer) event.entity);
-			((EntityPlayer) event.entity).addChatMessage(new ChatComponentText("Specialisation chosen: " + event.specialisation.getName()));
-			
-			TMRegistry.passiveAbilityEvent(TMRegistry.EVENT_SPECIALISATION, event, charon);
-		}
-	}
-	
-	@SubscribeEvent
-	public void onResearchComplete(ResearchCompleteEvent event)
-	{
-		if(!event.entity.worldObj.isRemote) {
-			((EntityPlayer) event.entity).addChatMessage(new ChatComponentText("Research Complete: " + event.research.getName()));
-		}
-	}
-	
-	@SubscribeEvent
-	public void onResearchProgress(ResearchProgressEvent event)
-	{
-		if(!event.entity.worldObj.isRemote) {
-			TMRegistry.passiveAbilityEvent(TMRegistry.EVENT_RESEARCH_PROGRESS, event, event.charon);
-		}
-	}
-	
+
+    @SubscribeEvent
+    public void onSpecialisationChosen(SpecialisationChosenEvent event)
+    {
+        if (!event.entity.worldObj.isRemote) {
+            PlayerKnowledge charon = PlayerKnowledge.get((EntityPlayer) event.entity);
+            ((EntityPlayer) event.entity).addChatMessage(new ChatComponentText("Specialisation chosen: " + event.specialisation.getName()));
+
+            TMRegistry.passiveAbilityEvent(TMRegistry.EVENT_SPECIALISATION, event, charon);
+        }
+    }
+
+    @SubscribeEvent
+    public void onResearchComplete(ResearchCompleteEvent event)
+    {
+        if (!event.entity.worldObj.isRemote) {
+            ((EntityPlayer) event.entity).addChatMessage(new ChatComponentText("Research Complete: " + event.research.getName()));
+        }
+    }
+
+    @SubscribeEvent
+    public void onResearchProgress(ResearchProgressEvent event)
+    {
+        if (!event.entity.worldObj.isRemote) {
+            TMRegistry.passiveAbilityEvent(TMRegistry.EVENT_RESEARCH_PROGRESS, event, event.charon);
+        }
+    }
+
 }

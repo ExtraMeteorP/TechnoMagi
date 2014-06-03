@@ -9,42 +9,37 @@ import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
-public class MessageAbility implements IMessage, IMessageHandler<MessageAbility, IMessage>
+public class MessageSyncNanites implements IMessage, IMessageHandler<MessageSyncNanites, IMessage>
 {
-    public int mode = 0;
+    public int nanites = 0;
 
-    public MessageAbility()
+    public MessageSyncNanites()
     {
     }
 
-    public MessageAbility(int mode)
+    public MessageSyncNanites(int nanites)
     {
-        this.mode = mode;
+        this.nanites = nanites;
     }
 
     @Override
     public void fromBytes(ByteBuf buffer)
     {
-        this.mode = buffer.readInt();
+        this.nanites = buffer.readInt();
     }
 
     @Override
     public void toBytes(ByteBuf buffer)
     {
-        buffer.writeInt(this.mode);
+        buffer.writeInt(this.nanites);
     }
 
     @Override
-    public IMessage onMessage(MessageAbility message, MessageContext ctx)
+    public IMessage onMessage(MessageSyncNanites message, MessageContext ctx)
     {
         EntityPlayer player = ctx.getServerHandler().playerEntity;
         PlayerKnowledge knowledge = PlayerKnowledge.get(player);
-
-        if (message.mode == 1) {
-            knowledge.abilities.setNextAbility();
-        } else if (message.mode == 2) {
-            knowledge.abilities.setPreviousAbility();
-        }
+        knowledge.setNanites(message.nanites);
 
         return null;
     }

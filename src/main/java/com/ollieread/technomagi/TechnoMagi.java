@@ -39,50 +39,51 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 
-@Mod(modid = Reference.MODID, version= Reference.VERSION)
-public class TechnoMagi {
-	
-	@SidedProxy(clientSide = "com.ollieread.technomagi.client.ClientProxy", serverSide = "com.ollieread.technomagi.common.CommonProxy")
+@Mod(modid = Reference.MODID, version = Reference.VERSION)
+public class TechnoMagi
+{
+
+    @SidedProxy(clientSide = "com.ollieread.technomagi.client.ClientProxy", serverSide = "com.ollieread.technomagi.common.CommonProxy")
     public static CommonProxy proxy;
-	
-	@Instance("TechnoMagi")
-	public static TechnoMagi instance;
-	
-	public static CreativeTabs tabTM = new CreativeTabTM();
-	
-	public static final Logger logger = LogManager.getLogger(Reference.MODID);
-	
-	@EventHandler
-	public void pre(FMLPreInitializationEvent event)
-	{ 		
-		PacketHandler.init();
-		Specialisations.init();
-		Knowledge.init();
-		Abilities.init();
-		
-		MinecraftForge.EVENT_BUS.register(new PlayerEventHandler());
-		MinecraftForge.EVENT_BUS.register(new TMEventHandler());
-		MinecraftForge.EVENT_BUS.register(new MouseEventHandler());
-		FMLCommonHandler.instance().bus().register(new TickEventHandler());
-	}
-	
-	@EventHandler
-	public void init(FMLInitializationEvent event)
-	{		
-		FMLCommonHandler.instance().bus().register(new KeyInputHandler());
-		NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
-		
-		KeyBindings.init();
-		Blocks.init();
-		Items.init();
-		
-		MinecraftForge.EVENT_BUS.register(new GuiTMOverlay(Minecraft.getMinecraft()));		
-	}
-	
-	@EventHandler
-	public void post(FMLPostInitializationEvent event)
-	{
-		Information.load("specialisations");
-	}
+
+    @Instance("TechnoMagi")
+    public static TechnoMagi instance;
+
+    public static CreativeTabs tabTM = new CreativeTabTM();
+
+    public static final Logger logger = LogManager.getLogger(Reference.MODID);
+
+    @EventHandler
+    public void pre(FMLPreInitializationEvent event)
+    {
+        PacketHandler.init();
+        Specialisations.init();
+        Knowledge.init();
+        Abilities.init();
+
+        MinecraftForge.EVENT_BUS.register(new PlayerEventHandler());
+        MinecraftForge.EVENT_BUS.register(new TMEventHandler());
+        MinecraftForge.EVENT_BUS.register(new MouseEventHandler());
+        FMLCommonHandler.instance().bus().register(new TickEventHandler());
+    }
+
+    @EventHandler
+    public void init(FMLInitializationEvent event)
+    {
+        FMLCommonHandler.instance().bus().register(new KeyInputHandler());
+        NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
+
+        KeyBindings.init();
+        Blocks.init();
+        Items.init();
+
+        MinecraftForge.EVENT_BUS.register(new GuiTMOverlay(Minecraft.getMinecraft()));
+    }
+
+    @EventHandler
+    public void post(FMLPostInitializationEvent event)
+    {
+        Information.load("specialisations");
+    }
 
 }

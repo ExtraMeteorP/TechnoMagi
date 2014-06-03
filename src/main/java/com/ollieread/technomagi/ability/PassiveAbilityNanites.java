@@ -13,47 +13,48 @@ import com.ollieread.technomagi.player.PlayerKnowledge;
 
 import cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
-public class PassiveAbilityNanites extends AbilityPassive<PlayerTickEvent> {
-	
-	private int timer;
+public class PassiveAbilityNanites extends AbilityPassive<PlayerTickEvent>
+{
 
-	public PassiveAbilityNanites(String name)
-	{
-		super(name);
-	}
+    private int timer;
 
-	@Override
-	public int getEvent()
-	{
-		return TMRegistry.EVENT_PLAYER_TICK;
-	}
+    public PassiveAbilityNanites(String name)
+    {
+        super(name);
+    }
 
-	@Override
-	public boolean canUse(PlayerKnowledge charon)
-	{
-		return charon.getNanites() < charon.getMaxNanites();
-	}
+    @Override
+    public int getEvent()
+    {
+        return TMRegistry.EVENT_PLAYER_TICK;
+    }
 
-	@Override
-	public boolean isAvailable(PlayerKnowledge charon)
-	{		
-		return !charon.canSpecialise();
-	}
+    @Override
+    public boolean canUse(PlayerKnowledge charon)
+    {
+        return charon.getNanites() < charon.getMaxNanites();
+    }
 
-	@Override
-	public void use(PlayerTickEvent event, PlayerKnowledge charon)
-	{
-		FoodStats foodstats = event.player.getFoodStats();
-		int foodLevel = foodstats.getFoodLevel();
-		
-		if(foodLevel >= 18) {
+    @Override
+    public boolean isAvailable(PlayerKnowledge charon)
+    {
+        return !charon.canSpecialise();
+    }
+
+    @Override
+    public void use(PlayerTickEvent event, PlayerKnowledge charon)
+    {
+        FoodStats foodstats = event.player.getFoodStats();
+        int foodLevel = foodstats.getFoodLevel();
+
+        if (foodLevel >= 18) {
             ++timer;
 
-            if(timer >= 80) {
-            	charon.increaseNanites(5);
+            if (timer >= 80) {
+                charon.increaseNanites(5);
                 timer = 0;
             }
         }
-	}
+    }
 
 }

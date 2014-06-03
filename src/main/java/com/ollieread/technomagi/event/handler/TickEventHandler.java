@@ -8,14 +8,15 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
-public class TickEventHandler {
-	
-	@SubscribeEvent
-	public void onPlayerTickEvent(PlayerTickEvent event)
-	{
-		if(!event.player.worldObj.isRemote) {
-			TMRegistry.passiveAbilityEvent(TMRegistry.EVENT_PLAYER_TICK, event, PlayerKnowledge.get(event.player));
-		}
-	}
+public class TickEventHandler
+{
+
+    @SubscribeEvent
+    public void onPlayerTickEvent(PlayerTickEvent event)
+    {
+        if (!event.player.worldObj.isRemote) {
+            TMRegistry.passiveAbilityEvent(TMRegistry.EVENT_PLAYER_TICK, event, PlayerKnowledge.get(event.player));
+        }
+    }
 
 }

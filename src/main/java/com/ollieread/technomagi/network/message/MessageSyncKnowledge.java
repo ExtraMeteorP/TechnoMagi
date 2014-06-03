@@ -14,7 +14,7 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
 public class MessageSyncKnowledge implements IMessage, IMessageHandler<MessageSyncKnowledge, IMessage>
 {
-	public NBTTagCompound data;
+    public NBTTagCompound data;
 
     public MessageSyncKnowledge()
     {
@@ -22,20 +22,20 @@ public class MessageSyncKnowledge implements IMessage, IMessageHandler<MessageSy
 
     public MessageSyncKnowledge(EntityPlayer player)
     {
-    	data = new NBTTagCompound();
-		PlayerKnowledge.get(player).saveNBTData(data);
+        data = new NBTTagCompound();
+        PlayerKnowledge.get(player).saveNBTData(data);
     }
 
     @Override
     public void fromBytes(ByteBuf buffer)
     {
-    	data = ByteBufUtils.readTag(buffer);
+        data = ByteBufUtils.readTag(buffer);
     }
 
     @Override
     public void toBytes(ByteBuf buffer)
     {
-    	ByteBufUtils.writeTag(buffer, data);
+        ByteBufUtils.writeTag(buffer, data);
     }
 
     @Override

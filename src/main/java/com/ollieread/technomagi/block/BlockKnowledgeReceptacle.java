@@ -14,37 +14,38 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-public class BlockKnowledgeReceptacle extends BlockContainer {
+public class BlockKnowledgeReceptacle extends BlockContainer
+{
 
-	public BlockKnowledgeReceptacle(String name)
-	{
-		super(Material.iron);
-		
-		setBlockName(name);
-		setBlockTextureName(name);
-	}
+    public BlockKnowledgeReceptacle(String name)
+    {
+        super(Material.iron);
 
-	@Override
-	public TileEntity createNewTileEntity(World var1, int var2)
-	{
-		return new TileEntityKnowledgeReceptor();
-	}
-	
-	@SideOnly(Side.CLIENT)
+        setBlockName(name);
+        setBlockTextureName(name);
+    }
+
+    @Override
+    public TileEntity createNewTileEntity(World var1, int var2)
+    {
+        return new TileEntityKnowledgeReceptor();
+    }
+
+    @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister register)
     {
         blockIcon = register.registerIcon(Reference.MODID.toLowerCase() + ":" + getTextureName());
     }
-	
-	@Override
-	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack)
-	{
-		if(entity instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) entity;
-			TileEntityKnowledgeReceptor tile = (TileEntityKnowledgeReceptor) world.getTileEntity(x, y, z);
-			
-			tile.setPlayer(player.getCommandSenderName());
-		}
-	}
+
+    @Override
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack)
+    {
+        if (entity instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer) entity;
+            TileEntityKnowledgeReceptor tile = (TileEntityKnowledgeReceptor) world.getTileEntity(x, y, z);
+
+            tile.setPlayer(player.getCommandSenderName());
+        }
+    }
 
 }

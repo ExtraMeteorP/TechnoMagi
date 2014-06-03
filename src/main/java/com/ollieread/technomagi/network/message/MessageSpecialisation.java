@@ -14,7 +14,7 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
 public class MessageSpecialisation implements IMessage, IMessageHandler<MessageSpecialisation, IMessage>
 {
-	public int specialisation;
+    public int specialisation;
 
     public MessageSpecialisation()
     {
@@ -22,19 +22,19 @@ public class MessageSpecialisation implements IMessage, IMessageHandler<MessageS
 
     public MessageSpecialisation(int specialisation)
     {
-    	this.specialisation = specialisation;
+        this.specialisation = specialisation;
     }
 
     @Override
     public void fromBytes(ByteBuf buffer)
     {
-    	this.specialisation = buffer.readInt();
+        this.specialisation = buffer.readInt();
     }
 
     @Override
     public void toBytes(ByteBuf buffer)
     {
-    	buffer.writeInt(this.specialisation);
+        buffer.writeInt(this.specialisation);
     }
 
     @Override
