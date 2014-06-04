@@ -1,20 +1,16 @@
 package com.ollieread.technomagi.common;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+
+import org.apache.commons.io.IOUtils;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-import com.google.gson.stream.JsonReader;
 import com.ollieread.technomagi.TechnoMagi;
 
 public class Information
@@ -30,10 +26,12 @@ public class Information
             Type jsonType = new TypeToken<Map<String, List<String>>>()
             {
             }.getType();
-            Map<String, List<String>> json = gson.fromJson(new FileReader(location), jsonType);
+            InputStream resource = TechnoMagi.class.getResourceAsStream(location);
+            Map<String, List<String>> json = gson.fromJson(IOUtils.toString(resource), jsonType);
             data.put(name, json);
         } catch (IOException e) {
             TechnoMagi.logger.warn("Unable to load information for: " + name);
+            e.printStackTrace();
         }
     }
 

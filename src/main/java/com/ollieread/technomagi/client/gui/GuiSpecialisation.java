@@ -1,34 +1,24 @@
 package com.ollieread.technomagi.client.gui;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-
-import com.ollieread.technomagi.TechnoMagi;
-import com.ollieread.technomagi.api.ISpecialisation;
-import com.ollieread.technomagi.api.TMRegistry;
-import com.ollieread.technomagi.common.Reference;
-import com.ollieread.technomagi.network.PacketHandler;
-import com.ollieread.technomagi.network.message.MessageAbility;
-import com.ollieread.technomagi.network.message.MessageSpecialisation;
-import com.ollieread.technomagi.player.PlayerKnowledge;
-
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
+
+import org.lwjgl.opengl.GL11;
+
+import com.ollieread.technomagi.api.ISpecialisation;
+import com.ollieread.technomagi.api.TMRegistry;
+import com.ollieread.technomagi.common.Information;
+import com.ollieread.technomagi.common.Reference;
+import com.ollieread.technomagi.network.PacketHandler;
+import com.ollieread.technomagi.network.message.MessageSpecialisation;
+import com.ollieread.technomagi.player.PlayerKnowledge;
 
 public class GuiSpecialisation extends GuiScreen
 {
@@ -41,6 +31,7 @@ public class GuiSpecialisation extends GuiScreen
     protected int xOffset;
     protected int yOffset;
     protected HashMap<Integer, String> buttonSpecialisations = new HashMap<Integer, String>();
+    protected int contentWidth = 207;
 
     protected GuiButton buttonSpecialise;
 
@@ -88,6 +79,12 @@ public class GuiSpecialisation extends GuiScreen
 
         this.xSize_lo = (float) par1;
         this.ySize_lo = (float) par2;
+
+        if (choice != null) {
+            List<String> information = Information.getInformation("specialisations", choice);
+            String paragraph = information.get(0);
+            this.fontRendererObj.drawSplitString(paragraph, this.xOffset + 10, this.yOffset + 78, contentWidth, 16777215);
+        }
 
         super.drawScreen(par1, par2, par3);
     }

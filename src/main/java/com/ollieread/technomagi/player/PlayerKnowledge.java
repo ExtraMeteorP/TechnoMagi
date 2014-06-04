@@ -303,6 +303,8 @@ public class PlayerKnowledge extends ExtendedProperties
             if (!flag) {
                 researchList.add(research);
             }
+
+            sync();
         }
     }
 

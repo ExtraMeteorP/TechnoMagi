@@ -43,43 +43,41 @@ public class ActiveAbilityFire extends AbilityActive
             PlayerInteractEvent interact = (PlayerInteractEvent) event;
 
             if (interact.action.equals(Action.RIGHT_CLICK_BLOCK) && charon.decreaseNanites(5)) {
-                if (!interact.entityLiving.worldObj.isRemote) {
-                    int x = interact.x;
-                    int y = interact.y;
-                    int z = interact.z;
+                int x = interact.x;
+                int y = interact.y;
+                int z = interact.z;
 
-                    if (interact.face == 0) {
-                        --y;
-                    }
+                if (interact.face == 0) {
+                    --y;
+                }
 
-                    if (interact.face == 1) {
-                        ++y;
-                    }
+                if (interact.face == 1) {
+                    ++y;
+                }
 
-                    if (interact.face == 2) {
-                        --z;
-                    }
+                if (interact.face == 2) {
+                    --z;
+                }
 
-                    if (interact.face == 3) {
-                        ++z;
-                    }
+                if (interact.face == 3) {
+                    ++z;
+                }
 
-                    if (interact.face == 4) {
-                        --x;
-                    }
+                if (interact.face == 4) {
+                    --x;
+                }
 
-                    if (interact.face == 5) {
-                        ++x;
-                    }
+                if (interact.face == 5) {
+                    ++x;
+                }
 
-                    if (!interact.entityPlayer.canPlayerEdit(x, y, z, interact.face, null)) {
-                        return;
-                    } else {
-                        if (interact.entityPlayer.worldObj.isAirBlock(x, y, z)) {
-                            Random rand = new Random();
-                            interact.entityPlayer.worldObj.playSoundEffect((double) x + 0.5D, (double) y + 0.5D, (double) z + 0.5D, "fire.ignite", 1.0F, rand.nextFloat() * 0.4F + 0.8F);
-                            interact.entityPlayer.worldObj.setBlock(x, y, z, Blocks.fire);
-                        }
+                if (!interact.entityPlayer.canPlayerEdit(x, y, z, interact.face, null)) {
+                    return;
+                } else {
+                    if (interact.entityPlayer.worldObj.isAirBlock(x, y, z)) {
+                        Random rand = new Random();
+                        interact.entityPlayer.worldObj.playSoundEffect((double) x + 0.5D, (double) y + 0.5D, (double) z + 0.5D, "fire.ignite", 1.0F, rand.nextFloat() * 0.4F + 0.8F);
+                        interact.entityPlayer.worldObj.setBlock(x, y, z, Blocks.fire);
                     }
                 }
             }
@@ -91,9 +89,9 @@ public class ActiveAbilityFire extends AbilityActive
             }
 
             if (interact.target instanceof EntityLiving && charon.decreaseNanites(8)) {
-                if (!interact.entityLiving.worldObj.isRemote) {
-                    EntityLiving target = (EntityLiving) interact.target;
-                }
+                EntityLiving target = (EntityLiving) interact.target;
+
+                target.setFire(5);
             }
         }
     }

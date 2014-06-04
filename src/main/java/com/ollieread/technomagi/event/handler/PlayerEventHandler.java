@@ -52,7 +52,7 @@ public class PlayerEventHandler
     @SubscribeEvent
     public void onPlayerInteract(PlayerInteractEvent event)
     {
-        if (event.entityPlayer.getHeldItem() == null) {
+        if (!event.entityPlayer.worldObj.isRemote && event.entityPlayer.getHeldItem() == null) {
             PlayerAbilities abilities = PlayerAbilities.get((EntityPlayer) event.entity);
             abilities.useAbility(event);
         }
@@ -61,7 +61,7 @@ public class PlayerEventHandler
     @SubscribeEvent
     public void onEntityInteract(EntityInteractEvent event)
     {
-        if (event.entityPlayer.getHeldItem() == null) {
+        if (!event.entityPlayer.worldObj.isRemote && event.entityPlayer.getHeldItem() == null) {
             PlayerAbilities abilities = PlayerAbilities.get((EntityPlayer) event.entity);
             abilities.useAbility(event);
         }

@@ -2,21 +2,21 @@ package com.ollieread.technomagi.client.gui;
 
 import java.util.List;
 
-import org.lwjgl.opengl.GL11;
-
-import com.ollieread.technomagi.api.ISpecialisation;
-import com.ollieread.technomagi.api.TMRegistry;
-import com.ollieread.technomagi.api.ability.IAbilityActive;
-import com.ollieread.technomagi.common.Reference;
-import com.ollieread.technomagi.player.PlayerKnowledge;
-
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
+
+import org.lwjgl.opengl.GL11;
+
+import com.ollieread.technomagi.api.TMRegistry;
+import com.ollieread.technomagi.api.ability.IAbilityActive;
+import com.ollieread.technomagi.common.Reference;
+import com.ollieread.technomagi.player.PlayerKnowledge;
+
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class GuiTMOverlay extends Gui
 {
@@ -61,8 +61,6 @@ public class GuiTMOverlay extends Gui
         int researchNanites = 100 - maxNanites;
         float nanite = 102 / 100;
 
-        List<String> abilities = charon.abilities.getActiveAbilities();
-
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glDisable(GL11.GL_DEPTH_TEST);
         GL11.glDepthMask(false);
@@ -86,38 +84,43 @@ public class GuiTMOverlay extends Gui
             this.drawTexturedModalRect(this.xOffset + 25, (int) (this.yOffset + (yo - ro)), 32, (int) (yo - ro), 5, (int) ro);
         }
 
-        int currentAbility = charon.abilities.getCurrentAbility();
-        int end = aOffset + 4;
-        int s = -1;
+        List<String> abilities = charon.abilities.getActiveAbilities();
 
-        if (currentAbility >= 0) {
-            if (currentAbility < aOffset) {
-                aOffset = currentAbility;
-            } else if (currentAbility > end) {
-                aOffset = currentAbility - 4;
+        if (abilities.size() > 0) {
+            int currentAbility = charon.abilities.getCurrentAbility();
+            int end = aOffset + 4;
+            int s = -1;
+
+            if (currentAbility >= 0) {
+                if (currentAbility < aOffset) {
+                    aOffset = currentAbility;
+                } else if (currentAbility > end) {
+                    aOffset = currentAbility - 4;
+                }
+
+                if (end >= abilities.size()) {
+                    end = abilities.size();
+                }
+
+                s = (currentAbility - aOffset) * 20;
             }
 
-            if (end >= abilities.size()) {
-                end = abilities.size();
+            if (s > -1) {
+                this.drawTexturedModalRect(this.xOffset - 1, (this.yOffset - 1) + s, 37, 7, 24, 24);
             }
 
-            s = (currentAbility - aOffset) * 20;
-        }
+            int x = aOffset;
+            for (int i = 0; i < 5; i++) {
+                x += i;
 
-        if (s > -1) {
-            this.drawTexturedModalRect(this.xOffset - 1, (this.yOffset - 1) + s, 37, 7, 24, 24);
-        }
+                if (x == end)
+                    break;
 
-        int x = aOffset;
-        for (int i = 0; i < 5; i++) {
-            x += i;
+                IAbilityActive ability = TMRegistry.getActiveAbility(abilities.get(aOffset + i));
 
-            if (x == end)
-                break;
-            IAbilityActive ability = TMRegistry.getActiveAbility(abilities.get(aOffset + i));
-
-            this.mc.getTextureManager().bindTexture(ability.getIcon());
-            this.func_146110_a(5, yOffset + (3 + (20 * i)), 0, 0, 16, 16, 16, 16);
+                this.mc.getTextureManager().bindTexture(ability.getIcon());
+                this.func_146110_a(5, yOffset + (3 + (20 * i)), 0, 0, 16, 16, 16, 16);
+            }
         }
 
         GL11.glDisable(GL11.GL_BLEND);
