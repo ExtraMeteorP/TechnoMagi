@@ -1,11 +1,16 @@
 package com.ollieread.technomagi.event.handler;
 
-import com.ollieread.technomagi.api.TMRegistry;
-import com.ollieread.technomagi.player.PlayerKnowledge;
+import net.minecraft.block.Block;
 
-import net.minecraft.util.FoodStats;
+import com.ollieread.technomagi.api.TMRegistry;
+import com.ollieread.technomagi.api.research.ResearchEvents;
+import com.ollieread.technomagi.common.init.Blocks;
+import com.ollieread.technomagi.player.PlayerKnowledge;
+import com.ollieread.technomagi.tileentity.TileEntityTeleporter;
+import com.ollieread.technomagi.util.PlayerHelper;
+import com.ollieread.technomagi.util.TeleportHelper;
+
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
 public class TickEventHandler
@@ -15,7 +20,23 @@ public class TickEventHandler
     public void onPlayerTickEvent(PlayerTickEvent event)
     {
         if (!event.player.worldObj.isRemote) {
-            TMRegistry.passiveAbilityEvent(TMRegistry.EVENT_PLAYER_TICK, event, PlayerKnowledge.get(event.player));
+            TMRegistry.passiveAbilityEvent(ResearchEvents.EVENT_PLAYER_TICK, event, PlayerKnowledge.get(event.player));
+
+            if (event.player.isSneaking()) {
+                Block block = PlayerHelper.getBlockStoodOn(event.player);
+
+                if (Block.isEqualTo(block, Blocks.blockTeleporter)) {
+                    TileEntityTeleporter teleporter = (TileEntityTeleporter) PlayerHelper.getTileEntityStoodOn(event.player);
+
+                    if (teleporter != null) {
+                        TileEntityTeleporter destination = TeleportHelper.findTeleporterBelow(teleporter);
+
+                        if (destination != null && destination.canUse()) {
+                            TeleportHelper.teleportPlayerToTeleporter(event.player, teleporter, destination);
+                        }
+                    }
+                }
+            }
         }
     }
 

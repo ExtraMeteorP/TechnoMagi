@@ -1,8 +1,9 @@
 package com.ollieread.technomagi.creativetab;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+
+import com.ollieread.technomagi.common.init.Blocks;
 
 public class CreativeTabTM extends CreativeTabs
 {
@@ -15,7 +16,7 @@ public class CreativeTabTM extends CreativeTabs
     @Override
     public Item getTabIconItem()
     {
-        return Items.iron_ingot;
+        return Item.getItemFromBlock(Blocks.blockConstruct);
     }
 
 }

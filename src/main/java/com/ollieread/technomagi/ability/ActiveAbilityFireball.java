@@ -26,9 +26,9 @@ public class ActiveAbilityFireball extends AbilityActive
     }
 
     @Override
-    public void use(PlayerKnowledge charon, Event event)
+    public boolean use(PlayerKnowledge charon, Event event)
     {
-
+        return false;
     }
 
 }

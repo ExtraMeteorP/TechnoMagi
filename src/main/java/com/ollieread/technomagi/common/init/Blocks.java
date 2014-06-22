@@ -1,12 +1,24 @@
 package com.ollieread.technomagi.common.init;
 
+import net.minecraft.block.Block;
+
+import org.apache.logging.log4j.Level;
+
+import com.ollieread.technomagi.TechnoMagi;
 import com.ollieread.technomagi.block.BlockArchive;
+import com.ollieread.technomagi.block.BlockAreaLight;
 import com.ollieread.technomagi.block.BlockConstruct;
 import com.ollieread.technomagi.block.BlockKnowledgeReceptacle;
+import com.ollieread.technomagi.block.BlockLightAir;
 import com.ollieread.technomagi.block.BlockNaniteReplicator;
+import com.ollieread.technomagi.block.BlockTeleporter;
+import com.ollieread.technomagi.tileentity.TileEntityArchive;
+import com.ollieread.technomagi.tileentity.TileEntityAreaLight;
+import com.ollieread.technomagi.tileentity.TileEntityLightAir;
+import com.ollieread.technomagi.tileentity.TileEntityNaniteReplicator;
+import com.ollieread.technomagi.tileentity.TileEntityTeleporter;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.block.Block;
 
 public class Blocks
 {
@@ -15,18 +27,35 @@ public class Blocks
     public static Block blockArchive;
     public static Block blockKnowledgeReceptacle;
     public static Block blockNaniteReplicator;
+    public static Block blockAreaLight;
+    public static Block blockLightAir;
+    public static Block blockTeleporter;
 
     public static void init()
     {
-        blockConstruct = new BlockConstruct("blockConstruct");
-        blockArchive = new BlockArchive("blockArchive");
-        blockKnowledgeReceptacle = new BlockKnowledgeReceptacle("blockKnowledgeReceptacle");
-        blockNaniteReplicator = new BlockNaniteReplicator("blockNaniteReplicator");
+        TechnoMagi.logger.log(Level.INFO, "Initiating & registering blocks");
 
-        GameRegistry.registerBlock(blockConstruct, "blockConstruct");
-        GameRegistry.registerBlock(blockArchive, "blockArchive");
-        GameRegistry.registerBlock(blockKnowledgeReceptacle, "blockKnowledgeReceptacle");
-        GameRegistry.registerBlock(blockNaniteReplicator, "blockNaniteReplicator");
+        blockConstruct = new BlockConstruct("construct");
+        blockArchive = new BlockArchive("archive");
+        blockKnowledgeReceptacle = new BlockKnowledgeReceptacle("knowledgeReceptacle");
+        blockNaniteReplicator = new BlockNaniteReplicator("naniteReplicator");
+        blockAreaLight = new BlockAreaLight("areaLight");
+        blockLightAir = new BlockLightAir("lightAir");
+        blockTeleporter = new BlockTeleporter("teleporter");
+
+        GameRegistry.registerBlock(blockConstruct, "construct");
+        GameRegistry.registerBlock(blockArchive, "archive");
+        GameRegistry.registerBlock(blockKnowledgeReceptacle, "knowledgeReceptacle");
+        GameRegistry.registerBlock(blockNaniteReplicator, "naniteReplicator");
+        GameRegistry.registerBlock(blockAreaLight, "areaLight");
+        GameRegistry.registerBlock(blockLightAir, "lightAir");
+        GameRegistry.registerBlock(blockTeleporter, "teleporter");
+
+        GameRegistry.registerTileEntity(TileEntityArchive.class, "tileEntityArchive");
+        GameRegistry.registerTileEntity(TileEntityNaniteReplicator.class, "tileEntityNaniteReplicator");
+        GameRegistry.registerTileEntity(TileEntityAreaLight.class, "tileEntityAreaLight");
+        GameRegistry.registerTileEntity(TileEntityLightAir.class, "tileEntityLightAir");
+        GameRegistry.registerTileEntity(TileEntityTeleporter.class, "tileEntityTeleporter");
     }
 
 }

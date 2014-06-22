@@ -1,12 +1,12 @@
 package com.ollieread.technomagi.network.message;
 
 import io.netty.buffer.ByteBuf;
-
-import com.ollieread.technomagi.player.PlayerKnowledge;
-
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+
+import com.ollieread.technomagi.TechnoMagi;
+import com.ollieread.technomagi.player.PlayerKnowledge;
+
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
@@ -41,8 +41,11 @@ public class MessageSyncKnowledge implements IMessage, IMessageHandler<MessageSy
     @Override
     public IMessage onMessage(MessageSyncKnowledge message, MessageContext ctx)
     {
-        EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-        PlayerKnowledge.get(player).loadNBTData(message.data);
+        EntityPlayer player = TechnoMagi.proxy.getClientPlayer();
+
+        if (player != null) {
+            PlayerKnowledge.get(player).loadNBTData(message.data);
+        }
 
         return null;
     }

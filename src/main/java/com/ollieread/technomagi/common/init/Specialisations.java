@@ -1,5 +1,8 @@
 package com.ollieread.technomagi.common.init;
 
+import org.apache.logging.log4j.Level;
+
+import com.ollieread.technomagi.TechnoMagi;
 import com.ollieread.technomagi.api.ISpecialisation;
 import com.ollieread.technomagi.api.Specialisation;
 import com.ollieread.technomagi.api.TMRegistry;
@@ -13,9 +16,11 @@ public class Specialisations
 
     public static void init()
     {
-        specScholar = new Specialisation("specScholar");
-        specMedic = new Specialisation("specMedic");
-        specWarrior = new Specialisation("specWarrior");
+        TechnoMagi.logger.log(Level.INFO, "Initiating & registering specialisations");
+
+        specScholar = new Specialisation("scholar");
+        specMedic = new Specialisation("medic");
+        specWarrior = new Specialisation("warrior");
 
         TMRegistry.registerSpecialisation(specScholar);
         TMRegistry.registerSpecialisation(specMedic);

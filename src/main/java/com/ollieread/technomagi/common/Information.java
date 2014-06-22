@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -35,17 +36,34 @@ public class Information
         }
     }
 
-    public static List<String> getInformation(String type, String name)
+    public static String getInformation(String type, String name)
     {
         if (data.containsKey(type)) {
             Map<String, List<String>> information = data.get(type);
 
             if (information.containsKey(name)) {
-                return information.get(name);
+                Object info = information.get(name);
+
+                if (info instanceof String) {
+                    return (String) info;
+                } else if (info instanceof List<?>) {
+                    List<String> list = (List<String>) info;
+
+                    String paragraph = null;
+
+                    for (Iterator<String> p = list.iterator(); p.hasNext();) {
+                        if (paragraph == null) {
+                            paragraph = p.next();
+                        } else {
+                            paragraph += "\n\n" + p.next();
+                        }
+                    }
+
+                    return paragraph;
+                }
             }
         }
 
         return null;
     }
-
 }

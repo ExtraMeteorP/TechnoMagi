@@ -8,8 +8,6 @@ import net.minecraftforge.common.IExtendedEntityProperties;
 public abstract class ExtendedProperties implements IExtendedEntityProperties
 {
 
-    public static String PROP_NAME;
-
     protected EntityPlayer player;
 
     public ExtendedProperties(EntityPlayer player)
@@ -20,11 +18,6 @@ public abstract class ExtendedProperties implements IExtendedEntityProperties
     @Override
     public void init(Entity entity, World world)
     {
-    }
-
-    protected static String getSaveKey(EntityPlayer player)
-    {
-        return player.getCommandSenderName() + ":" + PROP_NAME;
     }
 
 }

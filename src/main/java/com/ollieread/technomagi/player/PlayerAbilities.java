@@ -46,6 +46,8 @@ public class PlayerAbilities extends ExtendedProperties
 
     private int currentAbility = -1;
 
+    private boolean resetTimer = false;
+
     public PlayerAbilities(EntityPlayer player)
     {
         super(player);
@@ -67,6 +69,7 @@ public class PlayerAbilities extends ExtendedProperties
         NBTTagCompound properties = new NBTTagCompound();
 
         properties.setInteger("Current", currentAbility);
+        properties.setBoolean("Reset", resetTimer);
 
         compound.setTag(PROP_NAME, properties);
     }
@@ -77,6 +80,7 @@ public class PlayerAbilities extends ExtendedProperties
         NBTTagCompound properties = (NBTTagCompound) compound.getTag(PROP_NAME);
 
         currentAbility = properties.getInteger("Current");
+        resetTimer = properties.getBoolean("Reset");
     }
 
     public static void saveProxyData(EntityPlayer player)
@@ -101,6 +105,11 @@ public class PlayerAbilities extends ExtendedProperties
         PacketHandler.INSTANCE.sendTo(new MessageSyncAbilities(player), (EntityPlayerMP) player);
     }
 
+    protected static String getSaveKey(EntityPlayer player)
+    {
+        return player.getCommandSenderName() + ":" + PROP_NAME;
+    }
+
     public void buildAbilityLists()
     {
         passiveAbilityList = new ArrayList<String>();
@@ -112,7 +121,7 @@ public class PlayerAbilities extends ExtendedProperties
         for (Iterator<IAbilityPassive> i = passiveAbilities.iterator(); i.hasNext();) {
             IAbilityPassive ability = i.next();
             if (ability.isAvailable(PlayerKnowledge.get(player))) {
-                passiveAbilityList.add(TMRegistry.getPassiveAbilityName(ability));
+                passiveAbilityList.add(ability.getName());
             }
         }
 
@@ -173,22 +182,46 @@ public class PlayerAbilities extends ExtendedProperties
         }
     }
 
-    public void useAbility(Event event)
+    public boolean useAbility(Event event)
     {
+        boolean flag = false;
+
         if (currentAbility >= 0) {
             String name = activeAbilityList.get(currentAbility);
             PlayerKnowledge charon = PlayerKnowledge.get(player);
             IAbilityActive ability = TMRegistry.getActiveAbility(name);
 
             if (ability.canUse(charon, event)) {
-                ability.use(charon, event);
+                flag = ability.use(charon, event);
+            }
+
+            if (flag) {
+                setResetTimer(true);
+
+                if (event.isCancelable()) {
+                    event.setCanceled(true);
+                }
+
+                player.swingItem();
             }
         }
+
+        return flag;
     }
 
     public int getCurrentAbility()
     {
         return currentAbility;
+    }
+
+    public void setResetTimer(boolean flag)
+    {
+        resetTimer = flag;
+    }
+
+    public boolean getResetTimer()
+    {
+        return resetTimer;
     }
 
 }

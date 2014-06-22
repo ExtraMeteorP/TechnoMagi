@@ -1,35 +1,27 @@
 package com.ollieread.technomagi;
 
-import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.potion.Potion;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.MinecraftForge;
-
-import com.ollieread.technomagi.api.Specialisation;
-import com.ollieread.technomagi.client.gui.GuiTMOverlay;
 import com.ollieread.technomagi.common.CommonProxy;
 import com.ollieread.technomagi.common.Information;
-import com.ollieread.technomagi.common.KeyBindings;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.common.init.Abilities;
 import com.ollieread.technomagi.common.init.Blocks;
+import com.ollieread.technomagi.common.init.Entities;
 import com.ollieread.technomagi.common.init.Items;
 import com.ollieread.technomagi.common.init.Knowledge;
+import com.ollieread.technomagi.common.init.Potions;
 import com.ollieread.technomagi.common.init.Specialisations;
 import com.ollieread.technomagi.creativetab.CreativeTabTM;
-import com.ollieread.technomagi.event.handler.KeyInputHandler;
-import com.ollieread.technomagi.event.handler.MouseEventHandler;
-import com.ollieread.technomagi.event.handler.PlayerEventHandler;
-import com.ollieread.technomagi.event.handler.TMEventHandler;
-import com.ollieread.technomagi.event.handler.TickEventHandler;
 import com.ollieread.technomagi.network.PacketHandler;
 
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -61,23 +53,42 @@ public class TechnoMagi
         Knowledge.init();
         Abilities.init();
 
-        MinecraftForge.EVENT_BUS.register(new PlayerEventHandler());
-        MinecraftForge.EVENT_BUS.register(new TMEventHandler());
-        MinecraftForge.EVENT_BUS.register(new MouseEventHandler());
-        FMLCommonHandler.instance().bus().register(new TickEventHandler());
+        Blocks.init();
+        Items.init();
+        Potions.init();
+        Entities.init();
+
+        Potion[] potionTypes = null;
+
+        for (Field f : Potion.class.getDeclaredFields()) {
+            f.setAccessible(true);
+
+            try {
+                if (f.getName().equals("potionTypes") || f.getName().equals("field_76425_a")) {
+                    Field modfield = Field.class.getDeclaredField("modifiers");
+                    modfield.setAccessible(true);
+                    modfield.setInt(f, f.getModifiers() & ~Modifier.FINAL);
+
+                    potionTypes = (Potion[]) f.get(null);
+                    final Potion[] newPotionType = new Potion[256];
+                    System.arraycopy(potionTypes, 0, newPotionType, 0, potionTypes.length);
+                    f.set(null, newPotionType);
+                }
+            } catch (Exception e) {
+                System.err.println("Severe error, please report this to the mod author");
+                System.err.println(e);
+            }
+        }
+
+        proxy.registerEventHandlers();
     }
 
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
-        FMLCommonHandler.instance().bus().register(new KeyInputHandler());
+        proxy.init();
+
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
-
-        KeyBindings.init();
-        Blocks.init();
-        Items.init();
-
-        MinecraftForge.EVENT_BUS.register(new GuiTMOverlay(Minecraft.getMinecraft()));
     }
 
     @EventHandler

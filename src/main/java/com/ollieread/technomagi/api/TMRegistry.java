@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -13,6 +14,7 @@ import com.ollieread.technomagi.api.ability.IAbilityActive;
 import com.ollieread.technomagi.api.ability.IAbilityPassive;
 import com.ollieread.technomagi.api.research.IKnowledge;
 import com.ollieread.technomagi.api.research.IResearch;
+import com.ollieread.technomagi.api.research.ResearchEvents;
 import com.ollieread.technomagi.player.PlayerKnowledge;
 
 import cpw.mods.fml.common.eventhandler.Event;
@@ -26,40 +28,20 @@ import cpw.mods.fml.common.eventhandler.Event;
 public class TMRegistry
 {
 
-    public static int ABILITY_PASSIVE = 0;
-    public static int ABILITY_ACTIVE = 1;
-
-    public static int EVENT_NONE = 0;
-    public static int EVENT_SPECIALISATION = 1;
-    public static int EVENT_RESEARCH_PROGRESS = 2;
-    public static int EVENT_IN_FIRE = 3;
-    public static int EVENT_PLAYER_TICK = 4;
-
     protected static List<ISpecialisation> specList = new ArrayList<ISpecialisation>();
     protected static List<IResearch> researchList = new ArrayList<IResearch>();
     protected static List<IAbilityPassive> passiveAbilityList = new ArrayList<IAbilityPassive>();
     protected static List<IAbilityActive> activeAbilityList = new ArrayList<IAbilityActive>();
     protected static List<IKnowledge> knowledgeList = new ArrayList<IKnowledge>();
 
-    protected static HashMap<String, Integer> specNames = new HashMap<String, Integer>();
-    protected static HashMap<String, Integer> researchNames = new HashMap<String, Integer>();
-    protected static HashMap<String, Integer> passiveNames = new HashMap<String, Integer>();
-    protected static HashMap<String, Integer> activeNames = new HashMap<String, Integer>();
-    protected static HashMap<String, Integer> knowledgeNames = new HashMap<String, Integer>();
+    protected static Map<String, Integer> specNames = new HashMap<String, Integer>();
+    protected static Map<String, Integer> researchNames = new HashMap<String, Integer>();
+    protected static Map<String, Integer> passiveNames = new HashMap<String, Integer>();
+    protected static Map<String, Integer> activeNames = new HashMap<String, Integer>();
+    protected static Map<String, Integer> knowledgeNames = new HashMap<String, Integer>();
 
-    protected static HashMap<Integer, List<Integer>> researchEvents = new HashMap<Integer, List<Integer>>();
-    protected static HashMap<Integer, List<Integer>> passiveAbilityEvents = new HashMap<Integer, List<Integer>>();
-
-    /*
-     * protected static HashMap<String, ISpecialisation> specList = new
-     * HashMap<String, ISpecialisation>(); protected static HashMap<String,
-     * IResearch> researchList = new HashMap<String, IResearch>(); protected
-     * static HashMap<String, IAbilityPassive> passiveAbilityList = new
-     * HashMap<String, IAbilityPassive>(); protected static HashMap<String,
-     * IAbilityActive> activeAbilityList = new HashMap<String,
-     * IAbilityActive>(); protected static HashMap<String, IKnowledge>
-     * knowledgeList = new HashMap<String, IKnowledge>();
-     */
+    protected static Map<Integer, List<Integer>> researchEvents = new HashMap<Integer, List<Integer>>();
+    protected static Map<Integer, List<Integer>> passiveAbilityEvents = new HashMap<Integer, List<Integer>>();
 
     public static void registerSpecialisation(ISpecialisation spec)
     {
@@ -151,10 +133,12 @@ public class TMRegistry
             researchList.add(i, research);
             researchNames.put(name, i);
 
-            if (researchEvents.containsKey(research.getEvent())) {
-                researchEvents.get(research.getEvent()).add(i);
-            } else {
-                researchEvents.put(research.getEvent(), Arrays.asList(i));
+            if (research.getEvent() != ResearchEvents.EVENT_NONE) {
+                if (researchEvents.containsKey(research.getEvent())) {
+                    researchEvents.get(research.getEvent()).add(i);
+                } else {
+                    researchEvents.put(research.getEvent(), Arrays.asList(i));
+                }
             }
         }
     }
@@ -190,7 +174,7 @@ public class TMRegistry
             for (Iterator<Integer> i = researchEvents.get(id).iterator(); i.hasNext();) {
                 IResearch research = researchList.get(i.next());
 
-                if (research.canPerform(charon)) {
+                if (!charon.hasResearched(research.getName()) && research.canPerform(charon)) {
                     charon.researchKnowledge(research.getName(), research.getKnowledge(), research.getProgress(), research.isRepeating());
                 }
             }
@@ -218,10 +202,12 @@ public class TMRegistry
             passiveAbilityList.add(i, ability);
             passiveNames.put(name, i);
 
-            if (passiveAbilityEvents.containsKey(ability.getEvent())) {
-                passiveAbilityEvents.get(ability.getEvent()).add(i);
-            } else {
-                passiveAbilityEvents.put(ability.getEvent(), Arrays.asList(i));
+            if (ability.getEvent() != ResearchEvents.EVENT_NONE) {
+                if (passiveAbilityEvents.containsKey(ability.getEvent())) {
+                    passiveAbilityEvents.get(ability.getEvent()).add(i);
+                } else {
+                    passiveAbilityEvents.put(ability.getEvent(), Arrays.asList(i));
+                }
             }
         }
     }
@@ -264,7 +250,7 @@ public class TMRegistry
     {
         int id = getActiveAbilityId(name);
 
-        if (id > -1) {
+        if (id > -1 && id < activeAbilityList.size()) {
             return activeAbilityList.get(id);
         }
 
@@ -275,7 +261,7 @@ public class TMRegistry
     {
         int id = getPassiveAbilityId(name);
 
-        if (id > -1) {
+        if (id > -1 && id < passiveAbilityList.size()) {
             return passiveAbilityList.get(id);
         }
 
@@ -297,8 +283,7 @@ public class TMRegistry
         if (!charon.canSpecialise() && passiveAbilityEvents.containsKey(id)) {
             for (Iterator<Integer> i = passiveAbilityEvents.get(id).iterator(); i.hasNext();) {
                 IAbilityPassive ability = passiveAbilityList.get(i.next());
-
-                if (charon.abilities.hasPassiveAbility(ability.getName())) {
+                if (charon.abilities.hasPassiveAbility(ability.getName()) && ability.canUse(charon)) {
                     ability.use(event, charon);
                 }
             }

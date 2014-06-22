@@ -1,16 +1,19 @@
 package com.ollieread.technomagi.api.block;
 
-import java.util.HashMap;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityPlayerLocked extends TileEntity implements IPlayerLocked
 {
 
     protected String player = "none";
+
+    @Override
+    public boolean hasPlayer()
+    {
+        return player.equals("none");
+    }
 
     @Override
     public void setPlayer(String name)
@@ -21,7 +24,7 @@ public class TileEntityPlayerLocked extends TileEntity implements IPlayerLocked
     }
 
     @Override
-    public String getPlayer(String name)
+    public String getPlayer()
     {
         return !player.equals("none") ? player : null;
     }
@@ -37,14 +40,20 @@ public class TileEntityPlayerLocked extends TileEntity implements IPlayerLocked
         return isPlayer(player.getCommandSenderName());
     }
 
+    @Override
     public void readFromNBT(NBTTagCompound compound)
     {
-        compound.setString("Player", player);
+        super.readFromNBT(compound);
+
+        player = compound.getString("Player");
     }
 
+    @Override
     public void writeToNBT(NBTTagCompound compound)
     {
-        player = compound.getString("Player");
+        super.writeToNBT(compound);
+
+        compound.setString("Player", player);
     }
 
 }

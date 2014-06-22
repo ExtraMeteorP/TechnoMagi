@@ -1,8 +1,12 @@
 package com.ollieread.technomagi.api.ability;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 
 import com.ollieread.technomagi.common.Reference;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public abstract class AbilityActive implements IAbilityActive
 {
@@ -18,9 +22,11 @@ public abstract class AbilityActive implements IAbilityActive
 
     public AbilityActive(String name, ResourceLocation icon)
     {
+        abilityName = name;
         abilityIcon = icon;
     }
 
+    @SideOnly(Side.CLIENT)
     @Override
     public ResourceLocation getIcon()
     {
@@ -31,6 +37,11 @@ public abstract class AbilityActive implements IAbilityActive
     public String getName()
     {
         return abilityName;
+    }
+
+    public String getLocalisedName()
+    {
+        return I18n.format("ability.active." + this.getName());
     }
 
 }

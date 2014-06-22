@@ -1,14 +1,17 @@
 {
-  "specScholar": [
-    "The scholar path is one chosen by those who seek knowledge and understanding wherever they may be, and wherever that may take them. Some scholars consider themselves to be the superior technomages, but a true scholar would know that they are simply a small part of a large machine, and without their fellow technomages, that large machine would fall apart.",
+  "scholar": [
+    "The scholar path is one chosen by those who seek knowledge and understanding wherever they may be, and wherever that may take them.",
+    "Some scholars consider themselves to be the superior technomages, but a true scholar would know that they are simply a small part of a large machine, and without their fellow technomages, that large machine would fall apart.",
     "As a scholar you receive a random research boost while collecting data on knowledge topics."
   ],
-  "specMedic": [
-    "The medic path is one chosen by those who value life above all else. Technomages who choose to follow the medic path, are for the most part, empathetic, caring individuals, who accept the responsibility of the life of others without a second thought.",
+  "medic": [
+    "The medic path is one chosen by those who value life above all else.",
+    "Technomages who choose to follow the medic path, are for the most part, empathetic, caring individuals, who accept the responsibility of the life of others without a second thought.",
     "As a medic you receive increased regenerative capabilities, allowing you to tend to the wounds and needs of others without worrying about yourself."
   ],
-  "specWarrior": [
-    "The warrior path is one chosen by those who strive for strength in the pursuit of protecting others. Warriors are the frontline of the technomage world, their job is to defend and protect their fellow technomages by putting their life on the line. For the most part, technomage warriors will if possible, seek an option that does not require fighting.",
+  "warrior": [
+    "The warrior path is one chosen by those who strive for strength in the pursuit of protecting others.",
+    "Warriors are the frontline of the technomage world, their job is to defend and protect their fellow technomages by putting their life on the line. For the most part, technomage warriors will if possible, seek an option that does not require fighting.",
     "As a warrior you receive the ability to endure more physical damage compared to your fellow technomages."
   ]
 }

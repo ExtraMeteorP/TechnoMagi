@@ -1,6 +1,34 @@
 technomagi.specialise.gui=Choose a Specialisation
 technomagi.specialise.button=Specialise
+technomagi.archive.gui=Technomage Archive
+technomagi.archive.entries=Entries
+technomagi.self.gui=Details
+technomagi.replicator.gui=Nanite Replicator
 
-specialisation.specScholar=Scholar
-specialisation.specMedic=Medic
-specialisation.specWarrior=Warrior
+technomagi.nanites=Nanites
+technomagi.data=Data
+
+specialisation.scholar=Scholar
+specialisation.medic=Medic
+specialisation.warrior=Warrior
+
+ability.active.fire=Firemancy
+ability.active.harden=Harden Skin
+ability.active.invisibility=Vanish
+
+potionHardness=Hardness
+
+itemGroup.tabTm=TechnoMagi
+
+entity.robotCow.name=Roboticised Cow
+
+tile.construct.name=Construct
+tile.archive.name=TechnoMagi Archive
+tile.naniteReplicator.name=Nanite Replicator
+
+item.mobBrain.name=Brain
+item.sampleExtractor.name=Sample Extractor
+item.sampleVile.name=Empty Sample Vile
+item.sampleVile.full.name=Sample Vile
+item.naniteContainer.name=Empty Nanite Container
+item.naniteContainer.full.name=Nanite Container

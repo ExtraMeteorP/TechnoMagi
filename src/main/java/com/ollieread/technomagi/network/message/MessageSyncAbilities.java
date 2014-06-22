@@ -1,11 +1,12 @@
 package com.ollieread.technomagi.network.message;
 
-import com.ollieread.technomagi.player.PlayerAbilities;
-
-import net.minecraft.client.Minecraft;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import io.netty.buffer.ByteBuf;
+
+import com.ollieread.technomagi.TechnoMagi;
+import com.ollieread.technomagi.player.PlayerAbilities;
+
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
@@ -40,8 +41,11 @@ public class MessageSyncAbilities implements IMessage, IMessageHandler<MessageSy
     @Override
     public IMessage onMessage(MessageSyncAbilities message, MessageContext ctx)
     {
-        EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-        PlayerAbilities.get(player).loadNBTData(message.data);
+        EntityPlayer player = TechnoMagi.proxy.getClientPlayer();
+
+        if (player != null) {
+            PlayerAbilities.get(player).loadNBTData(message.data);
+        }
 
         return null;
     }

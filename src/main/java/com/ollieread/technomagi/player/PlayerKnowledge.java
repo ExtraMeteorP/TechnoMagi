@@ -1,6 +1,7 @@
 package com.ollieread.technomagi.player;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -19,6 +20,7 @@ import com.ollieread.technomagi.api.event.TMEvent.ResearchProgressEvent;
 import com.ollieread.technomagi.common.CommonProxy;
 import com.ollieread.technomagi.network.PacketHandler;
 import com.ollieread.technomagi.network.message.MessageSyncKnowledge;
+import com.ollieread.technomagi.network.message.MessageSyncKnowledgeOther;
 import com.ollieread.technomagi.network.message.MessageSyncNanites;
 
 /**
@@ -85,12 +87,32 @@ public class PlayerKnowledge extends ExtendedProperties
 
     private void syncNanites()
     {
-        PacketHandler.INSTANCE.sendTo(new MessageSyncNanites(nanites), (EntityPlayerMP) player);
+        if (!player.worldObj.isRemote) {
+            PacketHandler.INSTANCE.sendTo(new MessageSyncNanites(nanites), (EntityPlayerMP) player);
+        }
+    }
+
+    public void syncTo(EntityPlayer entityPlayer)
+    {
+        if (!player.worldObj.isRemote) {
+            PacketHandler.INSTANCE.sendTo(new MessageSyncKnowledgeOther(player), (EntityPlayerMP) entityPlayer);
+        }
     }
 
     public static void sync(EntityPlayer player)
     {
-        PacketHandler.INSTANCE.sendTo(new MessageSyncKnowledge(player), (EntityPlayerMP) player);
+        if (!player.worldObj.isRemote) {
+            PacketHandler.INSTANCE.sendTo(new MessageSyncKnowledge(player), (EntityPlayerMP) player);
+        }
+    }
+
+    public String toString()
+    {
+        if (player != null) {
+            return "PlayerKnowledge:" + player.getCommandSenderName() + ":" + canSpecialise();
+        }
+
+        return super.toString();
     }
 
     @Override
@@ -192,6 +214,11 @@ public class PlayerKnowledge extends ExtendedProperties
         sync(player);
     }
 
+    protected static String getSaveKey(EntityPlayer player)
+    {
+        return player.getCommandSenderName() + ":" + PROP_NAME;
+    }
+
     public boolean canSpecialise()
     {
         return specialisation.equals("none");
@@ -237,12 +264,16 @@ public class PlayerKnowledge extends ExtendedProperties
 
     public boolean decreaseNanites(int i)
     {
-        if (nanites > 0) {
-            if ((nanites - i) >= 0) {
-                nanites -= i;
-                syncNanites();
-                return true;
+        if (!player.capabilities.isCreativeMode) {
+            if (nanites > 0) {
+                if ((nanites - i) >= 0) {
+                    nanites -= i;
+                    syncNanites();
+                    return true;
+                }
             }
+        } else {
+            return true;
         }
 
         return false;
@@ -262,11 +293,20 @@ public class PlayerKnowledge extends ExtendedProperties
     {
         int maxNanites = 100;
 
-        for (Iterator<Integer> it = researchingKnowledge.values().iterator(); it.hasNext();) {
-            maxNanites -= it.next();
+        return maxNanites;
+    }
+
+    public int getResearchNanites()
+    {
+        Collection<Integer> research = researchingKnowledge.values();
+
+        int n = 0;
+
+        for (Iterator<Integer> i = research.iterator(); i.hasNext();) {
+            n += i.next();
         }
 
-        return maxNanites;
+        return n;
     }
 
     public void researchKnowledge(String research, String knowledge, int amount, boolean flag)
@@ -275,6 +315,7 @@ public class PlayerKnowledge extends ExtendedProperties
             return;
 
         int progress = getKnowledgeProgress(knowledge);
+        int nanites = getResearchNanites();
 
         if (progress == 100)
             return;
@@ -284,6 +325,9 @@ public class PlayerKnowledge extends ExtendedProperties
 
         amount += event.modifier;
         boolean flag2 = false;
+
+        if ((nanites + amount) > getMaxNanites())
+            return;
 
         if ((progress + amount) >= 100) {
             if (decreaseNanites(100 - progress)) {
@@ -315,9 +359,14 @@ public class PlayerKnowledge extends ExtendedProperties
         return progress == null ? 0 : progress;
     }
 
-    public boolean hasResearched(String knowledge)
+    public boolean hasKnowledge(String knowledge)
     {
         return researchedKnowledge.contains(knowledge);
+    }
+
+    public boolean hasResearched(String research)
+    {
+        return researchList.contains(research);
     }
 
     public Set<String> getResearchingKnowledge()

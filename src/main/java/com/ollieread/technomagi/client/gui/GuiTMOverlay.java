@@ -3,8 +3,10 @@ package com.ollieread.technomagi.client.gui;
 import java.util.List;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
@@ -30,6 +32,9 @@ public class GuiTMOverlay extends Gui
     private int yOffset = 0;
     private int aOffset = 0;
     private static final ResourceLocation texture = new ResourceLocation(Reference.MODID.toLowerCase(), "textures/gui/overlay.png");
+    public static int highlightTicks;
+    public static boolean shouldDisplay = false;
+    private FontRenderer fontrenderer;
 
     public GuiTMOverlay(Minecraft mc)
     {
@@ -50,6 +55,8 @@ public class GuiTMOverlay extends Gui
             return;
         }
 
+        this.fontrenderer = Minecraft.getMinecraft().fontRenderer;
+
         ScaledResolution scaled = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
         this.width = scaled.getScaledWidth();
         this.height = scaled.getScaledHeight();
@@ -58,7 +65,7 @@ public class GuiTMOverlay extends Gui
 
         int nanites = charon.getNanites();
         int maxNanites = charon.getMaxNanites();
-        int researchNanites = 100 - maxNanites;
+        int researchNanites = charon.getResearchNanites();
         float nanite = 102 / 100;
 
         GL11.glEnable(GL11.GL_BLEND);
@@ -71,24 +78,26 @@ public class GuiTMOverlay extends Gui
         this.mc.getTextureManager().bindTexture(texture);
         this.drawTexturedModalRect(this.xOffset, this.yOffset, 0, 0, this.xSize, this.ySize);
 
-        this.drawTexturedModalRect(this.xOffset + 25, this.yOffset, 22, 0, 5, this.ySize);
+        this.drawTexturedModalRect(this.xOffset + 22, this.yOffset, 22, 0, 5, this.ySize);
 
-        float ro = Math.round(nanite * researchNanites);
+        this.drawTexturedModalRect(this.xOffset + 28, this.yOffset, 22, 0, 5, this.ySize);
+
+        float ro = ((100 - researchNanites) * nanite);
         float yo = ((100 - nanites) * nanite);
 
         if (maxNanites > 0) {
-            this.drawTexturedModalRect(this.xOffset + 25, (int) (this.yOffset + yo), 27, (int) yo, 5, (int) (this.ySize - yo));
+            this.drawTexturedModalRect(this.xOffset + 22, (int) (this.yOffset + yo), 27, (int) yo, 5, (int) (this.ySize - yo));
         }
 
         if (researchNanites > 0) {
-            this.drawTexturedModalRect(this.xOffset + 25, (int) (this.yOffset + (yo - ro)), 32, (int) (yo - ro), 5, (int) ro);
+            this.drawTexturedModalRect(this.xOffset + 28, (int) (this.yOffset + ro), 32, (int) ro, 5, (int) (this.ySize - ro));
         }
 
         List<String> abilities = charon.abilities.getActiveAbilities();
 
         if (abilities.size() > 0) {
             int currentAbility = charon.abilities.getCurrentAbility();
-            int end = aOffset + 4;
+            int end = (aOffset + 4) >= abilities.size() ? abilities.size() : aOffset + 4;
             int s = -1;
 
             if (currentAbility >= 0) {
@@ -106,20 +115,58 @@ public class GuiTMOverlay extends Gui
             }
 
             if (s > -1) {
-                this.drawTexturedModalRect(this.xOffset - 1, (this.yOffset - 1) + s, 37, 7, 24, 24);
+                this.drawTexturedModalRect(this.xOffset - 1, (this.yOffset - 1) + s, 37, 0, 24, 24);
+            }
+
+            if (aOffset > 0) {
+                this.drawTexturedModalRect(this.xOffset, this.yOffset - 10, 37, 36, 11, 7);
+            }
+
+            if (abilities.size() > end) {
+                this.drawTexturedModalRect(this.xOffset, this.yOffset + 112, 37, 24, 11, 7);
             }
 
             int x = aOffset;
             for (int i = 0; i < 5; i++) {
                 x += i;
 
-                if (x == end)
+                if (x > end)
                     break;
 
                 IAbilityActive ability = TMRegistry.getActiveAbility(abilities.get(aOffset + i));
 
-                this.mc.getTextureManager().bindTexture(ability.getIcon());
-                this.func_146110_a(5, yOffset + (3 + (20 * i)), 0, 0, 16, 16, 16, 16);
+                // this.mc.getTextureManager().bindTexture(ability.getIcon());
+                // this.func_146110_a(5, yOffset + (3 + (20 * i)), 0, 0, 16, 16,
+                // 16, 16);
+            }
+
+            if (currentAbility > -1 && shouldDisplay && highlightTicks > 0) {
+                String display = TMRegistry.getActiveAbility(abilities.get(currentAbility)).getLocalisedName();
+                int k1 = (width - fontrenderer.getStringWidth(display)) / 2;
+                int l1 = height - 72;
+
+                if (!this.mc.playerController.shouldDrawHUD()) {
+                    l1 += 14;
+                }
+
+                int i2 = (int) ((float) highlightTicks * 256.0F / 10.0F);
+
+                if (i2 > 255) {
+                    i2 = 255;
+                }
+
+                if (i2 > 0) {
+                    GL11.glPushMatrix();
+                    GL11.glEnable(GL11.GL_BLEND);
+                    OpenGlHelper.glBlendFunc(770, 771, 1, 0);
+                    fontrenderer.drawStringWithShadow(display, k1, l1, 10339063 + (i2 << 24));
+                    GL11.glDisable(GL11.GL_BLEND);
+                    GL11.glPopMatrix();
+                    --highlightTicks;
+                }
+            } else {
+                shouldDisplay = false;
+                highlightTicks = 0;
             }
         }
 

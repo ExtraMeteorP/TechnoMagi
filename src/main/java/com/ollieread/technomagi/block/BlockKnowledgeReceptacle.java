@@ -1,11 +1,5 @@
 package com.ollieread.technomagi.block;
 
-import com.ollieread.technomagi.common.Reference;
-import com.ollieread.technomagi.tileentity.TileEntityKnowledgeReceptor;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
@@ -14,15 +8,19 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-public class BlockKnowledgeReceptacle extends BlockContainer
+import com.ollieread.technomagi.common.Reference;
+import com.ollieread.technomagi.tileentity.TileEntityKnowledgeReceptor;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
+public class BlockKnowledgeReceptacle extends BlockOwnable
 {
 
     public BlockKnowledgeReceptacle(String name)
     {
-        super(Material.iron);
-
-        setBlockName(name);
-        setBlockTextureName(name);
+        super(Material.iron, name);
+        setBlockTextureName("construct");
     }
 
     @Override

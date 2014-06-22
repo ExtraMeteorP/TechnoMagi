@@ -1,10 +1,8 @@
 package com.ollieread.technomagi.ability;
 
-import net.minecraft.entity.player.EntityPlayer;
-
-import com.ollieread.technomagi.api.TMRegistry;
 import com.ollieread.technomagi.api.ability.AbilityPassive;
 import com.ollieread.technomagi.api.event.TMEvent.ResearchProgressEvent;
+import com.ollieread.technomagi.api.research.ResearchEvents;
 import com.ollieread.technomagi.common.init.Specialisations;
 import com.ollieread.technomagi.player.PlayerKnowledge;
 
@@ -19,7 +17,7 @@ public class PassiveAbilityScholarResearch extends AbilityPassive<ResearchProgre
     @Override
     public int getEvent()
     {
-        return TMRegistry.EVENT_RESEARCH_PROGRESS;
+        return ResearchEvents.EVENT_RESEARCH_PROGRESS;
     }
 
     @Override

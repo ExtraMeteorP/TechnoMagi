@@ -2,10 +2,10 @@ package com.ollieread.technomagi.ability;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
@@ -21,7 +21,7 @@ public class ActiveAbilityFire extends AbilityActive
 
     public ActiveAbilityFire(String name)
     {
-        super(name, new ResourceLocation(Reference.MODID.toLowerCase(), "textures/ability/1.png"));
+        super(name);
     }
 
     @Override
@@ -33,16 +33,16 @@ public class ActiveAbilityFire extends AbilityActive
     @Override
     public boolean isAvailable(PlayerKnowledge charon)
     {
-        return false;
+        return true;
     }
 
     @Override
-    public void use(PlayerKnowledge charon, Event event)
+    public boolean use(PlayerKnowledge charon, Event event)
     {
         if (event instanceof PlayerInteractEvent) {
             PlayerInteractEvent interact = (PlayerInteractEvent) event;
 
-            if (interact.action.equals(Action.RIGHT_CLICK_BLOCK) && charon.decreaseNanites(5)) {
+            if (interact.action.equals(Action.RIGHT_CLICK_BLOCK)) {
                 int x = interact.x;
                 int y = interact.y;
                 int z = interact.z;
@@ -72,12 +72,31 @@ public class ActiveAbilityFire extends AbilityActive
                 }
 
                 if (!interact.entityPlayer.canPlayerEdit(x, y, z, interact.face, null)) {
-                    return;
+                    return false;
                 } else {
+                    Block block = interact.entityPlayer.worldObj.getBlock(x, y, z);
                     if (interact.entityPlayer.worldObj.isAirBlock(x, y, z)) {
-                        Random rand = new Random();
-                        interact.entityPlayer.worldObj.playSoundEffect((double) x + 0.5D, (double) y + 0.5D, (double) z + 0.5D, "fire.ignite", 1.0F, rand.nextFloat() * 0.4F + 0.8F);
-                        interact.entityPlayer.worldObj.setBlock(x, y, z, Blocks.fire);
+                        if (charon.decreaseNanites(4)) {
+                            if (!interact.entityPlayer.worldObj.isRemote) {
+                                Random rand = new Random();
+                                interact.entityPlayer.worldObj.playSoundEffect((double) x + 0.5D, (double) y + 0.5D, (double) z + 0.5D, Reference.MODID.toLowerCase() + ":cast", 1.0F, rand.nextFloat() * 0.4F + 0.8F);
+                                interact.entityPlayer.worldObj.setBlock(x, y, z, Blocks.fire);
+                            }
+
+                            interact.useBlock = Event.Result.DENY;
+
+                            return true;
+                        }
+                    } else if (block.isEqualTo(block, Blocks.fire)) {
+                        if (charon.decreaseNanites(6)) {
+                            if (!interact.entityPlayer.worldObj.isRemote) {
+                                interact.entityPlayer.worldObj.setBlockToAir(x, y, z);
+                            }
+
+                            interact.useBlock = Event.Result.DENY;
+
+                            return true;
+                        }
                     }
                 }
             }
@@ -85,15 +104,25 @@ public class ActiveAbilityFire extends AbilityActive
             EntityInteractEvent interact = (EntityInteractEvent) event;
 
             if (interact.target instanceof EntityPlayer && !interact.entityPlayer.canAttackPlayer((EntityPlayer) interact.target)) {
-                return;
+                return false;
             }
 
             if (interact.target instanceof EntityLiving && charon.decreaseNanites(8)) {
                 EntityLiving target = (EntityLiving) interact.target;
 
-                target.setFire(5);
+                if (!interact.entityPlayer.worldObj.isRemote) {
+                    if (target.isBurning()) {
+                        target.extinguish();
+                    } else {
+                        target.setFire(5);
+                    }
+                }
+
+                return true;
             }
         }
+
+        return false;
     }
 
 }

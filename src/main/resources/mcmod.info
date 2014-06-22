@@ -1,15 +1,15 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
+  "modid": "TechnoMagi",
+  "name": "TechnoMagi",
+  "description": "A technology mod where the technology is so advanced, it gives the illusion of magic",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "",
+  "url": "http://technomagi.ollieread.com/",
   "updateUrl": "",
-  "authors": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
-  "logoFile": "",
+  "authors": ["ollieread"],
+  "credits": "AbrarSyed, for he promised that gradle will never touch your sources. ever.",
+  "logoFile": "/TechnoMagi.png",
   "screenshots": [],
   "dependencies": []
 }

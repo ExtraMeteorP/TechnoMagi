@@ -1,8 +1,12 @@
 package com.ollieread.technomagi.api;
 
+import net.minecraft.client.resources.I18n;
+import net.minecraft.util.ResourceLocation;
+
 import com.ollieread.technomagi.common.Reference;
 
-import net.minecraft.util.ResourceLocation;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class Specialisation implements ISpecialisation
 {
@@ -28,10 +32,16 @@ public class Specialisation implements ISpecialisation
         return specialisationName;
     }
 
+    @SideOnly(Side.CLIENT)
     @Override
     public ResourceLocation getIcon()
     {
         return specialisationIcon;
+    }
+
+    public String getLocalisedName()
+    {
+        return I18n.format("specialisation." + this.getName());
     }
 
 }
