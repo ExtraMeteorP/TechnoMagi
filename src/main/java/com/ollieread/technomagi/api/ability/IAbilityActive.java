@@ -4,7 +4,7 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 
-import com.ollieread.technomagi.player.PlayerKnowledge;
+import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
 
 import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.relauncher.Side;
@@ -18,11 +18,11 @@ public interface IAbilityActive
     @SideOnly(Side.CLIENT)
     public ResourceLocation getIcon();
 
-    public boolean canUse(PlayerKnowledge charon, Event event);
+    public boolean canUse(ExtendedPlayerKnowledge charon, Event event);
 
-    public boolean isAvailable(PlayerKnowledge charon);
+    public boolean isAvailable(ExtendedPlayerKnowledge charon);
 
-    public boolean use(PlayerKnowledge charon, Event event);
+    public boolean use(ExtendedPlayerKnowledge charon, Event event);
 
     public String getLocalisedName();
 

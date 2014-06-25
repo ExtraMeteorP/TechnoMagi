@@ -12,7 +12,7 @@ import net.minecraftforge.client.event.RenderLivingEvent.Specials.Post;
 
 import org.lwjgl.opengl.GL11;
 
-import com.ollieread.technomagi.player.PlayerKnowledge;
+import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
@@ -31,7 +31,7 @@ public class RenderEventHandler
     {
         if (event.entity instanceof EntityOtherPlayerMP) {
             EntityPlayer player = (EntityPlayer) event.entity;
-            PlayerKnowledge charon = PlayerKnowledge.get(player);
+            ExtendedPlayerKnowledge charon = ExtendedPlayerKnowledge.get(player);
 
             RenderManager renderManager;
             try {

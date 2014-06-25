@@ -5,7 +5,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 
 import com.ollieread.technomagi.TechnoMagi;
-import com.ollieread.technomagi.player.PlayerAbilities;
+import com.ollieread.technomagi.extended.ExtendedPlayerAbilities;
 
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
@@ -23,7 +23,7 @@ public class MessageSyncAbilities implements IMessage, IMessageHandler<MessageSy
     public MessageSyncAbilities(EntityPlayer player)
     {
         data = new NBTTagCompound();
-        PlayerAbilities.get(player).saveNBTData(data);
+        ExtendedPlayerAbilities.get(player).saveNBTData(data);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class MessageSyncAbilities implements IMessage, IMessageHandler<MessageSy
         EntityPlayer player = TechnoMagi.proxy.getClientPlayer();
 
         if (player != null) {
-            PlayerAbilities.get(player).loadNBTData(message.data);
+            ExtendedPlayerAbilities.get(player).loadNBTData(message.data);
         }
 
         return null;

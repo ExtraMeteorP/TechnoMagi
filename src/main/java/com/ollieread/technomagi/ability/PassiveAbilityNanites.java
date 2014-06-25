@@ -4,7 +4,7 @@ import net.minecraft.util.FoodStats;
 
 import com.ollieread.technomagi.api.ability.AbilityPassive;
 import com.ollieread.technomagi.api.research.ResearchEvents;
-import com.ollieread.technomagi.player.PlayerKnowledge;
+import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
 
 import cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
@@ -25,19 +25,19 @@ public class PassiveAbilityNanites extends AbilityPassive<PlayerTickEvent>
     }
 
     @Override
-    public boolean canUse(PlayerKnowledge charon)
+    public boolean canUse(ExtendedPlayerKnowledge charon)
     {
-        return charon.getNanites() < charon.getMaxNanites();
+        return charon.nanites.getNanites() < charon.nanites.getMaxNanites();
     }
 
     @Override
-    public boolean isAvailable(PlayerKnowledge charon)
+    public boolean isAvailable(ExtendedPlayerKnowledge charon)
     {
         return charon.canSpecialise() == false;
     }
 
     @Override
-    public void use(PlayerTickEvent event, PlayerKnowledge charon)
+    public void use(PlayerTickEvent event, ExtendedPlayerKnowledge charon)
     {
         FoodStats foodstats = event.player.getFoodStats();
         int foodLevel = foodstats.getFoodLevel();
@@ -52,8 +52,8 @@ public class PassiveAbilityNanites extends AbilityPassive<PlayerTickEvent>
             ++timer;
 
             if (timer >= 80) {
-                int nanites = charon.getNanites();
-                charon.increaseNanites((int) Math.round(2 + ((nanites / 10) * 0.2)));
+                int nanites = charon.nanites.getNanites();
+                charon.nanites.increaseNanites((int) Math.round(2 + ((nanites / 10) * 0.2)));
                 timer = 0;
             }
         }

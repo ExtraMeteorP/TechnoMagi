@@ -5,7 +5,7 @@ import net.minecraft.block.Block;
 import com.ollieread.technomagi.api.TMRegistry;
 import com.ollieread.technomagi.api.research.ResearchEvents;
 import com.ollieread.technomagi.common.init.Blocks;
-import com.ollieread.technomagi.player.PlayerKnowledge;
+import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.tileentity.TileEntityTeleporter;
 import com.ollieread.technomagi.util.PlayerHelper;
 import com.ollieread.technomagi.util.TeleportHelper;
@@ -20,7 +20,7 @@ public class TickEventHandler
     public void onPlayerTickEvent(PlayerTickEvent event)
     {
         if (!event.player.worldObj.isRemote) {
-            TMRegistry.passiveAbilityEvent(ResearchEvents.EVENT_PLAYER_TICK, event, PlayerKnowledge.get(event.player));
+            TMRegistry.passiveAbilityEvent(ResearchEvents.EVENT_PLAYER_TICK, event, ExtendedPlayerKnowledge.get(event.player));
 
             if (event.player.isSneaking()) {
                 Block block = PlayerHelper.getBlockStoodOn(event.player);

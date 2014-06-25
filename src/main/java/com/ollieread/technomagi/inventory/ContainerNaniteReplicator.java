@@ -3,6 +3,7 @@ package com.ollieread.technomagi.inventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -10,22 +11,97 @@ import net.minecraft.tileentity.TileEntityFurnace;
 
 import com.ollieread.technomagi.tileentity.TileEntityNaniteReplicator;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class ContainerNaniteReplicator extends Container
 {
 
     private TileEntityNaniteReplicator replicator;
+    private int lastNanites;
+    private int lastSample;
+    private int lastNaniteType;
+    private int lastSampleType;
+    private int lastProgress;
 
     public ContainerNaniteReplicator(InventoryPlayer playerInventory, TileEntityNaniteReplicator tile)
     {
         replicator = tile;
 
-        /*
-         * addSlotToContainer(new Slot(replicator, 0, 5, 26));
-         * addSlotToContainer(new SlotResult(replicator, 1, 164, 26));
-         * addSlotToContainer(new SlotNanites(replicator, 2, 164, 61, true));
-         */
+        addSlotToContainer(new Slot(replicator, 0, 5, 26));
+        addSlotToContainer(new SlotResult(replicator, 1, 164, 26));
+        addSlotToContainer(new SlotNanites(replicator, 2, 164, 61, true));
 
         addPlayerSlots(playerInventory);
+    }
+
+    public void addCraftingToCrafters(ICrafting par1ICrafting)
+    {
+        super.addCraftingToCrafters(par1ICrafting);
+        par1ICrafting.sendProgressBarUpdate(this, 0, replicator.getNanites());
+        par1ICrafting.sendProgressBarUpdate(this, 1, replicator.getSample());
+        par1ICrafting.sendProgressBarUpdate(this, 2, replicator.getProgress());
+        par1ICrafting.sendProgressBarUpdate(this, 3, replicator.getNaniteType());
+        par1ICrafting.sendProgressBarUpdate(this, 4, replicator.getSampleType());
+    }
+
+    public void detectAndSendChanges()
+    {
+        super.detectAndSendChanges();
+
+        for (int i = 0; i < this.crafters.size(); ++i) {
+            ICrafting icrafting = (ICrafting) this.crafters.get(i);
+
+            if (lastNanites != replicator.getNanites()) {
+                icrafting.sendProgressBarUpdate(this, 0, replicator.getNanites());
+            }
+
+            if (lastSample != replicator.getSample()) {
+                icrafting.sendProgressBarUpdate(this, 1, replicator.getSample());
+            }
+
+            if (lastProgress != replicator.getProgress()) {
+                icrafting.sendProgressBarUpdate(this, 2, replicator.getProgress());
+            }
+
+            if (lastNaniteType != replicator.getNaniteType()) {
+                icrafting.sendProgressBarUpdate(this, 3, replicator.getNaniteType());
+            }
+
+            if (lastSampleType != replicator.getSampleType()) {
+                icrafting.sendProgressBarUpdate(this, 4, replicator.getSampleType());
+            }
+        }
+
+        lastNanites = replicator.getNanites();
+        lastSample = replicator.getSample();
+        lastNaniteType = replicator.getNaniteType();
+        lastSampleType = replicator.getSampleType();
+        lastProgress = replicator.getProgress();
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void updateProgressBar(int i, int v)
+    {
+        if (i == 0) {
+            replicator.setNanites(v);
+        }
+
+        if (i == 1) {
+            replicator.setSample(v);
+        }
+
+        if (i == 2) {
+            replicator.setProgress(v);
+        }
+
+        if (i == 3) {
+            replicator.setNaniteType(v);
+        }
+
+        if (i == 4) {
+            replicator.setSampleType(v);
+        }
     }
 
     @Override

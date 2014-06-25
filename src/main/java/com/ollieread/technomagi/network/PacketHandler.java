@@ -12,6 +12,7 @@ import com.ollieread.technomagi.network.message.MessageSyncAbilities;
 import com.ollieread.technomagi.network.message.MessageSyncKnowledge;
 import com.ollieread.technomagi.network.message.MessageSyncKnowledgeOther;
 import com.ollieread.technomagi.network.message.MessageSyncNanites;
+import com.ollieread.technomagi.network.message.MessageSyncTileEntityTM;
 
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
@@ -33,5 +34,6 @@ public class PacketHandler
         INSTANCE.registerMessage(MessagePlayerInteractEvent.class, MessagePlayerInteractEvent.class, 5, Side.SERVER);
         INSTANCE.registerMessage(MessageEntityInteractEvent.class, MessageEntityInteractEvent.class, 6, Side.SERVER);
         INSTANCE.registerMessage(MessageSyncKnowledgeOther.class, MessageSyncKnowledgeOther.class, 7, Side.CLIENT);
+        INSTANCE.registerMessage(MessageSyncTileEntityTM.class, MessageSyncTileEntityTM.class, 8, Side.CLIENT);
     }
 }

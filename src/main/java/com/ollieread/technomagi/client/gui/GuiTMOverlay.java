@@ -16,7 +16,7 @@ import org.lwjgl.opengl.GL11;
 import com.ollieread.technomagi.api.TMRegistry;
 import com.ollieread.technomagi.api.ability.IAbilityActive;
 import com.ollieread.technomagi.common.Reference;
-import com.ollieread.technomagi.player.PlayerKnowledge;
+import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
@@ -49,7 +49,7 @@ public class GuiTMOverlay extends Gui
             return;
         }
 
-        PlayerKnowledge charon = PlayerKnowledge.get(this.mc.thePlayer);
+        ExtendedPlayerKnowledge charon = ExtendedPlayerKnowledge.get(this.mc.thePlayer);
 
         if (charon == null || charon.canSpecialise()) {
             return;
@@ -63,9 +63,9 @@ public class GuiTMOverlay extends Gui
         this.xOffset = 2;
         this.yOffset = (this.height - this.ySize) / 2;
 
-        int nanites = charon.getNanites();
-        int maxNanites = charon.getMaxNanites();
-        int researchNanites = charon.getResearchNanites();
+        int nanites = charon.nanites.getNanites();
+        int maxNanites = charon.nanites.getMaxNanites();
+        int researchNanites = charon.nanites.getData();
         float nanite = 102 / 100;
 
         GL11.glEnable(GL11.GL_BLEND);
@@ -128,16 +128,15 @@ public class GuiTMOverlay extends Gui
 
             int x = aOffset;
             for (int i = 0; i < 5; i++) {
-                x += i;
 
                 if (x > end)
                     break;
 
                 IAbilityActive ability = TMRegistry.getActiveAbility(abilities.get(aOffset + i));
 
-                // this.mc.getTextureManager().bindTexture(ability.getIcon());
-                // this.func_146110_a(5, yOffset + (3 + (20 * i)), 0, 0, 16, 16,
-                // 16, 16);
+                this.mc.getTextureManager().bindTexture(ability.getIcon());
+                this.func_146110_a(5, yOffset + (3 + (20 * i)), 0, 0, 16, 16, 16, 16);
+                x += i;
             }
 
             if (currentAbility > -1 && shouldDisplay && highlightTicks > 0) {

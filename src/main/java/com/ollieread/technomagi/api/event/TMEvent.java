@@ -2,7 +2,7 @@ package com.ollieread.technomagi.api.event;
 
 import com.ollieread.technomagi.api.ISpecialisation;
 import com.ollieread.technomagi.api.research.IResearch;
-import com.ollieread.technomagi.player.PlayerKnowledge;
+import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,20 +13,20 @@ public class TMEvent extends Event
 {
 
     public final Entity entity;
-    public final PlayerKnowledge charon;
+    public final ExtendedPlayerKnowledge charon;
     public final boolean researchFired;
 
     public TMEvent(Entity entity)
     {
         this.entity = entity;
-        this.charon = PlayerKnowledge.get((EntityPlayer) entity);
+        this.charon = ExtendedPlayerKnowledge.get((EntityPlayer) entity);
         this.researchFired = false;
     }
 
     public TMEvent(Entity entity, boolean researchFired)
     {
         this.entity = entity;
-        this.charon = PlayerKnowledge.get((EntityPlayer) entity);
+        this.charon = ExtendedPlayerKnowledge.get((EntityPlayer) entity);
         this.researchFired = researchFired;
     }
 

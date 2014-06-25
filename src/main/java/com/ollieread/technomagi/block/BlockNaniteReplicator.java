@@ -70,8 +70,6 @@ public class BlockNaniteReplicator extends BlockOwnable
             if (entity != null) {
                 if (entity.isPlayer(player)) {
                     player.openGui(TechnoMagi.instance, CommonProxy.GUI_REPLICATOR, world, x, y, z);
-                } else {
-                    System.out.println(entity.getPlayer());
                 }
             }
 

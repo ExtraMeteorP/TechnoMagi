@@ -5,7 +5,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
 import com.ollieread.technomagi.common.CommonProxy;
-import com.ollieread.technomagi.player.PlayerKnowledge;
+import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
 
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
@@ -57,7 +57,7 @@ public class MessagePlayerInteractEvent implements IMessage, IMessageHandler<Mes
     public IMessage onMessage(MessagePlayerInteractEvent message, MessageContext ctx)
     {
         EntityPlayer player = ctx.getServerHandler().playerEntity;
-        PlayerKnowledge knowledge = PlayerKnowledge.get(player);
+        ExtendedPlayerKnowledge knowledge = ExtendedPlayerKnowledge.get(player);
 
         PlayerInteractEvent event = new PlayerInteractEvent(player, PlayerInteractEvent.Action.values()[message.action], message.x, message.y, message.z, message.face);
         CommonProxy.playerEventHandler.onPlayerInteract(event);

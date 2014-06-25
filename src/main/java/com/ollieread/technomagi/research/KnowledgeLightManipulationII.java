@@ -2,10 +2,10 @@ package com.ollieread.technomagi.research;
 
 import com.ollieread.technomagi.api.research.Knowledge;
 
-public class KnowledgeForceRedis extends Knowledge
+public class KnowledgeLightManipulationII extends Knowledge
 {
 
-    public KnowledgeForceRedis(String name)
+    public KnowledgeLightManipulationII(String name)
     {
         super(name);
     }

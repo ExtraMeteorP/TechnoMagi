@@ -4,7 +4,7 @@ import com.ollieread.technomagi.api.ability.AbilityPassive;
 import com.ollieread.technomagi.api.event.TMEvent.ResearchProgressEvent;
 import com.ollieread.technomagi.api.research.ResearchEvents;
 import com.ollieread.technomagi.common.init.Specialisations;
-import com.ollieread.technomagi.player.PlayerKnowledge;
+import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
 
 public class PassiveAbilityScholarResearch extends AbilityPassive<ResearchProgressEvent>
 {
@@ -21,19 +21,19 @@ public class PassiveAbilityScholarResearch extends AbilityPassive<ResearchProgre
     }
 
     @Override
-    public boolean canUse(PlayerKnowledge charon)
+    public boolean canUse(ExtendedPlayerKnowledge charon)
     {
         return true;
     }
 
     @Override
-    public boolean isAvailable(PlayerKnowledge charon)
+    public boolean isAvailable(ExtendedPlayerKnowledge charon)
     {
         return charon.isSpecialisation(Specialisations.specScholar.getName());
     }
 
     @Override
-    public void use(ResearchProgressEvent event, PlayerKnowledge charon)
+    public void use(ResearchProgressEvent event, ExtendedPlayerKnowledge charon)
     {
         int progress = event.progress;
         int current = event.current;

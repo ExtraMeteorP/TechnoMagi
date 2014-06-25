@@ -14,7 +14,7 @@ import org.lwjgl.opengl.GL12;
 
 import com.ollieread.technomagi.api.ISpecialisation;
 import com.ollieread.technomagi.common.Reference;
-import com.ollieread.technomagi.player.PlayerKnowledge;
+import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -27,7 +27,7 @@ public class GuiSelf extends GuiScreen
     protected int ySize = 142;
     protected int xOffset;
     protected int yOffset;
-    protected PlayerKnowledge charon;
+    protected ExtendedPlayerKnowledge charon;
     private static final ResourceLocation texture = new ResourceLocation(Reference.MODID.toLowerCase(), "textures/gui/self.png");
 
     public void initGui()
@@ -35,7 +35,7 @@ public class GuiSelf extends GuiScreen
         this.buttonList.clear();
         this.xOffset = (this.width - this.xSize) / 2;
         this.yOffset = (this.height - this.ySize) / 2;
-        this.charon = PlayerKnowledge.get(this.mc.thePlayer);
+        this.charon = ExtendedPlayerKnowledge.get(this.mc.thePlayer);
     }
 
     /**
@@ -55,8 +55,8 @@ public class GuiSelf extends GuiScreen
         if (specialisation != null) {
             // ResourceLocation icon = specialisation.getIcon();
 
-            int nanites = charon.getNanites();
-            int research = charon.getResearchNanites();
+            int nanites = charon.nanites.getNanites();
+            int research = charon.nanites.getData();
 
             this.mc.getTextureManager().bindTexture(texture);
 

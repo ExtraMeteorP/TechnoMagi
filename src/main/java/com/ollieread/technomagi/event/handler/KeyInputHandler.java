@@ -11,7 +11,7 @@ import net.minecraftforge.common.MinecraftForge;
 import com.ollieread.technomagi.TechnoMagi;
 import com.ollieread.technomagi.common.CommonProxy;
 import com.ollieread.technomagi.common.KeyBindings;
-import com.ollieread.technomagi.player.PlayerKnowledge;
+import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
 
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -26,7 +26,7 @@ public class KeyInputHandler
         if (KeyBindings.tmGui.isPressed()) {
             Minecraft client = FMLClientHandler.instance().getClient();
             EntityPlayer player = client.thePlayer;
-            PlayerKnowledge charon = PlayerKnowledge.get(player);
+            ExtendedPlayerKnowledge charon = ExtendedPlayerKnowledge.get(player);
 
             int id = CommonProxy.GUI_TECHNOMAGI;
 

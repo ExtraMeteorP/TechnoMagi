@@ -1,7 +1,6 @@
-package com.ollieread.technomagi.player;
+package com.ollieread.technomagi.extended;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -21,7 +20,6 @@ import com.ollieread.technomagi.common.CommonProxy;
 import com.ollieread.technomagi.network.PacketHandler;
 import com.ollieread.technomagi.network.message.MessageSyncKnowledge;
 import com.ollieread.technomagi.network.message.MessageSyncKnowledgeOther;
-import com.ollieread.technomagi.network.message.MessageSyncNanites;
 
 /**
  * This class handles all player specific matters outside of individual blocks
@@ -32,7 +30,7 @@ import com.ollieread.technomagi.network.message.MessageSyncNanites;
  * @author ollieread
  * 
  */
-public class PlayerKnowledge extends ExtendedProperties
+public class ExtendedPlayerKnowledge extends ExtendedProperties
 {
 
     public static String PROP_NAME = "TechnoMageKnowledge";
@@ -41,10 +39,6 @@ public class PlayerKnowledge extends ExtendedProperties
      * you pass an empty string.
      */
     private String specialisation = "none";
-    /**
-     * The players nanites, default is 100.
-     */
-    private int nanites = 100;
     /**
      * Knowledge being researched by the player. Contains a list of all
      * knowledge with a progress greater than 0 and less than 100.
@@ -57,39 +51,35 @@ public class PlayerKnowledge extends ExtendedProperties
     private List<String> researchedKnowledge = new ArrayList<String>();
     /**
      * A list of research activities that have already been carried out. Not
-     * ever piece of research will go in here, only those that cannot be
+     * every piece of research will go in here, only those that cannot be
      * repeated.
      */
     private List<String> researchList = new ArrayList<String>();
 
-    public PlayerAbilities abilities;
+    public ExtendedPlayerAbilities abilities;
 
-    public PlayerKnowledge(EntityPlayer player)
+    public ExtendedNanites nanites;
+
+    public ExtendedPlayerKnowledge(EntityPlayer player)
     {
         super(player);
-        abilities = PlayerAbilities.get(player);
+        abilities = ExtendedPlayerAbilities.get(player);
+        nanites = ExtendedNanites.get(player);
     }
 
     public static final void register(EntityPlayer player)
     {
-        player.registerExtendedProperties(PROP_NAME, new PlayerKnowledge(player));
+        player.registerExtendedProperties(PROP_NAME, new ExtendedPlayerKnowledge(player));
     }
 
-    public static final PlayerKnowledge get(EntityPlayer player)
+    public static final ExtendedPlayerKnowledge get(EntityPlayer player)
     {
-        return (PlayerKnowledge) player.getExtendedProperties(PROP_NAME);
+        return (ExtendedPlayerKnowledge) player.getExtendedProperties(PROP_NAME);
     }
 
     private void sync()
     {
         PacketHandler.INSTANCE.sendTo(new MessageSyncKnowledge(player), (EntityPlayerMP) player);
-    }
-
-    private void syncNanites()
-    {
-        if (!player.worldObj.isRemote) {
-            PacketHandler.INSTANCE.sendTo(new MessageSyncNanites(nanites), (EntityPlayerMP) player);
-        }
     }
 
     public void syncTo(EntityPlayer entityPlayer)
@@ -121,7 +111,6 @@ public class PlayerKnowledge extends ExtendedProperties
         NBTTagCompound properties = new NBTTagCompound();
 
         properties.setInteger("Specialisation", TMRegistry.getSpecialisationId(specialisation));
-        properties.setInteger("Nanites", nanites);
 
         NBTTagList researchCompleteList = new NBTTagList();
 
@@ -163,7 +152,6 @@ public class PlayerKnowledge extends ExtendedProperties
         NBTTagCompound properties = (NBTTagCompound) compound.getTag(PROP_NAME);
 
         specialisation = TMRegistry.getSpecialisationName(properties.getInteger("Specialisation"));
-        nanites = properties.getInteger("Nanites");
 
         NBTTagList researchCompleteList = properties.getTagList("ResearchComplete", properties.getId());
         researchedKnowledge = new ArrayList<String>();
@@ -194,7 +182,7 @@ public class PlayerKnowledge extends ExtendedProperties
 
     public static void saveProxyData(EntityPlayer player)
     {
-        PlayerKnowledge playerData = PlayerKnowledge.get(player);
+        ExtendedPlayerKnowledge playerData = ExtendedPlayerKnowledge.get(player);
         NBTTagCompound savedData = new NBTTagCompound();
 
         playerData.saveNBTData(savedData);
@@ -204,7 +192,7 @@ public class PlayerKnowledge extends ExtendedProperties
 
     public static void loadProxyData(EntityPlayer player)
     {
-        PlayerKnowledge playerData = PlayerKnowledge.get(player);
+        ExtendedPlayerKnowledge playerData = ExtendedPlayerKnowledge.get(player);
         NBTTagCompound savedData = CommonProxy.getEntityData(getSaveKey(player));
 
         if (savedData != null) {
@@ -243,79 +231,13 @@ public class PlayerKnowledge extends ExtendedProperties
         return specialisation.equals(name);
     }
 
-    public boolean increaseNanites(int i)
-    {
-        int maxNanites = getMaxNanites();
-
-        if (nanites < maxNanites) {
-            if ((nanites + i) > maxNanites) {
-                nanites = maxNanites;
-                syncNanites();
-                return true;
-            } else {
-                nanites += i;
-                syncNanites();
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public boolean decreaseNanites(int i)
-    {
-        if (!player.capabilities.isCreativeMode) {
-            if (nanites > 0) {
-                if ((nanites - i) >= 0) {
-                    nanites -= i;
-                    syncNanites();
-                    return true;
-                }
-            }
-        } else {
-            return true;
-        }
-
-        return false;
-    }
-
-    public void setNanites(int nanites)
-    {
-        this.nanites = nanites;
-    }
-
-    public int getNanites()
-    {
-        return nanites;
-    }
-
-    public int getMaxNanites()
-    {
-        int maxNanites = 100;
-
-        return maxNanites;
-    }
-
-    public int getResearchNanites()
-    {
-        Collection<Integer> research = researchingKnowledge.values();
-
-        int n = 0;
-
-        for (Iterator<Integer> i = research.iterator(); i.hasNext();) {
-            n += i.next();
-        }
-
-        return n;
-    }
-
     public void researchKnowledge(String research, String knowledge, int amount, boolean flag)
     {
         if (researchList.contains(research))
             return;
 
         int progress = getKnowledgeProgress(knowledge);
-        int nanites = getResearchNanites();
+        int data = nanites.getData();
 
         if (progress == 100)
             return;
@@ -326,16 +248,16 @@ public class PlayerKnowledge extends ExtendedProperties
         amount += event.modifier;
         boolean flag2 = false;
 
-        if ((nanites + amount) > getMaxNanites())
+        if ((data + amount) > nanites.getMaxData())
             return;
 
         if ((progress + amount) >= 100) {
-            if (decreaseNanites(100 - progress)) {
+            if (nanites.increaseData(100 - progress)) {
                 amount = 100;
                 flag2 = true;
             }
         } else {
-            if (decreaseNanites((progress + amount))) {
+            if (nanites.increaseData((progress + amount))) {
                 amount += progress;
                 flag2 = true;
             }
@@ -396,7 +318,7 @@ public class PlayerKnowledge extends ExtendedProperties
     public void updateAbilities()
     {
         if (abilities == null) {
-            abilities = PlayerAbilities.get(player);
+            abilities = ExtendedPlayerAbilities.get(player);
         }
 
         abilities.buildAbilityLists();

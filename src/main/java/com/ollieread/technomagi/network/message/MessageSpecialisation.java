@@ -1,7 +1,7 @@
 package com.ollieread.technomagi.network.message;
 
 import com.ollieread.technomagi.api.TMRegistry;
-import com.ollieread.technomagi.player.PlayerKnowledge;
+import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -41,7 +41,7 @@ public class MessageSpecialisation implements IMessage, IMessageHandler<MessageS
     public IMessage onMessage(MessageSpecialisation message, MessageContext ctx)
     {
         EntityPlayer player = ctx.getServerHandler().playerEntity;
-        PlayerKnowledge.get(player).setSpecialisation(TMRegistry.getSpecialisationName(message.specialisation));
+        ExtendedPlayerKnowledge.get(player).setSpecialisation(TMRegistry.getSpecialisationName(message.specialisation));
 
         return null;
     }

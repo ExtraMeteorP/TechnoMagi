@@ -4,6 +4,8 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
+import com.ollieread.technomagi.tileentity.TileEntityNaniteReplicator;
+
 public class ModelMachineReplicator extends ModelBase
 {
     // fields
@@ -13,11 +15,12 @@ public class ModelMachineReplicator extends ModelBase
     ModelRenderer resultstand;
     ModelRenderer samplestand;
     ModelRenderer sampleedge;
-    ModelRenderer screen;
     ModelRenderer sample1;
     ModelRenderer sample2;
     ModelRenderer sample3;
     ModelRenderer sample4;
+
+    TileEntityNaniteReplicator replicator = null;
 
     public ModelMachineReplicator()
     {
@@ -60,12 +63,6 @@ public class ModelMachineReplicator extends ModelBase
         sampleedge.setTextureSize(128, 64);
         sampleedge.mirror = true;
         setRotation(sampleedge, -0.4089647F, 0F, 0F);
-        screen = new ModelRenderer(this, 71, 19);
-        screen.addBox(0F, 0F, 0F, 12, 4, 0);
-        screen.setRotationPoint(-6F, 3F, -5F);
-        screen.setTextureSize(128, 64);
-        screen.mirror = true;
-        setRotation(screen, -0.2602503F, 0F, 0F);
         sample1 = new ModelRenderer(this, 56, 17);
         sample1.addBox(0F, 0F, 0F, 1, 4, 1);
         sample1.setRotationPoint(-5F, 1F, 5F);
@@ -92,6 +89,11 @@ public class ModelMachineReplicator extends ModelBase
         setRotation(sample4, 0F, 0F, 0F);
     }
 
+    public void setTileEntity(TileEntityNaniteReplicator tile)
+    {
+        replicator = tile;
+    }
+
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
     {
         super.render(entity, f, f1, f2, f3, f4, f5);
@@ -102,7 +104,20 @@ public class ModelMachineReplicator extends ModelBase
         resultstand.render(f5);
         samplestand.render(f5);
         sampleedge.render(f5);
-        screen.render(f5);
+
+        /*
+         * if (replicator != null) { int sample = replicator.getSample();
+         * System.out.println(sample);
+         * 
+         * if (sample < 75) { sample4.offsetY -= 3.0F; }
+         * 
+         * if (sample < 50) { sample3.offsetY -= 3.0F; }
+         * 
+         * if (sample < 25) { sample2.offsetY -= 3.0F; }
+         * 
+         * if (sample == 0) { sample1.offsetY -= 3.0F; } }
+         */
+
         sample1.render(f5);
         sample2.render(f5);
         sample3.render(f5);

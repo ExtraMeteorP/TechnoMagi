@@ -10,8 +10,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
+import net.minecraft.world.World;
 
 import com.ollieread.technomagi.common.Reference;
+import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -85,6 +87,26 @@ public class ItemNaniteContainer extends ItemTM
     public IIcon getIconFromDamage(int par1)
     {
         return par1 > 0 ? itemIconFull : itemIcon;
+    }
+
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    {
+        ExtendedPlayerKnowledge charon = ExtendedPlayerKnowledge.get(player);
+
+        if (charon != null && !charon.canSpecialise()) {
+            if (stack.getItemDamage() == 0) {
+                if (charon.nanites.decreaseNanites(10)) {
+                    player.inventory.addItemStackToInventory(new ItemStack(this, 1, 1));
+                    stack.stackSize--;
+
+                    if (stack.stackSize == 0) {
+                        stack = null;
+                    }
+                }
+            }
+        }
+
+        return stack;
     }
 
 }

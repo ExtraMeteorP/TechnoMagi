@@ -12,7 +12,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 
 import com.ollieread.technomagi.api.ability.AbilityActive;
 import com.ollieread.technomagi.common.Reference;
-import com.ollieread.technomagi.player.PlayerKnowledge;
+import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
 
 import cpw.mods.fml.common.eventhandler.Event;
 
@@ -25,19 +25,19 @@ public class ActiveAbilityFire extends AbilityActive
     }
 
     @Override
-    public boolean canUse(PlayerKnowledge charon, Event event)
+    public boolean canUse(ExtendedPlayerKnowledge charon, Event event)
     {
         return true;
     }
 
     @Override
-    public boolean isAvailable(PlayerKnowledge charon)
+    public boolean isAvailable(ExtendedPlayerKnowledge charon)
     {
         return true;
     }
 
     @Override
-    public boolean use(PlayerKnowledge charon, Event event)
+    public boolean use(ExtendedPlayerKnowledge charon, Event event)
     {
         if (event instanceof PlayerInteractEvent) {
             PlayerInteractEvent interact = (PlayerInteractEvent) event;
@@ -76,7 +76,7 @@ public class ActiveAbilityFire extends AbilityActive
                 } else {
                     Block block = interact.entityPlayer.worldObj.getBlock(x, y, z);
                     if (interact.entityPlayer.worldObj.isAirBlock(x, y, z)) {
-                        if (charon.decreaseNanites(4)) {
+                        if (decreaseNanites(charon, 4)) {
                             if (!interact.entityPlayer.worldObj.isRemote) {
                                 Random rand = new Random();
                                 interact.entityPlayer.worldObj.playSoundEffect((double) x + 0.5D, (double) y + 0.5D, (double) z + 0.5D, Reference.MODID.toLowerCase() + ":cast", 1.0F, rand.nextFloat() * 0.4F + 0.8F);
@@ -88,7 +88,7 @@ public class ActiveAbilityFire extends AbilityActive
                             return true;
                         }
                     } else if (block.isEqualTo(block, Blocks.fire)) {
-                        if (charon.decreaseNanites(6)) {
+                        if (decreaseNanites(charon, 6)) {
                             if (!interact.entityPlayer.worldObj.isRemote) {
                                 interact.entityPlayer.worldObj.setBlockToAir(x, y, z);
                             }
@@ -107,7 +107,7 @@ public class ActiveAbilityFire extends AbilityActive
                 return false;
             }
 
-            if (interact.target instanceof EntityLiving && charon.decreaseNanites(8)) {
+            if (interact.target instanceof EntityLiving && decreaseNanites(charon, 8)) {
                 EntityLiving target = (EntityLiving) interact.target;
 
                 if (!interact.entityPlayer.worldObj.isRemote) {

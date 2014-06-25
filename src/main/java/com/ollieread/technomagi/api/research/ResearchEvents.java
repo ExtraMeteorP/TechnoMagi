@@ -3,8 +3,9 @@ package com.ollieread.technomagi.api.research;
 public class ResearchEvents
 {
 
-    // for research that shouldn't fire on events
-    public static final int EVENT_NONE = 0;
+    public static final int MONITORING_COW_MATE = 1;
+    public static final int MONITORING_COW_MILKED = 2;
+
     // technomagi specific events
     public static final int EVENT_SPECIALISATION = 1;
     public static final int EVENT_RESEARCH_PROGRESS = 2;

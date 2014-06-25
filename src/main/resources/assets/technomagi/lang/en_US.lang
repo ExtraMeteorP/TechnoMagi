@@ -7,6 +7,8 @@ technomagi.replicator.gui=Nanite Replicator
 
 technomagi.nanites=Nanites
 technomagi.data=Data
+technomagi.progress=Progress
+technomagi.type=Replicate Type
 
 specialisation.scholar=Scholar
 specialisation.medic=Medic

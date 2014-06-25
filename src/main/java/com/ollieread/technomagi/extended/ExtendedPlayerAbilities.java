@@ -1,4 +1,4 @@
-package com.ollieread.technomagi.player;
+package com.ollieread.technomagi.extended;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,7 +27,7 @@ import cpw.mods.fml.common.eventhandler.Event;
  * @author ollieread
  * 
  */
-public class PlayerAbilities extends ExtendedProperties
+public class ExtendedPlayerAbilities extends ExtendedProperties
 {
 
     public static String PROP_NAME = "TechnoMageAbilities";
@@ -48,19 +48,19 @@ public class PlayerAbilities extends ExtendedProperties
 
     private boolean resetTimer = false;
 
-    public PlayerAbilities(EntityPlayer player)
+    public ExtendedPlayerAbilities(EntityPlayer player)
     {
         super(player);
     }
 
     public static final void register(EntityPlayer player)
     {
-        player.registerExtendedProperties(PROP_NAME, new PlayerAbilities(player));
+        player.registerExtendedProperties(PROP_NAME, new ExtendedPlayerAbilities(player));
     }
 
-    public static final PlayerAbilities get(EntityPlayer player)
+    public static final ExtendedPlayerAbilities get(EntityPlayer player)
     {
-        return (PlayerAbilities) player.getExtendedProperties(PROP_NAME);
+        return (ExtendedPlayerAbilities) player.getExtendedProperties(PROP_NAME);
     }
 
     @Override
@@ -85,7 +85,7 @@ public class PlayerAbilities extends ExtendedProperties
 
     public static void saveProxyData(EntityPlayer player)
     {
-        PlayerAbilities playerData = PlayerAbilities.get(player);
+        ExtendedPlayerAbilities playerData = ExtendedPlayerAbilities.get(player);
         NBTTagCompound savedData = new NBTTagCompound();
 
         playerData.saveNBTData(savedData);
@@ -95,7 +95,7 @@ public class PlayerAbilities extends ExtendedProperties
 
     public static void loadProxyData(EntityPlayer player)
     {
-        PlayerAbilities playerData = PlayerAbilities.get(player);
+        ExtendedPlayerAbilities playerData = ExtendedPlayerAbilities.get(player);
         NBTTagCompound savedData = CommonProxy.getEntityData(getSaveKey(player));
 
         if (savedData != null) {
@@ -120,14 +120,14 @@ public class PlayerAbilities extends ExtendedProperties
 
         for (Iterator<IAbilityPassive> i = passiveAbilities.iterator(); i.hasNext();) {
             IAbilityPassive ability = i.next();
-            if (ability.isAvailable(PlayerKnowledge.get(player))) {
+            if (ability.isAvailable(ExtendedPlayerKnowledge.get(player))) {
                 passiveAbilityList.add(ability.getName());
             }
         }
 
         for (Iterator<IAbilityActive> i = activeAbilities.iterator(); i.hasNext();) {
             IAbilityActive ability = i.next();
-            if (ability.isAvailable(PlayerKnowledge.get(player))) {
+            if (ability.isAvailable(ExtendedPlayerKnowledge.get(player))) {
                 activeAbilityList.add(ability.getName());
             }
         }
@@ -188,7 +188,7 @@ public class PlayerAbilities extends ExtendedProperties
 
         if (currentAbility >= 0) {
             String name = activeAbilityList.get(currentAbility);
-            PlayerKnowledge charon = PlayerKnowledge.get(player);
+            ExtendedPlayerKnowledge charon = ExtendedPlayerKnowledge.get(player);
             IAbilityActive ability = TMRegistry.getActiveAbility(name);
 
             if (ability.canUse(charon, event)) {

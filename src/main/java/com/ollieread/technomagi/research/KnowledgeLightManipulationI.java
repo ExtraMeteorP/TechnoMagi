@@ -2,10 +2,10 @@ package com.ollieread.technomagi.research;
 
 import com.ollieread.technomagi.api.research.Knowledge;
 
-public class KnowledgeProjectileResist extends Knowledge
+public class KnowledgeLightManipulationI extends Knowledge
 {
 
-    public KnowledgeProjectileResist(String name)
+    public KnowledgeLightManipulationI(String name)
     {
         super(name);
     }

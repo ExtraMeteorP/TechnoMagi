@@ -5,9 +5,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.MouseEvent;
 
 import com.ollieread.technomagi.client.gui.GuiTMOverlay;
+import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.network.PacketHandler;
 import com.ollieread.technomagi.network.message.MessageAbility;
-import com.ollieread.technomagi.player.PlayerKnowledge;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
@@ -20,7 +20,7 @@ public class MouseEventHandler
         EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 
         if (player.isSneaking() && event.dwheel != 0) {
-            PlayerKnowledge charon = PlayerKnowledge.get(player);
+            ExtendedPlayerKnowledge charon = ExtendedPlayerKnowledge.get(player);
 
             if (event.dwheel < 0) {
                 charon.abilities.setNextAbility();

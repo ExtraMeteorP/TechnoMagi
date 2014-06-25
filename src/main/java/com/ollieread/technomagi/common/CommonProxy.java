@@ -15,8 +15,8 @@ import com.ollieread.technomagi.client.gui.GuiSpecialisation;
 import com.ollieread.technomagi.event.handler.PlayerEventHandler;
 import com.ollieread.technomagi.event.handler.TMEventHandler;
 import com.ollieread.technomagi.event.handler.TickEventHandler;
+import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.inventory.ContainerNaniteReplicator;
-import com.ollieread.technomagi.player.PlayerKnowledge;
 import com.ollieread.technomagi.tileentity.TileEntityNaniteReplicator;
 
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -61,7 +61,7 @@ public class CommonProxy implements IGuiHandler
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
     {
         if (ID == GUI_TECHNOMAGI) {
-            PlayerKnowledge charon = PlayerKnowledge.get(player);
+            ExtendedPlayerKnowledge charon = ExtendedPlayerKnowledge.get(player);
 
             if (charon.canSpecialise()) {
                 return new GuiSpecialisation();

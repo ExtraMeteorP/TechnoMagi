@@ -2,9 +2,10 @@ package com.ollieread.technomagi.api.block;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 
-public class TileEntityPlayerLocked extends TileEntity implements IPlayerLocked
+import com.ollieread.technomagi.tileentity.TileEntityTM;
+
+public class TileEntityPlayerLocked extends TileEntityTM implements IPlayerLocked
 {
 
     protected String player = "none";

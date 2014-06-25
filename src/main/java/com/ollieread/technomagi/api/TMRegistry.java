@@ -10,14 +10,23 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
+
 import com.ollieread.technomagi.api.ability.IAbilityActive;
 import com.ollieread.technomagi.api.ability.IAbilityPassive;
 import com.ollieread.technomagi.api.research.IKnowledge;
 import com.ollieread.technomagi.api.research.IResearch;
-import com.ollieread.technomagi.api.research.ResearchEvents;
-import com.ollieread.technomagi.player.PlayerKnowledge;
+import com.ollieread.technomagi.api.research.IResearchCrafting;
+import com.ollieread.technomagi.api.research.IResearchEvent;
+import com.ollieread.technomagi.api.research.IResearchMining;
+import com.ollieread.technomagi.api.research.IResearchMonitoring;
+import com.ollieread.technomagi.api.research.IResearchObservation;
+import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
 
 import cpw.mods.fml.common.eventhandler.Event;
+import cpw.mods.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 
 /**
  * The registry for all things related to the mod. Allows for registration of
@@ -41,6 +50,11 @@ public class TMRegistry
     protected static Map<String, Integer> knowledgeNames = new HashMap<String, Integer>();
 
     protected static Map<Integer, List<Integer>> researchEvents = new HashMap<Integer, List<Integer>>();
+    protected static Map<ItemStack, List<Integer>> researchCrafting = new HashMap<ItemStack, List<Integer>>();
+    protected static Map<Integer, List<Integer>> researchMonitoring = new HashMap<Integer, List<Integer>>();
+    protected static Map<Integer, List<Integer>> researchObservation = new HashMap<Integer, List<Integer>>();
+    protected static Map<ItemStack, List<Integer>> researchMining = new HashMap<ItemStack, List<Integer>>();
+
     protected static Map<Integer, List<Integer>> passiveAbilityEvents = new HashMap<Integer, List<Integer>>();
 
     public static void registerSpecialisation(ISpecialisation spec)
@@ -133,13 +147,62 @@ public class TMRegistry
             researchList.add(i, research);
             researchNames.put(name, i);
 
-            if (research.getEvent() != ResearchEvents.EVENT_NONE) {
-                if (researchEvents.containsKey(research.getEvent())) {
-                    researchEvents.get(research.getEvent()).add(i);
-                } else {
-                    researchEvents.put(research.getEvent(), Arrays.asList(i));
-                }
+            if (research instanceof IResearchEvent) {
+                registerResearchEvent(i, (IResearchEvent) research);
+            } else if (research instanceof IResearchCrafting) {
+                registerResearchCrafting(i, (IResearchCrafting) research);
+            } else if (research instanceof IResearchMining) {
+                registerResearchMining(i, (IResearchMining) research);
+            } else if (research instanceof IResearchMonitoring) {
+                registerResearchMonitoring(i, (IResearchMonitoring) research);
+            } else if (research instanceof IResearchObservation) {
+                registerResearchObservation(i, (IResearchObservation) research);
             }
+        }
+    }
+
+    public static void registerResearchEvent(int i, IResearchEvent research)
+    {
+        if (researchEvents.containsKey(research.getEvent())) {
+            researchEvents.get(research.getEvent()).add(i);
+        } else {
+            researchEvents.put(research.getEvent(), Arrays.asList(i));
+        }
+    }
+
+    public static void registerResearchCrafting(int i, IResearchCrafting research)
+    {
+        if (researchCrafting.containsKey(research.getCrafting())) {
+            researchCrafting.get(research.getCrafting()).add(i);
+        } else {
+            researchCrafting.put(research.getCrafting(), Arrays.asList(i));
+        }
+    }
+
+    public static void registerResearchMining(int i, IResearchMining research)
+    {
+        if (researchCrafting.containsKey(research.getMining())) {
+            researchCrafting.get(research.getMining()).add(i);
+        } else {
+            researchCrafting.put(research.getMining(), Arrays.asList(i));
+        }
+    }
+
+    public static void registerResearchMonitoring(int i, IResearchMonitoring research)
+    {
+        if (researchMonitoring.containsKey(research.getMonitoringEvent())) {
+            researchMonitoring.get(research.getMonitoringEvent()).add(i);
+        } else {
+            researchMonitoring.put(research.getMonitoringEvent(), Arrays.asList(i));
+        }
+    }
+
+    public static void registerResearchObservation(int i, IResearchObservation research)
+    {
+        if (researchObservation.containsKey(research.getObservationEvent())) {
+            researchObservation.get(research.getObservationEvent()).add(i);
+        } else {
+            researchObservation.put(research.getObservationEvent(), Arrays.asList(i));
         }
     }
 
@@ -168,10 +231,66 @@ public class TMRegistry
         return id > -1 ? researchList.get(id).getName() : null;
     }
 
-    public static void researchEvent(int id, Event event, PlayerKnowledge charon)
+    public static void researchEvent(int id, Event event, ExtendedPlayerKnowledge charon)
     {
         if (!charon.canSpecialise() && researchEvents.containsKey(id)) {
             for (Iterator<Integer> i = researchEvents.get(id).iterator(); i.hasNext();) {
+                IResearch research = researchList.get(i.next());
+
+                if (!charon.hasResearched(research.getName()) && research.canPerform(charon)) {
+                    charon.researchKnowledge(research.getName(), research.getKnowledge(), research.getProgress(), research.isRepeating());
+                }
+            }
+        }
+    }
+
+    public static void researchCrafting(ItemCraftedEvent event, ExtendedPlayerKnowledge charon)
+    {
+        ItemStack id = event.crafting;
+        if (!charon.canSpecialise() && researchCrafting.containsKey(id)) {
+            for (Iterator<Integer> i = researchCrafting.get(id).iterator(); i.hasNext();) {
+                IResearch research = researchList.get(i.next());
+
+                if (!charon.hasResearched(research.getName()) && research.canPerform(charon)) {
+                    charon.researchKnowledge(research.getName(), research.getKnowledge(), research.getProgress(), research.isRepeating());
+                }
+            }
+        }
+    }
+
+    public static void researchMining(HarvestDropsEvent event, ExtendedPlayerKnowledge charon)
+    {
+        if (Item.getItemFromBlock(event.block) != null) {
+            ItemStack id = new ItemStack(event.block, 1, event.blockMetadata);
+            if (!charon.canSpecialise() && researchMining.containsKey(id)) {
+                for (Iterator<Integer> i = researchMining.get(id).iterator(); i.hasNext();) {
+                    IResearch research = researchList.get(i.next());
+
+                    if (!charon.hasResearched(research.getName()) && research.canPerform(charon)) {
+                        charon.researchKnowledge(research.getName(), research.getKnowledge(), research.getProgress(), research.isRepeating());
+                    }
+                }
+            }
+        }
+    }
+
+    public static void researchMonitoring(int id, ExtendedPlayerKnowledge charon)
+    {
+        if (!charon.canSpecialise() && researchMonitoring.containsKey(id)) {
+            for (Iterator<Integer> i = researchMonitoring.get(id).iterator(); i.hasNext();) {
+                IResearch research = researchList.get(i.next());
+
+                if (!charon.hasResearched(research.getName()) && research.canPerform(charon)) {
+                    charon.researchKnowledge(research.getName(), research.getKnowledge(), research.getProgress(), research.isRepeating());
+                }
+            }
+        }
+    }
+
+    public static void researchObservation(int id, ExtendedPlayerKnowledge charon)
+    {
+        if (!charon.canSpecialise() && researchObservation.containsKey(id)) {
+            for (Iterator<Integer> i = researchObservation.get(id).iterator(); i.hasNext();) {
                 IResearch research = researchList.get(i.next());
 
                 if (!charon.hasResearched(research.getName()) && research.canPerform(charon)) {
@@ -202,12 +321,10 @@ public class TMRegistry
             passiveAbilityList.add(i, ability);
             passiveNames.put(name, i);
 
-            if (ability.getEvent() != ResearchEvents.EVENT_NONE) {
-                if (passiveAbilityEvents.containsKey(ability.getEvent())) {
-                    passiveAbilityEvents.get(ability.getEvent()).add(i);
-                } else {
-                    passiveAbilityEvents.put(ability.getEvent(), Arrays.asList(i));
-                }
+            if (passiveAbilityEvents.containsKey(ability.getEvent())) {
+                passiveAbilityEvents.get(ability.getEvent()).add(i);
+            } else {
+                passiveAbilityEvents.put(ability.getEvent(), Arrays.asList(i));
             }
         }
     }
@@ -278,7 +395,7 @@ public class TMRegistry
         return passiveAbilityList;
     }
 
-    public static void passiveAbilityEvent(int id, Event event, PlayerKnowledge charon)
+    public static void passiveAbilityEvent(int id, Event event, ExtendedPlayerKnowledge charon)
     {
         if (!charon.canSpecialise() && passiveAbilityEvents.containsKey(id)) {
             for (Iterator<Integer> i = passiveAbilityEvents.get(id).iterator(); i.hasNext();) {

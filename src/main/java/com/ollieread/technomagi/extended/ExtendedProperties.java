@@ -1,4 +1,4 @@
-package com.ollieread.technomagi.player;
+package com.ollieread.technomagi.extended;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;

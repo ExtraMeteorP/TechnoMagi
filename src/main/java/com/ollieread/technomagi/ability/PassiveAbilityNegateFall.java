@@ -5,7 +5,7 @@ import net.minecraftforge.event.entity.living.LivingFallEvent;
 
 import com.ollieread.technomagi.api.ability.AbilityPassive;
 import com.ollieread.technomagi.api.research.ResearchEvents;
-import com.ollieread.technomagi.player.PlayerKnowledge;
+import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.util.ExplosionHelper;
 
 public class PassiveAbilityNegateFall extends AbilityPassive<LivingFallEvent>
@@ -23,32 +23,32 @@ public class PassiveAbilityNegateFall extends AbilityPassive<LivingFallEvent>
     }
 
     @Override
-    public boolean canUse(PlayerKnowledge charon)
+    public boolean canUse(ExtendedPlayerKnowledge charon)
     {
         return true;
     }
 
     @Override
-    public boolean isAvailable(PlayerKnowledge charon)
+    public boolean isAvailable(ExtendedPlayerKnowledge charon)
     {
         return true;
     }
 
     @Override
-    public void use(LivingFallEvent event, PlayerKnowledge charon)
+    public void use(LivingFallEvent event, ExtendedPlayerKnowledge charon)
     {
         int fall = Math.round(event.distance);
         boolean flag = false;
         float size = 0;
 
-        if (charon.decreaseNanites(fall)) {
+        if (charon.nanites.decreaseNanites(fall)) {
             event.distance -= fall;
             flag = true;
             size = fall / 15;
         } else {
-            int nanites = charon.getNanites();
+            int nanites = charon.nanites.getNanites();
 
-            if (charon.decreaseNanites(nanites)) {
+            if (charon.nanites.decreaseNanites(nanites)) {
                 event.distance -= nanites;
                 flag = true;
                 size = nanites / 15;

@@ -5,9 +5,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.tileentity.TileEntity;
 
-public class TileEntityInventory extends TileEntity implements IInventory
+public class TileEntityInventory extends TileEntityTM implements IInventory
 {
 
     protected ItemStack[] inventory;

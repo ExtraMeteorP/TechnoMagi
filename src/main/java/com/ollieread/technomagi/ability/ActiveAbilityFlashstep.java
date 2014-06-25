@@ -8,7 +8,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 
 import com.ollieread.technomagi.api.ability.AbilityActive;
-import com.ollieread.technomagi.player.PlayerKnowledge;
+import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.util.PlayerHelper;
 
 import cpw.mods.fml.common.eventhandler.Event;
@@ -22,19 +22,19 @@ public class ActiveAbilityFlashstep extends AbilityActive
     }
 
     @Override
-    public boolean canUse(PlayerKnowledge charon, Event event)
+    public boolean canUse(ExtendedPlayerKnowledge charon, Event event)
     {
         return true;
     }
 
     @Override
-    public boolean isAvailable(PlayerKnowledge charon)
+    public boolean isAvailable(ExtendedPlayerKnowledge charon)
     {
         return true;
     }
 
     @Override
-    public boolean use(PlayerKnowledge charon, Event event)
+    public boolean use(ExtendedPlayerKnowledge charon, Event event)
     {
         if (event instanceof PlayerInteractEvent) {
             PlayerInteractEvent interact = (PlayerInteractEvent) event;
@@ -62,7 +62,7 @@ public class ActiveAbilityFlashstep extends AbilityActive
                     }
                 }
 
-                if (dest != null && eye.squareDistanceTo(dest) < max && charon.decreaseNanites(8)) {
+                if (dest != null && eye.squareDistanceTo(dest) < max && decreaseNanites(charon, 8)) {
                     // Random rand = new Random();
                     // interact.entityPlayer.worldObj.playSoundEffect(dest.xCoord
                     // + 0.5D, dest.yCoord + 0.5D, dest.zCoord + 0.5D,

@@ -2,13 +2,12 @@ package com.ollieread.technomagi.tileentity;
 
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 import com.ollieread.technomagi.block.BlockLightAir;
 import com.ollieread.technomagi.common.init.Blocks;
 
-public class TileEntityLightAir extends TileEntity
+public class TileEntityLightAir extends TileEntityTM
 {
 
     public int masterX = 0;

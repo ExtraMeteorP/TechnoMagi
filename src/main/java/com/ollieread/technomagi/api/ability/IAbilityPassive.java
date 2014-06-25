@@ -2,7 +2,7 @@ package com.ollieread.technomagi.api.ability;
 
 import net.minecraft.util.ResourceLocation;
 
-import com.ollieread.technomagi.player.PlayerKnowledge;
+import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -17,11 +17,11 @@ public interface IAbilityPassive<E>
 
     public int getEvent();
 
-    public boolean canUse(PlayerKnowledge charon);
+    public boolean canUse(ExtendedPlayerKnowledge charon);
 
-    public boolean isAvailable(PlayerKnowledge charon);
+    public boolean isAvailable(ExtendedPlayerKnowledge charon);
 
-    public void use(E event, PlayerKnowledge charon);
+    public void use(E event, ExtendedPlayerKnowledge charon);
 
     public String getLocalisedName();
 

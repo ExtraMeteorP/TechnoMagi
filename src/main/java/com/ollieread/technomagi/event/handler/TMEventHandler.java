@@ -8,7 +8,7 @@ import com.ollieread.technomagi.api.event.TMEvent.ResearchCompleteEvent;
 import com.ollieread.technomagi.api.event.TMEvent.ResearchProgressEvent;
 import com.ollieread.technomagi.api.event.TMEvent.SpecialisationChosenEvent;
 import com.ollieread.technomagi.api.research.ResearchEvents;
-import com.ollieread.technomagi.player.PlayerKnowledge;
+import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
@@ -19,7 +19,7 @@ public class TMEventHandler
     public void onSpecialisationChosen(SpecialisationChosenEvent event)
     {
         if (!event.entity.worldObj.isRemote) {
-            PlayerKnowledge charon = PlayerKnowledge.get((EntityPlayer) event.entity);
+            ExtendedPlayerKnowledge charon = ExtendedPlayerKnowledge.get((EntityPlayer) event.entity);
             ((EntityPlayer) event.entity).addChatMessage(new ChatComponentText("Specialisation chosen: " + event.specialisation.getName()));
 
             TMRegistry.passiveAbilityEvent(ResearchEvents.EVENT_SPECIALISATION, event, charon);

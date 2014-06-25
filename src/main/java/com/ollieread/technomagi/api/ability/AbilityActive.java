@@ -4,6 +4,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 
 import com.ollieread.technomagi.common.Reference;
+import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -42,6 +43,11 @@ public abstract class AbilityActive implements IAbilityActive
     public String getLocalisedName()
     {
         return I18n.format("ability.active." + this.getName());
+    }
+
+    public boolean decreaseNanites(ExtendedPlayerKnowledge charon, int i)
+    {
+        return charon.nanites.decreaseNanites(i);
     }
 
 }

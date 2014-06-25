@@ -1,6 +1,6 @@
 package com.ollieread.technomagi.api.research;
 
-import com.ollieread.technomagi.player.PlayerKnowledge;
+import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
 
 public interface IResearch
 {
@@ -11,12 +11,10 @@ public interface IResearch
 
     public int getProgress();
 
-    public int getEvent();
-
     public boolean isRepeating();
 
-    public boolean canPerform(PlayerKnowledge charon);
-
     public String getLocalisedName();
+
+    public boolean canPerform(ExtendedPlayerKnowledge charon);
 
 }

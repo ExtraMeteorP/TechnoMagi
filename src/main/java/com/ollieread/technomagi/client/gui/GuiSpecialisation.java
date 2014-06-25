@@ -15,9 +15,9 @@ import com.ollieread.technomagi.api.ISpecialisation;
 import com.ollieread.technomagi.api.TMRegistry;
 import com.ollieread.technomagi.common.Information;
 import com.ollieread.technomagi.common.Reference;
+import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.network.PacketHandler;
 import com.ollieread.technomagi.network.message.MessageSpecialisation;
-import com.ollieread.technomagi.player.PlayerKnowledge;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -110,7 +110,7 @@ public class GuiSpecialisation extends GuiScreen
     {
         if (button.id == 1) {
             if (choice != null) {
-                PlayerKnowledge charon = PlayerKnowledge.get(this.mc.thePlayer);
+                ExtendedPlayerKnowledge charon = ExtendedPlayerKnowledge.get(this.mc.thePlayer);
                 charon.setSpecialisation(choice);
                 PacketHandler.INSTANCE.sendToServer(new MessageSpecialisation(TMRegistry.getSpecialisationId(choice)));
                 scrollableText.scrollY = 0;
