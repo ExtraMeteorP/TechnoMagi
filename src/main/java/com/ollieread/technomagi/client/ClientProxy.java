@@ -16,6 +16,7 @@ import com.ollieread.technomagi.client.renderer.item.RenderArchiveItem;
 import com.ollieread.technomagi.client.renderer.item.RenderReplicatorItem;
 import com.ollieread.technomagi.client.renderer.tileentity.TileEntityArchiveRenderer;
 import com.ollieread.technomagi.client.renderer.tileentity.TileEntityNaniteReplicatorRenderer;
+import com.ollieread.technomagi.client.renderer.tileentity.TileEntityObservationChamberRenderer;
 import com.ollieread.technomagi.common.CommonProxy;
 import com.ollieread.technomagi.common.KeyBindings;
 import com.ollieread.technomagi.common.init.Blocks;
@@ -25,6 +26,7 @@ import com.ollieread.technomagi.event.handler.MouseEventHandler;
 import com.ollieread.technomagi.event.handler.RenderEventHandler;
 import com.ollieread.technomagi.tileentity.TileEntityArchive;
 import com.ollieread.technomagi.tileentity.TileEntityNaniteReplicator;
+import com.ollieread.technomagi.tileentity.TileEntityObservationChamber;
 
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
@@ -68,6 +70,7 @@ public class ClientProxy extends CommonProxy
         RenderingRegistry.registerEntityRenderingHandler(EntityRobotCow.class, new RenderRobotCow(new ModelRobotCow(), 0.5F));
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityArchive.class, new TileEntityArchiveRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityNaniteReplicator.class, new TileEntityNaniteReplicatorRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityObservationChamber.class, new TileEntityObservationChamberRenderer());
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Blocks.blockArchive), new RenderArchiveItem());
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Blocks.blockNaniteReplicator), new RenderReplicatorItem());
     }

@@ -56,16 +56,18 @@ public class ExtendedNanites implements IExtendedEntityProperties
 
     public void sync()
     {
-        EntityPlayer player;
+        if (!entity.worldObj.isRemote) {
+            EntityPlayerMP player;
 
-        if (isPlayer()) {
-            player = (EntityPlayerMP) entity;
-        } else {
-            player = (EntityPlayerMP) getOwnerPlayer();
-        }
+            if (isPlayer()) {
+                player = (EntityPlayerMP) entity;
+            } else {
+                player = (EntityPlayerMP) getOwnerPlayer();
+            }
 
-        if (player != null) {
-            PacketHandler.INSTANCE.sendTo(new MessageSyncNanites(nanites, data), (EntityPlayerMP) entity);
+            if (player != null) {
+                PacketHandler.INSTANCE.sendTo(new MessageSyncNanites(nanites, data), player);
+            }
         }
     }
 
@@ -84,6 +86,8 @@ public class ExtendedNanites implements IExtendedEntityProperties
         properties.setInteger("Nanites", nanites);
         properties.setInteger("Data", data);
         properties.setString("Owner", owner);
+
+        compound.setTag(PROP_NAME, properties);
     }
 
     @Override

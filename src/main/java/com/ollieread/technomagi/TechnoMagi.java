@@ -55,7 +55,6 @@ public class TechnoMagi
 
         Blocks.init();
         Items.init();
-        Potions.init();
         Entities.init();
 
         Potion[] potionTypes = null;
@@ -79,6 +78,8 @@ public class TechnoMagi
                 System.err.println(e);
             }
         }
+
+        Potions.init();
 
         proxy.registerEventHandlers();
     }

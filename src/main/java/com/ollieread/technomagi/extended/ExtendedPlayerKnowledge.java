@@ -321,6 +321,10 @@ public class ExtendedPlayerKnowledge extends ExtendedProperties
             abilities = ExtendedPlayerAbilities.get(player);
         }
 
+        if (nanites == null) {
+            nanites = ExtendedNanites.get(player);
+        }
+
         abilities.buildAbilityLists();
     }
 

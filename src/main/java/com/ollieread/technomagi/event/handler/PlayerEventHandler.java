@@ -2,6 +2,7 @@ package com.ollieread.technomagi.event.handler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import net.minecraft.entity.monster.EntityCreeper;
@@ -49,7 +50,7 @@ import cpw.mods.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 public class PlayerEventHandler
 {
 
-    protected List<Class> allowedEntities = new ArrayList<Class>(Arrays.asList(EntityCow.class, EntitySheep.class, EntityPig.class, EntityChicken.class, EntityCreeper.class, EntityZombie.class, EntityPigZombie.class, EntityVillager.class, EntityEnderman.class));
+    public static List<Class> allowedEntities = new ArrayList<Class>(Arrays.asList(EntityCow.class, EntitySheep.class, EntityPig.class, EntityChicken.class, EntityCreeper.class, EntityZombie.class, EntityPigZombie.class, EntityVillager.class, EntityEnderman.class));
 
     @SubscribeEvent
     public void onEntityConstructing(EntityConstructing event)
@@ -65,8 +66,11 @@ public class PlayerEventHandler
                 ExtendedNanites.register((EntityPlayer) event.entity);
             }
         } else {
-            if (allowedEntities.contains(event.entity.getClass())) {
-                ExtendedNanites.register(event.entity);
+            for (Iterator<Class> i = allowedEntities.iterator(); i.hasNext();) {
+                Class c = i.next();
+                if (c.isInstance(event.entity) && ExtendedNanites.get(event.entity) == null) {
+                    ExtendedNanites.register(event.entity);
+                }
             }
         }
     }
@@ -77,6 +81,7 @@ public class PlayerEventHandler
         if (!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer) {
             ExtendedPlayerKnowledge.saveProxyData((EntityPlayer) event.entity);
             ExtendedPlayerAbilities.saveProxyData((EntityPlayer) event.entity);
+            ExtendedNanites.saveProxyData((EntityPlayer) event.entity);
         }
     }
 
@@ -86,6 +91,7 @@ public class PlayerEventHandler
         if (!event.entity.worldObj.isRemote && event.original instanceof EntityPlayer && !event.wasDeath) {
             ExtendedPlayerKnowledge.saveProxyData((EntityPlayer) event.original);
             ExtendedPlayerAbilities.saveProxyData((EntityPlayer) event.original);
+            ExtendedNanites.saveProxyData((EntityPlayer) event.original);
         }
     }
 
@@ -95,6 +101,7 @@ public class PlayerEventHandler
         if (!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer) {
             ExtendedPlayerKnowledge.loadProxyData((EntityPlayer) event.entity);
             ExtendedPlayerAbilities.loadProxyData((EntityPlayer) event.entity);
+            ExtendedNanites.loadProxyData((EntityPlayer) event.entity);
 
             World world = event.entity.worldObj;
 

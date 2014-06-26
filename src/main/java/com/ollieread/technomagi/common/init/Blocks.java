@@ -11,11 +11,13 @@ import com.ollieread.technomagi.block.BlockConstruct;
 import com.ollieread.technomagi.block.BlockKnowledgeReceptacle;
 import com.ollieread.technomagi.block.BlockLightAir;
 import com.ollieread.technomagi.block.BlockNaniteReplicator;
+import com.ollieread.technomagi.block.BlockObservationChamber;
 import com.ollieread.technomagi.block.BlockTeleporter;
 import com.ollieread.technomagi.tileentity.TileEntityArchive;
 import com.ollieread.technomagi.tileentity.TileEntityAreaLight;
 import com.ollieread.technomagi.tileentity.TileEntityLightAir;
 import com.ollieread.technomagi.tileentity.TileEntityNaniteReplicator;
+import com.ollieread.technomagi.tileentity.TileEntityObservationChamber;
 import com.ollieread.technomagi.tileentity.TileEntityTeleporter;
 
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -30,6 +32,7 @@ public class Blocks
     public static Block blockAreaLight;
     public static Block blockLightAir;
     public static Block blockTeleporter;
+    public static Block blockObservationChamber;
 
     public static void init()
     {
@@ -42,6 +45,7 @@ public class Blocks
         blockAreaLight = new BlockAreaLight("areaLight");
         blockLightAir = new BlockLightAir("lightAir");
         blockTeleporter = new BlockTeleporter("teleporter");
+        blockObservationChamber = new BlockObservationChamber("observationChamber");
 
         GameRegistry.registerBlock(blockConstruct, "construct");
         GameRegistry.registerBlock(blockArchive, "archive");
@@ -50,12 +54,14 @@ public class Blocks
         GameRegistry.registerBlock(blockAreaLight, "areaLight");
         GameRegistry.registerBlock(blockLightAir, "lightAir");
         GameRegistry.registerBlock(blockTeleporter, "teleporter");
+        GameRegistry.registerBlock(blockObservationChamber, "observationChamber");
 
         GameRegistry.registerTileEntity(TileEntityArchive.class, "tileEntityArchive");
         GameRegistry.registerTileEntity(TileEntityNaniteReplicator.class, "tileEntityNaniteReplicator");
         GameRegistry.registerTileEntity(TileEntityAreaLight.class, "tileEntityAreaLight");
         GameRegistry.registerTileEntity(TileEntityLightAir.class, "tileEntityLightAir");
         GameRegistry.registerTileEntity(TileEntityTeleporter.class, "tileEntityTeleporter");
+        GameRegistry.registerTileEntity(TileEntityObservationChamber.class, "tileEntityObservationChamber");
     }
 
 }
