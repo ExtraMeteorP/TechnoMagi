@@ -49,7 +49,7 @@ public class TileEntityObservationChamberRenderer extends TileEntitySpecialRende
 
         if (entity != null) {
             entity.setLocationAndAngles(x, y, z, 0.0F, 0.0F);
-            RenderManager.instance.renderEntityWithPosYaw(entity, 0.0D, -1.55D, -0.1D, 0.0F, 1.0F);
+            RenderManager.instance.renderEntityWithPosYaw(entity, 0.0D, -1.55D, -0.1D, 0.0F, 0F);
         }
 
         GL11.glPushMatrix();

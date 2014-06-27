@@ -54,8 +54,8 @@ public class TeleportHelper
 
     public static void teleportPlayerToTeleporter(EntityPlayer player, TileEntityTeleporter location, TileEntityTeleporter destination)
     {
-        teleportPlayerTo(player, destination.xCoord + 0.5D, destination.yCoord + 1, destination.zCoord + 0.5D);
         destination.startCooldown();
+        teleportPlayerTo(player, destination.xCoord + 0.5D, destination.yCoord + 1, destination.zCoord + 0.5D);
     }
 
 }

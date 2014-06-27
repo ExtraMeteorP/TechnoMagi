@@ -10,6 +10,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
@@ -56,6 +58,10 @@ public class TMRegistry
     protected static Map<ItemStack, List<Integer>> researchMining = new HashMap<ItemStack, List<Integer>>();
 
     protected static Map<Integer, List<Integer>> passiveAbilityEvents = new HashMap<Integer, List<Integer>>();
+
+    protected static List<Integer> entityObservable = new ArrayList<Integer>();
+    protected static Map<Integer, Integer> entityMonitorable = new HashMap<Integer, Integer>();
+    protected static List<Integer> entityBrainable = new ArrayList<Integer>();
 
     public static void registerSpecialisation(ISpecialisation spec)
     {
@@ -404,6 +410,121 @@ public class TMRegistry
                     ability.use(event, charon);
                 }
             }
+        }
+    }
+
+    public static void registerEntityObservable(Class<? extends EntityLiving> entity)
+    {
+        if (EntityList.IDtoClassMapping.containsValue(entity)) {
+            Set entityIDs = EntityList.IDtoClassMapping.keySet();
+            for (Iterator i = entityIDs.iterator(); i.hasNext();) {
+                int key = (Integer) i.next();
+                Class entityClass = (Class) EntityList.IDtoClassMapping.get(key);
+                if (entityClass != null && entityClass.equals(entity)) {
+                    if (entityObservable.contains(key))
+                        return;
+                    registerEntityObservable(key);
+                    break;
+                }
+            }
+        }
+    }
+
+    public static void registerEntityObservable(int id)
+    {
+        if (!entityObservable.contains(id)) {
+            entityObservable.add(id);
+        }
+    }
+
+    public static List<Integer> getObserableEntities()
+    {
+        return entityObservable;
+    }
+
+    public static void registerEntityMonitorable(Class<? extends EntityLiving> entity, int robotID)
+    {
+        if (EntityList.IDtoClassMapping.containsValue(entity)) {
+            Set entityIDs = EntityList.IDtoClassMapping.keySet();
+            for (Iterator i = entityIDs.iterator(); i.hasNext();) {
+                int key = (Integer) i.next();
+                Class entityClass = (Class) EntityList.IDtoClassMapping.get(key);
+                if (entityClass != null && entityClass.equals(entity)) {
+                    if (entityMonitorable.containsKey(key))
+                        return;
+                    registerEntityMonitorable(key, robotID);
+                    break;
+                }
+            }
+        }
+    }
+
+    public static void registerEntityMonitorable(int id, int robotID)
+    {
+        if (!entityMonitorable.containsValue(id)) {
+            entityMonitorable.put(id, robotID);
+        }
+    }
+
+    public static List<Integer> getMonitorableEntities()
+    {
+        return new ArrayList(entityMonitorable.keySet());
+    }
+
+    public static void registerEntityBrainable(Class<? extends EntityLiving> entity)
+    {
+        if (EntityList.IDtoClassMapping.containsValue(entity)) {
+            Set entityIDs = EntityList.IDtoClassMapping.keySet();
+            for (Iterator i = entityIDs.iterator(); i.hasNext();) {
+                int key = (Integer) i.next();
+                Class entityClass = (Class) EntityList.IDtoClassMapping.get(key);
+                if (entityClass != null && entityClass.equals(entity)) {
+                    if (entityBrainable.contains(key))
+                        return;
+                    registerEntityBrainable(key);
+                    break;
+                }
+            }
+        }
+    }
+
+    public static void registerEntityBrainable(int id)
+    {
+        if (!entityBrainable.contains(id)) {
+            entityBrainable.add(id);
+        }
+    }
+
+    public static List<Integer> getBrainableEntities()
+    {
+        return entityBrainable;
+    }
+
+    public static void registerEntity(Class<? extends EntityLiving> entity, boolean monitorable, int robotID, boolean observable, boolean brainable)
+    {
+        int key = -1;
+
+        if (EntityList.IDtoClassMapping.containsValue(entity)) {
+            Set entityIDs = EntityList.IDtoClassMapping.keySet();
+            for (Iterator i = entityIDs.iterator(); i.hasNext();) {
+                key = (Integer) i.next();
+                Class entityClass = (Class) EntityList.IDtoClassMapping.get(key);
+
+                if (entityClass != null && entityClass.equals(entity)) {
+                    break;
+                } else {
+                    key = -1;
+                }
+            }
+        }
+
+        if (key > -1) {
+            if (monitorable)
+                registerEntityMonitorable(key, robotID);
+            if (observable)
+                registerEntityObservable(key);
+            if (brainable)
+                registerEntityBrainable(key);
         }
     }
 

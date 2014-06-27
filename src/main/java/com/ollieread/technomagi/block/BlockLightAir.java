@@ -35,16 +35,6 @@ public class BlockLightAir extends BlockContainer
         return new TileEntityLightAir();
     }
 
-    @Override
-    public void onBlockAdded(World world, int x, int y, int z)
-    {
-        TileEntityLightAir tile = (TileEntityLightAir) world.getTileEntity(x, y, z);
-
-        if (tile != null) {
-            tile.spreadBlocks();
-        }
-    }
-
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(int p_149691_1_, int p_149691_2_)
     {

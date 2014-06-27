@@ -60,7 +60,6 @@ public class TileEntityLightAir extends TileEntityTM
                 return false;
             } else {
                 Block block = worldObj.getBlock(masterX, masterY, masterZ);
-
                 if (!block.equals(Blocks.blockAreaLight)) {
                     worldObj.setBlockToAir(xCoord, yCoord, zCoord);
                     worldObj.notifyBlockChange(xCoord, yCoord, zCoord, net.minecraft.init.Blocks.air);
@@ -69,13 +68,14 @@ public class TileEntityLightAir extends TileEntityTM
                 } else {
                     TileEntityAreaLight tile = (TileEntityAreaLight) worldObj.getTileEntity(masterX, masterY, masterZ);
 
-                    if (tile == null || !tile.isOn()) {
+                    if (tile == null) {
                         worldObj.setBlockToAir(xCoord, yCoord, zCoord);
                         worldObj.notifyBlockChange(xCoord, yCoord, zCoord, net.minecraft.init.Blocks.air);
                     }
                 }
             }
         } else {
+            System.out.println(6);
             if (ticks < 200) {
                 ticks++;
             } else {
@@ -91,12 +91,12 @@ public class TileEntityLightAir extends TileEntityTM
 
     public void spreadBlocks()
     {
-        int xStart = xCoord - 6;
-        int xEnd = xStart + 6;
-        int zStart = zCoord - 6;
-        int zEnd = zStart + 6;
-        int yStart = yCoord + 6;
-        int yEnd = yCoord - 6;
+        int xStart = xCoord - 10;
+        int xEnd = xCoord + 10;
+        int zStart = zCoord - 10;
+        int zEnd = zCoord + 10;
+        int yStart = yCoord - 10;
+        int yEnd = yCoord + 10;
 
         for (int i = xStart; i < xEnd; i++) {
             for (int j = zStart; j < zEnd; j++) {
@@ -117,7 +117,7 @@ public class TileEntityLightAir extends TileEntityTM
 
     public static boolean isValidPosition(World world, TileEntityLightAir tile, int x, int y, int z)
     {
-        if (tile.setup && !world.canBlockSeeTheSky(x, y, z) && world.getBlockLightValue(x, y, z) < 12) {
+        if (tile.setup && !world.canBlockSeeTheSky(x, y, z) && world.getBlockLightValue(x, y, z) < 14) {
             Block block = world.getBlock(x, y, z);
 
             if (block.equals(Blocks.blockLightAir)) {
@@ -132,7 +132,7 @@ public class TileEntityLightAir extends TileEntityTM
             double d2 = tile.masterY - y;
             double d3 = tile.masterZ - z;
 
-            return (d1 * d1 + d2 * d2 + d3 * d3) <= (25 * 25);
+            return (d1 * d1 + d2 * d2 + d3 * d3) <= (21 * 21);
         }
 
         return false;

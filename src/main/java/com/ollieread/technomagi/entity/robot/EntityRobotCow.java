@@ -1,4 +1,4 @@
-package com.ollieread.technomagi.entity.passive;
+package com.ollieread.technomagi.entity.robot;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityAgeable;

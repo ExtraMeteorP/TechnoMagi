@@ -23,7 +23,7 @@ public class BlockObservationChamber extends BlockOwnable
     public BlockObservationChamber(String name)
     {
         super(Material.iron, name);
-        setBlockBounds(-0.1F, 0.0F, -0.1F, 1.1F, 2.3F, 1.1F);
+        // setBlockBounds(-0.1F, 0.0F, -0.1F, 1.1F, 2.3F, 1.1F);
         setBlockTextureName("construct");
     }
 

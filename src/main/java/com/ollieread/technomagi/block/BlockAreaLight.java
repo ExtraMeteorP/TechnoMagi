@@ -52,6 +52,7 @@ public class BlockAreaLight extends BlockContainer
 
                 if (light != null) {
                     light.setMaster(x, y, z);
+                    light.spreadBlocks();
                 }
             }
         }

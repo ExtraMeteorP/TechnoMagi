@@ -1,16 +1,18 @@
 package com.ollieread.technomagi.item;
 
+import java.util.Iterator;
 import java.util.List;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 
+import com.ollieread.technomagi.api.TMRegistry;
 import com.ollieread.technomagi.common.Reference;
 
 import cpw.mods.fml.relauncher.Side;
@@ -41,19 +43,10 @@ public class ItemSampleVile extends ItemTM
         String info = "";
 
         switch (stack.getItemDamage()) {
-            default:
+            case 0:
                 return;
-            case 1:
-                info = EnumChatFormatting.DARK_GREEN + "Cow";
-                break;
-            case 2:
-                info = EnumChatFormatting.DARK_GREEN + "Sheep";
-                break;
-            case 3:
-                info = EnumChatFormatting.DARK_GREEN + "Pig";
-                break;
-            case 4:
-                info = EnumChatFormatting.DARK_GREEN + "Chicken";
+            default:
+                info = StatCollector.translateToLocal("entity." + EntityList.getStringFromID(stack.getItemDamage()) + ".name");
                 break;
         }
 
@@ -71,10 +64,12 @@ public class ItemSampleVile extends ItemTM
     public void getSubItems(Item item, CreativeTabs tab, List list)
     {
         list.add(new ItemStack(item, 1, 0));
-        list.add(new ItemStack(item, 1, 1));
-        list.add(new ItemStack(item, 1, 2));
-        list.add(new ItemStack(item, 1, 3));
-        list.add(new ItemStack(item, 1, 4));
+
+        Iterator iterator = TMRegistry.getMonitorableEntities().iterator();
+
+        while (iterator.hasNext()) {
+            list.add(new ItemStack(item, 1, (Integer) iterator.next()));
+        }
     }
 
     @SideOnly(Side.CLIENT)

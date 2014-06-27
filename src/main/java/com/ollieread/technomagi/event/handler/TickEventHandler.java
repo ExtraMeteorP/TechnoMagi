@@ -25,11 +25,10 @@ public class TickEventHandler
 
             if (event.player.isSneaking()) {
                 Block block = PlayerHelper.getBlockStoodOn(event.player);
-
                 if (Block.isEqualTo(block, Blocks.blockTeleporter)) {
                     TileEntityTeleporter teleporter = (TileEntityTeleporter) PlayerHelper.getTileEntityStoodOn(event.player);
 
-                    if (teleporter != null) {
+                    if (teleporter != null && teleporter.canUse()) {
                         TileEntityTeleporter destination = TeleportHelper.findTeleporterBelow(teleporter);
 
                         if (destination != null && destination.canUse()) {
@@ -40,5 +39,4 @@ public class TickEventHandler
             }
         }
     }
-
 }

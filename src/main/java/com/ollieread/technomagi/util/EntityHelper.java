@@ -11,7 +11,7 @@ public class EntityHelper
     {
         do {
             startEntityId++;
-        } while (EntityList.getStringFromID(startEntityId) != null);
+        } while (EntityList.IDtoClassMapping.containsKey(startEntityId));
 
         return startEntityId;
     }

@@ -7,7 +7,7 @@ import com.ollieread.technomagi.common.init.Blocks;
 public class TileEntityAreaLight extends TileEntityInventory
 {
 
-    protected boolean status = true;
+    protected boolean on = true;
 
     public TileEntityAreaLight()
     {
@@ -21,7 +21,7 @@ public class TileEntityAreaLight extends TileEntityInventory
     {
         super.readFromNBT(compound);
 
-        compound.setBoolean("Status", status);
+        compound.setBoolean("On", on);
     }
 
     @Override
@@ -29,20 +29,20 @@ public class TileEntityAreaLight extends TileEntityInventory
     {
         super.writeToNBT(compound);
 
-        status = compound.getBoolean("Status");
+        on = compound.getBoolean("On");
     }
 
     public boolean isOn()
     {
-        return status;
+        return on;
     }
 
     public void toggleStatus()
     {
-        if (status) {
-            status = false;
+        if (on) {
+            on = false;
         } else {
-            status = true;
+            on = true;
 
             if (worldObj.isAirBlock(xCoord, yCoord + 1, zCoord)) {
                 worldObj.setBlock(xCoord, yCoord + 1, zCoord, Blocks.blockLightAir);

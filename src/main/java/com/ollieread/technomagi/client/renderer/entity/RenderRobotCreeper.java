@@ -6,30 +6,30 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 
 import com.ollieread.technomagi.common.Reference;
-import com.ollieread.technomagi.entity.robot.EntityRobotCow;
+import com.ollieread.technomagi.entity.robot.EntityRobotCreeper;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderRobotCow extends RenderLiving
+public class RenderRobotCreeper extends RenderLiving
 {
-    private static final ResourceLocation cowTextures = new ResourceLocation(Reference.MODID.toLowerCase(), "textures/entity/robotCow.png");
+    private static final ResourceLocation cowTextures = new ResourceLocation(Reference.MODID.toLowerCase(), "textures/entity/robotCreeper.png");
     private static final String __OBFID = "CL_00000984";
 
-    public RenderRobotCow(ModelBase par1ModelBase, float par2)
+    public RenderRobotCreeper(ModelBase par1ModelBase, float par2)
     {
         super(par1ModelBase, par2);
     }
 
-    protected ResourceLocation getEntityTexture(EntityRobotCow par1EntityCow)
+    protected ResourceLocation getEntityTexture(EntityRobotCreeper par1EntityCow)
     {
         return cowTextures;
     }
 
     protected ResourceLocation getEntityTexture(Entity par1Entity)
     {
-        return this.getEntityTexture((EntityRobotCow) par1Entity);
+        return this.getEntityTexture((EntityRobotCreeper) par1Entity);
     }
 
 }

@@ -53,7 +53,7 @@ public class GuiSelf extends GuiScreen
         ISpecialisation specialisation = charon.getSpecialisation();
 
         if (specialisation != null) {
-            // ResourceLocation icon = specialisation.getIcon();
+            ResourceLocation icon = specialisation.getIcon();
 
             int nanites = charon.nanites.getNanites();
             int research = charon.nanites.getData();
@@ -69,13 +69,10 @@ public class GuiSelf extends GuiScreen
             this.fontRendererObj.drawString(nanites + "%", (xOffset + 105) - this.fontRendererObj.getStringWidth(nanites + "%"), yOffset + 100, 4118771);
             this.fontRendererObj.drawString(research + "%", (xOffset + 105) - this.fontRendererObj.getStringWidth(research + "%"), yOffset + 120, 15944766);
 
-            // this.mc.getTextureManager().bindTexture(icon);
-            // GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            // this.func_146110_a(xOffset + 77, yOffset + 43, 0, 0, 32, 32, 32,
-            // 32);
-            // this.func_147046_a(xOffset + 28, yOffset + 90, 30, (float)
-            // (xOffset + 28) - par1, (float) (yOffset + 90 - 50) - par2,
-            // this.mc.thePlayer);
+            this.mc.getTextureManager().bindTexture(icon);
+            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+            this.func_146110_a(xOffset + 77, yOffset + 43, 0, 0, 32, 32, 32, 32);
+            this.func_147046_a(xOffset + 28, yOffset + 90, 30, (float) (xOffset + 28) - par1, (float) (yOffset + 90 - 50) - par2, this.mc.thePlayer);
         }
 
         super.drawScreen(par1, par2, par3);

@@ -53,9 +53,10 @@ public class TechnoMagi
         Knowledge.init();
         Abilities.init();
 
+        Entities.init();
+
         Blocks.init();
         Items.init();
-        Entities.init();
 
         Potion[] potionTypes = null;
 
