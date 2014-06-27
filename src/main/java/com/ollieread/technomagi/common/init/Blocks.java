@@ -58,8 +58,8 @@ public class Blocks
 
         GameRegistry.registerTileEntity(TileEntityArchive.class, "tileEntityArchive");
         GameRegistry.registerTileEntity(TileEntityNaniteReplicator.class, "tileEntityNaniteReplicator");
-        GameRegistry.registerTileEntity(TileEntityAreaLight.class, "tileEntityAreaLight");
         GameRegistry.registerTileEntity(TileEntityLightAir.class, "tileEntityLightAir");
+        GameRegistry.registerTileEntity(TileEntityAreaLight.class, "tileEntityAreaLight");
         GameRegistry.registerTileEntity(TileEntityTeleporter.class, "tileEntityTeleporter");
         GameRegistry.registerTileEntity(TileEntityObservationChamber.class, "tileEntityObservationChamber");
     }

@@ -46,7 +46,6 @@ public class TileEntityAreaLight extends TileEntityInventory
 
             if (worldObj.isAirBlock(xCoord, yCoord + 1, zCoord)) {
                 worldObj.setBlock(xCoord, yCoord + 1, zCoord, Blocks.blockLightAir);
-                worldObj.notifyBlockChange(xCoord, yCoord + 1, zCoord, Blocks.blockLightAir);
                 TileEntityLightAir light = (TileEntityLightAir) worldObj.getTileEntity(xCoord, yCoord + 1, zCoord);
 
                 if (light != null) {

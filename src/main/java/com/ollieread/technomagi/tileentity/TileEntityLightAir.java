@@ -28,6 +28,8 @@ public class TileEntityLightAir extends TileEntityTM
     @Override
     public void writeToNBT(NBTTagCompound compound)
     {
+        super.writeToNBT(compound);
+
         compound.setInteger("MasterX", masterX);
         compound.setInteger("MasterY", masterY);
         compound.setInteger("MasterZ", masterZ);
@@ -38,6 +40,8 @@ public class TileEntityLightAir extends TileEntityTM
     @Override
     public void readFromNBT(NBTTagCompound compound)
     {
+        super.readFromNBT(compound);
+
         masterX = compound.getInteger("MasterX");
         masterY = compound.getInteger("MasterY");
         masterZ = compound.getInteger("MasterZ");
@@ -62,7 +66,6 @@ public class TileEntityLightAir extends TileEntityTM
                 Block block = worldObj.getBlock(masterX, masterY, masterZ);
                 if (!block.equals(Blocks.blockAreaLight)) {
                     worldObj.setBlockToAir(xCoord, yCoord, zCoord);
-                    worldObj.notifyBlockChange(xCoord, yCoord, zCoord, net.minecraft.init.Blocks.air);
 
                     return false;
                 } else {
@@ -70,17 +73,14 @@ public class TileEntityLightAir extends TileEntityTM
 
                     if (tile == null) {
                         worldObj.setBlockToAir(xCoord, yCoord, zCoord);
-                        worldObj.notifyBlockChange(xCoord, yCoord, zCoord, net.minecraft.init.Blocks.air);
                     }
                 }
             }
         } else {
-            System.out.println(6);
             if (ticks < 200) {
                 ticks++;
             } else {
                 worldObj.setBlockToAir(xCoord, yCoord, zCoord);
-                worldObj.notifyBlockChange(xCoord, yCoord, zCoord, net.minecraft.init.Blocks.air);
 
                 return false;
             }
@@ -103,7 +103,6 @@ public class TileEntityLightAir extends TileEntityTM
                 for (int k = yStart; k < yEnd; k++) {
                     if (isValidPosition(worldObj, this, i, k, j)) {
                         worldObj.setBlock(i, k, j, Blocks.blockLightAir);
-                        worldObj.notifyBlockChange(i, k, j, Blocks.blockLightAir);
                         TileEntityLightAir light = (TileEntityLightAir) worldObj.getTileEntity(i, k, j);
 
                         if (light != null) {
