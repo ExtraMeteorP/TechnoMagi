@@ -51,7 +51,7 @@ public class Entities
         TMRegistry.registerEntity(EntitySkeleton.class, false, 0, true, true);
         TMRegistry.registerEntity(EntitySpider.class, false, 0, false, true);
         TMRegistry.registerEntity(EntityCaveSpider.class, false, 0, false, true);
-        TMRegistry.registerEntity(EntityEnderman.class, false, 0, false, true);
+        TMRegistry.registerEntity(EntityEnderman.class, false, 0, true, true);
     }
 
 }
