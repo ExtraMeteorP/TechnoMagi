@@ -1,5 +1,6 @@
 package com.ollieread.technomagi.util;
 
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 
 import com.ollieread.technomagi.tileentity.TileEntityTeleporter;
@@ -19,7 +20,7 @@ public class TeleportHelper
         for (int i = 0; (i + oy) < 251; i++) {
             TileEntityTeleporter t = (TileEntityTeleporter) teleporter.getWorldObj().getTileEntity(ox, oy + i, oz);
 
-            if (t instanceof TileEntityTeleporter && t.canUse()) {
+            if (t instanceof TileEntityTeleporter && t.canUse() && teleporter.getWorldObj().getBlockMetadata(ox, oy + i, oz) == 0) {
                 return t;
             }
         }
@@ -39,7 +40,7 @@ public class TeleportHelper
         for (int i = 0; (oy - i) >= 3; i++) {
             TileEntityTeleporter t = (TileEntityTeleporter) teleporter.getWorldObj().getTileEntity(ox, oy - i, oz);
 
-            if (t instanceof TileEntityTeleporter && t.canUse()) {
+            if (t instanceof TileEntityTeleporter && t.canUse() && teleporter.getWorldObj().getBlockMetadata(ox, oy - i, oz) == 0) {
                 return t;
             }
         }
@@ -56,6 +57,17 @@ public class TeleportHelper
     {
         destination.startCooldown();
         teleportPlayerTo(player, destination.xCoord + 0.5D, destination.yCoord + 1, destination.zCoord + 0.5D);
+    }
+
+    public static void teleportEntityTo(EntityLiving entity, double x, double y, double z)
+    {
+        entity.setPositionAndUpdate(x, y, z);
+    }
+
+    public static void teleportEntityToTeleporter(EntityLiving entity, TileEntityTeleporter location, TileEntityTeleporter destination)
+    {
+        destination.startCooldown();
+        teleportEntityTo(entity, destination.xCoord + 0.5D, destination.yCoord + 1, destination.zCoord + 0.5D);
     }
 
 }

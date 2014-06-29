@@ -25,8 +25,13 @@ itemGroup.tabTm=TechnoMagi
 entity.robotCow.name=Roboticised Cow
 
 tile.construct.name=Construct
-tile.archive.name=TechnoMagi Archive
+tile.archive.name=Archive
 tile.naniteReplicator.name=Nanite Replicator
+tile.areaLight.name=Area Light
+tile.teleporter.0.name=Teleporter (Elevator)
+tile.teleporter.1.name=Teleporter (Paired)
+tile.teleporter.2.name=Teleporter (Relocater)
+tile.teleporter.3.name=Teleporter (Disrupter)
 
 item.mobBrain.name=Brain
 item.sampleExtractor.name=Sample Extractor

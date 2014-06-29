@@ -29,6 +29,24 @@ public class PlayerHelper
         return player.worldObj.getBlock(x, y, z);
     }
 
+    public static boolean isStoodOnMeta(EntityPlayer player, Block block, int meta)
+    {
+        if (getBlockStoodOnMeta(player).isItemEqual(new ItemStack(block, 1, meta))) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static ItemStack getBlockStoodOnMeta(EntityPlayer player)
+    {
+        int x = MathHelper.floor_double(player.posX);
+        int y = MathHelper.floor_double(player.posY) - 1;
+        int z = MathHelper.floor_double(player.posZ);
+
+        return new ItemStack(player.worldObj.getBlock(x, y, z), 1, player.worldObj.getBlockMetadata(x, y, z));
+    }
+
     public static TileEntity getTileEntityStoodOn(EntityPlayer player)
     {
         int x = MathHelper.floor_double(player.posX);

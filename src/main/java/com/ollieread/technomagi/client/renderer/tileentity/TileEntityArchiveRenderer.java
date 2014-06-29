@@ -1,6 +1,7 @@
 package com.ollieread.technomagi.client.renderer.tileentity;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.ModelBook;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -10,7 +11,7 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
-import com.ollieread.technomagi.client.model.ModelMachineArchive;
+import com.ollieread.technomagi.client.model.ModelMachineConstruct;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.common.init.Blocks;
 import com.ollieread.technomagi.tileentity.TileEntityArchive;
@@ -18,17 +19,20 @@ import com.ollieread.technomagi.tileentity.TileEntityArchive;
 public class TileEntityArchiveRenderer extends TileEntitySpecialRenderer
 {
 
-    private final ModelMachineArchive model;
+    private final ModelMachineConstruct construct;
+    private final ModelBook book;
 
     public TileEntityArchiveRenderer()
     {
-        model = new ModelMachineArchive();
+        construct = new ModelMachineConstruct();
+        book = new ModelBook();
     }
 
     @Override
     public void renderTileEntityAt(TileEntity te, double x, double y, double z, float scale)
     {
         TileEntityArchive archive = (TileEntityArchive) te;
+        int side = archive.getBlockMetadata();
         Tessellator tessellator = Tessellator.instance;
         // This will make your block brightness dependent from surroundings
         // lighting.
@@ -39,14 +43,51 @@ public class TileEntityArchiveRenderer extends TileEntitySpecialRenderer
         tessellator.setColorOpaque_F(f, f, f);
         OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) l1, (float) l2);
 
+        ResourceLocation textureConstruct = (new ResourceLocation(Reference.MODID.toLowerCase(), "textures/blocks/modelConstruct.png"));
+        ResourceLocation textureBook = (new ResourceLocation(Reference.MODID.toLowerCase(), "textures/blocks/modelArchiveBook.png"));
+
         GL11.glPushMatrix();
         GL11.glTranslatef((float) x + 0.5F, (float) y + 1.5F, (float) z + 0.5F);
-        ResourceLocation textures = (new ResourceLocation(Reference.MODID.toLowerCase(), "textures/blocks/modelArchive.png"));
-        Minecraft.getMinecraft().renderEngine.bindTexture(textures);
+
+        switch (side) {
+            case 2:
+                GL11.glRotatef(0, 0.0F, 1.0F, 0.0F);
+                break;
+            case 3:
+                GL11.glRotatef(180, 0.0F, 1.0F, 0.0F);
+                break;
+            case 4:
+                GL11.glRotatef(90, 0.0F, 1.0F, 0.0F);
+                break;
+            case 5:
+                GL11.glRotatef(270, 0.0F, 1.0F, 0.0F);
+                break;
+        }
+
         GL11.glPushMatrix();
         GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
-        this.model.setOwnedStatus(true);
-        this.model.render((Entity) null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
+
+        Minecraft.getMinecraft().renderEngine.bindTexture(textureConstruct);
+        construct.render((Entity) null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
+
+        Minecraft.getMinecraft().renderEngine.bindTexture(textureBook);
+        GL11.glEnable(GL11.GL_CULL_FACE);
+        GL11.glRotatef(90.0F, 0.0F, 0.0F, -1.0F);
+        GL11.glRotatef(90.0F, -1.0F, 0.0F, 0.0F);
+
+        book.bookSpine.offsetX = -0.6F;
+        book.coverRight.offsetX = -0.6F;
+        book.coverLeft.offsetX = -0.6F;
+        book.pagesRight.offsetX = -0.6F;
+        book.pagesLeft.offsetX = -0.6F;
+        book.flippingPageRight.offsetX = -0.6F;
+        book.flippingPageLeft.offsetX = -0.6F;
+        book.bookSpine.offsetX = -0.6F;
+
+        book.render((Entity) null, 1.0F, 0.0F, 0.0F, 1.0F, 0.0F, 0.0625F);
+
+        GL11.glDisable(GL11.GL_CULL_FACE);
+
         GL11.glPopMatrix();
         GL11.glPopMatrix();
     }

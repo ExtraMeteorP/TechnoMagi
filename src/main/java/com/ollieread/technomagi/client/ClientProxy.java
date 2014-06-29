@@ -15,6 +15,8 @@ import com.ollieread.technomagi.client.model.ModelRobotCreeper;
 import com.ollieread.technomagi.client.renderer.entity.RenderRobotCow;
 import com.ollieread.technomagi.client.renderer.entity.RenderRobotCreeper;
 import com.ollieread.technomagi.client.renderer.item.RenderArchiveItem;
+import com.ollieread.technomagi.client.renderer.item.RenderChamberItem;
+import com.ollieread.technomagi.client.renderer.item.RenderConstructItem;
 import com.ollieread.technomagi.client.renderer.item.RenderReplicatorItem;
 import com.ollieread.technomagi.client.renderer.tileentity.TileEntityArchiveRenderer;
 import com.ollieread.technomagi.client.renderer.tileentity.TileEntityNaniteReplicatorRenderer;
@@ -77,8 +79,10 @@ public class ClientProxy extends CommonProxy
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityNaniteReplicator.class, new TileEntityNaniteReplicatorRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityObservationChamber.class, new TileEntityObservationChamberRenderer());
 
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Blocks.blockConstruct), new RenderConstructItem());
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Blocks.blockArchive), new RenderArchiveItem());
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Blocks.blockNaniteReplicator), new RenderReplicatorItem());
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Blocks.blockObservationChamber), new RenderChamberItem());
     }
 
 }

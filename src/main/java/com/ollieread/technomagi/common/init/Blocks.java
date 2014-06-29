@@ -7,12 +7,14 @@ import org.apache.logging.log4j.Level;
 import com.ollieread.technomagi.TechnoMagi;
 import com.ollieread.technomagi.block.BlockArchive;
 import com.ollieread.technomagi.block.BlockAreaLight;
+import com.ollieread.technomagi.block.BlockChamberFiller;
 import com.ollieread.technomagi.block.BlockConstruct;
 import com.ollieread.technomagi.block.BlockKnowledgeReceptacle;
 import com.ollieread.technomagi.block.BlockLightAir;
 import com.ollieread.technomagi.block.BlockNaniteReplicator;
 import com.ollieread.technomagi.block.BlockObservationChamber;
 import com.ollieread.technomagi.block.BlockTeleporter;
+import com.ollieread.technomagi.item.ItemBlockTM;
 import com.ollieread.technomagi.tileentity.TileEntityArchive;
 import com.ollieread.technomagi.tileentity.TileEntityAreaLight;
 import com.ollieread.technomagi.tileentity.TileEntityLightAir;
@@ -33,6 +35,7 @@ public class Blocks
     public static Block blockLightAir;
     public static Block blockTeleporter;
     public static Block blockObservationChamber;
+    public static Block blockChamberFiller;
 
     public static void init()
     {
@@ -46,6 +49,7 @@ public class Blocks
         blockLightAir = new BlockLightAir("lightAir");
         blockTeleporter = new BlockTeleporter("teleporter");
         blockObservationChamber = new BlockObservationChamber("observationChamber");
+        blockChamberFiller = new BlockChamberFiller("chamberFiller");
 
         GameRegistry.registerBlock(blockConstruct, "construct");
         GameRegistry.registerBlock(blockArchive, "archive");
@@ -53,8 +57,9 @@ public class Blocks
         GameRegistry.registerBlock(blockNaniteReplicator, "naniteReplicator");
         GameRegistry.registerBlock(blockAreaLight, "areaLight");
         GameRegistry.registerBlock(blockLightAir, "lightAir");
-        GameRegistry.registerBlock(blockTeleporter, "teleporter");
+        GameRegistry.registerBlock(blockTeleporter, ItemBlockTM.class, "teleporter");
         GameRegistry.registerBlock(blockObservationChamber, "observationChamber");
+        GameRegistry.registerBlock(blockChamberFiller, "chamberFiller");
 
         GameRegistry.registerTileEntity(TileEntityArchive.class, "tileEntityArchive");
         GameRegistry.registerTileEntity(TileEntityNaniteReplicator.class, "tileEntityNaniteReplicator");

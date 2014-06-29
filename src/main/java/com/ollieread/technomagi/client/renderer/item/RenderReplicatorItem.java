@@ -23,7 +23,7 @@ public class RenderReplicatorItem implements IItemRenderer
     @Override
     public boolean handleRenderType(ItemStack item, ItemRenderType type)
     {
-        return type == ItemRenderType.INVENTORY || type == ItemRenderType.EQUIPPED_FIRST_PERSON;
+        return type == ItemRenderType.INVENTORY || type == ItemRenderType.EQUIPPED_FIRST_PERSON || type == ItemRenderType.EQUIPPED;
     }
 
     @Override
@@ -41,7 +41,7 @@ public class RenderReplicatorItem implements IItemRenderer
 
         float scale = 0;
 
-        if (type.equals(ItemRenderType.EQUIPPED_FIRST_PERSON)) {
+        if (type.equals(ItemRenderType.EQUIPPED_FIRST_PERSON) || type.equals(ItemRenderType.EQUIPPED)) {
             scale = 1.2F;
 
             GL11.glScalef(scale, scale, scale);

@@ -1,7 +1,5 @@
 package com.ollieread.technomagi.event.handler;
 
-import net.minecraft.block.Block;
-
 import com.ollieread.technomagi.api.TMRegistry;
 import com.ollieread.technomagi.api.research.ResearchEvents;
 import com.ollieread.technomagi.common.init.Blocks;
@@ -24,8 +22,7 @@ public class TickEventHandler
             TMRegistry.passiveAbilityEvent(ResearchEvents.EVENT_PLAYER_TICK, event, ExtendedPlayerKnowledge.get(event.player));
 
             if (event.player.isSneaking()) {
-                Block block = PlayerHelper.getBlockStoodOn(event.player);
-                if (Block.isEqualTo(block, Blocks.blockTeleporter)) {
+                if (PlayerHelper.isStoodOnMeta(event.player, Blocks.blockTeleporter, 0)) {
                     TileEntityTeleporter teleporter = (TileEntityTeleporter) PlayerHelper.getTileEntityStoodOn(event.player);
 
                     if (teleporter != null && teleporter.canUse()) {

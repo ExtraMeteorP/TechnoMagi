@@ -12,6 +12,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import com.ollieread.technomagi.common.Reference;
+import com.ollieread.technomagi.common.init.Blocks;
 import com.ollieread.technomagi.tileentity.TileEntityObservationChamber;
 
 import cpw.mods.fml.relauncher.Side;
@@ -23,7 +24,7 @@ public class BlockObservationChamber extends BlockOwnable
     public BlockObservationChamber(String name)
     {
         super(Material.iron, name);
-        // setBlockBounds(-0.1F, 0.0F, -0.1F, 1.1F, 2.3F, 1.1F);
+        setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 3.0F, 1.0F);
         setBlockTextureName("construct");
     }
 
@@ -75,6 +76,11 @@ public class BlockObservationChamber extends BlockOwnable
             world.setBlockMetadataWithNotify(x, y, z, 4, 2);
         }
 
+        world.setBlock(x, y + 1, z, Blocks.blockChamberFiller);
+        world.setBlockMetadataWithNotify(x, y + 1, z, 0, 2);
+        world.setBlock(x, y + 2, z, Blocks.blockChamberFiller);
+        world.setBlockMetadataWithNotify(x, y + 1, z, 1, 2);
+
         super.onBlockPlacedBy(world, x, y, z, entity, stack);
     }
 
@@ -94,10 +100,23 @@ public class BlockObservationChamber extends BlockOwnable
                 if (tile != null) {
                     tile.setEntity(Integer.valueOf(stack.getItemDamage()));
                     world.markBlockForUpdate(x, y, z);
+
+                    return true;
                 }
             }
         }
 
         return false;
+    }
+
+    public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int meta)
+    {
+        if (world.getBlock(x, y + 1, z).equals(Blocks.blockChamberFiller)) {
+            world.setBlockToAir(x, y + 1, z);
+        }
+
+        if (world.getBlock(x, y + 2, z).equals(Blocks.blockChamberFiller)) {
+            world.setBlockToAir(x, y + 2, z);
+        }
     }
 }

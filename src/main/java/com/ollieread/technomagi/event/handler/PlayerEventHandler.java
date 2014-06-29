@@ -15,11 +15,14 @@ import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
@@ -33,10 +36,12 @@ import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import com.ollieread.technomagi.api.TMRegistry;
 import com.ollieread.technomagi.api.research.ResearchEvents;
 import com.ollieread.technomagi.common.init.Blocks;
+import com.ollieread.technomagi.common.init.Items;
 import com.ollieread.technomagi.common.init.Potions;
 import com.ollieread.technomagi.extended.ExtendedNanites;
 import com.ollieread.technomagi.extended.ExtendedPlayerAbilities;
 import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
+import com.ollieread.technomagi.item.ItemDigitalTool;
 import com.ollieread.technomagi.network.PacketHandler;
 import com.ollieread.technomagi.network.message.MessageEntityInteractEvent;
 import com.ollieread.technomagi.network.message.MessagePlayerInteractEvent;
@@ -124,6 +129,41 @@ public class PlayerEventHandler
             if (abilities.useAbility(event)) {
                 if (event.entityPlayer.worldObj.isRemote && (event.isCanceled() || event.action.equals(PlayerInteractEvent.Action.RIGHT_CLICK_AIR))) {
                     PacketHandler.INSTANCE.sendToServer(new MessagePlayerInteractEvent(event));
+                }
+            }
+        } else if (event.action.equals(PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK)) {
+            ItemStack item = event.entityPlayer.getHeldItem();
+
+            if (item.isItemEqual(new ItemStack(Items.itemDigitalTool))) {
+                ItemDigitalTool tool = (ItemDigitalTool) item.getItem();
+                TileEntity tile = event.entityPlayer.worldObj.getTileEntity(event.x, event.y, event.z);
+
+                if (tile != null) {
+                    if (tile instanceof TileEntityTeleporter) {
+                        if (tile.getBlockMetadata() == 1) {
+                            if (tool.getFocusType() == 0) {
+                                tool.setFocusType(1);
+                                tool.setFocusLocation(event.x, event.y, event.z);
+
+                                event.setCanceled(true);
+                            } else if (tool.getFocusType() == 1) {
+                                int[] location = tool.getFocusLocation();
+
+                                TileEntityTeleporter teleporter = (TileEntityTeleporter) event.entityPlayer.worldObj.getTileEntity(location[0], location[1], location[2]);
+
+                                if (teleporter != null) {
+                                    ((TileEntityTeleporter) tile).partner(location[0], location[1], location[2]);
+                                    teleporter.partner(event.x, event.y, event.z);
+
+                                    tool.setFocusType(0);
+                                    tool.setFocusId(0);
+                                    tool.setFocusLocation(0, 0, 0);
+
+                                    event.setCanceled(true);
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -216,7 +256,7 @@ public class PlayerEventHandler
     {
         if (!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) event.entity;
-            if (PlayerHelper.isStoodOn(player, Blocks.blockTeleporter)) {
+            if (PlayerHelper.isStoodOnMeta(player, Blocks.blockTeleporter, 0)) {
                 TileEntityTeleporter teleporter = (TileEntityTeleporter) PlayerHelper.getTileEntityStoodOn(player);
 
                 if (teleporter != null && teleporter.canUse()) {
@@ -245,4 +285,38 @@ public class PlayerEventHandler
             TMRegistry.researchMining(event, ExtendedPlayerKnowledge.get(event.harvester));
         }
     }
+
+    @SubscribeEvent
+    public void onEnderTeleport(EnderTeleportEvent event)
+    {
+        if (!event.entityLiving.worldObj.isRemote) {
+            World world = event.entityLiving.worldObj;
+
+            int startX = (int) (event.targetX - 7);
+            int endX = (int) (event.targetX + 7);
+            int startY = (int) (event.targetY - 7);
+            int endY = (int) (event.targetY + 7);
+            int startZ = (int) (event.targetZ - 7);
+            int endZ = (int) (event.targetZ + 7);
+
+            for (int i = startX; i <= endX; i++) {
+                for (int j = startZ; j <= endZ; j++) {
+                    for (int k = startY; k <= endY; k++) {
+                        if (world.getBlock(i, k, j).equals(Blocks.blockTeleporter) && world.getBlockMetadata(i, k, j) == 3) {
+                            event.setCanceled(true);
+
+                            return;
+                        } else if (world.getBlock(i, k, j).equals(Blocks.blockTeleporter) && world.getBlockMetadata(i, k, j) == 2) {
+                            event.targetX = i;
+                            event.targetY = k + 1;
+                            event.targetZ = j;
+
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 }
