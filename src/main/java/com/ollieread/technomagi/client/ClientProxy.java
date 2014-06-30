@@ -15,6 +15,7 @@ import com.ollieread.technomagi.client.model.ModelRobotCreeper;
 import com.ollieread.technomagi.client.model.ModelRobotZombie;
 import com.ollieread.technomagi.client.renderer.entity.RenderRobotCow;
 import com.ollieread.technomagi.client.renderer.entity.RenderRobotCreeper;
+import com.ollieread.technomagi.client.renderer.entity.RenderRobotZombie;
 import com.ollieread.technomagi.client.renderer.item.RenderArchiveItem;
 import com.ollieread.technomagi.client.renderer.item.RenderChamberItem;
 import com.ollieread.technomagi.client.renderer.item.RenderConstructItem;
@@ -76,7 +77,7 @@ public class ClientProxy extends CommonProxy
     {
         RenderingRegistry.registerEntityRenderingHandler(EntityRobotCow.class, new RenderRobotCow(new ModelRobotCow(), 0.5F));
         RenderingRegistry.registerEntityRenderingHandler(EntityRobotCreeper.class, new RenderRobotCreeper(new ModelRobotCreeper(), 0.5F));
-        RenderingRegistry.registerEntityRenderingHandler(EntityRobotZombie.class, new RenderRobotCreeper(new ModelRobotZombie(), 0.5F));
+        RenderingRegistry.registerEntityRenderingHandler(EntityRobotZombie.class, new RenderRobotZombie(new ModelRobotZombie(), 0.5F));
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityArchive.class, new TileEntityArchiveRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityNaniteReplicator.class, new TileEntityNaniteReplicatorRenderer());
