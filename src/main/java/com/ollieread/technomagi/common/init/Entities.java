@@ -18,6 +18,7 @@ import com.ollieread.technomagi.TechnoMagi;
 import com.ollieread.technomagi.api.TMRegistry;
 import com.ollieread.technomagi.entity.robot.EntityRobotCow;
 import com.ollieread.technomagi.entity.robot.EntityRobotCreeper;
+import com.ollieread.technomagi.entity.robot.EntityRobotZombie;
 import com.ollieread.technomagi.util.EntityHelper;
 
 import cpw.mods.fml.common.registry.EntityRegistry;
@@ -27,17 +28,22 @@ public class Entities
 
     public static int robotCowID;
     public static int robotCreeperID;
+    public static int robotZombieID;
 
     public static void init()
     {
         robotCowID = EntityHelper.getUniqueEntityId();
         robotCreeperID = EntityHelper.getUniqueEntityId();
+        robotZombieID = EntityHelper.getUniqueEntityId();
 
         EntityRegistry.registerModEntity(EntityRobotCow.class, "robotCow", robotCowID, TechnoMagi.instance, 80, 1, true);
         EntityList.addMapping(EntityRobotCow.class, "robotCow", robotCowID, 113213, 3523523);
 
         EntityRegistry.registerModEntity(EntityRobotCreeper.class, "robotCreeper", robotCreeperID, TechnoMagi.instance, 80, 1, true);
         EntityList.addMapping(EntityRobotCreeper.class, "robotCreeper", robotCreeperID, 113213, 3523523);
+
+        EntityRegistry.registerModEntity(EntityRobotZombie.class, "robotZombie", robotZombieID, TechnoMagi.instance, 80, 1, true);
+        EntityList.addMapping(EntityRobotZombie.class, "robotZombie", robotZombieID, 113213, 3523523);
 
         TMRegistry.registerEntity(EntityCow.class, true, robotCowID, false, true);
         TMRegistry.registerEntity(EntitySheep.class, false, 0, false, true);
@@ -46,7 +52,7 @@ public class Entities
         TMRegistry.registerEntity(EntityVillager.class, false, 0, true, true);
 
         TMRegistry.registerEntity(EntityCreeper.class, true, robotCreeperID, true, true);
-        TMRegistry.registerEntity(EntityZombie.class, false, 0, true, true);
+        TMRegistry.registerEntity(EntityZombie.class, true, robotZombieID, true, true);
         TMRegistry.registerEntity(EntityPigZombie.class, false, 0, true, true);
         TMRegistry.registerEntity(EntitySkeleton.class, false, 0, true, true);
         TMRegistry.registerEntity(EntitySpider.class, false, 0, false, true);
