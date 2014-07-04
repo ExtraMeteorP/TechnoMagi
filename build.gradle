@@ -35,7 +35,7 @@ minecraft {
     assetDir = "run/assets"
     
     replaceIn "common/References.java"
-    replace "@VERSION@", "${config.version.major}.${config.version.minor}.${config.version.revis}${config.version.release}-${System.getenv("BUILD_NUMBER") ? : 0}"
+    replace "@VERSION@", "${config.version.major}.${config.version.minor}.${config.version.revis}${config.version.release}-${System.getenv("BUILD_NUMBER") ?: 0}"
 }
 
 version += "-${System.getenv("BUILD_NUMBER") ?: 0}"
