@@ -172,10 +172,14 @@ public class TMRegistry
 
     public static void registerResearchEvent(int i, IResearchEvent research)
     {
-        if (researchEvents.containsKey(research.getEvent())) {
-            researchEvents.get(research.getEvent()).add(i);
-        } else {
-            researchEvents.put(research.getEvent(), Arrays.asList(i));
+        int event = getEvent(research.getEvent());
+
+        if (event > -1) {
+            if (researchEvents.containsKey(event)) {
+                researchEvents.get(event).add(i);
+            } else {
+                researchEvents.put(event, Arrays.asList(i));
+            }
         }
     }
 
@@ -336,10 +340,12 @@ public class TMRegistry
             passiveNames.put(name, i);
             int event = getEvent(ability.getEvent());
 
-            if (passiveAbilityEvents.containsKey(event)) {
-                passiveAbilityEvents.get(event).add(i);
-            } else {
-                passiveAbilityEvents.put(event, Arrays.asList(i));
+            if (event > -1) {
+                if (passiveAbilityEvents.containsKey(event)) {
+                    passiveAbilityEvents.get(event).add(i);
+                } else {
+                    passiveAbilityEvents.put(event, Arrays.asList(i));
+                }
             }
         }
     }
