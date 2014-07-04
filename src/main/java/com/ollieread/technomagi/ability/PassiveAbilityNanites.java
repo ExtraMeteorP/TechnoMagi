@@ -3,7 +3,6 @@ package com.ollieread.technomagi.ability;
 import net.minecraft.util.FoodStats;
 
 import com.ollieread.technomagi.api.ability.AbilityPassive;
-import com.ollieread.technomagi.api.research.ResearchEvents;
 import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
 
 import cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent;
@@ -19,9 +18,9 @@ public class PassiveAbilityNanites extends AbilityPassive<PlayerTickEvent>
     }
 
     @Override
-    public int getEvent()
+    public String getEvent()
     {
-        return ResearchEvents.EVENT_PLAYER_TICK;
+        return "playerTick";
     }
 
     @Override

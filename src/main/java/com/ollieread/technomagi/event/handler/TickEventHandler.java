@@ -1,7 +1,6 @@
 package com.ollieread.technomagi.event.handler;
 
 import com.ollieread.technomagi.api.TMRegistry;
-import com.ollieread.technomagi.api.research.ResearchEvents;
 import com.ollieread.technomagi.common.init.Blocks;
 import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.tileentity.TileEntityTeleporter;
@@ -19,7 +18,7 @@ public class TickEventHandler
     public void onPlayerTickEvent(PlayerTickEvent event)
     {
         if (!event.player.worldObj.isRemote && event.phase.equals(TickEvent.Phase.END)) {
-            TMRegistry.passiveAbilityEvent(ResearchEvents.EVENT_PLAYER_TICK, event, ExtendedPlayerKnowledge.get(event.player));
+            TMRegistry.passiveAbilityEvent("playerTick", event, ExtendedPlayerKnowledge.get(event.player));
 
             if (event.player.isSneaking()) {
                 if (PlayerHelper.isStoodOnMeta(event.player, Blocks.blockTeleporter, 0)) {

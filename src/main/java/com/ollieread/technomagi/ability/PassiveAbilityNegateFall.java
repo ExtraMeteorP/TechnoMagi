@@ -4,7 +4,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 
 import com.ollieread.technomagi.api.ability.AbilityPassive;
-import com.ollieread.technomagi.api.research.ResearchEvents;
 import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.util.ExplosionHelper;
 
@@ -17,9 +16,9 @@ public class PassiveAbilityNegateFall extends AbilityPassive<LivingFallEvent>
     }
 
     @Override
-    public int getEvent()
+    public String getEvent()
     {
-        return ResearchEvents.EVENT_FALL;
+        return "playerFall";
     }
 
     @Override

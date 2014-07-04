@@ -61,7 +61,10 @@ public class TMRegistry
 
     protected static List<Integer> entityObservable = new ArrayList<Integer>();
     protected static Map<Integer, Integer> entityMonitorable = new HashMap<Integer, Integer>();
+    protected static List<Class> entityMonitorableClasses = new ArrayList<Class>();
     protected static List<Integer> entityBrainable = new ArrayList<Integer>();
+
+    protected static List<String> eventRegistration = new ArrayList<String>();
 
     public static void registerSpecialisation(ISpecialisation spec)
     {
@@ -237,6 +240,11 @@ public class TMRegistry
         return id > -1 ? researchList.get(id).getName() : null;
     }
 
+    public static void researchEvent(String name, Event event, ExtendedPlayerKnowledge charon)
+    {
+        researchEvent(getEvent(name), event, charon);
+    }
+
     public static void researchEvent(int id, Event event, ExtendedPlayerKnowledge charon)
     {
         if (!charon.canSpecialise() && researchEvents.containsKey(id)) {
@@ -326,11 +334,12 @@ public class TMRegistry
 
             passiveAbilityList.add(i, ability);
             passiveNames.put(name, i);
+            int event = getEvent(ability.getEvent());
 
-            if (passiveAbilityEvents.containsKey(ability.getEvent())) {
-                passiveAbilityEvents.get(ability.getEvent()).add(i);
+            if (passiveAbilityEvents.containsKey(event)) {
+                passiveAbilityEvents.get(event).add(i);
             } else {
-                passiveAbilityEvents.put(ability.getEvent(), Arrays.asList(i));
+                passiveAbilityEvents.put(event, Arrays.asList(i));
             }
         }
     }
@@ -401,6 +410,11 @@ public class TMRegistry
         return passiveAbilityList;
     }
 
+    public static void passiveAbilityEvent(String name, Event event, ExtendedPlayerKnowledge charon)
+    {
+        passiveAbilityEvent(getEvent(name), event, charon);
+    }
+
     public static void passiveAbilityEvent(int id, Event event, ExtendedPlayerKnowledge charon)
     {
         if (!charon.canSpecialise() && passiveAbilityEvents.containsKey(id)) {
@@ -452,23 +466,29 @@ public class TMRegistry
                 if (entityClass != null && entityClass.equals(entity)) {
                     if (entityMonitorable.containsKey(key))
                         return;
-                    registerEntityMonitorable(key, robotID);
+                    registerEntityMonitorable(key, robotID, entityClass);
                     break;
                 }
             }
         }
     }
 
-    public static void registerEntityMonitorable(int id, int robotID)
+    public static void registerEntityMonitorable(int id, int robotID, Class entityClass)
     {
         if (!entityMonitorable.containsValue(id)) {
             entityMonitorable.put(id, robotID);
+            entityMonitorableClasses.add(entityClass);
         }
     }
 
     public static List<Integer> getMonitorableEntities()
     {
         return new ArrayList(entityMonitorable.keySet());
+    }
+
+    public static List<Class> getMonitorableEntityClasses()
+    {
+        return entityMonitorableClasses;
     }
 
     public static void registerEntityBrainable(Class<? extends EntityLiving> entity)
@@ -503,12 +523,13 @@ public class TMRegistry
     public static void registerEntity(Class<? extends EntityLiving> entity, boolean monitorable, int robotID, boolean observable, boolean brainable)
     {
         int key = -1;
+        Class entityClass = null;
 
         if (EntityList.IDtoClassMapping.containsValue(entity)) {
             Set entityIDs = EntityList.IDtoClassMapping.keySet();
             for (Iterator i = entityIDs.iterator(); i.hasNext();) {
                 key = (Integer) i.next();
-                Class entityClass = (Class) EntityList.IDtoClassMapping.get(key);
+                entityClass = (Class) EntityList.IDtoClassMapping.get(key);
 
                 if (entityClass != null && entityClass.equals(entity)) {
                     break;
@@ -520,12 +541,28 @@ public class TMRegistry
 
         if (key > -1) {
             if (monitorable)
-                registerEntityMonitorable(key, robotID);
+                registerEntityMonitorable(key, robotID, entityClass);
             if (observable)
                 registerEntityObservable(key);
             if (brainable)
                 registerEntityBrainable(key);
         }
+    }
+
+    public static int registerEvent(String name)
+    {
+        if (!eventRegistration.contains(name)) {
+            eventRegistration.add(name);
+
+            return eventRegistration.indexOf(name);
+        }
+
+        return -1;
+    }
+
+    public static int getEvent(String name)
+    {
+        return eventRegistration.indexOf(name);
     }
 
 }

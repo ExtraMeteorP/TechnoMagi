@@ -2,7 +2,6 @@ package com.ollieread.technomagi.ability;
 
 import com.ollieread.technomagi.api.ability.AbilityPassive;
 import com.ollieread.technomagi.api.event.TMEvent.ResearchProgressEvent;
-import com.ollieread.technomagi.api.research.ResearchEvents;
 import com.ollieread.technomagi.common.init.Specialisations;
 import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
 
@@ -15,9 +14,9 @@ public class PassiveAbilityScholarResearch extends AbilityPassive<ResearchProgre
     }
 
     @Override
-    public int getEvent()
+    public String getEvent()
     {
-        return ResearchEvents.EVENT_RESEARCH_PROGRESS;
+        return "researchProgress";
     }
 
     @Override

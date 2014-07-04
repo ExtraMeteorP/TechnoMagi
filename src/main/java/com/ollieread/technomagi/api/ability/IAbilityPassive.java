@@ -15,7 +15,7 @@ public interface IAbilityPassive<E>
     @SideOnly(Side.CLIENT)
     public ResourceLocation getIcon();
 
-    public int getEvent();
+    public String getEvent();
 
     public boolean canUse(ExtendedPlayerKnowledge charon);
 

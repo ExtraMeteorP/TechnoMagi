@@ -9,6 +9,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
+import com.ollieread.technomagi.api.TMRegistry;
 import com.ollieread.technomagi.client.gui.GuiNaniteReplicator;
 import com.ollieread.technomagi.client.gui.GuiSelf;
 import com.ollieread.technomagi.client.gui.GuiSpecialisation;
@@ -81,6 +82,25 @@ public class CommonProxy implements IGuiHandler
 
     public void registerEventHandlers()
     {
+        TMRegistry.registerEvent("specialisation");
+        TMRegistry.registerEvent("researchProgress");
+        TMRegistry.registerEvent("inFire");
+        TMRegistry.registerEvent("playerTick");
+        TMRegistry.registerEvent("fall");
+        TMRegistry.registerEvent("onFire");
+        TMRegistry.registerEvent("inLava");
+        TMRegistry.registerEvent("inWall");
+        TMRegistry.registerEvent("starve");
+        TMRegistry.registerEvent("cactus");
+        TMRegistry.registerEvent("void");
+        TMRegistry.registerEvent("magic");
+        TMRegistry.registerEvent("wither");
+        TMRegistry.registerEvent("anvil");
+        TMRegistry.registerEvent("fallingBlock");
+        TMRegistry.registerEvent("toNether");
+        TMRegistry.registerEvent("toEnd");
+        TMRegistry.registerEvent("toOverworld");
+
         MinecraftForge.EVENT_BUS.register(playerEventHandler);
         MinecraftForge.EVENT_BUS.register(new TMEventHandler());
 

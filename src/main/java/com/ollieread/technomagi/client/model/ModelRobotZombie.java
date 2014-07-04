@@ -1,8 +1,8 @@
 package com.ollieread.technomagi.client.model;
 
-import net.minecraft.client.model.ModelCow;
+import net.minecraft.client.model.ModelZombie;
 
-public class ModelRobotZombie extends ModelCow
+public class ModelRobotZombie extends ModelZombie
 {
 
     public ModelRobotZombie()
