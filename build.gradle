@@ -45,7 +45,7 @@ task deobfJar(type: Jar) {
     classifier = 'deobf'
 }
 
-tasks.build.dependsOn('sourceJar', 'deobfJar')
+tasks.build.dependsOn('deobfJar')
 
 processResources {
     from (sourceSets.main.resources.srcDirs)
