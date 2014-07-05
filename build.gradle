@@ -27,7 +27,7 @@ configFile.withReader {
 }
 
 version = "${config.version.minecraft}-${config.version.forge}_${config.version.major}.${config.version.minor}.${config.version.revis}${config.version.release}"
-group= "com.ollieread.technomagi" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group = "com.ollieread.technomagi" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "TechnoMagi"
 
 minecraft {
@@ -40,18 +40,18 @@ minecraft {
 
 version += "-${System.getenv("BUILD_NUMBER") ?: 0}"
 
-processResources
-{
-    from 'build.properties'
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    classifier = 'deobf'
 }
 
-task apiZip(type: Zip) {
-    classifier = 'api'
-    from sourceSets*.allSource
-    include 'com/ollieread/technomagi/api/**'
-    destinationDir = file 'output'
+tasks.build.dependsOn('sourceJar', 'deobfJar')
+
+processResources {
+    from (sourceSets.main.resources.srcDirs)
 }
 
 artifacts {
-    archives apiZip
+    archives deobfJar 
+    archives jar
 }
