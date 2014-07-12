@@ -21,7 +21,7 @@ public class ActiveAbilityFire extends AbilityActive
 
     public ActiveAbilityFire(String name)
     {
-        super(name);
+        super(name, Reference.MODID.toLowerCase());
     }
 
     @Override

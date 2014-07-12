@@ -18,7 +18,7 @@ public class ActiveAbilityInvisibility extends AbilityActive
 
     public ActiveAbilityInvisibility(String name)
     {
-        super(name);
+        super(name, Reference.MODID.toLowerCase());
     }
 
     @Override

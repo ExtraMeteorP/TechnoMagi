@@ -8,6 +8,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 
 import com.ollieread.ennds.ability.AbilityActive;
+import com.ollieread.ennds.common.Reference;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.util.PlayerHelper;
 
@@ -18,7 +19,7 @@ public class ActiveAbilityFlashstep extends AbilityActive
 
     public ActiveAbilityFlashstep(String name)
     {
-        super(name);
+        super(name, Reference.MODID.toLowerCase());
     }
 
     @Override

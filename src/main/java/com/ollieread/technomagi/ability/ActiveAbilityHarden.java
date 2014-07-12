@@ -18,7 +18,7 @@ public class ActiveAbilityHarden extends AbilityActive
 
     public ActiveAbilityHarden(String name)
     {
-        super(name);
+        super(name, Reference.MODID.toLowerCase());
     }
 
     @Override

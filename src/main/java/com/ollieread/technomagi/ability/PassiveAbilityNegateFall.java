@@ -4,6 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 
 import com.ollieread.ennds.ability.AbilityPassive;
+import com.ollieread.ennds.common.Reference;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.util.ExplosionHelper;
 
@@ -12,7 +13,7 @@ public class PassiveAbilityNegateFall extends AbilityPassive<LivingFallEvent>
 
     public PassiveAbilityNegateFall(String name)
     {
-        super(name);
+        super(name, Reference.MODID.toLowerCase());
     }
 
     @Override

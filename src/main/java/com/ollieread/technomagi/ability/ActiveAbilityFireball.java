@@ -1,6 +1,7 @@
 package com.ollieread.technomagi.ability;
 
 import com.ollieread.ennds.ability.AbilityActive;
+import com.ollieread.ennds.common.Reference;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 
 import cpw.mods.fml.common.eventhandler.Event;
@@ -10,7 +11,7 @@ public class ActiveAbilityFireball extends AbilityActive
 
     public ActiveAbilityFireball(String name)
     {
-        super(name);
+        super(name, Reference.MODID.toLowerCase());
     }
 
     @Override
