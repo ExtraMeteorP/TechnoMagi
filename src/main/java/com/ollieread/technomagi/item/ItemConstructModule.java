@@ -2,21 +2,20 @@ package com.ollieread.technomagi.item;
 
 import java.util.List;
 
-import com.ollieread.technomagi.TechnoMagi;
-import com.ollieread.technomagi.api.item.IConstructModule;
-import com.ollieread.technomagi.block.BlockModule;
-import com.ollieread.technomagi.common.Reference;
-import com.ollieread.technomagi.common.init.Blocks;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.MathHelper;
+
+import com.ollieread.ennds.item.IConstructModule;
+import com.ollieread.technomagi.TechnoMagi;
+import com.ollieread.technomagi.common.Reference;
+import com.ollieread.technomagi.common.init.Blocks;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemConstructModule extends Item implements IConstructModule
 {

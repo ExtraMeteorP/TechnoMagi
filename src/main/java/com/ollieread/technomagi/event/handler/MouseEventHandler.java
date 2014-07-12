@@ -4,10 +4,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.MouseEvent;
 
+import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
+import com.ollieread.ennds.network.message.MessageAbility;
 import com.ollieread.technomagi.client.gui.GuiTMOverlay;
-import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.network.PacketHandler;
-import com.ollieread.technomagi.network.message.MessageAbility;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 

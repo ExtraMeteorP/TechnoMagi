@@ -14,8 +14,8 @@ import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.passive.EntityVillager;
 
+import com.ollieread.ennds.research.ResearchRegistry;
 import com.ollieread.technomagi.TechnoMagi;
-import com.ollieread.technomagi.api.TMRegistry;
 import com.ollieread.technomagi.entity.robot.EntityRobotCow;
 import com.ollieread.technomagi.entity.robot.EntityRobotCreeper;
 import com.ollieread.technomagi.entity.robot.EntityRobotZombie;
@@ -45,19 +45,19 @@ public class Entities
         EntityRegistry.registerModEntity(EntityRobotZombie.class, "robotZombie", robotZombieID, TechnoMagi.instance, 80, 1, true);
         EntityList.addMapping(EntityRobotZombie.class, "robotZombie", robotZombieID, 113213, 3523523);
 
-        TMRegistry.registerEntity(EntityCow.class, true, robotCowID, false, true);
-        TMRegistry.registerEntity(EntitySheep.class, false, 0, false, true);
-        TMRegistry.registerEntity(EntityChicken.class, false, 0, false, true);
-        TMRegistry.registerEntity(EntityHorse.class, false, 0, false, true);
-        TMRegistry.registerEntity(EntityVillager.class, false, 0, true, true);
+        ResearchRegistry.registerEntity(EntityCow.class, true, robotCowID, false, true);
+        ResearchRegistry.registerEntity(EntitySheep.class, false, 0, false, true);
+        ResearchRegistry.registerEntity(EntityChicken.class, false, 0, false, true);
+        ResearchRegistry.registerEntity(EntityHorse.class, false, 0, false, true);
+        ResearchRegistry.registerEntity(EntityVillager.class, false, 0, true, true);
 
-        TMRegistry.registerEntity(EntityCreeper.class, true, robotCreeperID, true, true);
-        TMRegistry.registerEntity(EntityZombie.class, true, robotZombieID, true, true);
-        TMRegistry.registerEntity(EntityPigZombie.class, false, 0, true, true);
-        TMRegistry.registerEntity(EntitySkeleton.class, false, 0, true, true);
-        TMRegistry.registerEntity(EntitySpider.class, false, 0, false, true);
-        TMRegistry.registerEntity(EntityCaveSpider.class, false, 0, false, true);
-        TMRegistry.registerEntity(EntityEnderman.class, false, 0, true, true);
+        ResearchRegistry.registerEntity(EntityCreeper.class, true, robotCreeperID, true, true);
+        ResearchRegistry.registerEntity(EntityZombie.class, true, robotZombieID, true, true);
+        ResearchRegistry.registerEntity(EntityPigZombie.class, false, 0, true, true);
+        ResearchRegistry.registerEntity(EntitySkeleton.class, false, 0, true, true);
+        ResearchRegistry.registerEntity(EntitySpider.class, false, 0, false, true);
+        ResearchRegistry.registerEntity(EntityCaveSpider.class, false, 0, false, true);
+        ResearchRegistry.registerEntity(EntityEnderman.class, false, 0, true, true);
     }
 
 }

@@ -13,10 +13,10 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 
 import org.lwjgl.opengl.GL11;
 
-import com.ollieread.technomagi.api.TMRegistry;
-import com.ollieread.technomagi.api.ability.IAbilityActive;
+import com.ollieread.ennds.ability.AbilityRegistry;
+import com.ollieread.ennds.ability.IAbilityActive;
+import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.common.Reference;
-import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
@@ -132,7 +132,7 @@ public class GuiTMOverlay extends Gui
                 if (x > end)
                     break;
 
-                IAbilityActive ability = TMRegistry.getActiveAbility(abilities.get(aOffset + i));
+                IAbilityActive ability = AbilityRegistry.getActiveAbility(abilities.get(aOffset + i));
 
                 this.mc.getTextureManager().bindTexture(ability.getIcon());
                 this.func_146110_a(5, yOffset + (3 + (20 * i)), 0, 0, 16, 16, 16, 16);
@@ -140,7 +140,7 @@ public class GuiTMOverlay extends Gui
             }
 
             if (currentAbility > -1 && shouldDisplay && highlightTicks > 0) {
-                String display = TMRegistry.getActiveAbility(abilities.get(currentAbility)).getLocalisedName();
+                String display = AbilityRegistry.getActiveAbility(abilities.get(currentAbility)).getLocalisedName();
                 int k1 = (width - fontrenderer.getStringWidth(display)) / 2;
                 int l1 = height - 72;
 

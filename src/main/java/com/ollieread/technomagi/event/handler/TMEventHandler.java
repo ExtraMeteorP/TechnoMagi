@@ -3,11 +3,11 @@ package com.ollieread.technomagi.event.handler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 
-import com.ollieread.technomagi.api.TMRegistry;
-import com.ollieread.technomagi.api.event.TMEvent.ResearchCompleteEvent;
-import com.ollieread.technomagi.api.event.TMEvent.ResearchProgressEvent;
-import com.ollieread.technomagi.api.event.TMEvent.SpecialisationChosenEvent;
-import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
+import com.ollieread.ennds.ability.AbilityRegistry;
+import com.ollieread.ennds.event.EnndsEvent.ResearchCompleteEvent;
+import com.ollieread.ennds.event.EnndsEvent.ResearchProgressEvent;
+import com.ollieread.ennds.event.EnndsEvent.SpecialisationChosenEvent;
+import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
@@ -21,7 +21,7 @@ public class TMEventHandler
             ExtendedPlayerKnowledge charon = ExtendedPlayerKnowledge.get((EntityPlayer) event.entity);
             ((EntityPlayer) event.entity).addChatMessage(new ChatComponentText("Specialisation chosen: " + event.specialisation.getName()));
 
-            TMRegistry.passiveAbilityEvent("specialisation", event, charon);
+            AbilityRegistry.passiveAbilityEvent("specialisation", event, charon);
         }
     }
 
@@ -37,7 +37,7 @@ public class TMEventHandler
     public void onResearchProgress(ResearchProgressEvent event)
     {
         if (!event.entity.worldObj.isRemote) {
-            TMRegistry.passiveAbilityEvent("researchProgress", event, event.charon);
+            AbilityRegistry.passiveAbilityEvent("researchProgress", event, event.charon);
         }
     }
 

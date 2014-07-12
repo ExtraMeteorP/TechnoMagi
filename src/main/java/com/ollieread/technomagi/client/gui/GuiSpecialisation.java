@@ -11,13 +11,13 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
-import com.ollieread.technomagi.api.ISpecialisation;
-import com.ollieread.technomagi.api.TMRegistry;
+import com.ollieread.ennds.EnndsRegistry;
+import com.ollieread.ennds.ISpecialisation;
+import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
+import com.ollieread.ennds.network.message.MessageSpecialisation;
 import com.ollieread.technomagi.common.Information;
 import com.ollieread.technomagi.common.Reference;
-import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.network.PacketHandler;
-import com.ollieread.technomagi.network.message.MessageSpecialisation;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -53,7 +53,7 @@ public class GuiSpecialisation extends GuiScreen
         this.buttonList.add(this.buttonSpecialise = new GuiTMButton(1, this.xOffset + 53, this.yOffset + 185, 120, 20, I18n.format("technomagi.specialise.button")));
         guiScale = this.mc.gameSettings.guiScale;
 
-        Collection<ISpecialisation> specialisations = TMRegistry.getSpecialisations();
+        Collection<ISpecialisation> specialisations = EnndsRegistry.getSpecialisations();
         int buttonId = 4;
 
         for (Iterator<ISpecialisation> i = specialisations.iterator(); i.hasNext();) {
@@ -112,7 +112,7 @@ public class GuiSpecialisation extends GuiScreen
             if (choice != null) {
                 ExtendedPlayerKnowledge charon = ExtendedPlayerKnowledge.get(this.mc.thePlayer);
                 charon.setSpecialisation(choice);
-                PacketHandler.INSTANCE.sendToServer(new MessageSpecialisation(TMRegistry.getSpecialisationId(choice)));
+                PacketHandler.INSTANCE.sendToServer(new MessageSpecialisation(EnndsRegistry.getSpecialisationId(choice)));
                 scrollableText.scrollY = 0;
                 this.mc.displayGuiScreen(null);
             }

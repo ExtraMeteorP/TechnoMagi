@@ -1,8 +1,8 @@
 package com.ollieread.technomagi.item;
 
-import com.ollieread.technomagi.api.item.IResearchStorage;
-
 import net.minecraft.item.Item;
+
+import com.ollieread.ennds.item.IResearchStorage;
 
 public class ItemResearchStorage extends Item implements IResearchStorage
 {

@@ -1,6 +1,6 @@
 package com.ollieread.technomagi.research;
 
-import com.ollieread.technomagi.api.research.Knowledge;
+import com.ollieread.ennds.research.Knowledge;
 
 public class KnowledgeLightManipulationI extends Knowledge
 {

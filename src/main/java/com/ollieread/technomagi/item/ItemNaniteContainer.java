@@ -14,9 +14,9 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
-import com.ollieread.technomagi.api.TMRegistry;
+import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
+import com.ollieread.ennds.research.ResearchRegistry;
 import com.ollieread.technomagi.common.Reference;
-import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -72,7 +72,7 @@ public class ItemNaniteContainer extends ItemTM
         list.add(new ItemStack(item, 1, 0));
         list.add(new ItemStack(item, 1, 1));
 
-        Iterator iterator = TMRegistry.getMonitorableEntities().iterator();
+        Iterator iterator = ResearchRegistry.getMonitorableEntities().iterator();
 
         while (iterator.hasNext()) {
             list.add(new ItemStack(item, 1, (Integer) iterator.next()));

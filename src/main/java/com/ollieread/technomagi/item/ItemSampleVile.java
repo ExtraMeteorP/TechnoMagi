@@ -12,7 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 
-import com.ollieread.technomagi.api.TMRegistry;
+import com.ollieread.ennds.research.ResearchRegistry;
 import com.ollieread.technomagi.common.Reference;
 
 import cpw.mods.fml.relauncher.Side;
@@ -65,7 +65,7 @@ public class ItemSampleVile extends ItemTM
     {
         list.add(new ItemStack(item, 1, 0));
 
-        Iterator iterator = TMRegistry.getMonitorableEntities().iterator();
+        Iterator iterator = ResearchRegistry.getMonitorableEntities().iterator();
 
         while (iterator.hasNext()) {
             list.add(new ItemStack(item, 1, (Integer) iterator.next()));

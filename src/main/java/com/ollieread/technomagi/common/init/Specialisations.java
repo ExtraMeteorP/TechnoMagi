@@ -2,10 +2,10 @@ package com.ollieread.technomagi.common.init;
 
 import org.apache.logging.log4j.Level;
 
+import com.ollieread.ennds.EnndsRegistry;
+import com.ollieread.ennds.ISpecialisation;
+import com.ollieread.ennds.Specialisation;
 import com.ollieread.technomagi.TechnoMagi;
-import com.ollieread.technomagi.api.ISpecialisation;
-import com.ollieread.technomagi.api.Specialisation;
-import com.ollieread.technomagi.api.TMRegistry;
 
 public class Specialisations
 {
@@ -22,9 +22,9 @@ public class Specialisations
         specMedic = new Specialisation("medic");
         specWarrior = new Specialisation("warrior");
 
-        TMRegistry.registerSpecialisation(specScholar);
-        TMRegistry.registerSpecialisation(specMedic);
-        TMRegistry.registerSpecialisation(specWarrior);
+        EnndsRegistry.registerSpecialisation(specScholar);
+        EnndsRegistry.registerSpecialisation(specMedic);
+        EnndsRegistry.registerSpecialisation(specWarrior);
     }
 
 }

@@ -13,7 +13,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
-import com.ollieread.technomagi.api.TMRegistry;
+import com.ollieread.ennds.research.ResearchRegistry;
 import com.ollieread.technomagi.common.Reference;
 
 import cpw.mods.fml.relauncher.Side;
@@ -93,7 +93,7 @@ public class ItemMobBrain extends ItemTM
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item p_150895_1_, CreativeTabs p_150895_2_, List p_150895_3_)
     {
-        Iterator iterator = TMRegistry.getBrainableEntities().iterator();
+        Iterator iterator = ResearchRegistry.getBrainableEntities().iterator();
 
         while (iterator.hasNext()) {
             EntityList.EntityEggInfo entityegginfo = (EntityList.EntityEggInfo) EntityList.entityEggs.get(iterator.next());

@@ -26,6 +26,19 @@ configFile.withReader {
     project.ext.config = new ConfigSlurper().parse prop
 }
 
+apply plugin: 'maven'
+
+repositories {
+    maven {
+        name = 'EnndsCore'
+        url = "http://exia.ollieread.com/maven/"
+    }
+}
+
+dependencies {
+    compile "com.ollieread.ennds:EnndsCore:${config.version.minecraft}-${config.version.ennds}:deobf"
+}
+
 version = "${config.version.minecraft}-${config.version.forge}_${config.version.major}.${config.version.minor}.${config.version.revis}${config.version.release}"
 group = "com.ollieread.technomagi" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "TechnoMagi"

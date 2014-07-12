@@ -9,6 +9,7 @@ import com.ollieread.technomagi.block.BlockArchive;
 import com.ollieread.technomagi.block.BlockAreaLight;
 import com.ollieread.technomagi.block.BlockChamberFiller;
 import com.ollieread.technomagi.block.BlockConstruct;
+import com.ollieread.technomagi.block.BlockCrafting;
 import com.ollieread.technomagi.block.BlockKnowledgeReceptacle;
 import com.ollieread.technomagi.block.BlockLightAir;
 import com.ollieread.technomagi.block.BlockNaniteReplicator;
@@ -17,6 +18,7 @@ import com.ollieread.technomagi.block.BlockTeleporter;
 import com.ollieread.technomagi.item.ItemBlockTM;
 import com.ollieread.technomagi.tileentity.TileEntityArchive;
 import com.ollieread.technomagi.tileentity.TileEntityAreaLight;
+import com.ollieread.technomagi.tileentity.TileEntityCrafting;
 import com.ollieread.technomagi.tileentity.TileEntityLightAir;
 import com.ollieread.technomagi.tileentity.TileEntityNaniteReplicator;
 import com.ollieread.technomagi.tileentity.TileEntityObservationChamber;
@@ -36,6 +38,7 @@ public class Blocks
     public static Block blockTeleporter;
     public static Block blockObservationChamber;
     public static Block blockChamberFiller;
+    public static Block blockCrafting;
 
     public static void init()
     {
@@ -50,6 +53,7 @@ public class Blocks
         blockTeleporter = new BlockTeleporter("teleporter");
         blockObservationChamber = new BlockObservationChamber("observationChamber");
         blockChamberFiller = new BlockChamberFiller("chamberFiller");
+        blockCrafting = new BlockCrafting("crafting");
 
         GameRegistry.registerBlock(blockConstruct, "construct");
         GameRegistry.registerBlock(blockArchive, "archive");
@@ -60,6 +64,7 @@ public class Blocks
         GameRegistry.registerBlock(blockTeleporter, ItemBlockTM.class, "teleporter");
         GameRegistry.registerBlock(blockObservationChamber, "observationChamber");
         GameRegistry.registerBlock(blockChamberFiller, "chamberFiller");
+        GameRegistry.registerBlock(blockCrafting, "crafting");
 
         GameRegistry.registerTileEntity(TileEntityArchive.class, "tileEntityArchive");
         GameRegistry.registerTileEntity(TileEntityNaniteReplicator.class, "tileEntityNaniteReplicator");
@@ -67,6 +72,7 @@ public class Blocks
         GameRegistry.registerTileEntity(TileEntityAreaLight.class, "tileEntityAreaLight");
         GameRegistry.registerTileEntity(TileEntityTeleporter.class, "tileEntityTeleporter");
         GameRegistry.registerTileEntity(TileEntityObservationChamber.class, "tileEntityObservationChamber");
+        GameRegistry.registerTileEntity(TileEntityCrafting.class, "tileEntityCrafting");
     }
 
 }

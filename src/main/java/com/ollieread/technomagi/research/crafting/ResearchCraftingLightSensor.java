@@ -3,9 +3,9 @@ package com.ollieread.technomagi.research.crafting;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
-import com.ollieread.technomagi.api.research.IResearchCrafting;
-import com.ollieread.technomagi.api.research.Research;
-import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
+import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
+import com.ollieread.ennds.research.IResearchCrafting;
+import com.ollieread.ennds.research.Research;
 
 public class ResearchCraftingLightSensor extends Research implements IResearchCrafting
 {

@@ -1,9 +1,9 @@
 package com.ollieread.technomagi.ability;
 
-import com.ollieread.technomagi.api.ability.AbilityPassive;
-import com.ollieread.technomagi.api.event.TMEvent.ResearchProgressEvent;
+import com.ollieread.ennds.ability.AbilityPassive;
+import com.ollieread.ennds.event.EnndsEvent.ResearchProgressEvent;
+import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.common.init.Specialisations;
-import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
 
 public class PassiveAbilityScholarResearch extends AbilityPassive<ResearchProgressEvent>
 {

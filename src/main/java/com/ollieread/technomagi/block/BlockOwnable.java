@@ -9,8 +9,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 import com.ollieread.technomagi.TechnoMagi;
-import com.ollieread.technomagi.api.block.TileEntityPlayerLocked;
 import com.ollieread.technomagi.common.Reference;
+import com.ollieread.technomagi.tileentity.TileEntityPlayerLocked;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

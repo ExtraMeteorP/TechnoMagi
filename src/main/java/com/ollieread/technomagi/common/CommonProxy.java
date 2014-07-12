@@ -1,22 +1,18 @@
 package com.ollieread.technomagi.common;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
-import com.ollieread.technomagi.api.TMRegistry;
+import com.ollieread.ennds.EnndsRegistry;
+import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.client.gui.GuiNaniteReplicator;
 import com.ollieread.technomagi.client.gui.GuiSelf;
 import com.ollieread.technomagi.client.gui.GuiSpecialisation;
 import com.ollieread.technomagi.event.handler.PlayerEventHandler;
 import com.ollieread.technomagi.event.handler.TMEventHandler;
 import com.ollieread.technomagi.event.handler.TickEventHandler;
-import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.inventory.ContainerNaniteReplicator;
 import com.ollieread.technomagi.tileentity.TileEntityNaniteReplicator;
 
@@ -31,18 +27,6 @@ public class CommonProxy implements IGuiHandler
     public static int GUI_REPLICATOR = 3;
 
     public static PlayerEventHandler playerEventHandler = new PlayerEventHandler();
-
-    private static final Map<String, NBTTagCompound> extendedEntityData = new HashMap<String, NBTTagCompound>();
-
-    public static void storeEntityData(String name, NBTTagCompound compound)
-    {
-        extendedEntityData.put(name, compound);
-    }
-
-    public static NBTTagCompound getEntityData(String name)
-    {
-        return extendedEntityData.remove(name);
-    }
 
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
@@ -82,24 +66,24 @@ public class CommonProxy implements IGuiHandler
 
     public void registerEventHandlers()
     {
-        TMRegistry.registerEvent("specialisation");
-        TMRegistry.registerEvent("researchProgress");
-        TMRegistry.registerEvent("inFire");
-        TMRegistry.registerEvent("playerTick");
-        TMRegistry.registerEvent("fall");
-        TMRegistry.registerEvent("onFire");
-        TMRegistry.registerEvent("inLava");
-        TMRegistry.registerEvent("inWall");
-        TMRegistry.registerEvent("starve");
-        TMRegistry.registerEvent("cactus");
-        TMRegistry.registerEvent("void");
-        TMRegistry.registerEvent("magic");
-        TMRegistry.registerEvent("wither");
-        TMRegistry.registerEvent("anvil");
-        TMRegistry.registerEvent("fallingBlock");
-        TMRegistry.registerEvent("toNether");
-        TMRegistry.registerEvent("toEnd");
-        TMRegistry.registerEvent("toOverworld");
+        EnndsRegistry.registerEvent("specialisation");
+        EnndsRegistry.registerEvent("researchProgress");
+        EnndsRegistry.registerEvent("inFire");
+        EnndsRegistry.registerEvent("playerTick");
+        EnndsRegistry.registerEvent("fall");
+        EnndsRegistry.registerEvent("onFire");
+        EnndsRegistry.registerEvent("inLava");
+        EnndsRegistry.registerEvent("inWall");
+        EnndsRegistry.registerEvent("starve");
+        EnndsRegistry.registerEvent("cactus");
+        EnndsRegistry.registerEvent("void");
+        EnndsRegistry.registerEvent("magic");
+        EnndsRegistry.registerEvent("wither");
+        EnndsRegistry.registerEvent("anvil");
+        EnndsRegistry.registerEvent("fallingBlock");
+        EnndsRegistry.registerEvent("toNether");
+        EnndsRegistry.registerEvent("toEnd");
+        EnndsRegistry.registerEvent("toOverworld");
 
         MinecraftForge.EVENT_BUS.register(playerEventHandler);
         MinecraftForge.EVENT_BUS.register(new TMEventHandler());

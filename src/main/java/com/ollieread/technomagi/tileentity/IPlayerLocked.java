@@ -1,4 +1,4 @@
-package com.ollieread.technomagi.api.block;
+package com.ollieread.technomagi.tileentity;
 
 public interface IPlayerLocked
 {

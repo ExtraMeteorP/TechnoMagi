@@ -2,16 +2,8 @@ package com.ollieread.technomagi.tileentity;
 
 import java.util.HashMap;
 
-import com.ollieread.technomagi.api.TMRegistry;
-import com.ollieread.technomagi.api.block.TileEntityPlayerLocked;
-import com.ollieread.technomagi.api.event.TMEvent;
-import com.ollieread.technomagi.api.event.TMEvent.ResearchProgressEvent;
-
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChatComponentText;
-import net.minecraftforge.common.MinecraftForge;
 
 public class TileEntityKnowledgeReceptor extends TileEntityPlayerLocked
 {

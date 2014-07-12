@@ -6,8 +6,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
-import com.ollieread.technomagi.api.block.TileEntityPlayerLocked;
-
 public class TileEntityInventoryLocked extends TileEntityPlayerLocked implements IInventory
 {
 

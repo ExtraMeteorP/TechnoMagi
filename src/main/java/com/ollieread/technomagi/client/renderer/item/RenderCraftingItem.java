@@ -1,7 +1,6 @@
 package com.ollieread.technomagi.client.renderer.item;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelBook;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -10,18 +9,19 @@ import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
 
 import com.ollieread.technomagi.client.model.ModelMachineConstruct;
+import com.ollieread.technomagi.client.model.ModelMachineCrafting;
 import com.ollieread.technomagi.common.Reference;
 
-public class RenderArchiveItem implements IItemRenderer
+public class RenderCraftingItem implements IItemRenderer
 {
 
     private final ModelMachineConstruct construct;
-    private final ModelBook book;
+    private final ModelMachineCrafting crafting;
 
-    public RenderArchiveItem()
+    public RenderCraftingItem()
     {
         construct = new ModelMachineConstruct();
-        book = new ModelBook();
+        crafting = new ModelMachineCrafting();
     }
 
     @Override
@@ -39,8 +39,9 @@ public class RenderArchiveItem implements IItemRenderer
     @Override
     public void renderItem(ItemRenderType type, ItemStack item, Object... data)
     {
+
         ResourceLocation textureConstruct = (new ResourceLocation(Reference.MODID.toLowerCase(), "textures/blocks/modelConstruct.png"));
-        ResourceLocation textureBook = (new ResourceLocation(Reference.MODID.toLowerCase(), "textures/blocks/modelArchiveBook.png"));
+        ResourceLocation textureReplicator = (new ResourceLocation(Reference.MODID.toLowerCase(), "textures/blocks/modelCrafting.png"));
 
         GL11.glPushMatrix();
 
@@ -61,22 +62,8 @@ public class RenderArchiveItem implements IItemRenderer
         Minecraft.getMinecraft().renderEngine.bindTexture(textureConstruct);
         construct.render((Entity) null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
 
-        Minecraft.getMinecraft().renderEngine.bindTexture(textureBook);
-        GL11.glEnable(GL11.GL_CULL_FACE);
-        GL11.glRotatef(90.0F, 0.0F, 0.0F, -1.0F);
-
-        book.bookSpine.offsetX = -0.8F;
-        book.coverRight.offsetX = -0.8F;
-        book.coverLeft.offsetX = -0.8F;
-        book.pagesRight.offsetX = -0.8F;
-        book.pagesLeft.offsetX = -0.8F;
-        book.flippingPageRight.offsetX = -0.8F;
-        book.flippingPageLeft.offsetX = -0.8F;
-        book.bookSpine.offsetX = -0.8F;
-
-        book.render((Entity) null, 1.0F, 0.0F, 0.0F, 1.0F, 0.0F, 0.0625F);
-
-        GL11.glDisable(GL11.GL_CULL_FACE);
+        Minecraft.getMinecraft().renderEngine.bindTexture(textureReplicator);
+        crafting.render((Entity) null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
 
         GL11.glPopMatrix();
     }

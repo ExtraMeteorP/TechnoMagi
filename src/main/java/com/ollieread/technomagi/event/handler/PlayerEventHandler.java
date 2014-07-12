@@ -22,13 +22,14 @@ import net.minecraftforge.event.entity.player.PlayerEvent.StartTracking;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 
-import com.ollieread.technomagi.api.TMRegistry;
+import com.ollieread.ennds.ability.AbilityRegistry;
+import com.ollieread.ennds.extended.ExtendedNanites;
+import com.ollieread.ennds.extended.ExtendedPlayerAbilities;
+import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
+import com.ollieread.ennds.research.ResearchRegistry;
 import com.ollieread.technomagi.common.init.Blocks;
 import com.ollieread.technomagi.common.init.Items;
 import com.ollieread.technomagi.common.init.Potions;
-import com.ollieread.technomagi.extended.ExtendedNanites;
-import com.ollieread.technomagi.extended.ExtendedPlayerAbilities;
-import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.item.ItemDigitalTool;
 import com.ollieread.technomagi.network.PacketHandler;
 import com.ollieread.technomagi.network.message.MessageEntityInteractEvent;
@@ -57,7 +58,7 @@ public class PlayerEventHandler
                 ExtendedNanites.register((EntityPlayer) event.entity);
             }
         } else {
-            List<Class> allowedEntities = TMRegistry.getMonitorableEntityClasses();
+            List<Class> allowedEntities = ResearchRegistry.getMonitorableEntityClasses();
 
             for (Iterator<Class> i = allowedEntities.iterator(); i.hasNext();) {
                 Class c = i.next();
@@ -100,9 +101,9 @@ public class PlayerEventHandler
 
             if (world.provider.dimensionId != 0) {
                 if (world.provider.dimensionId == -1) {
-                    TMRegistry.researchEvent("toNether", event, ExtendedPlayerKnowledge.get((EntityPlayer) event.entity));
+                    ResearchRegistry.researchEvent("toNether", event, ExtendedPlayerKnowledge.get((EntityPlayer) event.entity));
                 } else if (world.provider.dimensionId == 1) {
-                    TMRegistry.researchEvent("toEnd", event, ExtendedPlayerKnowledge.get((EntityPlayer) event.entity));
+                    ResearchRegistry.researchEvent("toEnd", event, ExtendedPlayerKnowledge.get((EntityPlayer) event.entity));
                 }
             }
         }
@@ -184,38 +185,38 @@ public class PlayerEventHandler
             }
 
             if (event.source.equals(DamageSource.inFire)) {
-                TMRegistry.passiveAbilityEvent("inFire", event, ExtendedPlayerKnowledge.get(player));
-                TMRegistry.researchEvent("inFire", event, ExtendedPlayerKnowledge.get(player));
+                AbilityRegistry.passiveAbilityEvent("inFire", event, ExtendedPlayerKnowledge.get(player));
+                ResearchRegistry.researchEvent("inFire", event, ExtendedPlayerKnowledge.get(player));
             } else if (event.source.equals(DamageSource.onFire)) {
-                TMRegistry.passiveAbilityEvent("onFire", event, ExtendedPlayerKnowledge.get(player));
-                TMRegistry.researchEvent("onFire", event, ExtendedPlayerKnowledge.get(player));
+                AbilityRegistry.passiveAbilityEvent("onFire", event, ExtendedPlayerKnowledge.get(player));
+                ResearchRegistry.researchEvent("onFire", event, ExtendedPlayerKnowledge.get(player));
             } else if (event.source.equals(DamageSource.lava)) {
-                TMRegistry.passiveAbilityEvent("inLava", event, ExtendedPlayerKnowledge.get(player));
-                TMRegistry.researchEvent("inLava", event, ExtendedPlayerKnowledge.get(player));
+                AbilityRegistry.passiveAbilityEvent("inLava", event, ExtendedPlayerKnowledge.get(player));
+                ResearchRegistry.researchEvent("inLava", event, ExtendedPlayerKnowledge.get(player));
             } else if (event.source.equals(DamageSource.inWall)) {
-                TMRegistry.passiveAbilityEvent("inWall", event, ExtendedPlayerKnowledge.get(player));
-                TMRegistry.researchEvent("inWall", event, ExtendedPlayerKnowledge.get(player));
+                AbilityRegistry.passiveAbilityEvent("inWall", event, ExtendedPlayerKnowledge.get(player));
+                ResearchRegistry.researchEvent("inWall", event, ExtendedPlayerKnowledge.get(player));
             } else if (event.source.equals(DamageSource.starve)) {
-                TMRegistry.passiveAbilityEvent("starve", event, ExtendedPlayerKnowledge.get(player));
-                TMRegistry.researchEvent("starve", event, ExtendedPlayerKnowledge.get(player));
+                AbilityRegistry.passiveAbilityEvent("starve", event, ExtendedPlayerKnowledge.get(player));
+                ResearchRegistry.researchEvent("starve", event, ExtendedPlayerKnowledge.get(player));
             } else if (event.source.equals(DamageSource.cactus)) {
-                TMRegistry.passiveAbilityEvent("cactus", event, ExtendedPlayerKnowledge.get(player));
-                TMRegistry.researchEvent("cactus", event, ExtendedPlayerKnowledge.get(player));
+                AbilityRegistry.passiveAbilityEvent("cactus", event, ExtendedPlayerKnowledge.get(player));
+                ResearchRegistry.researchEvent("cactus", event, ExtendedPlayerKnowledge.get(player));
             } else if (event.source.equals(DamageSource.outOfWorld)) {
-                TMRegistry.passiveAbilityEvent("void", event, ExtendedPlayerKnowledge.get(player));
-                TMRegistry.researchEvent("void", event, ExtendedPlayerKnowledge.get(player));
+                AbilityRegistry.passiveAbilityEvent("void", event, ExtendedPlayerKnowledge.get(player));
+                ResearchRegistry.researchEvent("void", event, ExtendedPlayerKnowledge.get(player));
             } else if (event.source.equals(DamageSource.magic)) {
-                TMRegistry.passiveAbilityEvent("magic", event, ExtendedPlayerKnowledge.get(player));
-                TMRegistry.researchEvent("magic", event, ExtendedPlayerKnowledge.get(player));
+                AbilityRegistry.passiveAbilityEvent("magic", event, ExtendedPlayerKnowledge.get(player));
+                ResearchRegistry.researchEvent("magic", event, ExtendedPlayerKnowledge.get(player));
             } else if (event.source.equals(DamageSource.wither)) {
-                TMRegistry.passiveAbilityEvent("wither", event, ExtendedPlayerKnowledge.get(player));
-                TMRegistry.researchEvent("wither", event, ExtendedPlayerKnowledge.get(player));
+                AbilityRegistry.passiveAbilityEvent("wither", event, ExtendedPlayerKnowledge.get(player));
+                ResearchRegistry.researchEvent("wither", event, ExtendedPlayerKnowledge.get(player));
             } else if (event.source.equals(DamageSource.anvil)) {
-                TMRegistry.passiveAbilityEvent("anvil", event, ExtendedPlayerKnowledge.get(player));
-                TMRegistry.researchEvent("anvil", event, ExtendedPlayerKnowledge.get(player));
+                AbilityRegistry.passiveAbilityEvent("anvil", event, ExtendedPlayerKnowledge.get(player));
+                ResearchRegistry.researchEvent("anvil", event, ExtendedPlayerKnowledge.get(player));
             } else if (event.source.equals(DamageSource.fallingBlock)) {
-                TMRegistry.passiveAbilityEvent("fallingBlock", event, ExtendedPlayerKnowledge.get(player));
-                TMRegistry.researchEvent("fallingBlock", event, ExtendedPlayerKnowledge.get(player));
+                AbilityRegistry.passiveAbilityEvent("fallingBlock", event, ExtendedPlayerKnowledge.get(player));
+                ResearchRegistry.researchEvent("fallingBlock", event, ExtendedPlayerKnowledge.get(player));
             }
         }
     }
@@ -224,8 +225,8 @@ public class PlayerEventHandler
     public void onFallEvent(LivingFallEvent event)
     {
         if (!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer) {
-            TMRegistry.passiveAbilityEvent("fall", event, ExtendedPlayerKnowledge.get((EntityPlayer) event.entity));
-            TMRegistry.researchEvent("fall", event, ExtendedPlayerKnowledge.get((EntityPlayer) event.entity));
+            AbilityRegistry.passiveAbilityEvent("fall", event, ExtendedPlayerKnowledge.get((EntityPlayer) event.entity));
+            ResearchRegistry.researchEvent("fall", event, ExtendedPlayerKnowledge.get((EntityPlayer) event.entity));
         }
     }
 
@@ -262,7 +263,7 @@ public class PlayerEventHandler
     public void onPlayerCrafting(ItemCraftedEvent event)
     {
         if (!event.player.worldObj.isRemote) {
-            TMRegistry.researchCrafting(event, ExtendedPlayerKnowledge.get(event.player));
+            ResearchRegistry.researchCrafting(event, ExtendedPlayerKnowledge.get(event.player));
         }
     }
 
@@ -270,7 +271,7 @@ public class PlayerEventHandler
     public void onPlayerHarvest(HarvestDropsEvent event)
     {
         if (!event.world.isRemote && event.harvester != null) {
-            TMRegistry.researchMining(event, ExtendedPlayerKnowledge.get(event.harvester));
+            ResearchRegistry.researchMining(event, ExtendedPlayerKnowledge.get(event.harvester));
         }
     }
 

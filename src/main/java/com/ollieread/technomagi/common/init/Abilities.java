@@ -2,6 +2,9 @@ package com.ollieread.technomagi.common.init;
 
 import org.apache.logging.log4j.Level;
 
+import com.ollieread.ennds.ability.AbilityRegistry;
+import com.ollieread.ennds.ability.IAbilityActive;
+import com.ollieread.ennds.ability.IAbilityPassive;
 import com.ollieread.technomagi.TechnoMagi;
 import com.ollieread.technomagi.ability.ActiveAbilityFire;
 import com.ollieread.technomagi.ability.ActiveAbilityFlashstep;
@@ -10,9 +13,6 @@ import com.ollieread.technomagi.ability.ActiveAbilityInvisibility;
 import com.ollieread.technomagi.ability.PassiveAbilityNanites;
 import com.ollieread.technomagi.ability.PassiveAbilityNegateFall;
 import com.ollieread.technomagi.ability.PassiveAbilityScholarResearch;
-import com.ollieread.technomagi.api.TMRegistry;
-import com.ollieread.technomagi.api.ability.IAbilityActive;
-import com.ollieread.technomagi.api.ability.IAbilityPassive;
 
 public class Abilities
 {
@@ -35,18 +35,18 @@ public class Abilities
         abilityActiveInvisibility = new ActiveAbilityInvisibility("invisibility");
         abilityActiveFlashstep = new ActiveAbilityFlashstep("flashstep");
 
-        TMRegistry.registerActiveAbility(abilityActiveFire);
-        TMRegistry.registerActiveAbility(abilityActiveHarden);
-        TMRegistry.registerActiveAbility(abilityActiveInvisibility);
-        TMRegistry.registerActiveAbility(abilityActiveFlashstep);
+        AbilityRegistry.registerActiveAbility(abilityActiveFire);
+        AbilityRegistry.registerActiveAbility(abilityActiveHarden);
+        AbilityRegistry.registerActiveAbility(abilityActiveInvisibility);
+        AbilityRegistry.registerActiveAbility(abilityActiveFlashstep);
 
         abilityPassiveScholarResearch = new PassiveAbilityScholarResearch("scholarResearch");
         abilityPassiveNanites = new PassiveAbilityNanites("naniteRegen");
         abilityPassiveNegateFall = new PassiveAbilityNegateFall("negateFall");
 
-        TMRegistry.registerPassiveAbility(abilityPassiveScholarResearch);
-        TMRegistry.registerPassiveAbility(abilityPassiveNanites);
-        TMRegistry.registerPassiveAbility(abilityPassiveNegateFall);
+        AbilityRegistry.registerPassiveAbility(abilityPassiveScholarResearch);
+        AbilityRegistry.registerPassiveAbility(abilityPassiveNanites);
+        AbilityRegistry.registerPassiveAbility(abilityPassiveNegateFall);
     }
 
 }

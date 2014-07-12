@@ -14,6 +14,7 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
+import com.ollieread.technomagi.client.model.ModelMachineConstruct;
 import com.ollieread.technomagi.client.model.ModelMachineReplicator;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.common.init.Blocks;
@@ -22,19 +23,22 @@ import com.ollieread.technomagi.tileentity.TileEntityNaniteReplicator;
 public class TileEntityNaniteReplicatorRenderer extends TileEntitySpecialRenderer
 {
 
-    private final ModelMachineReplicator model;
+    private final ModelMachineConstruct construct;
+    private final ModelMachineReplicator replicator;
 
     public TileEntityNaniteReplicatorRenderer()
     {
-        model = new ModelMachineReplicator();
+        construct = new ModelMachineConstruct();
+        replicator = new ModelMachineReplicator();
     }
 
     @Override
     public void renderTileEntityAt(TileEntity te, double x, double y, double z, float scale)
     {
-        TileEntityNaniteReplicator replicator = (TileEntityNaniteReplicator) te;
-        this.model.setTileEntity(replicator);
-        int side = replicator.getBlockMetadata();
+        TileEntityNaniteReplicator machine = (TileEntityNaniteReplicator) te;
+
+        replicator.setTileEntity(machine);
+        int side = machine.getBlockMetadata();
         Tessellator tessellator = Tessellator.instance;
         // This will make your block brightness dependent from surroundings
         // lighting.
@@ -44,6 +48,9 @@ public class TileEntityNaniteReplicatorRenderer extends TileEntitySpecialRendere
         int l2 = l / 65536;
         tessellator.setColorOpaque_F(f, f, f);
         OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) l1, (float) l2);
+
+        ResourceLocation textureConstruct = (new ResourceLocation(Reference.MODID.toLowerCase(), "textures/blocks/modelConstruct.png"));
+        ResourceLocation textureReplicator = (new ResourceLocation(Reference.MODID.toLowerCase(), "textures/blocks/modelReplicator.png"));
 
         GL11.glPushMatrix();
         GL11.glTranslatef((float) x + 0.5F, (float) y + 1.5F, (float) z + 0.5F);
@@ -63,19 +70,23 @@ public class TileEntityNaniteReplicatorRenderer extends TileEntitySpecialRendere
                 break;
         }
 
-        ResourceLocation textures = (new ResourceLocation(Reference.MODID.toLowerCase(), "textures/blocks/modelReplicator.png"));
-        Minecraft.getMinecraft().renderEngine.bindTexture(textures);
         GL11.glPushMatrix();
         GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
-        this.model.render((Entity) null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
+
+        Minecraft.getMinecraft().renderEngine.bindTexture(textureConstruct);
+        construct.render((Entity) null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
+
+        Minecraft.getMinecraft().renderEngine.bindTexture(textureReplicator);
+        replicator.render((Entity) null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
+
         GL11.glPopMatrix();
         GL11.glPopMatrix();
 
-        int progress = replicator.getProgress();
-        int type = replicator.getSampleType();
+        int progress = machine.getProgress();
+        int type = machine.getSampleType();
         MovingObjectPosition mouse = Minecraft.getMinecraft().objectMouseOver;
 
-        if (type > -1 && mouse.blockX == replicator.xCoord && mouse.blockY == replicator.yCoord && mouse.blockZ == replicator.zCoord) {
+        if (type > -1 && mouse.blockX == machine.xCoord && mouse.blockY == machine.yCoord && mouse.blockZ == machine.zCoord) {
             String s = null;
 
             switch (type) {

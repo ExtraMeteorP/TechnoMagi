@@ -19,8 +19,10 @@ import com.ollieread.technomagi.client.renderer.entity.RenderRobotZombie;
 import com.ollieread.technomagi.client.renderer.item.RenderArchiveItem;
 import com.ollieread.technomagi.client.renderer.item.RenderChamberItem;
 import com.ollieread.technomagi.client.renderer.item.RenderConstructItem;
+import com.ollieread.technomagi.client.renderer.item.RenderCraftingItem;
 import com.ollieread.technomagi.client.renderer.item.RenderReplicatorItem;
 import com.ollieread.technomagi.client.renderer.tileentity.TileEntityArchiveRenderer;
+import com.ollieread.technomagi.client.renderer.tileentity.TileEntityCraftingRenderer;
 import com.ollieread.technomagi.client.renderer.tileentity.TileEntityNaniteReplicatorRenderer;
 import com.ollieread.technomagi.client.renderer.tileentity.TileEntityObservationChamberRenderer;
 import com.ollieread.technomagi.common.CommonProxy;
@@ -33,6 +35,7 @@ import com.ollieread.technomagi.event.handler.KeyInputHandler;
 import com.ollieread.technomagi.event.handler.MouseEventHandler;
 import com.ollieread.technomagi.event.handler.RenderEventHandler;
 import com.ollieread.technomagi.tileentity.TileEntityArchive;
+import com.ollieread.technomagi.tileentity.TileEntityCrafting;
 import com.ollieread.technomagi.tileentity.TileEntityNaniteReplicator;
 import com.ollieread.technomagi.tileentity.TileEntityObservationChamber;
 
@@ -82,11 +85,13 @@ public class ClientProxy extends CommonProxy
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityArchive.class, new TileEntityArchiveRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityNaniteReplicator.class, new TileEntityNaniteReplicatorRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityObservationChamber.class, new TileEntityObservationChamberRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCrafting.class, new TileEntityCraftingRenderer());
 
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Blocks.blockConstruct), new RenderConstructItem());
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Blocks.blockArchive), new RenderArchiveItem());
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Blocks.blockNaniteReplicator), new RenderReplicatorItem());
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Blocks.blockObservationChamber), new RenderChamberItem());
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Blocks.blockCrafting), new RenderCraftingItem());
     }
 
 }

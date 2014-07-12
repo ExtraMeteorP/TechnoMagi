@@ -12,7 +12,7 @@ import net.minecraftforge.client.event.RenderLivingEvent.Specials.Post;
 
 import org.lwjgl.opengl.GL11;
 
-import com.ollieread.technomagi.extended.ExtendedPlayerKnowledge;
+import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 

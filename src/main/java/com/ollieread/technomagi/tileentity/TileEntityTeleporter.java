@@ -3,8 +3,6 @@ package com.ollieread.technomagi.tileentity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 
-import com.ollieread.technomagi.api.block.TileEntityPlayerLocked;
-
 public class TileEntityTeleporter extends TileEntityPlayerLocked
 {
 

@@ -1,9 +1,7 @@
-package com.ollieread.technomagi.api.block;
+package com.ollieread.technomagi.tileentity;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-
-import com.ollieread.technomagi.tileentity.TileEntityTM;
 
 public class TileEntityPlayerLocked extends TileEntityTM implements IPlayerLocked
 {

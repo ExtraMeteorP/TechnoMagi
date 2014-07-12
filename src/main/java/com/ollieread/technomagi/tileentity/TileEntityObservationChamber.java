@@ -4,8 +4,6 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.nbt.NBTTagCompound;
 
-import com.ollieread.technomagi.api.block.TileEntityPlayerLocked;
-
 public class TileEntityObservationChamber extends TileEntityPlayerLocked
 {
 
