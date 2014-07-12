@@ -1,7 +1,7 @@
 package com.ollieread.technomagi.research;
 
-import com.ollieread.ennds.common.Reference;
 import com.ollieread.ennds.research.Knowledge;
+import com.ollieread.technomagi.common.Reference;
 
 public class KnowledgeTeleportationI extends Knowledge
 {

@@ -13,11 +13,10 @@ import org.lwjgl.opengl.GL11;
 
 import com.ollieread.ennds.EnndsRegistry;
 import com.ollieread.ennds.ISpecialisation;
+import com.ollieread.ennds.common.PacketHelper;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
-import com.ollieread.ennds.network.message.MessageSpecialisation;
 import com.ollieread.technomagi.common.Information;
 import com.ollieread.technomagi.common.Reference;
-import com.ollieread.technomagi.network.PacketHandler;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -112,7 +111,8 @@ public class GuiSpecialisation extends GuiScreen
             if (choice != null) {
                 ExtendedPlayerKnowledge charon = ExtendedPlayerKnowledge.get(this.mc.thePlayer);
                 charon.setSpecialisation(choice);
-                PacketHandler.INSTANCE.sendToServer(new MessageSpecialisation(EnndsRegistry.getSpecialisationId(choice)));
+                PacketHelper.specialisationPacket(choice);
+
                 scrollableText.scrollY = 0;
                 this.mc.displayGuiScreen(null);
             }

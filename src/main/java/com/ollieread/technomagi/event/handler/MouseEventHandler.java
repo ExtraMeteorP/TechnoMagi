@@ -4,10 +4,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.MouseEvent;
 
+import com.ollieread.ennds.common.PacketHelper;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
-import com.ollieread.ennds.network.message.MessageAbility;
 import com.ollieread.technomagi.client.gui.GuiTMOverlay;
-import com.ollieread.technomagi.network.PacketHandler;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
@@ -24,10 +23,10 @@ public class MouseEventHandler
 
             if (event.dwheel < 0) {
                 charon.abilities.setNextAbility();
-                PacketHandler.INSTANCE.sendToServer(new MessageAbility(1));
+                PacketHelper.abilityPacket(1);
             } else {
                 charon.abilities.setPreviousAbility();
-                PacketHandler.INSTANCE.sendToServer(new MessageAbility(2));
+                PacketHelper.abilityPacket(2);
             }
 
             GuiTMOverlay.highlightTicks = 256;

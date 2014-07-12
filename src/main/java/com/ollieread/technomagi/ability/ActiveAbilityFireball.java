@@ -1,8 +1,8 @@
 package com.ollieread.technomagi.ability;
 
 import com.ollieread.ennds.ability.AbilityActive;
-import com.ollieread.ennds.common.Reference;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
+import com.ollieread.technomagi.common.Reference;
 
 import cpw.mods.fml.common.eventhandler.Event;
 

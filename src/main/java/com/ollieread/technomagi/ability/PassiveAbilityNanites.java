@@ -3,8 +3,8 @@ package com.ollieread.technomagi.ability;
 import net.minecraft.util.FoodStats;
 
 import com.ollieread.ennds.ability.AbilityPassive;
-import com.ollieread.ennds.common.Reference;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
+import com.ollieread.technomagi.common.Reference;
 
 import cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent;
 

@@ -2,7 +2,6 @@ package com.ollieread.technomagi.common.init;
 
 import org.apache.logging.log4j.Level;
 
-import com.ollieread.ennds.ability.AbilityRegistry;
 import com.ollieread.ennds.ability.IAbilityActive;
 import com.ollieread.ennds.ability.IAbilityPassive;
 import com.ollieread.technomagi.TechnoMagi;
@@ -35,18 +34,9 @@ public class Abilities
         abilityActiveInvisibility = new ActiveAbilityInvisibility("invisibility");
         abilityActiveFlashstep = new ActiveAbilityFlashstep("flashstep");
 
-        AbilityRegistry.registerActiveAbility(abilityActiveFire);
-        AbilityRegistry.registerActiveAbility(abilityActiveHarden);
-        AbilityRegistry.registerActiveAbility(abilityActiveInvisibility);
-        AbilityRegistry.registerActiveAbility(abilityActiveFlashstep);
-
         abilityPassiveScholarResearch = new PassiveAbilityScholarResearch("scholarResearch");
         abilityPassiveNanites = new PassiveAbilityNanites("naniteRegen");
         abilityPassiveNegateFall = new PassiveAbilityNegateFall("negateFall");
-
-        AbilityRegistry.registerPassiveAbility(abilityPassiveScholarResearch);
-        AbilityRegistry.registerPassiveAbility(abilityPassiveNanites);
-        AbilityRegistry.registerPassiveAbility(abilityPassiveNegateFall);
     }
 
 }

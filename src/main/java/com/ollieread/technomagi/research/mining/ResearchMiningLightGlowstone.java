@@ -3,10 +3,10 @@ package com.ollieread.technomagi.research.mining;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
-import com.ollieread.ennds.common.Reference;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.ennds.research.IResearchMining;
 import com.ollieread.ennds.research.Research;
+import com.ollieread.technomagi.common.Reference;
 
 public class ResearchMiningLightGlowstone extends Research implements IResearchMining
 {

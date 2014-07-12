@@ -33,7 +33,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 
-@Mod(modid = Reference.MODID, version = Reference.VERSION)
+@Mod(modid = Reference.MODID, version = Reference.VERSION, dependencies = "required-after:EnndsCore")
 public class TechnoMagi
 {
 

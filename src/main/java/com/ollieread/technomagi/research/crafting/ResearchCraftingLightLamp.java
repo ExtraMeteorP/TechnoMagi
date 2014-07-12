@@ -3,10 +3,10 @@ package com.ollieread.technomagi.research.crafting;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
-import com.ollieread.ennds.common.Reference;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.ennds.research.IResearchCrafting;
 import com.ollieread.ennds.research.Research;
+import com.ollieread.technomagi.common.Reference;
 
 public class ResearchCraftingLightLamp extends Research implements IResearchCrafting
 {

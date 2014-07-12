@@ -50,7 +50,6 @@ public class Entities
         ResearchRegistry.registerEntity(EntityChicken.class, false, 0, false, true);
         ResearchRegistry.registerEntity(EntityHorse.class, false, 0, false, true);
         ResearchRegistry.registerEntity(EntityVillager.class, false, 0, true, true);
-
         ResearchRegistry.registerEntity(EntityCreeper.class, true, robotCreeperID, true, true);
         ResearchRegistry.registerEntity(EntityZombie.class, true, robotZombieID, true, true);
         ResearchRegistry.registerEntity(EntityPigZombie.class, false, 0, true, true);
