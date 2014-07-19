@@ -8,20 +8,20 @@ import net.minecraftforge.client.IItemRenderer;
 
 import org.lwjgl.opengl.GL11;
 
+import com.ollieread.technomagi.client.model.ModelMachineAnalysis;
 import com.ollieread.technomagi.client.model.ModelMachineConstruct;
-import com.ollieread.technomagi.client.model.ModelMachineCrafting;
 import com.ollieread.technomagi.common.Reference;
 
-public class RenderCraftingItem implements IItemRenderer
+public class RenderAnalysisItem implements IItemRenderer
 {
 
     private final ModelMachineConstruct construct;
-    private final ModelMachineCrafting crafting;
+    private final ModelMachineAnalysis analysis;
 
-    public RenderCraftingItem()
+    public RenderAnalysisItem()
     {
         construct = new ModelMachineConstruct();
-        crafting = new ModelMachineCrafting();
+        analysis = new ModelMachineAnalysis();
     }
 
     @Override
@@ -41,7 +41,7 @@ public class RenderCraftingItem implements IItemRenderer
     {
 
         ResourceLocation textureConstruct = (new ResourceLocation(Reference.MODID.toLowerCase(), "textures/blocks/modelConstruct.png"));
-        ResourceLocation textureReplicator = (new ResourceLocation(Reference.MODID.toLowerCase(), "textures/blocks/modelCrafting.png"));
+        ResourceLocation textureReplicator = (new ResourceLocation(Reference.MODID.toLowerCase(), "textures/blocks/modelAnalysis.png"));
 
         GL11.glPushMatrix();
 
@@ -63,7 +63,7 @@ public class RenderCraftingItem implements IItemRenderer
         construct.render((Entity) null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
 
         Minecraft.getMinecraft().renderEngine.bindTexture(textureReplicator);
-        crafting.render((Entity) null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
+        analysis.render((Entity) null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
 
         GL11.glPopMatrix();
     }

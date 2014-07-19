@@ -27,7 +27,7 @@ public class RenderArchiveItem implements IItemRenderer
     @Override
     public boolean handleRenderType(ItemStack item, ItemRenderType type)
     {
-        return type == ItemRenderType.INVENTORY || type == ItemRenderType.EQUIPPED_FIRST_PERSON || type == ItemRenderType.EQUIPPED;
+        return type == ItemRenderType.INVENTORY || type == ItemRenderType.EQUIPPED_FIRST_PERSON || type == ItemRenderType.EQUIPPED || type == ItemRenderType.ENTITY;
     }
 
     @Override
@@ -49,7 +49,7 @@ public class RenderArchiveItem implements IItemRenderer
         if (type.equals(ItemRenderType.EQUIPPED_FIRST_PERSON) || type.equals(ItemRenderType.EQUIPPED)) {
             scale = 1.2F;
             GL11.glTranslatef(0.5F, 0.5F, 0.5F);
-        } else if (type.equals(ItemRenderType.INVENTORY)) {
+        } else if (type.equals(ItemRenderType.INVENTORY) || type.equals(ItemRenderType.ENTITY)) {
             scale = 1.0F;
         }
 

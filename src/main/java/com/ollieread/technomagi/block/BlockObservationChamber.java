@@ -1,16 +1,21 @@
 package com.ollieread.technomagi.block;
 
+import java.util.List;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import com.ollieread.ennds.research.ResearchRegistry;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.common.init.Blocks;
 import com.ollieread.technomagi.tileentity.TileEntityObservationChamber;
@@ -109,7 +114,7 @@ public class BlockObservationChamber extends BlockOwnable
         return false;
     }
 
-    public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int meta)
+    public void onBlockDestroyedByExplosion(World world, int x, int y, int z, Explosion explosion)
     {
         if (world.getBlock(x, y + 1, z).equals(Blocks.blockChamberFiller)) {
             world.setBlockToAir(x, y + 1, z);
@@ -117,6 +122,41 @@ public class BlockObservationChamber extends BlockOwnable
 
         if (world.getBlock(x, y + 2, z).equals(Blocks.blockChamberFiller)) {
             world.setBlockToAir(x, y + 2, z);
+        }
+    }
+
+    public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int p_149664_5_)
+    {
+        if (world.getBlock(x, y + 1, z).equals(Blocks.blockChamberFiller)) {
+            world.setBlockToAir(x, y + 1, z);
+        }
+
+        if (world.getBlock(x, y + 2, z).equals(Blocks.blockChamberFiller)) {
+            world.setBlockToAir(x, y + 2, z);
+        }
+    }
+
+    public void onBlockHarvested(World world, int x, int y, int z, int p_149681_5_, EntityPlayer player)
+    {
+        if (world.getBlock(x, y + 1, z).equals(Blocks.blockChamberFiller)) {
+            world.setBlockToAir(x, y + 1, z);
+        }
+
+        if (world.getBlock(x, y + 2, z).equals(Blocks.blockChamberFiller)) {
+            world.setBlockToAir(x, y + 2, z);
+        }
+    }
+
+    public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity)
+    {
+        List<Class> entities = ResearchRegistry.getObservableEntityClasses();
+
+        if (entities.contains(entity.getClass())) {
+            TileEntityObservationChamber chamber = (TileEntityObservationChamber) world.getTileEntity(x, y, z);
+
+            if (chamber != null) {
+
+            }
         }
     }
 }

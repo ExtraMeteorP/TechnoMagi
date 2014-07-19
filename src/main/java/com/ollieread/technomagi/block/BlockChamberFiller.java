@@ -7,6 +7,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
 import com.ollieread.technomagi.common.Reference;
@@ -49,6 +50,39 @@ public class BlockChamberFiller extends Block
         }
 
         return false;
+    }
+
+    public void onBlockDestroyedByExplosion(World world, int x, int y, int z, Explosion explosion)
+    {
+        int meta = world.getBlockMetadata(x, y, z);
+
+        if (meta == 0) {
+            Blocks.blockObservationChamber.onBlockDestroyedByExplosion(world, x, y - 1, z, explosion);
+        } else if (meta == 1) {
+            Blocks.blockObservationChamber.onBlockDestroyedByExplosion(world, x, y - 2, z, explosion);
+        }
+    }
+
+    public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int p_149664_5_)
+    {
+        int meta = world.getBlockMetadata(x, y, z);
+
+        if (meta == 0) {
+            Blocks.blockObservationChamber.onBlockDestroyedByPlayer(world, x, y - 1, z, p_149664_5_);
+        } else if (meta == 1) {
+            Blocks.blockObservationChamber.onBlockDestroyedByPlayer(world, x, y - 2, z, p_149664_5_);
+        }
+    }
+
+    public void onBlockHarvested(World world, int x, int y, int z, int p_149681_5_, EntityPlayer player)
+    {
+        int meta = world.getBlockMetadata(x, y, z);
+
+        if (meta == 0) {
+            Blocks.blockObservationChamber.onBlockHarvested(world, x, y - 1, z, p_149681_5_, player);
+        } else if (meta == 1) {
+            Blocks.blockObservationChamber.onBlockHarvested(world, x, y - 2, z, p_149681_5_, player);
+        }
     }
 
     public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_)

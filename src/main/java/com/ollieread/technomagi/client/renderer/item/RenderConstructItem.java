@@ -23,7 +23,7 @@ public class RenderConstructItem implements IItemRenderer
     @Override
     public boolean handleRenderType(ItemStack item, ItemRenderType type)
     {
-        return type == ItemRenderType.INVENTORY || type == ItemRenderType.EQUIPPED_FIRST_PERSON;
+        return type == ItemRenderType.INVENTORY || type == ItemRenderType.EQUIPPED_FIRST_PERSON || type == ItemRenderType.ENTITY;
     }
 
     @Override
@@ -44,7 +44,7 @@ public class RenderConstructItem implements IItemRenderer
         if (type.equals(ItemRenderType.EQUIPPED_FIRST_PERSON)) {
             scale = 1.2F;
             GL11.glTranslatef(0.5F, 0.5F, 0.5F);
-        } else if (type.equals(ItemRenderType.INVENTORY)) {
+        } else if (type.equals(ItemRenderType.INVENTORY) || type.equals(ItemRenderType.ENTITY)) {
             scale = 1.0F;
         }
 
