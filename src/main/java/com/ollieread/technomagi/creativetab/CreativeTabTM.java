@@ -16,7 +16,7 @@ public class CreativeTabTM extends CreativeTabs
     @Override
     public Item getTabIconItem()
     {
-        return Item.getItemFromBlock(Blocks.blockConstruct);
+        return Item.getItemFromBlock(Blocks.blockArchive);
     }
 
 }

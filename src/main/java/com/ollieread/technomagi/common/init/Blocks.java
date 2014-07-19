@@ -9,9 +9,7 @@ import com.ollieread.technomagi.block.BlockAnalysis;
 import com.ollieread.technomagi.block.BlockArchive;
 import com.ollieread.technomagi.block.BlockAreaLight;
 import com.ollieread.technomagi.block.BlockChamberFiller;
-import com.ollieread.technomagi.block.BlockConstruct;
 import com.ollieread.technomagi.block.BlockCrafting;
-import com.ollieread.technomagi.block.BlockKnowledgeReceptacle;
 import com.ollieread.technomagi.block.BlockLightAir;
 import com.ollieread.technomagi.block.BlockNaniteReplicator;
 import com.ollieread.technomagi.block.BlockObservationChamber;
@@ -31,9 +29,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class Blocks
 {
 
-    public static Block blockConstruct;
     public static Block blockArchive;
-    public static Block blockKnowledgeReceptacle;
     public static Block blockNaniteReplicator;
     public static Block blockAreaLight;
     public static Block blockLightAir;
@@ -47,9 +43,7 @@ public class Blocks
     {
         TechnoMagi.logger.log(Level.INFO, "Initiating & registering blocks");
 
-        blockConstruct = new BlockConstruct("construct");
         blockArchive = new BlockArchive("archive");
-        blockKnowledgeReceptacle = new BlockKnowledgeReceptacle("knowledgeReceptacle");
         blockNaniteReplicator = new BlockNaniteReplicator("naniteReplicator");
         blockAreaLight = new BlockAreaLight("areaLight");
         blockLightAir = new BlockLightAir("lightAir");
@@ -59,9 +53,7 @@ public class Blocks
         blockCrafting = new BlockCrafting("crafting");
         blockAnalysis = new BlockAnalysis("analysis");
 
-        GameRegistry.registerBlock(blockConstruct, "construct");
         GameRegistry.registerBlock(blockArchive, "archive");
-        GameRegistry.registerBlock(blockKnowledgeReceptacle, "knowledgeReceptacle");
         GameRegistry.registerBlock(blockNaniteReplicator, "naniteReplicator");
         GameRegistry.registerBlock(blockAreaLight, "areaLight");
         GameRegistry.registerBlock(blockLightAir, "lightAir");

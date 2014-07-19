@@ -19,7 +19,6 @@ import com.ollieread.technomagi.client.renderer.entity.RenderRobotZombie;
 import com.ollieread.technomagi.client.renderer.item.RenderAnalysisItem;
 import com.ollieread.technomagi.client.renderer.item.RenderArchiveItem;
 import com.ollieread.technomagi.client.renderer.item.RenderChamberItem;
-import com.ollieread.technomagi.client.renderer.item.RenderConstructItem;
 import com.ollieread.technomagi.client.renderer.item.RenderCraftingItem;
 import com.ollieread.technomagi.client.renderer.item.RenderReplicatorItem;
 import com.ollieread.technomagi.client.renderer.tileentity.TileEntityAnalysisRenderer;
@@ -90,8 +89,6 @@ public class ClientProxy extends CommonProxy
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityObservationChamber.class, new TileEntityObservationChamberRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCrafting.class, new TileEntityCraftingRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAnalysis.class, new TileEntityAnalysisRenderer());
-
-        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Blocks.blockConstruct), new RenderConstructItem());
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Blocks.blockArchive), new RenderArchiveItem());
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Blocks.blockNaniteReplicator), new RenderReplicatorItem());
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Blocks.blockObservationChamber), new RenderChamberItem());
