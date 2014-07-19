@@ -11,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
+import net.minecraft.world.World;
 
 import com.ollieread.ennds.research.ResearchRegistry;
 import com.ollieread.technomagi.common.Reference;
@@ -76,6 +77,21 @@ public class ItemSampleVile extends ItemTM
     public IIcon getIconFromDamage(int par1)
     {
         return par1 > 0 ? itemIconFull : itemIcon;
+    }
+
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float par8, float par9, float par10)
+    {
+        if (stack != null && stack.getItemDamage() == 0 && stack.stackSize > 0) {
+            stack.stackSize--;
+
+            if (stack.stackSize == 0) {
+                stack = null;
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
 }
