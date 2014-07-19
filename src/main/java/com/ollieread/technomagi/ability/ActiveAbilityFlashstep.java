@@ -46,17 +46,18 @@ public class ActiveAbilityFlashstep extends AbilityActive
 
                 Vec3 target = Vec3.createVectorHelper(look.xCoord, look.yCoord, look.zCoord);
                 Vec3 dest = null;
-                int max = 10 * 10;
+                int max = 11 * 11;
                 int dmg = 0;
 
-                for (int i = 0; i <= max; i++) {
+                for (int i = 1; i <= max; i++) {
                     target.xCoord = (look.xCoord * i) + eye.xCoord;
                     target.yCoord = (look.yCoord * i) + eye.yCoord;
                     target.zCoord = (look.zCoord * i) + eye.zCoord;
 
                     Block block = interact.entityPlayer.worldObj.getBlock(MathHelper.floor_double(target.xCoord), MathHelper.floor_double(target.yCoord), MathHelper.floor_double(target.zCoord));
+                    Block blockAbove = interact.entityPlayer.worldObj.getBlock(MathHelper.floor_double(target.xCoord), MathHelper.floor_double(target.yCoord) + 1, MathHelper.floor_double(target.zCoord));
 
-                    if (!block.equals(Blocks.air) || eye.squareDistanceTo(target) >= max) {
+                    if (!block.equals(Blocks.air) || eye.squareDistanceTo(target) >= max || !blockAbove.equals(Blocks.air)) {
                         break;
                     } else {
                         dest = Vec3.createVectorHelper(target.xCoord, target.yCoord, target.zCoord);
