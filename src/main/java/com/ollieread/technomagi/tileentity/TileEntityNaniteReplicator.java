@@ -250,7 +250,7 @@ public class TileEntityNaniteReplicator extends TileEntityInventoryLocked implem
     @Override
     public int[] getAccessibleSlotsFromSide(int var1)
     {
-        return var1 == 1 ? new int[] { 1 } : new int[] { 0, 2 };
+        return var1 == 1 ? new int[] { 2 } : new int[] { 0, 2 };
     }
 
     @Override
