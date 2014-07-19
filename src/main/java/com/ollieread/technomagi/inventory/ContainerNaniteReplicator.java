@@ -6,8 +6,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraft.tileentity.TileEntityFurnace;
 
 import com.ollieread.technomagi.tileentity.TileEntityNaniteReplicator;
 
@@ -132,30 +130,22 @@ public class ContainerNaniteReplicator extends Container
             ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
 
-            if (i == 2) {
+            System.out.println(i);
+
+            if (i > 2) {
+                if (!this.mergeItemStack(itemstack1, 0, 1, false)) {
+                    if (!this.mergeItemStack(itemstack1, 2, 3, false)) {
+                        return null;
+                    }
+                }
+
+                slot.onSlotChange(itemstack1, itemstack);
+            } else if (i < 3) {
                 if (!this.mergeItemStack(itemstack1, 3, 39, true)) {
                     return null;
                 }
 
                 slot.onSlotChange(itemstack1, itemstack);
-            } else if (i != 1 && i != 0) {
-                if (FurnaceRecipes.smelting().getSmeltingResult(itemstack1) != null) {
-                    if (!this.mergeItemStack(itemstack1, 0, 1, false)) {
-                        return null;
-                    }
-                } else if (TileEntityFurnace.isItemFuel(itemstack1)) {
-                    if (!this.mergeItemStack(itemstack1, 1, 2, false)) {
-                        return null;
-                    }
-                } else if (i >= 3 && i < 30) {
-                    if (!this.mergeItemStack(itemstack1, 30, 39, false)) {
-                        return null;
-                    }
-                } else if (i >= 30 && i < 39 && !this.mergeItemStack(itemstack1, 3, 30, false)) {
-                    return null;
-                }
-            } else if (!this.mergeItemStack(itemstack1, 3, 39, false)) {
-                return null;
             }
 
             if (itemstack1.stackSize == 0) {
@@ -173,5 +163,4 @@ public class ContainerNaniteReplicator extends Container
 
         return itemstack;
     }
-
 }
