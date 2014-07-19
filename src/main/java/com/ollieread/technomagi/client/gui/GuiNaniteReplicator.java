@@ -2,9 +2,10 @@ package com.ollieread.technomagi.client.gui;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
 
 import org.lwjgl.opengl.GL11;
 
@@ -39,24 +40,13 @@ public class GuiNaniteReplicator extends GuiContainer
 
         int progress = replicator.getProgress();
         int type = replicator.getSampleType();
-        String typeName = null;
+        String entity = EntityList.getStringFromID(type);
+        String typeName = "";
 
-        switch (type) {
-            case 2:
-                typeName = EnumChatFormatting.DARK_GREEN + "Cow";
-                break;
-            case 3:
-                typeName = EnumChatFormatting.DARK_GREEN + "Sheep";
-                break;
-            case 4:
-                typeName = EnumChatFormatting.DARK_GREEN + "Pig";
-                break;
-            case 5:
-                typeName = EnumChatFormatting.DARK_GREEN + "Chicken";
-                break;
-            default:
-                typeName = "--";
-                break;
+        if (entity != null) {
+            typeName = StatCollector.translateToLocal("entity." + entity + ".name");
+        } else {
+            typeName = "--";
         }
 
         this.fontRendererObj.drawString(I18n.format("technomagi.progress"), 6, 53, 16777215);
