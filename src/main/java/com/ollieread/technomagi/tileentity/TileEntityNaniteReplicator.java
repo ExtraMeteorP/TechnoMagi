@@ -180,7 +180,7 @@ public class TileEntityNaniteReplicator extends TileEntityInventoryLocked implem
                     }
                 }
             } else if (inventory[0].getItem() instanceof ItemSampleVile && inventory[0].getItemDamage() > 0 && sample < 91) {
-                if (sampleType > -1 && sampleType == inventory[0].getItemDamage() + 1) {
+                if (sampleType > -1 && sampleType == inventory[0].getItemDamage()) {
                     if (sample <= 90) {
                         sample += 10;
                     } else {
@@ -195,7 +195,7 @@ public class TileEntityNaniteReplicator extends TileEntityInventoryLocked implem
                     }
 
                 } else if (sampleType == -1) {
-                    sampleType = inventory[0].getItemDamage() + 1;
+                    sampleType = inventory[0].getItemDamage();
                     sample = 10;
 
                     inventory[0].stackSize--;
