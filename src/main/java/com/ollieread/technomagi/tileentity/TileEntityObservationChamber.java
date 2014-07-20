@@ -146,7 +146,6 @@ public class TileEntityObservationChamber extends TileEntityInventoryLocked impl
     @Override
     public void create()
     {
-        System.out.println("Called");
         worldObj.setBlock(xCoord, yCoord + 1, zCoord, Blocks.blockEmptyFiller);
         worldObj.setBlock(xCoord, yCoord + 2, zCoord, Blocks.blockEmptyFiller);
 

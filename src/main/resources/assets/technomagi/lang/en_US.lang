@@ -36,6 +36,8 @@ tile.teleporter.0.name=Teleporter (Elevator)
 tile.teleporter.1.name=Teleporter (Paired)
 tile.teleporter.2.name=Teleporter (Relocater)
 tile.teleporter.3.name=Teleporter (Disrupter)
+tile.analysis.name=Item Analysis
+tile.observationChamber.name=Observation Chamber
 
 item.mobBrain.name=Brain
 item.sampleExtractor.name=Sample Extractor

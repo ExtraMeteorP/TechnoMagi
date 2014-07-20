@@ -16,7 +16,6 @@ public class TileEntityEmptyFiller extends TileEntityTM
     public void setParent(int x, int y, int z)
     {
         if (!worldObj.isRemote) {
-            System.out.println(x + ":" + y + ":" + z);
             parentX = x;
             parentY = y;
             parentZ = z;
