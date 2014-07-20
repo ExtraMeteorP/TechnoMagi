@@ -35,7 +35,7 @@ public class TileEntityObservationChamberRenderer extends TileEntitySpecialRende
         int side = chamber.getBlockMetadata();
         Tessellator tessellator = Tessellator.instance;
 
-        EntityLiving entity = chamber.getEntity();
+        EntityLiving entity = chamber.getEntityLiving();
 
         // This will make your block brightness dependent from surroundings
         // lighting.

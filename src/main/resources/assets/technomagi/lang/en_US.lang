@@ -6,6 +6,7 @@ technomagi.self.gui=Details
 technomagi.replicator.gui=Nanite Replicator
 technomagi.analysis.gui=Item Analysis
 technomagi.analyse.button=Analyse
+technomagi.observation.gui=Observation Chamber
 
 technomagi.nanites=Nanites
 technomagi.data=Data
