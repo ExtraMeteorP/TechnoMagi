@@ -114,7 +114,7 @@ public class BlockAnalysis extends BlockOwnable
     {
         TileEntityAnalysis analysis = (TileEntityAnalysis) world.getTileEntity(x, y, z);
 
-        if (analysis != null && analysis.inProgress() && rand.nextInt(100) == 0) {
+        if (analysis != null && analysis.inProgress() && rand.nextInt(5) == 0) {
             double d0 = (double) ((float) x + rand.nextFloat());
             double d1 = (double) ((float) y + rand.nextFloat());
             double d2 = (double) ((float) z + rand.nextFloat());

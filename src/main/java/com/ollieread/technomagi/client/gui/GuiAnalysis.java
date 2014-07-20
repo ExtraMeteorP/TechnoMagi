@@ -85,7 +85,7 @@ public class GuiAnalysis extends GuiContainer
         if (button.id == 1) {
             analysis.setInProgress(true);
             button.enabled = false;
-            PacketHelper.analysePacket(analysis);
+            PacketHelper.setProgress(analysis, true);
         }
     }
 
