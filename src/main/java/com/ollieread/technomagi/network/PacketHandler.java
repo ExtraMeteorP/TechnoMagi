@@ -4,6 +4,7 @@ import org.apache.logging.log4j.Level;
 
 import com.ollieread.technomagi.TechnoMagi;
 import com.ollieread.technomagi.common.Reference;
+import com.ollieread.technomagi.network.message.MessageAnalyse;
 import com.ollieread.technomagi.network.message.MessageEntityInteractEvent;
 import com.ollieread.technomagi.network.message.MessagePlayerInteractEvent;
 import com.ollieread.technomagi.network.message.MessageSyncTileEntityTM;
@@ -23,5 +24,6 @@ public class PacketHandler
         INSTANCE.registerMessage(MessagePlayerInteractEvent.class, MessagePlayerInteractEvent.class, 0, Side.SERVER);
         INSTANCE.registerMessage(MessageEntityInteractEvent.class, MessageEntityInteractEvent.class, 1, Side.SERVER);
         INSTANCE.registerMessage(MessageSyncTileEntityTM.class, MessageSyncTileEntityTM.class, 2, Side.CLIENT);
+        INSTANCE.registerMessage(MessageAnalyse.class, MessageAnalyse.class, 3, Side.SERVER);
     }
 }

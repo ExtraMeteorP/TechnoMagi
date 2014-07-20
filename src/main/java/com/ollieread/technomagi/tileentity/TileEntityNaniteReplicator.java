@@ -84,8 +84,6 @@ public class TileEntityNaniteReplicator extends TileEntityInventoryLocked implem
 
         if (canReplicate() && !worldObj.isRemote) {
             replicate();
-        } else {
-            // System.out.println("Can't replicate");
         }
     }
 

@@ -7,13 +7,16 @@ import net.minecraftforge.common.MinecraftForge;
 
 import com.ollieread.ennds.EnndsRegistry;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
+import com.ollieread.technomagi.client.gui.GuiAnalysis;
 import com.ollieread.technomagi.client.gui.GuiNaniteReplicator;
 import com.ollieread.technomagi.client.gui.GuiSelf;
 import com.ollieread.technomagi.client.gui.GuiSpecialisation;
 import com.ollieread.technomagi.event.handler.PlayerEventHandler;
 import com.ollieread.technomagi.event.handler.TMEventHandler;
 import com.ollieread.technomagi.event.handler.TickEventHandler;
+import com.ollieread.technomagi.inventory.ContainerAnalysis;
 import com.ollieread.technomagi.inventory.ContainerNaniteReplicator;
+import com.ollieread.technomagi.tileentity.TileEntityAnalysis;
 import com.ollieread.technomagi.tileentity.TileEntityNaniteReplicator;
 
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -25,6 +28,7 @@ public class CommonProxy implements IGuiHandler
     public static int GUI_TECHNOMAGI = 1;
     public static int GUI_SPECIALISATION = 2;
     public static int GUI_REPLICATOR = 3;
+    public static int GUI_ANALYSIS = 4;
 
     public static PlayerEventHandler playerEventHandler = new PlayerEventHandler();
 
@@ -36,6 +40,12 @@ public class CommonProxy implements IGuiHandler
 
             if (replicator != null) {
                 return new ContainerNaniteReplicator(player.inventory, replicator);
+            }
+        } else if (ID == GUI_ANALYSIS) {
+            TileEntityAnalysis analysis = (TileEntityAnalysis) world.getTileEntity(x, y, z);
+
+            if (analysis != null) {
+                return new ContainerAnalysis(player.inventory, analysis);
             }
         }
 
@@ -58,6 +68,12 @@ public class CommonProxy implements IGuiHandler
 
             if (replicator != null) {
                 return new GuiNaniteReplicator(player.inventory, replicator);
+            }
+        } else if (ID == GUI_ANALYSIS) {
+            TileEntityAnalysis analysis = (TileEntityAnalysis) world.getTileEntity(x, y, z);
+
+            if (analysis != null) {
+                return new GuiAnalysis(player.inventory, analysis);
             }
         }
 

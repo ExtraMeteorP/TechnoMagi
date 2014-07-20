@@ -130,8 +130,6 @@ public class ContainerNaniteReplicator extends Container
             ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
 
-            System.out.println(i);
-
             if (i > 2) {
                 if (!this.mergeItemStack(itemstack1, 0, 1, false)) {
                     if (!this.mergeItemStack(itemstack1, 2, 3, false)) {

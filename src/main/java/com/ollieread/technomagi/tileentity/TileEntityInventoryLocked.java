@@ -11,7 +11,7 @@ public class TileEntityInventoryLocked extends TileEntityPlayerLocked implements
 
     public ItemStack[] inventory;
     protected String name;
-    protected int limit;
+    protected int limit = 64;
 
     public TileEntityInventoryLocked(int size)
     {
@@ -20,8 +20,10 @@ public class TileEntityInventoryLocked extends TileEntityPlayerLocked implements
 
     public TileEntityInventoryLocked(int size, int max)
     {
-        inventory = new ItemStack[size];
-        limit = max;
+        if (inventory == null) {
+            inventory = new ItemStack[size];
+            limit = max;
+        }
     }
 
     @Override

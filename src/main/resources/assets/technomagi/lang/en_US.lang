@@ -4,6 +4,8 @@ technomagi.archive.gui=Technomage Archive
 technomagi.archive.entries=Entries
 technomagi.self.gui=Details
 technomagi.replicator.gui=Nanite Replicator
+technomagi.analysis.gui=Item Analysis
+technomagi.analyse.button=Analyse
 
 technomagi.nanites=Nanites
 technomagi.data=Data
