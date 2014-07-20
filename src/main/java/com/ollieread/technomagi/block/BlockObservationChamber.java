@@ -11,13 +11,12 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
-import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import com.ollieread.ennds.research.ResearchRegistry;
 import com.ollieread.technomagi.common.Reference;
-import com.ollieread.technomagi.common.init.Blocks;
+import com.ollieread.technomagi.tileentity.IHasFiller;
 import com.ollieread.technomagi.tileentity.TileEntityObservationChamber;
 
 import cpw.mods.fml.relauncher.Side;
@@ -63,6 +62,8 @@ public class BlockObservationChamber extends BlockOwnable
 
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack)
     {
+        super.onBlockPlacedBy(world, x, y, z, entity, stack);
+
         int l = MathHelper.floor_double((double) (entity.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
 
         if (l == 0) {
@@ -81,12 +82,9 @@ public class BlockObservationChamber extends BlockOwnable
             world.setBlockMetadataWithNotify(x, y, z, 4, 2);
         }
 
-        world.setBlock(x, y + 1, z, Blocks.blockChamberFiller);
-        world.setBlockMetadataWithNotify(x, y + 1, z, 0, 2);
-        world.setBlock(x, y + 2, z, Blocks.blockChamberFiller);
-        world.setBlockMetadataWithNotify(x, y + 1, z, 1, 2);
+        TileEntity tileEntity = world.getTileEntity(x, y, z);
 
-        super.onBlockPlacedBy(world, x, y, z, entity, stack);
+        ((IHasFiller) tileEntity).create();
     }
 
     public boolean isBlockSolid(IBlockAccess world, int x, int y, int z, int face)
@@ -112,39 +110,6 @@ public class BlockObservationChamber extends BlockOwnable
         }
 
         return false;
-    }
-
-    public void onBlockDestroyedByExplosion(World world, int x, int y, int z, Explosion explosion)
-    {
-        if (world.getBlock(x, y + 1, z).equals(Blocks.blockChamberFiller)) {
-            world.setBlockToAir(x, y + 1, z);
-        }
-
-        if (world.getBlock(x, y + 2, z).equals(Blocks.blockChamberFiller)) {
-            world.setBlockToAir(x, y + 2, z);
-        }
-    }
-
-    public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int p_149664_5_)
-    {
-        if (world.getBlock(x, y + 1, z).equals(Blocks.blockChamberFiller)) {
-            world.setBlockToAir(x, y + 1, z);
-        }
-
-        if (world.getBlock(x, y + 2, z).equals(Blocks.blockChamberFiller)) {
-            world.setBlockToAir(x, y + 2, z);
-        }
-    }
-
-    public void onBlockHarvested(World world, int x, int y, int z, int p_149681_5_, EntityPlayer player)
-    {
-        if (world.getBlock(x, y + 1, z).equals(Blocks.blockChamberFiller)) {
-            world.setBlockToAir(x, y + 1, z);
-        }
-
-        if (world.getBlock(x, y + 2, z).equals(Blocks.blockChamberFiller)) {
-            world.setBlockToAir(x, y + 2, z);
-        }
     }
 
     public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity)

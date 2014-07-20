@@ -8,8 +8,8 @@ import com.ollieread.technomagi.TechnoMagi;
 import com.ollieread.technomagi.block.BlockAnalysis;
 import com.ollieread.technomagi.block.BlockArchive;
 import com.ollieread.technomagi.block.BlockAreaLight;
-import com.ollieread.technomagi.block.BlockChamberFiller;
 import com.ollieread.technomagi.block.BlockCrafting;
+import com.ollieread.technomagi.block.BlockEmptyFiller;
 import com.ollieread.technomagi.block.BlockLightAir;
 import com.ollieread.technomagi.block.BlockNaniteReplicator;
 import com.ollieread.technomagi.block.BlockObservationChamber;
@@ -19,6 +19,7 @@ import com.ollieread.technomagi.tileentity.TileEntityAnalysis;
 import com.ollieread.technomagi.tileentity.TileEntityArchive;
 import com.ollieread.technomagi.tileentity.TileEntityAreaLight;
 import com.ollieread.technomagi.tileentity.TileEntityCrafting;
+import com.ollieread.technomagi.tileentity.TileEntityEmptyFiller;
 import com.ollieread.technomagi.tileentity.TileEntityLightAir;
 import com.ollieread.technomagi.tileentity.TileEntityNaniteReplicator;
 import com.ollieread.technomagi.tileentity.TileEntityObservationChamber;
@@ -35,7 +36,7 @@ public class Blocks
     public static Block blockLightAir;
     public static Block blockTeleporter;
     public static Block blockObservationChamber;
-    public static Block blockChamberFiller;
+    public static Block blockEmptyFiller;
     public static Block blockCrafting;
     public static Block blockAnalysis;
 
@@ -49,7 +50,7 @@ public class Blocks
         blockLightAir = new BlockLightAir("lightAir");
         blockTeleporter = new BlockTeleporter("teleporter");
         blockObservationChamber = new BlockObservationChamber("observationChamber");
-        blockChamberFiller = new BlockChamberFiller("chamberFiller");
+        blockEmptyFiller = new BlockEmptyFiller("emptyFiller");
         blockCrafting = new BlockCrafting("crafting");
         blockAnalysis = new BlockAnalysis("analysis");
 
@@ -59,7 +60,7 @@ public class Blocks
         GameRegistry.registerBlock(blockLightAir, "lightAir");
         GameRegistry.registerBlock(blockTeleporter, ItemBlockTM.class, "teleporter");
         GameRegistry.registerBlock(blockObservationChamber, "observationChamber");
-        GameRegistry.registerBlock(blockChamberFiller, "chamberFiller");
+        GameRegistry.registerBlock(blockEmptyFiller, "emptyFiller");
         GameRegistry.registerBlock(blockCrafting, "crafting");
         GameRegistry.registerBlock(blockAnalysis, "analysis");
 
@@ -69,6 +70,7 @@ public class Blocks
         GameRegistry.registerTileEntity(TileEntityAreaLight.class, "tileEntityAreaLight");
         GameRegistry.registerTileEntity(TileEntityTeleporter.class, "tileEntityTeleporter");
         GameRegistry.registerTileEntity(TileEntityObservationChamber.class, "tileEntityObservationChamber");
+        GameRegistry.registerTileEntity(TileEntityEmptyFiller.class, "tileEntityEmptyFiller");
         GameRegistry.registerTileEntity(TileEntityCrafting.class, "tileEntityCrafting");
         GameRegistry.registerTileEntity(TileEntityAnalysis.class, "tileEntityAnalysis");
     }

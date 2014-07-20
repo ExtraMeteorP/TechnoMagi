@@ -4,7 +4,9 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class TileEntityObservationChamber extends TileEntityPlayerLocked
+import com.ollieread.technomagi.common.init.Blocks;
+
+public class TileEntityObservationChamber extends TileEntityPlayerLocked implements IHasFiller
 {
 
     private Integer entity = null;
@@ -41,6 +43,28 @@ public class TileEntityObservationChamber extends TileEntityPlayerLocked
         }
 
         return null;
+    }
+
+    @Override
+    public void create()
+    {
+        System.out.println("Called");
+        worldObj.setBlock(xCoord, yCoord + 1, zCoord, Blocks.blockEmptyFiller);
+        worldObj.setBlock(xCoord, yCoord + 2, zCoord, Blocks.blockEmptyFiller);
+
+        if (!worldObj.isRemote) {
+            ((TileEntityEmptyFiller) worldObj.getTileEntity(xCoord, yCoord + 1, zCoord)).setParent(xCoord, yCoord, zCoord);
+            ((TileEntityEmptyFiller) worldObj.getTileEntity(xCoord, yCoord + 2, zCoord)).setParent(xCoord, yCoord, zCoord);
+        }
+    }
+
+    @Override
+    public void destroy()
+    {
+        worldObj.setBlockToAir(xCoord, yCoord + 1, zCoord);
+        worldObj.setBlockToAir(xCoord, yCoord + 2, zCoord);
+        invalidate();
+        worldObj.setBlockToAir(xCoord, yCoord, zCoord);
     }
 
 }
