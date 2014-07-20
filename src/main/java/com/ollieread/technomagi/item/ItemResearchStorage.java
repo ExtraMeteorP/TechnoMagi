@@ -1,5 +1,8 @@
 package com.ollieread.technomagi.item;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import net.minecraft.item.Item;
 
 import com.ollieread.ennds.item.IResearchStorage;
@@ -7,43 +10,25 @@ import com.ollieread.ennds.item.IResearchStorage;
 public class ItemResearchStorage extends Item implements IResearchStorage
 {
 
-    public String knowledge;
-
-    public int progress;
-
-    @Override
-    public void setKnowledge(String name)
-    {
-        knowledge = name;
-    }
-
-    public String getKnowledge()
-    {
-        return knowledge;
-    }
+    protected int capacity;
+    protected int total;
+    protected Map<String, Integer> researchingKnowledge = new HashMap<String, Integer>();
 
     @Override
-    public int setProgress(int amount)
+    public boolean addResearch(String name, int amount)
     {
-        if (progress < 100) {
-            if ((progress + amount) > 100) {
-                int diff = 100 - progress;
-                progress += amount;
-
-                return progress;
+        if ((total + amount) > capacity) {
+            total += amount;
+            if (researchingKnowledge.containsKey(name)) {
+                researchingKnowledge.put(name, researchingKnowledge.get(name) + amount);
+                return true;
             } else {
-                progress += amount;
-
-                return amount;
+                researchingKnowledge.put(name, amount);
+                return true;
             }
         }
 
-        return 0;
-    }
-
-    public int getProgress()
-    {
-        return progress;
+        return false;
     }
 
 }
