@@ -1,6 +1,11 @@
 package com.ollieread.technomagi.block;
 
+import java.util.Random;
+
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.EntityFX;
+import net.minecraft.client.particle.EntityPortalFX;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -102,6 +107,30 @@ public class BlockAnalysis extends BlockOwnable
         }
 
         super.onBlockPlacedBy(world, x, y, z, entity, stack);
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void randomDisplayTick(World world, int x, int y, int z, Random rand)
+    {
+        TileEntityAnalysis analysis = (TileEntityAnalysis) world.getTileEntity(x, y, z);
+
+        if (analysis != null && analysis.inProgress() && rand.nextInt(100) == 0) {
+            double d0 = (double) ((float) x + rand.nextFloat());
+            double d1 = (double) ((float) y + rand.nextFloat());
+            double d2 = (double) ((float) z + rand.nextFloat());
+            double d3 = 0.0D;
+            double d4 = 0.0D;
+            double d5 = 0.0D;
+            int i1 = rand.nextInt(2) * 2 - 1;
+            d3 = ((double) rand.nextFloat() - 0.5D) * 0.5D;
+            d4 = ((double) rand.nextFloat() - 0.5D) * 0.5D;
+            d5 = ((double) rand.nextFloat() - 0.5D) * 0.5D;
+
+            EntityFX effect = new EntityPortalFX(world, d0, d1, d2, d3, d4, d5);
+            effect.setRBGColorF(147 / 255.0F, 225 / 255.0F, 242 / 255.0F);
+
+            Minecraft.getMinecraft().effectRenderer.addEffect(effect);
+        }
     }
 
 }
