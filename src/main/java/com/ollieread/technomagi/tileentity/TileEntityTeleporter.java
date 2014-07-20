@@ -73,6 +73,8 @@ public class TileEntityTeleporter extends TileEntityPlayerLocked
         partnerX = x;
         partnerY = y;
         partnerZ = z;
+
+        markDirty();
     }
 
     public TileEntityTeleporter getPartner()

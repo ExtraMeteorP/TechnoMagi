@@ -123,7 +123,7 @@ public class PlayerEventHandler
         } else if (event.action.equals(PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK)) {
             ItemStack item = event.entityPlayer.getHeldItem();
 
-            if (item.isItemEqual(new ItemStack(Items.itemDigitalTool))) {
+            if (item.isItemEqual(new ItemStack(Items.itemDigitalTool)) && !event.world.isRemote) {
                 ItemDigitalTool tool = (ItemDigitalTool) item.getItem();
                 TileEntity tile = event.entityPlayer.worldObj.getTileEntity(event.x, event.y, event.z);
 
@@ -132,9 +132,7 @@ public class PlayerEventHandler
                         if (tile.getBlockMetadata() == 1) {
                             if (tool.getFocusType() == 0) {
                                 tool.setFocusType(1);
-                                tool.setFocusLocation(event.x, event.y, event.z);
-
-                                event.setCanceled(true);
+                                tool.setFocusLocation(tile.xCoord, tile.yCoord, tile.zCoord);
                             } else if (tool.getFocusType() == 1) {
                                 int[] location = tool.getFocusLocation();
 
@@ -142,13 +140,11 @@ public class PlayerEventHandler
 
                                 if (teleporter != null) {
                                     ((TileEntityTeleporter) tile).partner(location[0], location[1], location[2]);
-                                    teleporter.partner(event.x, event.y, event.z);
+                                    teleporter.partner(tile.xCoord, tile.yCoord, tile.zCoord);
 
                                     tool.setFocusType(0);
                                     tool.setFocusId(0);
                                     tool.setFocusLocation(0, 0, 0);
-
-                                    event.setCanceled(true);
                                 }
                             }
                         }

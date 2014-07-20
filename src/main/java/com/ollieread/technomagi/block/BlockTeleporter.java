@@ -92,15 +92,18 @@ public class BlockTeleporter extends BlockOwnable
     public void onEntityWalking(World world, int x, int y, int z, Entity entity)
     {
         if (!world.isRemote && world.getBlockMetadata(x, y, z) == 1) {
+            System.out.println("There's an entity here");
             TileEntityTeleporter teleporter = (TileEntityTeleporter) world.getTileEntity(x, y, z);
 
             if (!teleporter.canPartner()) {
+                System.out.println("We've already partnered");
                 TileEntityTeleporter partner = teleporter.getPartner();
 
-                if (entity instanceof EntityLiving) {
-                    TeleportHelper.teleportEntityToTeleporter((EntityLiving) entity, teleporter, partner);
-                } else if (entity instanceof EntityPlayer) {
+                if (entity instanceof EntityPlayer) {
+                    System.out.println("Teleporting Player");
                     TeleportHelper.teleportPlayerToTeleporter((EntityPlayer) entity, teleporter, partner);
+                } else if (entity instanceof EntityLiving) {
+                    TeleportHelper.teleportEntityToTeleporter((EntityLiving) entity, teleporter, partner);
                 }
             }
         }
