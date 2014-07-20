@@ -66,7 +66,7 @@ public class ItemSampleVile extends ItemTM
     {
         list.add(new ItemStack(item, 1, 0));
 
-        Iterator iterator = ResearchRegistry.getMonitorableEntities().iterator();
+        Iterator iterator = ResearchRegistry.getMonitorableEntityIds().iterator();
 
         while (iterator.hasNext()) {
             list.add(new ItemStack(item, 1, (Integer) iterator.next()));

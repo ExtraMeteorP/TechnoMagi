@@ -1,13 +1,16 @@
 package com.ollieread.technomagi.item;
 
+import java.util.Map;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 
+import com.ollieread.ennds.research.ResearchRegistry;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.common.init.Items;
 
@@ -36,18 +39,19 @@ public class ItemSampleExtractor extends ItemTM
         player.swingItem();
 
         if (!entity.worldObj.isRemote) {
-            if (entity instanceof EntityCow) {
-                sample = new ItemStack(Items.itemSampleVile, 1, 1);
-            } else {
-                return false;
-            }
+            Map<Integer, Integer> entities = ResearchRegistry.getMonitorableEntities();
+            int id = EntityList.getEntityID(entity);
 
-            if (entity.attackEntityFrom(DamageSource.generic, 2)) {
-                player.setItemInUse(new ItemStack(Items.itemSampleVile, 1, 0), 1);
-                EntityItem item = player.entityDropItem(sample, 0);
-                item.delayBeforeCanPickup = 0;
+            if (entities.containsKey(id)) {
+                sample = new ItemStack(Items.itemSampleVile, 1, id);
 
-                return true;
+                if (entity.attackEntityFrom(DamageSource.generic, 2)) {
+                    player.setItemInUse(new ItemStack(Items.itemSampleVile, 1, 0), 1);
+                    EntityItem item = player.entityDropItem(sample, 0);
+                    item.delayBeforeCanPickup = 0;
+
+                    return true;
+                }
             }
         }
 

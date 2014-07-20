@@ -72,7 +72,7 @@ public class ItemNaniteContainer extends ItemTM
         list.add(new ItemStack(item, 1, 0));
         list.add(new ItemStack(item, 1, 1));
 
-        Iterator iterator = ResearchRegistry.getMonitorableEntities().iterator();
+        Iterator iterator = ResearchRegistry.getMonitorableEntityIds().iterator();
 
         while (iterator.hasNext()) {
             list.add(new ItemStack(item, 1, (Integer) iterator.next()));
