@@ -4,8 +4,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.world.World;
@@ -28,9 +26,7 @@ import com.ollieread.ennds.extended.ExtendedPlayerAbilities;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.ennds.research.ResearchRegistry;
 import com.ollieread.technomagi.common.init.Blocks;
-import com.ollieread.technomagi.common.init.Items;
 import com.ollieread.technomagi.common.init.Potions;
-import com.ollieread.technomagi.item.ItemDigitalTool;
 import com.ollieread.technomagi.network.PacketHandler;
 import com.ollieread.technomagi.network.message.MessageEntityInteractEvent;
 import com.ollieread.technomagi.network.message.MessagePlayerInteractEvent;
@@ -118,37 +114,6 @@ public class PlayerEventHandler
             if (abilities.useAbility(event)) {
                 if (event.entityPlayer.worldObj.isRemote && (event.isCanceled() || event.action.equals(PlayerInteractEvent.Action.RIGHT_CLICK_AIR))) {
                     PacketHandler.INSTANCE.sendToServer(new MessagePlayerInteractEvent(event));
-                }
-            }
-        } else if (event.action.equals(PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK)) {
-            ItemStack item = event.entityPlayer.getHeldItem();
-
-            if (item.isItemEqual(new ItemStack(Items.itemDigitalTool)) && !event.world.isRemote) {
-                ItemDigitalTool tool = (ItemDigitalTool) item.getItem();
-                TileEntity tile = event.entityPlayer.worldObj.getTileEntity(event.x, event.y, event.z);
-
-                if (tile != null) {
-                    if (tile instanceof TileEntityTeleporter) {
-                        if (tile.getBlockMetadata() == 1) {
-                            if (tool.getFocusType() == 0) {
-                                tool.setFocusType(1);
-                                tool.setFocusLocation(tile.xCoord, tile.yCoord, tile.zCoord);
-                            } else if (tool.getFocusType() == 1) {
-                                int[] location = tool.getFocusLocation();
-
-                                TileEntityTeleporter teleporter = (TileEntityTeleporter) event.entityPlayer.worldObj.getTileEntity(location[0], location[1], location[2]);
-
-                                if (teleporter != null) {
-                                    ((TileEntityTeleporter) tile).partner(location[0], location[1], location[2]);
-                                    teleporter.partner(tile.xCoord, tile.yCoord, tile.zCoord);
-
-                                    tool.setFocusType(0);
-                                    tool.setFocusId(0);
-                                    tool.setFocusLocation(0, 0, 0);
-                                }
-                            }
-                        }
-                    }
                 }
             }
         }
