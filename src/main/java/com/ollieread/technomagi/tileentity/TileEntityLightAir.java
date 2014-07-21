@@ -52,32 +52,36 @@ public class TileEntityLightAir extends TileEntityTM
     @Override
     public void updateEntity()
     {
-        validateSelf();
+        if (!worldObj.isRemote) {
+            validateSelf();
+        }
     }
 
     public boolean validateSelf()
     {
         if (setup) {
             if (masterX == 0 && masterY == 0 && masterZ == 0) {
-                worldObj.setBlockToAir(xCoord, yCoord, zCoord);
+                setup = false;
 
                 return false;
             } else {
                 Block block = worldObj.getBlock(masterX, masterY, masterZ);
                 if (!block.equals(Blocks.blockAreaLight)) {
-                    worldObj.setBlockToAir(xCoord, yCoord, zCoord);
+                    setup = false;
 
                     return false;
                 } else {
                     TileEntityAreaLight tile = (TileEntityAreaLight) worldObj.getTileEntity(masterX, masterY, masterZ);
 
                     if (tile == null) {
-                        worldObj.setBlockToAir(xCoord, yCoord, zCoord);
+                        setup = false;
+                    } else if (!tile.isOn()) {
+                        setup = false;
                     }
                 }
             }
         } else {
-            if (ticks < 200) {
+            if (ticks < 20) {
                 ticks++;
             } else {
                 worldObj.setBlockToAir(xCoord, yCoord, zCoord);
