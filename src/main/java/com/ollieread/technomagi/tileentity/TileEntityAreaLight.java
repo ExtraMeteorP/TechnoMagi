@@ -7,7 +7,7 @@ import com.ollieread.technomagi.common.init.Blocks;
 public class TileEntityAreaLight extends TileEntityInventory
 {
 
-    protected boolean on = true;
+    protected boolean on;
 
     public TileEntityAreaLight()
     {
@@ -21,7 +21,7 @@ public class TileEntityAreaLight extends TileEntityInventory
     {
         super.readFromNBT(compound);
 
-        compound.setBoolean("On", on);
+        on = compound.getBoolean("On");
     }
 
     @Override
@@ -29,7 +29,7 @@ public class TileEntityAreaLight extends TileEntityInventory
     {
         super.writeToNBT(compound);
 
-        on = compound.getBoolean("On");
+        compound.setBoolean("On", on);
     }
 
     public boolean isOn()
@@ -39,18 +39,20 @@ public class TileEntityAreaLight extends TileEntityInventory
 
     public void toggleStatus()
     {
-        if (on) {
-            on = false;
-        } else {
-            on = true;
+        if (!worldObj.isRemote) {
+            if (on) {
+                on = false;
+            } else {
+                on = true;
 
-            if (worldObj.isAirBlock(xCoord, yCoord + 1, zCoord)) {
-                worldObj.setBlock(xCoord, yCoord + 1, zCoord, Blocks.blockLightAir);
-                TileEntityLightAir light = (TileEntityLightAir) worldObj.getTileEntity(xCoord, yCoord + 1, zCoord);
+                if (worldObj.isAirBlock(xCoord, yCoord + 1, zCoord)) {
+                    worldObj.setBlock(xCoord, yCoord + 1, zCoord, Blocks.blockLightAir);
+                    TileEntityLightAir light = (TileEntityLightAir) worldObj.getTileEntity(xCoord, yCoord + 1, zCoord);
 
-                if (light != null) {
-                    light.setMaster(xCoord, yCoord, zCoord);
-                    light.spreadBlocks();
+                    if (light != null) {
+                        light.setMaster(xCoord, yCoord, zCoord);
+                        light.spreadBlocks();
+                    }
                 }
             }
         }
