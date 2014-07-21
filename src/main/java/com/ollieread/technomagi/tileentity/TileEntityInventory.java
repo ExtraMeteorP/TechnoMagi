@@ -20,8 +20,10 @@ public class TileEntityInventory extends TileEntityTM implements IInventory
 
     public TileEntityInventory(int size, int max)
     {
-        inventory = new ItemStack[size];
-        limit = max;
+        if (inventory == null) {
+            inventory = new ItemStack[size];
+            limit = max;
+        }
     }
 
     @Override
