@@ -38,10 +38,8 @@ public class Entities
 
         EntityRegistry.registerModEntity(EntityRobotCow.class, "robotCow", robotCowID, TechnoMagi.instance, 80, 1, true);
         EntityList.addMapping(EntityRobotCow.class, "robotCow", robotCowID, 113213, 3523523);
-
         EntityRegistry.registerModEntity(EntityRobotCreeper.class, "robotCreeper", robotCreeperID, TechnoMagi.instance, 80, 1, true);
         EntityList.addMapping(EntityRobotCreeper.class, "robotCreeper", robotCreeperID, 113213, 3523523);
-
         EntityRegistry.registerModEntity(EntityRobotZombie.class, "robotZombie", robotZombieID, TechnoMagi.instance, 80, 1, true);
         EntityList.addMapping(EntityRobotZombie.class, "robotZombie", robotZombieID, 113213, 3523523);
 
