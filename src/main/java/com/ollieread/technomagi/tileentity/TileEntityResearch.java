@@ -110,6 +110,8 @@ public class TileEntityResearch extends TileEntityInventoryLocked implements IRe
             research.setInteger("Progress", researchingKnowledge.get(k));
             researchProgressList.appendTag(research);
         }
+
+        compound.setTag("ResearchProgress", researchProgressList);
     }
 
     public void addResearch(String name, int progress)
