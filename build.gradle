@@ -12,6 +12,7 @@ buildscript {
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+        classpath 'org.ajoberstar:gradle-git:0.9.0'
     }
 }
 
@@ -39,7 +40,7 @@ dependencies {
     compile "com.ollieread.ennds:EnndsCore:${config.version.minecraft}-${config.version.ennds}:deobf"
 }
 
-version = "${config.version.minecraft}-${config.version.forge}_${config.version.major}.${config.version.minor}.${config.version.revis}${config.version.release}"
+version = "${config.version.minecraft}-${config.version.forge}_${config.version.major}.${config.version.minor}.${config.version.revis}.${System.getenv("BUILD_NUMBER") ?: 0}-${config.version.stage}"
 group = "com.ollieread.technomagi" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "TechnoMagi"
 
@@ -48,7 +49,7 @@ minecraft {
     assetDir = "run/assets"
     
     replaceIn "common/References.java"
-    replace "@VERSION@", "${config.version.major}.${config.version.minor}.${config.version.revis}${config.version.release}-${System.getenv("BUILD_NUMBER") ?: 0}"
+    replace "@VERSION@", "${config.version.minecraft}-${config.version.forge}_${config.version.major}.${config.version.minor}.${config.version.revis}.${System.getenv("BUILD_NUMBER") ?: 0}-${config.version.stage}"
 }
 
 version += "-${System.getenv("BUILD_NUMBER") ?: 0}"
@@ -67,4 +68,19 @@ processResources {
 artifacts {
     archives deobfJar 
     archives jar
+}
+
+import org.ajoberstar.grgit.*
+
+ext.repo = Grgit.open(project.file('.'))
+
+version = "${config.version.minecraft}-${config.version.forge}_${config.version.major}.${config.version.minor}.${config.version.revis}.${System.getenv("BUILD_NUMBER") ?: 0}-${config.version.stage}"
+
+task tagBuild << {
+    repo.tag.add {
+        name = version
+        message = "Build for ${version}"
+    }
+    
+    repo.push(tags: true)
 }
