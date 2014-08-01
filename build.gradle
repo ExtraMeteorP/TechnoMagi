@@ -37,7 +37,7 @@ repositories {
 }
 
 dependencies {
-    compile "com.ollieread.ennds:EnndsCore:${config.version.minecraft}-${config.version.ennds}:deobf"
+    compile "com.ollieread.ennds:EnndsCore:${config.version.ennds}:deobf"
 }
 
 version = "${config.version.minecraft}-${config.version.forge}_${config.version.major}.${config.version.minor}.${config.version.revis}.${System.getenv("BUILD_NUMBER") ?: 0}-${config.version.stage}"
