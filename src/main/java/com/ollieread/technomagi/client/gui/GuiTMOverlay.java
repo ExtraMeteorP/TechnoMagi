@@ -119,11 +119,11 @@ public class GuiTMOverlay extends Gui
             }
 
             if (aOffset > 0) {
-                this.drawTexturedModalRect(this.xOffset, this.yOffset - 10, 37, 36, 11, 7);
+                this.drawTexturedModalRect(this.xOffset + 5, this.yOffset - 8, 37, 36, 11, 7);
             }
 
-            if (abilities.size() > end) {
-                this.drawTexturedModalRect(this.xOffset, this.yOffset + 112, 37, 24, 11, 7);
+            if (abilities.size() > (end + 1)) {
+                this.drawTexturedModalRect(this.xOffset + 5, this.yOffset + 103, 37, 24, 11, 7);
             }
 
             int x = aOffset;
@@ -136,7 +136,7 @@ public class GuiTMOverlay extends Gui
 
                 this.mc.getTextureManager().bindTexture(ability.getIcon());
                 this.func_146110_a(5, yOffset + (3 + (20 * i)), 0, 0, 16, 16, 16, 16);
-                x += i;
+                x++;
             }
 
             if (currentAbility > -1 && shouldDisplay && highlightTicks > 0) {
