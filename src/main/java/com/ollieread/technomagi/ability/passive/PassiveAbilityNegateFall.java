@@ -1,4 +1,4 @@
-package com.ollieread.technomagi.ability;
+package com.ollieread.technomagi.ability.passive;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
@@ -37,27 +37,30 @@ public class PassiveAbilityNegateFall extends AbilityPassive<LivingFallEvent>
     @Override
     public void use(LivingFallEvent event, ExtendedPlayerKnowledge charon)
     {
-        int fall = Math.round(event.distance);
+        float fall = Math.round(event.distance);
         boolean flag = false;
         float size = 0;
 
-        if (charon.nanites.decreaseNanites(fall)) {
-            event.distance -= fall;
-            flag = true;
-            size = fall / 15;
-        } else {
-            int nanites = charon.nanites.getNanites();
-
-            if (charon.nanites.decreaseNanites(nanites)) {
-                event.distance -= nanites;
+        if (fall > 3.0F) {
+            if (charon.nanites.decreaseNanites((int) fall)) {
+                event.distance -= fall;
                 flag = true;
-                size = nanites / 15;
-            }
-        }
+                size = fall / 15;
+            } else {
+                int nanites = charon.nanites.getNanites();
 
-        if (flag && size > 0) {
-            EntityPlayer player = (EntityPlayer) event.entity;
-            ExplosionHelper.newFallExplosion(player.worldObj, player, player.posX, player.posY, player.posZ, size * 2);
+                if (charon.nanites.decreaseNanites(nanites)) {
+                    event.distance -= nanites;
+                    flag = true;
+                    size = nanites / 15;
+                }
+            }
+
+            if (flag && size > 0) {
+                EntityPlayer player = (EntityPlayer) event.entity;
+
+                ExplosionHelper.newFallExplosion(player.worldObj, player, player.posX, player.posY, player.posZ, size * 2);
+            }
         }
     }
 }

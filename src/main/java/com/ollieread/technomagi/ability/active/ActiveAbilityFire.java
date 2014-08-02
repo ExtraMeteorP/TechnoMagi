@@ -1,4 +1,4 @@
-package com.ollieread.technomagi.ability;
+package com.ollieread.technomagi.ability.active;
 
 import java.util.Random;
 

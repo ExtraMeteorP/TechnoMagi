@@ -1,4 +1,4 @@
-package com.ollieread.technomagi.ability;
+package com.ollieread.technomagi.ability.active;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;

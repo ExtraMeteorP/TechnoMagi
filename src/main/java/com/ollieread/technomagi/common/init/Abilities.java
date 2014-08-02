@@ -5,13 +5,13 @@ import org.apache.logging.log4j.Level;
 import com.ollieread.ennds.ability.IAbilityActive;
 import com.ollieread.ennds.ability.IAbilityPassive;
 import com.ollieread.technomagi.TechnoMagi;
-import com.ollieread.technomagi.ability.ActiveAbilityFire;
-import com.ollieread.technomagi.ability.ActiveAbilityFlashstep;
-import com.ollieread.technomagi.ability.ActiveAbilityHarden;
-import com.ollieread.technomagi.ability.ActiveAbilityInvisibility;
-import com.ollieread.technomagi.ability.PassiveAbilityNanites;
-import com.ollieread.technomagi.ability.PassiveAbilityNegateFall;
-import com.ollieread.technomagi.ability.PassiveAbilityScholarResearch;
+import com.ollieread.technomagi.ability.active.ActiveAbilityFire;
+import com.ollieread.technomagi.ability.active.ActiveAbilityFlashstep;
+import com.ollieread.technomagi.ability.active.ActiveAbilityHarden;
+import com.ollieread.technomagi.ability.active.ActiveAbilityInvisibility;
+import com.ollieread.technomagi.ability.passive.PassiveAbilityNanites;
+import com.ollieread.technomagi.ability.passive.PassiveAbilityNegateFall;
+import com.ollieread.technomagi.ability.passive.PassiveAbilityScholarResearch;
 
 public class Abilities
 {

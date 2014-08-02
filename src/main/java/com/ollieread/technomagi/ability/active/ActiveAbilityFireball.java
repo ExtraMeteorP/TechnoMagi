@@ -1,4 +1,4 @@
-package com.ollieread.technomagi.ability;
+package com.ollieread.technomagi.ability.active;
 
 import com.ollieread.ennds.ability.AbilityActive;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;

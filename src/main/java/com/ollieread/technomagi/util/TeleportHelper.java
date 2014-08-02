@@ -2,6 +2,7 @@ package com.ollieread.technomagi.util;
 
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
 
 import com.ollieread.technomagi.tileentity.TileEntityTeleporter;
 
@@ -18,10 +19,14 @@ public class TeleportHelper
             return null;
 
         for (int i = 0; (i + oy) < 251; i++) {
-            TileEntityTeleporter t = (TileEntityTeleporter) teleporter.getWorldObj().getTileEntity(ox, oy + i, oz);
+            TileEntity t = teleporter.getWorldObj().getTileEntity(ox, oy + i, oz);
 
-            if (t instanceof TileEntityTeleporter && t.canUse() && teleporter.getWorldObj().getBlockMetadata(ox, oy + i, oz) == 0) {
-                return t;
+            if (t instanceof TileEntityTeleporter) {
+                TileEntityTeleporter te = (TileEntityTeleporter) t;
+
+                if (te.canUse() && teleporter.getWorldObj().getBlockMetadata(ox, oy + i, oz) == 0) {
+                    return te;
+                }
             }
         }
 
@@ -38,10 +43,14 @@ public class TeleportHelper
             return null;
 
         for (int i = 0; (oy - i) >= 3; i++) {
-            TileEntityTeleporter t = (TileEntityTeleporter) teleporter.getWorldObj().getTileEntity(ox, oy - i, oz);
+            TileEntity t = teleporter.getWorldObj().getTileEntity(ox, oy - i, oz);
 
-            if (t instanceof TileEntityTeleporter && t.canUse() && teleporter.getWorldObj().getBlockMetadata(ox, oy - i, oz) == 0) {
-                return t;
+            if (t instanceof TileEntityTeleporter) {
+                TileEntityTeleporter te = (TileEntityTeleporter) t;
+
+                if (te.canUse() && teleporter.getWorldObj().getBlockMetadata(ox, oy - i, oz) == 0) {
+                    return te;
+                }
             }
         }
 

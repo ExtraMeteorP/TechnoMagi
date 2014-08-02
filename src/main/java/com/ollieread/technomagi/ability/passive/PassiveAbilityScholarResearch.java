@@ -1,4 +1,4 @@
-package com.ollieread.technomagi.ability;
+package com.ollieread.technomagi.ability.passive;
 
 import com.ollieread.ennds.ability.AbilityPassive;
 import com.ollieread.ennds.event.EnndsEvent.ResearchProgressEvent;
