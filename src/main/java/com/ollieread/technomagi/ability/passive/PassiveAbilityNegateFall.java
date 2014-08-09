@@ -37,11 +37,11 @@ public class PassiveAbilityNegateFall extends AbilityPassive<LivingFallEvent>
     @Override
     public void use(LivingFallEvent event, ExtendedPlayerKnowledge charon)
     {
-        float fall = Math.round(event.distance);
+        float fall = Math.round(event.distance) - 3.0F;
         boolean flag = false;
         float size = 0;
 
-        if (fall > 3.0F) {
+        if (fall > 0.0F) {
             if (charon.nanites.decreaseNanites((int) fall)) {
                 event.distance -= fall;
                 flag = true;
