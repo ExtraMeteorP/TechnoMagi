@@ -1,5 +1,7 @@
 package com.ollieread.technomagi.ability.active;
 
+import java.util.Random;
+
 import net.minecraft.util.Vec3;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
@@ -46,6 +48,8 @@ public class ActiveAbilityBlink extends AbilityActive
                 Vec3 target = Vec3.createVectorHelper(look.xCoord, look.yCoord, look.zCoord);
                 Vec3 dest = null;
 
+                Random rand = new Random();
+
                 target.xCoord = (look.xCoord * 15) + eye.xCoord;
                 target.yCoord = (look.yCoord * 15) + eye.yCoord;
                 target.zCoord = (look.zCoord * 15) + eye.zCoord;
@@ -55,6 +59,10 @@ public class ActiveAbilityBlink extends AbilityActive
 
                 if (!cancelled) {
                     interact.entityPlayer.setPositionAndUpdate(teleportEvent.targetX, teleportEvent.targetY, teleportEvent.targetZ);
+
+                    for (int i = 0; i < 32; ++i) {
+                        interact.entityPlayer.worldObj.spawnParticle("portal", teleportEvent.targetX, teleportEvent.targetY + rand.nextDouble() * 2.0D, teleportEvent.targetZ, rand.nextGaussian(), 0.0D, rand.nextGaussian());
+                    }
 
                     return true;
                 }
