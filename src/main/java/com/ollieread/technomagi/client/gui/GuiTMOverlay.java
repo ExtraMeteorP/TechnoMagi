@@ -57,7 +57,7 @@ public class GuiTMOverlay extends Gui
 
         this.fontrenderer = Minecraft.getMinecraft().fontRenderer;
 
-        ScaledResolution scaled = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
+        ScaledResolution scaled = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
         this.width = scaled.getScaledWidth();
         this.height = scaled.getScaledHeight();
         this.xOffset = 2;
