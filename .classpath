@@ -6,8 +6,8 @@
 	<classpathentry kind="src" path="src/api/java"/>
 	<classpathentry kind="src" path="src/api/resources"/>
 	<classpathentry kind="output" path="bin"/>
-	<classpathentry kind="lib" path="C:/Users/ollie/.gradle/caches/modules-2/files-2.1/com.ollieread.ennds/EnndsCore/1.6.3.41-dev/2abcd41c94b8c9dbd31f6db846dd18b14ebb3afb/EnndsCore-1.6.3.41-dev-deobf.jar" exported="true"/>
-	<classpathentry sourcepath="C:/Users/ollie/Minecraft/TechnoMagi/build/dirtyArtifacts/forgeSrc-1.7.10-10.13.0.1180-sources.jar" kind="lib" path="C:/Users/ollie/Minecraft/TechnoMagi/build/dirtyArtifacts/forgeSrc-1.7.10-10.13.0.1180.jar" exported="true"/>
+	<classpathentry kind="lib" path="C:/Users/ollie/.gradle/caches/modules-2/files-2.1/com.ollieread.ennds/EnndsCore/1.7.0.51-dev/9f1559da9a0859e85f916ac82d723e950a541211/EnndsCore-1.7.0.51-dev-deobf.jar" exported="true"/>
+	<classpathentry sourcepath="C:/Users/ollie/Minecraft/TechnoMagi/build/dirtyArtifacts/forgeSrc-1.7.10-10.13.0.1200-sources.jar" kind="lib" path="C:/Users/ollie/Minecraft/TechnoMagi/build/dirtyArtifacts/forgeSrc-1.7.10-10.13.0.1200.jar" exported="true"/>
 	<classpathentry sourcepath="C:/Users/ollie/.gradle/caches/modules-2/files-2.1/net.minecraft/launchwrapper/1.9/ed9a416b94de54fc9bd8f8da04739e9fd1548e2a/launchwrapper-1.9-sources.jar" kind="lib" path="C:/Users/ollie/.gradle/caches/modules-2/files-2.1/net.minecraft/launchwrapper/1.9/116f2aad5b0c68353ebed66cd463517db6522f7e/launchwrapper-1.9.jar" exported="true"/>
 	<classpathentry sourcepath="C:/Users/ollie/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-debug-all/4.1/1c218d5a0b8b932a1528b74069aa6973dcfcea74/asm-debug-all-4.1-sources.jar" kind="lib" path="C:/Users/ollie/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-debug-all/4.1/dd6ba5c392d4102458494e29f54f70ac534ec2a2/asm-debug-all-4.1.jar" exported="true">
 		<attributes>
@@ -223,5 +223,5 @@
 	<classpathentry kind="lib" path="C:/Users/ollie/.gradle/caches/modules-2/files-2.1/tv.twitch/twitch-platform/5.16/39d0c3d363735b4785598e0e7fbf8297c706a9f9/twitch-platform-5.16-natives-windows-64.jar" exported="true"/>
 	<classpathentry kind="lib" path="C:/Users/ollie/.gradle/caches/modules-2/files-2.1/tv.twitch/twitch-external-platform/4.5/18215140f010c05b9f86ef6f0f8871954d2ccebf/twitch-external-platform-4.5-natives-windows-32.jar" exported="true"/>
 	<classpathentry kind="lib" path="C:/Users/ollie/.gradle/caches/modules-2/files-2.1/tv.twitch/twitch-external-platform/4.5/c3cde57891b935d41b6680a9c5e1502eeab76d86/twitch-external-platform-4.5-natives-windows-64.jar" exported="true"/>
-	<classpathentry kind="lib" path="C:/Users/ollie/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.10-10.13.0.1180/start" exported="true"/>
+	<classpathentry kind="lib" path="C:/Users/ollie/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.10-10.13.0.1200/start" exported="true"/>
 </classpath>
