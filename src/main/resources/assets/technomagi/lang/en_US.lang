@@ -1,6 +1,6 @@
 technomagi.specialise.gui=Choose a Specialisation
 technomagi.specialise.button=Specialise
-technomagi.archive.gui=Technomage Archive
+technomagi.archive.gui=Knowledge Archive
 technomagi.archive.entries=Entries
 technomagi.self.gui=Details
 technomagi.replicator.gui=Nanite Replicator
@@ -25,6 +25,12 @@ ability.active.blink=Blink
 ability.active.fireball=Conjure Fireball
 ability.active.knockback=Knockback Entity
 ability.active.expel=Expel Entities
+
+knowledge.lightManipulationI=Light Manipulation I
+knowledge.lightManipulationII=Light Manipulation II
+knowledge.teleportationI=Teleportation I
+knowledge.teleportationII=Teleportation II
+knowledge.motionI=Motion I
 
 potionHardness=Hardness
 
