@@ -17,10 +17,13 @@ specialisation.scholar=Scholar
 specialisation.medic=Medic
 specialisation.warrior=Warrior
 
-ability.active.fire=Firemancy
+ability.active.fire=Pyromancy
 ability.active.harden=Harden Skin
 ability.active.invisibility=Vanish
 ability.active.flashstep=Flashstep
+ability.active.fireball=Conjure Fireball
+ability.active.knockback=Knockback Entity
+ability.active.expel=Expel Entities
 
 potionHardness=Hardness
 
