@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
@@ -70,25 +71,69 @@ public class TileEntityArchiveRenderer extends TileEntitySpecialRenderer
         Minecraft.getMinecraft().renderEngine.bindTexture(textureConstruct);
         construct.render((Entity) null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
 
-        Minecraft.getMinecraft().renderEngine.bindTexture(textureBook);
-        GL11.glEnable(GL11.GL_CULL_FACE);
-        GL11.glRotatef(90.0F, 0.0F, 0.0F, -1.0F);
-        GL11.glRotatef(90.0F, -1.0F, 0.0F, 0.0F);
+        GL11.glPopMatrix();
 
-        book.bookSpine.offsetX = -0.6F;
-        book.coverRight.offsetX = -0.6F;
-        book.coverLeft.offsetX = -0.6F;
-        book.pagesRight.offsetX = -0.6F;
-        book.pagesLeft.offsetX = -0.6F;
-        book.flippingPageRight.offsetX = -0.6F;
-        book.flippingPageLeft.offsetX = -0.6F;
-        book.bookSpine.offsetX = -0.6F;
+        // Minecraft.getMinecraft().renderEngine.bindTexture(textureBook);
+        // GL11.glEnable(GL11.GL_CULL_FACE);
+        // GL11.glRotatef(90.0F, 0.0F, 0.0F, -1.0F);
+        // GL11.glRotatef(90.0F, -1.0F, 0.0F, 0.0F);
+
+        // book.bookSpine.offsetX = -0.6F;
+        // book.coverRight.offsetX = -0.6F;
+        // book.coverLeft.offsetX = -0.6F;
+        // book.pagesRight.offsetX = -0.6F;
+        // book.pagesLeft.offsetX = -0.6F;
+        // book.flippingPageRight.offsetX = -0.6F;
+        // book.flippingPageLeft.offsetX = -0.6F;
+        // book.bookSpine.offsetX = -0.6F;
+
+        // GL11.glTranslatef((float) x + 0.5F, (float) y + 0.75F, (float) z +
+        // 0.5F);
+        GL11.glTranslatef(0.0F, (float) (y + 0.95F), 0.0F);
+        float f1 = (float) archive.field_145926_a + scale;
+        GL11.glTranslatef(0.0F, 0.1F + MathHelper.sin(f1 * 0.1F) * 0.01F, 0.0F);
+        float f2;
+
+        for (f2 = archive.field_145928_o - archive.field_145925_p; f2 >= (float) Math.PI; f2 -= ((float) Math.PI * 2F)) {
+            ;
+        }
+
+        while (f2 < -(float) Math.PI) {
+            f2 += ((float) Math.PI * 2F);
+        }
+
+        float f3 = archive.field_145925_p + f2 * scale;
+        GL11.glRotatef(-f3 * 180.0F / (float) Math.PI, 0.0F, 1.0F, 0.0F);
+        GL11.glRotatef(80.0F, 0.0F, 0.0F, 1.0F);
+
+        Minecraft.getMinecraft().renderEngine.bindTexture(textureBook);
+
+        float f4 = archive.field_145931_j + (archive.field_145933_i - archive.field_145931_j) * scale + 0.25F;
+        float f5 = archive.field_145931_j + (archive.field_145933_i - archive.field_145931_j) * scale + 0.75F;
+        f4 = (f4 - (float) MathHelper.truncateDoubleToInt((double) f4)) * 1.6F - 0.3F;
+        f5 = (f5 - (float) MathHelper.truncateDoubleToInt((double) f5)) * 1.6F - 0.3F;
+
+        if (f4 < 0.0F) {
+            f4 = 0.0F;
+        }
+
+        if (f5 < 0.0F) {
+            f5 = 0.0F;
+        }
+
+        if (f4 > 1.0F) {
+            f4 = 1.0F;
+        }
+
+        if (f5 > 1.0F) {
+            f5 = 1.0F;
+        }
+
+        float f6 = archive.field_145927_n + (archive.field_145930_m - archive.field_145927_n) * scale;
+        GL11.glEnable(GL11.GL_CULL_FACE);
 
         book.render((Entity) null, 1.0F, 0.0F, 0.0F, 1.0F, 0.0F, 0.0625F);
 
-        GL11.glDisable(GL11.GL_CULL_FACE);
-
-        GL11.glPopMatrix();
         GL11.glPopMatrix();
     }
 

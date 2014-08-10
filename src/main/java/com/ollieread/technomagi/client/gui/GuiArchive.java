@@ -1,5 +1,8 @@
 package com.ollieread.technomagi.client.gui;
 
+import java.util.Iterator;
+import java.util.List;
+
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
@@ -7,6 +10,10 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
+import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
+import com.ollieread.ennds.research.IKnowledge;
+import com.ollieread.ennds.research.ResearchRegistry;
+import com.ollieread.technomagi.TechnoMagi;
 import com.ollieread.technomagi.common.Reference;
 
 import cpw.mods.fml.relauncher.Side;
@@ -16,24 +23,17 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class GuiArchive extends GuiScreen
 {
 
-    protected int xSize = 325;
+    protected int xSize = 143;
     protected int ySize = 209;
     protected int xOffset;
     protected int yOffset;
-    private static final ResourceLocation texture1 = new ResourceLocation(Reference.MODID.toLowerCase(), "textures/gui/archive1.png");
-    private static final ResourceLocation texture2 = new ResourceLocation(Reference.MODID.toLowerCase(), "textures/gui/archive2.png");
+    private static final ResourceLocation texture1 = new ResourceLocation(Reference.MODID.toLowerCase(), "textures/gui/archive.png");
 
     public void initGui()
     {
         this.buttonList.clear();
         this.xOffset = (this.width - this.xSize) / 2;
         this.yOffset = (this.height - this.ySize) / 2;
-
-        this.buttonList.add(new GuiListButton(1, this.xOffset + 6, this.yOffset + 41, "Button Text"));
-        this.buttonList.add(new GuiListButton(1, this.xOffset + 6, this.yOffset + 56, "Button Text"));
-        this.buttonList.add(new GuiListButton(1, this.xOffset + 6, this.yOffset + 71, "Button Text"));
-        this.buttonList.add(new GuiListButton(1, this.xOffset + 6, this.yOffset + 86, "Button Text"));
-        this.buttonList.add(new GuiListButton(1, this.xOffset + 6, this.yOffset + 101, "Button Text"));
     }
 
     /**
@@ -44,14 +44,34 @@ public class GuiArchive extends GuiScreen
         this.drawDefaultBackground();
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(texture1);
-        this.drawTexturedModalRect(this.xOffset, this.yOffset, 0, 0, 132, this.ySize);
-        this.mc.getTextureManager().bindTexture(texture2);
-        this.drawTexturedModalRect(this.xOffset + 135, this.yOffset, 0, 0, 190, this.ySize);
+        this.drawTexturedModalRect(this.xOffset, this.yOffset, 0, 0, this.xSize, this.ySize);
 
         this.fontRendererObj.drawString(I18n.format("technomagi.archive.gui"), this.xOffset + 7, this.yOffset + 9, 16777215);
 
-        this.fontRendererObj.FONT_HEIGHT = 7;
-        this.fontRendererObj.drawString(I18n.format("technomagi.archive.entries"), this.xOffset + 11, this.yOffset + 30, 16777215);
+        List<IKnowledge> knowledge = ResearchRegistry.getKnowledge();
+
+        ExtendedPlayerKnowledge charon = ExtendedPlayerKnowledge.get(TechnoMagi.proxy.getClientPlayer());
+
+        int x = 10;
+
+        for (Iterator<IKnowledge> i = knowledge.iterator(); i.hasNext();) {
+            IKnowledge k = i.next();
+
+            // draw progress
+            this.mc.getTextureManager().bindTexture(texture1);
+            this.drawTexturedModalRect(this.xOffset + 30, this.yOffset + 20 + x + 10, 0, 212, 102, 5);
+            int p = charon.getKnowledgeProgress(k.getName());
+            this.drawTexturedModalRect(this.xOffset + 32, this.yOffset + 20 + x + 11, 102, 213, p, 5);
+
+            // draw name
+            this.fontRendererObj.drawString(k.getLocalisedName(), this.xOffset + 30, this.yOffset + 20 + x, 16777215);
+
+            // draw icon
+            this.mc.getTextureManager().bindTexture(k.getIcon());
+            this.func_146110_a(this.xOffset + 7, this.yOffset + 20 + x, 0, 0, 16, 16, 16, 16);
+
+            x += 25;
+        }
 
         super.drawScreen(par1, par2, par3);
     }

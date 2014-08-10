@@ -8,6 +8,7 @@ import net.minecraftforge.common.MinecraftForge;
 import com.ollieread.ennds.EnndsRegistry;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.client.gui.GuiAnalysis;
+import com.ollieread.technomagi.client.gui.GuiArchive;
 import com.ollieread.technomagi.client.gui.GuiNaniteReplicator;
 import com.ollieread.technomagi.client.gui.GuiObservation;
 import com.ollieread.technomagi.client.gui.GuiSelf;
@@ -19,6 +20,7 @@ import com.ollieread.technomagi.inventory.ContainerAnalysis;
 import com.ollieread.technomagi.inventory.ContainerNaniteReplicator;
 import com.ollieread.technomagi.inventory.ContainerObservation;
 import com.ollieread.technomagi.tileentity.TileEntityAnalysis;
+import com.ollieread.technomagi.tileentity.TileEntityArchive;
 import com.ollieread.technomagi.tileentity.TileEntityNaniteReplicator;
 import com.ollieread.technomagi.tileentity.TileEntityObservationChamber;
 
@@ -33,6 +35,7 @@ public class CommonProxy implements IGuiHandler
     public static int GUI_REPLICATOR = 3;
     public static int GUI_ANALYSIS = 4;
     public static int GUI_OBSERVATION = 5;
+    public static int GUI_ARCHIVE = 6;
 
     public static PlayerEventHandler playerEventHandler = new PlayerEventHandler();
 
@@ -91,6 +94,12 @@ public class CommonProxy implements IGuiHandler
             if (chamber != null) {
                 return new GuiObservation(player.inventory, chamber);
             }
+        } else if (ID == GUI_ARCHIVE) {
+            TileEntityArchive archive = (TileEntityArchive) world.getTileEntity(x, y, z);
+
+            if (archive != null) {
+                return new GuiArchive();
+            }
         }
 
         return null;
@@ -116,6 +125,7 @@ public class CommonProxy implements IGuiHandler
         EnndsRegistry.registerEvent("toNether");
         EnndsRegistry.registerEvent("toEnd");
         EnndsRegistry.registerEvent("toOverworld");
+        EnndsRegistry.registerEvent("enderTeleport");
 
         MinecraftForge.EVENT_BUS.register(playerEventHandler);
         MinecraftForge.EVENT_BUS.register(new TMEventHandler());
