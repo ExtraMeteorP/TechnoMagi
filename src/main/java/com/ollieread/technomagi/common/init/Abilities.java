@@ -9,6 +9,7 @@ import com.ollieread.technomagi.ability.active.ActiveAbilityBlink;
 import com.ollieread.technomagi.ability.active.ActiveAbilityFire;
 import com.ollieread.technomagi.ability.active.ActiveAbilityFireball;
 import com.ollieread.technomagi.ability.active.ActiveAbilityFlashstep;
+import com.ollieread.technomagi.ability.active.ActiveAbilityForceArea;
 import com.ollieread.technomagi.ability.active.ActiveAbilityForceTarget;
 import com.ollieread.technomagi.ability.active.ActiveAbilityHarden;
 import com.ollieread.technomagi.ability.active.ActiveAbilityInvisibility;
@@ -26,6 +27,7 @@ public class Abilities
     public static IAbilityActive abilityActiveFlashstep;
     public static IAbilityActive abilityActiveBlink;
     public static IAbilityActive abilityActiveForceTarget;
+    public static IAbilityActive abilityActiveForceArea;
 
     public static IAbilityPassive abilityPassiveScholarResearch;
     public static IAbilityPassive abilityPassiveNanites;
@@ -41,7 +43,8 @@ public class Abilities
         abilityActiveInvisibility = new ActiveAbilityInvisibility("invisibility");
         abilityActiveFlashstep = new ActiveAbilityFlashstep("flashstep");
         abilityActiveBlink = new ActiveAbilityBlink("blink");
-        abilityActiveForceTarget = new ActiveAbilityForceTarget("forceTarget");
+        abilityActiveForceTarget = new ActiveAbilityForceTarget("knockback");
+        abilityActiveForceArea = new ActiveAbilityForceArea("expell");
 
         abilityPassiveScholarResearch = new PassiveAbilityScholarResearch("scholarResearch");
         abilityPassiveNanites = new PassiveAbilityNanites("naniteRegen");
