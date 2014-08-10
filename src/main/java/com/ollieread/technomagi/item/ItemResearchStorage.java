@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -23,7 +24,7 @@ public class ItemResearchStorage extends ItemTM implements IResearchStorage
 {
 
     protected int capacity;
-    protected int total;
+    protected int total = 0;
     protected Map<String, Integer> researchingKnowledge = new HashMap<String, Integer>();
 
     public ItemResearchStorage(String name, int capacity)
@@ -39,7 +40,7 @@ public class ItemResearchStorage extends ItemTM implements IResearchStorage
     @Override
     public boolean addResearch(String name, int amount)
     {
-        if ((total + amount) > capacity) {
+        if ((total + amount) <= capacity) {
             total += amount;
             if (researchingKnowledge.containsKey(name)) {
                 researchingKnowledge.put(name, researchingKnowledge.get(name) + amount);
@@ -51,6 +52,30 @@ public class ItemResearchStorage extends ItemTM implements IResearchStorage
         }
 
         return false;
+    }
+
+    public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5)
+    {
+        loadStackInformation(stack);
+    }
+
+    protected void loadStackInformation(ItemStack stack)
+    {
+        if (stack.stackTagCompound.hasKey("Capacity")) {
+            NBTTagCompound compound = stack.stackTagCompound;
+            capacity = compound.getInteger("Capacity");
+            total = compound.getInteger("Total");
+
+            stack.setItemDamage(capacity - total);
+
+            NBTTagList researchProgressList = compound.getTagList("ResearchProgress", compound.getId());
+            researchingKnowledge = new HashMap<String, Integer>();
+
+            for (int i = 0; i < researchProgressList.tagCount(); i++) {
+                NBTTagCompound research = researchProgressList.getCompoundTagAt(i);
+                researchingKnowledge.put(ResearchRegistry.getResearchName(research.getInteger("Research")), research.getInteger("Progress"));
+            }
+        }
     }
 
     public void onCreated(ItemStack stack, World world, EntityPlayer player)
