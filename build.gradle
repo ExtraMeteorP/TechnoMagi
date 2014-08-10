@@ -40,19 +40,16 @@ dependencies {
     compile "com.ollieread.ennds:EnndsCore:${config.version.ennds}:deobf"
 }
 
-version = "${config.version.minecraft}-${config.version.forge}_${config.version.major}.${config.version.minor}.${config.version.revis}.${System.getenv("BUILD_NUMBER") ?: 0}-${config.version.stage}"
+version = "${config.version.minecraft}-${config.version.major}.${config.version.minor}.${config.version.revis}.${System.getenv("BUILD_NUMBER") ?: 0}${config.version.stage ? "-${config.version.stage}" : ""}"
 group = "com.ollieread.technomagi" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "TechnoMagi"
 
 minecraft {
     version = "${config.version.minecraft}-${config.version.forge}"
     assetDir = "run/assets"
-    
-    replaceIn "common/References.java"
-    replace "@VERSION@", "${config.version.minecraft}-${config.version.forge}_${config.version.major}.${config.version.minor}.${config.version.revis}.${System.getenv("BUILD_NUMBER") ?: 0}-${config.version.stage}"
-}
 
-version += "-${System.getenv("BUILD_NUMBER") ?: 0}"
+    replace "@VERSION@", "${config.version.major}.${config.version.minor}.${config.version.revis}.${System.getenv("BUILD_NUMBER") ?: 0}${config.version.stage ? "-${config.version.stage}" : ""}"
+}
 
 task deobfJar(type: Jar) {
     from sourceSets.main.output
@@ -62,7 +59,11 @@ task deobfJar(type: Jar) {
 tasks.build.dependsOn('deobfJar')
 
 processResources {
-    from (sourceSets.main.resources.srcDirs)
+    from (sourceSets.main.resources.srcDirs) {
+        include '**/*.info'
+
+        expand 'version':"${config.version.major}.${config.version.minor}.${config.version.revis}.${System.getenv("BUILD_NUMBER") ?: 0}${config.version.stage ? "-${config.version.stage}" : ""}",'mcversion':config.version.minecraft
+    }
 }
 
 artifacts {
@@ -74,12 +75,10 @@ import org.ajoberstar.grgit.*
 
 ext.repo = Grgit.open(project.file('.'))
 
-version = "${config.version.minecraft}-${config.version.forge}_${config.version.major}.${config.version.minor}.${config.version.revis}.${System.getenv("BUILD_NUMBER") ?: 0}-${config.version.stage}"
-
 task tagBuild << {
     repo.tag.add {
-        name = version
-        message = "Build for ${version}"
+        name = "${config.version.major}.${config.version.minor}.${config.version.revis}.${System.getenv("BUILD_NUMBER") ?: 0}${config.version.stage ? "-${config.version.stage}" : ""}"
+        message = "Build for "${config.version.major}.${config.version.minor}.${config.version.revis}.${System.getenv("BUILD_NUMBER") ?: 0}${config.version.stage ? "-${config.version.stage}" : ""}""
     }
     
     repo.push(tags: true)

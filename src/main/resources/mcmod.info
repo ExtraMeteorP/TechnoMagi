@@ -8,9 +8,9 @@
   "url": "http://technomagi.ollieread.com/",
   "updateUrl": "",
   "authors": ["ollieread"],
-  "credits": "AbrarSyed, for he promised that gradle will never touch your sources. ever.",
+  "credits": "",
   "logoFile": "assets/technomagi/logo.png",
   "screenshots": [],
-  "dependencies": []
+  "dependencies": ["EnndsCore"]
 }
 ]
