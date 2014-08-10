@@ -240,6 +240,10 @@ public class PlayerEventHandler
     public void onEnderTeleport(EnderTeleportEvent event)
     {
         if (!event.entityLiving.worldObj.isRemote) {
+            if (event.entityLiving instanceof EntityPlayer) {
+                ResearchRegistry.researchEvent("enderTeleport", event, ExtendedPlayerKnowledge.get((EntityPlayer) event.entityLiving));
+            }
+
             World world = event.entityLiving.worldObj;
 
             int startX = (int) (event.targetX - 7);
