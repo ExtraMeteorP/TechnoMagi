@@ -44,7 +44,7 @@ public class Abilities
         abilityActiveFlashstep = new ActiveAbilityFlashstep("flashstep");
         abilityActiveBlink = new ActiveAbilityBlink("blink");
         abilityActiveForceTarget = new ActiveAbilityForceTarget("knockback");
-        abilityActiveForceArea = new ActiveAbilityForceArea("expell");
+        abilityActiveForceArea = new ActiveAbilityForceArea("expel");
 
         abilityPassiveScholarResearch = new PassiveAbilityScholarResearch("scholarResearch");
         abilityPassiveNanites = new PassiveAbilityNanites("naniteRegen");
