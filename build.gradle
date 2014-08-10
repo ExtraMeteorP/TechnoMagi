@@ -46,7 +46,7 @@ archivesBaseName = "TechnoMagi"
 
 minecraft {
     version = "${config.version.minecraft}-${config.version.forge}"
-    assetDir = "run/assets"
+    runDir = "run/assets"
 
     replace "@VERSION@", "${config.version.major}.${config.version.minor}.${config.version.revis}.${System.getenv("BUILD_NUMBER") ?: 0}${config.version.stage ? "-${config.version.stage}" : ""}"
 }
@@ -75,10 +75,12 @@ import org.ajoberstar.grgit.*
 
 ext.repo = Grgit.open(project.file('.'))
 
+version = "${config.version.major}.${config.version.minor}.${config.version.revis}.${System.getenv("BUILD_NUMBER") ?: 0}${config.version.stage ? "-${config.version.stage}" : ""}"
+
 task tagBuild << {
     repo.tag.add {
-        name = "${config.version.major}.${config.version.minor}.${config.version.revis}.${System.getenv("BUILD_NUMBER") ?: 0}${config.version.stage ? "-${config.version.stage}" : ""}"
-        message = "Build for "${config.version.major}.${config.version.minor}.${config.version.revis}.${System.getenv("BUILD_NUMBER") ?: 0}${config.version.stage ? "-${config.version.stage}" : ""}""
+        name = version
+        message = "Build for ${version}"
     }
     
     repo.push(tags: true)
