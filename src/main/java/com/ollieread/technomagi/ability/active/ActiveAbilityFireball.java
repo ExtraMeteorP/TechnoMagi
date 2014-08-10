@@ -64,6 +64,7 @@ public class ActiveAbilityFireball extends AbilityActive
                         fireball.accelerationZ = look.zCoord / d3 * 0.1D;
 
                         player.worldObj.spawnEntityInWorld(fireball);
+                        interact.entityPlayer.worldObj.playSoundEffect((double) interact.entityPlayer.posX + 0.5D, (double) interact.entityPlayer.posY + 0.5D, (double) interact.entityPlayer.posZ + 0.5D, Reference.MODID.toLowerCase() + ":cast", 1.0F, rand.nextFloat() * 0.4F + 0.8F);
                     }
 
                     return true;

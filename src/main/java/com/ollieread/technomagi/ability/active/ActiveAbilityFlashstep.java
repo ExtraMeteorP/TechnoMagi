@@ -1,5 +1,7 @@
 package com.ollieread.technomagi.ability.active;
 
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
@@ -48,6 +50,7 @@ public class ActiveAbilityFlashstep extends AbilityActive
                 Vec3 dest = null;
                 int max = 11 * 11;
                 int dmg = 0;
+                Random rand = new Random();
 
                 for (int i = 1; i <= max; i++) {
                     target.xCoord = (look.xCoord * i) + eye.xCoord;
@@ -72,6 +75,7 @@ public class ActiveAbilityFlashstep extends AbilityActive
                     // rand.nextFloat() * 0.4F + 0.8F);
 
                     interact.entityPlayer.setPositionAndUpdate(dest.xCoord, dest.yCoord, dest.zCoord);
+                    interact.entityPlayer.worldObj.playSoundEffect((double) interact.entityPlayer.posX + 0.5D, (double) interact.entityPlayer.posY + 0.5D, (double) interact.entityPlayer.posZ + 0.5D, Reference.MODID.toLowerCase() + ":cast", 1.0F, rand.nextFloat() * 0.4F + 0.8F);
 
                     return true;
                 }
