@@ -16,10 +16,10 @@ import com.ollieread.technomagi.ability.active.ActiveAbilityInvisibility;
 import com.ollieread.technomagi.ability.passive.PassiveAbilityNanites;
 import com.ollieread.technomagi.ability.passive.PassiveAbilityNegateFall;
 import com.ollieread.technomagi.ability.passive.PassiveAbilityScholarResearch;
+import com.ollieread.technomagi.util.ConfigHelper;
 
 public class Abilities
 {
-
     public static IAbilityActive abilityActiveFire;
     public static IAbilityActive abilityActiveFireball;
     public static IAbilityActive abilityActiveHarden;
@@ -37,18 +37,38 @@ public class Abilities
     {
         TechnoMagi.logger.log(Level.INFO, "Initiating & registering abilities");
 
-        abilityActiveFire = new ActiveAbilityFire("fire");
-        abilityActiveFireball = new ActiveAbilityFireball("fireball");
-        abilityActiveHarden = new ActiveAbilityHarden("harden");
-        abilityActiveInvisibility = new ActiveAbilityInvisibility("invisibility");
-        abilityActiveFlashstep = new ActiveAbilityFlashstep("flashstep");
-        abilityActiveBlink = new ActiveAbilityBlink("blink");
-        abilityActiveForceTarget = new ActiveAbilityForceTarget("knockback");
-        abilityActiveForceArea = new ActiveAbilityForceArea("expel");
-
-        abilityPassiveScholarResearch = new PassiveAbilityScholarResearch("scholarResearch");
-        abilityPassiveNanites = new PassiveAbilityNanites("naniteRegen");
-        abilityPassiveNegateFall = new PassiveAbilityNegateFall("negateFall");
+        if (ConfigHelper.abilityState.get("fire")) {
+            abilityActiveFire = new ActiveAbilityFire("fire");
+        }
+        if (ConfigHelper.abilityState.get("fireball")) {
+            abilityActiveFireball = new ActiveAbilityFireball("fireball");
+        }
+        if (ConfigHelper.abilityState.get("harden")) {
+            abilityActiveHarden = new ActiveAbilityHarden("harden");
+        }
+        if (ConfigHelper.abilityState.get("invisibility")) {
+            abilityActiveInvisibility = new ActiveAbilityInvisibility("invisibility");
+        }
+        if (ConfigHelper.abilityState.get("flashstep")) {
+            abilityActiveFlashstep = new ActiveAbilityFlashstep("flashstep");
+        }
+        if (ConfigHelper.abilityState.get("blink")) {
+            abilityActiveBlink = new ActiveAbilityBlink("blink");
+        }
+        if (ConfigHelper.abilityState.get("knockback")) {
+            abilityActiveForceTarget = new ActiveAbilityForceTarget("knockback");
+        }
+        if (ConfigHelper.abilityState.get("expel")) {
+            abilityActiveForceArea = new ActiveAbilityForceArea("expel");
+        }
+        if (ConfigHelper.abilityState.get("scholarResearch")) {
+            abilityPassiveScholarResearch = new PassiveAbilityScholarResearch("scholarResearch");
+        }
+        if (ConfigHelper.abilityState.get("naniteRegen")) {
+            abilityPassiveNanites = new PassiveAbilityNanites("naniteRegen");
+        }
+        if (ConfigHelper.abilityState.get("negateFall")) {
+            abilityPassiveNegateFall = new PassiveAbilityNegateFall("negateFall");
+        }
     }
-
 }

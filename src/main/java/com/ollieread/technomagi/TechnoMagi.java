@@ -5,6 +5,7 @@ import java.lang.reflect.Modifier;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.potion.Potion;
+import net.minecraftforge.common.config.Configuration;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,6 +22,7 @@ import com.ollieread.technomagi.common.init.Potions;
 import com.ollieread.technomagi.common.init.Specialisations;
 import com.ollieread.technomagi.creativetab.CreativeTabTM;
 import com.ollieread.technomagi.network.PacketHandler;
+import com.ollieread.technomagi.util.ConfigHelper;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -45,9 +47,12 @@ public class TechnoMagi
 
     public static final Logger logger = LogManager.getLogger(Reference.MODID);
 
+    public static Configuration config;
+
     @EventHandler
     public void pre(FMLPreInitializationEvent event)
     {
+        ConfigHelper.loadConfiguration(event.getSuggestedConfigurationFile());
 
         proxy.registerEventHandlers();
 

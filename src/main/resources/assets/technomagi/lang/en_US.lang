@@ -21,6 +21,7 @@ ability.active.fire=Pyromancy
 ability.active.harden=Harden Skin
 ability.active.invisibility=Vanish
 ability.active.flashstep=Flashstep
+ability.active.blink=Blink
 ability.active.fireball=Conjure Fireball
 ability.active.knockback=Knockback Entity
 ability.active.expel=Expel Entities
@@ -30,6 +31,8 @@ potionHardness=Hardness
 itemGroup.tabTm=TechnoMagi
 
 entity.robotCow.name=Roboticised Cow
+entity.robotCreeper.name=Roboticised Creeper
+entity.robotZombie.name=Roboticised Zombie
 
 tile.construct.name=Construct
 tile.archive.name=Archive
