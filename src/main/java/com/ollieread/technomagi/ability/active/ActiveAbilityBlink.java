@@ -57,12 +57,12 @@ public class ActiveAbilityBlink extends AbilityActive
                 EnderTeleportEvent teleportEvent = new EnderTeleportEvent(interact.entityPlayer, target.xCoord, target.yCoord, target.zCoord, 0);
                 boolean cancelled = MinecraftForge.EVENT_BUS.post(teleportEvent);
 
-                if (!cancelled) {
-                    interact.entityPlayer.setPositionAndUpdate(teleportEvent.targetX, teleportEvent.targetY, teleportEvent.targetZ);
-
+                if (!cancelled && decreaseNanites(charon, 10)) {
                     for (int i = 0; i < 32; ++i) {
                         interact.entityPlayer.worldObj.spawnParticle("portal", teleportEvent.targetX, teleportEvent.targetY + rand.nextDouble() * 2.0D, teleportEvent.targetZ, rand.nextGaussian(), 0.0D, rand.nextGaussian());
                     }
+                    interact.entityPlayer.setPositionAndUpdate(teleportEvent.targetX, teleportEvent.targetY, teleportEvent.targetZ);
+                    interact.entityPlayer.worldObj.playSoundEffect((double) interact.entityPlayer.posX + 0.5D, (double) interact.entityPlayer.posY + 0.5D, (double) interact.entityPlayer.posZ + 0.5D, Reference.MODID.toLowerCase() + ":cast", 1.0F, rand.nextFloat() * 0.4F + 0.8F);
 
                     return true;
                 }
