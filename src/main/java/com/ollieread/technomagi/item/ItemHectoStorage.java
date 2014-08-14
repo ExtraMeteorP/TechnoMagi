@@ -32,6 +32,8 @@ public class ItemHectoStorage extends ItemResearchStorage
                     charon.nanites.decreaseData(5, k.getKey());
 
                     break;
+                } else {
+                    System.out.println("Can't add research?");
                 }
             }
 
