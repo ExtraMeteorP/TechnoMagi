@@ -9,6 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -94,6 +95,12 @@ public class BlockObservationChamber extends BlockOwnable
         return true;
     }
 
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z)
+    {
+        float f = 0.0625F;
+        return AxisAlignedBB.getBoundingBox((double) ((float) x + f), (double) y, (double) ((float) z + f), (double) ((float) (x + 1) - f), (double) ((float) (y + 1) - f), (double) ((float) (z + 1) - f));
+    }
+
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_)
     {
@@ -133,15 +140,34 @@ public class BlockObservationChamber extends BlockOwnable
 
     public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity)
     {
-        int id = EntityList.getEntityID(entity);
+        if (entity instanceof EntityLivingBase && !(entity instanceof EntityPlayer) && !world.isRemote) {
+            int id = EntityList.getEntityID(entity);
 
-        if (ResearchRegistry.getObservableEntities().contains(id)) {
-            TileEntityObservationChamber tile = (TileEntityObservationChamber) world.getTileEntity(x, y, z);
+            if (ResearchRegistry.getObservableEntities().contains(id)) {
+                TileEntityObservationChamber tile = (TileEntityObservationChamber) world.getTileEntity(x, y, z);
 
-            if (tile != null) {
-                tile.setEntity(Integer.valueOf(id));
-                entity.setDead();
-                world.markBlockForUpdate(x, y, z);
+                if (tile != null && tile.getEntity() == -1) {
+                    tile.setEntity((EntityLivingBase) entity);
+                    entity.setDead();
+                    world.markBlockForUpdate(x, y, z);
+                }
+            }
+        }
+    }
+
+    public void onEntityWalking(World world, int x, int y, int z, Entity entity)
+    {
+        if (entity instanceof EntityLivingBase && !(entity instanceof EntityPlayer) && !world.isRemote) {
+            int id = EntityList.getEntityID(entity);
+
+            if (ResearchRegistry.getObservableEntities().contains(id)) {
+                TileEntityObservationChamber tile = (TileEntityObservationChamber) world.getTileEntity(x, y, z);
+
+                if (tile != null && tile.getEntity() == -1) {
+                    tile.setEntity((EntityLivingBase) entity);
+                    entity.setDead();
+                    world.markBlockForUpdate(x, y, z);
+                }
             }
         }
     }

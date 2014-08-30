@@ -5,10 +5,12 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
@@ -38,6 +40,12 @@ public class BlockEmptyFiller extends Block
     {
     }
 
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z)
+    {
+        float f = 0.0625F;
+        return AxisAlignedBB.getBoundingBox((double) ((float) x + f), (double) y, (double) ((float) z + f), (double) ((float) (x + 1) - f), (double) ((float) (y + 1) - f), (double) ((float) (z + 1) - f));
+    }
+
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int facing, float playerX, float playerY, float playerZ)
     {
@@ -52,6 +60,34 @@ public class BlockEmptyFiller extends Block
         }
 
         return false;
+    }
+
+    @Override
+    public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity)
+    {
+        try {
+            TileEntityEmptyFiller tileEntity = (TileEntityEmptyFiller) world.getTileEntity(x, y, z);
+
+            if (tileEntity != null) {
+                tileEntity.getParent().onEntityCollidedWithBlock(world, x, y, z, entity);
+            }
+        } catch (Exception e) {
+
+        }
+    }
+
+    @Override
+    public void onEntityWalking(World world, int x, int y, int z, Entity entity)
+    {
+        try {
+            TileEntityEmptyFiller tileEntity = (TileEntityEmptyFiller) world.getTileEntity(x, y, z);
+
+            if (tileEntity != null) {
+                tileEntity.getParent().onEntityWalking(world, x, y, z, entity);
+            }
+        } catch (Exception e) {
+
+        }
     }
 
     @Override
