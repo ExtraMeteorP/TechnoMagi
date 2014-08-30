@@ -12,6 +12,9 @@ import com.ollieread.technomagi.ability.active.ActiveAbilityFlashstep;
 import com.ollieread.technomagi.ability.active.ActiveAbilityForceArea;
 import com.ollieread.technomagi.ability.active.ActiveAbilityForceTarget;
 import com.ollieread.technomagi.ability.active.ActiveAbilityHarden;
+import com.ollieread.technomagi.ability.active.ActiveAbilityHarvestI;
+import com.ollieread.technomagi.ability.active.ActiveAbilityHarvestII;
+import com.ollieread.technomagi.ability.active.ActiveAbilityHarvestIII;
 import com.ollieread.technomagi.ability.active.ActiveAbilityInvisibility;
 import com.ollieread.technomagi.ability.passive.PassiveAbilityNanites;
 import com.ollieread.technomagi.ability.passive.PassiveAbilityNegateFall;
@@ -28,6 +31,9 @@ public class Abilities
     public static IAbilityActive abilityActiveBlink;
     public static IAbilityActive abilityActiveForceTarget;
     public static IAbilityActive abilityActiveForceArea;
+    public static IAbilityActive abilityActiveHarvestI;
+    public static IAbilityActive abilityActiveHarvestII;
+    public static IAbilityActive abilityActiveHarvestIII;
 
     public static IAbilityPassive abilityPassiveScholarResearch;
     public static IAbilityPassive abilityPassiveNanites;
@@ -61,6 +67,16 @@ public class Abilities
         if (ConfigHelper.abilityState.get("expel")) {
             abilityActiveForceArea = new ActiveAbilityForceArea("expel");
         }
+        if (ConfigHelper.abilityState.get("harvestI")) {
+            abilityActiveHarvestI = new ActiveAbilityHarvestI("harvestI");
+        }
+        if (ConfigHelper.abilityState.get("harvestII")) {
+            abilityActiveHarvestI = new ActiveAbilityHarvestII("harvestII");
+        }
+        if (ConfigHelper.abilityState.get("harvestIII")) {
+            abilityActiveHarvestI = new ActiveAbilityHarvestIII("harvestIII");
+        }
+
         if (ConfigHelper.abilityState.get("scholarResearch")) {
             abilityPassiveScholarResearch = new PassiveAbilityScholarResearch("scholarResearch");
         }
