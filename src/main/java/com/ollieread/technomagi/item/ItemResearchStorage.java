@@ -62,17 +62,20 @@ public class ItemResearchStorage extends ItemTM implements IResearchStorage
     protected void loadStackInformation(ItemStack stack)
     {
         NBTTagCompound compound = stack.stackTagCompound;
-        capacity = compound.getInteger("Capacity");
-        total = compound.getInteger("Total");
 
-        stack.setItemDamage(capacity - total);
+        if (compound.hasKey("Capacity")) {
+            capacity = compound.getInteger("Capacity");
+            total = compound.getInteger("Total");
 
-        NBTTagList researchProgressList = compound.getTagList("ResearchProgress", compound.getId());
-        researchingKnowledge = new HashMap<String, Integer>();
+            stack.setItemDamage(capacity - total);
 
-        for (int i = 0; i < researchProgressList.tagCount(); i++) {
-            NBTTagCompound research = researchProgressList.getCompoundTagAt(i);
-            researchingKnowledge.put(ResearchRegistry.getResearchName(research.getInteger("Research")), research.getInteger("Progress"));
+            NBTTagList researchProgressList = compound.getTagList("ResearchProgress", compound.getId());
+            researchingKnowledge = new HashMap<String, Integer>();
+
+            for (int i = 0; i < researchProgressList.tagCount(); i++) {
+                NBTTagCompound research = researchProgressList.getCompoundTagAt(i);
+                researchingKnowledge.put(ResearchRegistry.getResearchName(research.getInteger("Research")), research.getInteger("Progress"));
+            }
         }
     }
 
