@@ -5,6 +5,7 @@ import java.util.Random;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.nbt.NBTTagCompound;
 
 import com.ollieread.technomagi.common.init.Blocks;
@@ -13,12 +14,24 @@ public class TileEntityObservationChamber extends TileEntityResearch implements 
 {
 
     protected int entity = -1;
+    protected int profession = -1;
     protected int health = 0;
     protected Random rand = new Random();
 
     public TileEntityObservationChamber()
     {
         super(2);
+    }
+
+    public void setEntity(EntityLivingBase entity)
+    {
+        this.entity = EntityList.getEntityID(entity);
+
+        if (entity instanceof EntityVillager) {
+            this.profession = ((EntityVillager) entity).getProfession();
+        }
+
+        health = (int) entity.getHealth();
     }
 
     public void setEntity(Integer integer)
@@ -40,7 +53,13 @@ public class TileEntityObservationChamber extends TileEntityResearch implements 
     public EntityLiving getEntityLiving()
     {
         if (entity > -1) {
-            return (EntityLiving) EntityList.createEntityByID(entity, worldObj);
+            EntityLiving entityLiving = (EntityLiving) EntityList.createEntityByID(entity, worldObj);
+
+            if (entityLiving instanceof EntityVillager) {
+                ((EntityVillager) entityLiving).setProfession(profession);
+            }
+
+            return entityLiving;
         }
 
         return null;
@@ -60,6 +79,7 @@ public class TileEntityObservationChamber extends TileEntityResearch implements 
 
         if (compound.hasKey("Entity")) {
             entity = compound.getInteger("Entity");
+            profession = compound.getInteger("Profession");
         }
     }
 
@@ -72,6 +92,7 @@ public class TileEntityObservationChamber extends TileEntityResearch implements 
 
         if (entity > -1) {
             compound.setInteger("Entity", entity);
+            compound.setInteger("Profession", profession);
         }
     }
 
