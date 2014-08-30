@@ -3,7 +3,9 @@ package com.ollieread.technomagi.event.handler;
 import java.util.Iterator;
 import java.util.List;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.world.World;
@@ -25,7 +27,9 @@ import com.ollieread.ennds.extended.ExtendedNanites;
 import com.ollieread.ennds.extended.ExtendedPlayerAbilities;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.ennds.research.ResearchRegistry;
+import com.ollieread.technomagi.block.IDigitalToolable;
 import com.ollieread.technomagi.common.init.Blocks;
+import com.ollieread.technomagi.common.init.Items;
 import com.ollieread.technomagi.common.init.Potions;
 import com.ollieread.technomagi.network.PacketHandler;
 import com.ollieread.technomagi.network.message.MessageEntityInteractEvent;
@@ -114,6 +118,17 @@ public class PlayerEventHandler
             if (abilities.useAbility(event)) {
                 if (event.entityPlayer.worldObj.isRemote && (event.isCanceled() || event.action.equals(PlayerInteractEvent.Action.RIGHT_CLICK_AIR))) {
                     PacketHandler.INSTANCE.sendToServer(new MessagePlayerInteractEvent(event));
+                }
+            }
+        } else if (event.entityPlayer.getHeldItem().isItemEqual(new ItemStack(Items.itemDigitalTool))) {
+            if (event.action.equals(PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK)) {
+                Block block = event.world.getBlock(event.x, event.y, event.z);
+
+                if (block instanceof IDigitalToolable) {
+                    if (((IDigitalToolable) block).onTooled(event.entityPlayer, event.world, event.x, event.y, event.z, event.entityPlayer.getHeldItem())) {
+                        event.setCanceled(true);
+                        event.entityPlayer.swingItem();
+                    }
                 }
             }
         }

@@ -5,12 +5,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
+/**
+ * 
+ * @author ollie
+ * 
+ */
 public class ItemDigitalTool extends ItemTM
 {
 
-    protected int focusType = 0;
     protected int[] focusLocation = new int[3];
-    protected int focusId = 0;
 
     public ItemDigitalTool(String name)
     {
@@ -24,34 +27,17 @@ public class ItemDigitalTool extends ItemTM
     {
         stack.stackTagCompound = new NBTTagCompound();
 
-        stack.stackTagCompound.setInteger("FocusType", focusType);
-        stack.stackTagCompound.setIntArray("FocusLocatioN", focusLocation);
-        stack.stackTagCompound.setInteger("FocusId", focusId);
+        stack.stackTagCompound.setIntArray("FocusLocation", focusLocation);
     }
 
-    public void setFocusType(int type)
+    public void resetFocusLocation()
     {
-        focusType = type;
-    }
-
-    public void setFocusId(int id)
-    {
-        focusId = id;
+        focusLocation = new int[3];
     }
 
     public void setFocusLocation(int x, int y, int z)
     {
         focusLocation = new int[] { x, y, z };
-    }
-
-    public int getFocusType()
-    {
-        return focusType;
-    }
-
-    public int getFocusId()
-    {
-        return focusId;
     }
 
     public int[] getFocusLocation()

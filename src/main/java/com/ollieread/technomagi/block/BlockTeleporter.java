@@ -2,6 +2,7 @@ package com.ollieread.technomagi.block;
 
 import java.util.List;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -11,7 +12,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
@@ -109,45 +109,32 @@ public class BlockTeleporter extends BlockOwnable implements IDigitalToolable
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int facing, float playerX, float playerY, float playerZ)
+    public boolean onTooled(EntityPlayer player, World world, int x, int y, int z, ItemStack tool)
     {
-        if (!world.isRemote && world.getBlockMetadata(x, y, z) == 1) {
-            ItemStack stack = player.getHeldItem();
+        if (world.getBlockMetadata(x, y, z) == 1) {
+            ItemDigitalTool digitalTool = (ItemDigitalTool) tool.getItem();
+            int[] location = digitalTool.getFocusLocation();
+            Block block = world.getBlock(location[0], location[1], location[2]);
+            TileEntityTeleporter thisTeleporter = (TileEntityTeleporter) world.getTileEntity(x, y, z);
 
-            if (stack != null) {
-                ItemDigitalTool tool = (ItemDigitalTool) stack.getItem();
+            if (block != null && block instanceof BlockTeleporter && world.getBlockMetadata(location[0], location[1], location[2]) == 1) {
+                TileEntityTeleporter otherTeleporter = (TileEntityTeleporter) world.getTileEntity(location[0], location[1], location[2]);
 
-                if (tool != null) {
-                    TileEntityTeleporter teleporter = (TileEntityTeleporter) world.getTileEntity(x, y, z);
-
-                    if (teleporter != null) {
-                        if (tool.getFocusType() == 0) {
-                            tool.setFocusType(1);
-                            tool.setFocusLocation(x, y, z);
-
-                            player.addChatComponentMessage(new ChatComponentText("Paired teleporter focused"));
-
-                            return true;
-                        } else if (tool.getFocusType() == 1) {
-                            int[] location = tool.getFocusLocation();
-
-                            TileEntityTeleporter teleporter2 = (TileEntityTeleporter) world.getTileEntity(location[0], location[1], location[2]);
-
-                            if (teleporter2 != null) {
-                                ((TileEntityTeleporter) teleporter).partner(location[0], location[1], location[2]);
-                                teleporter2.partner(teleporter.xCoord, teleporter.yCoord, teleporter.zCoord);
-
-                                tool.setFocusType(0);
-                                tool.setFocusId(0);
-                                tool.setFocusLocation(0, 0, 0);
-
-                                player.addChatComponentMessage(new ChatComponentText("Paired teleporters linked"));
-
-                                return true;
-                            }
-                        }
+                if (thisTeleporter.canPartner() && otherTeleporter.canPartner()) {
+                    if (!world.isRemote) {
+                        thisTeleporter.partner(location[0], location[1], location[2]);
+                        otherTeleporter.partner(x, y, z);
+                        digitalTool.resetFocusLocation();
                     }
+
+                    return true;
                 }
+            } else if (thisTeleporter.canPartner()) {
+                if (!world.isRemote) {
+                    digitalTool.setFocusLocation(x, y, z);
+                }
+
+                return true;
             }
         }
 

@@ -6,13 +6,13 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 
 import com.ollieread.technomagi.TechnoMagi;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.item.ItemDigitalTool;
 import com.ollieread.technomagi.tileentity.TileEntityAreaLight;
+import com.ollieread.technomagi.util.PlayerHelper;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -51,36 +51,31 @@ public class BlockAreaLight extends BlockContainer implements IDigitalToolable
         }
     }
 
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister register)
+    {
+        blockIcon = register.registerIcon(Reference.MODID.toLowerCase() + ":" + getTextureName());
+    }
+
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int facing, float playerX, float playerY, float playerZ)
+    public boolean onTooled(EntityPlayer player, World world, int x, int y, int z, ItemStack tool)
     {
         if (!world.isRemote) {
-            ItemStack stack = player.getHeldItem();
+            ItemDigitalTool digitalTool = (ItemDigitalTool) tool.getItem();
 
-            if (stack != null) {
-                ItemDigitalTool tool = (ItemDigitalTool) stack.getItem();
+            if (tool != null) {
+                TileEntityAreaLight light = (TileEntityAreaLight) world.getTileEntity(x, y, z);
 
-                if (tool != null) {
-                    TileEntityAreaLight light = (TileEntityAreaLight) world.getTileEntity(x, y, z);
+                if (light != null) {
+                    light.toggleStatus();
+                    PlayerHelper.addChatMessage(player, "Area light " + (light.isOn() ? "enabled" : "disabled"));
 
-                    if (light != null) {
-                        light.toggleStatus();
-
-                        player.addChatComponentMessage(new ChatComponentText("Area light " + (light.isOn() ? "enabled" : "disabled")));
-
-                        return true;
-                    }
+                    return true;
                 }
             }
         }
 
         return false;
-    }
-
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister register)
-    {
-        blockIcon = register.registerIcon(Reference.MODID.toLowerCase() + ":" + getTextureName());
     }
 
 }
