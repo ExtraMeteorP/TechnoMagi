@@ -13,7 +13,7 @@ import com.ollieread.technomagi.common.init.Blocks;
 public class TileEntityObservationChamber extends TileEntityResearch implements IHasFiller
 {
 
-    protected int entity = -1;
+    protected String entity = null;
     protected int profession = -1;
     protected int health = 0;
     protected Random rand = new Random();
@@ -25,7 +25,7 @@ public class TileEntityObservationChamber extends TileEntityResearch implements 
 
     public void setEntity(EntityLivingBase entity)
     {
-        this.entity = EntityList.getEntityID(entity);
+        this.entity = (String) EntityList.classToStringMapping.get(entity.getClass());
 
         if (entity instanceof EntityVillager) {
             this.profession = ((EntityVillager) entity).getProfession();
@@ -34,26 +34,15 @@ public class TileEntityObservationChamber extends TileEntityResearch implements 
         health = (int) entity.getHealth();
     }
 
-    public void setEntity(Integer integer)
-    {
-        this.entity = integer;
-
-        EntityLivingBase entityLiving = (EntityLivingBase) getEntityLiving();
-
-        if (entityLiving != null) {
-            health = (int) entityLiving.getHealth();
-        }
-    }
-
-    public int getEntity()
+    public String getEntity()
     {
         return entity;
     }
 
     public EntityLiving getEntityLiving()
     {
-        if (entity > -1) {
-            EntityLiving entityLiving = (EntityLiving) EntityList.createEntityByID(entity, worldObj);
+        if (entity != null) {
+            EntityLiving entityLiving = (EntityLiving) EntityList.createEntityByName(entity, worldObj);
 
             if (entityLiving instanceof EntityVillager) {
                 ((EntityVillager) entityLiving).setProfession(profession);
@@ -78,7 +67,7 @@ public class TileEntityObservationChamber extends TileEntityResearch implements 
         health = compound.getInteger("Health");
 
         if (compound.hasKey("Entity")) {
-            entity = compound.getInteger("Entity");
+            entity = compound.getString("Entity");
             profession = compound.getInteger("Profession");
         }
     }
@@ -90,8 +79,8 @@ public class TileEntityObservationChamber extends TileEntityResearch implements 
 
         compound.setInteger("Health", health);
 
-        if (entity > -1) {
-            compound.setInteger("Entity", entity);
+        if (entity != null) {
+            compound.setString("Entity", entity);
             compound.setInteger("Profession", profession);
         }
     }

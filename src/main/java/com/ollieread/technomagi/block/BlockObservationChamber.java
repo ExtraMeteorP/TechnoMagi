@@ -3,10 +3,8 @@ package com.ollieread.technomagi.block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
@@ -107,21 +105,6 @@ public class BlockObservationChamber extends BlockOwnable
         if (player != null) {
             ItemStack stack = player.getHeldItem();
 
-            if (stack != null && stack.getItem() != null && stack.getItem().equals(Items.spawn_egg)) {
-                int id = stack.getItemDamage();
-
-                if (ResearchRegistry.getObservableEntities().contains(id)) {
-                    TileEntityObservationChamber tile = (TileEntityObservationChamber) world.getTileEntity(x, y, z);
-
-                    if (tile != null) {
-                        tile.setEntity(Integer.valueOf(id));
-                        world.markBlockForUpdate(x, y, z);
-
-                        return true;
-                    }
-                }
-            }
-
             if (!world.isRemote) {
                 TileEntityObservationChamber entity = (TileEntityObservationChamber) world.getTileEntity(x, y, z);
 
@@ -141,12 +124,10 @@ public class BlockObservationChamber extends BlockOwnable
     public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity)
     {
         if (entity instanceof EntityLivingBase && !(entity instanceof EntityPlayer) && !world.isRemote) {
-            int id = EntityList.getEntityID(entity);
-
-            if (ResearchRegistry.getObservableEntities().contains(id)) {
+            if (ResearchRegistry.getObservableEntities().contains(entity.getClass())) {
                 TileEntityObservationChamber tile = (TileEntityObservationChamber) world.getTileEntity(x, y, z);
 
-                if (tile != null && tile.getEntity() == -1) {
+                if (tile != null && tile.getEntity() == null) {
                     tile.setEntity((EntityLivingBase) entity);
                     entity.setDead();
                     world.markBlockForUpdate(x, y, z);
@@ -158,12 +139,10 @@ public class BlockObservationChamber extends BlockOwnable
     public void onEntityWalking(World world, int x, int y, int z, Entity entity)
     {
         if (entity instanceof EntityLivingBase && !(entity instanceof EntityPlayer) && !world.isRemote) {
-            int id = EntityList.getEntityID(entity);
-
-            if (ResearchRegistry.getObservableEntities().contains(id)) {
+            if (ResearchRegistry.getObservableEntities().contains(entity.getClass())) {
                 TileEntityObservationChamber tile = (TileEntityObservationChamber) world.getTileEntity(x, y, z);
 
-                if (tile != null && tile.getEntity() == -1) {
+                if (tile != null && tile.getEntity() == null) {
                     tile.setEntity((EntityLivingBase) entity);
                     entity.setDead();
                     world.markBlockForUpdate(x, y, z);
