@@ -5,10 +5,12 @@ import java.util.List;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
@@ -32,23 +34,43 @@ public class ItemMobBrain extends ItemTM
         setHasSubtypes(true);
     }
 
-    public String getItemStackDisplayName(ItemStack par1ItemStack)
+    public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5)
+    {
+
+    }
+
+    public void onCreated(ItemStack stack, World world, EntityPlayer player)
+    {
+        stack.stackTagCompound = new NBTTagCompound();
+    }
+
+    protected String getEntity(ItemStack stack)
+    {
+        NBTTagCompound compound = stack.stackTagCompound;
+
+        if (compound.hasKey("Entity")) {
+            return compound.getString("Entity");
+        }
+
+        return null;
+    }
+
+    public static void setEntity(ItemStack stack, Class entityClass)
+    {
+        NBTTagCompound compound = stack.stackTagCompound;
+        compound.setString("Entity", (String) EntityList.classToStringMapping.get(entityClass));
+    }
+
+    public String getItemStackDisplayName(ItemStack stack)
     {
         String s = ("" + StatCollector.translateToLocal(this.getUnlocalizedName() + ".name")).trim();
-        String s1 = EntityList.getStringFromID(par1ItemStack.getItemDamage());
+        String entityName = getEntity(stack);
 
-        if (s1 != null) {
-            s = StatCollector.translateToLocal("entity." + s1 + ".name") + " " + s;
+        if (entityName != null) {
+            s = StatCollector.translateToLocal("entity." + entityName + ".name") + " " + s;
         }
 
         return s;
-    }
-
-    @SideOnly(Side.CLIENT)
-    public int getColorFromItemStack(ItemStack par1ItemStack, int par2)
-    {
-        EntityList.EntityEggInfo entityegginfo = (EntityList.EntityEggInfo) EntityList.entityEggs.get(Integer.valueOf(par1ItemStack.getItemDamage()));
-        return entityegginfo != null ? (par2 == 0 ? entityegginfo.primaryColor : entityegginfo.secondaryColor) : 16777215;
     }
 
     /**

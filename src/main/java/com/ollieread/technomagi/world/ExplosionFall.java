@@ -58,7 +58,6 @@ public class ExplosionFall extends Explosion
     public void doExplosionA()
     {
         float f = this.explosionSize;
-        System.out.println(f);
         HashSet hashset = new HashSet();
         int i;
         int j;

@@ -7,7 +7,6 @@ import com.ollieread.technomagi.item.ItemDigitalTool;
 import com.ollieread.technomagi.item.ItemEtherium;
 import com.ollieread.technomagi.item.ItemEtheriumIngot;
 import com.ollieread.technomagi.item.ItemHectoStorage;
-import com.ollieread.technomagi.item.ItemMobBrain;
 import com.ollieread.technomagi.item.ItemNaniteContainer;
 import com.ollieread.technomagi.item.ItemRelux;
 import com.ollieread.technomagi.item.ItemReluxIngot;
@@ -37,7 +36,7 @@ public class Items
 
         itemSampleVile = new ItemSampleVile("sampleVile");
         itemSampleExtractor = new ItemSampleExtractor("sampleExtractor");
-        itemMobBrain = new ItemMobBrain("mobBrain");
+        // itemMobBrain = new ItemMobBrain("mobBrain");
         itemNaniteContainer = new ItemNaniteContainer("naniteContainer");
         itemDigitalTool = new ItemDigitalTool("digitalTool");
         itemEtherium = new ItemEtherium("etherium");
@@ -48,7 +47,7 @@ public class Items
 
         GameRegistry.registerItem(itemSampleVile, "sampleVile");
         GameRegistry.registerItem(itemSampleExtractor, "sampleExtractor");
-        GameRegistry.registerItem(itemMobBrain, "mobBrain");
+        // GameRegistry.registerItem(itemMobBrain, "mobBrain");
         GameRegistry.registerItem(itemNaniteContainer, "naniteContainer");
         GameRegistry.registerItem(itemDigitalTool, "digitalTool");
         GameRegistry.registerItem(itemEtherium, "etherium");

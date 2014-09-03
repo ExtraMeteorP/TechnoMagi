@@ -28,16 +28,12 @@ public class ItemHectoStorage extends ItemResearchStorage
             for (Iterator<Entry<String, Integer>> i = researching.entrySet().iterator(); i.hasNext();) {
                 Entry<String, Integer> k = i.next();
 
-                if (this.addResearch(k.getKey(), 5)) {
+                if (this.addResearch(stack, k.getKey(), 5)) {
                     charon.nanites.decreaseData(5, k.getKey());
 
                     break;
-                } else {
-                    System.out.println("Can't add research?");
                 }
             }
-
-            addStackInformation(stack);
         }
 
         return stack;

@@ -23,30 +23,32 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ItemResearchStorage extends ItemTM implements IResearchStorage
 {
 
-    protected int capacity;
-    protected int total = 0;
-    protected Map<String, Integer> researchingKnowledge = new HashMap<String, Integer>();
-
     public ItemResearchStorage(String name, int capacity)
     {
         super(name);
-
-        this.capacity = capacity;
 
         setMaxDamage(capacity);
         setMaxStackSize(1);
     }
 
     @Override
-    public boolean addResearch(String name, int amount)
+    public boolean addResearch(ItemStack stack, String name, int amount)
     {
+        int capacity = getCapacity(stack);
+        int total = getTotal(stack);
+        Map<String, Integer> researchingKnowledge = getResearch(stack);
+
         if ((total + amount) <= capacity) {
             total += amount;
+            setTotal(stack, total + amount);
+
             if (researchingKnowledge.containsKey(name)) {
                 researchingKnowledge.put(name, researchingKnowledge.get(name) + amount);
+                setResearch(stack, researchingKnowledge);
                 return true;
             } else {
                 researchingKnowledge.put(name, amount);
+                setResearch(stack, researchingKnowledge);
                 return true;
             }
         }
@@ -56,41 +58,68 @@ public class ItemResearchStorage extends ItemTM implements IResearchStorage
 
     public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5)
     {
-        loadStackInformation(stack);
+        int capacity = getCapacity(stack);
+        int total = getTotal(stack);
+
+        stack.setItemDamage(capacity - total);
     }
 
-    protected void loadStackInformation(ItemStack stack)
+    protected int getCapacity(ItemStack stack)
     {
         NBTTagCompound compound = stack.stackTagCompound;
 
         if (compound.hasKey("Capacity")) {
-            capacity = compound.getInteger("Capacity");
-            total = compound.getInteger("Total");
+            return compound.getInteger("Capacity");
+        }
 
-            stack.setItemDamage(capacity - total);
+        return 0;
+    }
 
+    protected int getTotal(ItemStack stack)
+    {
+        NBTTagCompound compound = stack.stackTagCompound;
+
+        if (compound.hasKey("Total")) {
+            return compound.getInteger("Total");
+        }
+
+        return 0;
+    }
+
+    protected Map<String, Integer> getResearch(ItemStack stack)
+    {
+        NBTTagCompound compound = stack.stackTagCompound;
+
+        if (compound.hasKey("ResearchProgress")) {
             NBTTagList researchProgressList = compound.getTagList("ResearchProgress", compound.getId());
-            researchingKnowledge = new HashMap<String, Integer>();
+            Map<String, Integer> researchingKnowledge = new HashMap<String, Integer>();
 
             for (int i = 0; i < researchProgressList.tagCount(); i++) {
                 NBTTagCompound research = researchProgressList.getCompoundTagAt(i);
                 researchingKnowledge.put(ResearchRegistry.getResearchName(research.getInteger("Research")), research.getInteger("Progress"));
             }
+
+            return researchingKnowledge;
         }
+
+        return null;
     }
 
-    public void onCreated(ItemStack stack, World world, EntityPlayer player)
+    protected void setCapacity(ItemStack stack, int capacity)
     {
-        addStackInformation(stack);
+        NBTTagCompound compound = stack.stackTagCompound;
+        compound.setInteger("Capacity", capacity);
     }
 
-    protected void addStackInformation(ItemStack stack)
+    protected void setTotal(ItemStack stack, int total)
     {
-        stack.stackTagCompound = new NBTTagCompound();
+        NBTTagCompound compound = stack.stackTagCompound;
+        compound.setInteger("Total", total);
+    }
 
-        stack.stackTagCompound.setInteger("Capacity", capacity);
-        stack.stackTagCompound.setInteger("Total", total);
-
+    protected void setResearch(ItemStack stack, Map<String, Integer> researchingKnowledge)
+    {
+        NBTTagCompound compound = stack.stackTagCompound;
         NBTTagList researchProgressList = new NBTTagList();
 
         for (String k : researchingKnowledge.keySet()) {
@@ -100,15 +129,24 @@ public class ItemResearchStorage extends ItemTM implements IResearchStorage
             researchProgressList.appendTag(research);
         }
 
-        stack.stackTagCompound.setTag("ResearchProgress", researchProgressList);
+        compound.setTag("ResearchProgress", researchProgressList);
+    }
+
+    public void onCreated(ItemStack stack, World world, EntityPlayer player)
+    {
+        stack.stackTagCompound = new NBTTagCompound();
+
+        setCapacity(stack, 0);
+        setTotal(stack, 0);
+        setResearch(stack, new HashMap<String, Integer>());
     }
 
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4)
     {
         if (stack.stackTagCompound != null) {
-            list.add(EnumChatFormatting.AQUA + "Stored: " + total);
-            list.add(EnumChatFormatting.RED + "Capacity: " + capacity);
-            list.add(EnumChatFormatting.LIGHT_PURPLE + "Knowledge: " + researchingKnowledge.size());
+            list.add(EnumChatFormatting.AQUA + "Stored: " + getTotal(stack));
+            list.add(EnumChatFormatting.RED + "Capacity: " + getCapacity(stack));
+            list.add(EnumChatFormatting.LIGHT_PURPLE + "Knowledge: " + getResearch(stack).size());
         }
     }
 
@@ -116,8 +154,11 @@ public class ItemResearchStorage extends ItemTM implements IResearchStorage
     public void getSubItems(Item item, CreativeTabs tab, List list)
     {
         ItemStack stack = new ItemStack(item, 1, 100);
+        stack.stackTagCompound = new NBTTagCompound();
 
-        addStackInformation(stack);
+        setCapacity(stack, 0);
+        setTotal(stack, 0);
+        setResearch(stack, new HashMap<String, Integer>());
 
         list.add(stack);
     }

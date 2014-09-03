@@ -1,7 +1,7 @@
 package com.ollieread.technomagi.event.handler;
 
 import java.util.Iterator;
-import java.util.List;
+import java.util.Set;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -58,7 +58,7 @@ public class PlayerEventHandler
                 ExtendedNanites.register((EntityPlayer) event.entity);
             }
         } else {
-            List<Class> allowedEntities = ResearchRegistry.getMonitorableEntityClasses();
+            Set<Class> allowedEntities = ResearchRegistry.getMonitorableEntities();
 
             for (Iterator<Class> i = allowedEntities.iterator(); i.hasNext();) {
                 Class c = i.next();

@@ -1,9 +1,8 @@
 package com.ollieread.technomagi.item;
 
-import java.util.Map;
+import java.util.Set;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -39,14 +38,14 @@ public class ItemSampleExtractor extends ItemTM
         player.swingItem();
 
         if (!entity.worldObj.isRemote) {
-            Map<Integer, Integer> entities = ResearchRegistry.getMonitorableEntities();
-            int id = EntityList.getEntityID(entity);
+            Set<Class> entities = ResearchRegistry.getMonitorableEntities();
 
-            if (entities.containsKey(id)) {
-                sample = new ItemStack(Items.itemSampleVile, 1, id);
+            if (entities.contains(entity.getClass())) {
+                sample = new ItemStack(Items.itemSampleVile, 1);
+                ItemSampleVile.setEntity(sample, entity.getClass());
 
                 if (entity.attackEntityFrom(DamageSource.generic, 2)) {
-                    player.setItemInUse(new ItemStack(Items.itemSampleVile, 1, 0), 1);
+                    player.setItemInUse(new ItemStack(Items.itemSampleVile, 1), 1);
                     EntityItem item = player.entityDropItem(sample, 0);
                     item.delayBeforeCanPickup = 0;
 
