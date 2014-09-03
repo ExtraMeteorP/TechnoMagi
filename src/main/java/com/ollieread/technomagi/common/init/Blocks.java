@@ -9,6 +9,8 @@ import com.ollieread.technomagi.block.BlockAnalysis;
 import com.ollieread.technomagi.block.BlockArchive;
 import com.ollieread.technomagi.block.BlockAreaLight;
 import com.ollieread.technomagi.block.BlockCrafting;
+import com.ollieread.technomagi.block.BlockDisplacedAir;
+import com.ollieread.technomagi.block.BlockDisplacer;
 import com.ollieread.technomagi.block.BlockEmptyFiller;
 import com.ollieread.technomagi.block.BlockHardlight;
 import com.ollieread.technomagi.block.BlockHardlightFence;
@@ -24,6 +26,8 @@ import com.ollieread.technomagi.tileentity.TileEntityAnalysis;
 import com.ollieread.technomagi.tileentity.TileEntityArchive;
 import com.ollieread.technomagi.tileentity.TileEntityAreaLight;
 import com.ollieread.technomagi.tileentity.TileEntityCrafting;
+import com.ollieread.technomagi.tileentity.TileEntityDisplacedAir;
+import com.ollieread.technomagi.tileentity.TileEntityDisplacer;
 import com.ollieread.technomagi.tileentity.TileEntityEmptyFiller;
 import com.ollieread.technomagi.tileentity.TileEntityLightAir;
 import com.ollieread.technomagi.tileentity.TileEntityNaniteReplicator;
@@ -49,6 +53,8 @@ public class Blocks
     public static Block blockHardlightTile;
     public static Block blockHardlightFence;
     public static Block blockHardlightGenerator;
+    public static Block blockDisplacer;
+    public static Block blockDisplacedAir;
 
     public static void init()
     {
@@ -68,6 +74,8 @@ public class Blocks
         blockHardlightTile = new BlockHardlightTile("hardlightTile");
         blockHardlightFence = new BlockHardlightFence("hardlightFence");
         blockHardlightGenerator = new BlockHardlightGenerator("hardlightGenerator");
+        blockDisplacer = new BlockDisplacer("displacer");
+        blockDisplacedAir = new BlockDisplacedAir("displacedAir");
 
         GameRegistry.registerBlock(blockArchive, "archive");
         GameRegistry.registerBlock(blockNaniteReplicator, "naniteReplicator");
@@ -83,6 +91,8 @@ public class Blocks
         GameRegistry.registerBlock(blockHardlightTile, "hardlightTile");
         GameRegistry.registerBlock(blockHardlightFence, "hardlightFence");
         GameRegistry.registerBlock(blockHardlightGenerator, "hardlightGenerator");
+        GameRegistry.registerBlock(blockDisplacer, "displacer");
+        GameRegistry.registerBlock(blockDisplacedAir, "displacedAir");
 
         GameRegistry.registerTileEntity(TileEntityArchive.class, "tileEntityArchive");
         GameRegistry.registerTileEntity(TileEntityNaniteReplicator.class, "tileEntityNaniteReplicator");
@@ -93,6 +103,7 @@ public class Blocks
         GameRegistry.registerTileEntity(TileEntityEmptyFiller.class, "tileEntityEmptyFiller");
         GameRegistry.registerTileEntity(TileEntityCrafting.class, "tileEntityCrafting");
         GameRegistry.registerTileEntity(TileEntityAnalysis.class, "tileEntityAnalysis");
+        GameRegistry.registerTileEntity(TileEntityDisplacer.class, "tileEntityDisplacer");
+        GameRegistry.registerTileEntity(TileEntityDisplacedAir.class, "tileEntityDisplacedAir");
     }
-
 }
