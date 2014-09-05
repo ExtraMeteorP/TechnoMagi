@@ -48,7 +48,7 @@ public class ActiveAbilityHarvestIII extends AbilityActive
                 int meta = player.worldObj.getBlockMetadata(x, y, z);
                 Block block = player.worldObj.getBlock(x, y, z);
 
-                if (block.getHarvestLevel(meta) <= 3 && (block.getHarvestTool(meta).equals("pickaxe") || block.getHarvestTool(meta).equals("shovel"))) {
+                if (block != null && block.getHarvestLevel(meta) <= 3 && (block.getHarvestTool(meta).equals("pickaxe") || block.getHarvestTool(meta).equals("shovel"))) {
                     if (decreaseNanites(charon, 9)) {
                         if (!player.worldObj.isRemote) {
                             player.worldObj.func_147480_a(x, y, z, true);
