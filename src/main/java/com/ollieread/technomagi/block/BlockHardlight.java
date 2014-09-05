@@ -1,6 +1,8 @@
 package com.ollieread.technomagi.block;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.world.IBlockAccess;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -39,6 +41,14 @@ public class BlockHardlight extends BlockTM
     public int getLightValue()
     {
         return 15;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public boolean shouldSideBeRendered(IBlockAccess world, int x, int y, int z, int side)
+    {
+        Block block = world.getBlock(x, y, z);
+
+        return block == this ? false : true;
     }
 
 }
