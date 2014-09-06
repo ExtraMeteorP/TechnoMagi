@@ -1,20 +1,17 @@
 package com.ollieread.technomagi.tileentity;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 import com.ollieread.technomagi.common.init.Blocks;
+import com.ollieread.technomagi.tileentity.proxy.Disguisable;
 
-public class TileEntityAreaLight extends TileEntityInventory
+public class TileEntityAreaLight extends TileEntityTM implements IDisguisableTile
 {
 
+    protected Disguisable disguise = new Disguisable();
+
     protected boolean on;
-
-    public TileEntityAreaLight()
-    {
-        super(1, 1);
-
-        setInventoryName("areaLight");
-    }
 
     @Override
     public void readFromNBT(NBTTagCompound compound)
@@ -22,6 +19,8 @@ public class TileEntityAreaLight extends TileEntityInventory
         super.readFromNBT(compound);
 
         on = compound.getBoolean("On");
+
+        disguise.readFromNBT(compound);
     }
 
     @Override
@@ -30,6 +29,8 @@ public class TileEntityAreaLight extends TileEntityInventory
         super.writeToNBT(compound);
 
         compound.setBoolean("On", on);
+
+        disguise.writeToNBT(compound);
     }
 
     public boolean isOn()
@@ -56,6 +57,28 @@ public class TileEntityAreaLight extends TileEntityInventory
                 }
             }
         }
+    }
+
+    /* Everything below is just a proxy for the interfaces */
+
+    /* DISGUISABLE */
+
+    @Override
+    public boolean isDisguised()
+    {
+        return disguise.isDisguised();
+    }
+
+    @Override
+    public boolean setDisguise(ItemStack stack)
+    {
+        return disguise.setDisguise(stack);
+    }
+
+    @Override
+    public ItemStack getDisguise()
+    {
+        return disguise.getDisguise();
     }
 
 }
