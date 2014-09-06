@@ -10,7 +10,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 import com.ollieread.technomagi.tileentity.IHasFiller;
-import com.ollieread.technomagi.tileentity.TileEntityPlayerLocked;
+import com.ollieread.technomagi.tileentity.IPlayerLocked;
 
 public abstract class BlockOwnable extends BlockTMContainer
 {
@@ -27,7 +27,7 @@ public abstract class BlockOwnable extends BlockTMContainer
 
         if (entity instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) entity;
-            TileEntityPlayerLocked tile = (TileEntityPlayerLocked) tileEntity;
+            IPlayerLocked tile = (IPlayerLocked) tileEntity;
 
             tile.setPlayer(player.getCommandSenderName());
         }
