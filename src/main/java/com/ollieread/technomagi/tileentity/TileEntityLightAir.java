@@ -6,34 +6,20 @@ import net.minecraft.world.World;
 
 import com.ollieread.technomagi.block.BlockLightAir;
 import com.ollieread.technomagi.common.init.Blocks;
+import com.ollieread.technomagi.tileentity.proxy.MasterBlock;
 
-public class TileEntityLightAir extends TileEntityTM
+public class TileEntityLightAir extends TileEntityTM implements IHasMaster
 {
 
-    public int masterX = 0;
-    public int masterY = 0;
-    public int masterZ = 0;
-    public boolean setup = false;
-    public int ticks = 0;
+    public MasterBlock master = new MasterBlock(false);
 
-    public void setMaster(int x, int y, int z)
-    {
-        masterX = x;
-        masterY = y;
-        masterZ = z;
-        setup = true;
-        ticks = 0;
-    }
+    public int ticks = 0;
 
     @Override
     public void writeToNBT(NBTTagCompound compound)
     {
         super.writeToNBT(compound);
 
-        compound.setInteger("MasterX", masterX);
-        compound.setInteger("MasterY", masterY);
-        compound.setInteger("MasterZ", masterZ);
-        compound.setBoolean("Setup", setup);
         compound.setInteger("Ticks", ticks);
     }
 
@@ -42,10 +28,6 @@ public class TileEntityLightAir extends TileEntityTM
     {
         super.readFromNBT(compound);
 
-        masterX = compound.getInteger("MasterX");
-        masterY = compound.getInteger("MasterY");
-        masterZ = compound.getInteger("MasterZ");
-        setup = compound.getBoolean("Setup");
         ticks = compound.getInteger("Ticks");
     }
 
@@ -59,24 +41,24 @@ public class TileEntityLightAir extends TileEntityTM
 
     public boolean validateSelf()
     {
-        if (setup) {
-            if (masterX == 0 && masterY == 0 && masterZ == 0) {
-                setup = false;
+        if (master.setup) {
+            if (master.masterX == 0 && master.masterY == 0 && master.masterZ == 0) {
+                master.setSetup(false);
 
                 return false;
             } else {
-                Block block = worldObj.getBlock(masterX, masterY, masterZ);
+                Block block = worldObj.getBlock(master.masterX, master.masterY, master.masterZ);
                 if (!block.equals(Blocks.blockAreaLight)) {
-                    setup = false;
+                    master.setSetup(false);
 
                     return false;
                 } else {
-                    TileEntityAreaLight tile = (TileEntityAreaLight) worldObj.getTileEntity(masterX, masterY, masterZ);
+                    TileEntityAreaLight tile = (TileEntityAreaLight) worldObj.getTileEntity(master.masterX, master.masterY, master.masterZ);
 
                     if (tile == null) {
-                        setup = false;
+                        master.setSetup(false);
                     } else if (!tile.isOn()) {
-                        setup = false;
+                        master.setSetup(false);
                     }
                 }
             }
@@ -110,7 +92,7 @@ public class TileEntityLightAir extends TileEntityTM
                         TileEntityLightAir light = (TileEntityLightAir) worldObj.getTileEntity(i, k, j);
 
                         if (light != null) {
-                            light.setMaster(masterX, masterY, masterZ);
+                            light.setMaster(master.masterX, master.masterY, master.masterZ);
                         }
                     }
                 }
@@ -120,7 +102,7 @@ public class TileEntityLightAir extends TileEntityTM
 
     public static boolean isValidPosition(World world, TileEntityLightAir tile, int x, int y, int z)
     {
-        if (tile.setup && !world.canBlockSeeTheSky(x, y, z) && world.getBlockLightValue(x, y, z) < 14) {
+        if (tile.isSetup() && !world.canBlockSeeTheSky(x, y, z) && world.getBlockLightValue(x, y, z) < 14) {
             Block block = world.getBlock(x, y, z);
 
             if (block.equals(Blocks.blockLightAir)) {
@@ -131,13 +113,34 @@ public class TileEntityLightAir extends TileEntityTM
                 return false;
             }
 
-            double d1 = tile.masterX - x;
-            double d2 = tile.masterY - y;
-            double d3 = tile.masterZ - z;
+            double d1 = tile.master.masterX - x;
+            double d2 = tile.master.masterY - y;
+            double d3 = tile.master.masterZ - z;
 
             return (d1 * d1 + d2 * d2 + d3 * d3) <= (21 * 21);
         }
 
         return false;
+    }
+
+    public boolean isSetup()
+    {
+        return master.setup;
+    }
+
+    /* Everything below is just a proxy for the interfaces */
+
+    /* MASTER */
+
+    @Override
+    public void setMaster(int x, int y, int z)
+    {
+        master.setMaster(x, y, z);
+    }
+
+    @Override
+    public void setSetup(boolean setup)
+    {
+        master.setSetup(setup);
     }
 }

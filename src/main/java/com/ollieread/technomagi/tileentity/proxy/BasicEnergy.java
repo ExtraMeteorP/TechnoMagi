@@ -1,25 +1,27 @@
-package com.ollieread.technomagi.tileentity;
+package com.ollieread.technomagi.tileentity.proxy;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.util.ForgeDirection;
 import cofh.api.energy.EnergyStorage;
+import cofh.api.energy.IEnergyConnection;
 import cofh.api.energy.IEnergyStorage;
 
-public class TileEntityPower extends TileEntityTM implements IEnergyStorage
+public class BasicEnergy implements IEnergyStorage, IEnergyConnection
 {
 
     protected EnergyStorage energy;
 
-    public TileEntityPower(int capacity)
+    public BasicEnergy(int capacity)
     {
         this(capacity, capacity, capacity);
     }
 
-    public TileEntityPower(int capacity, int maxTransfer)
+    public BasicEnergy(int capacity, int maxTransfer)
     {
         this(capacity, maxTransfer, maxTransfer);
     }
 
-    public TileEntityPower(int capacity, int maxReceive, int maxExtract)
+    public BasicEnergy(int capacity, int maxReceive, int maxExtract)
     {
         energy = new EnergyStorage(capacity, maxReceive, maxExtract);
     }
@@ -50,8 +52,6 @@ public class TileEntityPower extends TileEntityTM implements IEnergyStorage
 
     public void readFromNBT(NBTTagCompound compound)
     {
-        super.readFromNBT(compound);
-
         NBTTagCompound energyStorage = compound.getCompoundTag("EnergyStorage");
 
         energy.readFromNBT(energyStorage);
@@ -59,13 +59,17 @@ public class TileEntityPower extends TileEntityTM implements IEnergyStorage
 
     public void writeToNBT(NBTTagCompound compound)
     {
-        super.writeToNBT(compound);
-
         NBTTagCompound energyStorage = new NBTTagCompound();
 
         energy.writeToNBT(energyStorage);
 
         compound.setTag("EnergyStorage", energyStorage);
+    }
+
+    @Override
+    public boolean canConnectEnergy(ForgeDirection from)
+    {
+        return true;
     }
 
 }

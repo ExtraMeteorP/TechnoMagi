@@ -11,7 +11,7 @@ import com.ollieread.ennds.research.ResearchRegistry;
 import com.ollieread.technomagi.network.message.MessageSyncTileEntityTM;
 import com.ollieread.technomagi.util.PacketHelper;
 
-public class TileEntityResearch extends TileEntityInventoryLocked implements IResearchMachine
+public class TileEntityResearch extends TileEntityTM implements IResearchMachine
 {
 
     protected int data = 0;
@@ -21,11 +21,6 @@ public class TileEntityResearch extends TileEntityInventoryLocked implements IRe
     protected boolean inProgress;
     protected boolean isConnected;
     protected Map<String, Integer> researchingKnowledge = new HashMap<String, Integer>();
-
-    public TileEntityResearch(int size)
-    {
-        super(size);
-    }
 
     public boolean inProgress()
     {
@@ -62,13 +57,6 @@ public class TileEntityResearch extends TileEntityInventoryLocked implements IRe
     public boolean isConnected()
     {
         return isConnected;
-    }
-
-    protected void reduceStacks(int i)
-    {
-        for (int x = 0; x < getSizeInventory(); x++) {
-            decrStackSize(x, i);
-        }
     }
 
     @Override
