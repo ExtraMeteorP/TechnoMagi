@@ -18,8 +18,8 @@ public class ContainerNaniteReplicator extends Container
     private TileEntityNaniteReplicator replicator;
     private int lastNanites;
     private int lastSample;
-    private int lastNaniteType;
-    private int lastSampleType;
+    private String lastNaniteType;
+    private String lastSampleType;
     private int lastProgress;
 
     public ContainerNaniteReplicator(InventoryPlayer playerInventory, TileEntityNaniteReplicator tile)
@@ -39,8 +39,6 @@ public class ContainerNaniteReplicator extends Container
         par1ICrafting.sendProgressBarUpdate(this, 0, replicator.getNanites());
         par1ICrafting.sendProgressBarUpdate(this, 1, replicator.getSample());
         par1ICrafting.sendProgressBarUpdate(this, 2, replicator.getProgress());
-        par1ICrafting.sendProgressBarUpdate(this, 3, replicator.getNaniteType());
-        par1ICrafting.sendProgressBarUpdate(this, 4, replicator.getSampleType());
     }
 
     public void detectAndSendChanges()
@@ -60,14 +58,6 @@ public class ContainerNaniteReplicator extends Container
 
             if (lastProgress != replicator.getProgress()) {
                 icrafting.sendProgressBarUpdate(this, 2, replicator.getProgress());
-            }
-
-            if (lastNaniteType != replicator.getNaniteType()) {
-                icrafting.sendProgressBarUpdate(this, 3, replicator.getNaniteType());
-            }
-
-            if (lastSampleType != replicator.getSampleType()) {
-                icrafting.sendProgressBarUpdate(this, 4, replicator.getSampleType());
             }
         }
 
@@ -91,14 +81,6 @@ public class ContainerNaniteReplicator extends Container
 
         if (i == 2) {
             replicator.setProgress(v);
-        }
-
-        if (i == 3) {
-            replicator.setNaniteType(v);
-        }
-
-        if (i == 4) {
-            replicator.setSampleType(v);
         }
     }
 
