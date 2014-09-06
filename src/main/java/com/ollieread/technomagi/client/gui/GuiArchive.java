@@ -25,6 +25,8 @@ public class GuiArchive extends GuiScreen
 
     protected int xSize = 143;
     protected int ySize = 209;
+    protected int mouseX;
+    protected int mouseY;
     protected int xOffset;
     protected int yOffset;
     private static final ResourceLocation texture1 = new ResourceLocation(Reference.MODID.toLowerCase(), "textures/gui/archive.png");
@@ -41,6 +43,8 @@ public class GuiArchive extends GuiScreen
      */
     public void drawScreen(int par1, int par2, float par3)
     {
+        this.mouseX = par1;
+        this.mouseY = par2;
         this.drawDefaultBackground();
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(texture1);

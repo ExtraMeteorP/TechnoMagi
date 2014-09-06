@@ -1,5 +1,8 @@
 package com.ollieread.technomagi.client.gui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -51,6 +54,30 @@ public class GuiNaniteReplicator extends GuiEnergyContainer
 
         this.fontRendererObj.drawString(progress + "%", 140 - this.fontRendererObj.getStringWidth(progress + "%"), 53, 4118771);
         this.fontRendererObj.drawString(typeName, 140 - this.fontRendererObj.getStringWidth(typeName), 66, 15944766);
+
+        int nanites = replicator.getNanites();
+        int sample = replicator.getSample();
+
+        int k = (this.width - this.xSize) / 2; // X asis on GUI
+        int l = (this.height - this.ySize) / 2; // Y asis on GUI
+
+        if (mouseX >= this.guiLeft + 42 && mouseX <= this.guiLeft + 142) {
+            if (mouseY >= this.guiTop + 38 && mouseY <= this.guiTop + 41) {
+                List text = new ArrayList();
+                text.add("Nanites: " + nanites + " / 100");
+
+                this.drawHoveringText(text, mouseX - k, mouseY - l, this.fontRendererObj);
+            }
+        }
+
+        if (mouseX >= this.guiLeft + 42 && mouseX <= this.guiLeft + 142) {
+            if (mouseY >= this.guiTop + 27 && mouseY <= this.guiTop + 33) {
+                List text = new ArrayList();
+                text.add("Units of Blood: " + sample + " / 100");
+
+                this.drawHoveringText(text, mouseX - k, mouseY - l, this.fontRendererObj);
+            }
+        }
     }
 
     @Override
