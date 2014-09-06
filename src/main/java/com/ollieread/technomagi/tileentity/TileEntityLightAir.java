@@ -21,6 +21,8 @@ public class TileEntityLightAir extends TileEntityTM implements IHasMaster
         super.writeToNBT(compound);
 
         compound.setInteger("Ticks", ticks);
+
+        master.writeToNBT(compound);
     }
 
     @Override
@@ -29,6 +31,8 @@ public class TileEntityLightAir extends TileEntityTM implements IHasMaster
         super.readFromNBT(compound);
 
         ticks = compound.getInteger("Ticks");
+
+        master.readFromNBT(compound);
     }
 
     @Override
