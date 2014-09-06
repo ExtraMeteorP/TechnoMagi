@@ -53,7 +53,7 @@ public class PassiveAbilityScholarResearch extends AbilityPassive<ResearchProgre
             }
         }
 
-        event.modifier = (int) Math.round(modifier);
+        // event.modifier = (int) Math.round(modifier);
     }
 
 }
