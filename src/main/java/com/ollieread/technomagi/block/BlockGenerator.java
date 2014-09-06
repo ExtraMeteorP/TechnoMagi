@@ -12,7 +12,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 import com.ollieread.technomagi.tileentity.TileEntityGeneratorBasic;
-import com.ollieread.technomagi.tileentity.TileEntityPower;
 import com.ollieread.technomagi.util.PlayerHelper;
 
 import cpw.mods.fml.relauncher.Side;
@@ -56,7 +55,7 @@ public class BlockGenerator extends BlockTMContainer
         if (world.isRemote) {
             return true;
         } else {
-            TileEntityPower entity = (TileEntityPower) world.getTileEntity(x, y, z);
+            TileEntityGeneratorBasic entity = (TileEntityGeneratorBasic) world.getTileEntity(x, y, z);
 
             if (entity != null) {
                 PlayerHelper.addChatMessage(player, "Energy: " + entity.getEnergyStored());

@@ -1,14 +1,18 @@
 package com.ollieread.technomagi.tileentity;
 
-public class TileEntityGeneratorBasic extends TileEntityPower
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.util.ForgeDirection;
+import cofh.api.energy.IEnergyConnection;
+import cofh.api.energy.IEnergyStorage;
+
+import com.ollieread.technomagi.tileentity.proxy.BasicEnergy;
+
+public class TileEntityGeneratorBasic extends TileEntityTM implements IEnergyStorage, IEnergyConnection
 {
 
-    protected int energyGeneration = 0;
+    protected BasicEnergy storage = new BasicEnergy(5120, 0, 10);
 
-    public TileEntityGeneratorBasic()
-    {
-        super(5120, 0, 10);
-    }
+    protected int energyGeneration = 0;
 
     public void setGenerationByLocation(int y)
     {
@@ -20,8 +24,60 @@ public class TileEntityGeneratorBasic extends TileEntityPower
     public void updateEntity()
     {
         if (getEnergyStored() < getMaxEnergyStored()) {
-            energy.modifyEnergyStored(energyGeneration);
+            storage.receiveEnergy(energyGeneration, false);
         }
+    }
+
+    public void readFromNBT(NBTTagCompound compound)
+    {
+        super.readFromNBT(compound);
+
+        energyGeneration = compound.getInteger("EnergyGeneration");
+
+        storage.readFromNBT(compound);
+    }
+
+    public void writeToNBT(NBTTagCompound compound)
+    {
+        super.writeToNBT(compound);
+
+        compound.setInteger("EnergyGeneration", energyGeneration);
+
+        storage.writeToNBT(compound);
+    }
+
+    /* Everything below is just a proxy for the interfaces */
+
+    /* ENERGY */
+
+    @Override
+    public boolean canConnectEnergy(ForgeDirection from)
+    {
+        return storage.canConnectEnergy(from);
+    }
+
+    @Override
+    public int receiveEnergy(int maxReceive, boolean simulate)
+    {
+        return storage.receiveEnergy(maxReceive, simulate);
+    }
+
+    @Override
+    public int extractEnergy(int maxExtract, boolean simulate)
+    {
+        return storage.extractEnergy(maxExtract, simulate);
+    }
+
+    @Override
+    public int getEnergyStored()
+    {
+        return storage.getEnergyStored();
+    }
+
+    @Override
+    public int getMaxEnergyStored()
+    {
+        return storage.getMaxEnergyStored();
     }
 
 }
