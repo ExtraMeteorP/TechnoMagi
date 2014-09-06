@@ -1,6 +1,5 @@
 package com.ollieread.technomagi.client.gui;
 
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -23,7 +22,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiObservation extends GuiContainer
+public class GuiObservationChamber extends GuiEnergyContainer
 {
 
     protected int xSize = 175;
@@ -32,7 +31,7 @@ public class GuiObservation extends GuiContainer
     protected TileEntityObservationChamber chamber;
     protected GuiTMButton analyseButton;
 
-    public GuiObservation(InventoryPlayer playerInventory, TileEntityObservationChamber tile)
+    public GuiObservationChamber(InventoryPlayer playerInventory, TileEntityObservationChamber tile)
     {
         super(new ContainerObservation(playerInventory, tile));
 
@@ -88,6 +87,8 @@ public class GuiObservation extends GuiContainer
             }
             this.func_147046_a(guiLeft + 33, guiTop + 90, scale, (float) (guiLeft + 33) - var2, (float) (guiTop + 90 - 50) - var3, entity);
         }
+
+        this.drawPowerLayer(chamber, this.guiLeft + xSize, this.guiTop);
     }
 
     public static void func_147046_a(int par1, int par2, int par3, float par4, float par5, EntityLivingBase p_147046_5_)

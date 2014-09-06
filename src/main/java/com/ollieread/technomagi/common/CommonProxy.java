@@ -10,7 +10,7 @@ import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.client.gui.GuiAnalysis;
 import com.ollieread.technomagi.client.gui.GuiArchive;
 import com.ollieread.technomagi.client.gui.GuiNaniteReplicator;
-import com.ollieread.technomagi.client.gui.GuiObservation;
+import com.ollieread.technomagi.client.gui.GuiObservationChamber;
 import com.ollieread.technomagi.client.gui.GuiSelf;
 import com.ollieread.technomagi.client.gui.GuiSpecialisation;
 import com.ollieread.technomagi.event.handler.PlayerEventHandler;
@@ -92,7 +92,7 @@ public class CommonProxy implements IGuiHandler
             TileEntityObservationChamber chamber = (TileEntityObservationChamber) world.getTileEntity(x, y, z);
 
             if (chamber != null) {
-                return new GuiObservation(player.inventory, chamber);
+                return new GuiObservationChamber(player.inventory, chamber);
             }
         } else if (ID == GUI_ARCHIVE) {
             TileEntityArchive archive = (TileEntityArchive) world.getTileEntity(x, y, z);

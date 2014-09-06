@@ -1,7 +1,6 @@
 package com.ollieread.technomagi.client.gui;
 
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -17,7 +16,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiAnalysis extends GuiContainer
+public class GuiAnalysis extends GuiEnergyContainer
 {
 
     protected int xSize = 175;
@@ -78,6 +77,8 @@ public class GuiAnalysis extends GuiContainer
         if (data > 0) {
             this.drawTexturedModalRect(this.guiLeft + 65, this.guiTop + 73, 0, 179, data, 3);
         }
+
+        this.drawPowerLayer(analysis, this.guiLeft + xSize, this.guiTop);
     }
 
     protected void actionPerformed(GuiButton button)

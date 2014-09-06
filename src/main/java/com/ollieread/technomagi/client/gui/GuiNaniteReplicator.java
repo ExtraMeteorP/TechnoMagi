@@ -1,8 +1,6 @@
 package com.ollieread.technomagi.client.gui;
 
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
@@ -17,7 +15,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiNaniteReplicator extends GuiContainer
+public class GuiNaniteReplicator extends GuiEnergyContainer
 {
 
     protected int xSize = 185;
@@ -39,12 +37,11 @@ public class GuiNaniteReplicator extends GuiContainer
         this.fontRendererObj.drawString(I18n.format("technomagi.replicator.gui"), 7, 9, 16777215);
 
         int progress = replicator.getProgress();
-        int type = replicator.getSampleType();
-        String entity = EntityList.getStringFromID(type);
+        String type = replicator.getSampleType();
         String typeName = "";
 
-        if (entity != null) {
-            typeName = StatCollector.translateToLocal("entity." + entity + ".name");
+        if (type != null && !type.equals("none")) {
+            typeName = StatCollector.translateToLocal("entity." + type + ".name");
         } else {
             typeName = "--";
         }
@@ -73,6 +70,8 @@ public class GuiNaniteReplicator extends GuiContainer
         if (sample > 0) {
             this.drawTexturedModalRect(this.guiLeft + 42, this.guiTop + 27, 0, 177, sample, 6);
         }
+
+        this.drawPowerLayer(replicator, this.guiLeft + xSize, this.guiTop);
     }
 
 }
