@@ -47,7 +47,7 @@ public class ItemNaniteContainer extends ItemTM
         stack.stackTagCompound = new NBTTagCompound();
     }
 
-    protected String getEntity(ItemStack stack)
+    public static String getEntity(ItemStack stack)
     {
         NBTTagCompound compound = stack.stackTagCompound;
 
