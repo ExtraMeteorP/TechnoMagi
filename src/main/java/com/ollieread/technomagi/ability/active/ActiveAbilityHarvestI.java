@@ -48,7 +48,9 @@ public class ActiveAbilityHarvestI extends AbilityActive
                 int meta = player.worldObj.getBlockMetadata(x, y, z);
                 Block block = player.worldObj.getBlock(x, y, z);
 
-                if (block != null && block.getHarvestLevel(meta) <= 1 && (block.getHarvestTool(meta) == null || block.getHarvestTool(meta).equals("pickaxe") || block.getHarvestTool(meta).equals("shovel"))) {
+                if (block != null && block.getHarvestLevel(meta) <= 1) {
+                    String tool = block.getHarvestTool(meta);
+
                     if (decreaseNanites(charon, 3)) {
                         if (!player.worldObj.isRemote) {
                             player.worldObj.func_147480_a(x, y, z, true);
@@ -63,5 +65,4 @@ public class ActiveAbilityHarvestI extends AbilityActive
 
         return false;
     }
-
 }

@@ -131,6 +131,7 @@ public class CommonProxy implements IGuiHandler
         MinecraftForge.EVENT_BUS.register(new TMEventHandler());
 
         FMLCommonHandler.instance().bus().register(new TickEventHandler());
+        FMLCommonHandler.instance().bus().register(playerEventHandler);
     }
 
     public EntityPlayer getClientPlayer()
