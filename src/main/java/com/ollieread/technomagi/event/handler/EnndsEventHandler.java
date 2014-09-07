@@ -4,14 +4,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 
 import com.ollieread.ennds.ability.AbilityRegistry;
-import com.ollieread.ennds.event.EnndsEvent.ResearchCompleteEvent;
+import com.ollieread.ennds.event.EnndsEvent.KnowledgeUnlockedEvent;
 import com.ollieread.ennds.event.EnndsEvent.ResearchProgressEvent;
 import com.ollieread.ennds.event.EnndsEvent.SpecialisationChosenEvent;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
-public class TMEventHandler
+public class EnndsEventHandler
 {
 
     @SubscribeEvent
@@ -26,10 +26,10 @@ public class TMEventHandler
     }
 
     @SubscribeEvent
-    public void onResearchComplete(ResearchCompleteEvent event)
+    public void onKnowledgeUnlocked(KnowledgeUnlockedEvent event)
     {
         if (!event.entity.worldObj.isRemote) {
-            ((EntityPlayer) event.entity).addChatMessage(new ChatComponentText("Research Complete: " + event.research.getName()));
+            ((EntityPlayer) event.entity).addChatMessage(new ChatComponentText("Knowledge Unlocked: " + event.knowledge.getName()));
         }
     }
 
