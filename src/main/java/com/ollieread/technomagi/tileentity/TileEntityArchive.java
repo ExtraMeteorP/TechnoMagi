@@ -5,15 +5,20 @@ import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
+import com.ollieread.technomagi.item.ItemResearchStorage;
+import com.ollieread.technomagi.tileentity.proxy.BasicInventory;
 import com.ollieread.technomagi.tileentity.proxy.PlayerLocked;
 
-public class TileEntityArchive extends TileEntityTM implements IPlayerLocked
+public class TileEntityArchive extends TileEntityTM implements IPlayerLocked, IInventory
 {
 
     protected PlayerLocked locked = new PlayerLocked();
+    protected BasicInventory inventory = new BasicInventory(1);
 
     public int field_145926_a;
     public float field_145933_i;
@@ -108,32 +113,8 @@ public class TileEntityArchive extends TileEntityTM implements IPlayerLocked
 
         if (!worldObj.isRemote) {
             if (syncCheck == 10) {
-                if (canSync()) {
-                    EntityPlayer owner = getEntityPlayer();
-                    ExtendedPlayerKnowledge playerKnowledge = ExtendedPlayerKnowledge.get(owner);
-
-                    if (playerKnowledge != null && playerKnowledge.nanites != null) {
-                        Map<String, Integer> researchingKnowledge = playerKnowledge.nanites.getResearchingKnowledge();
-
-                        if (researchingKnowledge.size() > 0) {
-                            for (Iterator<String> i = researchingKnowledge.keySet().iterator(); i.hasNext();) {
-                                String knowledge = i.next();
-                                int value = researchingKnowledge.get(knowledge);
-
-                                if (playerKnowledge.hasKnowledge(knowledge)) {
-                                    playerKnowledge.nanites.decreaseData(value, knowledge);
-                                    continue;
-                                }
-
-                                if (value > 0) {
-                                    if (value >= 5 && playerKnowledge.nanites.decreaseData(5, knowledge)) {
-                                        playerKnowledge.addKnowledgeProgress(knowledge, 5);
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                    }
+                if (canSyncPlayer()) {
+                    syncPlayer();
                 }
                 syncCheck = 0;
             }
@@ -141,12 +122,71 @@ public class TileEntityArchive extends TileEntityTM implements IPlayerLocked
         }
     }
 
-    public boolean canSync()
+    public boolean canSyncPlayer()
     {
         EntityPlayer owner = getEntityPlayer();
 
         if (owner != null && owner.getDistance(xCoord, yCoord, zCoord) <= 8) {
             return true;
+        }
+
+        return false;
+    }
+
+    protected void syncPlayer()
+    {
+        EntityPlayer owner = getEntityPlayer();
+        ExtendedPlayerKnowledge playerKnowledge = ExtendedPlayerKnowledge.get(owner);
+
+        if (playerKnowledge != null && playerKnowledge.nanites != null) {
+            Map<String, Integer> researchingKnowledge = playerKnowledge.nanites.getResearchingKnowledge();
+
+            if (researchingKnowledge.size() > 0) {
+                for (Iterator<String> i = researchingKnowledge.keySet().iterator(); i.hasNext();) {
+                    String knowledge = i.next();
+                    int value = researchingKnowledge.get(knowledge);
+
+                    if (playerKnowledge.hasKnowledge(knowledge)) {
+                        playerKnowledge.nanites.decreaseData(value, knowledge);
+                        continue;
+                    }
+
+                    if (value > 0) {
+                        if (value >= 5 && playerKnowledge.nanites.decreaseData(5, knowledge)) {
+                            playerKnowledge.addKnowledgeProgress(knowledge, 5);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public boolean syncStorage(ItemStack stack)
+    {
+        if (stack != null && stack.getItem() != null && stack.getItem() instanceof ItemResearchStorage) {
+            ItemResearchStorage storage = (ItemResearchStorage) stack.getItem();
+
+            if (storage.getTotal(stack) > 0) {
+                Map<String, Integer> researchingKnowledge = storage.getResearch(stack);
+
+                if (researchingKnowledge.size() > 0) {
+
+                    EntityPlayer owner = getEntityPlayer();
+                    ExtendedPlayerKnowledge playerKnowledge = ExtendedPlayerKnowledge.get(owner);
+
+                    if (playerKnowledge != null && playerKnowledge.nanites != null) {
+                        for (Iterator<String> i = researchingKnowledge.keySet().iterator(); i.hasNext();) {
+                            String knowledge = i.next();
+                            int value = researchingKnowledge.get(knowledge);
+
+                            playerKnowledge.addKnowledgeProgress(knowledge, value);
+                        }
+
+                        return true;
+                    }
+                }
+            }
         }
 
         return false;
@@ -172,7 +212,92 @@ public class TileEntityArchive extends TileEntityTM implements IPlayerLocked
         locked.writeToNBT(compound);
     }
 
+    public EntityPlayer getEntityPlayer()
+    {
+        String playerName = getPlayer();
+
+        if (playerName != null && !playerName.equals("none")) {
+            return worldObj.getPlayerEntityByName(playerName);
+        }
+
+        return null;
+    }
+
     /* Everything below is just a proxy for the interfaces */
+
+    /* INVENTORY */
+
+    @Override
+    public int getSizeInventory()
+    {
+        return inventory.getSizeInventory();
+    }
+
+    @Override
+    public ItemStack getStackInSlot(int slot)
+    {
+        return inventory.getStackInSlot(slot);
+    }
+
+    @Override
+    public ItemStack decrStackSize(int i, int q)
+    {
+        return inventory.decrStackSize(i, q);
+    }
+
+    @Override
+    public ItemStack getStackInSlotOnClosing(int i)
+    {
+        return inventory.getStackInSlotOnClosing(i);
+    }
+
+    @Override
+    public void setInventorySlotContents(int i, ItemStack stack)
+    {
+        inventory.setInventorySlotContents(i, stack);
+    }
+
+    @Override
+    public String getInventoryName()
+    {
+        return inventory.getInventoryName();
+    }
+
+    @Override
+    public boolean hasCustomInventoryName()
+    {
+        return inventory.hasCustomInventoryName();
+    }
+
+    @Override
+    public int getInventoryStackLimit()
+    {
+        return inventory.getInventoryStackLimit();
+    }
+
+    @Override
+    public boolean isUseableByPlayer(EntityPlayer player)
+    {
+        return inventory.isUseableByPlayer(player);
+    }
+
+    @Override
+    public void openInventory()
+    {
+
+    }
+
+    @Override
+    public void closeInventory()
+    {
+
+    }
+
+    @Override
+    public boolean isItemValidForSlot(int i, ItemStack stack)
+    {
+        return inventory.isItemValidForSlot(i, stack);
+    }
 
     /* LOCKED */
 
@@ -203,17 +328,6 @@ public class TileEntityArchive extends TileEntityTM implements IPlayerLocked
     public boolean isPlayer(EntityPlayer player)
     {
         return isPlayer(player.getCommandSenderName());
-    }
-
-    public EntityPlayer getEntityPlayer()
-    {
-        String playerName = getPlayer();
-
-        if (playerName != null && !playerName.equals("none")) {
-            return worldObj.getPlayerEntityByName(playerName);
-        }
-
-        return null;
     }
 
 }

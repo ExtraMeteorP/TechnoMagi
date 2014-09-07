@@ -14,9 +14,10 @@ import com.ollieread.technomagi.client.gui.GuiObservationChamber;
 import com.ollieread.technomagi.client.gui.GuiSelf;
 import com.ollieread.technomagi.client.gui.GuiSpecialisation;
 import com.ollieread.technomagi.event.handler.PlayerEventHandler;
-import com.ollieread.technomagi.event.handler.TMEventHandler;
+import com.ollieread.technomagi.event.handler.EnndsEventHandler;
 import com.ollieread.technomagi.event.handler.TickEventHandler;
 import com.ollieread.technomagi.inventory.ContainerAnalysis;
+import com.ollieread.technomagi.inventory.ContainerArchive;
 import com.ollieread.technomagi.inventory.ContainerNaniteReplicator;
 import com.ollieread.technomagi.inventory.ContainerObservation;
 import com.ollieread.technomagi.tileentity.TileEntityAnalysis;
@@ -60,6 +61,12 @@ public class CommonProxy implements IGuiHandler
             if (chamber != null) {
                 return new ContainerObservation(player.inventory, chamber);
             }
+        } else if (ID == GUI_ARCHIVE) {
+            TileEntityArchive archive = (TileEntityArchive) world.getTileEntity(x, y, z);
+
+            if (archive != null) {
+                return new ContainerArchive(player.inventory, archive);
+            }
         }
 
         return null;
@@ -98,7 +105,7 @@ public class CommonProxy implements IGuiHandler
             TileEntityArchive archive = (TileEntityArchive) world.getTileEntity(x, y, z);
 
             if (archive != null) {
-                return new GuiArchive();
+                return new GuiArchive(player.inventory, archive);
             }
         }
 
@@ -128,7 +135,7 @@ public class CommonProxy implements IGuiHandler
         EnndsRegistry.registerEvent("enderTeleport");
 
         MinecraftForge.EVENT_BUS.register(playerEventHandler);
-        MinecraftForge.EVENT_BUS.register(new TMEventHandler());
+        MinecraftForge.EVENT_BUS.register(new EnndsEventHandler());
 
         FMLCommonHandler.instance().bus().register(new TickEventHandler());
         FMLCommonHandler.instance().bus().register(playerEventHandler);
