@@ -71,6 +71,8 @@ public class Items
         stackNaniteContainer.stackTagCompound = new NBTTagCompound();
 
         ItemStack ironIngot = new ItemStack(net.minecraft.init.Items.iron_ingot, 1);
+        ItemStack goldIngot = new ItemStack(net.minecraft.init.Items.gold_ingot, 1);
+        ItemStack diamond = new ItemStack(net.minecraft.init.Items.diamond, 1);
 
         // empty sample vile
         GameRegistry.addShapedRecipe(stackSampleVile, "x x", "x x", "xxx", 'x', new ItemStack(net.minecraft.init.Blocks.glass, 1));
@@ -83,21 +85,29 @@ public class Items
         // iron rod
         GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 1, 2), "x", "x", 'x', ironIngot);
         // gold sheet
-        GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 2, 4), "xx", "xx", 'x', new ItemStack(net.minecraft.init.Items.gold_ingot, 1));
+        GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 2, 4), "xx", "xx", 'x', goldIngot);
         // gold rod
-        GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 1, 5), "x", "x", 'x', new ItemStack(net.minecraft.init.Items.gold_ingot, 1));
+        GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 1, 5), "x", "x", 'x', goldIngot);
         // diamond sheet
-        GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 2, 7), "xx", "xx", 'x', new ItemStack(net.minecraft.init.Items.diamond, 1));
+        GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 2, 7), "xx", "xx", 'x', diamond);
         // diamond rod
-        GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 1, 8), "x", "x", 'x', new ItemStack(net.minecraft.init.Items.diamond, 1));
+        GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 1, 8), "x", "x", 'x', diamond);
         // life unit
         GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 1, 11), "xzx", " y ", "x x", 'x', ironIngot, 'y', new ItemStack(net.minecraft.init.Items.porkchop, 1), 'z', new ItemStack(itemComponent, 1, 5));
+        GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 1, 15), "x x", " y ", "x x", 'x', goldIngot, 'y', new ItemStack(itemComponent, 1, 11));
+        GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 1, 19), "x x", " y ", "x x", 'x', diamond, 'y', new ItemStack(itemComponent, 1, 15));
         // nanite unit
         GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 1, 12), "xzx", " y ", "x x", 'x', ironIngot, 'y', stackNaniteContainer, 'z', new ItemStack(itemComponent, 1, 5));
+        GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 1, 16), "x x", " y ", "x x", 'x', goldIngot, 'y', new ItemStack(itemComponent, 1, 12));
+        GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 1, 20), "x x", " y ", "x x", 'x', diamond, 'y', new ItemStack(itemComponent, 1, 16));
         // power unit
         GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 1, 13), "xzx", " y ", "x x", 'x', ironIngot, 'y', new ItemStack(net.minecraft.init.Items.redstone, 1), 'z', new ItemStack(itemComponent, 1, 5));
+        GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 1, 17), "x x", " y ", "x x", 'x', goldIngot, 'y', new ItemStack(itemComponent, 1, 13));
+        GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 1, 21), "x x", " y ", "x x", 'x', diamond, 'y', new ItemStack(itemComponent, 1, 17));
         // teleport unit
         GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 1, 14), "xzx", " y ", "x x", 'x', ironIngot, 'y', new ItemStack(net.minecraft.init.Items.ender_pearl, 1), 'z', new ItemStack(itemComponent, 1, 5));
+        GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 1, 18), "x x", " y ", "x x", 'x', goldIngot, 'y', new ItemStack(itemComponent, 1, 14));
+        GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 1, 12), "x x", " y ", "x x", 'x', diamond, 'y', new ItemStack(itemComponent, 1, 18));
         // analysis unit
         GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 1, 10), "zxz", "xyx", " x ", 'x', ironIngot, 'y', new ItemStack(itemComponent, 1, 12), 'z', new ItemStack(itemComponent, 1, 5));
     }

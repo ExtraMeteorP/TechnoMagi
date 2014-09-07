@@ -17,7 +17,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ItemComponent extends ItemTM
 {
 
-    protected IIcon[] itemIcons = new IIcon[15];
+    protected IIcon[] itemIcons = new IIcon[23];
 
     public ItemComponent(String name)
     {
@@ -51,6 +51,14 @@ public class ItemComponent extends ItemTM
         itemIcons[12] = register.registerIcon(Reference.MODID.toLowerCase() + ":naniteUnit");
         itemIcons[13] = register.registerIcon(Reference.MODID.toLowerCase() + ":powerUnit");
         itemIcons[14] = register.registerIcon(Reference.MODID.toLowerCase() + ":teleportUnit");
+        itemIcons[15] = register.registerIcon(Reference.MODID.toLowerCase() + ":lifeUnitAdvanced");
+        itemIcons[16] = register.registerIcon(Reference.MODID.toLowerCase() + ":naniteUnitAdvanced");
+        itemIcons[17] = register.registerIcon(Reference.MODID.toLowerCase() + ":powerUnitAdvanced");
+        itemIcons[18] = register.registerIcon(Reference.MODID.toLowerCase() + ":teleportUnitAdvanced");
+        itemIcons[19] = register.registerIcon(Reference.MODID.toLowerCase() + ":lifeUnitElite");
+        itemIcons[20] = register.registerIcon(Reference.MODID.toLowerCase() + ":naniteUnitElite");
+        itemIcons[21] = register.registerIcon(Reference.MODID.toLowerCase() + ":powerUnitElite");
+        itemIcons[22] = register.registerIcon(Reference.MODID.toLowerCase() + ":teleportUnitElite");
     }
 
     @SideOnly(Side.CLIENT)
