@@ -40,17 +40,17 @@ public class ItemResearchStorage extends ItemTM implements IResearchStorage
 
         if ((total + amount) <= capacity) {
             total += amount;
-            setTotal(stack, total + amount);
+            setTotal(stack, total);
 
             if (researchingKnowledge.containsKey(name)) {
-                researchingKnowledge.put(name, researchingKnowledge.get(name) + amount);
-                setResearch(stack, researchingKnowledge);
-                return true;
-            } else {
-                researchingKnowledge.put(name, amount);
-                setResearch(stack, researchingKnowledge);
-                return true;
+                if ((researchingKnowledge.get(name) + amount) > 100) {
+                    return false;
+                }
             }
+
+            researchingKnowledge.put(name, total);
+            setResearch(stack, researchingKnowledge);
+            return true;
         }
 
         return false;
@@ -64,7 +64,7 @@ public class ItemResearchStorage extends ItemTM implements IResearchStorage
         stack.setItemDamage(capacity - total);
     }
 
-    protected int getCapacity(ItemStack stack)
+    public int getCapacity(ItemStack stack)
     {
         NBTTagCompound compound = stack.stackTagCompound;
 
@@ -75,7 +75,7 @@ public class ItemResearchStorage extends ItemTM implements IResearchStorage
         return 0;
     }
 
-    protected int getTotal(ItemStack stack)
+    public int getTotal(ItemStack stack)
     {
         NBTTagCompound compound = stack.stackTagCompound;
 
@@ -86,7 +86,7 @@ public class ItemResearchStorage extends ItemTM implements IResearchStorage
         return 0;
     }
 
-    protected Map<String, Integer> getResearch(ItemStack stack)
+    public Map<String, Integer> getResearch(ItemStack stack)
     {
         NBTTagCompound compound = stack.stackTagCompound;
 
@@ -96,7 +96,7 @@ public class ItemResearchStorage extends ItemTM implements IResearchStorage
 
             for (int i = 0; i < researchProgressList.tagCount(); i++) {
                 NBTTagCompound research = researchProgressList.getCompoundTagAt(i);
-                researchingKnowledge.put(ResearchRegistry.getResearchName(research.getInteger("Research")), research.getInteger("Progress"));
+                researchingKnowledge.put(ResearchRegistry.getKnowledgeName(research.getInteger("Research")), research.getInteger("Progress"));
             }
 
             return researchingKnowledge;
@@ -105,26 +105,26 @@ public class ItemResearchStorage extends ItemTM implements IResearchStorage
         return null;
     }
 
-    protected void setCapacity(ItemStack stack, int capacity)
+    public void setCapacity(ItemStack stack, int capacity)
     {
         NBTTagCompound compound = stack.stackTagCompound;
         compound.setInteger("Capacity", capacity);
     }
 
-    protected void setTotal(ItemStack stack, int total)
+    public void setTotal(ItemStack stack, int total)
     {
         NBTTagCompound compound = stack.stackTagCompound;
         compound.setInteger("Total", total);
     }
 
-    protected void setResearch(ItemStack stack, Map<String, Integer> researchingKnowledge)
+    public void setResearch(ItemStack stack, Map<String, Integer> researchingKnowledge)
     {
         NBTTagCompound compound = stack.stackTagCompound;
         NBTTagList researchProgressList = new NBTTagList();
 
         for (String k : researchingKnowledge.keySet()) {
             NBTTagCompound research = new NBTTagCompound();
-            research.setInteger("Research", ResearchRegistry.getResearchId(k));
+            research.setInteger("Research", ResearchRegistry.getKnowledgeId(k));
             research.setInteger("Progress", researchingKnowledge.get(k));
             researchProgressList.appendTag(research);
         }
@@ -156,7 +156,7 @@ public class ItemResearchStorage extends ItemTM implements IResearchStorage
         ItemStack stack = new ItemStack(item, 1, 100);
         stack.stackTagCompound = new NBTTagCompound();
 
-        setCapacity(stack, 0);
+        setCapacity(stack, 100);
         setTotal(stack, 0);
         setResearch(stack, new HashMap<String, Integer>());
 
