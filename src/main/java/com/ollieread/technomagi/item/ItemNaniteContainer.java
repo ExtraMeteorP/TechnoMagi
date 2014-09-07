@@ -122,7 +122,7 @@ public class ItemNaniteContainer extends ItemTM
         empty.stackTagCompound = new NBTTagCompound();
         list.add(empty);
 
-        ItemStack initial = new ItemStack(item, 1);
+        ItemStack initial = new ItemStack(item, 1, 1);
         initial.stackTagCompound = new NBTTagCompound();
         this.setEntity(initial, EntityPlayer.class);
         list.add(initial);
@@ -147,21 +147,28 @@ public class ItemNaniteContainer extends ItemTM
         if (charon != null && !charon.canSpecialise()) {
             if (stack.getItemDamage() == 0) {
                 if (charon.nanites.decreaseNanites(10)) {
-                    ItemStack newStack = new ItemStack(this, 1);
+                    ItemStack newStack = new ItemStack(this, 1, 1);
                     newStack.stackTagCompound = new NBTTagCompound();
                     this.setEntity(newStack, EntityPlayer.class);
 
                     player.inventory.addItemStackToInventory(newStack);
                     stack.stackSize--;
-
-                    if (stack.stackSize == 0) {
-                        stack = null;
-                    }
                 }
             }
         }
 
         return stack;
+    }
+
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float par8, float par9, float par10)
+    {
+        stack.stackSize--;
+
+        if (stack.stackSize == 0) {
+            stack = null;
+        }
+
+        return true;
     }
 
 }

@@ -122,7 +122,7 @@ public class ItemSampleVile extends ItemTM
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List list)
     {
-        ItemStack initial = new ItemStack(item, 1);
+        ItemStack initial = new ItemStack(item, 1, 0);
         initial.stackTagCompound = new NBTTagCompound();
         this.setEntity(initial, EntityPlayer.class);
         list.add(initial);
@@ -132,7 +132,7 @@ public class ItemSampleVile extends ItemTM
         while (iterator.hasNext()) {
             Class entityClass = (Class) iterator.next();
 
-            ItemStack stack = new ItemStack(item, 1);
+            ItemStack stack = new ItemStack(item, 1, 1);
             initial.stackTagCompound = new NBTTagCompound();
             this.setEntity(stack, entityClass);
 
@@ -142,17 +142,14 @@ public class ItemSampleVile extends ItemTM
 
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float par8, float par9, float par10)
     {
-        if (stack != null && stack.getItemDamage() == 0 && stack.stackSize > 0) {
-            stack.stackSize--;
+        System.out.println("In use");
+        stack.stackSize--;
 
-            if (stack.stackSize == 0) {
-                stack = null;
-            }
-
-            return true;
+        if (stack.stackSize == 0) {
+            stack = null;
         }
 
-        return false;
+        return true;
     }
 
 }

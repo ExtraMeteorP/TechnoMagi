@@ -7,6 +7,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 
 import com.ollieread.ennds.research.ResearchRegistry;
@@ -36,21 +37,40 @@ public class ItemSampleExtractor extends ItemTM
     {
         ItemStack sample = null;
         player.swingItem();
+        Set<Class> entities = ResearchRegistry.getMonitorableEntities();
 
-        if (!entity.worldObj.isRemote) {
-            Set<Class> entities = ResearchRegistry.getMonitorableEntities();
+        if (entities.contains(entity.getClass())) {
+            sample = new ItemStack(Items.itemSampleVile, 1, 1);
+            ItemSampleVile.setEntity(sample, entity.getClass());
+            ItemStack vileStack = new ItemStack(Items.itemSampleVile, 1, 0);
+            vileStack.stackTagCompound = new NBTTagCompound();
 
-            if (entities.contains(entity.getClass())) {
-                sample = new ItemStack(Items.itemSampleVile, 1);
-                ItemSampleVile.setEntity(sample, entity.getClass());
+            boolean flag = false;
 
-                if (entity.attackEntityFrom(DamageSource.generic, 2)) {
-                    player.setItemInUse(new ItemStack(Items.itemSampleVile, 1), 1);
-                    EntityItem item = player.entityDropItem(sample, 0);
-                    item.delayBeforeCanPickup = 0;
+            for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
+                ItemStack slot = player.inventory.getStackInSlot(i);
 
-                    return true;
+                if (slot != null && slot.isItemEqual(vileStack)) {
+                    if (ItemSampleVile.getEntity(slot) == null) {
+                        slot.stackSize--;
+
+                        if (slot.stackSize <= 0) {
+                            slot = null;
+                        }
+
+                        player.inventory.setInventorySlotContents(i, slot);
+                        flag = true;
+                        break;
+                    }
                 }
+            }
+
+            if (flag && entity.attackEntityFrom(DamageSource.generic, 2)) {
+                stack.setItemDamage(stack.getItemDamage() + 1);
+                EntityItem item = player.entityDropItem(sample, 0);
+                item.delayBeforeCanPickup = 0;
+
+                return true;
             }
         }
 
