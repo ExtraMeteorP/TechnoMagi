@@ -113,6 +113,10 @@ public class BlockArchive extends BlockTMContainer
             world.setBlockMetadataWithNotify(x, y, z, 4, 2);
         }
 
+        TileEntityArchive archive = (TileEntityArchive) world.getTileEntity(x, y, z);
+
+        archive.setPlayer(((EntityPlayer) entity).getCommandSenderName());
+
         super.onBlockPlacedBy(world, x, y, z, entity, stack);
     }
 
