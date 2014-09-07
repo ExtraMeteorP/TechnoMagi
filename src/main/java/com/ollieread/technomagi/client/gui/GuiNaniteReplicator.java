@@ -21,8 +21,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class GuiNaniteReplicator extends GuiEnergyContainer
 {
 
-    protected int xSize = 185;
-    protected int ySize = 177;
     protected int xOffset;
     protected int yOffset;
     private static final ResourceLocation texture = new ResourceLocation(Reference.MODID.toLowerCase(), "textures/gui/replicator.png");
@@ -33,6 +31,9 @@ public class GuiNaniteReplicator extends GuiEnergyContainer
         super(new ContainerNaniteReplicator(playerInventory, tile));
 
         replicator = tile;
+
+        xSize = 185;
+        ySize = 177;
     }
 
     protected void drawGuiContainerForegroundLayer(int par1, int par2)

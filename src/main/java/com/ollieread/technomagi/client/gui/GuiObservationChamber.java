@@ -25,8 +25,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class GuiObservationChamber extends GuiEnergyContainer
 {
 
-    protected int xSize = 175;
-    protected int ySize = 192;
     private static final ResourceLocation texture = new ResourceLocation(Reference.MODID.toLowerCase(), "textures/gui/observation.png");
     protected TileEntityObservationChamber chamber;
     protected GuiTMButton analyseButton;
@@ -36,6 +34,9 @@ public class GuiObservationChamber extends GuiEnergyContainer
         super(new ContainerObservation(playerInventory, tile));
 
         chamber = tile;
+
+        xSize = 175;
+        ySize = 192;
     }
 
     protected void drawGuiContainerForegroundLayer(int par1, int par2)

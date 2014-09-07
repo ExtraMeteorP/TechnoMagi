@@ -19,8 +19,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class GuiAnalysis extends GuiEnergyContainer
 {
 
-    protected int xSize = 175;
-    protected int ySize = 176;
     private static final ResourceLocation texture = new ResourceLocation(Reference.MODID.toLowerCase(), "textures/gui/analysis.png");
     protected TileEntityAnalysis analysis;
     protected GuiTMButton analyseButton;
@@ -30,6 +28,9 @@ public class GuiAnalysis extends GuiEnergyContainer
         super(new ContainerAnalysis(playerInventory, tile));
 
         analysis = tile;
+
+        xSize = 175;
+        ySize = 176;
     }
 
     public void initGui()
