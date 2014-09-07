@@ -5,9 +5,9 @@ import net.minecraft.block.material.Material;
 public class BlockConstruct extends BlockTM
 {
 
-    public BlockConstruct(Material material, String name)
+    public BlockConstruct(String name)
     {
-        super(material, name);
+        super(Material.iron, name);
     }
 
 }
