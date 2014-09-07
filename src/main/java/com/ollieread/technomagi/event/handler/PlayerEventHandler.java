@@ -37,6 +37,7 @@ import com.ollieread.technomagi.network.message.MessagePlayerInteractEvent;
 import com.ollieread.technomagi.tileentity.TileEntityTeleporter;
 import com.ollieread.technomagi.util.PlayerHelper;
 import com.ollieread.technomagi.util.TeleportHelper;
+import com.ollieread.technomagi.util.VersionChecker;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
@@ -96,6 +97,8 @@ public class PlayerEventHandler
             ExtendedPlayerKnowledge.loadProxyData((EntityPlayer) event.entity);
             ExtendedPlayerAbilities.loadProxyData((EntityPlayer) event.entity);
             ExtendedNanites.loadProxyData((EntityPlayer) event.entity);
+
+            new Thread(new VersionChecker((EntityPlayer) event.entity)).start();
 
             World world = event.entity.worldObj;
 
@@ -258,30 +261,49 @@ public class PlayerEventHandler
             if (event.entityLiving instanceof EntityPlayer) {
                 ResearchRegistry.researchEvent("enderTeleport", event, ExtendedPlayerKnowledge.get((EntityPlayer) event.entityLiving));
             }
+        }
 
-            World world = event.entityLiving.worldObj;
+        World world = event.entityLiving.worldObj;
 
-            int startX = (int) (event.targetX - 7);
-            int endX = (int) (event.targetX + 7);
-            int startY = (int) (event.targetY - 7);
-            int endY = (int) (event.targetY + 7);
-            int startZ = (int) (event.targetZ - 7);
-            int endZ = (int) (event.targetZ + 7);
+        int startX = (int) (event.targetX - 7);
+        int endX = (int) (event.targetX + 7);
+        int startY = (int) (event.targetY - 7);
+        int endY = (int) (event.targetY + 7);
+        int startZ = (int) (event.targetZ - 7);
+        int endZ = (int) (event.targetZ + 7);
 
-            for (int i = startX; i <= endX; i++) {
-                for (int j = startZ; j <= endZ; j++) {
-                    for (int k = startY; k <= endY; k++) {
-                        if (world.getBlock(i, k, j).equals(Blocks.blockTeleporter) && world.getBlockMetadata(i, k, j) == 3) {
-                            event.setCanceled(true);
+        for (int i = startX; i <= endX; i++) {
+            for (int j = startZ; j <= endZ; j++) {
+                for (int k = startY; k <= endY; k++) {
+                    if (world.getBlock(i, k, j).equals(Blocks.blockTeleporter) && world.getBlockMetadata(i, k, j) == 2) {
+                        event.targetX = i;
+                        event.targetY = k + 1;
+                        event.targetZ = j;
 
-                            return;
-                        } else if (world.getBlock(i, k, j).equals(Blocks.blockTeleporter) && world.getBlockMetadata(i, k, j) == 2) {
-                            event.targetX = i;
-                            event.targetY = k + 1;
-                            event.targetZ = j;
+                        return;
+                    } else if (world.getBlock(i, k, j).equals(Blocks.blockTeleporter) && world.getBlockMetadata(i, k, j) == 3) {
+                        event.setCanceled(true);
 
-                            return;
-                        }
+                        return;
+                    }
+                }
+            }
+        }
+
+        int startX1 = (int) (event.entityLiving.posX - 7);
+        int endX1 = (int) (event.entityLiving.posX + 7);
+        int startY1 = (int) (event.entityLiving.posY - 7);
+        int endY1 = (int) (event.entityLiving.posY + 7);
+        int startZ1 = (int) (event.entityLiving.posZ - 7);
+        int endZ1 = (int) (event.entityLiving.posZ + 7);
+
+        for (int i = startX1; i <= endX1; i++) {
+            for (int j = startZ1; j <= endZ1; j++) {
+                for (int k = startY1; k <= endY1; k++) {
+                    if (world.getBlock(i, k, j).equals(Blocks.blockTeleporter) && world.getBlockMetadata(i, k, j) == 3) {
+                        event.setCanceled(true);
+
+                        return;
                     }
                 }
             }
