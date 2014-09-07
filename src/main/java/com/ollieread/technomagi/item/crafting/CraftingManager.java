@@ -96,7 +96,7 @@ public class CraftingManager
                 arraylist.add(new ItemStack((Item) object1));
             } else {
                 if (!(object1 instanceof Block)) {
-                    throw new RuntimeException("Invalid shapeless recipy!");
+                    throw new RuntimeException("Invalid shapeless recipe!");
                 }
 
                 arraylist.add(new ItemStack((Block) object1));
