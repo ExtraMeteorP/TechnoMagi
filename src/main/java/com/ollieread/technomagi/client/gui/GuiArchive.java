@@ -1,5 +1,6 @@
 package com.ollieread.technomagi.client.gui;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -50,6 +51,9 @@ public class GuiArchive extends GuiScreen
         this.mc.getTextureManager().bindTexture(texture1);
         this.drawTexturedModalRect(this.xOffset, this.yOffset, 0, 0, this.xSize, this.ySize);
 
+        int k2 = (this.width - this.xSize) / 2; // X asis on GUI
+        int l2 = (this.height - this.ySize) / 2; // Y asis on GUI
+
         this.fontRendererObj.drawString(I18n.format("technomagi.archive.gui"), this.xOffset + 7, this.yOffset + 9, 16777215);
 
         List<IKnowledge> knowledge = ResearchRegistry.getKnowledge();
@@ -64,8 +68,16 @@ public class GuiArchive extends GuiScreen
             // draw progress
             this.mc.getTextureManager().bindTexture(texture1);
             this.drawTexturedModalRect(this.xOffset + 30, this.yOffset + 20 + x + 10, 0, 212, 102, 5);
-            int p = charon.getKnowledgeProgress(k.getName());
-            this.drawTexturedModalRect(this.xOffset + 32, this.yOffset + 20 + x + 11, 102, 213, p, 5);
+
+            int p = 0;
+
+            if (charon.hasKnowledge(k.getName())) {
+                p = 100;
+                this.drawTexturedModalRect(this.xOffset + 31, this.yOffset + 20 + x + 11, 102, 213, 100, 5);
+            } else {
+                p = charon.getKnowledgeProgress(k.getName());
+                this.drawTexturedModalRect(this.xOffset + 31, this.yOffset + 20 + x + 11, 102, 213, p, 5);
+            }
 
             // draw name
             this.fontRendererObj.drawString(k.getLocalisedName(), this.xOffset + 30, this.yOffset + 20 + x, 16777215);
@@ -73,6 +85,15 @@ public class GuiArchive extends GuiScreen
             // draw icon
             this.mc.getTextureManager().bindTexture(k.getIcon());
             this.func_146110_a(this.xOffset + 7, this.yOffset + 20 + x, 0, 0, 16, 16, 16, 16);
+
+            if (mouseX >= this.xOffset + 30 && mouseX <= this.xOffset + 142) {
+                if (mouseY >= this.yOffset + 20 + x + 10 && mouseY <= this.yOffset + 25 + x + 10) {
+                    List text = new ArrayList();
+                    text.add("Progress: " + p + " / 100");
+
+                    this.drawHoveringText(text, mouseX, mouseY, this.fontRendererObj);
+                }
+            }
 
             x += 25;
         }

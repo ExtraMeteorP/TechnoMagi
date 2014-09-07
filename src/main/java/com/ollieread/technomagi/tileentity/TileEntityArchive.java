@@ -1,11 +1,19 @@
 package com.ollieread.technomagi.tileentity;
 
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
 
-public class TileEntityArchive extends TileEntityPlayerLocked
+import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
+import com.ollieread.technomagi.tileentity.proxy.PlayerLocked;
+
+public class TileEntityArchive extends TileEntityTM implements IPlayerLocked
 {
+
+    protected PlayerLocked locked = new PlayerLocked();
 
     public int field_145926_a;
     public float field_145933_i;
@@ -17,14 +25,16 @@ public class TileEntityArchive extends TileEntityPlayerLocked
     public float field_145928_o;
     public float field_145925_p;
     public float field_145924_q;
-    private static Random random = new Random();
+    private static Random field_145923_r = new Random();
+
+    protected int syncCheck = 0;
 
     public void updateEntity()
     {
         super.updateEntity();
         this.field_145927_n = this.field_145930_m;
         this.field_145925_p = this.field_145928_o;
-        EntityPlayer entityplayer = this.worldObj.getClosestPlayer((double) ((float) this.xCoord + 0.5F), (double) ((float) this.yCoord + 0.5F), (double) ((float) this.zCoord + 0.5F), 3.0D);
+        EntityPlayer entityplayer = this.worldObj.getClosestPlayer((double) ((float) this.xCoord + 0.5F), (double) ((float) this.yCoord + 0.5F), (double) ((float) this.zCoord + 0.5F), 8.5D);
 
         if (entityplayer != null && isPlayer(entityplayer)) {
             double d0 = entityplayer.posX - (double) ((float) this.xCoord + 0.5F);
@@ -32,11 +42,11 @@ public class TileEntityArchive extends TileEntityPlayerLocked
             this.field_145924_q = (float) Math.atan2(d1, d0);
             this.field_145930_m += 0.1F;
 
-            if (this.field_145930_m < 0.5F || random.nextInt(40) == 0) {
+            if (this.field_145930_m < 0.5F || field_145923_r.nextInt(40) == 0) {
                 float f1 = this.field_145932_k;
 
                 do {
-                    this.field_145932_k += (float) (random.nextInt(4) - random.nextInt(4));
+                    this.field_145932_k += (float) (field_145923_r.nextInt(4) - field_145923_r.nextInt(4));
                 } while (f1 == this.field_145932_k);
             }
         } else {
@@ -95,6 +105,115 @@ public class TileEntityArchive extends TileEntityPlayerLocked
 
         this.field_145929_l += (f - this.field_145929_l) * 0.9F;
         this.field_145933_i += this.field_145929_l;
+
+        if (!worldObj.isRemote) {
+            if (syncCheck == 10) {
+                if (canSync()) {
+                    EntityPlayer owner = getEntityPlayer();
+                    ExtendedPlayerKnowledge playerKnowledge = ExtendedPlayerKnowledge.get(owner);
+
+                    if (playerKnowledge != null && playerKnowledge.nanites != null) {
+                        Map<String, Integer> researchingKnowledge = playerKnowledge.nanites.getResearchingKnowledge();
+
+                        if (researchingKnowledge.size() > 0) {
+                            for (Iterator<String> i = researchingKnowledge.keySet().iterator(); i.hasNext();) {
+                                String knowledge = i.next();
+                                int value = researchingKnowledge.get(knowledge);
+
+                                if (playerKnowledge.hasKnowledge(knowledge)) {
+                                    playerKnowledge.nanites.decreaseData(value, knowledge);
+                                    continue;
+                                }
+
+                                if (value > 0) {
+                                    if (value >= 5 && playerKnowledge.nanites.decreaseData(5, knowledge)) {
+                                        playerKnowledge.addKnowledgeProgress(knowledge, 5);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                syncCheck = 0;
+            }
+            syncCheck++;
+        }
+    }
+
+    public boolean canSync()
+    {
+        EntityPlayer owner = getEntityPlayer();
+
+        if (owner != null && owner.getDistance(xCoord, yCoord, zCoord) <= 8) {
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound compound)
+    {
+        super.readFromNBT(compound);
+
+        syncCheck = compound.getInteger("SyncCheck");
+
+        locked.readFromNBT(compound);
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound compound)
+    {
+        super.writeToNBT(compound);
+
+        compound.setInteger("SyncCheck", syncCheck);
+
+        locked.writeToNBT(compound);
+    }
+
+    /* Everything below is just a proxy for the interfaces */
+
+    /* LOCKED */
+
+    @Override
+    public boolean hasPlayer()
+    {
+        return locked.hasPlayer();
+    }
+
+    @Override
+    public void setPlayer(String name)
+    {
+        locked.setPlayer(name);
+    }
+
+    @Override
+    public String getPlayer()
+    {
+        return locked.getPlayer();
+    }
+
+    @Override
+    public boolean isPlayer(String name)
+    {
+        return locked.isPlayer(name);
+    }
+
+    public boolean isPlayer(EntityPlayer player)
+    {
+        return isPlayer(player.getCommandSenderName());
+    }
+
+    public EntityPlayer getEntityPlayer()
+    {
+        String playerName = getPlayer();
+
+        if (playerName != null && !playerName.equals("none")) {
+            return worldObj.getPlayerEntityByName(playerName);
+        }
+
+        return null;
     }
 
 }

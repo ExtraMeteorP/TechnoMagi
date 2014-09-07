@@ -73,23 +73,7 @@ public class TileEntityArchiveRenderer extends TileEntitySpecialRenderer
 
         GL11.glPopMatrix();
 
-        // Minecraft.getMinecraft().renderEngine.bindTexture(textureBook);
-        // GL11.glEnable(GL11.GL_CULL_FACE);
-        // GL11.glRotatef(90.0F, 0.0F, 0.0F, -1.0F);
-        // GL11.glRotatef(90.0F, -1.0F, 0.0F, 0.0F);
-
-        // book.bookSpine.offsetX = -0.6F;
-        // book.coverRight.offsetX = -0.6F;
-        // book.coverLeft.offsetX = -0.6F;
-        // book.pagesRight.offsetX = -0.6F;
-        // book.pagesLeft.offsetX = -0.6F;
-        // book.flippingPageRight.offsetX = -0.6F;
-        // book.flippingPageLeft.offsetX = -0.6F;
-        // book.bookSpine.offsetX = -0.6F;
-
-        // GL11.glTranslatef((float) x + 0.5F, (float) y + 0.75F, (float) z +
-        // 0.5F);
-        GL11.glTranslatef(0.0F, (float) (y + 0.95F), 0.0F);
+        GL11.glTranslatef(0.0F, (float) -0.75F, 0.0F);
         float f1 = (float) archive.field_145926_a + scale;
         GL11.glTranslatef(0.0F, 0.1F + MathHelper.sin(f1 * 0.1F) * 0.01F, 0.0F);
         float f2;
@@ -100,6 +84,21 @@ public class TileEntityArchiveRenderer extends TileEntitySpecialRenderer
 
         while (f2 < -(float) Math.PI) {
             f2 += ((float) Math.PI * 2F);
+        }
+
+        switch (side) {
+            case 2:
+                GL11.glRotatef(0, 0.0F, 1.0F, 0.0F);
+                break;
+            case 3:
+                GL11.glRotatef(180, 0.0F, 1.0F, 0.0F);
+                break;
+            case 4:
+                GL11.glRotatef(270, 0.0F, 1.0F, 0.0F);
+                break;
+            case 5:
+                GL11.glRotatef(90, 0.0F, 1.0F, 0.0F);
+                break;
         }
 
         float f3 = archive.field_145925_p + f2 * scale;
@@ -132,7 +131,7 @@ public class TileEntityArchiveRenderer extends TileEntitySpecialRenderer
         float f6 = archive.field_145927_n + (archive.field_145930_m - archive.field_145927_n) * scale;
         GL11.glEnable(GL11.GL_CULL_FACE);
 
-        book.render((Entity) null, 1.0F, 0.0F, 0.0F, 1.0F, 0.0F, 0.0625F);
+        book.render((Entity) null, f1, f4, f5, f6, 0.0F, 0.0625F);
 
         GL11.glPopMatrix();
     }

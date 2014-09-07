@@ -1,6 +1,11 @@
 package com.ollieread.technomagi.block;
 
+import java.util.Random;
+
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.EntityFX;
+import net.minecraft.client.particle.EntityPortalFX;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -104,4 +109,20 @@ public class BlockArchive extends BlockOwnable
         super.onBlockPlacedBy(world, x, y, z, entity, stack);
     }
 
+    @SideOnly(Side.CLIENT)
+    public void randomDisplayTick(World world, int x, int y, int z, Random random)
+    {
+        super.randomDisplayTick(world, x, y, z, random);
+
+        TileEntityArchive archive = (TileEntityArchive) world.getTileEntity(x, y, z);
+
+        if (archive != null && archive.canSync()) {
+            EntityPlayer player = archive.getEntityPlayer();
+
+            EntityFX effect = new EntityPortalFX(world, (double) x + 0.5D, (double) y + 1.0F, (double) z + 0.5D, (double) ((float) (player.posX - x) + random.nextFloat()) - 1.0D, (double) ((float) (player.posY - y) - random.nextFloat() - 1.5F), (double) ((float) (player.posZ - z) + random.nextFloat()) - 1.0D);
+            effect.setRBGColorF(147 / 255.0F, 225 / 255.0F, 242 / 255.0F);
+
+            Minecraft.getMinecraft().effectRenderer.addEffect(effect);
+        }
+    }
 }
