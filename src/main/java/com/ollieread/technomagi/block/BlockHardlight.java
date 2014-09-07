@@ -25,8 +25,7 @@ public class BlockHardlight extends BlockTM
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item item, CreativeTabs tab, List list)
     {
-        super.getSubBlocks(item, tab, list);
-
+        list.add(new ItemStack(this, 1, 0));
         list.add(new ItemStack(this, 1, 1));
         list.add(new ItemStack(this, 1, 2));
         list.add(new ItemStack(this, 1, 3));
