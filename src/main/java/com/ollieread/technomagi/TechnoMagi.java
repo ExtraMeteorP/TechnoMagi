@@ -63,8 +63,8 @@ public class TechnoMagi
 
         Entities.init();
 
-        Blocks.init();
         Items.init();
+        Blocks.init();
 
         Potion[] potionTypes = null;
 
