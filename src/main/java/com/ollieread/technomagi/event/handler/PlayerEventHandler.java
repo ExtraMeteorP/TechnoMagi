@@ -1,29 +1,22 @@
 package com.ollieread.technomagi.event.handler;
 
-import java.util.Iterator;
-import java.util.Set;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.world.World;
-import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent.Clone;
 import net.minecraftforge.event.entity.player.PlayerEvent.StartTracking;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 
 import com.ollieread.ennds.ability.AbilityRegistry;
-import com.ollieread.ennds.extended.ExtendedNanites;
 import com.ollieread.ennds.extended.ExtendedPlayerAbilities;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.ennds.research.ResearchRegistry;
@@ -46,58 +39,9 @@ public class PlayerEventHandler
 {
 
     @SubscribeEvent
-    public void onEntityConstructing(EntityConstructing event)
-    {
-        if (event.entity instanceof EntityPlayer) {
-            if (ExtendedPlayerKnowledge.get((EntityPlayer) event.entity) == null) {
-                ExtendedPlayerKnowledge.register((EntityPlayer) event.entity);
-            }
-            if (ExtendedPlayerAbilities.get((EntityPlayer) event.entity) == null) {
-                ExtendedPlayerAbilities.register((EntityPlayer) event.entity);
-            }
-            if (ExtendedNanites.get((EntityPlayer) event.entity) == null) {
-                ExtendedNanites.register((EntityPlayer) event.entity);
-            }
-        } else {
-            Set<Class> allowedEntities = ResearchRegistry.getMonitorableEntities();
-
-            for (Iterator<Class> i = allowedEntities.iterator(); i.hasNext();) {
-                Class c = i.next();
-                if (c.isInstance(event.entity) && ExtendedNanites.get(event.entity) == null) {
-                    ExtendedNanites.register(event.entity);
-                }
-            }
-        }
-    }
-
-    @SubscribeEvent
-    public void onLivingDeathEvent(LivingDeathEvent event)
-    {
-        if (!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer) {
-            ExtendedPlayerKnowledge.saveProxyData((EntityPlayer) event.entity);
-            ExtendedPlayerAbilities.saveProxyData((EntityPlayer) event.entity);
-            ExtendedNanites.saveProxyData((EntityPlayer) event.entity);
-        }
-    }
-
-    @SubscribeEvent
-    public void onClone(Clone event)
-    {
-        if (!event.entity.worldObj.isRemote && event.original instanceof EntityPlayer && !event.wasDeath) {
-            ExtendedPlayerKnowledge.saveProxyData((EntityPlayer) event.original);
-            ExtendedPlayerAbilities.saveProxyData((EntityPlayer) event.original);
-            ExtendedNanites.saveProxyData((EntityPlayer) event.original);
-        }
-    }
-
-    @SubscribeEvent
     public void onEntityJoinWorld(EntityJoinWorldEvent event)
     {
         if (!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer) {
-            ExtendedPlayerKnowledge.loadProxyData((EntityPlayer) event.entity);
-            ExtendedPlayerAbilities.loadProxyData((EntityPlayer) event.entity);
-            ExtendedNanites.loadProxyData((EntityPlayer) event.entity);
-
             new Thread(new VersionChecker((EntityPlayer) event.entity)).start();
 
             World world = event.entity.worldObj;
