@@ -7,9 +7,9 @@ public class TileEntityTeleporter extends TileEntityPlayerLocked
 {
 
     protected int cooldown = -1;
-    protected int partnerX = 0;
-    protected int partnerY = 0;
-    protected int partnerZ = 0;
+    protected int partnerX = -1;
+    protected int partnerY = -1;
+    protected int partnerZ = -1;
 
     @Override
     public void writeToNBT(NBTTagCompound compound)
@@ -65,7 +65,7 @@ public class TileEntityTeleporter extends TileEntityPlayerLocked
 
     public boolean canPartner()
     {
-        return partnerX == 0 && partnerY == 0 && partnerZ == 0;
+        return partnerX == -1 && partnerY == -1 && partnerZ == -1;
     }
 
     public void partner(int x, int y, int z)
