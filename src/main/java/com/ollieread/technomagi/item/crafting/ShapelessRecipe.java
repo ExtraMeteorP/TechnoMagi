@@ -75,10 +75,12 @@ public class ShapelessRecipe implements IRecipe, IRecipeKnowledge
 
     public boolean canCraft(EntityPlayer player)
     {
-        ExtendedPlayerKnowledge charon = ExtendedPlayerKnowledge.get(player);
+        if (knowledge != null) {
+            ExtendedPlayerKnowledge charon = ExtendedPlayerKnowledge.get(player);
 
-        if (charon == null || !charon.hasKnowledge(knowledge)) {
-            return false;
+            if (charon == null || !charon.hasKnowledge(knowledge)) {
+                return false;
+            }
         }
 
         return true;
