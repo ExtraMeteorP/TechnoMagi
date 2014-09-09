@@ -59,22 +59,26 @@ public class PlayerEventHandler
     @SubscribeEvent
     public void onPlayerInteract(PlayerInteractEvent event)
     {
-        if (event.entityPlayer.getHeldItem() == null) {
-            ExtendedPlayerAbilities abilities = ExtendedPlayerAbilities.get((EntityPlayer) event.entity);
+        ExtendedPlayerKnowledge playerKnowledge = ExtendedPlayerKnowledge.get(event.entityPlayer);
 
-            if (abilities.useAbility(event)) {
-                if (event.entityPlayer.worldObj.isRemote && (event.isCanceled() || event.action.equals(PlayerInteractEvent.Action.RIGHT_CLICK_AIR))) {
-                    PacketHandler.INSTANCE.sendToServer(new MessagePlayerInteractEvent(event));
+        if (playerKnowledge != null && !playerKnowledge.canSpecialise()) {
+            if (event.entityPlayer.getHeldItem() == null) {
+                ExtendedPlayerAbilities abilities = playerKnowledge.abilities;
+
+                if (abilities.useAbility(event)) {
+                    if (event.entityPlayer.worldObj.isRemote && (event.isCanceled() || event.action.equals(PlayerInteractEvent.Action.RIGHT_CLICK_AIR))) {
+                        PacketHandler.INSTANCE.sendToServer(new MessagePlayerInteractEvent(event));
+                    }
                 }
-            }
-        } else if (event.entityPlayer.getHeldItem().isItemEqual(new ItemStack(Items.itemDigitalTool))) {
-            if (event.action.equals(PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK)) {
-                Block block = event.world.getBlock(event.x, event.y, event.z);
+            } else if (event.entityPlayer.getHeldItem().isItemEqual(new ItemStack(Items.itemDigitalTool))) {
+                if (event.action.equals(PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK)) {
+                    Block block = event.world.getBlock(event.x, event.y, event.z);
 
-                if (block instanceof IDigitalToolable) {
-                    if (((IDigitalToolable) block).onTooled(event.entityPlayer, event.world, event.x, event.y, event.z, event.entityPlayer.getHeldItem())) {
-                        event.setCanceled(true);
-                        event.entityPlayer.swingItem();
+                    if (block instanceof IDigitalToolable) {
+                        if (((IDigitalToolable) block).onTooled(event.entityPlayer, event.world, event.x, event.y, event.z, event.entityPlayer.getHeldItem())) {
+                            event.setCanceled(true);
+                            event.entityPlayer.swingItem();
+                        }
                     }
                 }
             }
@@ -84,12 +88,16 @@ public class PlayerEventHandler
     @SubscribeEvent
     public void onEntityInteract(EntityInteractEvent event)
     {
-        if (event.entityPlayer.getHeldItem() == null) {
-            ExtendedPlayerAbilities abilities = ExtendedPlayerAbilities.get((EntityPlayer) event.entity);
+        ExtendedPlayerKnowledge playerKnowledge = ExtendedPlayerKnowledge.get(event.entityPlayer);
 
-            if (abilities.useAbility(event)) {
-                if (event.entityPlayer.worldObj.isRemote && event.isCanceled()) {
-                    PacketHandler.INSTANCE.sendToServer(new MessageEntityInteractEvent(event));
+        if (playerKnowledge != null && !playerKnowledge.canSpecialise()) {
+            if (event.entityPlayer.getHeldItem() == null) {
+                ExtendedPlayerAbilities abilities = playerKnowledge.abilities;
+
+                if (abilities.useAbility(event)) {
+                    if (event.entityPlayer.worldObj.isRemote && event.isCanceled()) {
+                        PacketHandler.INSTANCE.sendToServer(new MessageEntityInteractEvent(event));
+                    }
                 }
             }
         }
