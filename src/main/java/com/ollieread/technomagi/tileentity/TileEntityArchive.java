@@ -10,9 +10,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
+import com.ollieread.technomagi.common.proxy.BasicInventory;
+import com.ollieread.technomagi.common.proxy.PlayerLocked;
 import com.ollieread.technomagi.item.ItemResearchStorage;
-import com.ollieread.technomagi.tileentity.proxy.BasicInventory;
-import com.ollieread.technomagi.tileentity.proxy.PlayerLocked;
 
 public class TileEntityArchive extends TileEntityTM implements IPlayerLocked, IInventory
 {

@@ -15,9 +15,9 @@ import cofh.api.energy.IEnergyConnection;
 import cofh.api.energy.IEnergyStorage;
 
 import com.ollieread.technomagi.common.init.Blocks;
-import com.ollieread.technomagi.tileentity.proxy.BasicEnergy;
-import com.ollieread.technomagi.tileentity.proxy.BasicInventory;
-import com.ollieread.technomagi.tileentity.proxy.PlayerLocked;
+import com.ollieread.technomagi.common.proxy.BasicEnergy;
+import com.ollieread.technomagi.common.proxy.BasicInventory;
+import com.ollieread.technomagi.common.proxy.PlayerLocked;
 
 public class TileEntityObservationChamber extends TileEntityResearch implements IHasFiller, IPlayerLocked, IInventory, IEnergyStorage, IEnergyConnection
 {

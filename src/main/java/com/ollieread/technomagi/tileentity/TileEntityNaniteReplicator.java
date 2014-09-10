@@ -12,11 +12,11 @@ import cofh.api.energy.IEnergyConnection;
 import cofh.api.energy.IEnergyStorage;
 
 import com.ollieread.technomagi.common.init.Items;
+import com.ollieread.technomagi.common.proxy.BasicEnergy;
+import com.ollieread.technomagi.common.proxy.BasicInventory;
+import com.ollieread.technomagi.common.proxy.PlayerLocked;
 import com.ollieread.technomagi.item.ItemNaniteContainer;
 import com.ollieread.technomagi.item.ItemSampleVile;
-import com.ollieread.technomagi.tileentity.proxy.BasicEnergy;
-import com.ollieread.technomagi.tileentity.proxy.BasicInventory;
-import com.ollieread.technomagi.tileentity.proxy.PlayerLocked;
 
 public class TileEntityNaniteReplicator extends TileEntityTM implements IPlayerLocked, ISidedInventory, IEnergyStorage, IEnergyConnection
 {

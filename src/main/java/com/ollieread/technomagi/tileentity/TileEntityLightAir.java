@@ -6,7 +6,7 @@ import net.minecraft.world.World;
 
 import com.ollieread.technomagi.block.BlockLightAir;
 import com.ollieread.technomagi.common.init.Blocks;
-import com.ollieread.technomagi.tileentity.proxy.MasterBlock;
+import com.ollieread.technomagi.common.proxy.MasterBlock;
 
 public class TileEntityLightAir extends TileEntityTM implements IHasMaster
 {

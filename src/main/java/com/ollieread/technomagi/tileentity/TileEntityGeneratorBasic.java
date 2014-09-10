@@ -5,7 +5,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import cofh.api.energy.IEnergyConnection;
 import cofh.api.energy.IEnergyStorage;
 
-import com.ollieread.technomagi.tileentity.proxy.BasicEnergy;
+import com.ollieread.technomagi.common.proxy.BasicEnergy;
 
 public class TileEntityGeneratorBasic extends TileEntityTM implements IEnergyStorage, IEnergyConnection
 {

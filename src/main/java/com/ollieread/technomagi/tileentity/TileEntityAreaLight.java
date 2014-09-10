@@ -4,7 +4,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 import com.ollieread.technomagi.common.init.Blocks;
-import com.ollieread.technomagi.tileentity.proxy.Disguisable;
+import com.ollieread.technomagi.common.proxy.Disguisable;
 
 public class TileEntityAreaLight extends TileEntityTM implements IDisguisableTile
 {

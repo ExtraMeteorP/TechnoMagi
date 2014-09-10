@@ -14,9 +14,9 @@ import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.ennds.research.IResearch;
 import com.ollieread.ennds.research.IResearchAnalysis;
 import com.ollieread.ennds.research.ResearchRegistry;
-import com.ollieread.technomagi.tileentity.proxy.BasicEnergy;
-import com.ollieread.technomagi.tileentity.proxy.BasicInventory;
-import com.ollieread.technomagi.tileentity.proxy.PlayerLocked;
+import com.ollieread.technomagi.common.proxy.BasicEnergy;
+import com.ollieread.technomagi.common.proxy.BasicInventory;
+import com.ollieread.technomagi.common.proxy.PlayerLocked;
 
 public class TileEntityAnalysis extends TileEntityResearch implements IPlayerLocked, IInventory, IEnergyStorage, IEnergyConnection
 {
