@@ -21,6 +21,7 @@ import com.ollieread.technomagi.client.renderer.item.RenderArchiveItem;
 import com.ollieread.technomagi.client.renderer.item.RenderChamberItem;
 import com.ollieread.technomagi.client.renderer.item.RenderCraftingItem;
 import com.ollieread.technomagi.client.renderer.item.RenderReplicatorItem;
+import com.ollieread.technomagi.client.renderer.item.RenderTechnomageStaff;
 import com.ollieread.technomagi.client.renderer.tileentity.TileEntityAnalysisRenderer;
 import com.ollieread.technomagi.client.renderer.tileentity.TileEntityArchiveRenderer;
 import com.ollieread.technomagi.client.renderer.tileentity.TileEntityCraftingRenderer;
@@ -29,6 +30,7 @@ import com.ollieread.technomagi.client.renderer.tileentity.TileEntityObservation
 import com.ollieread.technomagi.common.CommonProxy;
 import com.ollieread.technomagi.common.KeyBindings;
 import com.ollieread.technomagi.common.init.Blocks;
+import com.ollieread.technomagi.common.init.Items;
 import com.ollieread.technomagi.entity.robot.EntityRobotCow;
 import com.ollieread.technomagi.entity.robot.EntityRobotCreeper;
 import com.ollieread.technomagi.entity.robot.EntityRobotZombie;
@@ -95,6 +97,7 @@ public class ClientProxy extends CommonProxy
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Blocks.blockObservationChamber), new RenderChamberItem());
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Blocks.blockCrafting), new RenderCraftingItem());
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Blocks.blockAnalysis), new RenderAnalysisItem());
+        MinecraftForgeClient.registerItemRenderer(Items.itemTechnomageStaff, new RenderTechnomageStaff());
     }
 
 }

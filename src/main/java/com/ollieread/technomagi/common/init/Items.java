@@ -16,7 +16,10 @@ import com.ollieread.technomagi.item.ItemRelux;
 import com.ollieread.technomagi.item.ItemReluxIngot;
 import com.ollieread.technomagi.item.ItemSampleExtractor;
 import com.ollieread.technomagi.item.ItemSampleVile;
+import com.ollieread.technomagi.item.ItemStaff;
 import com.ollieread.technomagi.item.ItemTM;
+import com.ollieread.technomagi.item.ItemUnit;
+import com.ollieread.technomagi.item.crafting.CraftingManager;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -34,6 +37,8 @@ public class Items
     public static ItemTM itemReluxIngot;
     public static ItemTM itemHectoStorage;
     public static ItemTM itemComponent;
+    public static ItemTM itemUnit;
+    public static ItemTM itemTechnomageStaff;
 
     public static void init()
     {
@@ -50,7 +55,10 @@ public class Items
         itemReluxIngot = new ItemReluxIngot("reluxIngot");
         itemHectoStorage = new ItemHectoStorage("hectoStorage");
         itemComponent = new ItemComponent("component");
+        itemUnit = new ItemUnit("unit");
+        itemTechnomageStaff = new ItemStaff("technomageStaff");
 
+        GameRegistry.registerItem(itemTechnomageStaff, "technomageStaff");
         GameRegistry.registerItem(itemSampleVile, "sampleVile");
         GameRegistry.registerItem(itemSampleExtractor, "sampleExtractor");
         // GameRegistry.registerItem(itemMobBrain, "mobBrain");
@@ -62,6 +70,7 @@ public class Items
         GameRegistry.registerItem(itemReluxIngot, "reluxIngot");
         GameRegistry.registerItem(itemHectoStorage, "hectoStorage");
         GameRegistry.registerItem(itemComponent, "component");
+        GameRegistry.registerItem(itemUnit, "unit");
 
         ItemStack stackSampleVile = new ItemStack(itemSampleVile, 8, 0);
         stackSampleVile.stackTagCompound = new NBTTagCompound();
@@ -93,7 +102,7 @@ public class Items
         // diamond rod
         GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 1, 8), "x", "x", 'x', diamond);
         // life unit
-        GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 1, 11), "xzx", " y ", "x x", 'x', ironIngot, 'y', new ItemStack(net.minecraft.init.Items.porkchop, 1), 'z', new ItemStack(itemComponent, 1, 5));
+        CraftingManager.getInstance().addRecipe(null, new ItemStack(itemUnit, 1, 0), "xzx", " y ", "x x", 'x', ironIngot, 'y', new ItemStack(net.minecraft.init.Items.porkchop, 1), 'z', new ItemStack(itemComponent, 1, 5));
         GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 1, 15), "x x", " y ", "x x", 'x', goldIngot, 'y', new ItemStack(itemComponent, 1, 11));
         GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 1, 19), "x x", " y ", "x x", 'x', diamond, 'y', new ItemStack(itemComponent, 1, 15));
         // nanite unit
