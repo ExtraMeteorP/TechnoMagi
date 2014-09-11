@@ -126,17 +126,15 @@ public class GuiTMOverlay extends Gui
                 this.drawTexturedModalRect(this.xOffset + 5, this.yOffset + 103, 37, 24, 11, 7);
             }
 
-            int x = aOffset;
             for (int i = 0; i < 5; i++) {
 
-                if (x > end)
+                if (i > end)
                     break;
 
                 IAbilityActive ability = AbilityRegistry.getActiveAbility(abilities.get(aOffset + i));
 
                 this.mc.getTextureManager().bindTexture(ability.getIcon());
                 this.func_146110_a(5, yOffset + (3 + (20 * i)), 0, 0, 16, 16, 16, 16);
-                x++;
             }
 
             if (currentAbility > -1 && shouldDisplay && highlightTicks > 0) {
