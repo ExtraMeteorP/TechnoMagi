@@ -7,6 +7,7 @@ import net.minecraft.event.ClickEvent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
@@ -132,5 +133,10 @@ public class PlayerHelper
         chat.appendSibling(link);
 
         player.addChatComponentMessage(chat);
+    }
+
+    public static void addTranslatedChatMessage(EntityPlayer player, String translation)
+    {
+        player.addChatComponentMessage(new ChatComponentTranslation(translation));
     }
 }
