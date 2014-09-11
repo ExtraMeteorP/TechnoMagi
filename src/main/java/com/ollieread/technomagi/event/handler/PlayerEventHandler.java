@@ -19,6 +19,7 @@ import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import com.ollieread.ennds.ability.AbilityRegistry;
 import com.ollieread.ennds.extended.ExtendedPlayerAbilities;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
+import com.ollieread.ennds.item.IStaff;
 import com.ollieread.ennds.research.ResearchRegistry;
 import com.ollieread.technomagi.block.IDigitalToolable;
 import com.ollieread.technomagi.common.init.Blocks;
@@ -62,15 +63,18 @@ public class PlayerEventHandler
         ExtendedPlayerKnowledge playerKnowledge = ExtendedPlayerKnowledge.get(event.entityPlayer);
 
         if (playerKnowledge != null && !playerKnowledge.canSpecialise()) {
-            if (event.entityPlayer.getHeldItem() == null) {
+            ItemStack heldItem = event.entityPlayer.getHeldItem();
+
+            if (heldItem != null && heldItem.getItem() != null && heldItem.getItem() instanceof IStaff) {
                 ExtendedPlayerAbilities abilities = playerKnowledge.abilities;
 
-                if (abilities.useAbility(event)) {
+                if (abilities.useAbility(event, heldItem)) {
+                    event.entityPlayer.swingItem();
                     if (event.entityPlayer.worldObj.isRemote && (event.isCanceled() || event.action.equals(PlayerInteractEvent.Action.RIGHT_CLICK_AIR))) {
                         PacketHandler.INSTANCE.sendToServer(new MessagePlayerInteractEvent(event));
                     }
                 }
-            } else if (event.entityPlayer.getHeldItem().isItemEqual(new ItemStack(Items.itemDigitalTool))) {
+            } else if (heldItem != null && heldItem.getItem() != null && event.entityPlayer.getHeldItem().isItemEqual(new ItemStack(Items.itemDigitalTool))) {
                 if (event.action.equals(PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK)) {
                     Block block = event.world.getBlock(event.x, event.y, event.z);
 
@@ -91,10 +95,13 @@ public class PlayerEventHandler
         ExtendedPlayerKnowledge playerKnowledge = ExtendedPlayerKnowledge.get(event.entityPlayer);
 
         if (playerKnowledge != null && !playerKnowledge.canSpecialise()) {
-            if (event.entityPlayer.getHeldItem() == null) {
+            ItemStack heldItem = event.entityPlayer.getHeldItem();
+
+            if (heldItem != null && heldItem.getItem() != null && heldItem.getItem() instanceof IStaff) {
                 ExtendedPlayerAbilities abilities = playerKnowledge.abilities;
 
-                if (abilities.useAbility(event)) {
+                if (abilities.useAbility(event, heldItem)) {
+                    event.entityPlayer.swingItem();
                     if (event.entityPlayer.worldObj.isRemote && event.isCanceled()) {
                         PacketHandler.INSTANCE.sendToServer(new MessageEntityInteractEvent(event));
                     }
