@@ -28,9 +28,11 @@ public class ConfigHelper
         abilityState.put("blink", config.getBoolean("blink", "Ability State", true, "Enable/Disable blink ability"));
         abilityState.put("knockback", config.getBoolean("knockback", "Ability State", true, "Enable/Disable knockback entity ability"));
         abilityState.put("expel", config.getBoolean("expel", "Ability State", true, "Enable/Disable expel entities ability"));
-        abilityState.put("harvestI", config.getBoolean("harvestI", "Ability State", true, "Enable/Disable harvest block ability"));
-        abilityState.put("harvestII", config.getBoolean("harvestII", "Ability State", true, "Enable/Disable harvest block ability"));
-        abilityState.put("harvestIII", config.getBoolean("harvestIII", "Ability State", true, "Enable/Disable harvest block ability"));
+        abilityState.put("harvestI", config.getBoolean("harvestI", "Ability State", true, "Enable/Disable harvest I ability"));
+        abilityState.put("harvestII", config.getBoolean("harvestII", "Ability State", true, "Enable/Disable harvest II ability"));
+        abilityState.put("harvestIII", config.getBoolean("harvestIII", "Ability State", true, "Enable/Disable harvest III ability"));
+        abilityState.put("atmosphereI", config.getBoolean("atmosphereI", "Ability State", true, "Enable/Disable atmosphere I ability"));
+
         abilityState.put("scholarResearch", config.getBoolean("scholarResearch", "Ability State", true, "Enable/Disable scholar research boost ability"));
         abilityState.put("naniteRegen", config.getBoolean("naniteRegen", "Ability State", true, "Enable/Disable nanite regeneration ability"));
         abilityState.put("negateFall", config.getBoolean("negateFall", "Ability State", true, "Enable/Disable fall negation ability"));
