@@ -25,13 +25,13 @@ public class ActiveAbilityHarvestIII extends AbilityActive
     @Override
     public boolean canUse(ExtendedPlayerKnowledge charon, Event event)
     {
-        return true;
+        return charon.hasKnowledge("harvestIII");
     }
 
     @Override
     public boolean isAvailable(ExtendedPlayerKnowledge charon)
     {
-        return true;
+        return charon.hasKnowledge("harvestIII");
     }
 
     @Override
@@ -62,6 +62,12 @@ public class ActiveAbilityHarvestIII extends AbilityActive
         }
 
         return false;
+    }
+
+    @Override
+    public String[] getEnhancements()
+    {
+        return null;
     }
 
 }

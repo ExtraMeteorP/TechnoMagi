@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Level;
 import com.ollieread.ennds.ability.IAbilityActive;
 import com.ollieread.ennds.ability.IAbilityPassive;
 import com.ollieread.technomagi.TechnoMagi;
+import com.ollieread.technomagi.ability.active.ActiveAbilityAtmosphereI;
 import com.ollieread.technomagi.ability.active.ActiveAbilityBlink;
 import com.ollieread.technomagi.ability.active.ActiveAbilityFire;
 import com.ollieread.technomagi.ability.active.ActiveAbilityFireball;
@@ -34,6 +35,7 @@ public class Abilities
     public static IAbilityActive abilityActiveHarvestI;
     public static IAbilityActive abilityActiveHarvestII;
     public static IAbilityActive abilityActiveHarvestIII;
+    public static IAbilityActive abilityActiveAtmosphereI;
 
     public static IAbilityPassive abilityPassiveScholarResearch;
     public static IAbilityPassive abilityPassiveNanites;
@@ -75,6 +77,9 @@ public class Abilities
         }
         if (ConfigHelper.abilityState.get("harvestIII")) {
             abilityActiveHarvestI = new ActiveAbilityHarvestIII("harvestIII");
+        }
+        if (ConfigHelper.abilityState.get("atmosphereI")) {
+            abilityActiveAtmosphereI = new ActiveAbilityAtmosphereI("atmosphereI");
         }
 
         if (ConfigHelper.abilityState.get("scholarResearch")) {

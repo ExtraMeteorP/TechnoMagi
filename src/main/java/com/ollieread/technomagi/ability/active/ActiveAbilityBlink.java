@@ -27,13 +27,13 @@ public class ActiveAbilityBlink extends AbilityActive
     @Override
     public boolean canUse(ExtendedPlayerKnowledge charon, Event event)
     {
-        return true;
+        return charon.hasKnowledge("teleportationI");
     }
 
     @Override
     public boolean isAvailable(ExtendedPlayerKnowledge charon)
     {
-        return true;
+        return charon.hasKnowledge("teleportationI");
     }
 
     @Override
@@ -71,6 +71,12 @@ public class ActiveAbilityBlink extends AbilityActive
         }
 
         return false;
+    }
+
+    @Override
+    public String[] getEnhancements()
+    {
+        return null;
     }
 
 }
