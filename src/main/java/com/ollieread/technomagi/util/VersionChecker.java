@@ -12,6 +12,9 @@ import org.apache.commons.io.Charsets;
 import com.google.common.io.CharStreams;
 import com.ollieread.technomagi.common.Reference;
 
+import cpw.mods.fml.common.versioning.ArtifactVersion;
+import cpw.mods.fml.common.versioning.VersionParser;
+
 public class VersionChecker implements Runnable
 {
 
@@ -27,9 +30,11 @@ public class VersionChecker implements Runnable
     {
         try {
             String versions = CharStreams.toString(new InputStreamReader(new URL("http://technomagi.ollieread.com/versions.txt").openStream(), Charsets.UTF_8));
+            ArtifactVersion recommended = VersionParser.parseVersionReference(versions);
+            ArtifactVersion current = VersionParser.parseVersionReference(Reference.VERSION);
 
-            if (!versions.equals(Reference.VERSION)) {
-                PlayerHelper.addChatMessage(player, "There is a new version of TechnoMagi available. http://s.ollieread.com/XPa8");
+            if (!VersionParser.satisfies(recommended, current)) {
+                PlayerHelper.addLinkedChatMessage(player, "You are not using a recommended version. ", "http://s.ollieread.com/XT5E");
             }
         } catch (MalformedURLException e) {
             // TODO Auto-generated catch block
