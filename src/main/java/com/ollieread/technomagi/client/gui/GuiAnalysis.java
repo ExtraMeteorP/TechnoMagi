@@ -91,4 +91,13 @@ public class GuiAnalysis extends GuiEnergyContainer
         }
     }
 
+    public void updateScreen()
+    {
+        if (analysis.inProgress() && analyseButton.enabled) {
+            analyseButton.enabled = false;
+        } else if (!analysis.inProgress() && !analyseButton.enabled) {
+            analyseButton.enabled = true;
+        }
+    }
+
 }
