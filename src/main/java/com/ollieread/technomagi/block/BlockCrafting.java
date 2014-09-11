@@ -3,11 +3,14 @@ package com.ollieread.technomagi.block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
+import com.ollieread.technomagi.TechnoMagi;
+import com.ollieread.technomagi.common.CommonProxy;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.tileentity.TileEntityCrafting;
 
@@ -82,6 +85,23 @@ public class BlockCrafting extends BlockOwnable
         }
 
         super.onBlockPlacedBy(world, x, y, z, entity, stack);
+    }
+
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_)
+    {
+        if (world.isRemote) {
+            return true;
+        } else {
+            TileEntityCrafting entity = (TileEntityCrafting) world.getTileEntity(x, y, z);
+
+            if (entity != null) {
+                if (entity.isPlayer(player)) {
+                    player.openGui(TechnoMagi.instance, CommonProxy.GUI_CRAFTING, world, x, y, z);
+                }
+            }
+
+            return true;
+        }
     }
 
 }

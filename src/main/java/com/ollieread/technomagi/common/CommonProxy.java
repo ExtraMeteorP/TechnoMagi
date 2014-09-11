@@ -9,19 +9,25 @@ import com.ollieread.ennds.EnndsRegistry;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.client.gui.GuiAnalysis;
 import com.ollieread.technomagi.client.gui.GuiArchive;
+import com.ollieread.technomagi.client.gui.GuiCrafting;
 import com.ollieread.technomagi.client.gui.GuiNaniteReplicator;
 import com.ollieread.technomagi.client.gui.GuiObservationChamber;
 import com.ollieread.technomagi.client.gui.GuiSelf;
 import com.ollieread.technomagi.client.gui.GuiSpecialisation;
-import com.ollieread.technomagi.event.handler.PlayerEventHandler;
+import com.ollieread.technomagi.client.gui.GuiStaff;
 import com.ollieread.technomagi.event.handler.EnndsEventHandler;
+import com.ollieread.technomagi.event.handler.ItemEventHandler;
+import com.ollieread.technomagi.event.handler.PlayerEventHandler;
 import com.ollieread.technomagi.event.handler.TickEventHandler;
 import com.ollieread.technomagi.inventory.ContainerAnalysis;
 import com.ollieread.technomagi.inventory.ContainerArchive;
+import com.ollieread.technomagi.inventory.ContainerCrafting;
 import com.ollieread.technomagi.inventory.ContainerNaniteReplicator;
 import com.ollieread.technomagi.inventory.ContainerObservation;
+import com.ollieread.technomagi.inventory.ContainerStaff;
 import com.ollieread.technomagi.tileentity.TileEntityAnalysis;
 import com.ollieread.technomagi.tileentity.TileEntityArchive;
+import com.ollieread.technomagi.tileentity.TileEntityCrafting;
 import com.ollieread.technomagi.tileentity.TileEntityNaniteReplicator;
 import com.ollieread.technomagi.tileentity.TileEntityObservationChamber;
 
@@ -37,6 +43,8 @@ public class CommonProxy implements IGuiHandler
     public static int GUI_ANALYSIS = 4;
     public static int GUI_OBSERVATION = 5;
     public static int GUI_ARCHIVE = 6;
+    public static int GUI_CRAFTING = 7;
+    public static int GUI_STAFF = 8;
 
     public static PlayerEventHandler playerEventHandler = new PlayerEventHandler();
 
@@ -67,6 +75,14 @@ public class CommonProxy implements IGuiHandler
             if (archive != null) {
                 return new ContainerArchive(player.inventory, archive);
             }
+        } else if (ID == GUI_CRAFTING) {
+            TileEntityCrafting crafter = (TileEntityCrafting) world.getTileEntity(x, y, z);
+
+            if (crafter != null) {
+                return new ContainerCrafting(player.inventory, crafter);
+            }
+        } else if (ID == GUI_STAFF) {
+            return new ContainerStaff(player, player.getHeldItem());
         }
 
         return null;
@@ -78,10 +94,14 @@ public class CommonProxy implements IGuiHandler
         if (ID == GUI_TECHNOMAGI) {
             ExtendedPlayerKnowledge charon = ExtendedPlayerKnowledge.get(player);
 
+            if (!charon.canSpecialise()) {
+                return new GuiSelf();
+            }
+        } else if (ID == GUI_SPECIALISATION) {
+            ExtendedPlayerKnowledge charon = ExtendedPlayerKnowledge.get(player);
+
             if (charon.canSpecialise()) {
                 return new GuiSpecialisation();
-            } else {
-                return new GuiSelf();
             }
         } else if (ID == GUI_REPLICATOR) {
             TileEntityNaniteReplicator replicator = (TileEntityNaniteReplicator) world.getTileEntity(x, y, z);
@@ -107,6 +127,14 @@ public class CommonProxy implements IGuiHandler
             if (archive != null) {
                 return new GuiArchive(player.inventory, archive);
             }
+        } else if (ID == GUI_CRAFTING) {
+            TileEntityCrafting crafter = (TileEntityCrafting) world.getTileEntity(x, y, z);
+
+            if (crafter != null) {
+                return new GuiCrafting(player.inventory, crafter);
+            }
+        } else if (ID == GUI_STAFF) {
+            return new GuiStaff(player, player.getHeldItem());
         }
 
         return null;
@@ -136,6 +164,7 @@ public class CommonProxy implements IGuiHandler
 
         MinecraftForge.EVENT_BUS.register(playerEventHandler);
         MinecraftForge.EVENT_BUS.register(new EnndsEventHandler());
+        MinecraftForge.EVENT_BUS.register(new ItemEventHandler());
 
         FMLCommonHandler.instance().bus().register(new TickEventHandler());
         FMLCommonHandler.instance().bus().register(playerEventHandler);

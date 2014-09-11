@@ -6,11 +6,11 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
+
+import com.ollieread.technomagi.common.proxy.CraftingInventory;
 
 public class CraftingManager
 {
@@ -106,14 +106,14 @@ public class CraftingManager
         this.recipes.add(new ShapelessRecipe(output, arraylist, knowledge));
     }
 
-    public ItemStack findMatchingRecipe(InventoryCrafting crafting, World world, EntityPlayer player)
+    public ItemStack findMatchingRecipe(CraftingInventory crafting, World world, EntityPlayer player)
     {
         int i = 0;
         ItemStack itemstack = null;
         ItemStack itemstack1 = null;
         int j;
 
-        for (j = 0; j < crafting.getSizeInventory(); ++j) {
+        for (j = 0; j < 9; ++j) {
             ItemStack itemstack2 = crafting.getStackInSlot(j);
 
             if (itemstack2 != null) {
@@ -143,18 +143,15 @@ public class CraftingManager
             return new ItemStack(itemstack.getItem(), 1, i1);
         } else {
             for (j = 0; j < this.recipes.size(); ++j) {
-                IRecipe irecipe = (IRecipe) this.recipes.get(j);
+                IRecipeTM recipe = (IRecipeTM) this.recipes.get(j);
 
-                if (irecipe.matches(crafting, world)) {
-                    if (irecipe instanceof IRecipeKnowledge) {
-                        IRecipeKnowledge recipe = (IRecipeKnowledge) irecipe;
+                if (recipe.matches(crafting, world)) {
 
-                        if (!recipe.canCraft(player)) {
-                            continue;
-                        }
+                    if (!recipe.canCraft(player)) {
+                        continue;
                     }
 
-                    return irecipe.getCraftingResult(crafting);
+                    return recipe.getCraftingResult(crafting);
                 }
             }
 

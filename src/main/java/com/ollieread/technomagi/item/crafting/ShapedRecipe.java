@@ -1,14 +1,13 @@
 package com.ollieread.technomagi.item.crafting;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
+import com.ollieread.technomagi.common.proxy.CraftingInventory;
 
-public class ShapedRecipe implements IRecipe, IRecipeKnowledge
+public class ShapedRecipe implements IRecipeTM
 {
 
     public final int width;
@@ -26,8 +25,7 @@ public class ShapedRecipe implements IRecipe, IRecipeKnowledge
         this.knowledge = knowledge;
     }
 
-    @Override
-    public boolean matches(InventoryCrafting crafting, World world)
+    public boolean matches(CraftingInventory crafting, World world)
     {
         for (int i = 0; i <= 3 - this.width; ++i) {
             for (int j = 0; j <= 3 - this.height; ++j) {
@@ -44,25 +42,22 @@ public class ShapedRecipe implements IRecipe, IRecipeKnowledge
         return false;
     }
 
-    @Override
-    public ItemStack getCraftingResult(InventoryCrafting crafting)
+    public ItemStack getCraftingResult(CraftingInventory crafting)
     {
-        return null;
+        return output;
     }
 
-    @Override
     public int getRecipeSize()
     {
         return this.width * this.height;
     }
 
-    @Override
     public ItemStack getRecipeOutput()
     {
         return output;
     }
 
-    private boolean checkMatch(InventoryCrafting crafting, int i, int j, boolean b)
+    private boolean checkMatch(CraftingInventory crafting, int i, int j, boolean b)
     {
         for (int k = 0; k < 3; ++k) {
             for (int l = 0; l < 3; ++l) {

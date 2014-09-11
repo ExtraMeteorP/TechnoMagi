@@ -4,7 +4,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
 import cofh.api.energy.IEnergyConnection;
 import cofh.api.energy.IEnergyStorage;
 
@@ -12,6 +14,10 @@ import com.ollieread.technomagi.common.proxy.BasicEnergy;
 import com.ollieread.technomagi.common.proxy.CraftingInventory;
 import com.ollieread.technomagi.common.proxy.PlayerLocked;
 import com.ollieread.technomagi.item.crafting.CraftingManager;
+import com.ollieread.technomagi.network.message.MessageSyncTileEntityTM;
+import com.ollieread.technomagi.util.PacketHelper;
+
+import cpw.mods.fml.common.FMLCommonHandler;
 
 public class TileEntityCrafting extends TileEntityTM implements IPlayerLocked, IInventory, IEnergyStorage, IEnergyConnection
 {
@@ -23,6 +29,7 @@ public class TileEntityCrafting extends TileEntityTM implements IPlayerLocked, I
     protected int progress = 0;
     protected int ticks;
     protected int waiting;
+    protected boolean isCrafting = false;
     public CraftingManager crafting = CraftingManager.getInstance();
 
     public TileEntityCrafting()
@@ -47,6 +54,7 @@ public class TileEntityCrafting extends TileEntityTM implements IPlayerLocked, I
 
         ticks = compound.getInteger("Ticks");
         progress = compound.getInteger("Progress");
+        isCrafting = compound.getBoolean("IsCrafting");
 
         locked.readFromNBT(compound);
         inventory.readFromNBT(compound);
@@ -60,6 +68,7 @@ public class TileEntityCrafting extends TileEntityTM implements IPlayerLocked, I
 
         compound.setInteger("Ticks", ticks);
         compound.setInteger("Progress", progress);
+        compound.setBoolean("IsCrafting", isCrafting);
 
         locked.writeToNBT(compound);
         inventory.writeToNBT(compound);
@@ -70,13 +79,16 @@ public class TileEntityCrafting extends TileEntityTM implements IPlayerLocked, I
     public void updateEntity()
     {
         if (!worldObj.isRemote) {
-            if (canCraft()) {
+            if (canCraft() && isCrafting()) {
                 craft();
-            } else {
-                progress = 0;
-                ticks = 0;
             }
         }
+    }
+
+    public void setCrafting(boolean crafting)
+    {
+        isCrafting = crafting;
+        PacketHelper.syncTile(new MessageSyncTileEntityTM(this));
     }
 
     public boolean canCraft()
@@ -85,11 +97,25 @@ public class TileEntityCrafting extends TileEntityTM implements IPlayerLocked, I
             EntityPlayer player = worldObj.getPlayerEntityByName(getPlayer());
 
             if (player != null) {
-                return crafting.findMatchingRecipe(inventory, worldObj, player) != null;
+                ItemStack recipe = crafting.findMatchingRecipe(inventory, worldObj, player);
+                ItemStack result = inventory.getStackInSlot(9);
+
+                if (result == null) {
+                    return true;
+                }
+
+                if (result.isItemEqual(recipe) && (result.stackSize + recipe.stackSize) <= result.getMaxStackSize()) {
+                    return true;
+                }
             }
         }
 
         return false;
+    }
+
+    public boolean isCrafting()
+    {
+        return isCrafting;
     }
 
     public void craft()
@@ -106,10 +132,50 @@ public class TileEntityCrafting extends TileEntityTM implements IPlayerLocked, I
                 EntityPlayer player = worldObj.getPlayerEntityByName(getPlayer());
 
                 if (player != null) {
-                    inventory.setInventorySlotContents(9, crafting.findMatchingRecipe(inventory, worldObj, player));
+                    ItemStack recipe = crafting.findMatchingRecipe(inventory, worldObj, player);
+
+                    removeFromGrid(player, recipe);
+
+                    if (inventory.getStackInSlot(9) == null) {
+                        inventory.setInventorySlotContents(9, recipe.copy());
+                    } else if (inventory.getStackInSlot(9).isItemEqual(recipe)) {
+                        inventory.getStackInSlot(9).stackSize += recipe.stackSize;
+                    }
                 }
             }
             progress = 0;
+            ticks = 0;
+            setCrafting(false);
+        }
+    }
+
+    private void removeFromGrid(EntityPlayer player, ItemStack stack)
+    {
+        FMLCommonHandler.instance().firePlayerCraftingEvent(player, stack, inventory);
+
+        for (int i = 0; i < 9; ++i) {
+            ItemStack itemstack1 = inventory.getStackInSlot(i);
+
+            if (itemstack1 != null) {
+                inventory.decrStackSize(i, 1);
+
+                if (itemstack1.getItem().hasContainerItem(itemstack1)) {
+                    ItemStack itemstack2 = itemstack1.getItem().getContainerItem(itemstack1);
+
+                    if (itemstack2 != null && itemstack2.isItemStackDamageable() && itemstack2.getItemDamage() > itemstack2.getMaxDamage()) {
+                        MinecraftForge.EVENT_BUS.post(new PlayerDestroyItemEvent(player, itemstack2));
+                        continue;
+                    }
+
+                    if (!itemstack1.getItem().doesContainerItemLeaveCraftingGrid(itemstack1) || !player.inventory.addItemStackToInventory(itemstack2)) {
+                        if (inventory.getStackInSlot(i) == null) {
+                            inventory.setInventorySlotContents(i, itemstack2);
+                        } else {
+                            player.dropPlayerItemWithRandomChoice(itemstack2, false);
+                        }
+                    }
+                }
+            }
         }
     }
 
