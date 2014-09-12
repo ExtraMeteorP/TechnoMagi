@@ -96,8 +96,13 @@ public class RenderTechnomageStaff implements IItemRenderer
                 }
             }
         } else if (type.equals(ItemRenderType.INVENTORY)) {
-            scale = 0.3F;
-            GL11.glTranslatef(0.0F, -0.5F, 0.0F);
+            if (item.getItemDamage() == 0) {
+                scale = 0.45F;
+                GL11.glTranslatef(0.1F, -0.25F, 0.0F);
+            } else {
+                scale = 0.3F;
+                GL11.glTranslatef(0.1F, -0.5F, 0.0F);
+            }
         } else if (type.equals(ItemRenderType.ENTITY)) {
             scale = 1F;
         }

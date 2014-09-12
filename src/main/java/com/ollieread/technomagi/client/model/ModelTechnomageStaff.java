@@ -42,6 +42,12 @@ public class ModelTechnomageStaff extends ModelBase
         staff1.setTextureSize(128, 128);
         staff1.mirror = true;
         setRotation(staff1, 0F, 0F, 0F);
+        staff2 = new ModelRenderer(this, 0, 18);
+        staff2.addBox(0.5F, 0F, 0.5F, 3, 50, 3);
+        staff2.setRotationPoint(0F, -26F, 0F);
+        staff2.setTextureSize(128, 128);
+        staff2.mirror = true;
+        setRotation(staff2, 0F, 0F, 0F);
         ring1 = new ModelRenderer(this, 16, 0);
         ring1.addBox(0F, 0F, 0F, 5, 1, 5);
         ring1.setRotationPoint(-0.5F, -39F, -0.5F);
@@ -108,18 +114,6 @@ public class ModelTechnomageStaff extends ModelBase
         support5.setTextureSize(128, 128);
         support5.mirror = true;
         setRotation(support5, 0F, 0F, 0F);
-        shield1 = new ModelRenderer(this, 32, 6);
-        shield1.addBox(0F, 0F, 0F, 2, 10, 0);
-        shield1.setRotationPoint(-7F, -57F, 2F);
-        shield1.setTextureSize(128, 128);
-        shield1.mirror = true;
-        setRotation(shield1, 0F, 0F, 0F);
-        shield2 = new ModelRenderer(this, 32, 6);
-        shield2.addBox(0F, 0F, 0F, 2, 10, 0);
-        shield2.setRotationPoint(9F, -57F, 2F);
-        shield2.setTextureSize(128, 128);
-        shield2.mirror = true;
-        setRotation(shield2, 0F, 0F, 0F);
         support6 = new ModelRenderer(this, 44, 0);
         support6.addBox(-0.5F, 0F, 0F, 1, 1, 10);
         support6.setRotationPoint(2F, -38F, -3F);
@@ -150,6 +144,18 @@ public class ModelTechnomageStaff extends ModelBase
         support10.setTextureSize(128, 128);
         support10.mirror = true;
         setRotation(support10, 0F, 0F, 0F);
+        shield1 = new ModelRenderer(this, 32, 6);
+        shield1.addBox(0F, 0F, 0F, 2, 10, 0);
+        shield1.setRotationPoint(-7F, -57F, 2F);
+        shield1.setTextureSize(128, 128);
+        shield1.mirror = true;
+        setRotation(shield1, 0F, 0F, 0F);
+        shield2 = new ModelRenderer(this, 32, 6);
+        shield2.addBox(0F, 0F, 0F, 2, 10, 0);
+        shield2.setRotationPoint(9F, -57F, 2F);
+        shield2.setTextureSize(128, 128);
+        shield2.mirror = true;
+        setRotation(shield2, 0F, 0F, 0F);
         shield3 = new ModelRenderer(this, 32, 16);
         shield3.addBox(0F, 0F, 0F, 0, 10, 2);
         shield3.setRotationPoint(2F, -57F, 9F);
@@ -162,12 +168,6 @@ public class ModelTechnomageStaff extends ModelBase
         shield4.setTextureSize(128, 128);
         shield4.mirror = true;
         setRotation(shield4, 0F, 0F, 0F);
-        staff2 = new ModelRenderer(this, 0, 18);
-        staff2.addBox(0.5F, 0F, 0.5F, 3, 50, 3);
-        staff2.setRotationPoint(0F, -26F, 0F);
-        staff2.setTextureSize(128, 128);
-        staff2.mirror = true;
-        setRotation(staff2, 0F, 0F, 0F);
     }
 
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, ItemStack staff)
@@ -188,13 +188,13 @@ public class ModelTechnomageStaff extends ModelBase
             support3.render(f5);
             support4.render(f5);
             support5.render(f5);
-            shield1.render(f5);
-            shield2.render(f5);
-            support5.render(f5);
             support6.render(f5);
             support7.render(f5);
             support8.render(f5);
             support9.render(f5);
+            support10.render(f5);
+            shield1.render(f5);
+            shield2.render(f5);
             shield3.render(f5);
             shield4.render(f5);
         }
