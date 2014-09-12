@@ -72,6 +72,8 @@ public class Items
         GameRegistry.registerItem(itemComponent, "component");
         GameRegistry.registerItem(itemUnit, "unit");
 
+        ItemStack basicStaff = ItemStaff.resetNBT(new ItemStack(itemTechnomageStaff, 1, 0));
+
         ItemStack stackSampleVile = new ItemStack(itemSampleVile, 8, 0);
         stackSampleVile.stackTagCompound = new NBTTagCompound();
         ItemStack stackSampleExtractor = new ItemStack(itemSampleExtractor, 1);
@@ -83,6 +85,7 @@ public class Items
         ItemStack goldIngot = new ItemStack(net.minecraft.init.Items.gold_ingot, 1);
         ItemStack diamond = new ItemStack(net.minecraft.init.Items.diamond, 1);
 
+        GameRegistry.addShapedRecipe(basicStaff, "x", "y", "x", 'x', new ItemStack(itemComponent, 1, 2), 'y', new ItemStack(net.minecraft.init.Blocks.chest, 1));
         // empty sample vile
         GameRegistry.addShapedRecipe(stackSampleVile, "x x", "x x", "xxx", 'x', new ItemStack(net.minecraft.init.Blocks.glass, 1));
         // sample extractor

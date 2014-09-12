@@ -81,7 +81,6 @@ public class ItemStaff extends ItemTMNBT implements IStaff
     public void getSubItems(Item item, CreativeTabs tab, List list)
     {
         list.add(resetNBT(new ItemStack(item, 1, 0)));
-        list.add(resetNBT(new ItemStack(item, 1, 1)));
     }
 
     @Override
