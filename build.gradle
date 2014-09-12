@@ -56,8 +56,6 @@ task deobfJar(type: Jar) {
     classifier = 'deobf'
 }
 
-tasks.build.dependsOn('deobfJar')
-
 processResources {
     from (sourceSets.main.resources.srcDirs) {
         include '**/*.info'
@@ -85,3 +83,29 @@ task tagBuild << {
     
     repo.push(tags: true)
 }
+
+import net.minecraftforge.gradle.delayed.*
+import net.minecraftforge.gradle.tasks.dev.ChangelogTask
+
+task createChangelog(type: ChangelogTask) {
+
+    if (System.getenv("BUILD_NUMBER") != null) {
+        def jobName = "${System.getenv("JOB_NAME")}"
+        
+        if (jobName?.trim()) {
+            jobName = "TechnoMagi"
+        }
+        
+        def buildNumber = "${System.getenv("BUILD_NUMBER")}"
+
+        setServerRoot(new DelayedString(project, "${System.getenv("jenkins_server")}"))
+        setJobName(new DelayedString(project, jobName.toString()))
+        setAuthName(new DelayedString(project, "${System.getenv("jenkins_user")}"))
+        setAuthPassword(new DelayedString(project, "${System.getenv("jenkins_pass")}"))
+        setTargetBuild({ buildNumber.toString() });
+        setOutput(new DelayedFile(project, 'build/libs/' + project.version + 'changelog.txt'));
+    }
+    
+}
+
+build.dependsOn "deobfJar", "createChangelog"
