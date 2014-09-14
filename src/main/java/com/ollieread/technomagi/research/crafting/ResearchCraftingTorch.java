@@ -1,14 +1,16 @@
-package com.ollieread.technomagi.research.event;
+package com.ollieread.technomagi.research.crafting;
+
+import net.minecraft.item.ItemStack;
 
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
-import com.ollieread.ennds.research.IResearchEvent;
+import com.ollieread.ennds.research.IResearchCrafting;
 import com.ollieread.ennds.research.Research;
 import com.ollieread.technomagi.common.Reference;
 
-public class ResearchEventDamageInLava extends Research implements IResearchEvent
+public class ResearchCraftingTorch extends Research implements IResearchCrafting
 {
 
-    public ResearchEventDamageInLava(String name, String knowledge, int progress)
+    public ResearchCraftingTorch(String name, String knowledge, int progress)
     {
         super(name, knowledge, progress, Reference.MODID.toLowerCase());
     }
@@ -26,15 +28,15 @@ public class ResearchEventDamageInLava extends Research implements IResearchEven
     }
 
     @Override
-    public String getEvent()
+    public ItemStack getCrafting()
     {
-        return "damageInLava";
+        return new ItemStack(net.minecraft.init.Blocks.torch);
     }
 
     @Override
     public int getChance()
     {
-        return 1;
+        return 5;
     }
 
 }
