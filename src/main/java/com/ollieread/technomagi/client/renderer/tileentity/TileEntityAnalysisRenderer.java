@@ -90,7 +90,11 @@ public class TileEntityAnalysisRenderer extends TileEntitySpecialRenderer
         float f3 = machine.field_145925_p + f2 * scale;
 
         if (machine.inProgress() && machine.getProgress() > 0) {
-            f3 *= machine.getProgress();
+            if (machine.getProgress() > 50) {
+                f3 *= ((100 - machine.getProgress()) * 1.5F);
+            } else {
+                f3 *= (machine.getProgress() * 1.5F);
+            }
         }
         GL11.glRotatef(-f3 * 180.0F / (float) Math.PI, 0.0F, 1.0F, 0.0F);
 
