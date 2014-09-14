@@ -59,7 +59,7 @@ public class MessagePlayerInteractEvent implements IMessage, IMessageHandler<Mes
         EntityPlayer player = ctx.getServerHandler().playerEntity;
         ExtendedPlayerKnowledge knowledge = ExtendedPlayerKnowledge.get(player);
 
-        PlayerInteractEvent event = new PlayerInteractEvent(player, PlayerInteractEvent.Action.values()[message.action], message.x, message.y, message.z, message.face);
+        PlayerInteractEvent event = new PlayerInteractEvent(player, PlayerInteractEvent.Action.values()[message.action], message.x, message.y, message.z, message.face, player.worldObj);
         CommonProxy.playerEventHandler.onPlayerInteract(event);
 
         return null;

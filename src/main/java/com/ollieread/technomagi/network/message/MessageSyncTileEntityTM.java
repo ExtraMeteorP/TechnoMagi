@@ -3,6 +3,7 @@ package com.ollieread.technomagi.network.message;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.NBTTagCompound;
 
+import com.ollieread.technomagi.tileentity.IDisguisableTile;
 import com.ollieread.technomagi.tileentity.TileEntityTM;
 
 import cpw.mods.fml.client.FMLClientHandler;
@@ -57,6 +58,10 @@ public class MessageSyncTileEntityTM implements IMessage, IMessageHandler<Messag
 
         if (tile != null) {
             tile.readFromNBT(message.data);
+
+            if (tile instanceof IDisguisableTile) {
+                FMLClientHandler.instance().getClient().theWorld.markBlockRangeForRenderUpdate(message.x, message.y, message.z, message.x, message.y, message.z);
+            }
         }
 
         return null;
