@@ -103,7 +103,7 @@ task createChangelog(type: ChangelogTask) {
         setAuthName(new DelayedString(project, "${System.getenv("jenkins_user")}"))
         setAuthPassword(new DelayedString(project, "${System.getenv("jenkins_pass")}"))
         setTargetBuild({ buildNumber.toString() });
-        setOutput(new DelayedFile(project, 'build/libs/' + project.version + 'changelog.txt'));
+        setOutput(new DelayedFile(project, 'build/libs/changelog.txt'));
     }
     
 }
