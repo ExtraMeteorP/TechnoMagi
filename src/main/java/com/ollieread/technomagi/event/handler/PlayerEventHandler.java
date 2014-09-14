@@ -6,10 +6,12 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemFlintAndSteel;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
@@ -19,6 +21,8 @@ import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.StartTracking;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
+
+import org.apache.commons.lang3.StringUtils;
 
 import com.ollieread.ennds.ability.AbilityRegistry;
 import com.ollieread.ennds.extended.ExtendedNanites;
@@ -76,7 +80,7 @@ public class PlayerEventHandler
 
                 if (abilities.useAbility(event, heldItem)) {
                     event.entityPlayer.swingItem();
-                    if (event.entityPlayer.worldObj.isRemote && (event.isCanceled() || event.action.equals(PlayerInteractEvent.Action.RIGHT_CLICK_AIR))) {
+                    if (event.entityPlayer.worldObj.isRemote && event.isCanceled()) {
                         PacketHandler.INSTANCE.sendToServer(new MessagePlayerInteractEvent(event));
                     }
                 }
@@ -88,6 +92,18 @@ public class PlayerEventHandler
                         if (((IDigitalToolable) block).onTooled(event.entityPlayer, event.world, event.x, event.y, event.z, event.entityPlayer.getHeldItem())) {
                             event.setCanceled(true);
                             event.entityPlayer.swingItem();
+                        }
+                    }
+                }
+            } else if (heldItem != null && heldItem.getItem() != null) {
+                ItemStack held = event.entityPlayer.getHeldItem();
+
+                if (held.getItem() instanceof ItemFlintAndSteel) {
+                    if (event.action.equals(PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK)) {
+                        Block block = event.world.getBlock(event.x, event.y, event.z);
+
+                        if (block.isFlammable(event.world, event.x, event.y, event.z, ForgeDirection.getOrientation(event.face))) {
+                            ResearchRegistry.researchEvent("useFlintAndSteel", event, ExtendedPlayerKnowledge.get(event.entityPlayer));
                         }
                     }
                 }
@@ -133,11 +149,11 @@ public class PlayerEventHandler
                     Class entityClass = event.source.getEntity().getClass();
                     String entityName = (String) EntityList.classToStringMapping.get(entityClass);
 
-                    AbilityRegistry.passiveAbilityEvent(event.source.damageType + entityName + "Attack", event, ExtendedPlayerKnowledge.get(player));
-                    ResearchRegistry.researchEvent(event.source.damageType + entityName + "Attack", event, ExtendedPlayerKnowledge.get(player));
+                    AbilityRegistry.passiveAbilityEvent("damage" + StringUtils.capitalize(event.source.damageType) + entityName + "Attack", event, ExtendedPlayerKnowledge.get(player));
+                    ResearchRegistry.researchEvent("damage" + StringUtils.capitalize(event.source.damageType) + entityName + "Attack", event, ExtendedPlayerKnowledge.get(player));
                 } else {
-                    AbilityRegistry.passiveAbilityEvent(event.source.damageType, event, ExtendedPlayerKnowledge.get(player));
-                    ResearchRegistry.researchEvent(event.source.damageType, event, ExtendedPlayerKnowledge.get(player));
+                    AbilityRegistry.passiveAbilityEvent("damage" + StringUtils.capitalize(event.source.damageType), event, ExtendedPlayerKnowledge.get(player));
+                    ResearchRegistry.researchEvent("damage" + StringUtils.capitalize(event.source.damageType), event, ExtendedPlayerKnowledge.get(player));
                 }
             } else {
                 Class entityClass = event.entityLiving.getClass();
@@ -153,9 +169,9 @@ public class PlayerEventHandler
 
                         if (player != null) {
                             if (event.source instanceof EntityDamageSource) {
-                                ResearchRegistry.researchMonitoring(event.source.damageType + entityName + "Attacked", event, ExtendedPlayerKnowledge.get(player), nanites);
+                                ResearchRegistry.researchMonitoring("damage" + StringUtils.capitalize(event.source.damageType) + entityName + "Attacked", event, ExtendedPlayerKnowledge.get(player), nanites);
                             } else {
-                                ResearchRegistry.researchMonitoring(event.source.damageType + entityName, event, ExtendedPlayerKnowledge.get(player), nanites);
+                                ResearchRegistry.researchMonitoring("damage" + StringUtils.capitalize(event.source.damageType) + entityName, event, ExtendedPlayerKnowledge.get(player), nanites);
                             }
                         }
                     }
