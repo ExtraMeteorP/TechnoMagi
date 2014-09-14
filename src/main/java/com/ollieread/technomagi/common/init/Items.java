@@ -18,8 +18,9 @@ import com.ollieread.technomagi.item.ItemSampleExtractor;
 import com.ollieread.technomagi.item.ItemSampleVile;
 import com.ollieread.technomagi.item.ItemStaff;
 import com.ollieread.technomagi.item.ItemTM;
+import com.ollieread.technomagi.item.ItemTMSubtypes;
 import com.ollieread.technomagi.item.ItemUnit;
-import com.ollieread.technomagi.item.crafting.CraftingManager;
+import com.ollieread.technomagi.util.RecipeHelper;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -36,8 +37,8 @@ public class Items
     public static ItemTM itemRelux;
     public static ItemTM itemReluxIngot;
     public static ItemTM itemHectoStorage;
-    public static ItemTM itemComponent;
-    public static ItemTM itemUnit;
+    public static ItemTMSubtypes itemComponent;
+    public static ItemTMSubtypes itemUnit;
     public static ItemTM itemTechnomageStaff;
 
     public static void init()
@@ -105,21 +106,18 @@ public class Items
         // diamond rod
         GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 1, 8), "x", "x", 'x', diamond);
         // life unit
-        CraftingManager.getInstance().addRecipe(null, new ItemStack(itemUnit, 1, 0), "xzx", " y ", "x x", 'x', ironIngot, 'y', new ItemStack(net.minecraft.init.Items.porkchop, 1), 'z', new ItemStack(itemComponent, 1, 5));
-        GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 1, 15), "x x", " y ", "x x", 'x', goldIngot, 'y', new ItemStack(itemComponent, 1, 11));
-        GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 1, 19), "x x", " y ", "x x", 'x', diamond, 'y', new ItemStack(itemComponent, 1, 15));
-        // nanite unit
-        GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 1, 12), "xzx", " y ", "x x", 'x', ironIngot, 'y', stackNaniteContainer, 'z', new ItemStack(itemComponent, 1, 5));
-        GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 1, 16), "x x", " y ", "x x", 'x', goldIngot, 'y', new ItemStack(itemComponent, 1, 12));
-        GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 1, 20), "x x", " y ", "x x", 'x', diamond, 'y', new ItemStack(itemComponent, 1, 16));
-        // power unit
-        GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 1, 13), "xzx", " y ", "x x", 'x', ironIngot, 'y', new ItemStack(net.minecraft.init.Items.redstone, 1), 'z', new ItemStack(itemComponent, 1, 5));
-        GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 1, 17), "x x", " y ", "x x", 'x', goldIngot, 'y', new ItemStack(itemComponent, 1, 13));
-        GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 1, 21), "x x", " y ", "x x", 'x', diamond, 'y', new ItemStack(itemComponent, 1, 17));
-        // teleport unit
-        GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 1, 14), "xzx", " y ", "x x", 'x', ironIngot, 'y', new ItemStack(net.minecraft.init.Items.ender_pearl, 1), 'z', new ItemStack(itemComponent, 1, 5));
-        GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 1, 18), "x x", " y ", "x x", 'x', goldIngot, 'y', new ItemStack(itemComponent, 1, 14));
-        GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 1, 12), "x x", " y ", "x x", 'x', diamond, 'y', new ItemStack(itemComponent, 1, 18));
+        RecipeHelper.addShapedRecipe(null, new ItemStack(itemUnit, 1, 0), "xzx", " y ", "x x", 'x', ironIngot, 'y', new ItemStack(net.minecraft.init.Items.porkchop, 1), 'z', new ItemStack(itemComponent, 1, 5));
+        RecipeHelper.addShapedRecipe(null, new ItemStack(itemComponent, 1, 15), "x x", " y ", "x x", 'x', goldIngot, 'y', new ItemStack(itemComponent, 1, 11));
+        RecipeHelper.addShapedRecipe(null, new ItemStack(itemComponent, 1, 19), "x x", " y ", "x x", 'x', diamond, 'y', new ItemStack(itemComponent, 1, 15));
+        RecipeHelper.addShapedRecipe(null, new ItemStack(itemComponent, 1, 12), "xzx", " y ", "x x", 'x', ironIngot, 'y', stackNaniteContainer, 'z', new ItemStack(itemComponent, 1, 5));
+        RecipeHelper.addShapedRecipe(null, new ItemStack(itemComponent, 1, 16), "x x", " y ", "x x", 'x', goldIngot, 'y', new ItemStack(itemComponent, 1, 12));
+        RecipeHelper.addShapedRecipe(null, new ItemStack(itemComponent, 1, 20), "x x", " y ", "x x", 'x', diamond, 'y', new ItemStack(itemComponent, 1, 16));
+        RecipeHelper.addShapedRecipe(null, new ItemStack(itemComponent, 1, 13), "xzx", " y ", "x x", 'x', ironIngot, 'y', new ItemStack(net.minecraft.init.Items.redstone, 1), 'z', new ItemStack(itemComponent, 1, 5));
+        RecipeHelper.addShapedRecipe(null, new ItemStack(itemComponent, 1, 17), "x x", " y ", "x x", 'x', goldIngot, 'y', new ItemStack(itemComponent, 1, 13));
+        RecipeHelper.addShapedRecipe(null, new ItemStack(itemComponent, 1, 21), "x x", " y ", "x x", 'x', diamond, 'y', new ItemStack(itemComponent, 1, 17));
+        RecipeHelper.addShapedRecipe(null, new ItemStack(itemComponent, 1, 14), "xzx", " y ", "x x", 'x', ironIngot, 'y', new ItemStack(net.minecraft.init.Items.ender_pearl, 1), 'z', new ItemStack(itemComponent, 1, 5));
+        RecipeHelper.addShapedRecipe(null, new ItemStack(itemComponent, 1, 18), "x x", " y ", "x x", 'x', goldIngot, 'y', new ItemStack(itemComponent, 1, 14));
+        RecipeHelper.addShapedRecipe(null, new ItemStack(itemComponent, 1, 12), "x x", " y ", "x x", 'x', diamond, 'y', new ItemStack(itemComponent, 1, 18));
         // analysis unit
         GameRegistry.addShapedRecipe(new ItemStack(itemComponent, 1, 10), "zxz", "xyx", " x ", 'x', ironIngot, 'y', new ItemStack(itemComponent, 1, 12), 'z', new ItemStack(itemComponent, 1, 5));
     }
