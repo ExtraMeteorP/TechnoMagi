@@ -13,7 +13,7 @@ public class ItemUnit extends ItemTMSubtypes implements IStaffEnhancement
 
     public ItemUnit(String name)
     {
-        super(name, new String[] { "lifeUnitBasic", "lifeUnitAdvanced", "lifeUnitElite", "teleportUnitBasic", "teleportUnitAdvanced", "teleportUnitElite", "subspaceUnitBasic", "subspaceUnitAdvanced", "subspaceUnitElite", "naniteUnitBasic", "naniteUnitAdvanced", "naniteUnitElite", "powerUnitBasic", "powerUnitAdvanced", "powerUniteElite", "pyroUnitBasic", "pyroUnitAdvanced", "pyroUnitElite", "forceUnitBasic", "forceUnitAdvanced", "forceUnitElite" });
+        super(name, new String[] { "lifeUnitBasic", "lifeUnitAdvanced", "lifeUnitElite", "teleportUnitBasic", "teleportUnitAdvanced", "teleportUnitElite", "subspaceUnitBasic", "subspaceUnitAdvanced", "subspaceUnitElite", "naniteUnitBasic", "naniteUnitAdvanced", "naniteUnitElite", "powerUnitBasic", "powerUnitAdvanced", "powerUnitElite", "exoUnitBasic", "exoUnitAdvanced", "exoUnitElite", "endoUnitBasic", "endoUnitAdvanced", "endoUnitElite", "forceUnitBasic", "forceUnitAdvanced", "forceUnitElite", "voidUnitBasic", "voidUnitAdvanced", "voidUnitElite" });
     }
 
     @Override
@@ -52,17 +52,29 @@ public class ItemUnit extends ItemTMSubtypes implements IStaffEnhancement
                 case 14:
                     return "powerIII";
                 case 15:
-                    return "pyroI";
+                    return "exoI";
                 case 16:
-                    return "pyroII";
+                    return "exoII";
                 case 17:
-                    return "pyroIII";
+                    return "exoIII";
                 case 18:
-                    return "forceI";
+                    return "endoI";
                 case 19:
-                    return "forceII";
+                    return "endoII";
                 case 20:
+                    return "endoIII";
+                case 21:
+                    return "forceI";
+                case 22:
+                    return "forceII";
+                case 23:
                     return "forceIII";
+                case 24:
+                    return "voidI";
+                case 25:
+                    return "voidII";
+                case 26:
+                    return "voidIII";
             }
         }
 

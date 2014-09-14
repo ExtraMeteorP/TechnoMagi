@@ -9,6 +9,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
 import cofh.api.energy.IEnergyConnection;
 import cofh.api.energy.IEnergyStorage;
+import cofh.lib.util.helpers.EnergyHelper;
 
 import com.ollieread.technomagi.common.proxy.BasicEnergy;
 import com.ollieread.technomagi.common.proxy.CraftingInventory;
@@ -22,9 +23,9 @@ import cpw.mods.fml.common.FMLCommonHandler;
 public class TileEntityCrafting extends TileEntityTM implements IPlayerLocked, IInventory, IEnergyStorage, IEnergyConnection
 {
 
-    protected PlayerLocked locked = new PlayerLocked();
-    protected CraftingInventory inventory = new CraftingInventory(10);
-    protected BasicEnergy storage = new BasicEnergy(3200);
+    protected PlayerLocked locked = null;
+    protected CraftingInventory inventory = null;
+    protected BasicEnergy storage = null;
 
     protected int progress = 0;
     protected int ticks;
@@ -34,7 +35,9 @@ public class TileEntityCrafting extends TileEntityTM implements IPlayerLocked, I
 
     public TileEntityCrafting()
     {
-
+        locked = new PlayerLocked();
+        inventory = new CraftingInventory(10);
+        storage = new BasicEnergy(3200, 2, 0);
     }
 
     public int getProgress()
@@ -81,6 +84,27 @@ public class TileEntityCrafting extends TileEntityTM implements IPlayerLocked, I
         if (!worldObj.isRemote) {
             if (canCraft() && isCrafting()) {
                 craft();
+            }
+
+            if (EnergyHelper.isAdjacentEnergyHandlerFromSide(this, ForgeDirection.DOWN.ordinal())) {
+                int input = storage.getMaxReceive();
+                int receive = storage.receiveEnergy(input, true);
+                int extract = EnergyHelper.extractEnergyFromAdjacentEnergyHandler(this, ForgeDirection.DOWN.ordinal(), receive, true);
+
+                if (receive > 0 && extract > 0) {
+
+                    if (receive == extract) {
+                        extract = EnergyHelper.extractEnergyFromAdjacentEnergyHandler(this, ForgeDirection.DOWN.ordinal(), receive, false);
+                    } else if (receive > extract) {
+                        extract = EnergyHelper.extractEnergyFromAdjacentEnergyHandler(this, ForgeDirection.DOWN.ordinal(), extract, false);
+                    } else if (receive < extract) {
+                        extract = EnergyHelper.extractEnergyFromAdjacentEnergyHandler(this, ForgeDirection.DOWN.ordinal(), receive, false);
+                    }
+                    receiveEnergy(extract, false);
+
+                    worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+                    markDirty();
+                }
             }
         }
     }
@@ -265,7 +289,7 @@ public class TileEntityCrafting extends TileEntityTM implements IPlayerLocked, I
     @Override
     public boolean canConnectEnergy(ForgeDirection from)
     {
-        return storage.canConnectEnergy(from);
+        return from.equals(ForgeDirection.DOWN);
     }
 
     @Override

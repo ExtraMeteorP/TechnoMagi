@@ -37,10 +37,6 @@ public class ConfigHelper
         abilityState.put("naniteRegen", config.getBoolean("naniteRegen", "Ability State", true, "Enable/Disable nanite regeneration ability"));
         abilityState.put("negateFall", config.getBoolean("negateFall", "Ability State", true, "Enable/Disable fall negation ability"));
 
-        robotCowID = config.get("Robot Entities", "robotCow", EntityHelper.getUniqueEntityId()).getInt();
-        robotCreeperID = config.get("Robot Entities", "robotCreeper", EntityHelper.getUniqueEntityId()).getInt();
-        robotZombieID = config.get("Robot Entities", "robotZombie", EntityHelper.getUniqueEntityId()).getInt();
-
         config.save();
     }
 }

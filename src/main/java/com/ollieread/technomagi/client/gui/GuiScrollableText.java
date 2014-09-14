@@ -192,4 +192,9 @@ public class GuiScrollableText extends GuiScreen
         }
     }
 
+    public void setFontRenderer(FontRenderer fontRenderer)
+    {
+        fontRendererObj = fontRenderer;
+    }
+
 }

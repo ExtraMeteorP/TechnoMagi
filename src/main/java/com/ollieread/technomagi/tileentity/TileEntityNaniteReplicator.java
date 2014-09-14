@@ -10,6 +10,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import cofh.api.energy.IEnergyConnection;
 import cofh.api.energy.IEnergyStorage;
+import cofh.lib.util.helpers.EnergyHelper;
 
 import com.ollieread.technomagi.common.init.Items;
 import com.ollieread.technomagi.common.proxy.BasicEnergy;
@@ -37,7 +38,7 @@ public class TileEntityNaniteReplicator extends TileEntityTM implements IPlayerL
     {
         locked = new PlayerLocked();
         inventory = new BasicInventory(3);
-        storage = new BasicEnergy(3200);
+        storage = new BasicEnergy(3200, 2, 0);
     }
 
     public int getNanites()
@@ -95,8 +96,31 @@ public class TileEntityNaniteReplicator extends TileEntityTM implements IPlayerL
     {
         populate();
 
-        if (canReplicate() && !worldObj.isRemote) {
-            replicate();
+        if (!worldObj.isRemote) {
+            if (canReplicate()) {
+                replicate();
+            }
+
+            if (EnergyHelper.isAdjacentEnergyHandlerFromSide(this, ForgeDirection.DOWN.ordinal())) {
+                int input = storage.getMaxReceive();
+                int receive = storage.receiveEnergy(input, true);
+                int extract = EnergyHelper.extractEnergyFromAdjacentEnergyHandler(this, ForgeDirection.DOWN.ordinal(), receive, true);
+
+                if (receive > 0 && extract > 0) {
+
+                    if (receive == extract) {
+                        extract = EnergyHelper.extractEnergyFromAdjacentEnergyHandler(this, ForgeDirection.DOWN.ordinal(), receive, false);
+                    } else if (receive > extract) {
+                        extract = EnergyHelper.extractEnergyFromAdjacentEnergyHandler(this, ForgeDirection.DOWN.ordinal(), extract, false);
+                    } else if (receive < extract) {
+                        extract = EnergyHelper.extractEnergyFromAdjacentEnergyHandler(this, ForgeDirection.DOWN.ordinal(), receive, false);
+                    }
+                    receiveEnergy(extract, false);
+
+                    worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+                    markDirty();
+                }
+            }
         }
     }
 
@@ -104,36 +128,36 @@ public class TileEntityNaniteReplicator extends TileEntityTM implements IPlayerL
     {
         boolean flag = false;
         if (sampleType.equals(naniteType)) {
-            if (storage.extractEnergy(2, true) == 2) {
-                storage.extractEnergy(2, false);
-                working++;
+            // if (storage.extractEnergy(2, true) == 2) {
+            // storage.extractEnergy(2, false);
+            working++;
 
-                if (working >= 60) {
-                    working = 0;
-                    sample--;
-                    nanites--;
-                    progress++;
-                    flag = true;
-                }
+            if (working >= 60) {
+                working = 0;
+                sample--;
+                nanites--;
+                progress++;
+                flag = true;
             }
+            // }
         } else {
             if (naniteType.equals("player")) {
 
-                if (storage.extractEnergy(5, true) == 5) {
-                    storage.extractEnergy(5, false);
-                    working++;
+                // if (storage.extractEnergy(5, true) == 5) {
+                // storage.extractEnergy(5, false);
+                working++;
 
-                    if (working >= 100) {
-                        working = 0;
-                        sample--;
-                        nanites--;
-                        flag = true;
+                if (working >= 100) {
+                    working = 0;
+                    sample--;
+                    nanites--;
+                    flag = true;
 
-                        if (rand.nextInt(5) == 0) {
-                            progress++;
-                        }
+                    if (rand.nextInt(5) == 0) {
+                        progress++;
                     }
                 }
+                // }
             }
         }
 
@@ -161,6 +185,7 @@ public class TileEntityNaniteReplicator extends TileEntityTM implements IPlayerL
                 }
             }
             worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+            markDirty();
         }
     }
 
@@ -241,6 +266,7 @@ public class TileEntityNaniteReplicator extends TileEntityTM implements IPlayerL
         }
 
         if (update) {
+            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
             markDirty();
         }
     }
@@ -378,7 +404,7 @@ public class TileEntityNaniteReplicator extends TileEntityTM implements IPlayerL
     @Override
     public boolean canConnectEnergy(ForgeDirection from)
     {
-        return storage.canConnectEnergy(from);
+        return from.equals(ForgeDirection.DOWN);
     }
 
     @Override

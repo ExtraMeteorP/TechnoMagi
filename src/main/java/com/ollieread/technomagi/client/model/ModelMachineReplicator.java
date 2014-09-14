@@ -42,27 +42,27 @@ public class ModelMachineReplicator extends ModelBase
         con2.setTextureSize(128, 64);
         con2.mirror = true;
         setRotation(con2, 0F, 0F, 0F);
+        sample3 = new ModelRenderer(this, 28, 0);
+        sample3.addBox(0F, 0F, 0F, 1, 5, 1);
+        sample3.setRotationPoint(-5F, 8F, 1F);
+        sample3.setTextureSize(128, 64);
+        sample3.mirror = true;
+        setRotation(sample3, 0F, 0F, 0F);
         sample1 = new ModelRenderer(this, 28, 0);
         sample1.addBox(0F, 0F, 0F, 1, 5, 1);
-        sample1.setRotationPoint(-5F, 8F, 4F);
+        sample1.setRotationPoint(-5F, 8F, -5F);
         sample1.setTextureSize(128, 64);
         sample1.mirror = true;
         setRotation(sample1, 0F, 0F, 0F);
         sample2 = new ModelRenderer(this, 28, 0);
         sample2.addBox(0F, 0F, 0F, 1, 5, 1);
-        sample2.setRotationPoint(-5F, 8F, -5F);
+        sample2.setRotationPoint(-5F, 8F, -2F);
         sample2.setTextureSize(128, 64);
         sample2.mirror = true;
         setRotation(sample2, 0F, 0F, 0F);
-        sample3 = new ModelRenderer(this, 28, 0);
-        sample3.addBox(0F, 0F, 0F, 1, 5, 1);
-        sample3.setRotationPoint(-5F, 8F, -2F);
-        sample3.setTextureSize(128, 64);
-        sample3.mirror = true;
-        setRotation(sample3, 0F, 0F, 0F);
         sample4 = new ModelRenderer(this, 28, 0);
         sample4.addBox(0F, 0F, 0F, 1, 5, 1);
-        sample4.setRotationPoint(-5F, 8F, 1F);
+        sample4.setRotationPoint(-5F, 8F, 4F);
         sample4.setTextureSize(128, 64);
         sample4.mirror = true;
         setRotation(sample4, 0F, 0F, 0F);
@@ -80,6 +80,48 @@ public class ModelMachineReplicator extends ModelBase
         nanites.render(f5);
         con1.render(f5);
         con2.render(f5);
+        sample1.render(f5);
+        sample2.render(f5);
+        sample3.render(f5);
+        sample4.render(f5);
+    }
+
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, int sample)
+    {
+        super.render(entity, f, f1, f2, f3, f4, f5);
+        setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+        nanites.render(f5);
+        con1.render(f5);
+        con2.render(f5);
+
+        sample1.offsetY = 0.3F;
+        sample2.offsetY = 0.3F;
+        sample3.offsetY = 0.3F;
+        sample4.offsetY = 0.3F;
+
+        if (sample > 0) {
+            if (sample < 25) {
+                sample1.offsetY -= (sample / (25 / 3)) / 10F;
+            } else if (sample < 50) {
+                sample2.offsetY -= ((sample - 25) / (25 / 3)) / 10F;
+                sample1.offsetY = 0;
+            } else if (sample < 75) {
+                sample3.offsetY -= ((sample - 50) / (25 / 3)) / 10F;
+                sample1.offsetY = 0;
+                sample2.offsetY = 0;
+            } else if (sample < 100) {
+                sample4.offsetY -= ((sample - 75) / (25 / 3)) / 10F;
+                sample1.offsetY = 0;
+                sample2.offsetY = 0;
+                sample3.offsetY = 0;
+            } else {
+                sample1.offsetY = 0;
+                sample2.offsetY = 0;
+                sample3.offsetY = 0;
+                sample4.offsetY = 0;
+            }
+        }
+
         sample1.render(f5);
         sample2.render(f5);
         sample3.render(f5);

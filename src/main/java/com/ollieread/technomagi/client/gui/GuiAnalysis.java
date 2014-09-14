@@ -40,9 +40,9 @@ public class GuiAnalysis extends GuiEnergyContainer
         analyseButton = new GuiTMButton(1, this.guiLeft + 65, this.guiTop + 24, 102, 15, I18n.format("technomagi.analyse.button"));
         this.buttonList.add(analyseButton);
 
-        if (analysis.inProgress() && analyseButton.enabled) {
+        if (analysis.inProgress() || !analysis.canAnalyse()) {
             analyseButton.enabled = false;
-        } else if (!analysis.inProgress() && !analyseButton.enabled) {
+        } else if (!analysis.inProgress() && analysis.canAnalyse()) {
             analyseButton.enabled = true;
         }
     }
@@ -93,9 +93,9 @@ public class GuiAnalysis extends GuiEnergyContainer
 
     public void updateScreen()
     {
-        if (analysis.inProgress() && analyseButton.enabled) {
+        if (analysis.inProgress() || !analysis.canAnalyse()) {
             analyseButton.enabled = false;
-        } else if (!analysis.inProgress() && !analyseButton.enabled) {
+        } else if (!analysis.inProgress() && analysis.canAnalyse()) {
             analyseButton.enabled = true;
         }
     }

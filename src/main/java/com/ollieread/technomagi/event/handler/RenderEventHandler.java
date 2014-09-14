@@ -13,7 +13,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.common.init.Items;
-import com.ollieread.technomagi.util.PlayerHelper;
+import com.ollieread.technomagi.util.EntityHelper;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
@@ -36,7 +36,7 @@ public class RenderEventHandler
         if (playerKnowledge != null && !playerKnowledge.canSpecialise()) {
             ItemStack staffStack = new ItemStack(Items.itemTechnomageStaff, 1, 1);
 
-            boolean flag1 = PlayerHelper.hasInventoryItem(player, staffStack) && (player.getHeldItem() == null || !player.getHeldItem().isItemEqual(staffStack));
+            boolean flag1 = EntityHelper.hasInventoryItem(player, staffStack) && (player.getHeldItem() == null || !player.getHeldItem().isItemEqual(staffStack));
             boolean flag2 = playerKnowledge.hasStaff();
 
             if (flag1 || flag2) {

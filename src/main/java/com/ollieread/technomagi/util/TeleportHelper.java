@@ -1,6 +1,6 @@
 package com.ollieread.technomagi.util;
 
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 
@@ -9,7 +9,7 @@ import com.ollieread.technomagi.tileentity.TileEntityTeleporter;
 public class TeleportHelper
 {
 
-    public static TileEntityTeleporter findTeleporterAbove(TileEntityTeleporter teleporter)
+    public static TileEntityTeleporter findTeleporterAbove(TileEntityTeleporter teleporter, EntityLivingBase entity)
     {
         int ox = teleporter.xCoord;
         int oy = teleporter.yCoord + 3;
@@ -24,7 +24,7 @@ public class TeleportHelper
             if (t instanceof TileEntityTeleporter) {
                 TileEntityTeleporter te = (TileEntityTeleporter) t;
 
-                if (te.canUse() && teleporter.getWorldObj().getBlockMetadata(ox, oy + i, oz) == 0) {
+                if (te.canUse(entity) && teleporter.getWorldObj().getBlockMetadata(ox, oy + i, oz) == 0) {
                     return te;
                 }
             }
@@ -33,7 +33,7 @@ public class TeleportHelper
         return null;
     }
 
-    public static TileEntityTeleporter findTeleporterBelow(TileEntityTeleporter teleporter)
+    public static TileEntityTeleporter findTeleporterBelow(TileEntityTeleporter teleporter, EntityLivingBase entity)
     {
         int ox = teleporter.xCoord;
         int oy = teleporter.yCoord - 3;
@@ -48,7 +48,7 @@ public class TeleportHelper
             if (t instanceof TileEntityTeleporter) {
                 TileEntityTeleporter te = (TileEntityTeleporter) t;
 
-                if (te.canUse() && teleporter.getWorldObj().getBlockMetadata(ox, oy - i, oz) == 0) {
+                if (te.canUse(entity) && teleporter.getWorldObj().getBlockMetadata(ox, oy - i, oz) == 0) {
                     return te;
                 }
             }
@@ -68,12 +68,12 @@ public class TeleportHelper
         teleportPlayerTo(player, destination.xCoord + 0.5D, destination.yCoord + 1, destination.zCoord + 0.5D);
     }
 
-    public static void teleportEntityTo(EntityLiving entity, double x, double y, double z)
+    public static void teleportEntityTo(EntityLivingBase entity, double x, double y, double z)
     {
         entity.setPositionAndUpdate(x, y, z);
     }
 
-    public static void teleportEntityToTeleporter(EntityLiving entity, TileEntityTeleporter location, TileEntityTeleporter destination)
+    public static void teleportEntityToTeleporter(EntityLivingBase entity, TileEntityTeleporter location, TileEntityTeleporter destination)
     {
         destination.startCooldown();
         teleportEntityTo(entity, destination.xCoord + 0.5D, destination.yCoord + 1, destination.zCoord + 0.5D);

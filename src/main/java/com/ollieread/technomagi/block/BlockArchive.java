@@ -14,6 +14,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
+import com.ollieread.technomagi.TechnoMagi;
+import com.ollieread.technomagi.common.CommonProxy;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.item.ItemResearchStorage;
 import com.ollieread.technomagi.tileentity.TileEntityArchive;
@@ -59,15 +61,6 @@ public class BlockArchive extends BlockTMContainer
         return false;
     }
 
-    public boolean canPlaceBlockAt(World world, int x, int y, int z)
-    {
-        if (!world.isAirBlock(x, y + 1, z)) {
-            return false;
-        }
-
-        return true;
-    }
-
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_)
     {
         if (!world.isRemote) {
@@ -82,8 +75,8 @@ public class BlockArchive extends BlockTMContainer
                             stack.stackSize--;
                         }
                     }
-                    // player.openGui(TechnoMagi.instance,
-                    // CommonProxy.GUI_ARCHIVE, world, x, y, z);
+
+                    player.openGui(TechnoMagi.instance, CommonProxy.GUI_ARCHIVE, world, x, y, z);
                 }
             }
 

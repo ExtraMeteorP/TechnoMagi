@@ -49,7 +49,7 @@ public class BlockHardlight extends BlockTM
     @SideOnly(Side.CLIENT)
     public int getRenderBlockPass()
     {
-        return 1;
+        return -1;
     }
 
     public int getLightValue()

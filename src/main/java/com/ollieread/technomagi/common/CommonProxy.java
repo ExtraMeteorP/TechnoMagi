@@ -8,28 +8,33 @@ import net.minecraftforge.common.MinecraftForge;
 import com.ollieread.ennds.EnndsRegistry;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.client.gui.GuiAnalysis;
-import com.ollieread.technomagi.client.gui.GuiArchive;
+import com.ollieread.technomagi.client.gui.GuiArchiveKnowledge;
+import com.ollieread.technomagi.client.gui.GuiConstruct;
 import com.ollieread.technomagi.client.gui.GuiCrafting;
 import com.ollieread.technomagi.client.gui.GuiNaniteReplicator;
 import com.ollieread.technomagi.client.gui.GuiObservationChamber;
 import com.ollieread.technomagi.client.gui.GuiSelf;
 import com.ollieread.technomagi.client.gui.GuiSpecialisation;
 import com.ollieread.technomagi.client.gui.GuiStaff;
+import com.ollieread.technomagi.client.gui.GuiTeleporter;
 import com.ollieread.technomagi.event.handler.EnndsEventHandler;
 import com.ollieread.technomagi.event.handler.ItemEventHandler;
 import com.ollieread.technomagi.event.handler.PlayerEventHandler;
 import com.ollieread.technomagi.event.handler.TickEventHandler;
 import com.ollieread.technomagi.inventory.ContainerAnalysis;
 import com.ollieread.technomagi.inventory.ContainerArchive;
+import com.ollieread.technomagi.inventory.ContainerConstruct;
 import com.ollieread.technomagi.inventory.ContainerCrafting;
 import com.ollieread.technomagi.inventory.ContainerNaniteReplicator;
 import com.ollieread.technomagi.inventory.ContainerObservation;
 import com.ollieread.technomagi.inventory.ContainerStaff;
 import com.ollieread.technomagi.tileentity.TileEntityAnalysis;
 import com.ollieread.technomagi.tileentity.TileEntityArchive;
+import com.ollieread.technomagi.tileentity.TileEntityConstruct;
 import com.ollieread.technomagi.tileentity.TileEntityCrafting;
 import com.ollieread.technomagi.tileentity.TileEntityNaniteReplicator;
 import com.ollieread.technomagi.tileentity.TileEntityObservationChamber;
+import com.ollieread.technomagi.tileentity.TileEntityTeleporter;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.IGuiHandler;
@@ -45,6 +50,8 @@ public class CommonProxy implements IGuiHandler
     public static int GUI_ARCHIVE = 6;
     public static int GUI_CRAFTING = 7;
     public static int GUI_STAFF = 8;
+    public static int GUI_CONSTRUCT = 9;
+    public static int GUI_TELEPORTER = 10;
 
     public static PlayerEventHandler playerEventHandler = new PlayerEventHandler();
 
@@ -83,6 +90,12 @@ public class CommonProxy implements IGuiHandler
             }
         } else if (ID == GUI_STAFF) {
             return new ContainerStaff(player, player.getHeldItem());
+        } else if (ID == GUI_CONSTRUCT) {
+            TileEntityConstruct construct = (TileEntityConstruct) world.getTileEntity(x, y, z);
+
+            if (construct != null) {
+                return new ContainerConstruct(player.inventory, construct);
+            }
         }
 
         return null;
@@ -125,7 +138,7 @@ public class CommonProxy implements IGuiHandler
             TileEntityArchive archive = (TileEntityArchive) world.getTileEntity(x, y, z);
 
             if (archive != null) {
-                return new GuiArchive(player.inventory, archive);
+                return new GuiArchiveKnowledge(player, archive);
             }
         } else if (ID == GUI_CRAFTING) {
             TileEntityCrafting crafter = (TileEntityCrafting) world.getTileEntity(x, y, z);
@@ -135,6 +148,18 @@ public class CommonProxy implements IGuiHandler
             }
         } else if (ID == GUI_STAFF) {
             return new GuiStaff(player, player.getHeldItem());
+        } else if (ID == GUI_CONSTRUCT) {
+            TileEntityConstruct construct = (TileEntityConstruct) world.getTileEntity(x, y, z);
+
+            if (construct != null) {
+                return new GuiConstruct(player.inventory, construct);
+            }
+        } else if (ID == GUI_TELEPORTER) {
+            TileEntityTeleporter teleporter = (TileEntityTeleporter) world.getTileEntity(x, y, z);
+
+            if (teleporter != null) {
+                return new GuiTeleporter(teleporter);
+            }
         }
 
         return null;

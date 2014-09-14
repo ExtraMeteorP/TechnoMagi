@@ -72,4 +72,14 @@ public class BasicEnergy implements IEnergyStorage, IEnergyConnection
         return true;
     }
 
+    public int getMaxReceive()
+    {
+        return energy.getMaxReceive();
+    }
+
+    public int getMaxExtract()
+    {
+        return energy.getMaxExtract();
+    }
+
 }

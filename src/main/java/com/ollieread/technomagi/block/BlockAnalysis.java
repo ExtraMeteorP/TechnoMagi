@@ -22,7 +22,7 @@ import com.ollieread.technomagi.tileentity.TileEntityAnalysis;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockAnalysis extends BlockOwnable
+public class BlockAnalysis extends BlockTMContainer
 {
 
     public BlockAnalysis(String name)
@@ -58,15 +58,6 @@ public class BlockAnalysis extends BlockOwnable
     public boolean isOpaqueCube()
     {
         return false;
-    }
-
-    public boolean canPlaceBlockAt(World world, int x, int y, int z)
-    {
-        if (!world.isAirBlock(x, y + 1, z)) {
-            return false;
-        }
-
-        return true;
     }
 
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_)
@@ -105,6 +96,10 @@ public class BlockAnalysis extends BlockOwnable
         if (l == 3) {
             world.setBlockMetadataWithNotify(x, y, z, 4, 2);
         }
+
+        TileEntityAnalysis analysis = (TileEntityAnalysis) world.getTileEntity(x, y, z);
+
+        analysis.setPlayer(((EntityPlayer) entity).getCommandSenderName());
 
         super.onBlockPlacedBy(world, x, y, z, entity, stack);
     }

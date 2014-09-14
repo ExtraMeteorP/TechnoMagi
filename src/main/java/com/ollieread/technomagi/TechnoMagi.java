@@ -103,6 +103,7 @@ public class TechnoMagi
     public void post(FMLPostInitializationEvent event)
     {
         Information.load("specialisations");
+        Information.load("knowledge");
     }
 
 }

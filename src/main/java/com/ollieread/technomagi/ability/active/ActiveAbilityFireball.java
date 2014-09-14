@@ -13,7 +13,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 import com.ollieread.ennds.ability.AbilityActive;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.common.Reference;
-import com.ollieread.technomagi.util.PlayerHelper;
+import com.ollieread.technomagi.util.EntityHelper;
 
 import cpw.mods.fml.common.eventhandler.Event;
 
@@ -48,8 +48,8 @@ public class ActiveAbilityFireball extends AbilityActive
 
                 if (decreaseNanites(charon, 15)) {
                     if (!player.worldObj.isRemote) {
-                        Vec3 look = PlayerHelper.getLookVector(player);
-                        Vec3 eye = PlayerHelper.getEyeVector(player);
+                        Vec3 look = EntityHelper.getLookVector(player);
+                        Vec3 eye = EntityHelper.getEyeVector(player);
                         Random rand = new Random();
 
                         float f = 2 * 0.5F;

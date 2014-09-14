@@ -1,6 +1,10 @@
 package com.ollieread.technomagi.event.handler;
 
+import java.util.Set;
+
 import net.minecraft.block.Block;
+import net.minecraft.entity.EntityList;
+import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
@@ -17,6 +21,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 
 import com.ollieread.ennds.ability.AbilityRegistry;
+import com.ollieread.ennds.extended.ExtendedNanites;
 import com.ollieread.ennds.extended.ExtendedPlayerAbilities;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.ennds.item.IStaff;
@@ -29,7 +34,7 @@ import com.ollieread.technomagi.network.PacketHandler;
 import com.ollieread.technomagi.network.message.MessageEntityInteractEvent;
 import com.ollieread.technomagi.network.message.MessagePlayerInteractEvent;
 import com.ollieread.technomagi.tileentity.TileEntityTeleporter;
-import com.ollieread.technomagi.util.PlayerHelper;
+import com.ollieread.technomagi.util.EntityHelper;
 import com.ollieread.technomagi.util.TeleportHelper;
 import com.ollieread.technomagi.util.VersionChecker;
 
@@ -113,48 +118,47 @@ public class PlayerEventHandler
     @SubscribeEvent
     public void onEntityHurt(LivingHurtEvent event)
     {
-        if (!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer) {
-            EntityPlayer player = (EntityPlayer) event.entity;
+        if (!event.entityLiving.worldObj.isRemote) {
+            if (event.entityLiving instanceof EntityPlayer) {
+                EntityPlayer player = (EntityPlayer) event.entity;
 
-            if (event.source instanceof EntityDamageSource || event.source.equals(DamageSource.generic) || event.source.equals(DamageSource.anvil) || event.source.equals(DamageSource.cactus) || event.source.equals(DamageSource.fall) || event.source.equals(DamageSource.fallingBlock)) {
-                if (player.isPotionActive(Potions.potionHardness)) {
-                    event.ammount = event.ammount / 2;
+                if (event.source instanceof EntityDamageSource) {
+                    if (event.source.equals(DamageSource.generic) || event.source.equals(DamageSource.anvil) || event.source.equals(DamageSource.cactus) || event.source.equals(DamageSource.fall) || event.source.equals(DamageSource.fallingBlock)) {
+                        if (player.isPotionActive(Potions.potionHardness)) {
+                            event.ammount = event.ammount / 2;
+                        }
+                    }
+
+                    Class entityClass = event.source.getEntity().getClass();
+                    String entityName = (String) EntityList.classToStringMapping.get(entityClass);
+
+                    AbilityRegistry.passiveAbilityEvent(event.source.damageType + entityName + "Attack", event, ExtendedPlayerKnowledge.get(player));
+                    ResearchRegistry.researchEvent(event.source.damageType + entityName + "Attack", event, ExtendedPlayerKnowledge.get(player));
+                } else {
+                    AbilityRegistry.passiveAbilityEvent(event.source.damageType, event, ExtendedPlayerKnowledge.get(player));
+                    ResearchRegistry.researchEvent(event.source.damageType, event, ExtendedPlayerKnowledge.get(player));
                 }
-            }
+            } else {
+                Class entityClass = event.entityLiving.getClass();
+                String entityName = (String) EntityList.classToStringMapping.get(entityClass);
+                World world = event.entityLiving.worldObj;
+                Set<Class> entities = ResearchRegistry.getMonitorableEntities();
 
-            if (event.source.equals(DamageSource.inFire)) {
-                AbilityRegistry.passiveAbilityEvent("inFire", event, ExtendedPlayerKnowledge.get(player));
-                ResearchRegistry.researchEvent("inFire", event, ExtendedPlayerKnowledge.get(player));
-            } else if (event.source.equals(DamageSource.onFire)) {
-                AbilityRegistry.passiveAbilityEvent("onFire", event, ExtendedPlayerKnowledge.get(player));
-                ResearchRegistry.researchEvent("onFire", event, ExtendedPlayerKnowledge.get(player));
-            } else if (event.source.equals(DamageSource.lava)) {
-                AbilityRegistry.passiveAbilityEvent("inLava", event, ExtendedPlayerKnowledge.get(player));
-                ResearchRegistry.researchEvent("inLava", event, ExtendedPlayerKnowledge.get(player));
-            } else if (event.source.equals(DamageSource.inWall)) {
-                AbilityRegistry.passiveAbilityEvent("inWall", event, ExtendedPlayerKnowledge.get(player));
-                ResearchRegistry.researchEvent("inWall", event, ExtendedPlayerKnowledge.get(player));
-            } else if (event.source.equals(DamageSource.starve)) {
-                AbilityRegistry.passiveAbilityEvent("starve", event, ExtendedPlayerKnowledge.get(player));
-                ResearchRegistry.researchEvent("starve", event, ExtendedPlayerKnowledge.get(player));
-            } else if (event.source.equals(DamageSource.cactus)) {
-                AbilityRegistry.passiveAbilityEvent("cactus", event, ExtendedPlayerKnowledge.get(player));
-                ResearchRegistry.researchEvent("cactus", event, ExtendedPlayerKnowledge.get(player));
-            } else if (event.source.equals(DamageSource.outOfWorld)) {
-                AbilityRegistry.passiveAbilityEvent("void", event, ExtendedPlayerKnowledge.get(player));
-                ResearchRegistry.researchEvent("void", event, ExtendedPlayerKnowledge.get(player));
-            } else if (event.source.equals(DamageSource.magic)) {
-                AbilityRegistry.passiveAbilityEvent("magic", event, ExtendedPlayerKnowledge.get(player));
-                ResearchRegistry.researchEvent("magic", event, ExtendedPlayerKnowledge.get(player));
-            } else if (event.source.equals(DamageSource.wither)) {
-                AbilityRegistry.passiveAbilityEvent("wither", event, ExtendedPlayerKnowledge.get(player));
-                ResearchRegistry.researchEvent("wither", event, ExtendedPlayerKnowledge.get(player));
-            } else if (event.source.equals(DamageSource.anvil)) {
-                AbilityRegistry.passiveAbilityEvent("anvil", event, ExtendedPlayerKnowledge.get(player));
-                ResearchRegistry.researchEvent("anvil", event, ExtendedPlayerKnowledge.get(player));
-            } else if (event.source.equals(DamageSource.fallingBlock)) {
-                AbilityRegistry.passiveAbilityEvent("fallingBlock", event, ExtendedPlayerKnowledge.get(player));
-                ResearchRegistry.researchEvent("fallingBlock", event, ExtendedPlayerKnowledge.get(player));
+                if (entityName != null && entities.contains(entityClass)) {
+                    ExtendedNanites nanites = ExtendedNanites.get(event.entityLiving);
+
+                    if (nanites != null) {
+                        EntityPlayer player = nanites.getOwnerPlayer();
+
+                        if (player != null) {
+                            if (event.source instanceof EntityDamageSource) {
+                                ResearchRegistry.researchMonitoring(event.source.damageType + entityName + "Attacked", event, ExtendedPlayerKnowledge.get(player), nanites);
+                            } else {
+                                ResearchRegistry.researchMonitoring(event.source.damageType + entityName, event, ExtendedPlayerKnowledge.get(player), nanites);
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -162,9 +166,28 @@ public class PlayerEventHandler
     @SubscribeEvent
     public void onFallEvent(LivingFallEvent event)
     {
-        if (!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer) {
-            AbilityRegistry.passiveAbilityEvent("fall", event, ExtendedPlayerKnowledge.get((EntityPlayer) event.entity));
-            ResearchRegistry.researchEvent("fall", event, ExtendedPlayerKnowledge.get((EntityPlayer) event.entity));
+        if (!event.entity.worldObj.isRemote) {
+            if (event.entity instanceof EntityPlayer) {
+                AbilityRegistry.passiveAbilityEvent("fall", event, ExtendedPlayerKnowledge.get((EntityPlayer) event.entity));
+                ResearchRegistry.researchEvent("fall", event, ExtendedPlayerKnowledge.get((EntityPlayer) event.entity));
+            } else {
+                Class entityClass = event.entityLiving.getClass();
+                String entityName = (String) EntityList.classToStringMapping.get(entityClass);
+                World world = event.entityLiving.worldObj;
+                Set<Class> entities = ResearchRegistry.getMonitorableEntities();
+
+                if (entityName != null && entities.contains(entityClass)) {
+                    ExtendedNanites nanites = ExtendedNanites.get(event.entityLiving);
+
+                    if (nanites != null) {
+                        EntityPlayer player = nanites.getOwnerPlayer();
+
+                        if (player != null) {
+                            ResearchRegistry.researchMonitoring("fall" + entityName, event, ExtendedPlayerKnowledge.get(player), nanites);
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -181,16 +204,15 @@ public class PlayerEventHandler
     @SubscribeEvent
     public void onLivingJumpEvent(LivingJumpEvent event)
     {
-        if (!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer) {
-            EntityPlayer player = (EntityPlayer) event.entity;
-            if (PlayerHelper.isStoodOnMeta(player, Blocks.blockTeleporter, 0)) {
-                TileEntityTeleporter teleporter = (TileEntityTeleporter) PlayerHelper.getTileEntityStoodOn(player);
+        if (!event.entityLiving.worldObj.isRemote) {
+            if (EntityHelper.isStoodOnMeta(event.entityLiving, Blocks.blockTeleporter, 0)) {
+                TileEntityTeleporter teleporter = (TileEntityTeleporter) EntityHelper.getTileEntityStoodOn(event.entityLiving);
 
-                if (teleporter != null && teleporter.canUse()) {
-                    TileEntityTeleporter destination = TeleportHelper.findTeleporterAbove(teleporter);
+                if (teleporter != null && teleporter.canUse(event.entityLiving)) {
+                    TileEntityTeleporter destination = TeleportHelper.findTeleporterAbove(teleporter, event.entityLiving);
 
                     if (destination != null) {
-                        TeleportHelper.teleportPlayerToTeleporter(player, teleporter, destination);
+                        TeleportHelper.teleportEntityToTeleporter(event.entityLiving, teleporter, destination);
                     }
                 }
             }
@@ -219,6 +241,10 @@ public class PlayerEventHandler
         if (!event.entityLiving.worldObj.isRemote) {
             if (event.entityLiving instanceof EntityPlayer) {
                 ResearchRegistry.researchEvent("enderTeleport", event, ExtendedPlayerKnowledge.get((EntityPlayer) event.entityLiving));
+            } else if (event.entityLiving instanceof EntityEnderman) {
+                // ResearchRegistry.researchEvent("endermanTeleport", event,
+                // ExtendedPlayerKnowledge.get((EntityEnderman)
+                // event.entityLiving));
             }
         }
 
@@ -235,15 +261,23 @@ public class PlayerEventHandler
             for (int j = startZ; j <= endZ; j++) {
                 for (int k = startY; k <= endY; k++) {
                     if (world.getBlock(i, k, j).equals(Blocks.blockTeleporter) && world.getBlockMetadata(i, k, j) == 2) {
-                        event.targetX = i;
-                        event.targetY = k + 1;
-                        event.targetZ = j;
+                        TileEntityTeleporter teleporter = (TileEntityTeleporter) world.getTileEntity(i, k, j);
 
-                        return;
+                        if (teleporter.canUse(event.entityLiving)) {
+                            event.targetX = i;
+                            event.targetY = k + 1;
+                            event.targetZ = j;
+
+                            return;
+                        }
                     } else if (world.getBlock(i, k, j).equals(Blocks.blockTeleporter) && world.getBlockMetadata(i, k, j) == 3) {
-                        event.setCanceled(true);
+                        TileEntityTeleporter teleporter = (TileEntityTeleporter) world.getTileEntity(i, k, j);
 
-                        return;
+                        if (teleporter.canUse(event.entityLiving)) {
+                            event.setCanceled(true);
+
+                            return;
+                        }
                     }
                 }
             }
@@ -260,9 +294,13 @@ public class PlayerEventHandler
             for (int j = startZ1; j <= endZ1; j++) {
                 for (int k = startY1; k <= endY1; k++) {
                     if (world.getBlock(i, k, j).equals(Blocks.blockTeleporter) && world.getBlockMetadata(i, k, j) == 3) {
-                        event.setCanceled(true);
+                        TileEntityTeleporter teleporter = (TileEntityTeleporter) world.getTileEntity(i, k, j);
 
-                        return;
+                        if (teleporter.canUse(event.entityLiving)) {
+                            event.setCanceled(true);
+
+                            return;
+                        }
                     }
                 }
             }

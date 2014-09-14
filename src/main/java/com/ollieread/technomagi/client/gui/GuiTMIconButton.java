@@ -6,14 +6,14 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
-public class GuiSpecialiseButton extends GuiButton
+public class GuiTMIconButton extends GuiButton
 {
 
     protected ResourceLocation texture;
 
-    public GuiSpecialiseButton(int par1, int par2, int par3, String par4Str, ResourceLocation texture)
+    public GuiTMIconButton(int par1, int par2, int par3, String par4Str, ResourceLocation texture, int w, int h)
     {
-        super(par1, par2, par3, 32, 32, par4Str);
+        super(par1, par2, par3, w, h, par4Str);
 
         this.texture = texture;
     }
@@ -24,7 +24,7 @@ public class GuiSpecialiseButton extends GuiButton
         p_146112_1_.getTextureManager().bindTexture(texture);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.func_146110_a(this.xPosition, this.yPosition, 0, 0, this.width, this.height, 32, 32);
+        this.func_146110_a(this.xPosition, this.yPosition, 0, 0, this.width, this.height, 16, 16);
     }
 
 }

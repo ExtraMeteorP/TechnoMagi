@@ -34,7 +34,7 @@ public class TileEntityObservationChamber extends TileEntityResearch implements 
     {
         locked = new PlayerLocked();
         inventory = new BasicInventory(2);
-        storage = new BasicEnergy(6400);
+        storage = new BasicEnergy(6400, 5, 0);
     }
 
     public void setEntity(EntityLivingBase entity)

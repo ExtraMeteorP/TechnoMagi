@@ -13,7 +13,7 @@ public class TileEntityDisplacer extends TileEntityInventory
     {
         super(1, 1);
 
-        setInventoryName("areaLight");
+        setInventoryName("displacer");
     }
 
     @Override
@@ -46,12 +46,12 @@ public class TileEntityDisplacer extends TileEntityInventory
                 on = true;
 
                 if (worldObj.isAirBlock(xCoord, yCoord + 1, zCoord)) {
-                    worldObj.setBlock(xCoord, yCoord + 1, zCoord, Blocks.blockLightAir);
-                    TileEntityDisplacedAir light = (TileEntityDisplacedAir) worldObj.getTileEntity(xCoord, yCoord + 1, zCoord);
+                    worldObj.setBlock(xCoord, yCoord + 1, zCoord, Blocks.blockDisplacedAir);
+                    TileEntityDisplacedAir air = (TileEntityDisplacedAir) worldObj.getTileEntity(xCoord, yCoord + 1, zCoord);
 
-                    if (light != null) {
-                        light.setMaster(xCoord, yCoord, zCoord);
-                        light.spreadBlocks();
+                    if (air != null) {
+                        air.setMaster(xCoord, yCoord, zCoord);
+                        air.spreadBlocks();
                     }
                 }
             }

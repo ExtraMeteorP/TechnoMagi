@@ -1,15 +1,34 @@
 package com.ollieread.technomagi.tileentity;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.util.ForgeDirection;
+import cofh.api.energy.IEnergyConnection;
+import cofh.api.energy.IEnergyStorage;
 
-public class TileEntityTeleporter extends TileEntityPlayerLocked
+import com.ollieread.technomagi.common.proxy.BasicEnergy;
+import com.ollieread.technomagi.common.proxy.PlayerLocked;
+
+public class TileEntityTeleporter extends TileEntityTM implements IPlayerLocked, IEnergyStorage, IEnergyConnection
 {
 
     protected int cooldown = -1;
     protected int partnerX = -1;
     protected int partnerY = -1;
     protected int partnerZ = -1;
+
+    protected BasicEnergy storage = null;
+    protected PlayerLocked locked = null;
+
+    protected int mode = 0;
+
+    public TileEntityTeleporter()
+    {
+        locked = new PlayerLocked();
+        storage = new BasicEnergy(3200);
+    }
 
     @Override
     public void writeToNBT(NBTTagCompound compound)
@@ -23,6 +42,11 @@ public class TileEntityTeleporter extends TileEntityPlayerLocked
             compound.setInteger("PartnerY", partnerY);
             compound.setInteger("PartnerZ", partnerZ);
         }
+
+        compound.setInteger("Mode", mode);
+
+        storage.writeToNBT(compound);
+        locked.writeToNBT(compound);
     }
 
     @Override
@@ -37,6 +61,10 @@ public class TileEntityTeleporter extends TileEntityPlayerLocked
             partnerY = compound.getInteger("PartnerY");
             partnerZ = compound.getInteger("PartnerZ");
         }
+        mode = compound.getInteger("Mode");
+
+        storage.readFromNBT(compound);
+        locked.readFromNBT(compound);
     }
 
     @Override
@@ -58,9 +86,21 @@ public class TileEntityTeleporter extends TileEntityPlayerLocked
         }
     }
 
-    public boolean canUse()
+    public boolean canUse(EntityLivingBase entity)
     {
-        return cooldown == -1;
+        if (cooldown == -1) {
+            if (mode == 0 && entity instanceof EntityPlayer) {
+                return true;
+            } else if (mode == 1 && entity instanceof EntityPlayer && isPlayer(((EntityPlayer) entity))) {
+                return true;
+            } else if (mode == 2 && !(entity instanceof EntityPlayer)) {
+                return true;
+            } else if (mode == 3) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public boolean canPartner()
@@ -88,6 +128,100 @@ public class TileEntityTeleporter extends TileEntityPlayerLocked
         }
 
         return null;
+    }
+
+    public void setMode(int mode)
+    {
+        this.mode = mode;
+
+        if (getBlockMetadata() == 1) {
+            TileEntityTeleporter partner = getPartner();
+
+            if (partner != null) {
+                partner.setModeChain(mode);
+            }
+        }
+
+        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+        markDirty();
+    }
+
+    public void setModeChain(int mode)
+    {
+        this.mode = mode;
+
+        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+        markDirty();
+    }
+
+    public int getMode()
+    {
+        return mode;
+    }
+
+    /* Everything below is just a proxy for the interfaces */
+
+    /* ENERGY */
+
+    @Override
+    public boolean canConnectEnergy(ForgeDirection from)
+    {
+        return storage.canConnectEnergy(from);
+    }
+
+    @Override
+    public int receiveEnergy(int maxReceive, boolean simulate)
+    {
+        return storage.receiveEnergy(maxReceive, simulate);
+    }
+
+    @Override
+    public int extractEnergy(int maxExtract, boolean simulate)
+    {
+        return storage.extractEnergy(maxExtract, simulate);
+    }
+
+    @Override
+    public int getEnergyStored()
+    {
+        return storage.getEnergyStored();
+    }
+
+    @Override
+    public int getMaxEnergyStored()
+    {
+        return storage.getMaxEnergyStored();
+    }
+
+    /* LOCKED */
+
+    @Override
+    public boolean hasPlayer()
+    {
+        return locked.hasPlayer();
+    }
+
+    @Override
+    public void setPlayer(String name)
+    {
+        locked.setPlayer(name);
+    }
+
+    @Override
+    public String getPlayer()
+    {
+        return locked.getPlayer();
+    }
+
+    @Override
+    public boolean isPlayer(String name)
+    {
+        return locked.isPlayer(name);
+    }
+
+    public boolean isPlayer(EntityPlayer player)
+    {
+        return isPlayer(player.getCommandSenderName());
     }
 
 }

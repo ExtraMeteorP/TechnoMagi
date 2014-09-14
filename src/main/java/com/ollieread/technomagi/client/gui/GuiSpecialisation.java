@@ -58,7 +58,7 @@ public class GuiSpecialisation extends GuiScreen
         for (Iterator<ISpecialisation> i = specialisations.iterator(); i.hasNext();) {
             ISpecialisation spec = i.next();
             this.buttonSpecialisations.put(buttonId, spec.getName());
-            this.buttonList.add(new GuiSpecialiseButton(buttonId, this.xOffset + 57 + ((buttonId - 4) * 40), this.yOffset + 23, I18n.format("technomagi.specialise.button"), spec.getIcon()));
+            this.buttonList.add(new GuiTMSpecialiseButton(buttonId, this.xOffset + 57 + ((buttonId - 4) * 40), this.yOffset + 23, I18n.format("technomagi.specialise.button"), spec.getIcon()));
             buttonId++;
         }
 

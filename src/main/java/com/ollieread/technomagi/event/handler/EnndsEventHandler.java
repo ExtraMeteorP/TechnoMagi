@@ -13,7 +13,7 @@ import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.common.init.Items;
 import com.ollieread.technomagi.item.ItemStaff;
 import com.ollieread.technomagi.util.InventoryHelper;
-import com.ollieread.technomagi.util.PlayerHelper;
+import com.ollieread.technomagi.util.EntityHelper;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
@@ -25,8 +25,8 @@ public class EnndsEventHandler
     {
         if (!event.entityPlayer.worldObj.isRemote) {
             ExtendedPlayerKnowledge charon = ExtendedPlayerKnowledge.get(event.entityPlayer);
-            PlayerHelper.addTranslatedChatMessage(event.entityPlayer, "message.specialisation.chosen");
-            PlayerHelper.addTranslatedChatMessage(event.entityPlayer, "message.specialisation.chosen." + event.specialisation.getName());
+            EntityHelper.addTranslatedChatMessage(event.entityPlayer, "message.specialisation.chosen");
+            EntityHelper.addTranslatedChatMessage(event.entityPlayer, "message.specialisation.chosen." + event.specialisation.getName());
 
             if (InventoryHelper.consumeInventoryItem(event.entityPlayer.inventory, new ItemStack(Items.itemTechnomageStaff, 1, 0))) {
                 ItemStack staff = ItemStaff.resetNBT(new ItemStack(Items.itemTechnomageStaff, 1, 1));
@@ -50,8 +50,8 @@ public class EnndsEventHandler
     public void onKnowledgeUnlocked(KnowledgeUnlockedEvent event)
     {
         if (!event.entityPlayer.worldObj.isRemote) {
-            PlayerHelper.addTranslatedChatMessage(event.entityPlayer, "message.knowledge.unlocked");
-            PlayerHelper.addTranslatedChatMessage(event.entityPlayer, "message.knowledge.unlocked." + event.knowledge.getName());
+            EntityHelper.addTranslatedChatMessage(event.entityPlayer, "message.knowledge.unlocked");
+            EntityHelper.addTranslatedChatMessage(event.entityPlayer, "message.knowledge.unlocked." + event.knowledge.getName());
         }
     }
 

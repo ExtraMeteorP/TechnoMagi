@@ -11,7 +11,7 @@ import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import com.ollieread.ennds.ability.AbilityActive;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.common.Reference;
-import com.ollieread.technomagi.util.PlayerHelper;
+import com.ollieread.technomagi.util.EntityHelper;
 
 import cpw.mods.fml.common.eventhandler.Event;
 
@@ -46,8 +46,8 @@ public class ActiveAbilityForceTarget extends AbilityActive
 
                 if (decreaseNanites(charon, 6)) {
                     if (!entity.worldObj.isRemote) {
-                        Vec3 look = PlayerHelper.getLookVector(interact.entityPlayer);
-                        Vec3 eye = PlayerHelper.getEyeVector(interact.entityPlayer);
+                        Vec3 look = EntityHelper.getLookVector(interact.entityPlayer);
+                        Vec3 eye = EntityHelper.getEyeVector(interact.entityPlayer);
 
                         Vec3 target = Vec3.createVectorHelper(look.xCoord, look.yCoord, look.zCoord);
                         Vec3 dest = null;

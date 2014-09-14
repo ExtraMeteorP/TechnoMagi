@@ -73,7 +73,7 @@ public class TileEntityNaniteReplicatorRenderer extends TileEntitySpecialRendere
         construct.render((Entity) null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
 
         Minecraft.getMinecraft().renderEngine.bindTexture(textureReplicator);
-        replicator.render((Entity) null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
+        replicator.render((Entity) null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F, machine.getSample());
 
         GL11.glPopMatrix();
         GL11.glPopMatrix();

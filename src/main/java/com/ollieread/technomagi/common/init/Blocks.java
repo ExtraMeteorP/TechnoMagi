@@ -26,9 +26,11 @@ import com.ollieread.technomagi.block.BlockNaniteReplicator;
 import com.ollieread.technomagi.block.BlockObservationChamber;
 import com.ollieread.technomagi.block.BlockTeleporter;
 import com.ollieread.technomagi.item.ItemBlockTM;
+import com.ollieread.technomagi.item.crafting.ConstructManager;
 import com.ollieread.technomagi.tileentity.TileEntityAnalysis;
 import com.ollieread.technomagi.tileentity.TileEntityArchive;
 import com.ollieread.technomagi.tileentity.TileEntityAreaLight;
+import com.ollieread.technomagi.tileentity.TileEntityConstruct;
 import com.ollieread.technomagi.tileentity.TileEntityCrafting;
 import com.ollieread.technomagi.tileentity.TileEntityDisplacedAir;
 import com.ollieread.technomagi.tileentity.TileEntityDisplacer;
@@ -88,14 +90,14 @@ public class Blocks
 
         GameRegistry.registerBlock(blockConstruct, "construct");
         GameRegistry.registerBlock(blockArchive, "archive");
+        GameRegistry.registerBlock(blockCrafting, "crafting");
         GameRegistry.registerBlock(blockNaniteReplicator, "naniteReplicator");
+        GameRegistry.registerBlock(blockAnalysis, "analysis");
         GameRegistry.registerBlock(blockAreaLight, "areaLight");
         GameRegistry.registerBlock(blockLightAir, "lightAir");
         GameRegistry.registerBlock(blockTeleporter, ItemBlockTM.class, "teleporter");
         GameRegistry.registerBlock(blockObservationChamber, "observationChamber");
         GameRegistry.registerBlock(blockEmptyFiller, "emptyFiller");
-        GameRegistry.registerBlock(blockCrafting, "crafting");
-        GameRegistry.registerBlock(blockAnalysis, "analysis");
         GameRegistry.registerBlock(blockHardlight, "hardlight");
         GameRegistry.registerBlock(blockHardlightSlab, "hardlightSlab");
         GameRegistry.registerBlock(blockHardlightTile, "hardlightTile");
@@ -117,17 +119,19 @@ public class Blocks
         GameRegistry.registerTileEntity(TileEntityDisplacer.class, "tileEntityDisplacer");
         GameRegistry.registerTileEntity(TileEntityDisplacedAir.class, "tileEntityDisplacedAir");
         GameRegistry.registerTileEntity(TileEntityGeneratorBasic.class, "tileEntityGeneratorBasic");
+        GameRegistry.registerTileEntity(TileEntityConstruct.class, "tileEntityConstruct");
 
         ItemStack stackNaniteContainer = new ItemStack(Items.itemNaniteContainer, 4);
         stackNaniteContainer.stackTagCompound = new NBTTagCompound();
 
+        ItemStack stackSampleVile = new ItemStack(Items.itemSampleVile, 4, 0);
+        stackSampleVile.stackTagCompound = new NBTTagCompound();
+
         // construct
         GameRegistry.addShapedRecipe(new ItemStack(blockConstruct), "xzx", "zyz", "xzx", 'x', new ItemStack(net.minecraft.init.Items.iron_ingot, 1), 'y', new ItemStack(Items.itemNaniteContainer, 1, 0), 'z', new ItemStack(Items.itemComponent, 1, 1));
-        // archive
-        GameRegistry.addShapedRecipe(new ItemStack(blockArchive), " w ", "xyx", "xzx", 'x', stackNaniteContainer, 'y', new ItemStack(Items.itemComponent, 1, 12), 'z', new ItemStack(blockConstruct, 1), 'w', new ItemStack(net.minecraft.init.Items.book, 1));
-        // nanite replicator
-        GameRegistry.addShapedRecipe(new ItemStack(blockNaniteReplicator), " w ", "xyx", "xzx", 'x', new ItemStack(Items.itemSampleVile, 1, 0), 'y', new ItemStack(Items.itemComponent, 1, 12), 'z', new ItemStack(blockConstruct, 1), 'w', new ItemStack(Items.itemComponent, 1, 11));
-        // area light
+        ConstructManager.getInstance().addRecipe(blockArchive, new ItemStack[] { new ItemStack(Items.itemNaniteContainer, 2), new ItemStack(Items.itemComponent, 2, 5), new ItemStack(net.minecraft.init.Items.redstone, 4), new ItemStack(net.minecraft.init.Items.book, 1) });
+        ConstructManager.getInstance().addRecipe(blockNaniteReplicator, new ItemStack[] { new ItemStack(Items.itemNaniteContainer, 4, 0), new ItemStack(Items.itemComponent, 2, 5), stackSampleVile, new ItemStack(net.minecraft.init.Items.redstone, 4) });
+        ConstructManager.getInstance().addRecipe(blockCrafting, new ItemStack[] { new ItemStack(Items.itemNaniteContainer, 2, 0), new ItemStack(Items.itemComponent, 2, 5), new ItemStack(net.minecraft.init.Blocks.crafting_table, 1), new ItemStack(net.minecraft.init.Items.redstone, 4) });
 
         // teleporter
         GameRegistry.addShapedRecipe(new ItemStack(blockTeleporter, 1, 0), "w", "y", "z", 'y', new ItemStack(Items.itemComponent, 1, 14), 'z', new ItemStack(blockConstruct, 1), 'w', new ItemStack(net.minecraft.init.Blocks.piston, 1));

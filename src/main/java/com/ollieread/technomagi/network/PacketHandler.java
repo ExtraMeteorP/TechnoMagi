@@ -5,9 +5,12 @@ import org.apache.logging.log4j.Level;
 import com.ollieread.technomagi.TechnoMagi;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.network.message.MessageEntityInteractEvent;
+import com.ollieread.technomagi.network.message.MessageOpenTeleporter;
 import com.ollieread.technomagi.network.message.MessagePlayerInteractEvent;
+import com.ollieread.technomagi.network.message.MessageSetBuilding;
 import com.ollieread.technomagi.network.message.MessageSetCrafting;
 import com.ollieread.technomagi.network.message.MessageSetProgress;
+import com.ollieread.technomagi.network.message.MessageSetTeleporterMode;
 import com.ollieread.technomagi.network.message.MessageSyncTileEntityTM;
 
 import cpw.mods.fml.common.network.NetworkRegistry;
@@ -27,5 +30,8 @@ public class PacketHandler
         INSTANCE.registerMessage(MessageSyncTileEntityTM.class, MessageSyncTileEntityTM.class, 2, Side.CLIENT);
         INSTANCE.registerMessage(MessageSetProgress.class, MessageSetProgress.class, 3, Side.SERVER);
         INSTANCE.registerMessage(MessageSetCrafting.class, MessageSetCrafting.class, 4, Side.SERVER);
+        INSTANCE.registerMessage(MessageSetBuilding.class, MessageSetBuilding.class, 5, Side.SERVER);
+        INSTANCE.registerMessage(MessageOpenTeleporter.class, MessageOpenTeleporter.class, 6, Side.CLIENT);
+        INSTANCE.registerMessage(MessageSetTeleporterMode.class, MessageSetTeleporterMode.class, 7, Side.SERVER);
     }
 }

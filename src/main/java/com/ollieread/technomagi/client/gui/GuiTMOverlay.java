@@ -128,7 +128,7 @@ public class GuiTMOverlay extends Gui
 
             for (int i = 0; i < 5; i++) {
 
-                if (i > end)
+                if (i > end || (aOffset + i) >= abilities.size())
                     break;
 
                 IAbilityActive ability = AbilityRegistry.getActiveAbility(abilities.get(aOffset + i));

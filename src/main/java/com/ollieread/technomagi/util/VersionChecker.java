@@ -34,7 +34,7 @@ public class VersionChecker implements Runnable
             ArtifactVersion current = VersionParser.parseVersionReference(Reference.VERSION);
 
             if (!VersionParser.satisfies(recommended, current)) {
-                PlayerHelper.addLinkedChatMessage(player, "You are not using a recommended version. ", "http://s.ollieread.com/XT5E");
+                EntityHelper.addLinkedChatMessage(player, "You are not using a recommended version. ", "http://s.ollieread.com/XT5E");
             }
         } catch (MalformedURLException e) {
             // TODO Auto-generated catch block

@@ -8,7 +8,9 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -17,14 +19,16 @@ import net.minecraft.world.World;
 
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.item.ItemDigitalTool;
+import com.ollieread.technomagi.tileentity.IPlayerLocked;
 import com.ollieread.technomagi.tileentity.TileEntityTeleporter;
-import com.ollieread.technomagi.util.PlayerHelper;
+import com.ollieread.technomagi.util.EntityHelper;
+import com.ollieread.technomagi.util.PacketHelper;
 import com.ollieread.technomagi.util.TeleportHelper;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockTeleporter extends BlockOwnable implements IDigitalToolable
+public class BlockTeleporter extends BlockTMContainer implements IDigitalToolable
 {
 
     @SideOnly(Side.CLIENT)
@@ -94,10 +98,10 @@ public class BlockTeleporter extends BlockOwnable implements IDigitalToolable
     @Override
     public void onEntityWalking(World world, int x, int y, int z, Entity entity)
     {
-        if (!world.isRemote && world.getBlockMetadata(x, y, z) == 1) {
+        if (!world.isRemote && world.getBlockMetadata(x, y, z) == 1 && entity instanceof EntityLivingBase) {
             TileEntityTeleporter teleporter = (TileEntityTeleporter) world.getTileEntity(x, y, z);
 
-            if (!teleporter.canPartner()) {
+            if (!teleporter.canPartner() && teleporter.canUse((EntityLivingBase) entity)) {
                 TileEntityTeleporter partner = teleporter.getPartner();
 
                 if (entity instanceof EntityPlayer) {
@@ -127,14 +131,14 @@ public class BlockTeleporter extends BlockOwnable implements IDigitalToolable
                             thisTeleporter.partner(location[0], location[1], location[2]);
                             otherTeleporter.partner(x, y, z);
                             ItemDigitalTool.resetFocusLocation(tool);
-                            PlayerHelper.addChatMessage(player, "Teleporter Paired: " + x + " " + y + " " + z);
+                            EntityHelper.addChatMessage(player, "Teleporter Paired: " + x + " " + y + " " + z);
                         }
 
                         return true;
                     }
                 } else if (thisTeleporter.canPartner()) {
                     ItemDigitalTool.setFocusLocation(tool, x, y, z);
-                    PlayerHelper.addChatMessage(player, "Teleporter Focused: " + x + " " + y + " " + z);
+                    EntityHelper.addChatMessage(player, "Teleporter Focused: " + x + " " + y + " " + z);
 
                     return true;
                 }
@@ -142,6 +146,36 @@ public class BlockTeleporter extends BlockOwnable implements IDigitalToolable
         }
 
         return false;
+    }
+
+    @Override
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack)
+    {
+        TileEntity tileEntity = world.getTileEntity(x, y, z);
+
+        if (entity instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer) entity;
+            IPlayerLocked tile = (IPlayerLocked) tileEntity;
+
+            tile.setPlayer(player.getCommandSenderName());
+        }
+    }
+
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_)
+    {
+        if (world.isRemote) {
+            return true;
+        } else {
+            TileEntityTeleporter entity = (TileEntityTeleporter) world.getTileEntity(x, y, z);
+
+            if (entity != null) {
+                if (entity.isPlayer(player)) {
+                    PacketHelper.openTeleporter(x, y, z, (EntityPlayerMP) player);
+                }
+            }
+
+            return true;
+        }
     }
 
 }

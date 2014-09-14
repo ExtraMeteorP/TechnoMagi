@@ -53,7 +53,7 @@ public class TileEntityDisplacedAir extends TileEntityTM
     public void updateEntity()
     {
         if (!worldObj.isRemote) {
-            validateSelf();
+            // validateSelf();
         }
     }
 

@@ -4,53 +4,78 @@ import org.apache.logging.log4j.Level;
 
 import com.ollieread.ennds.research.IKnowledge;
 import com.ollieread.technomagi.TechnoMagi;
+import com.ollieread.technomagi.research.KnowledgeAggressive;
+import com.ollieread.technomagi.research.KnowledgeChicken;
+import com.ollieread.technomagi.research.KnowledgeCow;
+import com.ollieread.technomagi.research.KnowledgeCreeper;
 import com.ollieread.technomagi.research.KnowledgeDensity;
-import com.ollieread.technomagi.research.KnowledgeForceI;
-import com.ollieread.technomagi.research.KnowledgeForceII;
-import com.ollieread.technomagi.research.KnowledgeHarvestI;
-import com.ollieread.technomagi.research.KnowledgeHarvestII;
-import com.ollieread.technomagi.research.KnowledgeHarvestIII;
-import com.ollieread.technomagi.research.KnowledgeLightManipulationI;
-import com.ollieread.technomagi.research.KnowledgeLightManipulationII;
+import com.ollieread.technomagi.research.KnowledgeEnderman;
+import com.ollieread.technomagi.research.KnowledgeEndothermic;
+import com.ollieread.technomagi.research.KnowledgeExothermic;
+import com.ollieread.technomagi.research.KnowledgeForce;
+import com.ollieread.technomagi.research.KnowledgeLight;
 import com.ollieread.technomagi.research.KnowledgeMotion;
-import com.ollieread.technomagi.research.KnowledgePyrologyI;
-import com.ollieread.technomagi.research.KnowledgePyrologyII;
-import com.ollieread.technomagi.research.KnowledgeTeleportationI;
-import com.ollieread.technomagi.research.KnowledgeTeleportationII;
+import com.ollieread.technomagi.research.KnowledgePassive;
+import com.ollieread.technomagi.research.KnowledgePig;
+import com.ollieread.technomagi.research.KnowledgeProjectile;
+import com.ollieread.technomagi.research.KnowledgeSheep;
+import com.ollieread.technomagi.research.KnowledgeSkeleton;
+import com.ollieread.technomagi.research.KnowledgeSubspace;
+import com.ollieread.technomagi.research.KnowledgeTeleportation;
+import com.ollieread.technomagi.research.KnowledgeVoid;
+import com.ollieread.technomagi.research.KnowledgeZombie;
 
 public class Knowledge
 {
 
-    public static IKnowledge density;
-    public static IKnowledge forceI;
-    public static IKnowledge forceII;
-    public static IKnowledge pyrologyI;
-    public static IKnowledge pyrologyII;
-    public static IKnowledge lightManipulationI;
-    public static IKnowledge lightManipulationII;
-    public static IKnowledge teleportationI;
-    public static IKnowledge teleportationII;
-    public static IKnowledge motionI;
-    public static IKnowledge harvestI;
-    public static IKnowledge harvestII;
-    public static IKnowledge harvestIII;
+    public static IKnowledge knowledgeDensity;
+    public static IKnowledge knowledgeEndothermic;
+    public static IKnowledge knowledgeExothermic;
+    public static IKnowledge knowledgeForce;
+    public static IKnowledge knowledgeLight;
+    public static IKnowledge knowledgeMotion;
+    public static IKnowledge knowledgeProjectile;
+    public static IKnowledge knowledgeSubspace;
+    public static IKnowledge knowledgeTeleportation;
+    public static IKnowledge knowledgeVoid;
+
+    public static IKnowledge knowledgeCow;
+    public static IKnowledge knowledgePig;
+    public static IKnowledge knowledgeSheep;
+    public static IKnowledge knowledgeChicken;
+    public static IKnowledge knowledgePassive;
+
+    public static IKnowledge knowledgeZombie;
+    public static IKnowledge knowledgeSkeleton;
+    public static IKnowledge knowledgeCreeper;
+    public static IKnowledge knowledgeEnderman;
+    public static IKnowledge knowledgeAggressive;
 
     public static void init()
     {
         TechnoMagi.logger.log(Level.INFO, "Initiating & registering knowledge");
 
-        density = new KnowledgeDensity("density");
-        forceI = new KnowledgeForceI("forceI");
-        forceII = new KnowledgeForceII("foreceII");
-        pyrologyI = new KnowledgePyrologyI("pyrologyI");
-        pyrologyII = new KnowledgePyrologyII("pyrologyII");
-        lightManipulationI = new KnowledgeLightManipulationI("lightManipulationI");
-        lightManipulationII = new KnowledgeLightManipulationII("lightManipulationII");
-        teleportationI = new KnowledgeTeleportationI("teleportationI");
-        teleportationII = new KnowledgeTeleportationII("teleportationII");
-        motionI = new KnowledgeMotion("motionI");
-        harvestI = new KnowledgeHarvestI("harvestI");
-        harvestII = new KnowledgeHarvestII("harvestII");
-        harvestIII = new KnowledgeHarvestIII("harvestIII");
+        knowledgeDensity = new KnowledgeDensity("density");
+        knowledgeEndothermic = new KnowledgeEndothermic("endothermic");
+        knowledgeExothermic = new KnowledgeExothermic("exothermic");
+        knowledgeForce = new KnowledgeForce("force");
+        knowledgeLight = new KnowledgeLight("light");
+        knowledgeMotion = new KnowledgeMotion("motion");
+        knowledgeProjectile = new KnowledgeProjectile("projectile");
+        knowledgeSubspace = new KnowledgeSubspace("subspace");
+        knowledgeTeleportation = new KnowledgeTeleportation("teleportation");
+        knowledgeVoid = new KnowledgeVoid("void");
+
+        knowledgeCow = new KnowledgeCow("entityCow");
+        knowledgePig = new KnowledgePig("entityPig");
+        knowledgeSheep = new KnowledgeSheep("entitySheep");
+        knowledgeChicken = new KnowledgeChicken("entityChicken");
+        knowledgePassive = new KnowledgePassive("entityPassive");
+
+        knowledgeZombie = new KnowledgeZombie("entityZombie");
+        knowledgeSkeleton = new KnowledgeSkeleton("entitySkeleton");
+        knowledgeCreeper = new KnowledgeCreeper("entityCreeper");
+        knowledgeEnderman = new KnowledgeEnderman("entityEnderman");
+        knowledgeAggressive = new KnowledgeAggressive("entityAggressive");
     }
 }

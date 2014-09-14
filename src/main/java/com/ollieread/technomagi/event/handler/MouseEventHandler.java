@@ -6,6 +6,7 @@ import net.minecraftforge.client.event.MouseEvent;
 
 import com.ollieread.ennds.common.PacketHelper;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
+import com.ollieread.ennds.item.IStaff;
 import com.ollieread.technomagi.client.gui.GuiTMOverlay;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -18,7 +19,7 @@ public class MouseEventHandler
     {
         EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 
-        if (player.isSneaking() && event.dwheel != 0) {
+        if (player.isSneaking() && player.getHeldItem() != null && player.getHeldItem().getItem() instanceof IStaff && event.dwheel != 0) {
             ExtendedPlayerKnowledge charon = ExtendedPlayerKnowledge.get(player);
 
             if (event.dwheel < 0) {
