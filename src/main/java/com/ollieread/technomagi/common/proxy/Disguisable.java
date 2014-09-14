@@ -28,7 +28,7 @@ public class Disguisable implements IDisguisableTile
         if (stack.getItem() != null) {
             Block block = Block.getBlockFromItem(stack.getItem());
 
-            if (block.isNormalCube() && block.getRenderType() == 0) {
+            if (block != null && block.isNormalCube() && block.getRenderType() == 0) {
                 inventory.setInventorySlotContents(0, stack);
 
                 return true;
@@ -46,12 +46,18 @@ public class Disguisable implements IDisguisableTile
 
     public void readFromNBT(NBTTagCompound compound)
     {
-        inventory.readFromNBT(compound);
+        NBTTagCompound disguise = (NBTTagCompound) compound.getTag("Disguise");
+
+        inventory.readFromNBT(disguise);
     }
 
     public void writeToNBT(NBTTagCompound compound)
     {
-        inventory.writeToNBT(compound);
+        NBTTagCompound disguise = new NBTTagCompound();
+
+        inventory.writeToNBT(disguise);
+
+        compound.setTag("Disguise", disguise);
     }
 
 }
