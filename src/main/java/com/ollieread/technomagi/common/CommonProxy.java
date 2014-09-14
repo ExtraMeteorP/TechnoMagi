@@ -169,23 +169,24 @@ public class CommonProxy implements IGuiHandler
     {
         EnndsRegistry.registerEvent("specialisation");
         EnndsRegistry.registerEvent("researchProgress");
-        EnndsRegistry.registerEvent("inFire");
+        EnndsRegistry.registerEvent("damageInFire");
         EnndsRegistry.registerEvent("playerTick");
-        EnndsRegistry.registerEvent("fall");
-        EnndsRegistry.registerEvent("onFire");
-        EnndsRegistry.registerEvent("inLava");
-        EnndsRegistry.registerEvent("inWall");
-        EnndsRegistry.registerEvent("starve");
-        EnndsRegistry.registerEvent("cactus");
-        EnndsRegistry.registerEvent("void");
-        EnndsRegistry.registerEvent("magic");
-        EnndsRegistry.registerEvent("wither");
-        EnndsRegistry.registerEvent("anvil");
-        EnndsRegistry.registerEvent("fallingBlock");
+        EnndsRegistry.registerEvent("damageFall");
+        EnndsRegistry.registerEvent("damageOnFire");
+        EnndsRegistry.registerEvent("damageInLava");
+        EnndsRegistry.registerEvent("damageInWall");
+        EnndsRegistry.registerEvent("damageStarve");
+        EnndsRegistry.registerEvent("damageCactus");
+        EnndsRegistry.registerEvent("damageOutOfWorld");
+        EnndsRegistry.registerEvent("damageMagic");
+        EnndsRegistry.registerEvent("damageWither");
+        EnndsRegistry.registerEvent("damageAnvil");
+        EnndsRegistry.registerEvent("damageFallingBlock");
         EnndsRegistry.registerEvent("toNether");
         EnndsRegistry.registerEvent("toEnd");
         EnndsRegistry.registerEvent("toOverworld");
         EnndsRegistry.registerEvent("enderTeleport");
+        EnndsRegistry.registerEvent("useFlintAndSteel");
 
         MinecraftForge.EVENT_BUS.register(playerEventHandler);
         MinecraftForge.EVENT_BUS.register(new EnndsEventHandler());
