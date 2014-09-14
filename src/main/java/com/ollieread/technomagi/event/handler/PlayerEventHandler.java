@@ -40,6 +40,7 @@ import com.ollieread.technomagi.util.VersionChecker;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent.ItemSmeltedEvent;
 
 public class PlayerEventHandler
 {
@@ -221,6 +222,14 @@ public class PlayerEventHandler
 
     @SubscribeEvent
     public void onPlayerCrafting(ItemCraftedEvent event)
+    {
+        if (!event.player.worldObj.isRemote) {
+            ResearchRegistry.researchCrafting(event, ExtendedPlayerKnowledge.get(event.player));
+        }
+    }
+
+    @SubscribeEvent
+    public void onPlayerSmelting(ItemSmeltedEvent event)
     {
         if (!event.player.worldObj.isRemote) {
             ResearchRegistry.researchCrafting(event, ExtendedPlayerKnowledge.get(event.player));
