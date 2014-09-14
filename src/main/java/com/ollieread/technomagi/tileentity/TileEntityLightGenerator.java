@@ -1,6 +1,6 @@
 package com.ollieread.technomagi.tileentity;
 
-public class TileEntityLightGenerator extends TileEntityPlayerLocked
+public class TileEntityLightGenerator extends TileEntityTM
 {
 
     protected boolean enabled = false;

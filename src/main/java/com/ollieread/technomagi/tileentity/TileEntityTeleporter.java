@@ -114,7 +114,7 @@ public class TileEntityTeleporter extends TileEntityTM implements IPlayerLocked,
         partnerY = y;
         partnerZ = z;
 
-        markDirty();
+        sync();
     }
 
     public TileEntityTeleporter getPartner()
@@ -150,8 +150,7 @@ public class TileEntityTeleporter extends TileEntityTM implements IPlayerLocked,
     {
         this.mode = mode;
 
-        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-        markDirty();
+        sync();
     }
 
     public int getMode()

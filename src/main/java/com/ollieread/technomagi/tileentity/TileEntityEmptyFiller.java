@@ -3,9 +3,6 @@ package com.ollieread.technomagi.tileentity;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
 
-import com.ollieread.technomagi.network.message.MessageSyncTileEntityTM;
-import com.ollieread.technomagi.util.PacketHelper;
-
 public class TileEntityEmptyFiller extends TileEntityTM
 {
 
@@ -20,7 +17,7 @@ public class TileEntityEmptyFiller extends TileEntityTM
             parentY = y;
             parentZ = z;
 
-            PacketHelper.syncTile(new MessageSyncTileEntityTM(this));
+            sync();
         }
     }
 

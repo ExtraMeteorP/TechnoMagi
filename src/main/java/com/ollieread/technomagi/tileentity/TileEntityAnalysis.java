@@ -159,8 +159,7 @@ public class TileEntityAnalysis extends TileEntityResearch implements IPlayerLoc
                     }
                     receiveEnergy(extract, false);
 
-                    worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-                    markDirty();
+                    sync();
                 }
             }
         }
@@ -207,7 +206,7 @@ public class TileEntityAnalysis extends TileEntityResearch implements IPlayerLoc
 
         if (progress >= 100) {
             IResearchAnalysis analysis = getResearchAnalysis();
-            int c = rand.nextInt(analysis.getChance()) + 1;
+            int c = rand.nextInt(((IResearch) analysis).getChance()) + 1;
 
             IResearch research = (IResearch) analysis;
             EntityPlayer player = worldObj.getPlayerEntityByName(getPlayer());
@@ -220,8 +219,8 @@ public class TileEntityAnalysis extends TileEntityResearch implements IPlayerLoc
             setInProgress(false);
             progress = 0;
         }
-        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-        markDirty();
+
+        sync();
     }
 
     private IResearchAnalysis getResearchAnalysis()

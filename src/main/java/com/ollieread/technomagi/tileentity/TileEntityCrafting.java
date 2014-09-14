@@ -102,8 +102,7 @@ public class TileEntityCrafting extends TileEntityTM implements IPlayerLocked, I
                     }
                     receiveEnergy(extract, false);
 
-                    worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-                    markDirty();
+                    sync();
                 }
             }
         }

@@ -7,6 +7,7 @@ import net.minecraft.tileentity.TileEntity;
 
 import com.ollieread.technomagi.network.PacketHandler;
 import com.ollieread.technomagi.network.message.MessageSyncTileEntityTM;
+import com.ollieread.technomagi.util.PacketHelper;
 
 public class TileEntityTM extends TileEntity
 {
@@ -20,5 +21,10 @@ public class TileEntityTM extends TileEntity
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
     {
         readFromNBT(pkt.func_148857_g());
+    }
+
+    public void sync()
+    {
+        PacketHelper.syncTile(this);
     }
 }

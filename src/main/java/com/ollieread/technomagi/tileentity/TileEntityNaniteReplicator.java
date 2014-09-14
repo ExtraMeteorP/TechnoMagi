@@ -117,8 +117,7 @@ public class TileEntityNaniteReplicator extends TileEntityTM implements IPlayerL
                     }
                     receiveEnergy(extract, false);
 
-                    worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-                    markDirty();
+                    sync();
                 }
             }
         }
@@ -184,8 +183,8 @@ public class TileEntityNaniteReplicator extends TileEntityTM implements IPlayerL
                     }
                 }
             }
-            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-            markDirty();
+
+            sync();
         }
     }
 
@@ -266,8 +265,7 @@ public class TileEntityNaniteReplicator extends TileEntityTM implements IPlayerL
         }
 
         if (update) {
-            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-            markDirty();
+            sync();
         }
     }
 
