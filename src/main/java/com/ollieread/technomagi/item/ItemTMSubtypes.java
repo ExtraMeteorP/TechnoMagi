@@ -18,7 +18,7 @@ public abstract class ItemTMSubtypes extends ItemTM
 {
 
     protected IIcon[] itemIcons;
-    protected String[] itemNames;
+    public String[] itemNames;
 
     public ItemTMSubtypes(String name, int subtypes)
     {
@@ -66,6 +66,17 @@ public abstract class ItemTMSubtypes extends ItemTM
             list.add(new ItemStack(this, 1, i));
         }
 
+    }
+
+    public static ItemStack getStack(ItemTMSubtypes item, String name, int q)
+    {
+        for (int i = 0; i < item.itemNames.length; i++) {
+            if (item.itemNames[i].equals(name)) {
+                return new ItemStack(item, q, i);
+            }
+        }
+
+        return null;
     }
 
 }
