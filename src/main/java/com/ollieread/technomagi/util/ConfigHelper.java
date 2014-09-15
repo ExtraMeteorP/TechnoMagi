@@ -23,6 +23,8 @@ public class ConfigHelper
         abilityState.put("exothermic", config.getBoolean("exothermic", "Ability State", true, "Enable/Disable exothermic crafting ability"));
         abilityState.put("endothermic", config.getBoolean("endothermic", "Ability State", true, "Enable/Disable endothermic crafting ability"));
 
+        abilityState.put("nanites", config.getBoolean("nanites", "Ability State", true, "Enable/Disable nanite regeneration"));
+
         config.save();
     }
 }

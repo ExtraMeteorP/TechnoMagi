@@ -173,7 +173,7 @@ public class CommonProxy implements IGuiHandler
         EnndsRegistry.registerEvent("playerTick");
         EnndsRegistry.registerEvent("damageFall");
         EnndsRegistry.registerEvent("damageOnFire");
-        EnndsRegistry.registerEvent("damageInLava");
+        EnndsRegistry.registerEvent("damageLava");
         EnndsRegistry.registerEvent("damageInWall");
         EnndsRegistry.registerEvent("damageStarve");
         EnndsRegistry.registerEvent("damageCactus");

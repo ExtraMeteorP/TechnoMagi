@@ -36,7 +36,7 @@ public class ResearchSmeltingIronIngot extends Research implements IResearchCraf
     @Override
     public int getChance()
     {
-        return 7;
+        return 4;
     }
 
 }

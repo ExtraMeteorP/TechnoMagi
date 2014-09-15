@@ -5,10 +5,10 @@ import com.ollieread.ennds.research.IResearchEvent;
 import com.ollieread.ennds.research.Research;
 import com.ollieread.technomagi.common.Reference;
 
-public class ResearchEventDamageInLava extends Research implements IResearchEvent
+public class ResearchEventDamageLava extends Research implements IResearchEvent
 {
 
-    public ResearchEventDamageInLava(String name, String knowledge, int progress)
+    public ResearchEventDamageLava(String name, String knowledge, int progress)
     {
         super(name, knowledge, progress, Reference.MODID.toLowerCase());
     }
@@ -28,7 +28,7 @@ public class ResearchEventDamageInLava extends Research implements IResearchEven
     @Override
     public String getEvent()
     {
-        return "damageInLava";
+        return "damageLava";
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.ollieread.technomagi.event.handler;
 
+import java.util.Random;
 import java.util.Set;
 
 import net.minecraft.block.Block;
@@ -39,6 +40,7 @@ import com.ollieread.technomagi.network.message.MessageEntityInteractEvent;
 import com.ollieread.technomagi.network.message.MessagePlayerInteractEvent;
 import com.ollieread.technomagi.tileentity.TileEntityTeleporter;
 import com.ollieread.technomagi.util.EntityHelper;
+import com.ollieread.technomagi.util.SoundHelper;
 import com.ollieread.technomagi.util.TeleportHelper;
 import com.ollieread.technomagi.util.VersionChecker;
 
@@ -83,6 +85,10 @@ public class PlayerEventHandler
                     if (event.entityPlayer.worldObj.isRemote && event.isCanceled()) {
                         PacketHandler.INSTANCE.sendToServer(new MessagePlayerInteractEvent(event));
                     }
+                } else {
+                    if (!event.entityPlayer.worldObj.isRemote) {
+                        SoundHelper.playSoundEffectAtPlayer(event.entityPlayer, "fail", new Random());
+                    }
                 }
             } else if (heldItem != null && heldItem.getItem() != null && event.entityPlayer.getHeldItem().isItemEqual(new ItemStack(Items.itemDigitalTool))) {
                 if (event.action.equals(PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK)) {
@@ -126,6 +132,10 @@ public class PlayerEventHandler
                     event.entityPlayer.swingItem();
                     if (event.entityPlayer.worldObj.isRemote && event.isCanceled()) {
                         PacketHandler.INSTANCE.sendToServer(new MessageEntityInteractEvent(event));
+                    }
+                } else {
+                    if (!event.entityPlayer.worldObj.isRemote) {
+                        SoundHelper.playSoundEffectAtPlayer(event.entityPlayer, "fail", new Random());
                     }
                 }
             }

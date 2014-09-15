@@ -18,10 +18,10 @@ import com.ollieread.technomagi.tileentity.TileEntityReactiveCrafting;
 
 import cpw.mods.fml.common.eventhandler.Event;
 
-public class ActiveAbilityExothermic extends AbilityActive
+public class ActiveAbilityEndothermic extends AbilityActive
 {
 
-    public ActiveAbilityExothermic(String name)
+    public ActiveAbilityEndothermic(String name)
     {
         super(name, Reference.MODID.toLowerCase());
     }
@@ -29,13 +29,13 @@ public class ActiveAbilityExothermic extends AbilityActive
     @Override
     public boolean canUse(ExtendedPlayerKnowledge charon, Event event)
     {
-        return charon.hasKnowledge("exothermic");
+        return charon.hasKnowledge("endothermic");
     }
 
     @Override
     public boolean isAvailable(ExtendedPlayerKnowledge charon)
     {
-        return charon.hasKnowledge("exothermic");
+        return charon.hasKnowledge("endothermic");
     }
 
     @Override
@@ -57,7 +57,7 @@ public class ActiveAbilityExothermic extends AbilityActive
                     ItemStack stack = new ItemStack(block, 1, meta);
 
                     if (stack != null) {
-                        List recipe = ReactiveManager.getInstance().findMatchingRecipe(stack, 0);
+                        List recipe = ReactiveManager.getInstance().findMatchingRecipe(stack, 1);
 
                         if (recipe != null && recipe.size() == 2) {
                             ItemStack resultStack = ((ItemStack) recipe.get(0)).copy();
@@ -71,7 +71,7 @@ public class ActiveAbilityExothermic extends AbilityActive
                                         TileEntityReactiveCrafting reactive = (TileEntityReactiveCrafting) player.worldObj.getTileEntity(x, y, z);
 
                                         if (reactive != null) {
-                                            reactive.setResult(resultStack, (Integer) recipe.get(1), 0, new ItemStack(block, 1, meta));
+                                            reactive.setResult(resultStack, (Integer) recipe.get(1), 1, new ItemStack(block, 1, meta));
                                         }
                                     }
 

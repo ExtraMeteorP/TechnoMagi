@@ -1,5 +1,6 @@
 {
 "cast": {"category": "player", "sounds": [{"name":"cast","stream":false}]},
 "flashstep": {"category": "player", "sounds": [{"name":"flashstep","stream":false}]},
-"cow": {"category": "player", "sounds": [{"name":"cow","stream":false}]}
+"cow": {"category": "player", "sounds": [{"name":"cow","stream":false}]},
+"fail": {"category": "player", "sounds": [{"name":"fail","stream":false}]}
 }
