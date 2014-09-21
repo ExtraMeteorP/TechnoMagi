@@ -7,6 +7,7 @@ import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.network.message.MessageEntityInteractEvent;
 import com.ollieread.technomagi.network.message.MessageOpenTeleporter;
 import com.ollieread.technomagi.network.message.MessagePlayerInteractEvent;
+import com.ollieread.technomagi.network.message.MessageSetArchive;
 import com.ollieread.technomagi.network.message.MessageSetBuilding;
 import com.ollieread.technomagi.network.message.MessageSetCrafting;
 import com.ollieread.technomagi.network.message.MessageSetProgress;
@@ -33,5 +34,6 @@ public class PacketHandler
         INSTANCE.registerMessage(MessageSetBuilding.class, MessageSetBuilding.class, 5, Side.SERVER);
         INSTANCE.registerMessage(MessageOpenTeleporter.class, MessageOpenTeleporter.class, 6, Side.CLIENT);
         INSTANCE.registerMessage(MessageSetTeleporterMode.class, MessageSetTeleporterMode.class, 7, Side.SERVER);
+        INSTANCE.registerMessage(MessageSetArchive.class, MessageSetArchive.class, 5, Side.SERVER);
     }
 }

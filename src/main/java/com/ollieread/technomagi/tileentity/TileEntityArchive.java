@@ -33,6 +33,9 @@ public class TileEntityArchive extends TileEntityTM implements IPlayerLocked, II
     private static Random field_145923_r = new Random();
 
     protected int syncCheck = 0;
+    protected int guiType = 0;
+    protected int guiSubType = 0;
+    protected int guiPage = 0;
 
     public void updateEntity()
     {
@@ -221,6 +224,42 @@ public class TileEntityArchive extends TileEntityTM implements IPlayerLocked, II
         }
 
         return null;
+    }
+
+    public TileEntityArchive setType(int type)
+    {
+        guiType = type;
+
+        return this;
+    }
+
+    public TileEntityArchive setSubType(int subtype)
+    {
+        guiSubType = subtype;
+
+        return this;
+    }
+
+    public TileEntityArchive setPage(int page)
+    {
+        guiPage = page;
+
+        return this;
+    }
+
+    public int getType()
+    {
+        return guiType;
+    }
+
+    public int getSubType()
+    {
+        return guiSubType;
+    }
+
+    public int getPage()
+    {
+        return guiPage;
     }
 
     /* Everything below is just a proxy for the interfaces */

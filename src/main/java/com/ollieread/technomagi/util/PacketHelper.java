@@ -4,11 +4,13 @@ import net.minecraft.entity.player.EntityPlayerMP;
 
 import com.ollieread.technomagi.network.PacketHandler;
 import com.ollieread.technomagi.network.message.MessageOpenTeleporter;
+import com.ollieread.technomagi.network.message.MessageSetArchive;
 import com.ollieread.technomagi.network.message.MessageSetBuilding;
 import com.ollieread.technomagi.network.message.MessageSetCrafting;
 import com.ollieread.technomagi.network.message.MessageSetProgress;
 import com.ollieread.technomagi.network.message.MessageSetTeleporterMode;
 import com.ollieread.technomagi.network.message.MessageSyncTileEntityTM;
+import com.ollieread.technomagi.tileentity.TileEntityArchive;
 import com.ollieread.technomagi.tileentity.TileEntityConstruct;
 import com.ollieread.technomagi.tileentity.TileEntityCrafting;
 import com.ollieread.technomagi.tileentity.TileEntityResearch;
@@ -19,6 +21,11 @@ import cpw.mods.fml.common.network.simpleimpl.IMessage;
 
 public class PacketHelper
 {
+
+    public static void setArchive(TileEntityArchive archive, int type, int subtype, int page)
+    {
+        PacketHandler.INSTANCE.sendToServer(new MessageSetArchive(archive, type, subtype, page));
+    }
 
     public static void setTeleporterMode(TileEntityTeleporter machine, int mode)
     {
