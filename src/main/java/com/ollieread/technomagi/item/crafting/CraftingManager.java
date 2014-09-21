@@ -15,7 +15,7 @@ import com.ollieread.technomagi.common.proxy.CraftingInventory;
 public class CraftingManager
 {
     private static final CraftingManager instance = new CraftingManager();
-    private List recipes = new ArrayList();
+    private List<IRecipeTM> recipes = new ArrayList();
 
     public static final CraftingManager getInstance()
     {
@@ -159,7 +159,7 @@ public class CraftingManager
         }
     }
 
-    public List getRecipeList()
+    public List<IRecipeTM> getRecipeList()
     {
         return this.recipes;
     }

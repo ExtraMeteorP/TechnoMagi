@@ -28,4 +28,8 @@ public interface IRecipeTM
 
     ItemStack getRecipeOutput();
 
+    String getKnowledge();
+
+    ItemStack getOutput();
+
 }

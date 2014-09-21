@@ -1,8 +1,6 @@
 package com.ollieread.technomagi.common.init;
 
 import net.minecraft.block.Block;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 
 import org.apache.logging.log4j.Level;
 
@@ -41,7 +39,6 @@ import com.ollieread.technomagi.tileentity.TileEntityNaniteReplicator;
 import com.ollieread.technomagi.tileentity.TileEntityObservationChamber;
 import com.ollieread.technomagi.tileentity.TileEntityReactiveCrafting;
 import com.ollieread.technomagi.tileentity.TileEntityTeleporter;
-import com.ollieread.technomagi.util.RecipeHelper;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -126,34 +123,5 @@ public class Blocks
         GameRegistry.registerTileEntity(TileEntityGeneratorBasic.class, "tileEntityGeneratorBasic");
         GameRegistry.registerTileEntity(TileEntityConstruct.class, "tileEntityConstruct");
         GameRegistry.registerTileEntity(TileEntityReactiveCrafting.class, "tileEntityReactiveCrafting");
-
-        ItemStack stackNaniteContainer = new ItemStack(Items.itemNaniteContainer, 4);
-        stackNaniteContainer.stackTagCompound = new NBTTagCompound();
-
-        ItemStack stackSampleVile = new ItemStack(Items.itemSampleVile, 4, 0);
-        stackSampleVile.stackTagCompound = new NBTTagCompound();
-
-        // construct
-        GameRegistry.addShapedRecipe(new ItemStack(blockConstruct), "xzx", "zyz", "xzx", 'x', new ItemStack(net.minecraft.init.Items.iron_ingot, 1), 'y', new ItemStack(Items.itemNaniteContainer, 1, 0), 'z', new ItemStack(Items.itemComponent, 1, 1));
-        RecipeHelper.addConstructRecipe(blockArchive, new ItemStack[] { new ItemStack(Items.itemNaniteContainer, 2), new ItemStack(Items.itemComponent, 2, 5), new ItemStack(net.minecraft.init.Items.redstone, 4), new ItemStack(net.minecraft.init.Items.book, 1) });
-        RecipeHelper.addConstructRecipe(blockNaniteReplicator, new ItemStack[] { new ItemStack(Items.itemNaniteContainer, 4, 0), new ItemStack(Items.itemComponent, 2, 5), stackSampleVile, new ItemStack(net.minecraft.init.Items.redstone, 4) });
-        RecipeHelper.addConstructRecipe(blockCrafting, new ItemStack[] { new ItemStack(Items.itemNaniteContainer, 2, 0), new ItemStack(Items.itemComponent, 2, 5), new ItemStack(net.minecraft.init.Blocks.crafting_table, 1), new ItemStack(net.minecraft.init.Items.redstone, 4) });
-
-        // teleporter
-        GameRegistry.addShapedRecipe(new ItemStack(blockTeleporter, 1, 0), "w", "y", "z", 'y', new ItemStack(Items.itemComponent, 1, 14), 'z', new ItemStack(blockConstruct, 1), 'w', new ItemStack(net.minecraft.init.Blocks.piston, 1));
-        GameRegistry.addShapedRecipe(new ItemStack(blockTeleporter, 1, 1), "w", "y", "z", 'y', new ItemStack(Items.itemComponent, 1, 14), 'z', new ItemStack(blockConstruct, 1), 'w', new ItemStack(net.minecraft.init.Blocks.sticky_piston, 1));
-        GameRegistry.addShapedRecipe(new ItemStack(blockTeleporter, 1, 2), "w", "y", "z", 'y', new ItemStack(Items.itemComponent, 1, 14), 'z', new ItemStack(blockConstruct, 1), 'w', new ItemStack(net.minecraft.init.Items.ender_pearl, 1));
-        GameRegistry.addShapedRecipe(new ItemStack(blockTeleporter, 1, 3), "w", "y", "z", 'y', new ItemStack(Items.itemComponent, 1, 14), 'z', new ItemStack(blockConstruct, 1), 'w', new ItemStack(net.minecraft.init.Items.emerald, 1));
-        // observation chamber
-
-        // crafting
-
-        // analysis
-
-        // Exothermic
-        RecipeHelper.addExothermicRecipe(new ItemStack(net.minecraft.init.Blocks.log), new ItemStack(net.minecraft.init.Items.coal, 1, 1), 250);
-        // Endothermic
-        RecipeHelper.addEndothermicRecipe(new ItemStack(net.minecraft.init.Blocks.cobblestone), new ItemStack(net.minecraft.init.Blocks.stone, 1), 250);
-
     }
 }

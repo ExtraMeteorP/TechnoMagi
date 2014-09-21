@@ -85,4 +85,16 @@ public class ShapelessRecipe implements IRecipeTM
         return true;
     }
 
+    @Override
+    public String getKnowledge()
+    {
+        return knowledge;
+    }
+
+    @Override
+    public ItemStack getOutput()
+    {
+        return output;
+    }
+
 }
