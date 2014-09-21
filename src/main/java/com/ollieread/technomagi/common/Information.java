@@ -3,8 +3,8 @@ package com.ollieread.technomagi.common;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,19 +17,29 @@ import com.ollieread.technomagi.TechnoMagi;
 public class Information
 {
 
-    private static Map<String, Map<String, List<String>>> data = new HashMap<String, Map<String, List<String>>>();
+    private static Map<String, Map<String, List<String>>> data = new LinkedHashMap<String, Map<String, List<String>>>();
     private static Gson gson = new Gson();
 
     public static void load(String name)
     {
+        load(Reference.MODID.toLowerCase(), name);
+    }
+
+    public static void load(String modid, String name)
+    {
         try {
-            String location = "/assets/technomagi/information/" + name + ".json";
+            String location = "/assets/" + modid + "/information/" + name + ".json";
             Type jsonType = new TypeToken<Map<String, List<String>>>()
             {
             }.getType();
             InputStream resource = TechnoMagi.class.getResourceAsStream(location);
             Map<String, List<String>> json = gson.fromJson(IOUtils.toString(resource), jsonType);
-            data.put(name, json);
+
+            if (data.containsKey(name)) {
+                data.get(name).putAll(json);
+            } else {
+                data.put(name, json);
+            }
         } catch (IOException e) {
             TechnoMagi.logger.warn("Unable to load information for: " + name);
             e.printStackTrace();
@@ -37,6 +47,15 @@ public class Information
             TechnoMagi.logger.warn("Unable to load information for: " + name);
             e.printStackTrace();
         }
+    }
+
+    public static Map<String, List<String>> getInformation(String type)
+    {
+        if (data.containsKey(type)) {
+            return data.get(type);
+        }
+
+        return new LinkedHashMap<String, List<String>>();
     }
 
     public static String getInformation(String type, String name)
