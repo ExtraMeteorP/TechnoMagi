@@ -117,7 +117,7 @@ public class GuiScrollableText extends GuiScreen
     {
         String s = trimStringNewline(text);
         List l = fontRendererObj.listFormattedStringToWidth(s, innerWidth);
-        int h = paddingY * 2;
+        int h = (paddingY * 2);
 
         for (Iterator<String> i = l.iterator(); i.hasNext();) {
             String s1 = (String) i.next();
@@ -190,6 +190,11 @@ public class GuiScrollableText extends GuiScreen
                 scrollY -= i;
             }
         }
+    }
+
+    public void scrollReset()
+    {
+        scrollY = 0;
     }
 
     public void setFontRenderer(FontRenderer fontRenderer)
