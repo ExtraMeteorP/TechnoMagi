@@ -43,6 +43,11 @@ public abstract class ItemTMSubtypes extends ItemTM
         return ("" + StatCollector.translateToLocal(this.getUnlocalizedName() + "." + itemNames[stack.getItemDamage()] + ".name")).trim();
     }
 
+    public String getUnlocalizedName(ItemStack stack)
+    {
+        return this.getUnlocalizedName() + "." + itemNames[stack.getItemDamage()] + ".name";
+    }
+
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister register)
     {
