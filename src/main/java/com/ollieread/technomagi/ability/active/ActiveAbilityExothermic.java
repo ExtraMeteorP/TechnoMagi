@@ -27,12 +27,6 @@ public class ActiveAbilityExothermic extends AbilityActive
     }
 
     @Override
-    public boolean canUse(ExtendedPlayerKnowledge charon, Event event)
-    {
-        return charon.hasKnowledge("exothermic");
-    }
-
-    @Override
     public boolean isAvailable(ExtendedPlayerKnowledge charon)
     {
         return charon.hasKnowledge("exothermic");
@@ -91,6 +85,12 @@ public class ActiveAbilityExothermic extends AbilityActive
     public String[] getEnhancements()
     {
         return new String[] { "exoI" };
+    }
+
+    @Override
+    public String[] getKnowledge()
+    {
+        return new String[] { "exothermic" };
     }
 
 }

@@ -22,12 +22,6 @@ public class ActiveAbilityHarden extends AbilityActive
     }
 
     @Override
-    public boolean canUse(ExtendedPlayerKnowledge charon, Event event)
-    {
-        return charon.hasKnowledge("density");
-    }
-
-    @Override
     public boolean isAvailable(ExtendedPlayerKnowledge charon)
     {
         return charon.hasKnowledge("density");
@@ -60,6 +54,12 @@ public class ActiveAbilityHarden extends AbilityActive
     public String[] getEnhancements()
     {
         return null;
+    }
+
+    @Override
+    public String[] getKnowledge()
+    {
+        return new String[] { "density" };
     }
 
 }

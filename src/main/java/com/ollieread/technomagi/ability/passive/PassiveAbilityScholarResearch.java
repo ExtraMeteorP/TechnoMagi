@@ -21,15 +21,15 @@ public class PassiveAbilityScholarResearch extends AbilityPassive<ResearchProgre
     }
 
     @Override
-    public boolean canUse(ExtendedPlayerKnowledge charon)
-    {
-        return true;
-    }
-
-    @Override
     public boolean isAvailable(ExtendedPlayerKnowledge charon)
     {
         return charon.isSpecialisation(Specialisations.specScholar.getName());
+    }
+
+    @Override
+    public boolean canUse(ExtendedPlayerKnowledge charon)
+    {
+        return true;
     }
 
     @Override
@@ -54,6 +54,12 @@ public class PassiveAbilityScholarResearch extends AbilityPassive<ResearchProgre
         }
 
         // event.modifier = (int) Math.round(modifier);
+    }
+
+    @Override
+    public String[] getKnowledge()
+    {
+        return null;
     }
 
 }

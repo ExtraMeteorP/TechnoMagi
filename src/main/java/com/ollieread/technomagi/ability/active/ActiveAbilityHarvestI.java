@@ -23,12 +23,6 @@ public class ActiveAbilityHarvestI extends AbilityActive
     }
 
     @Override
-    public boolean canUse(ExtendedPlayerKnowledge charon, Event event)
-    {
-        return charon.hasKnowledge("harvestI");
-    }
-
-    @Override
     public boolean isAvailable(ExtendedPlayerKnowledge charon)
     {
         return charon.hasKnowledge("harvestI");
@@ -70,5 +64,11 @@ public class ActiveAbilityHarvestI extends AbilityActive
     public String[] getEnhancements()
     {
         return null;
+    }
+
+    @Override
+    public String[] getKnowledge()
+    {
+        return new String[] { "harvestI" };
     }
 }

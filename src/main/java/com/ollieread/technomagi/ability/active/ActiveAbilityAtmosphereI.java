@@ -22,12 +22,6 @@ public class ActiveAbilityAtmosphereI extends AbilityActive
     }
 
     @Override
-    public boolean canUse(ExtendedPlayerKnowledge charon, Event event)
-    {
-        return true;
-    }
-
-    @Override
     public boolean isAvailable(ExtendedPlayerKnowledge charon)
     {
         return true;
@@ -58,6 +52,12 @@ public class ActiveAbilityAtmosphereI extends AbilityActive
 
     @Override
     public String[] getEnhancements()
+    {
+        return null;
+    }
+
+    @Override
+    public String[] getKnowledge()
     {
         return null;
     }

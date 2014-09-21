@@ -58,4 +58,10 @@ public class PassiveAbilityNanites extends AbilityPassive<PlayerTickEvent>
             }
         }
     }
+
+    @Override
+    public String[] getKnowledge()
+    {
+        return null;
+    }
 }

@@ -23,13 +23,13 @@ public class PassiveAbilityNegateFall extends AbilityPassive<LivingFallEvent>
     }
 
     @Override
-    public boolean canUse(ExtendedPlayerKnowledge charon)
+    public boolean isAvailable(ExtendedPlayerKnowledge charon)
     {
         return true;
     }
 
     @Override
-    public boolean isAvailable(ExtendedPlayerKnowledge charon)
+    public boolean canUse(ExtendedPlayerKnowledge charon)
     {
         return true;
     }
@@ -62,5 +62,11 @@ public class PassiveAbilityNegateFall extends AbilityPassive<LivingFallEvent>
                 ExplosionHelper.newFallExplosion(player.worldObj, player, player.posX, player.posY, player.posZ, size * 2);
             }
         }
+    }
+
+    @Override
+    public String[] getKnowledge()
+    {
+        return null;
     }
 }
