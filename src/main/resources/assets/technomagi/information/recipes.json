@@ -1,0 +1,122 @@
+{
+    "item.unit.lifeUnitBasic.name": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique."
+    ],
+    "item.unit.lifeUnitAdvanced.name": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique."
+    ],
+    "item.unit.lifeUnitElite.name": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique."
+    ],
+    "item.unit.subspaceUnitBasic.name": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique."
+    ],
+    "item.unit.subspaceUnitAdvanced.name": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique."
+    ],
+    "item.unit.subspaceUnitElite.name": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique."
+    ],
+    "item.unit.teleportUnitBasic.name": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique."
+    ],
+    "item.unit.teleportUnitAdvanced.name": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique."
+    ],
+    "item.unit.teleportUnitElite.name": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique."
+    ],
+    "item.unit.naniteUnitBasic.name": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique."
+    ],
+    "item.unit.naniteUnitAdvanced.name": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique."
+    ],
+    "item.unit.naniteUnitElite.name": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique."
+    ],
+    "item.unit.powerUnitBasic.name": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique."
+    ],
+    "item.unit.powerUnitAdvanced.name": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique."
+    ],
+    "item.unit.powerUnitElite.name": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique."
+    ],
+    "item.unit.exoUnitBasic.name": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique."
+    ],
+    "item.unit.exoUnitAdvanced.name": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique."
+    ],
+    "item.unit.exoUnitElite.name": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique."
+    ],
+    "item.unit.endoUnitBasic.name": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique."
+    ],
+    "item.unit.endoUnitAdvanced.name": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique."
+    ],
+    "item.unit.endoUnitElite.name": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique."
+    ],
+    "item.unit.forceUnitBasic.name": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique."
+    ],
+    "item.unit.forceUnitAdvanced.name": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique."
+    ],
+    "item.unit.forceUnitElite.name": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed imperdiet dolor, nec facilisis urna. Nulla quis neque ut odio aliquet blandit. Sed lacus quam, scelerisque non nulla vitae, porttitor rhoncus arcu. Quisque tempus nulla ac consectetur tristique."
+    ]
+}

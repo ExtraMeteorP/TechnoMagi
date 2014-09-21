@@ -1,7 +1,14 @@
 technomagi.analysis.gui=Item Analysis
 technomagi.analyse.button=Analyse
-technomagi.archive.gui=Knowledge Archive
-technomagi.archive.entries=Entries
+
+technomagi.archive.name.main=Archive
+technomagi.archive.name.info=Information
+technomagi.archive.name.knowledge=Knowledge Topics
+technomagi.archive.name.abilities=Abilities
+technomagi.archive.name.recipes=Recipes
+technomagi.archive.name.construct=Construct Recipes
+technomagi.archive.name.reactive=Reactive Crafting
+
 technomagi.construct.gui=Nanite Construct
 technomagi.build.button=Build
 technomagi.crafter.gui=Crafter
