@@ -4,5 +4,29 @@
     "In a last ditch attempt to continue the order, the elders gathered the initiates that they were protecting and performed their rites, which would make them a fully fledged member of the order. The elders equipped each initiate with internal nanites and prepared to send them to alternate worlds, instances, dimensions and universes, where they would be safe from the onslaught. Each initiate's nanites were equipped with the basics of the knowledge that the the order had accumulated over the many years since they first came to be.",
     "Unfortunately as the elders were performing the final part of the process the zealots broke through into the archives and interrupted, causing all the initiates to be thrown into the void, scattered across the known universes, cut off from home, dead or alive.",
     "You were one of those initiates, your job is to survive, collect knowledge, explore and understand, and try to contact any others who may have survived."
+  ],
+  "nanites": [
+    "Nanites are the main power source for a TechnoMage. They work in the same way that mana would do.",
+    "Your internal nanites provide a host of features, allowing you to react and perform actions that a normal human wouldn't be able to do.",
+    "Nanites can also be extracted and cultured to work with other hosts. They can also be extracted and used on non-organic matter for such things as construction."
+  ],
+  "staff": [
+    "The staff is an important item for all TechnoMages, as well as providing a focus tool your nanites can also interact with it.",
+    "No matter how much data or knowledge your nanites have, there are certain things they simply cannot do as it's outside the realm of possibility. The staff works as a host for enhancements, that the nanites can interact with to perform said actions."
+  ],
+  "enhancements": [
+    "Enhancement units are used for fine tuning and enhancing machines and items alike.",
+    "Their primary use is for enhancing the staff, allowing nanites to interact and perform abilities they normally wouldn't be able to."
+  ],
+  "etherium": [
+    "Not much is known about etherium. All that we know is that it isn't a naturally spawning element within the universe and realms that the TechnoMages originally called home.",
+    "We do not know why, but nanites are drawn towards etherium and can interact with it on a level that has not been seen before within any other element or item, not even other nanites.",
+    "Because of this, Etherium is an extremely sort after material as it can be used to craft tools, weapons and armour that react with the owners nanites."
+  ],
+  "relux": [
+    "Relux is a material that is created by focusing light in on a single atom over and over again. This creates a material that glows with a pinkish light, and is so dense that it appears to have physical properties.",
+    "Despite this, relux has no mass what so ever, which has been the source of much confusion.",
+    "Relux is often used to create platforms and walkways which gives the appearance of the user walking through the air.",
+    "Since Relux does not have any mass, any energy exerted on it is immediately nullified. Many have speculated that this is because it absorbs the energy, where others believe that the energy is not nullified, but simply passes through the Relux, as energy in of itself does not have any mass."
   ]
 }

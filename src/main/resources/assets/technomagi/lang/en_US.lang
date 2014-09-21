@@ -29,6 +29,15 @@ specialisation.scholar=Scholar
 specialisation.medic=Sage
 specialisation.warrior=Guardian
 
+info.story=Backstory
+info.staff=TechnoMage Staff
+info.nanites=Nanites
+info.enhancements=Enhancement Units
+info.etherium=Etherium
+info.relux=Relux
+info.void=The Void
+info.subspace=Subspace
+
 ability.active.fire=Pyromancy
 ability.active.harden=Harden Skin
 ability.active.invisibility=Vanish
