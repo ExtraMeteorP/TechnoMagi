@@ -33,6 +33,9 @@ public class Information
         } catch (IOException e) {
             TechnoMagi.logger.warn("Unable to load information for: " + name);
             e.printStackTrace();
+        } catch (Exception e) {
+            TechnoMagi.logger.warn("Unable to load information for: " + name);
+            e.printStackTrace();
         }
     }
 
@@ -64,6 +67,6 @@ public class Information
             }
         }
 
-        return null;
+        return "";
     }
 }
