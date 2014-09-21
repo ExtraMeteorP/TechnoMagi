@@ -19,6 +19,7 @@ import com.ollieread.technomagi.common.init.Entities;
 import com.ollieread.technomagi.common.init.Items;
 import com.ollieread.technomagi.common.init.Knowledge;
 import com.ollieread.technomagi.common.init.Potions;
+import com.ollieread.technomagi.common.init.Recipes;
 import com.ollieread.technomagi.common.init.Specialisations;
 import com.ollieread.technomagi.creativetab.CreativeTabTM;
 import com.ollieread.technomagi.network.PacketHandler;
@@ -60,11 +61,10 @@ public class TechnoMagi
         Specialisations.init();
         Knowledge.init();
         Abilities.init();
-
         Entities.init();
-
         Items.init();
         Blocks.init();
+        Recipes.init();
 
         Potion[] potionTypes = null;
 
@@ -102,8 +102,10 @@ public class TechnoMagi
     @EventHandler
     public void post(FMLPostInitializationEvent event)
     {
+        Information.load("info");
         Information.load("specialisations");
         Information.load("knowledge");
+        Information.load("recipes");
     }
 
 }
