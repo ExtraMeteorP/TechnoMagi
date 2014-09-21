@@ -8,7 +8,7 @@ import net.minecraftforge.common.MinecraftForge;
 import com.ollieread.ennds.EnndsRegistry;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.client.gui.GuiAnalysis;
-import com.ollieread.technomagi.client.gui.GuiArchiveKnowledge;
+import com.ollieread.technomagi.client.gui.GuiArchive;
 import com.ollieread.technomagi.client.gui.GuiConstruct;
 import com.ollieread.technomagi.client.gui.GuiCrafting;
 import com.ollieread.technomagi.client.gui.GuiNaniteReplicator;
@@ -17,6 +17,13 @@ import com.ollieread.technomagi.client.gui.GuiSelf;
 import com.ollieread.technomagi.client.gui.GuiSpecialisation;
 import com.ollieread.technomagi.client.gui.GuiStaff;
 import com.ollieread.technomagi.client.gui.GuiTeleporter;
+import com.ollieread.technomagi.client.gui.archive.GuiArchiveAbilities;
+import com.ollieread.technomagi.client.gui.archive.GuiArchiveConstruct;
+import com.ollieread.technomagi.client.gui.archive.GuiArchiveCrafting;
+import com.ollieread.technomagi.client.gui.archive.GuiArchiveInfo;
+import com.ollieread.technomagi.client.gui.archive.GuiArchiveKnowledge;
+import com.ollieread.technomagi.client.gui.archive.GuiArchiveMain;
+import com.ollieread.technomagi.client.gui.archive.GuiArchiveReactive;
 import com.ollieread.technomagi.event.handler.EnndsEventHandler;
 import com.ollieread.technomagi.event.handler.ItemEventHandler;
 import com.ollieread.technomagi.event.handler.PlayerEventHandler;
@@ -138,7 +145,39 @@ public class CommonProxy implements IGuiHandler
             TileEntityArchive archive = (TileEntityArchive) world.getTileEntity(x, y, z);
 
             if (archive != null) {
-                return new GuiArchiveKnowledge(player, archive);
+                int type = archive.getType();
+                GuiArchive gui = null;
+
+                switch (type) {
+                    case 1:
+                        gui = new GuiArchiveInfo(player, archive);
+                        break;
+                    case 2:
+                        gui = new GuiArchiveKnowledge(player, archive);
+                        break;
+                    case 3:
+                        gui = new GuiArchiveAbilities(player, archive);
+                        break;
+                    case 4:
+                        gui = new GuiArchiveCrafting(player, archive);
+                        break;
+                    case 5:
+                        gui = new GuiArchiveConstruct(player, archive);
+                        break;
+                    case 6:
+                        gui = new GuiArchiveReactive(player, archive);
+                        break;
+                    default:
+                        gui = new GuiArchiveMain(player, archive);
+                }
+
+                if (gui != null) {
+                    gui.setType(type);
+                    gui.setSubType(archive.getSubType());
+                    gui.setPage(archive.getPage());
+
+                    return gui;
+                }
             }
         } else if (ID == GUI_CRAFTING) {
             TileEntityCrafting crafter = (TileEntityCrafting) world.getTileEntity(x, y, z);
