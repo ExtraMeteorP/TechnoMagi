@@ -21,6 +21,10 @@ import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.inventory.ContainerArchive;
 import com.ollieread.technomagi.tileentity.TileEntityArchive;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
+@SideOnly(Side.CLIENT)
 public abstract class GuiArchive extends GuiContainer
 {
 

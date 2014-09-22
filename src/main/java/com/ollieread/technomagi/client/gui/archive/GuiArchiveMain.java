@@ -13,6 +13,10 @@ import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.tileentity.TileEntityArchive;
 import com.ollieread.technomagi.util.PacketHelper;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
+@SideOnly(Side.CLIENT)
 public class GuiArchiveMain extends GuiArchive
 {
 

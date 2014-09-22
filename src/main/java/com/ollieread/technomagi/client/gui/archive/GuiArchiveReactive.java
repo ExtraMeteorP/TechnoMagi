@@ -5,6 +5,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import com.ollieread.technomagi.client.gui.GuiArchive;
 import com.ollieread.technomagi.tileentity.TileEntityArchive;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
+@SideOnly(Side.CLIENT)
 public class GuiArchiveReactive extends GuiArchive
 {
 

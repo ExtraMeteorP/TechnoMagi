@@ -28,6 +28,10 @@ import com.ollieread.technomagi.item.crafting.ShapedRecipe;
 import com.ollieread.technomagi.tileentity.TileEntityArchive;
 import com.ollieread.technomagi.util.PacketHelper;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
+@SideOnly(Side.CLIENT)
 public class GuiArchiveCrafting extends GuiArchive
 {
 
@@ -162,6 +166,8 @@ public class GuiArchiveCrafting extends GuiArchive
                 boolean can = true;
                 int w = 0;
                 int h = 0;
+                String type = "";
+                String knowledge = "";
 
                 if (o instanceof IRecipe) {
                     IRecipe recipe = (IRecipe) o;
@@ -173,10 +179,11 @@ public class GuiArchiveCrafting extends GuiArchive
 
                     w = ((ShapedRecipes) recipe).recipeWidth;
                     h = ((ShapedRecipes) recipe).recipeHeight;
+                    type = "Vanilla";
                 } else if (o instanceof IRecipeTM) {
                     IRecipeTM recipe = (IRecipeTM) o;
                     output = recipe.getRecipeOutput();
-                    String knowledge = recipe.getKnowledge();
+                    knowledge = recipe.getKnowledge();
 
                     if (knowledge != null && !knowledge.equals("")) {
                         can = playerKnowledge.hasKnowledge(knowledge);
@@ -188,11 +195,13 @@ public class GuiArchiveCrafting extends GuiArchive
 
                     w = ((ShapedRecipe) recipe).width;
                     h = ((ShapedRecipe) recipe).height;
+                    type = "TechnoMagi";
                 }
 
                 this.drawItemStack(output, 9, 50, "");
+                String name = output.getUnlocalizedName().replaceAll("item.", "").replaceAll(".name", "").replaceAll("tile.", "");
                 int progress = 0;
-                String content = Information.getInformation("recipes", output.getUnlocalizedName());
+                String content = Information.getInformation("recipes", name);
 
                 drawStringPage(content, 9, 70, 158, 144, !can);
 
@@ -201,6 +210,23 @@ public class GuiArchiveCrafting extends GuiArchive
                 } else {
                     obfFontRendererObj.drawString(output.getDisplayName(), 28, 55, 5097727);
                 }
+
+                GL11.glPushMatrix();
+                GL11.glScalef(0.8F, 0.8F, 0.8F);
+                GL11.glTranslatef(45F, 26F, 0.0F);
+
+                fontRendererObj.drawString("Type", 178, 105, 5097727);
+                fontRendererObj.drawString(type, 178, 115, 16777215);
+
+                fontRendererObj.drawString("Knowledge", 178, 130, 5097727);
+
+                if (can) {
+                    fontRendererObj.drawSplitString((knowledge == null || knowledge.isEmpty()) ? "None" : I18n.format("knowledge." + name), 178, 140, 51, 16777215);
+                } else {
+                    obfFontRendererObj.drawSplitString((knowledge == null || knowledge.isEmpty()) ? "None" : I18n.format("knowledge." + name), 178, 140, 51, 16777215);
+                }
+
+                GL11.glPopMatrix();
 
                 for (int r = 0; r < w; r++) {
                     for (int c = 0; c < h; c++) {
