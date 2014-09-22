@@ -2,11 +2,13 @@ package com.ollieread.technomagi.event.handler;
 
 import net.minecraft.item.ItemStack;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.ollieread.ennds.ability.AbilityRegistry;
+import com.ollieread.ennds.event.EnndsEvent.KnowledgeProgressEvent;
 import com.ollieread.ennds.event.EnndsEvent.KnowledgeUnlockedEvent;
-import com.ollieread.ennds.event.EnndsEvent.ResearchProgressEvent;
 import com.ollieread.ennds.event.EnndsEvent.SpecialisationChosenEvent;
-import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
+import com.ollieread.ennds.research.ResearchRegistry;
 import com.ollieread.technomagi.common.init.Items;
 import com.ollieread.technomagi.item.ItemStaff;
 import com.ollieread.technomagi.util.EntityHelper;
@@ -21,7 +23,6 @@ public class EnndsEventHandler
     public void onSpecialisationChosen(SpecialisationChosenEvent event)
     {
         if (!event.entityPlayer.worldObj.isRemote) {
-            ExtendedPlayerKnowledge charon = ExtendedPlayerKnowledge.get(event.entityPlayer);
             EntityHelper.addTranslatedChatMessage(event.entityPlayer, "message.specialisation.chosen");
             EntityHelper.addTranslatedChatMessage(event.entityPlayer, "message.specialisation.chosen." + event.specialisation.getName());
 
@@ -32,7 +33,17 @@ public class EnndsEventHandler
                 event.entityPlayer.inventory.setInventorySlotContents(event.entityPlayer.inventory.currentItem, staff);
             }
 
-            AbilityRegistry.passiveAbilityEvent("specialisation", event, charon);
+            AbilityRegistry.passiveAbilityEvent("specialisation", event, event.charon);
+            ResearchRegistry.researchEvent("specialisation", event, event.charon, false);
+        }
+    }
+
+    @SubscribeEvent
+    public void onKnowledgeProgress(KnowledgeProgressEvent event)
+    {
+        if (!event.entityPlayer.worldObj.isRemote) {
+            AbilityRegistry.passiveAbilityEvent("knowledgeProgress", event, event.charon);
+            ResearchRegistry.researchEvent("knowledgeProgress", event, event.charon, false);
         }
     }
 
@@ -42,14 +53,7 @@ public class EnndsEventHandler
         if (!event.entityPlayer.worldObj.isRemote) {
             EntityHelper.addTranslatedChatMessage(event.entityPlayer, "message.knowledge.unlocked");
             EntityHelper.addTranslatedChatMessage(event.entityPlayer, "message.knowledge.unlocked." + event.knowledge.getName());
-        }
-    }
-
-    @SubscribeEvent
-    public void onResearchProgress(ResearchProgressEvent event)
-    {
-        if (!event.entityPlayer.worldObj.isRemote) {
-            AbilityRegistry.passiveAbilityEvent("researchProgress", event, event.charon);
+            ResearchRegistry.researchEvent("knowledge" + StringUtils.capitalize(event.knowledge.getName()), event, event.charon, false);
         }
     }
 

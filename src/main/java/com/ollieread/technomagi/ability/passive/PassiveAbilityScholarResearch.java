@@ -1,12 +1,12 @@
 package com.ollieread.technomagi.ability.passive;
 
 import com.ollieread.ennds.ability.AbilityPassive;
-import com.ollieread.ennds.event.EnndsEvent.ResearchProgressEvent;
+import com.ollieread.ennds.event.EnndsEvent.KnowledgeProgressEvent;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.common.init.Specialisations;
 
-public class PassiveAbilityScholarResearch extends AbilityPassive<ResearchProgressEvent>
+public class PassiveAbilityScholarResearch extends AbilityPassive<KnowledgeProgressEvent>
 {
 
     public PassiveAbilityScholarResearch(String name)
@@ -33,7 +33,7 @@ public class PassiveAbilityScholarResearch extends AbilityPassive<ResearchProgre
     }
 
     @Override
-    public void use(ResearchProgressEvent event, ExtendedPlayerKnowledge charon)
+    public void use(KnowledgeProgressEvent event, ExtendedPlayerKnowledge charon)
     {
         int progress = event.progress;
         int current = event.current;

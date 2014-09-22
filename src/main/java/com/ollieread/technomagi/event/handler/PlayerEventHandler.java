@@ -62,9 +62,9 @@ public class PlayerEventHandler
 
             if (world.provider.dimensionId != 0) {
                 if (world.provider.dimensionId == -1) {
-                    ResearchRegistry.researchEvent("toNether", event, ExtendedPlayerKnowledge.get((EntityPlayer) event.entity));
+                    ResearchRegistry.researchEvent("toNether", event, ExtendedPlayerKnowledge.get((EntityPlayer) event.entity), true);
                 } else if (world.provider.dimensionId == 1) {
-                    ResearchRegistry.researchEvent("toEnd", event, ExtendedPlayerKnowledge.get((EntityPlayer) event.entity));
+                    ResearchRegistry.researchEvent("toEnd", event, ExtendedPlayerKnowledge.get((EntityPlayer) event.entity), true);
                 }
             }
         }
@@ -117,7 +117,7 @@ public class PlayerEventHandler
                         Block block = event.world.getBlock(event.x, event.y, event.z);
 
                         if (block.isFlammable(event.world, event.x, event.y, event.z, ForgeDirection.getOrientation(event.face))) {
-                            ResearchRegistry.researchEvent("useFlintAndSteel", event, ExtendedPlayerKnowledge.get(event.entityPlayer));
+                            ResearchRegistry.researchEvent("useFlintAndSteel", event, ExtendedPlayerKnowledge.get(event.entityPlayer), true);
                         }
                     }
                 }
@@ -168,10 +168,10 @@ public class PlayerEventHandler
                     String entityName = (String) EntityList.classToStringMapping.get(entityClass);
 
                     AbilityRegistry.passiveAbilityEvent("damage" + StringUtils.capitalize(event.source.damageType) + entityName + "Attack", event, ExtendedPlayerKnowledge.get(player));
-                    ResearchRegistry.researchEvent("damage" + StringUtils.capitalize(event.source.damageType) + entityName + "Attack", event, ExtendedPlayerKnowledge.get(player));
+                    ResearchRegistry.researchEvent("damage" + StringUtils.capitalize(event.source.damageType) + entityName + "Attack", event, ExtendedPlayerKnowledge.get(player), true);
                 } else {
                     AbilityRegistry.passiveAbilityEvent("damage" + StringUtils.capitalize(event.source.damageType), event, ExtendedPlayerKnowledge.get(player));
-                    ResearchRegistry.researchEvent("damage" + StringUtils.capitalize(event.source.damageType), event, ExtendedPlayerKnowledge.get(player));
+                    ResearchRegistry.researchEvent("damage" + StringUtils.capitalize(event.source.damageType), event, ExtendedPlayerKnowledge.get(player), true);
                 }
             } else {
                 Class entityClass = event.entityLiving.getClass();
@@ -204,7 +204,7 @@ public class PlayerEventHandler
         if (!event.entity.worldObj.isRemote) {
             if (event.entity instanceof EntityPlayer) {
                 AbilityRegistry.passiveAbilityEvent("fall", event, ExtendedPlayerKnowledge.get((EntityPlayer) event.entity));
-                ResearchRegistry.researchEvent("fall", event, ExtendedPlayerKnowledge.get((EntityPlayer) event.entity));
+                ResearchRegistry.researchEvent("fall", event, ExtendedPlayerKnowledge.get((EntityPlayer) event.entity), true);
             } else {
                 Class entityClass = event.entityLiving.getClass();
                 String entityName = (String) EntityList.classToStringMapping.get(entityClass);
@@ -283,7 +283,7 @@ public class PlayerEventHandler
     {
         if (!event.entityLiving.worldObj.isRemote) {
             if (event.entityLiving instanceof EntityPlayer) {
-                ResearchRegistry.researchEvent("enderTeleport", event, ExtendedPlayerKnowledge.get((EntityPlayer) event.entityLiving));
+                ResearchRegistry.researchEvent("enderTeleport", event, ExtendedPlayerKnowledge.get((EntityPlayer) event.entityLiving), true);
             } else if (event.entityLiving instanceof EntityEnderman) {
                 // ResearchRegistry.researchEvent("endermanTeleport", event,
                 // ExtendedPlayerKnowledge.get((EntityEnderman)
