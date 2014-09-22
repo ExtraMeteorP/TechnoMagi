@@ -34,6 +34,8 @@ public class TileEntityNaniteReplicator extends TileEntityTM implements IPlayerL
     protected int working = 0;
     protected Random rand = new Random();
 
+    protected int powerUsage = 4;
+
     public TileEntityNaniteReplicator()
     {
         locked = new PlayerLocked();
@@ -126,37 +128,40 @@ public class TileEntityNaniteReplicator extends TileEntityTM implements IPlayerL
     protected void replicate()
     {
         boolean flag = false;
-        if (sampleType.equals(naniteType)) {
-            // if (storage.extractEnergy(2, true) == 2) {
-            // storage.extractEnergy(2, false);
-            working++;
 
-            if (working >= 60) {
-                working = 0;
-                sample--;
-                nanites--;
-                progress++;
-                flag = true;
-            }
-            // }
-        } else {
-            if (naniteType.equals("player")) {
-
-                // if (storage.extractEnergy(5, true) == 5) {
-                // storage.extractEnergy(5, false);
+        if (storage.modifyEnergyStored(powerUsage)) {
+            if (sampleType.equals(naniteType)) {
+                // if (storage.extractEnergy(2, true) == 2) {
+                // storage.extractEnergy(2, false);
                 working++;
 
-                if (working >= 100) {
+                if (working >= 60) {
                     working = 0;
                     sample--;
                     nanites--;
+                    progress++;
                     flag = true;
-
-                    if (rand.nextInt(5) == 0) {
-                        progress++;
-                    }
                 }
                 // }
+            } else {
+                if (naniteType.equals("player")) {
+
+                    // if (storage.extractEnergy(5, true) == 5) {
+                    // storage.extractEnergy(5, false);
+                    working++;
+
+                    if (working >= 100) {
+                        working = 0;
+                        sample--;
+                        nanites--;
+                        flag = true;
+
+                        if (rand.nextInt(5) == 0) {
+                            progress++;
+                        }
+                    }
+                    // }
+                }
             }
         }
 
@@ -195,7 +200,7 @@ public class TileEntityNaniteReplicator extends TileEntityTM implements IPlayerL
          * System.out.println(progress < 100); System.out.println(sampleType ==
          * naniteType); System.out.println(naniteType == 1);
          */
-        return sample > 0 && nanites > 0 && progress < 100 && (sampleType == naniteType || naniteType.equals("player"));
+        return getEnergyStored() > powerUsage && sample > 0 && nanites > 0 && progress < 100 && (sampleType == naniteType || naniteType.equals("player"));
     }
 
     protected void populate()

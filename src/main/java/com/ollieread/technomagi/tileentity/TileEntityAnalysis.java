@@ -40,6 +40,8 @@ public class TileEntityAnalysis extends TileEntityResearch implements IPlayerLoc
 
     protected Random rand = new Random();
 
+    protected int powerUsage = 5;
+
     public TileEntityAnalysis()
     {
         locked = new PlayerLocked();
@@ -189,7 +191,7 @@ public class TileEntityAnalysis extends TileEntityResearch implements IPlayerLoc
                 return false;
             }
 
-            return true;
+            return getEnergyStored() > powerUsage;
         }
 
         return false;
@@ -197,30 +199,32 @@ public class TileEntityAnalysis extends TileEntityResearch implements IPlayerLoc
 
     public void analyse()
     {
-        ticks++;
+        if (storage.modifyEnergyStored(powerUsage)) {
+            ticks++;
 
-        if (ticks >= 20) {
-            ticks = 0;
-            progress++;
+            if (ticks >= 20) {
+                ticks = 0;
+                progress++;
+            }
+
+            if (progress >= 100) {
+                IResearchAnalysis analysis = getResearchAnalysis();
+                int c = rand.nextInt(((IResearch) analysis).getChance()) + 1;
+
+                IResearch research = (IResearch) analysis;
+                EntityPlayer player = worldObj.getPlayerEntityByName(getPlayer());
+
+                ResearchRegistry.researchAnalysis(Arrays.asList(inventory.getInventory()), ExtendedPlayerKnowledge.get(player), this, c);
+
+                data += research.getProgress();
+
+                reduceStacks(1);
+                setInProgress(false);
+                progress = 0;
+            }
+
+            sync();
         }
-
-        if (progress >= 100) {
-            IResearchAnalysis analysis = getResearchAnalysis();
-            int c = rand.nextInt(((IResearch) analysis).getChance()) + 1;
-
-            IResearch research = (IResearch) analysis;
-            EntityPlayer player = worldObj.getPlayerEntityByName(getPlayer());
-
-            ResearchRegistry.researchAnalysis(Arrays.asList(inventory.getInventory()), ExtendedPlayerKnowledge.get(player), this, c);
-
-            data += research.getProgress();
-
-            reduceStacks(1);
-            setInProgress(false);
-            progress = 0;
-        }
-
-        sync();
     }
 
     private IResearchAnalysis getResearchAnalysis()

@@ -47,6 +47,8 @@ public class TileEntityCrafting extends TileEntityTM implements IPlayerLocked, I
     public float field_145924_q;
     private static Random field_145923_r = new Random();
 
+    protected int powerUsage = 2;
+
     public TileEntityCrafting()
     {
         locked = new PlayerLocked();
@@ -198,11 +200,11 @@ public class TileEntityCrafting extends TileEntityTM implements IPlayerLocked, I
                     ItemStack result = inventory.getStackInSlot(9);
 
                     if (result == null) {
-                        return true;
+                        return getEnergyStored() > powerUsage;
                     }
 
                     if (result.isItemEqual(recipe) && (result.stackSize + recipe.stackSize) <= result.getMaxStackSize()) {
-                        return true;
+                        return getEnergyStored() > powerUsage;
                     }
                 }
             }
@@ -218,32 +220,34 @@ public class TileEntityCrafting extends TileEntityTM implements IPlayerLocked, I
 
     public void craft()
     {
-        ticks++;
+        if (storage.modifyEnergyStored(powerUsage)) {
+            ticks++;
 
-        if (ticks >= 20) {
-            ticks = 0;
-            progress++;
-        }
+            if (ticks >= 20) {
+                ticks = 0;
+                progress++;
+            }
 
-        if (progress >= 20) {
-            if (getPlayer() != null) {
-                EntityPlayer player = worldObj.getPlayerEntityByName(getPlayer());
+            if (progress >= 20) {
+                if (getPlayer() != null) {
+                    EntityPlayer player = worldObj.getPlayerEntityByName(getPlayer());
 
-                if (player != null) {
-                    ItemStack recipe = crafting.findMatchingRecipe(inventory, worldObj, player);
+                    if (player != null) {
+                        ItemStack recipe = crafting.findMatchingRecipe(inventory, worldObj, player);
 
-                    removeFromGrid(player, recipe);
+                        removeFromGrid(player, recipe);
 
-                    if (inventory.getStackInSlot(9) == null) {
-                        inventory.setInventorySlotContents(9, recipe.copy());
-                    } else if (inventory.getStackInSlot(9).isItemEqual(recipe)) {
-                        inventory.getStackInSlot(9).stackSize += recipe.stackSize;
+                        if (inventory.getStackInSlot(9) == null) {
+                            inventory.setInventorySlotContents(9, recipe.copy());
+                        } else if (inventory.getStackInSlot(9).isItemEqual(recipe)) {
+                            inventory.getStackInSlot(9).stackSize += recipe.stackSize;
+                        }
                     }
                 }
+                progress = 0;
+                ticks = 0;
+                setCrafting(false);
             }
-            progress = 0;
-            ticks = 0;
-            setCrafting(false);
         }
     }
 
