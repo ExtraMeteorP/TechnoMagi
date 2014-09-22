@@ -176,7 +176,7 @@ public class ItemStaff extends ItemTMNBT implements IStaff
     {
         setCurrentCast(stack, getCurrentCast(stack) + 1);
 
-        return false;
+        return true;
     }
 
     public void onPlayerStoppedUsing(ItemStack stack, World world, EntityPlayer player, int i)
