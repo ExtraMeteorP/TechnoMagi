@@ -13,6 +13,7 @@ import com.ollieread.technomagi.block.BlockCrafting;
 import com.ollieread.technomagi.block.BlockDisplacedAir;
 import com.ollieread.technomagi.block.BlockDisplacer;
 import com.ollieread.technomagi.block.BlockEmptyFiller;
+import com.ollieread.technomagi.block.BlockEtheriumOre;
 import com.ollieread.technomagi.block.BlockGenerator;
 import com.ollieread.technomagi.block.BlockHardlight;
 import com.ollieread.technomagi.block.BlockHardlightFence;
@@ -24,6 +25,7 @@ import com.ollieread.technomagi.block.BlockNaniteReplicator;
 import com.ollieread.technomagi.block.BlockObservationChamber;
 import com.ollieread.technomagi.block.BlockReactiveCrafting;
 import com.ollieread.technomagi.block.BlockTeleporter;
+import com.ollieread.technomagi.block.BlockVoidstone;
 import com.ollieread.technomagi.item.ItemBlockTM;
 import com.ollieread.technomagi.tileentity.TileEntityAnalysis;
 import com.ollieread.technomagi.tileentity.TileEntityArchive;
@@ -64,6 +66,8 @@ public class Blocks
     public static Block blockDisplacedAir;
     public static Block blockGenerator;
     public static Block blockReactiveCrafting;
+    public static Block blockEtheriumOre;
+    public static Block blockVoidstone;
 
     public static void init()
     {
@@ -88,6 +92,8 @@ public class Blocks
         blockDisplacedAir = new BlockDisplacedAir("displacedAir");
         blockGenerator = new BlockGenerator("generator");
         blockReactiveCrafting = new BlockReactiveCrafting("reactiveCrafting");
+        blockEtheriumOre = new BlockEtheriumOre("etheriumOre");
+        blockVoidstone = new BlockVoidstone("voidstone");
 
         GameRegistry.registerBlock(blockConstruct, "construct");
         GameRegistry.registerBlock(blockArchive, "archive");
@@ -108,6 +114,8 @@ public class Blocks
         GameRegistry.registerBlock(blockDisplacedAir, "displacedAir");
         GameRegistry.registerBlock(blockGenerator, ItemBlockTM.class, "generator");
         GameRegistry.registerBlock(blockReactiveCrafting, "reactiveCrafting");
+        GameRegistry.registerBlock(blockEtheriumOre, "etheriumOre");
+        GameRegistry.registerBlock(blockVoidstone, "voidstone");
 
         GameRegistry.registerTileEntity(TileEntityArchive.class, "tileEntityArchive");
         GameRegistry.registerTileEntity(TileEntityNaniteReplicator.class, "tileEntityNaniteReplicator");

@@ -17,6 +17,8 @@ import com.ollieread.technomagi.item.ItemStaff;
 import com.ollieread.technomagi.item.ItemTM;
 import com.ollieread.technomagi.item.ItemTMSubtypes;
 import com.ollieread.technomagi.item.ItemUnit;
+import com.ollieread.technomagi.item.ItemVoidCrystal;
+import com.ollieread.technomagi.item.ItemVoidIngot;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -36,6 +38,8 @@ public class Items
     public static ItemTMSubtypes itemComponent;
     public static ItemTMSubtypes itemUnit;
     public static ItemTM itemTechnomageStaff;
+    public static ItemTM itemVoidCrystal;
+    public static ItemTM itemVoidIngot;
 
     public static void init()
     {
@@ -54,6 +58,8 @@ public class Items
         itemComponent = new ItemComponent("component");
         itemUnit = new ItemUnit("unit");
         itemTechnomageStaff = new ItemStaff("technomageStaff");
+        itemVoidCrystal = new ItemVoidCrystal("voidCrystal");
+        itemVoidIngot = new ItemVoidIngot("voidIngot");
 
         GameRegistry.registerItem(itemTechnomageStaff, "technomageStaff");
         GameRegistry.registerItem(itemSampleVile, "sampleVile");
