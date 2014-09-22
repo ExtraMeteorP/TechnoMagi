@@ -1,8 +1,8 @@
 package com.ollieread.technomagi.item.crafting;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +13,7 @@ public class ConstructManager
 {
 
     private static final ConstructManager instance = new ConstructManager();
-    private Map<Block, List<ItemStack>> recipes = new HashMap<Block, List<ItemStack>>();
+    private Map<Block, List<ItemStack>> recipes = new LinkedHashMap<Block, List<ItemStack>>();
 
     public static final ConstructManager getInstance()
     {
@@ -67,5 +67,10 @@ public class ConstructManager
         }
 
         return null;
+    }
+
+    public Map<Block, List<ItemStack>> getRecipeList()
+    {
+        return this.recipes;
     }
 }
