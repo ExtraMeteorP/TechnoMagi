@@ -60,13 +60,17 @@ public class ActiveAbilityEndothermic extends AbilityActive
                                 Block result = Block.getBlockFromItem(resultStack.getItem());
 
                                 if (result != null) {
-                                    if (!interact.world.isRemote && charon.nanites.decreaseNanites(10)) {
-                                        interact.world.setBlock(x, y, z, Blocks.blockReactiveCrafting);
-                                        TileEntityReactiveCrafting reactive = (TileEntityReactiveCrafting) player.worldObj.getTileEntity(x, y, z);
+                                    if (charon.nanites.decreaseNanites(10)) {
+                                        if (!interact.world.isRemote) {
+                                            interact.world.setBlock(x, y, z, Blocks.blockReactiveCrafting);
+                                            TileEntityReactiveCrafting reactive = (TileEntityReactiveCrafting) player.worldObj.getTileEntity(x, y, z);
 
-                                        if (reactive != null) {
-                                            reactive.setResult(resultStack, (Integer) recipe.get(1), 1, new ItemStack(block, 1, meta));
+                                            if (reactive != null) {
+                                                reactive.setResult(resultStack, (Integer) recipe.get(1), 1, new ItemStack(block, 1, meta));
+                                            }
                                         }
+
+                                        return true;
                                     }
 
                                     return true;
