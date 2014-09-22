@@ -119,4 +119,9 @@ public class TileEntityReactiveCrafting extends TileEntityTM implements IDisguis
         return disguise.getDisguise();
     }
 
+    public int getType()
+    {
+        return type;
+    }
+
 }
