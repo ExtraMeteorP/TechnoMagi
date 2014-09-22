@@ -24,6 +24,7 @@ import com.ollieread.technomagi.common.init.Specialisations;
 import com.ollieread.technomagi.creativetab.CreativeTabTM;
 import com.ollieread.technomagi.network.PacketHandler;
 import com.ollieread.technomagi.util.ConfigHelper;
+import com.ollieread.technomagi.world.gen.OreGen;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -33,6 +34,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 @Mod(modid = Reference.MODID, version = Reference.VERSION, dependencies = "required-after:EnndsCore;required-after:CoFHAPI")
 public class TechnoMagi
@@ -97,6 +99,8 @@ public class TechnoMagi
         proxy.init();
 
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
+        GameRegistry.registerWorldGenerator(new OreGen(Blocks.blockEtheriumOre, 10, 70, 3, 3), 4);
+        GameRegistry.registerWorldGenerator(new OreGen(Blocks.blockVoidstone, 0, 10, 3, 3), 4);
     }
 
     @EventHandler
@@ -106,6 +110,7 @@ public class TechnoMagi
         Information.load("specialisations");
         Information.load("knowledge");
         Information.load("recipes");
+        Information.load("abilities");
     }
 
 }
