@@ -44,6 +44,7 @@ import com.ollieread.technomagi.util.SoundHelper;
 import com.ollieread.technomagi.util.TeleportHelper;
 import com.ollieread.technomagi.util.VersionChecker;
 
+import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.ItemSmeltedEvent;
@@ -77,13 +78,20 @@ public class PlayerEventHandler
         if (playerKnowledge != null && !playerKnowledge.canSpecialise()) {
             ItemStack heldItem = event.entityPlayer.getHeldItem();
 
-            if (heldItem != null && heldItem.getItem() != null && heldItem.getItem() instanceof IStaff) {
+            if (!event.action.equals(PlayerInteractEvent.Action.LEFT_CLICK_BLOCK) && heldItem != null && heldItem.getItem() != null && heldItem.getItem() instanceof IStaff) {
                 ExtendedPlayerAbilities abilities = playerKnowledge.abilities;
+                event.useBlock = Event.Result.DENY;
+                event.useItem = Event.Result.DENY;
 
                 if (abilities.useAbility(event, heldItem)) {
                     event.entityPlayer.swingItem();
-                    if (event.entityPlayer.worldObj.isRemote && event.isCanceled()) {
-                        PacketHandler.INSTANCE.sendToServer(new MessagePlayerInteractEvent(event));
+
+                    if (!event.entityPlayer.worldObj.isRemote) {
+                        SoundHelper.playSoundEffectAtPlayer(event.entityPlayer, "cast", new Random());
+                    } else {
+                        if (event.isCanceled()) {
+                            PacketHandler.INSTANCE.sendToServer(new MessagePlayerInteractEvent(event));
+                        }
                     }
                 } else {
                     if (!event.entityPlayer.worldObj.isRemote) {
