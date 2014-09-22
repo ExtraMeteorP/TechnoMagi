@@ -20,6 +20,8 @@ public class BlockDisplacer extends BlockTM
     public BlockDisplacer(String name)
     {
         super(Material.iron, name);
+
+        setCreativeTab(null);
     }
 
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack)

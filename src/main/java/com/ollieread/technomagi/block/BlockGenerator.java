@@ -23,6 +23,8 @@ public class BlockGenerator extends BlockTMContainer
     public BlockGenerator(String name)
     {
         super(Material.iron, name);
+
+        setCreativeTab(null);
     }
 
     @Override

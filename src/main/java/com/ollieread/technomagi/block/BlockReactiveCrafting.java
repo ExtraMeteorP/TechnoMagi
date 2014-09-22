@@ -1,6 +1,7 @@
 package com.ollieread.technomagi.block;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -22,6 +23,8 @@ public class BlockReactiveCrafting extends BlockTMContainer
     public BlockReactiveCrafting(String name)
     {
         super(Material.rock, name);
+
+        setCreativeTab(null);
     }
 
     @Override
@@ -93,6 +96,36 @@ public class BlockReactiveCrafting extends BlockTMContainer
         }
 
         return super.colorMultiplier(world, x, y, z);
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void randomDisplayTick(World world, int x, int y, int z, Random rand)
+    {
+        TileEntityReactiveCrafting reactive = (TileEntityReactiveCrafting) world.getTileEntity(x, y, z);
+
+        if (reactive != null && reactive.isCrafting()) {
+            float f = (float) x + 0.5F;
+            float f1 = (float) y + 0.0F + rand.nextFloat() * 6.0F / 16.0F;
+            float f2 = (float) z + 0.5F;
+            float f3 = 0.52F;
+            float f4 = rand.nextFloat() * 0.6F - 0.3F;
+
+            if (reactive.getType() == 0) {
+                world.spawnParticle("smoke", (double) (f - f3), (double) f1, (double) (f2 + f4), 0.0D, 0.0D, 0.0D);
+                world.spawnParticle("flame", (double) (f - f3), (double) f1, (double) (f2 + f4), 0.0D, 0.0D, 0.0D);
+                world.spawnParticle("smoke", (double) (f + f3), (double) f1, (double) (f2 + f4), 0.0D, 0.0D, 0.0D);
+                world.spawnParticle("flame", (double) (f + f3), (double) f1, (double) (f2 + f4), 0.0D, 0.0D, 0.0D);
+                world.spawnParticle("smoke", (double) (f + f4), (double) f1, (double) (f2 - f3), 0.0D, 0.0D, 0.0D);
+                world.spawnParticle("flame", (double) (f + f4), (double) f1, (double) (f2 - f3), 0.0D, 0.0D, 0.0D);
+                world.spawnParticle("smoke", (double) (f + f4), (double) f1, (double) (f2 + f3), 0.0D, 0.0D, 0.0D);
+                world.spawnParticle("flame", (double) (f + f4), (double) f1, (double) (f2 + f3), 0.0D, 0.0D, 0.0D);
+            } else {
+                world.spawnParticle("snowballpoof", (double) (f - f3), (double) f1, (double) (f2 + f4), 0.0D, 0.0D, 0.0D);
+                world.spawnParticle("snowballpoof", (double) (f + f3), (double) f1, (double) (f2 + f4), 0.0D, 0.0D, 0.0D);
+                world.spawnParticle("snowballpoof", (double) (f + f4), (double) f1, (double) (f2 - f3), 0.0D, 0.0D, 0.0D);
+                world.spawnParticle("snowballpoof", (double) (f + f4), (double) f1, (double) (f2 + f3), 0.0D, 0.0D, 0.0D);
+            }
+        }
     }
 
 }
