@@ -82,4 +82,16 @@ public class BasicEnergy implements IEnergyStorage, IEnergyConnection
         return energy.getMaxExtract();
     }
 
+    public boolean modifyEnergyStored(int energy)
+    {
+        int c = getEnergyStored();
+        this.energy.modifyEnergyStored(-energy);
+
+        if ((c - 5) == getEnergyStored()) {
+            return true;
+        }
+
+        return false;
+    }
+
 }

@@ -28,7 +28,7 @@ public class Disguisable implements IDisguisableTile
         if (stack.getItem() != null) {
             Block block = Block.getBlockFromItem(stack.getItem());
 
-            if (block != null && block.isNormalCube() && block.getRenderType() == 0) {
+            if (block != null && block.isNormalCube() && block.renderAsNormalBlock()) {
                 inventory.setInventorySlotContents(0, stack);
 
                 return true;
