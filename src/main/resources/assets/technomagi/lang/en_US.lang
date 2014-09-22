@@ -98,6 +98,8 @@ tile.hardlightFence.name=Hardlight Fence
 tile.displacer.name=Displacer
 tile.generator.0.name=Basic Generator
 tile.hardlight.name=Hardlight
+tile.etheriumOre.name=Etherium Ore
+tile.voidstone.name=Voidstone
 
 item.mobBrain.name=Brain
 item.sampleExtractor.name=Sample Extractor
@@ -120,7 +122,7 @@ item.component.goldDust.name=Gold Dust
 item.component.goldSheet.name=Gold Plate
 item.component.goldRod.name=Gold Rod
 item.component.diamondDust.name=Diamond Dust
-item.component.diamondPlate.name=Diamond Plate
+item.component.diamondSheet.name=Diamond Plate
 item.component.diamondRod.name=Diamond Rod
 item.component.basicPowerWater.name=Basic Energised Water
 item.unit.10.name=Analysis Unit
@@ -148,6 +150,9 @@ item.unit.endoUnitElite.name=Elite Endothermic Unit
 item.unit.forceUnitBasic.name=Basic Force Unit
 item.unit.forceUnitAdvanced.name=Advanced Force Unit
 item.unit.forceUnitElite.name=Elite Force Unit
+item.unit.voidUnitBasic.name=Basic Void Unit
+item.unit.voidUnitAdvanced.name=Advanced Void Unit
+item.unit.voidUnitElite.name=Elite Void Unit
 
 message.specialisation.chosen=You have activated your internal nanites, your first step towards rebuilding the TechnoMage order.
 message.specialisation.chosen.scholar=Your internal nanites have calibrated themselves to you, manifesting your internal desires, morals and ambitions, aligning you with the Scholar specialisation.
