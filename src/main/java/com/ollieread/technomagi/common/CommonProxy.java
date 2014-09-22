@@ -45,6 +45,8 @@ import com.ollieread.technomagi.tileentity.TileEntityTeleporter;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.IGuiHandler;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class CommonProxy implements IGuiHandler
 {
@@ -109,6 +111,7 @@ public class CommonProxy implements IGuiHandler
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
     {
         if (ID == GUI_TECHNOMAGI) {
