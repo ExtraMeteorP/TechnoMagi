@@ -60,7 +60,7 @@ public class MessageSyncTileEntityTM implements IMessage, IMessageHandler<Messag
             tile.readFromNBT(message.data);
 
             if (tile instanceof IDisguisableTile) {
-                FMLClientHandler.instance().getClient().theWorld.markBlockRangeForRenderUpdate(message.x, message.y, message.z, message.x, message.y, message.z);
+                tile.getWorldObj().markBlockRangeForRenderUpdate(message.x, message.y, message.z, message.x, message.y, message.z);
             }
         }
 
