@@ -5,22 +5,32 @@ import java.util.Set;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityEnderman;
+import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemFlintAndSteel;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
+import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.StartTracking;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
+import net.minecraftforge.event.entity.player.PlayerUseItemEvent;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 
 import org.apache.commons.lang3.StringUtils;
@@ -35,6 +45,8 @@ import com.ollieread.technomagi.block.IDigitalToolable;
 import com.ollieread.technomagi.common.init.Blocks;
 import com.ollieread.technomagi.common.init.Items;
 import com.ollieread.technomagi.common.init.Potions;
+import com.ollieread.technomagi.common.init.Research;
+import com.ollieread.technomagi.item.ItemStaff;
 import com.ollieread.technomagi.network.PacketHandler;
 import com.ollieread.technomagi.network.message.MessageEntityInteractEvent;
 import com.ollieread.technomagi.network.message.MessagePlayerInteractEvent;
@@ -112,12 +124,14 @@ public class PlayerEventHandler
             } else if (heldItem != null && heldItem.getItem() != null) {
                 ItemStack held = event.entityPlayer.getHeldItem();
 
-                if (held.getItem() instanceof ItemFlintAndSteel) {
+                if (Block.getBlockFromItem(held.getItem()) == null) {
                     if (event.action.equals(PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK)) {
-                        Block block = event.world.getBlock(event.x, event.y, event.z);
+                        if (held.getItem() instanceof ItemFlintAndSteel) {
+                            Block block = event.world.getBlock(event.x, event.y, event.z);
 
-                        if (block.isFlammable(event.world, event.x, event.y, event.z, ForgeDirection.getOrientation(event.face))) {
-                            ResearchRegistry.researchEvent("useFlintAndSteel", event, ExtendedPlayerKnowledge.get(event.entityPlayer), true);
+                            if (block.isFlammable(event.world, event.x, event.y, event.z, ForgeDirection.getOrientation(event.face))) {
+                                ResearchRegistry.researchEvent("useFlintAndSteel", event, ExtendedPlayerKnowledge.get(event.entityPlayer), true);
+                            }
                         }
                     }
                 }
@@ -133,18 +147,108 @@ public class PlayerEventHandler
         if (playerKnowledge != null && !playerKnowledge.canSpecialise()) {
             ItemStack heldItem = event.entityPlayer.getHeldItem();
 
-            if (heldItem != null && heldItem.getItem() != null && heldItem.getItem() instanceof IStaff) {
-                ExtendedPlayerAbilities abilities = playerKnowledge.abilities;
+            if (heldItem != null && heldItem.getItem() != null) {
+                if (heldItem.getItem() instanceof IStaff) {
+                    ExtendedPlayerAbilities abilities = playerKnowledge.abilities;
 
-                if (abilities.useAbility(event, heldItem)) {
-                    event.entityPlayer.swingItem();
-                    if (event.entityPlayer.worldObj.isRemote && event.isCanceled()) {
-                        PacketHandler.INSTANCE.sendToServer(new MessageEntityInteractEvent(event));
+                    if (abilities.useAbility(event, heldItem)) {
+                        event.entityPlayer.swingItem();
+                        if (event.entityPlayer.worldObj.isRemote && event.isCanceled()) {
+                            PacketHandler.INSTANCE.sendToServer(new MessageEntityInteractEvent(event));
+                        }
+                    } else {
+                        if (!event.entityPlayer.worldObj.isRemote) {
+                            SoundHelper.playSoundEffectAtPlayer(event.entityPlayer, "fail", new Random());
+                        }
                     }
-                } else {
-                    if (!event.entityPlayer.worldObj.isRemote) {
-                        SoundHelper.playSoundEffectAtPlayer(event.entityPlayer, "fail", new Random());
+                } else if (event.entityLiving instanceof EntityAnimal) {
+                    if (((EntityAnimal) event.entityLiving).isBreedingItem(heldItem)) {
+                        Class entityClass = event.entityLiving.getClass();
+                        String entityName = (String) EntityList.classToStringMapping.get(entityClass);
+
+                        if (entityName != null && !entityName.isEmpty()) {
+                            ResearchRegistry.researchEvent("breeding" + StringUtils.capitalize(entityName), event, playerKnowledge, true);
+                        }
+                    } else if (event.entityLiving instanceof EntitySheep) {
+                        if (((EntitySheep) event.entityLiving).isShearable(heldItem, event.entityLiving.worldObj, (int) event.entityLiving.posX, (int) event.entityLiving.posY, (int) event.entityLiving.posZ)) {
+                            ResearchRegistry.researchEvent("shearedSheep", event, playerKnowledge, true);
+                        }
                     }
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onAttackEntity(AttackEntityEvent event)
+    {
+        if (!event.entityLiving.worldObj.isRemote) {
+            EntityPlayer player = event.entityPlayer;
+            EntityLivingBase entity = event.entityLiving;
+
+            String entityName = (String) EntityList.classToStringMapping.get(entity.getClass());
+
+            if (entityName != null) {
+                ResearchRegistry.researchEvent("attacked" + StringUtils.capitalize(entityName), event, ExtendedPlayerKnowledge.get(player), true);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onLivingAttack(LivingAttackEvent event)
+    {
+        if (!event.entityLiving.worldObj.isRemote) {
+            String researchName = null;
+            String damageName = null;
+            EntityPlayer player = null;
+
+            if (event.entityLiving instanceof EntityPlayer) {
+                player = (EntityPlayer) event.entityLiving;
+                String entityName = null;
+
+                if (event.source instanceof EntityDamageSourceIndirect) {
+                    if (event.source.getEntity() instanceof EntityLivingBase) {
+                        EntityLivingBase entity = (EntityLivingBase) event.source.getEntity();
+                        entityName = (String) EntityList.classToStringMapping.get(entity.getClass());
+                    }
+                } else if (event.source instanceof EntityDamageSource) {
+                    EntityLivingBase entity = (EntityLivingBase) event.source.getEntity();
+                    entityName = (String) EntityList.classToStringMapping.get(entity.getClass());
+                }
+
+                damageName = event.source.damageType;
+
+                if (entityName != null && !entityName.isEmpty()) {
+                    researchName = "attackedBy" + StringUtils.capitalize(entityName);
+                }
+            } else {
+                EntityLivingBase entity = null;
+                if (event.source instanceof EntityDamageSourceIndirect) {
+                    if (event.source.getEntity() instanceof EntityLivingBase) {
+                        entity = (EntityLivingBase) event.source.getEntity();
+                    }
+                } else if (event.source instanceof EntityDamageSource) {
+                    entity = (EntityLivingBase) event.source.getEntity();
+                }
+
+                damageName = event.source.damageType;
+
+                if (entity != null && entity instanceof EntityPlayer) {
+                    EntityLivingBase subject = event.entityLiving;
+                    String entityName = (String) EntityList.classToStringMapping.get(entity.getClass());
+
+                    if (entityName != null && !entityName.isEmpty()) {
+                        researchName = "attacked" + StringUtils.capitalize(entityName);
+                    }
+                }
+            }
+
+            if (player != null && researchName != null) {
+                ResearchRegistry.researchEvent(researchName, event, ExtendedPlayerKnowledge.get(player), true);
+                AbilityRegistry.passiveAbilityEvent(researchName, event, ExtendedPlayerKnowledge.get(player));
+
+                if (damageName != null) {
+                    ResearchRegistry.researchEvent(researchName + StringUtils.capitalize(damageName), event, ExtendedPlayerKnowledge.get(player), true);
                 }
             }
         }
@@ -156,44 +260,97 @@ public class PlayerEventHandler
         if (!event.entityLiving.worldObj.isRemote) {
             if (event.entityLiving instanceof EntityPlayer) {
                 EntityPlayer player = (EntityPlayer) event.entity;
+                ExtendedPlayerKnowledge charon = ExtendedPlayerKnowledge.get(player);
 
-                if (event.source instanceof EntityDamageSource) {
+                if (event.source instanceof EntityDamageSource || event.source instanceof EntityDamageSourceIndirect) {
                     if (event.source.equals(DamageSource.generic) || event.source.equals(DamageSource.anvil) || event.source.equals(DamageSource.cactus) || event.source.equals(DamageSource.fall) || event.source.equals(DamageSource.fallingBlock)) {
                         if (player.isPotionActive(Potions.potionHardness)) {
                             event.ammount = event.ammount / 2;
                         }
                     }
-
-                    Class entityClass = event.source.getEntity().getClass();
-                    String entityName = (String) EntityList.classToStringMapping.get(entityClass);
-
-                    AbilityRegistry.passiveAbilityEvent("damage" + StringUtils.capitalize(event.source.damageType) + entityName + "Attack", event, ExtendedPlayerKnowledge.get(player));
-                    ResearchRegistry.researchEvent("damage" + StringUtils.capitalize(event.source.damageType) + entityName + "Attack", event, ExtendedPlayerKnowledge.get(player), true);
                 } else {
-                    AbilityRegistry.passiveAbilityEvent("damage" + StringUtils.capitalize(event.source.damageType), event, ExtendedPlayerKnowledge.get(player));
-                    ResearchRegistry.researchEvent("damage" + StringUtils.capitalize(event.source.damageType), event, ExtendedPlayerKnowledge.get(player), true);
+                    if (event.source.isExplosion()) {
+                        ResearchRegistry.researchEvent("damageExplosion", event, ExtendedPlayerKnowledge.get(player), true);
+                        AbilityRegistry.passiveAbilityEvent("damageExplosion", event, ExtendedPlayerKnowledge.get(player));
+                    } else {
+                        ResearchRegistry.researchEvent("damage" + StringUtils.capitalize(event.source.damageType), event, ExtendedPlayerKnowledge.get(player), true);
+                        AbilityRegistry.passiveAbilityEvent("damage" + StringUtils.capitalize(event.source.damageType), event, ExtendedPlayerKnowledge.get(player));
+                    }
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onLivingDeath(LivingDeathEvent event)
+    {
+        if (!event.entityLiving.worldObj.isRemote) {
+            String researchName = null;
+            EntityLivingBase entity = null;
+            EntityPlayer player = null;
+
+            if (event.entityLiving instanceof EntityPlayer) {
+                player = (EntityPlayer) event.entityLiving;
+
+                ExtendedPlayerKnowledge playerKnowledge = ExtendedPlayerKnowledge.get(player);
+
+                if (playerKnowledge != null && !playerKnowledge.canSpecialise()) {
+                    InventoryPlayer inventory = player.inventory;
+                    ItemStack staff = null;
+                    int slot = -1;
+
+                    for (int i = 0; i < inventory.getSizeInventory(); i++) {
+                        ItemStack stack = inventory.getStackInSlot(i);
+
+                        if (stack != null && stack.getItem() != null && stack.getItem() instanceof IStaff) {
+                            if (stack.getItemDamage() == 1) {
+                                staff = stack;
+                                slot = i;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (staff != null) {
+                        String playerName = ItemStaff.getPlayer(staff);
+
+                        if (player != null && player.equals(player.getCommandSenderName())) {
+                            playerKnowledge.setStaff(staff);
+                            inventory.setInventorySlotContents(slot, null);
+                        }
+                    }
+                }
+
+                if (event.source instanceof EntityDamageSourceIndirect || event.source instanceof EntityDamageSource) {
+                    entity = (EntityLivingBase) event.source.getEntity();
+
+                    if (entity != null) {
+                        String entityName = (String) EntityList.classToStringMapping.get(entity.getClass());
+
+                        if (entityName != null && !entityName.isEmpty()) {
+                            researchName = "killedBy" + StringUtils.capitalize(entityName);
+                        }
+                    }
                 }
             } else {
-                Class entityClass = event.entityLiving.getClass();
-                String entityName = (String) EntityList.classToStringMapping.get(entityClass);
-                World world = event.entityLiving.worldObj;
-                Set<Class> entities = ResearchRegistry.getMonitorableEntities();
+                if (event.source instanceof EntityDamageSourceIndirect || event.source instanceof EntityDamageSource) {
+                    if (event.source.getEntity() instanceof EntityPlayer) {
+                        player = (EntityPlayer) event.source.getEntity();
+                        entity = (EntityLivingBase) event.entityLiving;
 
-                if (entityName != null && entities.contains(entityClass)) {
-                    ExtendedNanites nanites = ExtendedNanites.get(event.entityLiving);
+                        if (entity != null) {
+                            String entityName = (String) EntityList.classToStringMapping.get(entity.getClass());
 
-                    if (nanites != null) {
-                        EntityPlayer player = nanites.getOwnerPlayer();
-
-                        if (player != null) {
-                            if (event.source instanceof EntityDamageSource) {
-                                ResearchRegistry.researchMonitoring("damage" + StringUtils.capitalize(event.source.damageType) + entityName + "Attacked", event, ExtendedPlayerKnowledge.get(player), nanites);
-                            } else {
-                                ResearchRegistry.researchMonitoring("damage" + StringUtils.capitalize(event.source.damageType) + entityName, event, ExtendedPlayerKnowledge.get(player), nanites);
+                            if (entityName != null && !entityName.isEmpty()) {
+                                researchName = "killed" + StringUtils.capitalize(entityName);
                             }
                         }
                     }
                 }
+            }
+
+            if (researchName != null && !researchName.isEmpty() && player != null) {
+                ResearchRegistry.researchEvent(researchName, event, ExtendedPlayerKnowledge.get(player), true);
             }
         }
     }
@@ -285,9 +442,7 @@ public class PlayerEventHandler
             if (event.entityLiving instanceof EntityPlayer) {
                 ResearchRegistry.researchEvent("enderTeleport", event, ExtendedPlayerKnowledge.get((EntityPlayer) event.entityLiving), true);
             } else if (event.entityLiving instanceof EntityEnderman) {
-                // ResearchRegistry.researchEvent("endermanTeleport", event,
-                // ExtendedPlayerKnowledge.get((EntityEnderman)
-                // event.entityLiving));
+                ResearchRegistry.researchEvent("enderTeleportEnderman", event, ExtendedPlayerKnowledge.get((EntityPlayer) event.entityLiving), true);
             }
         }
 
@@ -347,6 +502,26 @@ public class PlayerEventHandler
                     }
                 }
             }
+        }
+    }
+
+    @SubscribeEvent
+    public void onPlayerUseItem(PlayerUseItemEvent.Finish event)
+    {
+        if (!event.entityPlayer.worldObj.isRemote) {
+            String research = Research.itemToResearchMapping.get(event.item);
+
+            if (research != null) {
+                ResearchRegistry.researchEvent(research, event, ExtendedPlayerKnowledge.get(event.entityPlayer), true);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onPlayerSleep(PlayerSleepInBedEvent event)
+    {
+        if (!event.entityPlayer.worldObj.isRemote) {
+            ResearchRegistry.researchEvent("sleep", event, ExtendedPlayerKnowledge.get(event.entityPlayer), true);
         }
     }
 
