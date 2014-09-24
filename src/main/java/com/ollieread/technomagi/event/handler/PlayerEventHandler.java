@@ -331,6 +331,8 @@ public class PlayerEventHandler
                             researchName = "killedBy" + StringUtils.capitalize(entityName);
                         }
                     }
+                } else if (event.source instanceof DamageSource && event.source.equals(DamageSource.fall)) {
+                    researchName = "killedByGravity";
                 }
             } else {
                 if (event.source instanceof EntityDamageSourceIndirect || event.source instanceof EntityDamageSource) {
