@@ -20,6 +20,7 @@ import com.ollieread.technomagi.common.init.Items;
 import com.ollieread.technomagi.common.init.Knowledge;
 import com.ollieread.technomagi.common.init.Potions;
 import com.ollieread.technomagi.common.init.Recipes;
+import com.ollieread.technomagi.common.init.Research;
 import com.ollieread.technomagi.common.init.Specialisations;
 import com.ollieread.technomagi.creativetab.CreativeTabTM;
 import com.ollieread.technomagi.network.PacketHandler;
@@ -61,6 +62,7 @@ public class TechnoMagi
 
         PacketHandler.init();
         Specialisations.init();
+        Research.init();
         Knowledge.init();
         Abilities.init();
         Entities.init();
