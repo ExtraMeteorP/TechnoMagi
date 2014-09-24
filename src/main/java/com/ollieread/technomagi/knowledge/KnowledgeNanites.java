@@ -5,12 +5,12 @@ import com.ollieread.ennds.research.Knowledge;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.knowledge.research.ResearchEvent;
 
-public class KnowledgeNanitesI extends Knowledge
+public class KnowledgeNanites extends Knowledge
 {
 
     public static IResearchEvent progress;
 
-    public KnowledgeNanitesI(String name)
+    public KnowledgeNanites(String name)
     {
         super(name, Reference.MODID.toLowerCase());
 
