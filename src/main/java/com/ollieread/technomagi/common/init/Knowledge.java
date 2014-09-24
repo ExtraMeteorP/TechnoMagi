@@ -4,26 +4,26 @@ import org.apache.logging.log4j.Level;
 
 import com.ollieread.ennds.research.IKnowledge;
 import com.ollieread.technomagi.TechnoMagi;
-import com.ollieread.technomagi.research.KnowledgeAggressive;
-import com.ollieread.technomagi.research.KnowledgeChicken;
-import com.ollieread.technomagi.research.KnowledgeCow;
-import com.ollieread.technomagi.research.KnowledgeCreeper;
-import com.ollieread.technomagi.research.KnowledgeDensity;
-import com.ollieread.technomagi.research.KnowledgeEnderman;
-import com.ollieread.technomagi.research.KnowledgeEndothermic;
-import com.ollieread.technomagi.research.KnowledgeExothermic;
-import com.ollieread.technomagi.research.KnowledgeForce;
-import com.ollieread.technomagi.research.KnowledgeLight;
-import com.ollieread.technomagi.research.KnowledgeMotion;
-import com.ollieread.technomagi.research.KnowledgePassive;
-import com.ollieread.technomagi.research.KnowledgePig;
-import com.ollieread.technomagi.research.KnowledgeProjectile;
-import com.ollieread.technomagi.research.KnowledgeSheep;
-import com.ollieread.technomagi.research.KnowledgeSkeleton;
-import com.ollieread.technomagi.research.KnowledgeSubspace;
-import com.ollieread.technomagi.research.KnowledgeTeleportation;
-import com.ollieread.technomagi.research.KnowledgeVoid;
-import com.ollieread.technomagi.research.KnowledgeZombie;
+import com.ollieread.technomagi.knowledge.KnowledgeAggressive;
+import com.ollieread.technomagi.knowledge.KnowledgeChicken;
+import com.ollieread.technomagi.knowledge.KnowledgeCow;
+import com.ollieread.technomagi.knowledge.KnowledgeCreeper;
+import com.ollieread.technomagi.knowledge.KnowledgeDensity;
+import com.ollieread.technomagi.knowledge.KnowledgeEnderman;
+import com.ollieread.technomagi.knowledge.KnowledgeEndothermic;
+import com.ollieread.technomagi.knowledge.KnowledgeExothermic;
+import com.ollieread.technomagi.knowledge.KnowledgeForce;
+import com.ollieread.technomagi.knowledge.KnowledgeLight;
+import com.ollieread.technomagi.knowledge.KnowledgeMotion;
+import com.ollieread.technomagi.knowledge.KnowledgePassive;
+import com.ollieread.technomagi.knowledge.KnowledgePig;
+import com.ollieread.technomagi.knowledge.KnowledgeProjectile;
+import com.ollieread.technomagi.knowledge.KnowledgeSheep;
+import com.ollieread.technomagi.knowledge.KnowledgeSkeleton;
+import com.ollieread.technomagi.knowledge.KnowledgeSubspace;
+import com.ollieread.technomagi.knowledge.KnowledgeTeleportation;
+import com.ollieread.technomagi.knowledge.KnowledgeVoid;
+import com.ollieread.technomagi.knowledge.KnowledgeZombie;
 
 public class Knowledge
 {
