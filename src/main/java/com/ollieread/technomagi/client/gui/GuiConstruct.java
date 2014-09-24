@@ -70,8 +70,8 @@ public class GuiConstruct extends GuiContainer
         if (button.id == 1) {
             construct.setBuilding(true);
             button.enabled = false;
-            TechnoMagi.proxy.getClientPlayer().closeScreen();
             PacketHelper.setBuilding(construct, true);
+            TechnoMagi.proxy.getClientPlayer().closeScreen();
         }
     }
 
