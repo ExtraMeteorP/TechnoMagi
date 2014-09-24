@@ -5,7 +5,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
-import com.ollieread.ennds.EnndsRegistry;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.client.gui.GuiAnalysis;
 import com.ollieread.technomagi.client.gui.GuiArchive;
@@ -209,27 +208,6 @@ public class CommonProxy implements IGuiHandler
 
     public void registerEventHandlers()
     {
-        EnndsRegistry.registerEvent("specialisation");
-        EnndsRegistry.registerEvent("researchProgress");
-        EnndsRegistry.registerEvent("damageInFire");
-        EnndsRegistry.registerEvent("playerTick");
-        EnndsRegistry.registerEvent("damageFall");
-        EnndsRegistry.registerEvent("damageOnFire");
-        EnndsRegistry.registerEvent("damageLava");
-        EnndsRegistry.registerEvent("damageInWall");
-        EnndsRegistry.registerEvent("damageStarve");
-        EnndsRegistry.registerEvent("damageCactus");
-        EnndsRegistry.registerEvent("damageOutOfWorld");
-        EnndsRegistry.registerEvent("damageMagic");
-        EnndsRegistry.registerEvent("damageWither");
-        EnndsRegistry.registerEvent("damageAnvil");
-        EnndsRegistry.registerEvent("damageFallingBlock");
-        EnndsRegistry.registerEvent("toNether");
-        EnndsRegistry.registerEvent("toEnd");
-        EnndsRegistry.registerEvent("toOverworld");
-        EnndsRegistry.registerEvent("enderTeleport");
-        EnndsRegistry.registerEvent("useFlintAndSteel");
-
         MinecraftForge.EVENT_BUS.register(playerEventHandler);
         MinecraftForge.EVENT_BUS.register(new EnndsEventHandler());
         MinecraftForge.EVENT_BUS.register(new ItemEventHandler());
