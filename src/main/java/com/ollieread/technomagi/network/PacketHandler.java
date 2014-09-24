@@ -34,6 +34,6 @@ public class PacketHandler
         INSTANCE.registerMessage(MessageSetBuilding.class, MessageSetBuilding.class, 5, Side.SERVER);
         INSTANCE.registerMessage(MessageOpenTeleporter.class, MessageOpenTeleporter.class, 6, Side.CLIENT);
         INSTANCE.registerMessage(MessageSetTeleporterMode.class, MessageSetTeleporterMode.class, 7, Side.SERVER);
-        INSTANCE.registerMessage(MessageSetArchive.class, MessageSetArchive.class, 5, Side.SERVER);
+        INSTANCE.registerMessage(MessageSetArchive.class, MessageSetArchive.class, 8, Side.SERVER);
     }
 }
