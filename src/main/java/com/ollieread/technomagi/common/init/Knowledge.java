@@ -15,6 +15,7 @@ import com.ollieread.technomagi.knowledge.KnowledgeExothermic;
 import com.ollieread.technomagi.knowledge.KnowledgeForce;
 import com.ollieread.technomagi.knowledge.KnowledgeLight;
 import com.ollieread.technomagi.knowledge.KnowledgeMotion;
+import com.ollieread.technomagi.knowledge.KnowledgeNanites;
 import com.ollieread.technomagi.knowledge.KnowledgePassive;
 import com.ollieread.technomagi.knowledge.KnowledgePig;
 import com.ollieread.technomagi.knowledge.KnowledgeProjectile;
@@ -38,6 +39,7 @@ public class Knowledge
     public static IKnowledge knowledgeSubspace;
     public static IKnowledge knowledgeTeleportation;
     public static IKnowledge knowledgeVoid;
+    public static IKnowledge knowledgeNanites;
 
     public static IKnowledge knowledgeCow;
     public static IKnowledge knowledgePig;
@@ -65,6 +67,7 @@ public class Knowledge
         knowledgeSubspace = new KnowledgeSubspace("subspace");
         knowledgeTeleportation = new KnowledgeTeleportation("teleportation");
         knowledgeVoid = new KnowledgeVoid("void");
+        knowledgeNanites = new KnowledgeNanites("nanites");
 
         knowledgeCow = new KnowledgeCow("entityCow");
         knowledgePig = new KnowledgePig("entityPig");
