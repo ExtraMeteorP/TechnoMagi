@@ -22,12 +22,6 @@ public class ActiveAbilityAtmosphereI extends AbilityActive
     }
 
     @Override
-    public boolean isAvailable(ExtendedPlayerKnowledge charon)
-    {
-        return true;
-    }
-
-    @Override
     public boolean use(ExtendedPlayerKnowledge charon, Event event)
     {
         if (event instanceof PlayerInteractEvent) {

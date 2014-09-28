@@ -24,12 +24,6 @@ public class ActiveAbilityForceTarget extends AbilityActive
     }
 
     @Override
-    public boolean isAvailable(ExtendedPlayerKnowledge charon)
-    {
-        return charon.hasKnowledge("forceI");
-    }
-
-    @Override
     public boolean use(ExtendedPlayerKnowledge charon, Event event)
     {
         if (event instanceof EntityInteractEvent) {
