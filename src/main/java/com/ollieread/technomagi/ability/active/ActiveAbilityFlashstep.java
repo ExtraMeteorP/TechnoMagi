@@ -42,7 +42,6 @@ public class ActiveAbilityFlashstep extends AbilityActive
 
                 for (int i = 1; i <= max; i++) {
                     target.xCoord = (look.xCoord * i) + eye.xCoord;
-                    target.yCoord = (look.yCoord * i) + eye.yCoord;
                     target.zCoord = (look.zCoord * i) + eye.zCoord;
 
                     Block block = interact.entityPlayer.worldObj.getBlock(MathHelper.floor_double(target.xCoord), MathHelper.floor_double(target.yCoord), MathHelper.floor_double(target.zCoord));
