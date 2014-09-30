@@ -102,13 +102,50 @@ public class TileEntityResearch extends TileEntityTM implements IResearchMachine
         compound.setTag("ResearchProgress", researchProgressList);
     }
 
+    public Map<String, Integer> getKnowledge()
+    {
+        return researchingKnowledge;
+    }
+
     public void addResearch(String name, int progress)
     {
         if (researchingKnowledge.containsKey(name)) {
             researchingKnowledge.put(name, researchingKnowledge.get(name) + progress);
+            sync();
         } else {
             researchingKnowledge.put(name, progress);
+            sync();
         }
+    }
+
+    public void removeKnowledge(String name)
+    {
+        if (researchingKnowledge.containsKey(name)) {
+            int progress = researchingKnowledge.remove(name);
+            setData(data - progress);
+            sync();
+        }
+    }
+
+    public boolean decreaseKnowledge(String name, int progress)
+    {
+        if (researchingKnowledge.containsKey(name)) {
+            int value = researchingKnowledge.get(name);
+
+            if (value <= progress) {
+                researchingKnowledge.remove(name);
+                setData(data - value);
+                sync();
+                return true;
+            } else {
+                researchingKnowledge.put(name, value - progress);
+                setData(data - progress);
+                sync();
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }
