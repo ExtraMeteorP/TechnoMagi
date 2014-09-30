@@ -45,9 +45,9 @@ public class Recipes
         recipes.add(GameRegistry.addShapedRecipe(new ItemStack(Items.itemComponent, 2, 7), "xx", "xx", 'x', diamond));
         recipes.add(GameRegistry.addShapedRecipe(new ItemStack(Items.itemComponent, 1, 8), "x", "x", 'x', diamond));
 
-        RecipeHelper.addConstructRecipe(Blocks.blockArchive, new ItemStack[] { stackNaniteContainer2, new ItemStack(Items.itemComponent, 2, 5), new ItemStack(net.minecraft.init.Items.redstone, 4), new ItemStack(net.minecraft.init.Items.book, 1) });
-        RecipeHelper.addConstructRecipe(Blocks.blockCrafting, new ItemStack[] { stackNaniteContainer2, new ItemStack(Items.itemComponent, 2, 5), new ItemStack(net.minecraft.init.Blocks.crafting_table, 1), new ItemStack(net.minecraft.init.Items.redstone, 4) });
-        RecipeHelper.addConstructRecipe(Blocks.blockNaniteReplicator, new ItemStack[] { stackNaniteContainer4, new ItemStack(Items.itemComponent, 2, 5), stackSampleVile8, new ItemStack(net.minecraft.init.Items.redstone, 4) });
+        RecipeHelper.addConstructRecipe(Blocks.blockArchive, new ItemStack[] { stackNaniteContainer2, new ItemStack(Items.itemComponent, 2, 5), new ItemStack(net.minecraft.init.Items.redstone, 4), new ItemStack(net.minecraft.init.Items.book, 1) }, null);
+        RecipeHelper.addConstructRecipe(Blocks.blockCrafting, new ItemStack[] { stackNaniteContainer2, new ItemStack(Items.itemComponent, 2, 5), new ItemStack(net.minecraft.init.Blocks.crafting_table, 1), new ItemStack(net.minecraft.init.Items.redstone, 4) }, null);
+        RecipeHelper.addConstructRecipe(Blocks.blockNaniteReplicator, new ItemStack[] { stackNaniteContainer4, new ItemStack(Items.itemComponent, 2, 5), stackSampleVile8, new ItemStack(net.minecraft.init.Items.redstone, 4) }, "nanites");
 
         // teleporter
         RecipeHelper.addShapedRecipe(Knowledge.knowledgeTeleportation.getName(), new ItemStack(Blocks.blockTeleporter, 1, 0), " w ", " y ", " z ", 'y', new ItemStack(Items.itemUnit, 1, 3), 'z', new ItemStack(Blocks.blockConstruct, 1), 'w', new ItemStack(net.minecraft.init.Blocks.piston, 1));
