@@ -46,7 +46,7 @@ public class TileEntityAnalysis extends TileEntityResearch implements IPlayerLoc
     {
         locked = new PlayerLocked();
         inventory = new BasicInventory(9);
-        storage = new BasicEnergy(3200, 2, 0);
+        storage = new BasicEnergy(3200, 5, 0);
     }
 
     @Override
@@ -180,12 +180,14 @@ public class TileEntityAnalysis extends TileEntityResearch implements IPlayerLoc
             if (player != null) {
                 ExtendedPlayerKnowledge charon = ExtendedPlayerKnowledge.get(player);
 
-                if (charon.hasResearched(research.getName())) {
-                    return false;
-                }
+                if (!charon.canSpecialise()) {
+                    if (charon.hasResearched(research.getName()) || charon.hasKnowledge(research.getKnowledge())) {
+                        return false;
+                    }
 
-                if (player != null && research.getProgress() + data > 100 && research.canPerform(charon)) {
-                    return false;
+                    if (player != null && research.getProgress() + data > 100 && research.canPerform(charon)) {
+                        return false;
+                    }
                 }
             } else if (!inProgress) {
                 return false;
@@ -213,12 +215,14 @@ public class TileEntityAnalysis extends TileEntityResearch implements IPlayerLoc
 
                 IResearch research = (IResearch) analysis;
                 EntityPlayer player = worldObj.getPlayerEntityByName(getPlayer());
+                ExtendedPlayerKnowledge playerKnowledge = ExtendedPlayerKnowledge.get(player);
 
-                ResearchRegistry.researchAnalysis(Arrays.asList(inventory.getInventory()), ExtendedPlayerKnowledge.get(player), this, c);
+                if (!playerKnowledge.hasResearched(research.getName())) {
+                    ResearchRegistry.researchAnalysis(Arrays.asList(inventory.getInventory()), ExtendedPlayerKnowledge.get(player), this, c);
+                    data += research.getProgress();
+                    reduceStacks(1);
+                }
 
-                data += research.getProgress();
-
-                reduceStacks(1);
                 setInProgress(false);
                 progress = 0;
             }
