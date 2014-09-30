@@ -22,7 +22,7 @@ public class KnowledgeSheep extends Knowledge
     {
         super(name, Reference.MODID.toLowerCase());
 
-        breed = new ResearchEvent("breedSheep", getName(), 25, "breedSheep", false, 2, null);
+        breed = new ResearchEvent("breedSheep", getName(), 25, "breedingSheep", false, 2, null);
         kill = new ResearchEvent("killSheep", getName(), 25, "killedSheep", false, 2, null);
         shear = new ResearchEvent("shearSheep", getName(), 25, "shearedSheep", false, 2, null);
         wool = new ResearchAnalysis("analyseWool", getName(), 25, Arrays.asList(new ItemStack[] { new ItemStack(net.minecraft.init.Blocks.wool, 1, 0) }), false, 2, null);
