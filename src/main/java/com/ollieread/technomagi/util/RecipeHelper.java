@@ -20,9 +20,9 @@ public class RecipeHelper
         CraftingManager.getInstance().addShapelessRecipe(knowledge, output, items);
     }
 
-    public static void addConstructRecipe(Block block, ItemStack[] stacks)
+    public static void addConstructRecipe(Block block, ItemStack[] stacks, String knowledge)
     {
-        ConstructManager.getInstance().addRecipe(block, stacks);
+        ConstructManager.getInstance().addRecipe(block, stacks, knowledge);
     }
 
     public static void addExothermicRecipe(ItemStack block, ItemStack result, Integer time)
