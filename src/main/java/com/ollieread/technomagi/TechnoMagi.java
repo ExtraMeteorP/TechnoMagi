@@ -24,7 +24,6 @@ import com.ollieread.technomagi.common.init.Research;
 import com.ollieread.technomagi.common.init.Specialisations;
 import com.ollieread.technomagi.creativetab.CreativeTabTM;
 import com.ollieread.technomagi.network.PacketHandler;
-import com.ollieread.technomagi.util.ConfigHelper;
 import com.ollieread.technomagi.world.gen.OreGen;
 
 import cpw.mods.fml.common.Mod;
@@ -56,19 +55,24 @@ public class TechnoMagi
     @EventHandler
     public void pre(FMLPreInitializationEvent event)
     {
-        ConfigHelper.loadConfiguration(event.getSuggestedConfigurationFile());
+        config = new Configuration(event.getSuggestedConfigurationFile());
+        config.load();
 
         proxy.registerEventHandlers();
 
         PacketHandler.init();
+
         Specialisations.init();
         Research.init();
         Knowledge.init();
         Abilities.init();
         Entities.init();
+
         Items.init();
         Blocks.init();
         Recipes.init();
+
+        config.save();
 
         Potion[] potionTypes = null;
 
