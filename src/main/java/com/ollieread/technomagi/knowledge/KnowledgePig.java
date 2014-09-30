@@ -22,7 +22,7 @@ public class KnowledgePig extends Knowledge
     {
         super(name, Reference.MODID.toLowerCase());
 
-        breed = new ResearchEvent("breedPig", getName(), 25, "breedPig", false, 2, null);
+        breed = new ResearchEvent("breedPig", getName(), 25, "breedingPig", false, 2, null);
         kill = new ResearchEvent("killPig", getName(), 25, "killedPig", false, 2, null);
         cook = new ResearchCrafting("cookPig", getName(), 25, new ItemStack(Items.cooked_porkchop), false, 2, null);
         eat = new ResearchEvent("eatPig", getName(), 25, "eatPorkchop", false, 2, null);
