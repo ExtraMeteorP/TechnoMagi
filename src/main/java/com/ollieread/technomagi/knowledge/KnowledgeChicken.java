@@ -22,7 +22,7 @@ public class KnowledgeChicken extends Knowledge
     {
         super(name, Reference.MODID.toLowerCase());
 
-        breed = new ResearchEvent("breedChicken", getName(), 25, "breedChicken", false, 2, null);
+        breed = new ResearchEvent("breedChicken", getName(), 25, "breedingChicken", false, 2, null);
         kill = new ResearchEvent("killChicken", getName(), 25, "killedChicken", false, 2, null);
         cook = new ResearchCrafting("cookChicken", getName(), 25, new ItemStack(Items.cooked_chicken), false, 2, null);
         eat = new ResearchEvent("eatChicken", getName(), 25, "eatChicken", false, 2, null);
