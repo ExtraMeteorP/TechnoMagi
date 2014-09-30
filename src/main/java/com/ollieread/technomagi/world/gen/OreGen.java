@@ -78,8 +78,6 @@ public class OreGen implements IWorldGenerator
 
                                 Block block = world.getBlock(var38, var41, var44);
                                 if (var39 * var39 + var42 * var42 + var45 * var45 < 1.0D && block == Blocks.stone) {
-                                    System.out.println(oreBlock);
-                                    System.out.println(var38 + ":" + var41 + ":" + var44);
                                     world.setBlock(var38, var41, var44, this.oreBlock);
                                 }
                             }
