@@ -42,8 +42,10 @@ public class EnndsEventHandler
     public void onKnowledgeProgress(KnowledgeProgressEvent event)
     {
         if (!event.entityPlayer.worldObj.isRemote) {
-            AbilityRegistry.passiveAbilityEvent("knowledgeProgress", event, event.charon);
-            ResearchRegistry.researchEvent("knowledgeProgress", event, event.charon, false);
+            if (!event.research.getName().equals("knowledgeProgress")) {
+                AbilityRegistry.passiveAbilityEvent("knowledgeProgress", event, event.charon);
+                ResearchRegistry.researchEvent("knowledgeProgress", event, event.charon, false);
+            }
         }
     }
 
