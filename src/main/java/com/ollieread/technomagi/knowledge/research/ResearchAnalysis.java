@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.ennds.research.IResearchAnalysis;
+import com.ollieread.ennds.research.ResearchRegistry;
 import com.ollieread.technomagi.common.Reference;
 
 public class ResearchAnalysis extends com.ollieread.ennds.research.ResearchAnalysis implements IResearchAnalysis
@@ -24,6 +25,8 @@ public class ResearchAnalysis extends com.ollieread.ennds.research.ResearchAnaly
         this.items = items;
         this.repeating = repeating;
         this.requirements = requirements;
+
+        ResearchRegistry.registerResearch(this);
     }
 
     @Override

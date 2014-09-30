@@ -4,6 +4,7 @@ import com.ollieread.ennds.common.Reference;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.ennds.research.IResearchEvent;
 import com.ollieread.ennds.research.Research;
+import com.ollieread.ennds.research.ResearchRegistry;
 
 public class ResearchEvent extends Research implements IResearchEvent
 {
@@ -26,6 +27,8 @@ public class ResearchEvent extends Research implements IResearchEvent
         this.repeating = repeating;
         this.chance = chance;
         this.requirements = requirements;
+
+        ResearchRegistry.registerResearch(this);
     }
 
     @Override

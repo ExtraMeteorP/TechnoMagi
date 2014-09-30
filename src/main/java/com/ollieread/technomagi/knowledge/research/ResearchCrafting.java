@@ -5,6 +5,7 @@ import net.minecraft.item.ItemStack;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.ennds.research.IResearchCrafting;
 import com.ollieread.ennds.research.Research;
+import com.ollieread.ennds.research.ResearchRegistry;
 import com.ollieread.technomagi.common.Reference;
 
 public class ResearchCrafting extends Research implements IResearchCrafting
@@ -28,6 +29,8 @@ public class ResearchCrafting extends Research implements IResearchCrafting
         this.repeating = repeating;
         this.chance = chance;
         this.requirements = requirements;
+
+        ResearchRegistry.registerResearch(this);
     }
 
     @Override
