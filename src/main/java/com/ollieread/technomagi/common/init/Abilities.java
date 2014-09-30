@@ -7,8 +7,9 @@ import com.ollieread.ennds.ability.IAbilityPassive;
 import com.ollieread.technomagi.TechnoMagi;
 import com.ollieread.technomagi.ability.active.ActiveAbilityEndothermic;
 import com.ollieread.technomagi.ability.active.ActiveAbilityExothermic;
+import com.ollieread.technomagi.ability.active.ActiveAbilityProjectile;
+import com.ollieread.technomagi.ability.active.ActiveAbilityProjectileExothermic;
 import com.ollieread.technomagi.ability.passive.PassiveAbilityNanites;
-import com.ollieread.technomagi.util.ConfigHelper;
 
 public class Abilities
 {
@@ -27,6 +28,8 @@ public class Abilities
     public static IAbilityActive abilityActiveHarvestII;
     public static IAbilityActive abilityActiveHarvestIII;
     public static IAbilityActive abilityActiveAtmosphereI;
+    public static IAbilityActive abilityActiveProjectile;
+    public static IAbilityActive abilityActiveProjectileExothermic;
 
     public static IAbilityPassive abilityPassiveScholarResearch;
     public static IAbilityPassive abilityPassiveNanites;
@@ -36,16 +39,11 @@ public class Abilities
     {
         TechnoMagi.logger.log(Level.INFO, "Initiating & registering abilities");
 
-        if (ConfigHelper.abilityState.get("exothermic")) {
-            abilityActiveExothermic = new ActiveAbilityExothermic("exothermic");
-        }
-        if (ConfigHelper.abilityState.get("endothermic")) {
-            abilityActiveEndothermic = new ActiveAbilityEndothermic("endothermic");
-        }
+        abilityActiveExothermic = new ActiveAbilityExothermic("exothermic");
+        abilityActiveEndothermic = new ActiveAbilityEndothermic("endothermic");
+        abilityActiveProjectile = new ActiveAbilityProjectile("projectile");
+        abilityActiveProjectileExothermic = new ActiveAbilityProjectileExothermic("projectileExothermic");
 
-        if (ConfigHelper.abilityState.get("nanites")) {
-            abilityPassiveNanites = new PassiveAbilityNanites("nanites");
-        }
-
+        abilityPassiveNanites = new PassiveAbilityNanites("nanites");
     }
 }
