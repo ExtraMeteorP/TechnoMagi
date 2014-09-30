@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.common.proxy.BasicInventory;
@@ -115,10 +116,12 @@ public class TileEntityArchive extends TileEntityTM implements IPlayerLocked, II
         this.field_145933_i += this.field_145929_l;
 
         if (!worldObj.isRemote) {
-            if (syncCheck == 10) {
+            if (syncCheck == 50) {
                 if (canSyncPlayer()) {
                     syncPlayer();
                 }
+
+                syncMachine();
                 syncCheck = 0;
             }
             syncCheck++;
@@ -158,6 +161,53 @@ public class TileEntityArchive extends TileEntityTM implements IPlayerLocked, II
                         if (value >= 5 && playerKnowledge.nanites.decreaseData(5, knowledge)) {
                             playerKnowledge.addKnowledgeProgress(knowledge, 5);
                             break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void syncMachine()
+    {
+        EntityPlayer owner = getEntityPlayer();
+        ExtendedPlayerKnowledge playerKnowledge = ExtendedPlayerKnowledge.get(owner);
+
+        if (playerKnowledge != null && playerKnowledge.nanites != null) {
+            for (int x = (xCoord - 8); x < (xCoord + 8); x++) {
+                for (int y = (yCoord - 8); y < (yCoord + 8); y++) {
+                    for (int z = (zCoord - 8); z < (zCoord + 8); z++) {
+                        TileEntity tile = worldObj.getTileEntity(x, y, z);
+
+                        if (tile != null && tile instanceof TileEntityResearch) {
+                            TileEntityResearch machine = (TileEntityResearch) tile;
+                            System.out.println(x + ":" + y + ":" + z);
+                            System.out.println(machine.getData());
+
+                            if (machine.getData() > 0) {
+                                Map<String, Integer> knowledge = machine.getKnowledge();
+                                for (Iterator<String> it = knowledge.keySet().iterator(); it.hasNext();) {
+                                    String name = it.next();
+                                    int value = knowledge.get(name);
+
+                                    if (playerKnowledge.hasKnowledge(name)) {
+                                        machine.removeKnowledge(name);
+                                        continue;
+                                    }
+
+                                    if (value > 0) {
+                                        if (value >= 5) {
+                                            machine.decreaseKnowledge(name, 5);
+                                            playerKnowledge.addKnowledgeProgress(name, 5);
+                                            return;
+                                        } else {
+                                            machine.decreaseKnowledge(name, value);
+                                            playerKnowledge.addKnowledgeProgress(name, value);
+                                            return;
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
