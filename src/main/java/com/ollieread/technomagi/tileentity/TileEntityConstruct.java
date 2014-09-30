@@ -54,10 +54,14 @@ public class TileEntityConstruct extends TileEntityTM implements IInventory, IPl
 
         if (nanites != null && nanites.getItem() instanceof ItemNaniteContainer && nanites.getItemDamage() == 1) {
             if (ItemNaniteContainer.getEntity(nanites).equals("player")) {
-                ItemStack[] stacks = new ItemStack[] { inventory.getStackInSlot(1), inventory.getStackInSlot(2), inventory.getStackInSlot(3), inventory.getStackInSlot(4) };
+                EntityPlayer player = worldObj.getPlayerEntityByName(locked.getPlayer());
 
-                if (ConstructManager.getInstance().findMatchingRecipe(stacks) != null) {
-                    return true;
+                if (player != null) {
+                    ItemStack[] stacks = new ItemStack[] { inventory.getStackInSlot(1), inventory.getStackInSlot(2), inventory.getStackInSlot(3), inventory.getStackInSlot(4) };
+
+                    if (ConstructManager.getInstance().findMatchingRecipe(stacks, player) != null) {
+                        return true;
+                    }
                 }
             }
         }
@@ -69,13 +73,17 @@ public class TileEntityConstruct extends TileEntityTM implements IInventory, IPl
     {
         ItemStack[] stacks = new ItemStack[] { inventory.getStackInSlot(1), inventory.getStackInSlot(2), inventory.getStackInSlot(3), inventory.getStackInSlot(4) };
 
-        Block block = ConstructManager.getInstance().findMatchingRecipe(stacks);
-
-        worldObj.setBlock(xCoord, yCoord, zCoord, block, getBlockMetadata(), 2);
-        TileEntity tile = worldObj.getTileEntity(xCoord, yCoord, zCoord);
-
-        if (tile instanceof IPlayerLocked) {
-            ((IPlayerLocked) tile).setPlayer(getPlayer());
+        EntityPlayer player = worldObj.getPlayerEntityByName(locked.getPlayer());
+        
+        if(player != null) {
+            Block block = ConstructManager.getInstance().findMatchingRecipe(stacks, player);
+    
+            worldObj.setBlock(xCoord, yCoord, zCoord, block, getBlockMetadata(), 2);
+            TileEntity tile = worldObj.getTileEntity(xCoord, yCoord, zCoord);
+    
+            if (tile instanceof IPlayerLocked) {
+                ((IPlayerLocked) tile).setPlayer(getPlayer());
+            }
         }
     }
 
