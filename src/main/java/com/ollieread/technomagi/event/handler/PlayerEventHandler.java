@@ -1,5 +1,6 @@
 package com.ollieread.technomagi.event.handler;
 
+import java.util.Iterator;
 import java.util.Random;
 import java.util.Set;
 
@@ -25,12 +26,13 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.StartTracking;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
-import net.minecraftforge.event.entity.player.PlayerUseItemEvent;
+import net.minecraftforge.event.entity.player.PlayerUseItemEvent.Finish;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 
 import org.apache.commons.lang3.StringUtils;
@@ -161,16 +163,16 @@ public class PlayerEventHandler
                             SoundHelper.playSoundEffectAtPlayer(event.entityPlayer, "fail", new Random());
                         }
                     }
-                } else if (event.entityLiving instanceof EntityAnimal) {
-                    if (((EntityAnimal) event.entityLiving).isBreedingItem(heldItem)) {
-                        Class entityClass = event.entityLiving.getClass();
+                } else if (event.target instanceof EntityAnimal) {
+                    if (((EntityAnimal) event.target).isBreedingItem(heldItem)) {
+                        Class entityClass = event.target.getClass();
                         String entityName = (String) EntityList.classToStringMapping.get(entityClass);
 
                         if (entityName != null && !entityName.isEmpty()) {
                             ResearchRegistry.researchEvent("breeding" + StringUtils.capitalize(entityName), event, playerKnowledge, true);
                         }
-                    } else if (event.entityLiving instanceof EntitySheep) {
-                        if (((EntitySheep) event.entityLiving).isShearable(heldItem, event.entityLiving.worldObj, (int) event.entityLiving.posX, (int) event.entityLiving.posY, (int) event.entityLiving.posZ)) {
+                    } else if (event.target instanceof EntitySheep) {
+                        if (((EntitySheep) event.target).isShearable(heldItem, event.target.worldObj, (int) event.target.posX, (int) event.target.posY, (int) event.target.posZ)) {
                             ResearchRegistry.researchEvent("shearedSheep", event, playerKnowledge, true);
                         }
                     }
@@ -358,6 +360,16 @@ public class PlayerEventHandler
     }
 
     @SubscribeEvent
+    public void onArrowLoose(ArrowLooseEvent event)
+    {
+        if (!event.entity.worldObj.isRemote) {
+            if (event.charge == 72000) {
+                ResearchRegistry.researchEvent("fireArrow", event, ExtendedPlayerKnowledge.get((EntityPlayer) event.entityPlayer), true);
+            }
+        }
+    }
+
+    @SubscribeEvent
     public void onFallEvent(LivingFallEvent event)
     {
         if (!event.entity.worldObj.isRemote) {
@@ -508,13 +520,15 @@ public class PlayerEventHandler
     }
 
     @SubscribeEvent
-    public void onPlayerUseItem(PlayerUseItemEvent.Finish event)
+    public void onPlayerUseItem(Finish event)
     {
         if (!event.entityPlayer.worldObj.isRemote) {
-            String research = Research.itemToResearchMapping.get(event.item);
+            for (Iterator<ItemStack> i = Research.itemToResearchMapping.keySet().iterator(); i.hasNext();) {
+                ItemStack key = i.next();
 
-            if (research != null) {
-                ResearchRegistry.researchEvent(research, event, ExtendedPlayerKnowledge.get(event.entityPlayer), true);
+                if (key.isItemEqual(event.item)) {
+                    ResearchRegistry.researchEvent(Research.itemToResearchMapping.get(key), event, ExtendedPlayerKnowledge.get(event.entityPlayer), true);
+                }
             }
         }
     }
