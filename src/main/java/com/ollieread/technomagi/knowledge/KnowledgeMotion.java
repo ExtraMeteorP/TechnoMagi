@@ -1,8 +1,9 @@
 package com.ollieread.technomagi.knowledge;
 
+import java.util.Arrays;
+
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import scala.actors.threadpool.Arrays;
 
 import com.ollieread.ennds.research.IResearchAnalysis;
 import com.ollieread.ennds.research.Knowledge;
