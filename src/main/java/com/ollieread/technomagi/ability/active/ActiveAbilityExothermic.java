@@ -21,9 +21,13 @@ import cpw.mods.fml.common.eventhandler.Event;
 public class ActiveAbilityExothermic extends AbilityActive
 {
 
-    public ActiveAbilityExothermic(String name)
+    public int cost = 0;
+
+    public ActiveAbilityExothermic(String name, int cost)
     {
         super(name, Reference.MODID.toLowerCase());
+
+        this.cost = cost;
     }
 
     @Override
@@ -54,7 +58,7 @@ public class ActiveAbilityExothermic extends AbilityActive
                                 Block result = Block.getBlockFromItem(resultStack.getItem());
 
                                 if (result != null) {
-                                    if (charon.nanites.decreaseNanites(10)) {
+                                    if (charon.nanites.decreaseNanites(cost)) {
                                         if (!interact.world.isRemote) {
                                             interact.world.setBlock(x, y, z, Blocks.blockReactiveCrafting);
                                             TileEntityReactiveCrafting reactive = (TileEntityReactiveCrafting) player.worldObj.getTileEntity(x, y, z);

@@ -15,9 +15,13 @@ import cpw.mods.fml.common.eventhandler.Event;
 public class ActiveAbilityProjectileExothermic extends AbilityActive
 {
 
-    public ActiveAbilityProjectileExothermic(String name)
+    public int cost = 0;
+
+    public ActiveAbilityProjectileExothermic(String name, int cost)
     {
         super(name, Reference.MODID.toLowerCase());
+
+        this.cost = cost;
     }
 
     @Override
@@ -33,7 +37,7 @@ public class ActiveAbilityProjectileExothermic extends AbilityActive
                 Random rand = new Random();
 
                 if (flag) {
-                    if (charon.player.inventory.hasItem(Items.arrow) && charon.nanites.decreaseNanites(7)) {
+                    if (charon.player.inventory.hasItem(Items.arrow) && charon.nanites.decreaseNanites(cost)) {
                         float f = (float) j / 20.0F;
                         f = (f * f + f * 2.0F) / 3.0F;
 
