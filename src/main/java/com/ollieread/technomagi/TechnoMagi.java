@@ -52,11 +52,15 @@ public class TechnoMagi
 
     public static Configuration config;
 
+    public static boolean version = true;
+
     @EventHandler
     public void pre(FMLPreInitializationEvent event)
     {
         config = new Configuration(event.getSuggestedConfigurationFile());
         config.load();
+
+        version = config.getBoolean("versionCheck", "General", true, "Whether or not to check version for recommended");
 
         proxy.registerEventHandlers();
 
@@ -71,8 +75,6 @@ public class TechnoMagi
         Items.init();
         Blocks.init();
         Recipes.init();
-
-        config.save();
 
         Potion[] potionTypes = null;
 
@@ -97,6 +99,8 @@ public class TechnoMagi
         }
 
         Potions.init();
+
+        config.save();
     }
 
     @EventHandler
