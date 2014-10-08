@@ -43,6 +43,7 @@ import com.ollieread.ennds.extended.ExtendedPlayerAbilities;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.ennds.item.IStaff;
 import com.ollieread.ennds.research.ResearchRegistry;
+import com.ollieread.technomagi.TechnoMagi;
 import com.ollieread.technomagi.block.IDigitalToolable;
 import com.ollieread.technomagi.common.init.Blocks;
 import com.ollieread.technomagi.common.init.Items;
@@ -70,7 +71,9 @@ public class PlayerEventHandler
     public void onEntityJoinWorld(EntityJoinWorldEvent event)
     {
         if (!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer) {
-            new Thread(new VersionChecker((EntityPlayer) event.entity)).start();
+            if (TechnoMagi.version) {
+                new Thread(new VersionChecker((EntityPlayer) event.entity)).start();
+            }
 
             World world = event.entity.worldObj;
 
@@ -456,7 +459,11 @@ public class PlayerEventHandler
             if (event.entityLiving instanceof EntityPlayer) {
                 ResearchRegistry.researchEvent("enderTeleport", event, ExtendedPlayerKnowledge.get((EntityPlayer) event.entityLiving), true);
             } else if (event.entityLiving instanceof EntityEnderman) {
-                ResearchRegistry.researchEvent("enderTeleportEnderman", event, ExtendedPlayerKnowledge.get((EntityPlayer) event.entityLiving), true);
+                // @todo Fix this issue, perhaps move to watching entities
+                // something or other
+                // ResearchRegistry.researchEvent("enderTeleportEnderman",
+                // event, ExtendedPlayerKnowledge.get((EntityPlayer)
+                // event.entityLiving), true);
             }
         }
 
