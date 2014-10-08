@@ -1,5 +1,9 @@
 package com.ollieread.technomagi.common.init;
 
+import java.util.Map;
+
+import net.minecraftforge.common.config.Configuration;
+
 import org.apache.logging.log4j.Level;
 
 import com.ollieread.ennds.ability.IAbilityActive;
@@ -13,6 +17,8 @@ import com.ollieread.technomagi.ability.passive.PassiveAbilityNanites;
 
 public class Abilities
 {
+
+    public static Map<String, Boolean> enabledAbilities;
 
     public static IAbilityActive abilityActiveExothermic;
     public static IAbilityActive abilityActiveEndothermic;
@@ -37,12 +43,22 @@ public class Abilities
 
     public static void init()
     {
+        Configuration config = TechnoMagi.config;
+
         TechnoMagi.logger.log(Level.INFO, "Initiating & registering abilities");
 
-        abilityActiveExothermic = new ActiveAbilityExothermic("exothermic");
-        abilityActiveEndothermic = new ActiveAbilityEndothermic("endothermic");
-        abilityActiveProjectile = new ActiveAbilityProjectile("projectile");
-        abilityActiveProjectileExothermic = new ActiveAbilityProjectileExothermic("projectileExothermic");
+        if (config.getBoolean("exothermic", "Ability States", true, null)) {
+            abilityActiveExothermic = new ActiveAbilityExothermic("exothermic", config.getInt("exothermic", "Ability Cost", 10, 1, 100, null));
+        }
+        if (config.getBoolean("endothermic", "Ability States", true, null)) {
+            abilityActiveEndothermic = new ActiveAbilityEndothermic("endothermic", config.getInt("endothermic", "Ability Cost", 10, 1, 100, null));
+        }
+        if (config.getBoolean("projectile", "Ability States", true, null)) {
+            abilityActiveProjectile = new ActiveAbilityProjectile("projectile", config.getInt("projectile", "Ability Cost", 5, 1, 100, null));
+        }
+        if (config.getBoolean("projectileExothermic", "Ability States", true, null)) {
+            abilityActiveProjectileExothermic = new ActiveAbilityProjectileExothermic("projectileExothermic", config.getInt("projectileExothermic", "Ability Cost", 7, 1, 100, null));
+        }
 
         abilityPassiveNanites = new PassiveAbilityNanites("nanites");
     }
