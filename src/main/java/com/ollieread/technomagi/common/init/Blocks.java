@@ -18,8 +18,6 @@ import com.ollieread.technomagi.block.BlockGenerator;
 import com.ollieread.technomagi.block.BlockHardlight;
 import com.ollieread.technomagi.block.BlockHardlightFence;
 import com.ollieread.technomagi.block.BlockHardlightGenerator;
-import com.ollieread.technomagi.block.BlockHardlightSlab;
-import com.ollieread.technomagi.block.BlockHardlightTile;
 import com.ollieread.technomagi.block.BlockLightAir;
 import com.ollieread.technomagi.block.BlockNaniteReplicator;
 import com.ollieread.technomagi.block.BlockObservationChamber;
@@ -58,8 +56,6 @@ public class Blocks
     public static Block blockCrafting;
     public static Block blockAnalysis;
     public static Block blockHardlight;
-    public static Block blockHardlightSlab;
-    public static Block blockHardlightTile;
     public static Block blockHardlightFence;
     public static Block blockHardlightGenerator;
     public static Block blockDisplacer;
@@ -84,8 +80,6 @@ public class Blocks
         blockCrafting = new BlockCrafting("crafting");
         blockAnalysis = new BlockAnalysis("analysis");
         blockHardlight = new BlockHardlight("hardlight");
-        blockHardlightSlab = new BlockHardlightSlab("hardlightSlab");
-        blockHardlightTile = new BlockHardlightTile("hardlightTile");
         blockHardlightFence = new BlockHardlightFence("hardlightFence");
         blockHardlightGenerator = new BlockHardlightGenerator("hardlightGenerator");
         blockDisplacer = new BlockDisplacer("displacer");
@@ -106,8 +100,6 @@ public class Blocks
         GameRegistry.registerBlock(blockObservationChamber, "observationChamber");
         GameRegistry.registerBlock(blockEmptyFiller, "emptyFiller");
         GameRegistry.registerBlock(blockHardlight, "hardlight");
-        GameRegistry.registerBlock(blockHardlightSlab, "hardlightSlab");
-        GameRegistry.registerBlock(blockHardlightTile, "hardlightTile");
         GameRegistry.registerBlock(blockHardlightFence, "hardlightFence");
         GameRegistry.registerBlock(blockHardlightGenerator, "hardlightGenerator");
         GameRegistry.registerBlock(blockDisplacer, "displacer");
