@@ -18,6 +18,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
@@ -459,11 +460,17 @@ public class PlayerEventHandler
             if (event.entityLiving instanceof EntityPlayer) {
                 ResearchRegistry.researchEvent("enderTeleport", event, ExtendedPlayerKnowledge.get((EntityPlayer) event.entityLiving), true);
             } else if (event.entityLiving instanceof EntityEnderman) {
-                // @todo Fix this issue, perhaps move to watching entities
-                // something or other
-                // ResearchRegistry.researchEvent("enderTeleportEnderman",
-                // event, ExtendedPlayerKnowledge.get((EntityPlayer)
-                // event.entityLiving), true);
+                EntityEnderman enderman = (EntityEnderman) event.entityLiving;
+                Set<EntityPlayer> players = ((WorldServer) enderman.worldObj).getEntityTracker().getTrackingPlayers(enderman);
+
+                for (Iterator<EntityPlayer> i = players.iterator(); i.hasNext();) {
+                    EntityPlayer player = i.next();
+                    ExtendedPlayerKnowledge knowledge = ExtendedPlayerKnowledge.get(player);
+
+                    if (knowledge != null && !knowledge.canSpecialise()) {
+                        ResearchRegistry.researchEvent("enderTeleportEnderman", event, knowledge, true);
+                    }
+                }
             }
         }
 
