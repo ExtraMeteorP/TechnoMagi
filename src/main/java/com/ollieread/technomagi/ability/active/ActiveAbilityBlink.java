@@ -70,7 +70,7 @@ public class ActiveAbilityBlink extends AbilityActive
     @Override
     public String[] getKnowledge()
     {
-        return new String[] { "teleportationI" };
+        return new String[] { "teleportation" };
     }
 
 }
