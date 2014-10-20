@@ -212,14 +212,11 @@ public class PlayerEventHandler
                 player = (EntityPlayer) event.entityLiving;
                 String entityName = null;
 
-                if (event.source instanceof EntityDamageSourceIndirect) {
+                if (event.source instanceof EntityDamageSourceIndirect || event.source instanceof EntityDamageSource) {
                     if (event.source.getEntity() instanceof EntityLivingBase) {
                         EntityLivingBase entity = (EntityLivingBase) event.source.getEntity();
                         entityName = (String) EntityList.classToStringMapping.get(entity.getClass());
                     }
-                } else if (event.source instanceof EntityDamageSource) {
-                    EntityLivingBase entity = (EntityLivingBase) event.source.getEntity();
-                    entityName = (String) EntityList.classToStringMapping.get(entity.getClass());
                 }
 
                 damageName = event.source.damageType;
@@ -229,12 +226,10 @@ public class PlayerEventHandler
                 }
             } else {
                 EntityLivingBase entity = null;
-                if (event.source instanceof EntityDamageSourceIndirect) {
+                if (event.source instanceof EntityDamageSourceIndirect || event.source instanceof EntityDamageSource) {
                     if (event.source.getEntity() instanceof EntityLivingBase) {
                         entity = (EntityLivingBase) event.source.getEntity();
                     }
-                } else if (event.source instanceof EntityDamageSource) {
-                    entity = (EntityLivingBase) event.source.getEntity();
                 }
 
                 damageName = event.source.damageType;
