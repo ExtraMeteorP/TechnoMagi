@@ -60,7 +60,7 @@ public class BlockGenerator extends BlockTMContainer
             TileEntityGeneratorBasic entity = (TileEntityGeneratorBasic) world.getTileEntity(x, y, z);
 
             if (entity != null) {
-                EntityHelper.addChatMessage(player, "Energy: " + entity.getEnergyStored());
+                EntityHelper.addChatMessage(player, "Energy: " + entity.getEnergyStored(null));
             }
 
             return true;

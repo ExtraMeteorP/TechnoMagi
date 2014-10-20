@@ -7,7 +7,7 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
-import cofh.api.energy.IEnergyStorage;
+import cofh.api.energy.IEnergyHandler;
 
 import com.ollieread.technomagi.common.Reference;
 
@@ -29,11 +29,11 @@ public abstract class GuiEnergyContainer extends GuiContainer
 
     public void drawPowerLayer(TileEntity tile, int x, int y)
     {
-        if (tile != null && tile instanceof IEnergyStorage) {
-            IEnergyStorage handler = (IEnergyStorage) tile;
+        if (tile != null && tile instanceof IEnergyHandler) {
+            IEnergyHandler handler = (IEnergyHandler) tile;
 
-            int capacity = handler.getMaxEnergyStored();
-            int stored = handler.getEnergyStored();
+            int capacity = handler.getMaxEnergyStored(null);
+            int stored = handler.getEnergyStored(null);
             int total = 0;
 
             this.mc.getTextureManager().bindTexture(overlay);

@@ -8,8 +8,7 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
-import cofh.api.energy.IEnergyConnection;
-import cofh.api.energy.IEnergyStorage;
+import cofh.api.energy.IEnergyHandler;
 import cofh.lib.util.helpers.EnergyHelper;
 
 import com.ollieread.technomagi.common.init.Items;
@@ -19,7 +18,7 @@ import com.ollieread.technomagi.common.proxy.PlayerLocked;
 import com.ollieread.technomagi.item.ItemNaniteContainer;
 import com.ollieread.technomagi.item.ItemSampleVile;
 
-public class TileEntityNaniteReplicator extends TileEntityTM implements IPlayerLocked, ISidedInventory, IEnergyStorage, IEnergyConnection
+public class TileEntityNaniteReplicator extends TileEntityTM implements IPlayerLocked, ISidedInventory, IEnergyHandler
 {
 
     protected BasicEnergy storage = null;
@@ -105,7 +104,7 @@ public class TileEntityNaniteReplicator extends TileEntityTM implements IPlayerL
 
             if (EnergyHelper.isAdjacentEnergyHandlerFromSide(this, ForgeDirection.DOWN.ordinal())) {
                 int input = storage.getMaxReceive();
-                int receive = storage.receiveEnergy(input, true);
+                int receive = storage.receiveEnergy(ForgeDirection.DOWN, input, true);
                 int extract = EnergyHelper.extractEnergyFromAdjacentEnergyHandler(this, ForgeDirection.DOWN.ordinal(), receive, true);
 
                 if (receive > 0 && extract > 0) {
@@ -117,9 +116,7 @@ public class TileEntityNaniteReplicator extends TileEntityTM implements IPlayerL
                     } else if (receive < extract) {
                         extract = EnergyHelper.extractEnergyFromAdjacentEnergyHandler(this, ForgeDirection.DOWN.ordinal(), receive, false);
                     }
-                    receiveEnergy(extract, false);
-
-                    sync();
+                    receiveEnergy(ForgeDirection.DOWN, extract, false);
                 }
             }
         }
@@ -200,7 +197,7 @@ public class TileEntityNaniteReplicator extends TileEntityTM implements IPlayerL
          * System.out.println(progress < 100); System.out.println(sampleType ==
          * naniteType); System.out.println(naniteType == 1);
          */
-        return getEnergyStored() > powerUsage && sample > 0 && nanites > 0 && progress < 100 && (sampleType == naniteType || naniteType.equals("player"));
+        return getEnergyStored(null) > powerUsage && sample > 0 && nanites > 0 && progress < 100 && (sampleType == naniteType || naniteType.equals("player"));
     }
 
     protected void populate()
@@ -411,27 +408,41 @@ public class TileEntityNaniteReplicator extends TileEntityTM implements IPlayerL
     }
 
     @Override
-    public int receiveEnergy(int maxReceive, boolean simulate)
+    public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate)
     {
-        return storage.receiveEnergy(maxReceive, simulate);
+        int r = storage.receiveEnergy(ForgeDirection.DOWN, maxReceive, simulate);
+
+        if (r > 0) {
+            sync();
+            return r;
+        }
+
+        return 0;
     }
 
     @Override
-    public int extractEnergy(int maxExtract, boolean simulate)
+    public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate)
     {
-        return storage.extractEnergy(maxExtract, simulate);
+        int r = storage.extractEnergy(ForgeDirection.DOWN, maxExtract, simulate);
+
+        if (r > 0) {
+            sync();
+            return r;
+        }
+
+        return 0;
     }
 
     @Override
-    public int getEnergyStored()
+    public int getEnergyStored(ForgeDirection from)
     {
-        return storage.getEnergyStored();
+        return storage.getEnergyStored(null);
     }
 
     @Override
-    public int getMaxEnergyStored()
+    public int getMaxEnergyStored(ForgeDirection from)
     {
-        return storage.getMaxEnergyStored();
+        return storage.getMaxEnergyStored(null);
     }
 
     /* LOCKED */

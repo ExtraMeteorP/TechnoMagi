@@ -2,12 +2,11 @@ package com.ollieread.technomagi.tileentity;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
-import cofh.api.energy.IEnergyConnection;
-import cofh.api.energy.IEnergyStorage;
+import cofh.api.energy.IEnergyHandler;
 
 import com.ollieread.technomagi.common.proxy.BasicEnergy;
 
-public class TileEntityGeneratorBasic extends TileEntityTM implements IEnergyStorage, IEnergyConnection
+public class TileEntityGeneratorBasic extends TileEntityTM implements IEnergyHandler
 {
 
     protected BasicEnergy storage = new BasicEnergy(5120, 0, 10);
@@ -23,9 +22,7 @@ public class TileEntityGeneratorBasic extends TileEntityTM implements IEnergySto
 
     public void updateEntity()
     {
-        if (getEnergyStored() < getMaxEnergyStored()) {
-            storage.receiveEnergy(energyGeneration, false);
-        }
+
     }
 
     public void readFromNBT(NBTTagCompound compound)
@@ -57,27 +54,27 @@ public class TileEntityGeneratorBasic extends TileEntityTM implements IEnergySto
     }
 
     @Override
-    public int receiveEnergy(int maxReceive, boolean simulate)
+    public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate)
     {
-        return storage.receiveEnergy(maxReceive, simulate);
+        return storage.receiveEnergy(ForgeDirection.DOWN, maxReceive, simulate);
     }
 
     @Override
-    public int extractEnergy(int maxExtract, boolean simulate)
+    public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate)
     {
-        return storage.extractEnergy(maxExtract, simulate);
+        return storage.extractEnergy(ForgeDirection.DOWN, maxExtract, simulate);
     }
 
     @Override
-    public int getEnergyStored()
+    public int getEnergyStored(ForgeDirection from)
     {
-        return storage.getEnergyStored();
+        return storage.getEnergyStored(null);
     }
 
     @Override
-    public int getMaxEnergyStored()
+    public int getMaxEnergyStored(ForgeDirection from)
     {
-        return storage.getMaxEnergyStored();
+        return storage.getMaxEnergyStored(null);
     }
 
 }

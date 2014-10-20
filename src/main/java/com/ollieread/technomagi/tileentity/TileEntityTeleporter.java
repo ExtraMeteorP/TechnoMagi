@@ -24,6 +24,8 @@ public class TileEntityTeleporter extends TileEntityTM implements IPlayerLocked,
 
     protected int mode = 0;
 
+    protected int maxCooldown = 10;
+
     public TileEntityTeleporter()
     {
         locked = new PlayerLocked();
@@ -71,7 +73,7 @@ public class TileEntityTeleporter extends TileEntityTM implements IPlayerLocked,
     public void updateEntity()
     {
         if (cooldown > -1) {
-            if (cooldown == 40) {
+            if (cooldown == maxCooldown) {
                 cooldown = -1;
             } else {
                 cooldown++;
@@ -171,25 +173,25 @@ public class TileEntityTeleporter extends TileEntityTM implements IPlayerLocked,
     @Override
     public int receiveEnergy(int maxReceive, boolean simulate)
     {
-        return storage.receiveEnergy(maxReceive, simulate);
+        return storage.receiveEnergy(ForgeDirection.DOWN, maxReceive, simulate);
     }
 
     @Override
     public int extractEnergy(int maxExtract, boolean simulate)
     {
-        return storage.extractEnergy(maxExtract, simulate);
+        return storage.extractEnergy(ForgeDirection.DOWN, maxExtract, simulate);
     }
 
     @Override
     public int getEnergyStored()
     {
-        return storage.getEnergyStored();
+        return storage.getEnergyStored(null);
     }
 
     @Override
     public int getMaxEnergyStored()
     {
-        return storage.getMaxEnergyStored();
+        return storage.getMaxEnergyStored(null);
     }
 
     /* LOCKED */

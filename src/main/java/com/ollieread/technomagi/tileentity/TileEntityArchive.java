@@ -181,8 +181,6 @@ public class TileEntityArchive extends TileEntityTM implements IPlayerLocked, II
 
                         if (tile != null && tile instanceof TileEntityResearch) {
                             TileEntityResearch machine = (TileEntityResearch) tile;
-                            System.out.println(x + ":" + y + ":" + z);
-                            System.out.println(machine.getData());
 
                             if (machine.getData() > 0) {
                                 Map<String, Integer> knowledge = machine.getKnowledge();

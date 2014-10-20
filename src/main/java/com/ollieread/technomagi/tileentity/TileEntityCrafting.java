@@ -9,8 +9,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
-import cofh.api.energy.IEnergyConnection;
-import cofh.api.energy.IEnergyStorage;
+import cofh.api.energy.IEnergyHandler;
 import cofh.lib.util.helpers.EnergyHelper;
 
 import com.ollieread.technomagi.common.proxy.BasicEnergy;
@@ -22,7 +21,7 @@ import com.ollieread.technomagi.util.PacketHelper;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 
-public class TileEntityCrafting extends TileEntityTM implements IPlayerLocked, IInventory, IEnergyStorage, IEnergyConnection
+public class TileEntityCrafting extends TileEntityTM implements IPlayerLocked, IInventory, IEnergyHandler
 {
 
     protected PlayerLocked locked = null;
@@ -162,7 +161,7 @@ public class TileEntityCrafting extends TileEntityTM implements IPlayerLocked, I
 
             if (EnergyHelper.isAdjacentEnergyHandlerFromSide(this, ForgeDirection.DOWN.ordinal())) {
                 int input = storage.getMaxReceive();
-                int receive = storage.receiveEnergy(input, true);
+                int receive = storage.receiveEnergy(ForgeDirection.DOWN, input, true);
                 int extract = EnergyHelper.extractEnergyFromAdjacentEnergyHandler(this, ForgeDirection.DOWN.ordinal(), receive, true);
 
                 if (receive > 0 && extract > 0) {
@@ -174,9 +173,7 @@ public class TileEntityCrafting extends TileEntityTM implements IPlayerLocked, I
                     } else if (receive < extract) {
                         extract = EnergyHelper.extractEnergyFromAdjacentEnergyHandler(this, ForgeDirection.DOWN.ordinal(), receive, false);
                     }
-                    receiveEnergy(extract, false);
-
-                    sync();
+                    receiveEnergy(ForgeDirection.DOWN, extract, false);
                 }
             }
         }
@@ -200,11 +197,11 @@ public class TileEntityCrafting extends TileEntityTM implements IPlayerLocked, I
                     ItemStack result = inventory.getStackInSlot(9);
 
                     if (result == null) {
-                        return getEnergyStored() > powerUsage;
+                        return getEnergyStored(null) > powerUsage;
                     }
 
                     if (result.isItemEqual(recipe) && (result.stackSize + recipe.stackSize) <= result.getMaxStackSize()) {
-                        return getEnergyStored() > powerUsage;
+                        return getEnergyStored(null) > powerUsage;
                     }
                 }
             }
@@ -376,27 +373,41 @@ public class TileEntityCrafting extends TileEntityTM implements IPlayerLocked, I
     }
 
     @Override
-    public int receiveEnergy(int maxReceive, boolean simulate)
+    public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate)
     {
-        return storage.receiveEnergy(maxReceive, simulate);
+        int r = storage.receiveEnergy(ForgeDirection.DOWN, maxReceive, simulate);
+
+        if (r > 0) {
+            sync();
+            return r;
+        }
+
+        return 0;
     }
 
     @Override
-    public int extractEnergy(int maxExtract, boolean simulate)
+    public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate)
     {
-        return storage.extractEnergy(maxExtract, simulate);
+        int r = storage.extractEnergy(ForgeDirection.DOWN, maxExtract, simulate);
+
+        if (r > 0) {
+            sync();
+            return r;
+        }
+
+        return 0;
     }
 
     @Override
-    public int getEnergyStored()
+    public int getEnergyStored(ForgeDirection from)
     {
-        return storage.getEnergyStored();
+        return storage.getEnergyStored(null);
     }
 
     @Override
-    public int getMaxEnergyStored()
+    public int getMaxEnergyStored(ForgeDirection from)
     {
-        return storage.getMaxEnergyStored();
+        return storage.getMaxEnergyStored(null);
     }
 
     /* LOCKED */

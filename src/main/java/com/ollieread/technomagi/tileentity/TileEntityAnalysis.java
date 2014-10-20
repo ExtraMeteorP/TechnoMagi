@@ -8,8 +8,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
-import cofh.api.energy.IEnergyConnection;
-import cofh.api.energy.IEnergyStorage;
+import cofh.api.energy.IEnergyHandler;
 import cofh.lib.util.helpers.EnergyHelper;
 
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
@@ -20,7 +19,7 @@ import com.ollieread.technomagi.common.proxy.BasicEnergy;
 import com.ollieread.technomagi.common.proxy.BasicInventory;
 import com.ollieread.technomagi.common.proxy.PlayerLocked;
 
-public class TileEntityAnalysis extends TileEntityResearch implements IPlayerLocked, IInventory, IEnergyStorage, IEnergyConnection
+public class TileEntityAnalysis extends TileEntityResearch implements IPlayerLocked, IInventory, IEnergyHandler
 {
     protected BasicEnergy storage = null;
     protected PlayerLocked locked = null;
@@ -143,25 +142,23 @@ public class TileEntityAnalysis extends TileEntityResearch implements IPlayerLoc
                     waiting = 0;
                     setInProgress(false);
                 }
-            }
 
-            if (EnergyHelper.isAdjacentEnergyHandlerFromSide(this, ForgeDirection.DOWN.ordinal())) {
-                int input = storage.getMaxReceive();
-                int receive = storage.receiveEnergy(input, true);
-                int extract = EnergyHelper.extractEnergyFromAdjacentEnergyHandler(this, ForgeDirection.DOWN.ordinal(), receive, true);
+                if (EnergyHelper.isAdjacentEnergyHandlerFromSide(this, ForgeDirection.DOWN.ordinal())) {
+                    int input = storage.getMaxReceive();
+                    int receive = storage.receiveEnergy(ForgeDirection.DOWN, input, true);
+                    int extract = EnergyHelper.extractEnergyFromAdjacentEnergyHandler(this, ForgeDirection.DOWN.ordinal(), receive, true);
 
-                if (receive > 0 && extract > 0) {
+                    if (receive > 0 && extract > 0) {
 
-                    if (receive == extract) {
-                        extract = EnergyHelper.extractEnergyFromAdjacentEnergyHandler(this, ForgeDirection.DOWN.ordinal(), receive, false);
-                    } else if (receive > extract) {
-                        extract = EnergyHelper.extractEnergyFromAdjacentEnergyHandler(this, ForgeDirection.DOWN.ordinal(), extract, false);
-                    } else if (receive < extract) {
-                        extract = EnergyHelper.extractEnergyFromAdjacentEnergyHandler(this, ForgeDirection.DOWN.ordinal(), receive, false);
+                        if (receive == extract) {
+                            extract = EnergyHelper.extractEnergyFromAdjacentEnergyHandler(this, ForgeDirection.DOWN.ordinal(), receive, false);
+                        } else if (receive > extract) {
+                            extract = EnergyHelper.extractEnergyFromAdjacentEnergyHandler(this, ForgeDirection.DOWN.ordinal(), extract, false);
+                        } else if (receive < extract) {
+                            extract = EnergyHelper.extractEnergyFromAdjacentEnergyHandler(this, ForgeDirection.DOWN.ordinal(), receive, false);
+                        }
+                        receiveEnergy(ForgeDirection.DOWN, extract, false);
                     }
-                    receiveEnergy(extract, false);
-
-                    sync();
                 }
             }
         }
@@ -193,7 +190,7 @@ public class TileEntityAnalysis extends TileEntityResearch implements IPlayerLoc
                 return false;
             }
 
-            return getEnergyStored() > powerUsage;
+            return getEnergyStored(null) > powerUsage;
         }
 
         return false;
@@ -328,27 +325,41 @@ public class TileEntityAnalysis extends TileEntityResearch implements IPlayerLoc
     }
 
     @Override
-    public int receiveEnergy(int maxReceive, boolean simulate)
+    public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate)
     {
-        return storage.receiveEnergy(maxReceive, simulate);
+        int r = storage.receiveEnergy(ForgeDirection.DOWN, maxReceive, simulate);
+
+        if (r > 0) {
+            sync();
+            return r;
+        }
+
+        return 0;
     }
 
     @Override
-    public int extractEnergy(int maxExtract, boolean simulate)
+    public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate)
     {
-        return storage.extractEnergy(maxExtract, simulate);
+        int r = storage.extractEnergy(ForgeDirection.DOWN, maxExtract, simulate);
+
+        if (r > 0) {
+            sync();
+            return r;
+        }
+
+        return 0;
     }
 
     @Override
-    public int getEnergyStored()
+    public int getEnergyStored(ForgeDirection from)
     {
-        return storage.getEnergyStored();
+        return storage.getEnergyStored(null);
     }
 
     @Override
-    public int getMaxEnergyStored()
+    public int getMaxEnergyStored(ForgeDirection from)
     {
-        return storage.getMaxEnergyStored();
+        return storage.getMaxEnergyStored(null);
     }
 
     /* LOCKED */

@@ -3,13 +3,12 @@ package com.ollieread.technomagi.common.proxy;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import cofh.api.energy.EnergyStorage;
-import cofh.api.energy.IEnergyConnection;
-import cofh.api.energy.IEnergyStorage;
+import cofh.api.energy.IEnergyHandler;
 
-public class BasicEnergy implements IEnergyStorage, IEnergyConnection
+public class BasicEnergy implements IEnergyHandler
 {
 
-    protected EnergyStorage energy;
+    protected EnergyStorage storage;
 
     public BasicEnergy(int capacity)
     {
@@ -23,75 +22,70 @@ public class BasicEnergy implements IEnergyStorage, IEnergyConnection
 
     public BasicEnergy(int capacity, int maxReceive, int maxExtract)
     {
-        energy = new EnergyStorage(capacity, maxReceive, maxExtract);
+        storage = new EnergyStorage(capacity, maxReceive, maxExtract);
     }
 
-    @Override
-    public int receiveEnergy(int maxReceive, boolean simulate)
+    public void readFromNBT(NBTTagCompound nbt)
     {
-        return energy.receiveEnergy(maxReceive, simulate);
+        storage.readFromNBT(nbt);
     }
 
-    @Override
-    public int extractEnergy(int maxExtract, boolean simulate)
+    public void writeToNBT(NBTTagCompound nbt)
     {
-        return energy.extractEnergy(maxExtract, simulate);
+        storage.writeToNBT(nbt);
     }
 
-    @Override
-    public int getEnergyStored()
-    {
-        return energy.getEnergyStored();
-    }
-
-    @Override
-    public int getMaxEnergyStored()
-    {
-        return energy.getMaxEnergyStored();
-    }
-
-    public void readFromNBT(NBTTagCompound compound)
-    {
-        NBTTagCompound energyStorage = compound.getCompoundTag("EnergyStorage");
-
-        energy.readFromNBT(energyStorage);
-    }
-
-    public void writeToNBT(NBTTagCompound compound)
-    {
-        NBTTagCompound energyStorage = new NBTTagCompound();
-
-        energy.writeToNBT(energyStorage);
-
-        compound.setTag("EnergyStorage", energyStorage);
-    }
-
+    /* IEnergyHandler */
     @Override
     public boolean canConnectEnergy(ForgeDirection from)
     {
         return true;
     }
 
-    public int getMaxReceive()
+    @Override
+    public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate)
     {
-        return energy.getMaxReceive();
+        return storage.receiveEnergy(maxReceive, simulate);
     }
 
-    public int getMaxExtract()
+    @Override
+    public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate)
     {
-        return energy.getMaxExtract();
+        return storage.extractEnergy(maxExtract, simulate);
+    }
+
+    @Override
+    public int getEnergyStored(ForgeDirection from)
+    {
+        return storage.getEnergyStored();
+    }
+
+    @Override
+    public int getMaxEnergyStored(ForgeDirection from)
+    {
+        return storage.getMaxEnergyStored();
     }
 
     public boolean modifyEnergyStored(int energy)
     {
-        int c = getEnergyStored();
-        this.energy.modifyEnergyStored(-energy);
+        int c = getEnergyStored(null);
+        storage.modifyEnergyStored(-energy);
 
-        if ((c - 5) == getEnergyStored()) {
+        if ((c - 5) == getEnergyStored(null)) {
             return true;
         }
 
         return false;
+    }
+
+    public int getMaxReceive()
+    {
+        return storage.getMaxReceive();
+    }
+
+    public int getMaxExtract()
+    {
+        return storage.getMaxExtract();
     }
 
 }
