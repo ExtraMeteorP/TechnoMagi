@@ -69,25 +69,25 @@ public class Blocks
     {
         TechnoMagi.logger.log(Level.INFO, "Initiating & registering blocks");
 
-        blockConstruct = new BlockConstruct("construct");
-        blockArchive = new BlockArchive("archive");
-        blockNaniteReplicator = new BlockNaniteReplicator("naniteReplicator");
-        blockAreaLight = new BlockAreaLight("areaLight");
+        blockConstruct = new BlockConstruct("construct").setHardness(5.0F).setResistance(10.0F);
+        blockArchive = new BlockArchive("archive").setHardness(5.0F).setResistance(10.0F);
+        blockNaniteReplicator = new BlockNaniteReplicator("naniteReplicator").setHardness(5.0F).setResistance(10.0F);
+        blockAreaLight = new BlockAreaLight("areaLight").setHardness(5.0F).setResistance(10.0F);
         blockLightAir = new BlockLightAir("lightAir");
-        blockTeleporter = new BlockTeleporter("teleporter");
-        blockObservationChamber = new BlockObservationChamber("observationChamber");
-        blockEmptyFiller = new BlockEmptyFiller("emptyFiller");
-        blockCrafting = new BlockCrafting("crafting");
-        blockAnalysis = new BlockAnalysis("analysis");
+        blockTeleporter = new BlockTeleporter("teleporter").setHardness(5.0F).setResistance(10.0F);
+        blockObservationChamber = new BlockObservationChamber("observationChamber").setHardness(5.0F).setResistance(10.0F);
+        blockEmptyFiller = new BlockEmptyFiller("emptyFiller").setHardness(5.0F).setResistance(10.0F);
+        blockCrafting = new BlockCrafting("crafting").setHardness(5.0F).setResistance(10.0F);
+        blockAnalysis = new BlockAnalysis("analysis").setHardness(5.0F).setResistance(10.0F);
         blockHardlight = new BlockHardlight("hardlight");
         blockHardlightFence = new BlockHardlightFence("hardlightFence");
         blockHardlightGenerator = new BlockHardlightGenerator("hardlightGenerator");
-        blockDisplacer = new BlockDisplacer("displacer");
+        blockDisplacer = new BlockDisplacer("displacer").setHardness(5.0F).setResistance(10.0F);
         blockDisplacedAir = new BlockDisplacedAir("displacedAir");
-        blockGenerator = new BlockGenerator("generator");
+        blockGenerator = new BlockGenerator("generator").setHardness(5.0F).setResistance(10.0F);
         blockReactiveCrafting = new BlockReactiveCrafting("reactiveCrafting");
-        blockEtheriumOre = new BlockEtheriumOre("etheriumOre");
-        blockVoidstone = new BlockVoidstone("voidstone");
+        blockEtheriumOre = new BlockEtheriumOre("etheriumOre").setHardness(3.0F).setResistance(5.0F);
+        blockVoidstone = new BlockVoidstone("voidstone").setHardness(3.0F).setResistance(5.0F);
 
         GameRegistry.registerBlock(blockConstruct, "construct");
         GameRegistry.registerBlock(blockArchive, "archive");
