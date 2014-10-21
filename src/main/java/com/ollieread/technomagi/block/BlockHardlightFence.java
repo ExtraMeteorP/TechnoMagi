@@ -1,5 +1,7 @@
 package com.ollieread.technomagi.block;
 
+import java.util.Random;
+
 import net.minecraft.block.BlockFence;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -61,6 +63,12 @@ public class BlockHardlightFence extends BlockFence
     public int getLightValue()
     {
         return 15;
+    }
+
+    @Override
+    public int quantityDropped(Random random)
+    {
+        return 0;
     }
 
     @SideOnly(Side.CLIENT)

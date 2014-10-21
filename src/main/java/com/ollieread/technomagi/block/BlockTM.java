@@ -1,5 +1,7 @@
 package com.ollieread.technomagi.block;
 
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -26,6 +28,11 @@ public abstract class BlockTM extends Block
     public void registerBlockIcons(IIconRegister register)
     {
         blockIcon = register.registerIcon(Reference.MODID.toLowerCase() + ":" + getTextureName());
+    }
+
+    public int quantityDropped(Random random)
+    {
+        return 1;
     }
 
 }

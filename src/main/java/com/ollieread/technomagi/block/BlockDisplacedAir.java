@@ -1,5 +1,7 @@
 package com.ollieread.technomagi.block;
 
+import java.util.Random;
+
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -61,6 +63,12 @@ public class BlockDisplacedAir extends BlockContainer
     public boolean canBeReplacedByLeaves(IBlockAccess world, int x, int y, int z)
     {
         return true;
+    }
+
+    @Override
+    public int quantityDropped(Random random)
+    {
+        return 0;
     }
 
     public int getRenderType()

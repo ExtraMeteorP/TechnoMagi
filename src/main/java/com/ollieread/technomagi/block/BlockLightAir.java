@@ -1,5 +1,7 @@
 package com.ollieread.technomagi.block;
 
+import java.util.Random;
+
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -71,6 +73,12 @@ public class BlockLightAir extends BlockContainer
     public int getLightValue()
     {
         return 15;
+    }
+
+    @Override
+    public int quantityDropped(Random random)
+    {
+        return 0;
     }
 
     public AxisAlignedBB getCollisionBoundingBoxFromPool(World p_149668_1_, int p_149668_2_, int p_149668_3_, int p_149668_4_)

@@ -1,5 +1,7 @@
 package com.ollieread.technomagi.block;
 
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.world.IBlockAccess;
@@ -42,6 +44,12 @@ public class BlockHardlight extends BlockTM
     public int getLightValue()
     {
         return 15;
+    }
+
+    @Override
+    public int quantityDropped(Random random)
+    {
+        return 0;
     }
 
     @SideOnly(Side.CLIENT)
