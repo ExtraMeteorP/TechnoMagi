@@ -72,9 +72,9 @@ public class BlockAnalysis extends BlockTMContainer
                     player.openGui(TechnoMagi.instance, CommonProxy.GUI_ANALYSIS, world, x, y, z);
                 }
             }
-
-            return true;
         }
+
+        return true;
     }
 
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack)

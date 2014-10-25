@@ -173,9 +173,9 @@ public class BlockTeleporter extends BlockTMContainer implements IDigitalToolabl
                     PacketHelper.openTeleporter(x, y, z, (EntityPlayerMP) player);
                 }
             }
-
-            return true;
         }
+
+        return true;
     }
 
 }

@@ -140,6 +140,11 @@ public class ItemSampleVile extends ItemTM
         }
     }
 
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    {
+        return stack;
+    }
+
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float par8, float par9, float par10)
     {
         System.out.println("In use");

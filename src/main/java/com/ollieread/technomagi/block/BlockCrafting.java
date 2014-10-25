@@ -99,9 +99,9 @@ public class BlockCrafting extends BlockOwnable
                     player.openGui(TechnoMagi.instance, CommonProxy.GUI_CRAFTING, world, x, y, z);
                 }
             }
-
-            return true;
         }
+
+        return true;
     }
 
 }

@@ -66,9 +66,9 @@ public class BlockNaniteReplicator extends BlockOwnable
                     player.openGui(TechnoMagi.instance, CommonProxy.GUI_REPLICATOR, world, x, y, z);
                 }
             }
-
-            return true;
         }
+
+        return true;
     }
 
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack)
