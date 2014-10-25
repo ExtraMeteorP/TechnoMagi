@@ -50,7 +50,7 @@ public class ItemSampleVile extends ItemTM
     {
         NBTTagCompound compound = stack.stackTagCompound;
 
-        if (compound.hasKey("Entity")) {
+        if (compound != null && compound.hasKey("Entity")) {
             return compound.getString("Entity");
         }
 
