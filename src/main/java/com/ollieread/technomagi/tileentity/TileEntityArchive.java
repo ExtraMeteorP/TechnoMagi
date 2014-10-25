@@ -11,6 +11,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
+import com.ollieread.technomagi.TechnoMagi;
 import com.ollieread.technomagi.common.proxy.BasicInventory;
 import com.ollieread.technomagi.common.proxy.PlayerLocked;
 import com.ollieread.technomagi.item.ItemResearchStorage;
@@ -142,6 +143,13 @@ public class TileEntityArchive extends TileEntityTM implements IPlayerLocked, II
     protected void syncPlayer()
     {
         EntityPlayer owner = getEntityPlayer();
+
+        if (owner == null) {
+            TechnoMagi.logger.error("Something went horribly wrong and the Archive no longer has an owner");
+            worldObj.func_147480_a(xCoord, yCoord, zCoord, true);
+            return;
+        }
+
         ExtendedPlayerKnowledge playerKnowledge = ExtendedPlayerKnowledge.get(owner);
 
         if (playerKnowledge != null && playerKnowledge.nanites != null) {
@@ -171,6 +179,13 @@ public class TileEntityArchive extends TileEntityTM implements IPlayerLocked, II
     public void syncMachine()
     {
         EntityPlayer owner = getEntityPlayer();
+
+        if (owner == null) {
+            TechnoMagi.logger.error("Something went horribly wrong and the Archive no longer has an owner");
+            worldObj.func_147480_a(xCoord, yCoord, zCoord, true);
+            return;
+        }
+
         ExtendedPlayerKnowledge playerKnowledge = ExtendedPlayerKnowledge.get(owner);
 
         if (playerKnowledge != null && playerKnowledge.nanites != null) {
