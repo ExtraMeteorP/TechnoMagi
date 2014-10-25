@@ -17,6 +17,7 @@ buildscript {
 }
 
 apply plugin: 'forge'
+apply plugin: 'maven'
 
 ext.configFile = file "build.properties"
 
@@ -27,7 +28,6 @@ configFile.withReader {
     project.ext.config = new ConfigSlurper().parse prop
 }
 
-apply plugin: 'maven'
 
 repositories {
     maven {
@@ -57,10 +57,17 @@ task deobfJar(type: Jar) {
 }
 
 processResources {
-    from (sourceSets.main.resources.srcDirs) {
-        include '**/*.info'
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
 
-        expand 'version':"${config.version.major}.${config.version.minor}.${config.version.revis}.${System.getenv("BUILD_NUMBER") ?: 0}${config.version.stage ? "-${config.version.stage}" : ""}",'mcversion':config.version.minecraft
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+                
+        expand 'version':project.version, 'mcversion':project.minecraft.version
+    }
+        
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
     }
 }
 
