@@ -63,7 +63,7 @@ processResources {
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
                 
-        expand 'version':${config.version.minor}.${config.version.revis}.${System.getenv("BUILD_NUMBER") ?: 0}${config.version.stage ? "-${config.version.stage}" : ""}", 'mcversion':project.minecraft.version
+        expand 'version':"${config.version.major}.${config.version.minor}.${config.version.revis}.${System.getenv("BUILD_NUMBER") ?: 0}${config.version.stage ? "-${config.version.stage}" : ""}", 'mcversion':project.minecraft.version
     }
         
     from(sourceSets.main.resources.srcDirs) {
