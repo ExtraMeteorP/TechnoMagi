@@ -150,7 +150,6 @@ public class ItemNaniteContainer extends ItemTM
                     ItemStack newStack = new ItemStack(this, 1, 1);
                     newStack.stackTagCompound = new NBTTagCompound();
                     this.setEntity(newStack, EntityPlayer.class);
-
                     player.inventory.addItemStackToInventory(newStack);
                     stack.stackSize--;
                 }
@@ -158,17 +157,6 @@ public class ItemNaniteContainer extends ItemTM
         }
 
         return stack;
-    }
-
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float par8, float par9, float par10)
-    {
-        stack.stackSize--;
-
-        if (stack.stackSize == 0) {
-            stack = null;
-        }
-
-        return true;
     }
 
 }
