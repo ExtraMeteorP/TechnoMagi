@@ -1,6 +1,7 @@
 package com.ollieread.technomagi.util;
 
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class InventoryHelper
@@ -12,10 +13,16 @@ public class InventoryHelper
             ItemStack slot = inventory.getStackInSlot(i);
 
             if (slot != null && slot.isItemEqual(stack)) {
-                slot.stackSize--;
+                Item item = slot.getItem();
 
-                if (slot.stackSize <= 0) {
-                    slot = null;
+                if (item.hasContainerItem(stack)) {
+                    slot = item.getContainerItem(stack);
+                } else {
+                    slot.stackSize--;
+
+                    if (slot.stackSize <= 0) {
+                        slot = null;
+                    }
                 }
 
                 inventory.setInventorySlotContents(i, slot);
@@ -25,6 +32,25 @@ public class InventoryHelper
         }
 
         return false;
+    }
+
+    public static ItemStack consumeInventoryItem(ItemStack stack)
+    {
+        if (stack != null) {
+            Item item = stack.getItem();
+
+            if (item.hasContainerItem(stack)) {
+                stack = item.getContainerItem(stack);
+            } else {
+                stack.stackSize--;
+
+                if (stack.stackSize <= 0) {
+                    stack = null;
+                }
+            }
+        }
+
+        return stack;
     }
 
     public static boolean hasInventoryItem(IInventory inventory, ItemStack stack)

@@ -22,6 +22,7 @@ import com.ollieread.technomagi.block.BlockLightAir;
 import com.ollieread.technomagi.block.BlockNaniteReplicator;
 import com.ollieread.technomagi.block.BlockObservationChamber;
 import com.ollieread.technomagi.block.BlockReactiveCrafting;
+import com.ollieread.technomagi.block.BlockTank;
 import com.ollieread.technomagi.block.BlockTeleporter;
 import com.ollieread.technomagi.block.BlockVoidstone;
 import com.ollieread.technomagi.item.ItemBlockTM;
@@ -38,6 +39,7 @@ import com.ollieread.technomagi.tileentity.TileEntityLightAir;
 import com.ollieread.technomagi.tileentity.TileEntityNaniteReplicator;
 import com.ollieread.technomagi.tileentity.TileEntityObservationChamber;
 import com.ollieread.technomagi.tileentity.TileEntityReactiveCrafting;
+import com.ollieread.technomagi.tileentity.TileEntityTank;
 import com.ollieread.technomagi.tileentity.TileEntityTeleporter;
 
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -64,6 +66,7 @@ public class Blocks
     public static Block blockReactiveCrafting;
     public static Block blockEtheriumOre;
     public static Block blockVoidstone;
+    public static Block blockTank;
 
     public static void init()
     {
@@ -88,6 +91,7 @@ public class Blocks
         blockReactiveCrafting = new BlockReactiveCrafting("reactiveCrafting");
         blockEtheriumOre = new BlockEtheriumOre("etheriumOre").setHardness(3.0F).setResistance(5.0F);
         blockVoidstone = new BlockVoidstone("voidstone").setHardness(3.0F).setResistance(5.0F);
+        blockTank = new BlockTank("tank").setHardness(5.0F).setResistance(10.0F);
 
         GameRegistry.registerBlock(blockConstruct, "construct");
         GameRegistry.registerBlock(blockArchive, "archive");
@@ -108,6 +112,7 @@ public class Blocks
         GameRegistry.registerBlock(blockReactiveCrafting, "reactiveCrafting");
         GameRegistry.registerBlock(blockEtheriumOre, "etheriumOre");
         GameRegistry.registerBlock(blockVoidstone, "voidstone");
+        GameRegistry.registerBlock(blockTank, ItemBlockTM.class, "tank");
 
         GameRegistry.registerTileEntity(TileEntityArchive.class, "tileEntityArchive");
         GameRegistry.registerTileEntity(TileEntityNaniteReplicator.class, "tileEntityNaniteReplicator");
@@ -123,5 +128,6 @@ public class Blocks
         GameRegistry.registerTileEntity(TileEntityGeneratorBasic.class, "tileEntityGeneratorBasic");
         GameRegistry.registerTileEntity(TileEntityConstruct.class, "tileEntityConstruct");
         GameRegistry.registerTileEntity(TileEntityReactiveCrafting.class, "tileEntityReactiveCrafting");
+        GameRegistry.registerTileEntity(TileEntityTank.class, "tileEntityTank");
     }
 }
