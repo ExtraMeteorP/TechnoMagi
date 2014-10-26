@@ -18,6 +18,7 @@ import com.ollieread.technomagi.TechnoMagi;
 import com.ollieread.technomagi.common.CommonProxy;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.item.ItemResearchStorage;
+import com.ollieread.technomagi.tileentity.IPlayerLocked;
 import com.ollieread.technomagi.tileentity.TileEntityArchive;
 
 import cpw.mods.fml.relauncher.Side;
@@ -104,9 +105,11 @@ public class BlockArchive extends BlockTMContainer
             world.setBlockMetadataWithNotify(x, y, z, 4, 2);
         }
 
-        TileEntityArchive archive = (TileEntityArchive) world.getTileEntity(x, y, z);
+        TileEntity te = world.getTileEntity(x, y, z);
 
-        archive.setPlayer(((EntityPlayer) entity).getCommandSenderName());
+        if (te instanceof IPlayerLocked) {
+            ((IPlayerLocked) te).setPlayer(((EntityPlayer) entity).getCommandSenderName());
+        }
 
         super.onBlockPlacedBy(world, x, y, z, entity, stack);
     }

@@ -56,13 +56,10 @@ public class BlockConstruct extends BlockTMContainer
             world.setBlockMetadataWithNotify(x, y, z, 4, 2);
         }
 
-        TileEntity tileEntity = world.getTileEntity(x, y, z);
+        TileEntity te = world.getTileEntity(x, y, z);
 
-        if (entity instanceof EntityPlayer) {
-            EntityPlayer player = (EntityPlayer) entity;
-            IPlayerLocked tile = (IPlayerLocked) tileEntity;
-
-            tile.setPlayer(player.getCommandSenderName());
+        if (te instanceof IPlayerLocked) {
+            ((IPlayerLocked) te).setPlayer(((EntityPlayer) entity).getCommandSenderName());
         }
     }
 
