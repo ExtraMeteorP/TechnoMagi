@@ -78,6 +78,15 @@ public class BasicEnergy implements IEnergyHandler
         return false;
     }
 
+    public void increaseEnergyStored(int energy)
+    {
+        int capacity = storage.getEnergyStored();
+
+        if (capacity < storage.getMaxEnergyStored() && (capacity + energy) <= storage.getMaxEnergyStored()) {
+            storage.setEnergyStored(capacity + energy);
+        }
+    }
+
     public int getMaxReceive()
     {
         return storage.getMaxReceive();
