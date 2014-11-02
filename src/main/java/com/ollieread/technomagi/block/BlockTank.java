@@ -9,6 +9,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -23,7 +24,7 @@ import com.ollieread.technomagi.util.InventoryHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockTank extends BlockTMContainer
+public class BlockTank extends BlockTMContainer implements IDigitalToolable
 {
 
     public BlockTank(String name)
@@ -73,6 +74,13 @@ public class BlockTank extends BlockTMContainer
 
         if (tank.getBlockMetadata() > 0) {
             tank.setCapacity(FluidContainerRegistry.BUCKET_VOLUME * (100 * (tank.getBlockMetadata() * 5)));
+        }
+
+        if (stack.stackTagCompound != null) {
+            tank.readFromNBT(stack.stackTagCompound);
+            tank.xCoord = x;
+            tank.yCoord = y;
+            tank.zCoord = z;
         }
 
         super.onBlockPlacedBy(world, x, y, z, entity, stack);
@@ -155,6 +163,29 @@ public class BlockTank extends BlockTMContainer
     public int damageDropped(int meta)
     {
         return meta;
+    }
+
+    @Override
+    public boolean onTooled(EntityPlayer player, World world, int x, int y, int z, ItemStack tool)
+    {
+        if (!world.isRemote) {
+            Item dropItem = Item.getItemFromBlock(this);
+
+            if (dropItem != null) {
+                ItemStack dropStack = new ItemStack(dropItem);
+                dropStack.stackTagCompound = new NBTTagCompound();
+
+                TileEntityTank tank = (TileEntityTank) world.getTileEntity(x, y, z);
+
+                if (tank != null) {
+                    tank.writeToNBT(dropStack.stackTagCompound);
+                    dropBlockAsItem(world, x, y, z, dropStack);
+                    world.setBlockToAir(x, y, z);
+                }
+            }
+        }
+
+        return false;
     }
 
 }

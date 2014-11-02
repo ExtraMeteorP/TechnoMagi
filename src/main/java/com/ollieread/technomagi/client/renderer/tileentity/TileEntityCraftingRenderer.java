@@ -138,6 +138,7 @@ public class TileEntityCraftingRenderer extends TileEntitySpecialRenderer
         if (items != null) {
             double dx = -0.5D;
             double dz = -0.5D;
+
             for (int i = 0; i < items.length; i++) {
                 ItemStack stack = items[i];
 

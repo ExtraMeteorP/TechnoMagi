@@ -51,8 +51,6 @@ public abstract class ItemTMSubtypes extends ItemTM
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister register)
     {
-        itemIcon = register.registerIcon(Reference.MODID.toLowerCase() + ":" + getIconString());
-
         for (int i = 0; i < itemIcons.length; i++) {
             itemIcons[i] = register.registerIcon(Reference.MODID.toLowerCase() + ":" + itemNames[i]);
         }

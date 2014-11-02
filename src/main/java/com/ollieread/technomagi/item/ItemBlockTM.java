@@ -1,9 +1,14 @@
 package com.ollieread.technomagi.item;
 
+import java.util.List;
+
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidTank;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -39,6 +44,21 @@ public class ItemBlockTM extends ItemBlock
     public String getUnlocalizedName(ItemStack stack)
     {
         return getUnlocalizedName() + "." + stack.getItemDamage();
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean bool)
+    {
+        if (stack.stackTagCompound != null) {
+            FluidTank tank = new FluidTank(FluidContainerRegistry.BUCKET_VOLUME * 100);
+            tank.readFromNBT(stack.stackTagCompound);
+
+            if (tank.getFluid() != null) {
+                list.add(tank.getFluid().getLocalizedName());
+            }
+
+            list.add(tank.getFluidAmount() + "/" + tank.getCapacity());
+        }
     }
 
 }
