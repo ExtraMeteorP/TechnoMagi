@@ -3,6 +3,7 @@ package com.ollieread.technomagi.client.gui.archive;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -143,8 +144,8 @@ public class GuiArchiveAbilities extends GuiArchive
 
                 String content = Information.getInformation("abilities", name);
                 String type = (ability instanceof IAbilityActive ? "Active" : "Passive");
-                String knowledge[] = ability.getKnowledge();
-                String enhancements[] = null;
+                String[] knowledge = ability.getKnowledge();
+                Map<String, Integer> enhancements = null;
 
                 fontRendererObj.drawString(type, 33, 60, 16777215);
 
@@ -175,9 +176,13 @@ public class GuiArchiveAbilities extends GuiArchive
                 y += 10;
 
                 if (enhancements != null) {
-                    for (int i = 0; i < enhancements.length; i++) {
-                        y += (10 * i);
-                        fontRendererObj.drawString(I18n.format("enhancement." + enhancements[i]), 9, y, 16777215);
+                    int x = 0;
+                    for (Iterator<String> i = enhancements.keySet().iterator(); i.hasNext();) {
+                        String key = i.next();
+
+                        y += (10 * x);
+                        fontRendererObj.drawString(I18n.format("enhancement." + key) + " " + enhancements.get(key), 9, y, 16777215);
+                        x++;
                     }
                 } else {
                     fontRendererObj.drawString("None", 9, y, 16777215);

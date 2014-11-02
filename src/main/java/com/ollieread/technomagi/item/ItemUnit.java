@@ -1,6 +1,9 @@
 package com.ollieread.technomagi.item;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.ennds.item.IStaff;
@@ -11,74 +14,31 @@ import cpw.mods.fml.common.eventhandler.Event;
 public class ItemUnit extends ItemTMSubtypes implements IStaffEnhancement
 {
 
+    public String[] itemTypes = new String[] { "life", "light", "teleport", "subspace", "nanite", "power", "exo", "endo", "force", "void" };
+
     public ItemUnit(String name)
     {
-        super(name, new String[] { "lifeUnitBasic", "lifeUnitAdvanced", "lifeUnitElite", "teleportUnitBasic", "teleportUnitAdvanced", "teleportUnitElite", "subspaceUnitBasic", "subspaceUnitAdvanced", "subspaceUnitElite", "naniteUnitBasic", "naniteUnitAdvanced", "naniteUnitElite", "powerUnitBasic", "powerUnitAdvanced", "powerUnitElite", "exoUnitBasic", "exoUnitAdvanced", "exoUnitElite", "endoUnitBasic", "endoUnitAdvanced", "endoUnitElite", "forceUnitBasic", "forceUnitAdvanced", "forceUnitElite", "voidUnitBasic", "voidUnitAdvanced", "voidUnitElite" });
+        super(name, new String[] { "lifeUnitBasic", "lifeUnitAdvanced", "lifeUnitElite", "lightUnitBasic", "lightUnitAdvanced", "lightUnitElite", "teleportUnitBasic", "teleportUnitAdvanced", "teleportUnitElite", "subspaceUnitBasic", "subspaceUnitAdvanced", "subspaceUnitElite", "naniteUnitBasic", "naniteUnitAdvanced", "naniteUnitElite", "powerUnitBasic", "powerUnitAdvanced", "powerUnitElite", "exoUnitBasic", "exoUnitAdvanced", "exoUnitElite", "endoUnitBasic", "endoUnitAdvanced", "endoUnitElite", "forceUnitBasic", "forceUnitAdvanced", "forceUnitElite", "voidUnitBasic", "voidUnitAdvanced", "voidUnitElite" });
     }
 
     @Override
     public String getName(ItemStack enhancement)
     {
         if (enhancement != null) {
-            switch (enhancement.getItemDamage()) {
-                case 0:
-                    return "lifeI";
-                case 1:
-                    return "lifeII";
-                case 2:
-                    return "lifeIII";
-                case 3:
-                    return "teleportI";
-                case 4:
-                    return "teleportII";
-                case 5:
-                    return "teleportIII";
-                case 6:
-                    return "subspaceI";
-                case 7:
-                    return "subspaceII";
-                case 8:
-                    return "subspaceIII";
-                case 9:
-                    return "naniteI";
-                case 10:
-                    return "naniteII";
-                case 11:
-                    return "naniteIII";
-                case 12:
-                    return "powerI";
-                case 13:
-                    return "powerII";
-                case 14:
-                    return "powerIII";
-                case 15:
-                    return "exoI";
-                case 16:
-                    return "exoII";
-                case 17:
-                    return "exoIII";
-                case 18:
-                    return "endoI";
-                case 19:
-                    return "endoII";
-                case 20:
-                    return "endoIII";
-                case 21:
-                    return "forceI";
-                case 22:
-                    return "forceII";
-                case 23:
-                    return "forceIII";
-                case 24:
-                    return "voidI";
-                case 25:
-                    return "voidII";
-                case 26:
-                    return "voidIII";
-            }
+            return itemTypes[(int) Math.floor(enhancement.getItemDamage() % 3)];
         }
 
         return null;
+    }
+
+    @Override
+    public int getLevel(ItemStack enhancement)
+    {
+        if (enhancement != null) {
+            return (enhancement.getItemDamage() % 3) + 1;
+        }
+
+        return 0;
     }
 
     @Override
@@ -86,11 +46,49 @@ public class ItemUnit extends ItemTMSubtypes implements IStaffEnhancement
     {
         if (staff != null && staff.getItem() != null && staff.getItem() instanceof IStaff && staff.getItemDamage() == 1) {
             IStaff istaff = (IStaff) staff.getItem();
+            IStaffEnhancement istaffenhancement = (IStaffEnhancement) enhancement.getItem();
 
-            return istaff.hasEnchancement(staff, ((IStaffEnhancement) enhancement.getItem()).getName(enhancement));
+            return istaff.hasEnhancement(staff, istaffenhancement.getName(enhancement), istaffenhancement.getLevel(enhancement));
         }
 
         return false;
+    }
+
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    {
+        ExtendedPlayerKnowledge charon = ExtendedPlayerKnowledge.get(player);
+
+        if (charon != null && !charon.canSpecialise()) {
+            ItemStack staff = charon.getStaff(false);
+
+            if (staff != null) {
+                Item actualStaff = staff.getItem();
+
+                if (actualStaff instanceof IStaff) {
+                    IStaff realStaff = (IStaff) actualStaff;
+
+                    if (!realStaff.hasEnhancement(staff, getName(stack), getLevel(stack))) {
+                        realStaff.setEnhancement(staff, getName(stack), getLevel(stack));
+                        stack.stackSize--;
+                        charon.getStaff(true);
+                        charon.setStaff(staff);
+                    }
+                }
+            }
+        }
+
+        return stack;
+    }
+
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float par8, float par9, float par10)
+    {
+        stack.stackSize--;
+
+        if (stack.stackSize == 0) {
+            stack = null;
+        }
+
+        return true;
     }
 
 }

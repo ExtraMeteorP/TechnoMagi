@@ -1,5 +1,7 @@
 package com.ollieread.technomagi.ability.active;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,10 +21,14 @@ import cpw.mods.fml.common.eventhandler.Event;
 
 public class ActiveAbilityFireball extends AbilityActive
 {
+    protected Map<String, Integer> enhancements;
 
     public ActiveAbilityFireball(String name)
     {
         super(name, Reference.MODID.toLowerCase());
+        this.enhancements = new HashMap<String, Integer>();
+        this.enhancements.put("exo", 1);
+        this.enhancements.put("force", 1);
     }
 
     @Override
@@ -64,14 +70,14 @@ public class ActiveAbilityFireball extends AbilityActive
     }
 
     @Override
-    public String[] getEnhancements()
+    public Map<String, Integer> getEnhancements()
     {
-        return null;
+        return enhancements;
     }
 
     @Override
     public String[] getKnowledge()
     {
-        return new String[] { "pyrologyII" };
+        return new String[] { "exothermic", "projectile" };
     }
 }

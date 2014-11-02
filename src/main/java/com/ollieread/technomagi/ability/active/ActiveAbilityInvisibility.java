@@ -1,5 +1,7 @@
 package com.ollieread.technomagi.ability.active;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.potion.Potion;
@@ -16,9 +18,13 @@ import cpw.mods.fml.common.eventhandler.Event;
 public class ActiveAbilityInvisibility extends AbilityActive
 {
 
+    protected Map<String, Integer> enhancements;
+
     public ActiveAbilityInvisibility(String name)
     {
         super(name, Reference.MODID.toLowerCase());
+        this.enhancements = new HashMap<String, Integer>();
+        this.enhancements.put("light", 1);
     }
 
     @Override
@@ -45,15 +51,15 @@ public class ActiveAbilityInvisibility extends AbilityActive
     }
 
     @Override
-    public String[] getEnhancements()
+    public Map<String, Integer> getEnhancements()
     {
-        return null;
+        return enhancements;
     }
 
     @Override
     public String[] getKnowledge()
     {
-        return new String[] { "lightManipulationI" };
+        return new String[] { "light" };
     }
 
 }

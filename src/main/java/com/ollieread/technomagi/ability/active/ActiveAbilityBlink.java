@@ -1,5 +1,7 @@
 package com.ollieread.technomagi.ability.active;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.util.Vec3;
@@ -18,10 +20,13 @@ import cpw.mods.fml.common.eventhandler.Event;
 
 public class ActiveAbilityBlink extends AbilityActive
 {
+    protected Map<String, Integer> enhancements;
 
     public ActiveAbilityBlink(String name)
     {
         super(name, Reference.MODID.toLowerCase());
+        this.enhancements = new HashMap<String, Integer>();
+        this.enhancements.put("teleport", 1);
     }
 
     @Override
@@ -62,9 +67,9 @@ public class ActiveAbilityBlink extends AbilityActive
     }
 
     @Override
-    public String[] getEnhancements()
+    public Map<String, Integer> getEnhancements()
     {
-        return null;
+        return enhancements;
     }
 
     @Override

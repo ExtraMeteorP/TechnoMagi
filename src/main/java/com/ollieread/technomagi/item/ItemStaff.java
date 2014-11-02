@@ -84,7 +84,7 @@ public class ItemStaff extends ItemTMNBT implements IStaff
     }
 
     @Override
-    public boolean hasEnchancement(ItemStack staff, String enhancement)
+    public boolean hasEnhancement(ItemStack staff, String enhancement, int level)
     {
         NBTTagCompound compound = getNBT(staff);
 
@@ -94,8 +94,8 @@ public class ItemStaff extends ItemTMNBT implements IStaff
             for (int i = 0; i < enhancements.tagCount(); i++) {
                 NBTTagCompound tag = enhancements.getCompoundTagAt(i);
 
-                if (tag.getString("Enhancement") != null && tag.getString("Enhancement").equals(enhancement)) {
-                    return true;
+                if (tag.getString("Enhancement") != null) {
+                    return tag.getString("Enhancement").equals(enhancement) && tag.getInteger("Level") == level;
                 }
             }
         }
@@ -103,7 +103,7 @@ public class ItemStaff extends ItemTMNBT implements IStaff
     }
 
     @Override
-    public void setEnhancement(ItemStack staff, String enhancement)
+    public void setEnhancement(ItemStack staff, String enhancement, int level)
     {
         NBTTagCompound compound = getNBT(staff);
 
@@ -111,6 +111,7 @@ public class ItemStaff extends ItemTMNBT implements IStaff
             NBTTagList enhancements = compound.getTagList("Enhancements", compound.getId());
             NBTTagCompound entry = new NBTTagCompound();
             entry.setString("Enhancement", enhancement);
+            entry.setInteger("Level", level);
             enhancements.appendTag(entry);
 
             compound.setTag("Enhancements", enhancements);
@@ -200,4 +201,23 @@ public class ItemStaff extends ItemTMNBT implements IStaff
         return stack;
     }
 
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4)
+    {
+        list.add("Enhancements:");
+        NBTTagCompound compound = getNBT(stack);
+
+        if (compound.hasKey("Enhancements")) {
+            NBTTagList enhancements = compound.getTagList("Enhancements", compound.getId());
+
+            for (int i = 0; i < enhancements.tagCount(); i++) {
+                NBTTagCompound tag = enhancements.getCompoundTagAt(i);
+                String enhancement = tag.getString("Enhancement");
+
+                if (enhancement != null) {
+                    list.add(StatCollector.translateToLocal("enhancement." + enhancement));
+                }
+            }
+        }
+    }
 }

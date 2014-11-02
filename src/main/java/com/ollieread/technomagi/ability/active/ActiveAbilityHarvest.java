@@ -1,5 +1,7 @@
 package com.ollieread.technomagi.ability.active;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -14,12 +16,15 @@ import com.ollieread.technomagi.util.SoundHelper;
 
 import cpw.mods.fml.common.eventhandler.Event;
 
-public class ActiveAbilityHarvestIII extends AbilityActive
+public class ActiveAbilityHarvest extends AbilityActive
 {
 
-    public ActiveAbilityHarvestIII(String name)
+    protected Map<String, Integer> enhancements;
+
+    public ActiveAbilityHarvest(String name)
     {
         super(name, Reference.MODID.toLowerCase());
+        this.enhancements = new HashMap<String, Integer>();
     }
 
     @Override
@@ -36,8 +41,10 @@ public class ActiveAbilityHarvestIII extends AbilityActive
                 int meta = player.worldObj.getBlockMetadata(x, y, z);
                 Block block = player.worldObj.getBlock(x, y, z);
 
-                if (block != null && block.getHarvestLevel(meta) <= 3) {
-                    if (decreaseNanites(charon, 9)) {
+                if (block != null && block.getHarvestLevel(meta) <= 1) {
+                    String tool = block.getHarvestTool(meta);
+
+                    if (decreaseNanites(charon, 3)) {
                         if (!player.worldObj.isRemote) {
                             player.worldObj.func_147480_a(x, y, z, true);
                             SoundHelper.playSoundEffectAtPlayer(player, "cast", new Random());
@@ -53,7 +60,7 @@ public class ActiveAbilityHarvestIII extends AbilityActive
     }
 
     @Override
-    public String[] getEnhancements()
+    public Map<String, Integer> getEnhancements()
     {
         return null;
     }
@@ -61,7 +68,6 @@ public class ActiveAbilityHarvestIII extends AbilityActive
     @Override
     public String[] getKnowledge()
     {
-        return new String[] { "harvestIII" };
+        return new String[] { "" };
     }
-
 }

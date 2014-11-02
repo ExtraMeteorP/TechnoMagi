@@ -1,5 +1,7 @@
 package com.ollieread.technomagi.ability.active;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.entity.EntityLiving;
@@ -17,10 +19,12 @@ import cpw.mods.fml.common.eventhandler.Event;
 
 public class ActiveAbilityForceTarget extends AbilityActive
 {
+    protected Map<String, Integer> enhancements;
 
     public ActiveAbilityForceTarget(String name)
     {
         super(name, Reference.MODID.toLowerCase());
+        this.enhancements = new HashMap<String, Integer>();
     }
 
     @Override
@@ -61,7 +65,7 @@ public class ActiveAbilityForceTarget extends AbilityActive
     }
 
     @Override
-    public String[] getEnhancements()
+    public Map<String, Integer> getEnhancements()
     {
         return null;
     }
@@ -69,6 +73,6 @@ public class ActiveAbilityForceTarget extends AbilityActive
     @Override
     public String[] getKnowledge()
     {
-        return new String[] { "forceI" };
+        return new String[] { "force", "motion" };
     }
 }

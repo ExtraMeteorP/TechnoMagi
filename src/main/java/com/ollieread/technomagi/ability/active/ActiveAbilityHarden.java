@@ -1,5 +1,7 @@
 package com.ollieread.technomagi.ability.active;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.potion.PotionEffect;
@@ -15,10 +17,13 @@ import cpw.mods.fml.common.eventhandler.Event;
 
 public class ActiveAbilityHarden extends AbilityActive
 {
+    protected Map<String, Integer> enhancements;
 
     public ActiveAbilityHarden(String name)
     {
         super(name, Reference.MODID.toLowerCase());
+
+        this.enhancements = new HashMap<String, Integer>();
     }
 
     @Override
@@ -45,7 +50,7 @@ public class ActiveAbilityHarden extends AbilityActive
     }
 
     @Override
-    public String[] getEnhancements()
+    public Map<String, Integer> getEnhancements()
     {
         return null;
     }
