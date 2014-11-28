@@ -38,7 +38,6 @@ public class GuiArchiveMain extends GuiArchive
         buttonList.add(new GuiTMButton(3, guiLeft + 41, guiTop + 92, 150, 20, I18n.format("technomagi.archive.name.abilities")));
         buttonList.add(new GuiTMButton(4, guiLeft + 41, guiTop + 118, 150, 20, I18n.format("technomagi.archive.name.recipes")));
         buttonList.add(new GuiTMButton(5, guiLeft + 41, guiTop + 144, 150, 20, I18n.format("technomagi.archive.name.construct")));
-        buttonList.add(new GuiTMButton(6, guiLeft + 41, guiTop + 170, 150, 20, I18n.format("technomagi.archive.name.reactive")));
     }
 
     @Override

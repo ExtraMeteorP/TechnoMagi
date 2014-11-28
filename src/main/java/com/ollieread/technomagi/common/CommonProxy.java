@@ -22,7 +22,6 @@ import com.ollieread.technomagi.client.gui.archive.GuiArchiveCrafting;
 import com.ollieread.technomagi.client.gui.archive.GuiArchiveInfo;
 import com.ollieread.technomagi.client.gui.archive.GuiArchiveKnowledge;
 import com.ollieread.technomagi.client.gui.archive.GuiArchiveMain;
-import com.ollieread.technomagi.client.gui.archive.GuiArchiveReactive;
 import com.ollieread.technomagi.event.handler.EnndsEventHandler;
 import com.ollieread.technomagi.event.handler.ItemEventHandler;
 import com.ollieread.technomagi.event.handler.PlayerEventHandler;
@@ -165,9 +164,6 @@ public class CommonProxy implements IGuiHandler
                         break;
                     case 5:
                         gui = new GuiArchiveConstruct(player, archive);
-                        break;
-                    case 6:
-                        gui = new GuiArchiveReactive(player, archive);
                         break;
                     default:
                         gui = new GuiArchiveMain(player, archive);
