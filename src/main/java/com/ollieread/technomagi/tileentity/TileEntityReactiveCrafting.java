@@ -13,7 +13,6 @@ public class TileEntityReactiveCrafting extends TileEntityTM implements IDisguis
     protected Disguisable disguise = null;
     protected int ticks = 0;
     protected int crafting = 0;
-    protected int type;
 
     public TileEntityReactiveCrafting()
     {
@@ -28,7 +27,6 @@ public class TileEntityReactiveCrafting extends TileEntityTM implements IDisguis
 
         ticks = compound.getInteger("Ticks");
         crafting = compound.getInteger("Crafting");
-        type = compound.getInteger("Type");
 
         result.readFromNBT(compound);
         disguise.readFromNBT(compound);
@@ -41,7 +39,6 @@ public class TileEntityReactiveCrafting extends TileEntityTM implements IDisguis
 
         compound.setInteger("Ticks", ticks);
         compound.setInteger("Crafting", crafting);
-        compound.setInteger("Type", type);
 
         result.writeToNBT(compound);
         disguise.writeToNBT(compound);
@@ -72,11 +69,10 @@ public class TileEntityReactiveCrafting extends TileEntityTM implements IDisguis
         }
     }
 
-    public void setResult(ItemStack stack, int crafting, int type, ItemStack disguise)
+    public void setResult(ItemStack stack, int crafting, ItemStack disguise)
     {
         this.crafting = crafting;
         this.result.setInventorySlotContents(0, stack);
-        this.type = type;
         this.setDisguise(disguise);
 
         this.sync();
@@ -117,11 +113,6 @@ public class TileEntityReactiveCrafting extends TileEntityTM implements IDisguis
     public ItemStack getDisguise()
     {
         return disguise.getDisguise();
-    }
-
-    public int getType()
-    {
-        return type;
     }
 
 }
