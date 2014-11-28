@@ -14,8 +14,11 @@ public class PowerHelper
         if (EnergyHelper.isEnergyHandlerFromSide(tile, from) && EnergyHelper.isAdjacentEnergyHandlerFromSide(tile, from.ordinal())) {
             int output = ((IEnergyHandler) tile).extractEnergy(from, ((IEnergyHandler) tile).getMaxEnergyStored(from), true);
             int input = EnergyHelper.insertEnergyIntoAdjacentEnergyHandler(tile, from.ordinal(), output, false);
-            ((IEnergyHandler) tile).extractEnergy(from, output, false);
-            tile.sync();
+
+            if (input > 0) {
+                ((IEnergyHandler) tile).extractEnergy(from, output, false);
+                tile.sync();
+            }
         }
     }
 }
