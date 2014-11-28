@@ -1,13 +1,13 @@
 package com.ollieread.technomagi.ability.active;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 
@@ -15,7 +15,6 @@ import com.ollieread.ennds.ability.AbilityActive;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.common.init.Blocks;
-import com.ollieread.technomagi.item.crafting.ReactiveManager;
 import com.ollieread.technomagi.tileentity.TileEntityReactiveCrafting;
 
 import cpw.mods.fml.common.eventhandler.Event;
@@ -55,13 +54,11 @@ public class ActiveAbilityReactive extends AbilityActive
                     ItemStack stack = new ItemStack(block, 1, meta);
 
                     if (stack != null) {
-                        List recipe = ReactiveManager.getInstance().findMatchingRecipe(stack, 1);
+                        ItemStack recipe = FurnaceRecipes.smelting().getSmeltingResult(stack);
 
-                        if (recipe != null && recipe.size() == 2) {
-                            ItemStack resultStack = ((ItemStack) recipe.get(0)).copy();
-
-                            if (resultStack.getItem() != null) {
-                                Block result = Block.getBlockFromItem(resultStack.getItem());
+                        if (recipe != null) {
+                            if (recipe.getItem() != null) {
+                                Block result = Block.getBlockFromItem(recipe.getItem());
 
                                 if (result != null) {
                                     if (charon.nanites.decreaseNanites(cost)) {
@@ -70,7 +67,7 @@ public class ActiveAbilityReactive extends AbilityActive
                                             TileEntityReactiveCrafting reactive = (TileEntityReactiveCrafting) player.worldObj.getTileEntity(x, y, z);
 
                                             if (reactive != null) {
-                                                reactive.setResult(resultStack, (Integer) recipe.get(1), 1, new ItemStack(block, 1, meta));
+                                                reactive.setResult(recipe, 100, new ItemStack(block, 1, meta));
                                             }
                                         }
 

@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockLog;
 import net.minecraft.item.ItemStack;
 
 public class ReactiveManager
@@ -52,10 +54,25 @@ public class ReactiveManager
                     ret.add(recipeTimes.get(type).get(block));
 
                     return ret;
+                } else {
+                    Block focus = Block.getBlockFromItem(block.getItem());
+                    Block recipe = Block.getBlockFromItem(stack.getItem());
+
+                    if (focus != null && recipe != null) {
+                        if (focus instanceof BlockLog && recipe instanceof BlockLog) {
+                            List ret = new ArrayList();
+
+                            ret.add(recipes.get(type).get(stack));
+                            ret.add(recipeTimes.get(type).get(stack));
+
+                            return ret;
+                        }
+                    }
                 }
             }
         }
 
         return null;
     }
+
 }

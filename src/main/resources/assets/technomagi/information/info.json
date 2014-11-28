@@ -28,5 +28,10 @@
     "Despite this, relux has no mass what so ever, which has been the source of much confusion.",
     "Relux is often used to create platforms and walkways which gives the appearance of the user walking through the air.",
     "Since Relux does not have any mass, any energy exerted on it is immediately nullified. Many have speculated that this is because it absorbs the energy, where others believe that the energy is not nullified, but simply passes through the Relux, as energy in of itself does not have any mass."
+  ],
+  "reactive": [
+    "Reactive crafting is a way of crafting, or rather, smelting, but directly in the world.",
+    "Any smelting recipe that is the result of smelting a block, can be performed directly on the block while it's placed in the world.",
+    "Once you've discovered the required knowledge you'll be given the ability to perform reactive crafting."
   ]
 }
