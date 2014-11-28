@@ -5,7 +5,7 @@ public class TileEntityGeneratorVoid extends TileEntityGenerator
 
     public TileEntityGeneratorVoid()
     {
-        super(3200, 50, 0, 5);
+        super(3200, 10, 0, 5);
     }
 
     public void setGenerationByLocation(int y)
