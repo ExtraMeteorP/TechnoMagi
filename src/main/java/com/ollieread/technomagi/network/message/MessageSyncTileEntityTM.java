@@ -54,14 +54,19 @@ public class MessageSyncTileEntityTM implements IMessage, IMessageHandler<Messag
     @Override
     public IMessage onMessage(MessageSyncTileEntityTM message, MessageContext ctx)
     {
-        TileEntityTM tile = (TileEntityTM) FMLClientHandler.instance().getClient().theWorld.getTileEntity(message.x, message.y, message.z);
+        try {
+            TileEntityTM tile = (TileEntityTM) FMLClientHandler.instance().getClient().theWorld.getTileEntity(message.x, message.y, message.z);
 
-        if (tile != null) {
-            tile.readFromNBT(message.data);
+            if (tile != null) {
+                tile.readFromNBT(message.data);
 
-            if (tile instanceof IDisguisableTile) {
-                tile.getWorldObj().markBlockRangeForRenderUpdate(message.x, message.y, message.z, message.x, message.y, message.z);
+                if (tile instanceof IDisguisableTile) {
+                    tile.getWorldObj().markBlockRangeForRenderUpdate(message.x, message.y, message.z, message.x, message.y, message.z);
+                }
             }
+
+        } catch (NullPointerException e) {
+            e.printStackTrace();
         }
 
         return null;
