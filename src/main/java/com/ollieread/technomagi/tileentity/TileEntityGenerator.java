@@ -127,4 +127,14 @@ public abstract class TileEntityGenerator extends TileEntityTM implements IEnerg
         return energy.getMaxEnergyStored(null);
     }
 
+    public int getMaxReceive()
+    {
+        return energy.getMaxReceive();
+    }
+
+    public int getMaxExtract()
+    {
+        return energy.getMaxExtract();
+    }
+
 }
