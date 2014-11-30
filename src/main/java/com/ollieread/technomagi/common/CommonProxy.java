@@ -10,9 +10,11 @@ import com.ollieread.technomagi.client.gui.GuiAnalysis;
 import com.ollieread.technomagi.client.gui.GuiArchive;
 import com.ollieread.technomagi.client.gui.GuiConstruct;
 import com.ollieread.technomagi.client.gui.GuiCrafting;
+import com.ollieread.technomagi.client.gui.GuiFurnace;
 import com.ollieread.technomagi.client.gui.GuiNaniteReplicator;
 import com.ollieread.technomagi.client.gui.GuiObservationChamber;
 import com.ollieread.technomagi.client.gui.GuiSelf;
+import com.ollieread.technomagi.client.gui.GuiSeparator;
 import com.ollieread.technomagi.client.gui.GuiSpecialisation;
 import com.ollieread.technomagi.client.gui.GuiStaff;
 import com.ollieread.technomagi.client.gui.GuiTeleporter;
@@ -30,15 +32,19 @@ import com.ollieread.technomagi.inventory.ContainerAnalysis;
 import com.ollieread.technomagi.inventory.ContainerArchive;
 import com.ollieread.technomagi.inventory.ContainerConstruct;
 import com.ollieread.technomagi.inventory.ContainerCrafting;
+import com.ollieread.technomagi.inventory.ContainerFurnace;
 import com.ollieread.technomagi.inventory.ContainerNaniteReplicator;
 import com.ollieread.technomagi.inventory.ContainerObservation;
+import com.ollieread.technomagi.inventory.ContainerSeparator;
 import com.ollieread.technomagi.inventory.ContainerStaff;
 import com.ollieread.technomagi.tileentity.TileEntityAnalysis;
 import com.ollieread.technomagi.tileentity.TileEntityArchive;
 import com.ollieread.technomagi.tileentity.TileEntityConstruct;
 import com.ollieread.technomagi.tileentity.TileEntityCrafting;
+import com.ollieread.technomagi.tileentity.TileEntityFurnace;
 import com.ollieread.technomagi.tileentity.TileEntityNaniteReplicator;
 import com.ollieread.technomagi.tileentity.TileEntityObservationChamber;
+import com.ollieread.technomagi.tileentity.TileEntitySeparator;
 import com.ollieread.technomagi.tileentity.TileEntityTeleporter;
 
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -59,6 +65,8 @@ public class CommonProxy implements IGuiHandler
     public static int GUI_STAFF = 8;
     public static int GUI_CONSTRUCT = 9;
     public static int GUI_TELEPORTER = 10;
+    public static int GUI_SEPARATOR = 11;
+    public static int GUI_FURNACE = 12;
 
     public static PlayerEventHandler playerEventHandler = new PlayerEventHandler();
 
@@ -102,6 +110,18 @@ public class CommonProxy implements IGuiHandler
 
             if (construct != null) {
                 return new ContainerConstruct(player.inventory, construct);
+            }
+        } else if (ID == GUI_SEPARATOR) {
+            TileEntitySeparator crafter = (TileEntitySeparator) world.getTileEntity(x, y, z);
+
+            if (crafter != null) {
+                return new ContainerSeparator(player.inventory, crafter);
+            }
+        } else if (ID == GUI_FURNACE) {
+            TileEntityFurnace crafter = (TileEntityFurnace) world.getTileEntity(x, y, z);
+
+            if (crafter != null) {
+                return new ContainerFurnace(player.inventory, crafter);
             }
         }
 
@@ -196,6 +216,18 @@ public class CommonProxy implements IGuiHandler
 
             if (teleporter != null) {
                 return new GuiTeleporter(teleporter);
+            }
+        } else if (ID == GUI_SEPARATOR) {
+            TileEntitySeparator separator = (TileEntitySeparator) world.getTileEntity(x, y, z);
+
+            if (separator != null) {
+                return new GuiSeparator(player.inventory, separator);
+            }
+        } else if (ID == GUI_FURNACE) {
+            TileEntityFurnace furnace = (TileEntityFurnace) world.getTileEntity(x, y, z);
+
+            if (furnace != null) {
+                return new GuiFurnace(player.inventory, furnace);
             }
         }
 

@@ -14,6 +14,7 @@ import com.ollieread.technomagi.block.BlockDisplacedAir;
 import com.ollieread.technomagi.block.BlockDisplacer;
 import com.ollieread.technomagi.block.BlockEmptyFiller;
 import com.ollieread.technomagi.block.BlockEtheriumOre;
+import com.ollieread.technomagi.block.BlockFurnace;
 import com.ollieread.technomagi.block.BlockGenerator;
 import com.ollieread.technomagi.block.BlockHardlight;
 import com.ollieread.technomagi.block.BlockHardlightFence;
@@ -22,6 +23,8 @@ import com.ollieread.technomagi.block.BlockLightAir;
 import com.ollieread.technomagi.block.BlockNaniteReplicator;
 import com.ollieread.technomagi.block.BlockObservationChamber;
 import com.ollieread.technomagi.block.BlockReactiveCrafting;
+import com.ollieread.technomagi.block.BlockSeparator;
+import com.ollieread.technomagi.block.BlockStorage;
 import com.ollieread.technomagi.block.BlockTank;
 import com.ollieread.technomagi.block.BlockTeleporter;
 import com.ollieread.technomagi.block.BlockVoidstone;
@@ -34,6 +37,7 @@ import com.ollieread.technomagi.tileentity.TileEntityCrafting;
 import com.ollieread.technomagi.tileentity.TileEntityDisplacedAir;
 import com.ollieread.technomagi.tileentity.TileEntityDisplacer;
 import com.ollieread.technomagi.tileentity.TileEntityEmptyFiller;
+import com.ollieread.technomagi.tileentity.TileEntityFurnace;
 import com.ollieread.technomagi.tileentity.TileEntityGeneratorLife;
 import com.ollieread.technomagi.tileentity.TileEntityGeneratorLight;
 import com.ollieread.technomagi.tileentity.TileEntityGeneratorVoid;
@@ -41,6 +45,8 @@ import com.ollieread.technomagi.tileentity.TileEntityLightAir;
 import com.ollieread.technomagi.tileentity.TileEntityNaniteReplicator;
 import com.ollieread.technomagi.tileentity.TileEntityObservationChamber;
 import com.ollieread.technomagi.tileentity.TileEntityReactiveCrafting;
+import com.ollieread.technomagi.tileentity.TileEntitySeparator;
+import com.ollieread.technomagi.tileentity.TileEntityStorage;
 import com.ollieread.technomagi.tileentity.TileEntityTank;
 import com.ollieread.technomagi.tileentity.TileEntityTeleporter;
 
@@ -69,6 +75,9 @@ public class Blocks
     public static Block blockEtheriumOre;
     public static Block blockVoidstone;
     public static Block blockTank;
+    public static Block blockStorage;
+    public static Block blockSeparator;
+    public static Block blockFurnace;
 
     public static void init()
     {
@@ -94,6 +103,9 @@ public class Blocks
         blockEtheriumOre = new BlockEtheriumOre("etheriumOre").setHardness(3.0F).setResistance(5.0F);
         blockVoidstone = new BlockVoidstone("voidstone").setHardness(3.0F).setResistance(5.0F);
         blockTank = new BlockTank("tank").setHardness(5.0F).setResistance(10.0F);
+        blockStorage = new BlockStorage("storage").setHardness(5.0F).setResistance(10.0F);
+        blockSeparator = new BlockSeparator("separator").setHardness(5.0F).setResistance(10.0F);
+        blockFurnace = new BlockFurnace("furnace").setHardness(5.0F).setResistance(10.0F);
 
         GameRegistry.registerBlock(blockConstruct, "construct");
         GameRegistry.registerBlock(blockArchive, "archive");
@@ -115,6 +127,9 @@ public class Blocks
         GameRegistry.registerBlock(blockEtheriumOre, "etheriumOre");
         GameRegistry.registerBlock(blockVoidstone, "voidstone");
         GameRegistry.registerBlock(blockTank, ItemBlockTM.class, "tank");
+        GameRegistry.registerBlock(blockStorage, ItemBlockTM.class, "storage");
+        GameRegistry.registerBlock(blockSeparator, "separator");
+        GameRegistry.registerBlock(blockFurnace, "furnace");
 
         GameRegistry.registerTileEntity(TileEntityArchive.class, "tileEntityArchive");
         GameRegistry.registerTileEntity(TileEntityNaniteReplicator.class, "tileEntityNaniteReplicator");
@@ -133,5 +148,8 @@ public class Blocks
         GameRegistry.registerTileEntity(TileEntityConstruct.class, "tileEntityConstruct");
         GameRegistry.registerTileEntity(TileEntityReactiveCrafting.class, "tileEntityReactiveCrafting");
         GameRegistry.registerTileEntity(TileEntityTank.class, "tileEntityTank");
+        GameRegistry.registerTileEntity(TileEntityStorage.class, "tileEntityStorage");
+        GameRegistry.registerTileEntity(TileEntitySeparator.class, "tileEntitySeparator");
+        GameRegistry.registerTileEntity(TileEntityFurnace.class, "tileEntityFurnace");
     }
 }

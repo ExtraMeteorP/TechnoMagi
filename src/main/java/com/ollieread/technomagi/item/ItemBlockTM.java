@@ -9,6 +9,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidTank;
+
+import com.ollieread.technomagi.block.BlockStorage;
+import com.ollieread.technomagi.block.BlockTank;
+import com.ollieread.technomagi.common.proxy.ItemStorage;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -49,15 +54,30 @@ public class ItemBlockTM extends ItemBlock
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean bool)
     {
-        if (stack.stackTagCompound != null) {
-            FluidTank tank = new FluidTank(FluidContainerRegistry.BUCKET_VOLUME * 100);
-            tank.readFromNBT(stack.stackTagCompound);
+        if (stack != null) {
+            if (Block.getBlockFromItem(stack.getItem()) instanceof BlockTank) {
+                if (stack.stackTagCompound != null) {
+                    FluidTank tank = new FluidTank(FluidContainerRegistry.BUCKET_VOLUME * 100);
+                    tank.readFromNBT(stack.stackTagCompound);
 
-            if (tank.getFluid() != null) {
-                list.add(tank.getFluid().getLocalizedName());
+                    if (tank.getFluid() != null) {
+                        list.add(tank.getFluid().getLocalizedName());
+                    }
+
+                    list.add(tank.getFluidAmount() + "/" + tank.getCapacity());
+                }
+            } else if (Block.getBlockFromItem(stack.getItem()) instanceof BlockStorage) {
+                if (stack.stackTagCompound != null) {
+                    ItemStorage storage = new ItemStorage(4096);
+                    storage.readFromNBT(stack.stackTagCompound);
+
+                    if (storage.getItem() != null) {
+                        list.add(storage.getLocalizedName());
+                    }
+
+                    list.add(storage.getAmount() + "/" + storage.getCapacity());
+                }
             }
-
-            list.add(tank.getFluidAmount() + "/" + tank.getCapacity());
         }
     }
 
