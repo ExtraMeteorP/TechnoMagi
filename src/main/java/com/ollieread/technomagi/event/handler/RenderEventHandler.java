@@ -43,9 +43,13 @@ public class RenderEventHandler
                 if (!player.isInvisible()) {
                     IItemRenderer staffRenderer = MinecraftForgeClient.getItemRenderer(staffStack, ItemRenderType.EQUIPPED);
 
-                    GL11.glColor3f(255F, 255F, 255F);
+                    // GL11.glColor3f(1F, 1F, 1F);
+
+                    GL11.glPushMatrix();
 
                     staffRenderer.renderItem(ItemRenderType.EQUIPPED, staffStack, 1);
+
+                    GL11.glPopMatrix();
                 }
             }
         }
