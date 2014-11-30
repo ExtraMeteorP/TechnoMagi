@@ -30,7 +30,7 @@ public class TileEntityAnalysisRenderer extends TileEntitySpecialRenderer
     }
 
     @Override
-    public void renderTileEntityAt(TileEntity te, double x, double y, double z, float scale)
+    public void renderTileEntityAt(TileEntity te, double x, double y, double z, float partialTicks)
     {
         TileEntityAnalysis machine = (TileEntityAnalysis) te;
 
@@ -75,7 +75,7 @@ public class TileEntityAnalysisRenderer extends TileEntitySpecialRenderer
         GL11.glPopMatrix();
 
         GL11.glTranslatef(0.0F, (float) -1.5F, 0.0F);
-        float f1 = (float) machine.field_145926_a + scale;
+        float f1 = (float) machine.field_145926_a + partialTicks;
         GL11.glTranslatef(0.0F, 0.1F + MathHelper.sin(f1 * 0.1F) * 0.01F, 0.0F);
         float f2;
 
@@ -87,7 +87,7 @@ public class TileEntityAnalysisRenderer extends TileEntitySpecialRenderer
             f2 += ((float) Math.PI * 2F);
         }
 
-        float f3 = machine.field_145925_p + f2 * scale;
+        float f3 = machine.field_145925_p + f2 * partialTicks;
 
         if (machine.inProgress() && machine.getProgress() > 0) {
             if (machine.getProgress() > 50) {
@@ -98,8 +98,8 @@ public class TileEntityAnalysisRenderer extends TileEntitySpecialRenderer
         }
         GL11.glRotatef(-f3 * 180.0F / (float) Math.PI, 0.0F, 1.0F, 0.0F);
 
-        float f4 = machine.field_145931_j + (machine.field_145933_i - machine.field_145931_j) * scale + 0.25F;
-        float f5 = machine.field_145931_j + (machine.field_145933_i - machine.field_145931_j) * scale + 0.75F;
+        float f4 = machine.field_145931_j + (machine.field_145933_i - machine.field_145931_j) * partialTicks + 0.25F;
+        float f5 = machine.field_145931_j + (machine.field_145933_i - machine.field_145931_j) * partialTicks + 0.75F;
         f4 = (f4 - (float) MathHelper.truncateDoubleToInt((double) f4)) * 1.6F - 0.3F;
         f5 = (f5 - (float) MathHelper.truncateDoubleToInt((double) f5)) * 1.6F - 0.3F;
 
@@ -119,7 +119,7 @@ public class TileEntityAnalysisRenderer extends TileEntitySpecialRenderer
             f5 = 1.0F;
         }
 
-        float f6 = machine.field_145927_n + (machine.field_145930_m - machine.field_145927_n) * scale;
+        float f6 = machine.field_145927_n + (machine.field_145930_m - machine.field_145927_n) * partialTicks;
         GL11.glEnable(GL11.GL_CULL_FACE);
 
         Minecraft.getMinecraft().renderEngine.bindTexture(textureReplicator);
