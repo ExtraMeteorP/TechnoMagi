@@ -71,7 +71,7 @@ public class BasicEnergy implements IEnergyHandler
         int c = getEnergyStored(null);
         storage.modifyEnergyStored(-energy);
 
-        if ((c - 5) == getEnergyStored(null)) {
+        if ((c - energy) == getEnergyStored(null)) {
             return true;
         }
 
