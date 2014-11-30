@@ -45,16 +45,22 @@ public class Recipes
         recipes.add(GameRegistry.addShapedRecipe(new ItemStack(Items.itemComponent, 2, 7), "xx", "xx", 'x', diamond));
         recipes.add(GameRegistry.addShapedRecipe(new ItemStack(Items.itemComponent, 1, 8), "x", "x", 'x', diamond));
 
+        RecipeHelper.addSeparatorRecipe(new ItemStack(net.minecraft.init.Blocks.iron_ore), new ItemStack(Items.itemComponent, 2, 0), new ItemStack(net.minecraft.init.Blocks.cobblestone), 3);
+        RecipeHelper.addSeparatorRecipe(new ItemStack(net.minecraft.init.Blocks.gold_ore), new ItemStack(Items.itemComponent, 2, 3), new ItemStack(net.minecraft.init.Blocks.cobblestone), 3);
+        RecipeHelper.addSeparatorRecipe(new ItemStack(net.minecraft.init.Blocks.diamond_ore), new ItemStack(Items.itemComponent, 1, 6), new ItemStack(net.minecraft.init.Blocks.cobblestone), 3);
+
         RecipeHelper.addConstructRecipe(Blocks.blockArchive, new ItemStack[] { stackNaniteContainer2, new ItemStack(Items.itemComponent, 2, 5), new ItemStack(net.minecraft.init.Items.redstone, 4), new ItemStack(net.minecraft.init.Items.book, 1) }, null);
         RecipeHelper.addConstructRecipe(Blocks.blockCrafting, new ItemStack[] { stackNaniteContainer2, new ItemStack(Items.itemComponent, 2, 5), new ItemStack(net.minecraft.init.Blocks.crafting_table, 1), new ItemStack(net.minecraft.init.Items.redstone, 4) }, null);
         RecipeHelper.addConstructRecipe(Blocks.blockNaniteReplicator, new ItemStack[] { stackNaniteContainer4, new ItemStack(Items.itemComponent, 2, 5), stackSampleVile8, new ItemStack(net.minecraft.init.Items.redstone, 4) }, "nanites");
+
+        RecipeHelper.addFurnaceRecipe(new ItemStack(Items.itemComponent, 1, 0), ironIngot, 0.7F);
+        RecipeHelper.addFurnaceRecipe(new ItemStack(Items.itemComponent, 1, 3), goldIngot, 1F);
 
         // teleporter
         RecipeHelper.addShapedRecipe(Knowledge.knowledgeTeleportation.getName(), new ItemStack(Blocks.blockTeleporter, 1, 0), " w ", " y ", " z ", 'y', new ItemStack(Items.itemUnit, 1, 3), 'z', new ItemStack(Blocks.blockConstruct, 1), 'w', new ItemStack(net.minecraft.init.Blocks.piston, 1));
         RecipeHelper.addShapedRecipe(Knowledge.knowledgeTeleportation.getName(), new ItemStack(Blocks.blockTeleporter, 1, 1), " w ", " y ", " z ", 'y', new ItemStack(Items.itemUnit, 1, 3), 'z', new ItemStack(Blocks.blockConstruct, 1), 'w', new ItemStack(net.minecraft.init.Blocks.sticky_piston, 1));
         RecipeHelper.addShapedRecipe(Knowledge.knowledgeTeleportation.getName(), new ItemStack(Blocks.blockTeleporter, 1, 2), " w ", " y ", " z ", 'y', new ItemStack(Items.itemUnit, 1, 4), 'z', new ItemStack(Blocks.blockConstruct, 1), 'w', new ItemStack(net.minecraft.init.Items.ender_pearl, 1));
         RecipeHelper.addShapedRecipe(Knowledge.knowledgeTeleportation.getName(), new ItemStack(Blocks.blockTeleporter, 1, 3), " w ", " y ", " z ", 'y', new ItemStack(Items.itemUnit, 1, 5), 'z', new ItemStack(Blocks.blockConstruct, 1), 'w', new ItemStack(net.minecraft.init.Items.emerald, 1));
-
         // life unit
         RecipeHelper.addShapedRecipe(null, new ItemStack(Items.itemUnit, 1, 0), "xzx", " y ", "x x", 'x', ironIngot, 'y', new ItemStack(net.minecraft.init.Items.egg, 1), 'z', new ItemStack(Items.itemComponent, 1, 5));
         RecipeHelper.addShapedRecipe(null, new ItemStack(Items.itemUnit, 1, 1), "x x", " y ", "x x", 'x', goldIngot, 'y', new ItemStack(Items.itemUnit, 1, 0));
@@ -91,7 +97,6 @@ public class Recipes
         RecipeHelper.addShapedRecipe(Knowledge.knowledgeVoid.getName(), new ItemStack(Items.itemUnit, 1, 24), "xzx", " y ", "x x", 'x', ironIngot, 'y', new ItemStack(net.minecraft.init.Items.skull, 1, 1), 'z', new ItemStack(Items.itemComponent, 1, 5));
         RecipeHelper.addShapedRecipe(Knowledge.knowledgeVoid.getName(), new ItemStack(Items.itemUnit, 1, 25), "x x", " y ", "x x", 'x', goldIngot, 'y', new ItemStack(Items.itemUnit, 1, 24));
         RecipeHelper.addShapedRecipe(Knowledge.knowledgeVoid.getName(), new ItemStack(Items.itemUnit, 1, 26), "x x", " y ", "x x", 'x', diamond, 'y', new ItemStack(Items.itemUnit, 1, 25));
-
         // Exothermic
         RecipeHelper.addExothermicRecipe(new ItemStack(net.minecraft.init.Blocks.log), new ItemStack(net.minecraft.init.Items.coal, 1, 1), 500);
         // Endothermic
