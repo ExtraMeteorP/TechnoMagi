@@ -70,4 +70,47 @@ public class InventoryHelper
         return false;
     }
 
+    public static int countInventoryItem(IInventory inventory, ItemStack stack)
+    {
+        int total = 0;
+
+        for (int i = 0; i < inventory.getSizeInventory(); i++) {
+            ItemStack slot = inventory.getStackInSlot(i);
+
+            if (slot != null && slot.isItemEqual(stack)) {
+                total += slot.stackSize;
+            }
+        }
+
+        return total;
+    }
+
+    public static boolean consumeAllInventoryItem(IInventory inventory, ItemStack stack, int max)
+    {
+        for (int i = 0; i < inventory.getSizeInventory(); i++) {
+            ItemStack slot = inventory.getStackInSlot(i);
+
+            if (slot != null && slot.isItemEqual(stack)) {
+
+                if (max >= 0) {
+                    max -= slot.stackSize;
+                    slot.stackSize = 0;
+                    slot = null;
+                } else {
+                    max += slot.stackSize;
+                    slot.stackSize -= max;
+                    max = 0;
+                }
+
+                inventory.setInventorySlotContents(i, slot);
+            }
+
+            if (max == 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }
