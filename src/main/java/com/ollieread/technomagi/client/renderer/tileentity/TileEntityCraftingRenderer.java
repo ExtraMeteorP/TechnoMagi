@@ -6,11 +6,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
@@ -140,73 +137,46 @@ public class TileEntityCraftingRenderer extends TileEntitySpecialRenderer
 
         crafting.render((Entity) null, f1, f4, f5, f6, 0.0F, 0.0625F);
 
-        ItemStack[] items = machine.getInventory();
-
-        if (items != null) {
-            double dx = -0.5D;
-            double dz = -0.5D;
-
-            GL11.glMatrixMode(GL11.GL_MODELVIEW);
-            GL11.glPushMatrix();
-            GL11.glTranslatef(0.5f, 0, 0.5f);
-            int angle = 0;
-            switch (side) {
-                case 3:
-                    angle = 180;
-                    break;
-                case 4:
-                    angle = 270;
-                    break;
-                case 5:
-                    angle = 90;
-                    break;
-            }
-            GL11.glRotatef(angle, 0.0F, 1.0F, 0.0F);
-            GL11.glTranslatef(-0.5f, 0, -0.5f);
-            GL11.glTranslatef(1.0F, 0.0F, 0.0F);
-            GL11.glScalef(0.5F, 0.5F, 0.5F);
-
-            for (int i = 0; i < items.length; i++) {
-                ItemStack stack = items[i];
-
-                if (stack != null) {
-                    ItemStack stack2 = stack.copy();
-                    EntityItem entityItem = new EntityItem(machine.getWorldObj(), 0.0D, 0.0D, 0.0D, stack2);
-                    entityItem.getEntityItem().stackSize = 1;
-                    entityItem.hoverStart = 0.0F;
-                    entityItem.setLocationAndAngles(x, y, z, 0.0F, 0.0F);
-
-                    if (i < 3) {
-                        dx = -0.5D + (i * 0.5D);
-                    } else if (i < 6) {
-                        dx = -0.5D + ((i - 3) * 0.5D);
-                        dz = 0.0D;
-                    } else if (i < 9) {
-                        dx = -0.5D + ((i - 6) * 0.5D);
-                        dz = 0.5D;
-                    } else {
-                        break;
-                    }
-
-                    /*
-                     * Tessellator.instance.startDrawing(GL11.GL_LINES);
-                     * Tessellator.instance.addVertex(0, -1, 0);
-                     * Tessellator.instance.addVertex(0, 1, 0);
-                     * Tessellator.instance.addVertex(-1, 0, 0);
-                     * Tessellator.instance.addVertex(1, 0, 0);
-                     * Tessellator.instance.addVertex(0, 0, -1);
-                     * Tessellator.instance.addVertex(0, 0, 1);
-                     * Tessellator.instance.draw();
-                     * 
-                     * rotateFacing(partialTicks);
-                     */
-
-                    RenderManager.instance.renderEntityWithPosYaw(entityItem, dx, 1.5D, dz, 0.0F, 0.0F);
-                }
-            }
-
-            GL11.glPopMatrix();
-        }
+        /*
+         * ItemStack[] items = machine.getInventory();
+         * 
+         * if (items != null) { double dx = -0.5D; double dz = -0.5D;
+         * 
+         * GL11.glMatrixMode(GL11.GL_MODELVIEW); GL11.glPushMatrix();
+         * GL11.glTranslatef(0.5f, 0, 0.5f); int angle = 0; switch (side) { case
+         * 3: angle = 180; break; case 4: angle = 270; break; case 5: angle =
+         * 90; break; } GL11.glRotatef(angle, 0.0F, 1.0F, 0.0F);
+         * GL11.glTranslatef(-0.5f, 0, -0.5f); GL11.glTranslatef(1.0F, 0.0F,
+         * 0.0F); GL11.glScalef(0.5F, 0.5F, 0.5F);
+         * 
+         * for (int i = 0; i < items.length; i++) { ItemStack stack = items[i];
+         * 
+         * if (stack != null) { ItemStack stack2 = stack.copy(); EntityItem
+         * entityItem = new EntityItem(machine.getWorldObj(), 0.0D, 0.0D, 0.0D,
+         * stack2); entityItem.getEntityItem().stackSize = 1;
+         * entityItem.hoverStart = 0.0F; entityItem.setLocationAndAngles(x, y,
+         * z, 0.0F, 0.0F);
+         * 
+         * if (i < 3) { dx = -0.5D + (i * 0.5D); } else if (i < 6) { dx = -0.5D
+         * + ((i - 3) * 0.5D); dz = 0.0D; } else if (i < 9) { dx = -0.5D + ((i -
+         * 6) * 0.5D); dz = 0.5D; } else { break; }
+         * 
+         * /* Tessellator.instance.startDrawing(GL11.GL_LINES);
+         * Tessellator.instance.addVertex(0, -1, 0);
+         * Tessellator.instance.addVertex(0, 1, 0);
+         * Tessellator.instance.addVertex(-1, 0, 0);
+         * Tessellator.instance.addVertex(1, 0, 0);
+         * Tessellator.instance.addVertex(0, 0, -1);
+         * Tessellator.instance.addVertex(0, 0, 1); Tessellator.instance.draw();
+         * 
+         * rotateFacing(partialTicks);
+         * 
+         * 
+         * RenderManager.instance.renderEntityWithPosYaw(entityItem, dx, 1.5D,
+         * dz, 0.0F, 0.0F); } }
+         * 
+         * GL11.glPopMatrix(); }
+         */
 
         GL11.glPopMatrix();
     }
