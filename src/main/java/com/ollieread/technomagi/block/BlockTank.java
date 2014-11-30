@@ -172,7 +172,7 @@ public class BlockTank extends BlockTMContainer implements IDigitalToolable
             Item dropItem = Item.getItemFromBlock(this);
 
             if (dropItem != null) {
-                ItemStack dropStack = new ItemStack(dropItem);
+                ItemStack dropStack = new ItemStack(dropItem, 1, world.getBlockMetadata(x, y, z));
                 dropStack.stackTagCompound = new NBTTagCompound();
 
                 TileEntityTank tank = (TileEntityTank) world.getTileEntity(x, y, z);
