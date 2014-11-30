@@ -18,7 +18,7 @@ public class TileEntityTMFluid extends TileEntityTM implements IFluidHandler
     public void readFromNBT(NBTTagCompound tag)
     {
         super.readFromNBT(tag);
-        tank = new FluidTank(tank.getCapacity());
+        tank = new FluidTank(tag.getInteger("Capacity"));
         tank.readFromNBT(tag);
     }
 
@@ -27,6 +27,7 @@ public class TileEntityTMFluid extends TileEntityTM implements IFluidHandler
     {
         super.writeToNBT(tag);
         tank.writeToNBT(tag);
+        tag.setInteger("Capacity", tank.getCapacity());
     }
 
     /* IFluidHandler */
