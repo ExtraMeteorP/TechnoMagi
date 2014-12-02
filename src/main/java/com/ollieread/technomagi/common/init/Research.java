@@ -63,5 +63,7 @@ public class Research
         itemToResearchMapping.put(new ItemStack(Items.golden_apple), "eatGoldenApple");
         itemToResearchMapping.put(new ItemStack(Items.golden_carrot), "eatGoldenCarrot");
         itemToResearchMapping.put(new ItemStack(Items.ender_pearl), "useEnderpearl");
+        itemToResearchMapping.put(new ItemStack(Items.egg), "useEgg");
+        itemToResearchMapping.put(new ItemStack(Items.snowball), "useSnowball");
     }
 }
