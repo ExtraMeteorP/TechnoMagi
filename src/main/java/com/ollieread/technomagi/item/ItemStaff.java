@@ -98,7 +98,7 @@ public class ItemStaff extends ItemTMNBT implements IStaff
                 NBTTagCompound tag = enhancements.getCompoundTagAt(i);
 
                 if (tag.getString("Enhancement") != null) {
-                    return tag.getString("Enhancement").equals(enhancement) && tag.getInteger("Level") == level;
+                    return tag.getString("Enhancement").equals(enhancement) && tag.getInteger("Level") <= level;
                 }
             }
         }
@@ -117,7 +117,7 @@ public class ItemStaff extends ItemTMNBT implements IStaff
             for (int i = 0; i < enhancements.tagCount(); i++) {
                 NBTTagCompound tag = enhancements.getCompoundTagAt(i);
 
-                if (tag.getString("Enhancement") != null && tag.getString("Enhancement").equals(enhancement) && tag.getInteger("Level") <= level) {
+                if (tag.getString("Enhancement") != null && tag.getString("Enhancement").equals(enhancement) && tag.getInteger("Level") >= level) {
                     tag.setInteger("Level", level);
                     compound.setTag("Enhancements", enhancements);
                     return;
