@@ -11,6 +11,9 @@ public class Config
 
     public static boolean versionCheck;
 
+    public static boolean atmosphereEnabled;
+    public static int atmosphereCost;
+    public static int atmosphereDuration;
     public static boolean blinkEnabled;
     public static int blinkCost;
     public static int blinkDistance;
@@ -93,6 +96,10 @@ public class Config
         versionCheck = config.getBoolean("versionCheck", "General", true, "Whether or not to check version for recommended");
 
         // Ability Config
+        // Atmosphere
+        atmosphereEnabled = config.getBoolean("atmosphereEnabled", "Ability", true, "Whether or not the atmosphere ability should be available");
+        atmosphereCost = config.getInt("atmosphereCost", "Ability", 10, 1, 100, "Cost of the atmosphere ability");
+        atmosphereDuration = config.getInt("atmosphereDistance", "Ability", 15, 1, 32, "Duration of the atmosphere ability");
         // Blink
         blinkEnabled = config.getBoolean("blinkEnabled", "Ability", true, "Whether or not the blink ability should be available");
         blinkCost = config.getInt("blinkCost", "Ability", 10, 1, 100, "Cost of the blink ability");
