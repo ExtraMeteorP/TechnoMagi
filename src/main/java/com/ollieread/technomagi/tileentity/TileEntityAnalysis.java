@@ -15,6 +15,7 @@ import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.ennds.research.IResearch;
 import com.ollieread.ennds.research.IResearchAnalysis;
 import com.ollieread.ennds.research.ResearchRegistry;
+import com.ollieread.technomagi.common.init.Config;
 import com.ollieread.technomagi.common.proxy.BasicEnergy;
 import com.ollieread.technomagi.common.proxy.BasicInventory;
 import com.ollieread.technomagi.common.proxy.PlayerLocked;
@@ -39,13 +40,21 @@ public class TileEntityAnalysis extends TileEntityResearch implements IPlayerLoc
 
     protected Random rand = new Random();
 
-    protected int powerUsage = 5;
+    protected int maxProgress;
+    protected int maxTicks;
+    protected int maxWaiting;
+    protected int usage;
 
     public TileEntityAnalysis()
     {
         locked = new PlayerLocked();
         inventory = new BasicInventory(9);
-        storage = new BasicEnergy(3200, 5, 0);
+        storage = new BasicEnergy(Config.analysisPowerMax, Config.analysisPowerRecieve, 0);
+
+        maxProgress = Config.analysisProgressMax;
+        maxTicks = Config.analysisTicksMax;
+        maxWaiting = Config.analysisWaitingMax;
+        usage = Config.analysisPowerUse;
     }
 
     @Override
@@ -138,7 +147,7 @@ public class TileEntityAnalysis extends TileEntityResearch implements IPlayerLoc
             } else {
                 waiting++;
 
-                if (waiting == 30) {
+                if (waiting == maxWaiting) {
                     waiting = 0;
                     setInProgress(false);
                 }
@@ -190,7 +199,7 @@ public class TileEntityAnalysis extends TileEntityResearch implements IPlayerLoc
                 return false;
             }
 
-            return getEnergyStored(null) > powerUsage;
+            return getEnergyStored(null) > usage;
         }
 
         return false;
@@ -198,15 +207,15 @@ public class TileEntityAnalysis extends TileEntityResearch implements IPlayerLoc
 
     public void analyse()
     {
-        if (storage.modifyEnergyStored(powerUsage)) {
+        if (storage.modifyEnergyStored(usage)) {
             ticks++;
 
-            if (ticks >= 20) {
+            if (ticks >= maxTicks) {
                 ticks = 0;
                 progress++;
             }
 
-            if (progress >= 100) {
+            if (progress >= maxProgress) {
                 IResearchAnalysis analysis = getResearchAnalysis();
                 int c = rand.nextInt(((IResearch) analysis).getChance()) + 1;
 

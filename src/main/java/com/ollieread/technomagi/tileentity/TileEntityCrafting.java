@@ -9,9 +9,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
-import cofh.api.energy.IEnergyHandler;
 import cofh.lib.util.helpers.EnergyHelper;
 
+import com.ollieread.technomagi.common.init.Config;
 import com.ollieread.technomagi.common.proxy.BasicEnergy;
 import com.ollieread.technomagi.common.proxy.CraftingInventory;
 import com.ollieread.technomagi.common.proxy.PlayerLocked;
@@ -21,16 +21,11 @@ import com.ollieread.technomagi.util.PacketHelper;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 
-public class TileEntityCrafting extends TileEntityTM implements IPlayerLocked, IInventory, IEnergyHandler
+public class TileEntityCrafting extends TileEntityMachineTM implements IInventory
 {
 
-    protected PlayerLocked locked = null;
     protected CraftingInventory inventory = null;
-    protected BasicEnergy storage = null;
 
-    protected int progress = 0;
-    protected int ticks;
-    protected int waiting;
     protected boolean isCrafting = false;
     public CraftingManager crafting = CraftingManager.getInstance();
 
@@ -46,13 +41,14 @@ public class TileEntityCrafting extends TileEntityTM implements IPlayerLocked, I
     public float field_145924_q;
     private static Random field_145923_r = new Random();
 
-    protected int powerUsage = 2;
-
     public TileEntityCrafting()
     {
         locked = new PlayerLocked();
         inventory = new CraftingInventory(10);
-        storage = new BasicEnergy(3200, 2, 0);
+        storage = new BasicEnergy(Config.craftingPowerMax, Config.craftingPowerRecieve, 0);
+
+        maxProgress = Config.craftingProgressMax;
+        usage = Config.craftingPowerUse;
     }
 
     public int getProgress()
@@ -70,13 +66,9 @@ public class TileEntityCrafting extends TileEntityTM implements IPlayerLocked, I
     {
         super.readFromNBT(compound);
 
-        ticks = compound.getInteger("Ticks");
-        progress = compound.getInteger("Progress");
         isCrafting = compound.getBoolean("IsCrafting");
 
-        locked.readFromNBT(compound);
         inventory.readFromNBT(compound);
-        storage.readFromNBT(compound);
     }
 
     @Override
@@ -84,13 +76,9 @@ public class TileEntityCrafting extends TileEntityTM implements IPlayerLocked, I
     {
         super.writeToNBT(compound);
 
-        compound.setInteger("Ticks", ticks);
-        compound.setInteger("Progress", progress);
         compound.setBoolean("IsCrafting", isCrafting);
 
-        locked.writeToNBT(compound);
         inventory.writeToNBT(compound);
-        storage.writeToNBT(compound);
     }
 
     @Override
@@ -197,11 +185,11 @@ public class TileEntityCrafting extends TileEntityTM implements IPlayerLocked, I
                     ItemStack result = inventory.getStackInSlot(9);
 
                     if (result == null) {
-                        return getEnergyStored(null) > powerUsage;
+                        return getEnergyStored(null) > usage;
                     }
 
                     if (result.isItemEqual(recipe) && (result.stackSize + recipe.stackSize) <= result.getMaxStackSize()) {
-                        return getEnergyStored(null) > powerUsage;
+                        return getEnergyStored(null) > usage;
                     }
                 }
             }
@@ -217,15 +205,10 @@ public class TileEntityCrafting extends TileEntityTM implements IPlayerLocked, I
 
     public void craft()
     {
-        if (storage.modifyEnergyStored(powerUsage)) {
-            ticks++;
+        if (storage.modifyEnergyStored(usage)) {
+            progress++;
 
-            if (ticks >= 20) {
-                ticks = 0;
-                progress++;
-            }
-
-            if (progress >= 20) {
+            if (progress >= maxProgress) {
                 if (getPlayer() != null) {
                     EntityPlayer player = worldObj.getPlayerEntityByName(getPlayer());
 
@@ -242,7 +225,6 @@ public class TileEntityCrafting extends TileEntityTM implements IPlayerLocked, I
                     }
                 }
                 progress = 0;
-                ticks = 0;
                 setCrafting(false);
             }
         }
@@ -362,83 +344,6 @@ public class TileEntityCrafting extends TileEntityTM implements IPlayerLocked, I
     public ItemStack getStackInRowAndColumn(int row, int col)
     {
         return inventory.getStackInRowAndColumn(row, col);
-    }
-
-    /* ENERGY */
-
-    @Override
-    public boolean canConnectEnergy(ForgeDirection from)
-    {
-        return from.equals(ForgeDirection.DOWN);
-    }
-
-    @Override
-    public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate)
-    {
-        int r = storage.receiveEnergy(ForgeDirection.DOWN, maxReceive, simulate);
-
-        if (r > 0) {
-            sync();
-            return r;
-        }
-
-        return 0;
-    }
-
-    @Override
-    public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate)
-    {
-        int r = storage.extractEnergy(ForgeDirection.DOWN, maxExtract, simulate);
-
-        if (r > 0) {
-            sync();
-            return r;
-        }
-
-        return 0;
-    }
-
-    @Override
-    public int getEnergyStored(ForgeDirection from)
-    {
-        return storage.getEnergyStored(null);
-    }
-
-    @Override
-    public int getMaxEnergyStored(ForgeDirection from)
-    {
-        return storage.getMaxEnergyStored(null);
-    }
-
-    /* LOCKED */
-
-    @Override
-    public boolean hasPlayer()
-    {
-        return locked.hasPlayer();
-    }
-
-    @Override
-    public void setPlayer(String name)
-    {
-        locked.setPlayer(name);
-    }
-
-    @Override
-    public String getPlayer()
-    {
-        return locked.getPlayer();
-    }
-
-    @Override
-    public boolean isPlayer(String name)
-    {
-        return locked.isPlayer(name);
-    }
-
-    public boolean isPlayer(EntityPlayer player)
-    {
-        return isPlayer(player.getCommandSenderName());
     }
 
 }

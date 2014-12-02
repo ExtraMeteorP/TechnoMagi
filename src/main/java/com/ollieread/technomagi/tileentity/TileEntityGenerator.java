@@ -19,6 +19,7 @@ public abstract class TileEntityGenerator extends TileEntityTM implements IEnerg
     {
         energy = new BasicEnergy(capacity, 0, maxExtract);
         energyGeneration = generation;
+        energyTicks = ticks;
     }
 
     public TileEntityGenerator(int capacity, int maxExtract, int generation)
@@ -51,7 +52,7 @@ public abstract class TileEntityGenerator extends TileEntityTM implements IEnerg
     public void updateEntity()
     {
         if (!worldObj.isRemote) {
-            boolean should = true;
+            boolean should = false;
 
             if (energyTicks > 0) {
                 working++;

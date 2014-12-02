@@ -1,16 +1,18 @@
 package com.ollieread.technomagi.tileentity;
 
+import com.ollieread.technomagi.common.init.Config;
+
 public class TileEntityGeneratorVoid extends TileEntityGenerator
 {
 
     public TileEntityGeneratorVoid()
     {
-        super(3200, 10, 0, 5);
+        super(Config.generatorVoidPowerMax, Config.generatorVoidPowerOutput, 0, Config.generatorVoidMaxTicks);
     }
 
     public void setGenerationByLocation(int y)
     {
-        int generation = (int) Math.ceil((256 - y) / (256 / 5));
+        int generation = (int) Math.ceil((256 - y) / (256 / Config.generatorVoidModifier));
 
         energyGeneration = generation;
     }

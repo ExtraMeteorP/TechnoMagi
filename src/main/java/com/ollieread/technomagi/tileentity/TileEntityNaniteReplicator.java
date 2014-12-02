@@ -8,9 +8,9 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
-import cofh.api.energy.IEnergyHandler;
 import cofh.lib.util.helpers.EnergyHelper;
 
+import com.ollieread.technomagi.common.init.Config;
 import com.ollieread.technomagi.common.init.Items;
 import com.ollieread.technomagi.common.proxy.BasicEnergy;
 import com.ollieread.technomagi.common.proxy.BasicInventory;
@@ -18,28 +18,29 @@ import com.ollieread.technomagi.common.proxy.PlayerLocked;
 import com.ollieread.technomagi.item.ItemNaniteContainer;
 import com.ollieread.technomagi.item.ItemSampleVile;
 
-public class TileEntityNaniteReplicator extends TileEntityTM implements IPlayerLocked, ISidedInventory, IEnergyHandler
+public class TileEntityNaniteReplicator extends TileEntityMachineTM implements ISidedInventory
 {
-
-    protected BasicEnergy storage = null;
-    protected PlayerLocked locked = null;
     protected BasicInventory inventory = null;
 
     protected int nanites = 0;
     protected int sample = 0;
     protected String naniteType = "none";
     protected String sampleType = "none";
-    protected int progress = 0;
     protected int working = 0;
     protected Random rand = new Random();
-
-    protected int powerUsage = 4;
+    protected int maxWorkingEntity;
+    protected int maxWorkingPlayer;
 
     public TileEntityNaniteReplicator()
     {
         locked = new PlayerLocked();
         inventory = new BasicInventory(3);
-        storage = new BasicEnergy(3200, 2, 0);
+        storage = new BasicEnergy(Config.replicatorPowerMax, Config.replicatorPowerRecieve, 0);
+
+        maxProgress = Config.replicatorProgressMax;
+        usage = Config.replicatorPowerUse;
+        maxWorkingEntity = Config.replicatorWorkingEntityMax;
+        maxWorkingPlayer = Config.replicatorWorkingPlayerMax;
     }
 
     public int getNanites()
@@ -126,44 +127,40 @@ public class TileEntityNaniteReplicator extends TileEntityTM implements IPlayerL
     {
         boolean flag = false;
 
-        if (storage.modifyEnergyStored(powerUsage)) {
+        if (storage.modifyEnergyStored(usage)) {
             if (sampleType.equals(naniteType)) {
                 // if (storage.extractEnergy(2, true) == 2) {
                 // storage.extractEnergy(2, false);
                 working++;
 
-                if (working >= 60) {
+                if (working >= maxWorkingEntity) {
                     working = 0;
-                    sample--;
-                    nanites--;
+                    if (rand.nextInt(8) == 0) {
+                        sample--;
+                        nanites--;
+                    }
                     progress++;
                     flag = true;
                 }
                 // }
             } else {
                 if (naniteType.equals("player")) {
-
-                    // if (storage.extractEnergy(5, true) == 5) {
-                    // storage.extractEnergy(5, false);
                     working++;
 
-                    if (working >= 100) {
+                    if (working >= maxWorkingPlayer) {
                         working = 0;
                         sample--;
                         nanites--;
                         flag = true;
 
-                        if (rand.nextInt(5) == 0) {
-                            progress++;
-                        }
+                        progress++;
                     }
-                    // }
                 }
             }
         }
 
         if (flag) {
-            if (progress == 100) {
+            if (progress == maxProgress) {
                 ItemStack result = getStackInSlot(1);
                 ItemStack input = getStackInSlot(2);
 
@@ -197,7 +194,7 @@ public class TileEntityNaniteReplicator extends TileEntityTM implements IPlayerL
          * System.out.println(progress < 100); System.out.println(sampleType ==
          * naniteType); System.out.println(naniteType == 1);
          */
-        return getEnergyStored(null) > powerUsage && sample > 0 && nanites > 0 && progress < 100 && (sampleType == naniteType || naniteType.equals("player"));
+        return getEnergyStored(null) > usage && sample > 0 && nanites > 0 && progress < 100 && (sampleType == naniteType || naniteType.equals("player"));
     }
 
     protected void populate()
@@ -280,12 +277,9 @@ public class TileEntityNaniteReplicator extends TileEntityTM implements IPlayerL
         sample = compound.getInteger("Sample");
         naniteType = compound.getString("NaniteType");
         sampleType = compound.getString("SampleType");
-        progress = compound.getInteger("Progress");
         working = compound.getInteger("Working");
 
-        locked.readFromNBT(compound);
         inventory.readFromNBT(compound);
-        storage.readFromNBT(compound);
     }
 
     @Override
@@ -297,12 +291,9 @@ public class TileEntityNaniteReplicator extends TileEntityTM implements IPlayerL
         compound.setInteger("Sample", sample);
         compound.setString("NaniteType", naniteType);
         compound.setString("SampleType", sampleType);
-        compound.setInteger("Progress", progress);
         compound.setInteger("Working", working);
 
-        locked.writeToNBT(compound);
         inventory.writeToNBT(compound);
-        storage.writeToNBT(compound);
     }
 
     @Override
@@ -397,83 +388,6 @@ public class TileEntityNaniteReplicator extends TileEntityTM implements IPlayerL
     public boolean isItemValidForSlot(int i, ItemStack stack)
     {
         return inventory.isItemValidForSlot(i, stack);
-    }
-
-    /* ENERGY */
-
-    @Override
-    public boolean canConnectEnergy(ForgeDirection from)
-    {
-        return from.equals(ForgeDirection.DOWN);
-    }
-
-    @Override
-    public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate)
-    {
-        int r = storage.receiveEnergy(ForgeDirection.DOWN, maxReceive, simulate);
-
-        if (r > 0) {
-            sync();
-            return r;
-        }
-
-        return 0;
-    }
-
-    @Override
-    public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate)
-    {
-        int r = storage.extractEnergy(ForgeDirection.DOWN, maxExtract, simulate);
-
-        if (r > 0) {
-            sync();
-            return r;
-        }
-
-        return 0;
-    }
-
-    @Override
-    public int getEnergyStored(ForgeDirection from)
-    {
-        return storage.getEnergyStored(null);
-    }
-
-    @Override
-    public int getMaxEnergyStored(ForgeDirection from)
-    {
-        return storage.getMaxEnergyStored(null);
-    }
-
-    /* LOCKED */
-
-    @Override
-    public boolean hasPlayer()
-    {
-        return locked.hasPlayer();
-    }
-
-    @Override
-    public void setPlayer(String name)
-    {
-        locked.setPlayer(name);
-    }
-
-    @Override
-    public String getPlayer()
-    {
-        return locked.getPlayer();
-    }
-
-    @Override
-    public boolean isPlayer(String name)
-    {
-        return locked.isPlayer(name);
-    }
-
-    public boolean isPlayer(EntityPlayer player)
-    {
-        return isPlayer(player.getCommandSenderName());
     }
 
 }

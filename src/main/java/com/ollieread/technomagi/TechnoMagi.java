@@ -5,7 +5,6 @@ import java.lang.reflect.Modifier;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.potion.Potion;
-import net.minecraftforge.common.config.Configuration;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,6 +14,7 @@ import com.ollieread.technomagi.common.Information;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.common.init.Abilities;
 import com.ollieread.technomagi.common.init.Blocks;
+import com.ollieread.technomagi.common.init.Config;
 import com.ollieread.technomagi.common.init.Entities;
 import com.ollieread.technomagi.common.init.Items;
 import com.ollieread.technomagi.common.init.Knowledge;
@@ -50,17 +50,12 @@ public class TechnoMagi
 
     public static final Logger logger = LogManager.getLogger(Reference.MODID);
 
-    public static Configuration config;
-
     public static boolean version = true;
 
     @EventHandler
     public void pre(FMLPreInitializationEvent event)
     {
-        config = new Configuration(event.getSuggestedConfigurationFile());
-        config.load();
-
-        version = config.getBoolean("versionCheck", "General", true, "Whether or not to check version for recommended");
+        Config.init(event.getSuggestedConfigurationFile());
 
         proxy.registerEventHandlers();
 
@@ -99,8 +94,6 @@ public class TechnoMagi
         }
 
         Potions.init();
-
-        config.save();
     }
 
     @EventHandler

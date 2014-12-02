@@ -1,11 +1,13 @@
 package com.ollieread.technomagi.tileentity;
 
+import com.ollieread.technomagi.common.init.Config;
+
 public class TileEntityGeneratorLight extends TileEntityGenerator
 {
 
     public TileEntityGeneratorLight()
     {
-        super(3200, 10, 2, 5);
+        super(Config.generatorLightPowerMax, Config.generatorLightPowerOutput, Config.generatorLightGeneration, Config.generatorLightMaxTicks);
     }
 
     @Override
