@@ -25,7 +25,7 @@ public class ItemUnit extends ItemTMSubtypes implements IStaffEnhancement
     public String getName(ItemStack enhancement)
     {
         if (enhancement != null) {
-            return itemTypes[(int) Math.floor(enhancement.getItemDamage() % 3)];
+            return itemTypes[enhancement.getItemDamage() / 3];
         }
 
         return null;
@@ -70,6 +70,7 @@ public class ItemUnit extends ItemTMSubtypes implements IStaffEnhancement
                     if (!realStaff.hasEnhancement(staff, getName(stack), getLevel(stack))) {
                         realStaff.setEnhancement(staff, getName(stack), getLevel(stack));
                         stack.stackSize--;
+
                         charon.getStaff(true);
                         charon.setStaff(staff);
                     }

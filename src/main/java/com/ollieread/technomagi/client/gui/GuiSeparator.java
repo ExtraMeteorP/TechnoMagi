@@ -19,7 +19,6 @@ public class GuiSeparator extends GuiEnergyContainer
 
     private static final ResourceLocation texture = new ResourceLocation(Reference.MODID.toLowerCase(), "textures/gui/separator.png");
     protected TileEntitySeparator separator;
-    protected GuiTMButton analyseButton;
 
     public GuiSeparator(InventoryPlayer playerInventory, TileEntitySeparator tile)
     {
@@ -45,7 +44,7 @@ public class GuiSeparator extends GuiEnergyContainer
         this.mc.getTextureManager().bindTexture(texture);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 
-        int progress = separator.getProgress();
+        int progress = separator.getProgress(100);
 
         if (progress > 0) {
             this.drawTexturedModalRect(this.guiLeft + 27, this.guiTop + 35, 0, 176, progress, 3);

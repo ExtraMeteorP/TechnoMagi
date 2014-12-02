@@ -151,35 +151,4 @@ public class TileEntitySeparatorRenderer extends TileEntitySpecialRenderer
         GL11.glPopMatrix();
     }
 
-    public static void rotateFacing(float partialTicks)
-    {
-        Entity entity = Minecraft.getMinecraft().renderViewEntity;
-        float yaw = entity.prevRotationYaw + (entity.rotationYaw - entity.prevRotationYaw) * partialTicks;
-        float pitch = entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks;
-        float roll = 0;
-
-        try {
-            roll = getPrevCamRoll() + (getCamRoll() - getPrevCamRoll()) * partialTicks;
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
-        GL11.glRotatef(-(yaw + 180), 0, 1, 0);
-        GL11.glRotatef(-pitch, 1, 0, 0);
-        GL11.glRotatef(-roll, 0, 0, 1);
-    }
-
-    public static float getCamRoll() throws IllegalArgumentException, IllegalAccessException
-    {
-        rollField.setAccessible(true);
-        return (Float) rollField.get(Minecraft.getMinecraft().entityRenderer);
-    }
-
-    public static float getPrevCamRoll() throws IllegalArgumentException, IllegalAccessException
-    {
-        prevRollField.setAccessible(true);
-        return (Float) prevRollField.get(Minecraft.getMinecraft().entityRenderer);
-    }
 }

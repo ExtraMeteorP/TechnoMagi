@@ -5,6 +5,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -48,18 +49,33 @@ public abstract class BlockOwnable extends BlockTMContainer
     @Override
     public boolean removedByPlayer(World world, EntityPlayer player, int x, int y, int z)
     {
-        if (!player.capabilities.isCreativeMode && !world.isRemote && canHarvestBlock(player, world.getBlockMetadata(x, y, z))) {
+        if (!world.isRemote) {
             float motion = 0.7F;
             double motionX = (world.rand.nextFloat() * motion) + (1.0F - motion) * 0.5D;
             double motionY = (world.rand.nextFloat() * motion) + (1.0F - motion) * 0.5D;
             double motionZ = (world.rand.nextFloat() * motion) + (1.0F - motion) * 0.5D;
 
-            EntityItem entityItem = new EntityItem(world, x + motionX, y + motionY, z + motionZ, getPickBlock(null, world, x, y, z));
+            TileEntity tile = world.getTileEntity(x, y, z);
 
-            world.spawnEntityInWorld(entityItem);
+            if (tile instanceof IInventory) {
+                IInventory inventory = (IInventory) tile;
+
+                for (int i = 0; i < inventory.getSizeInventory(); i++) {
+                    ItemStack slot = inventory.getStackInSlot(i);
+
+                    if (slot != null) {
+                        EntityItem entity = new EntityItem(world, x + motionX, y + motionY, z + motionZ, slot);
+                        world.spawnEntityInWorld(entity);
+                    }
+                }
+            }
+
+            if (!player.capabilities.isCreativeMode && canHarvestBlock(player, world.getBlockMetadata(x, y, z))) {
+                EntityItem entityItem = new EntityItem(world, x + motionX, y + motionY, z + motionZ, getPickBlock(null, world, x, y, z));
+                world.spawnEntityInWorld(entityItem);
+            }
         }
 
         return world.setBlockToAir(x, y, z);
     }
-
 }

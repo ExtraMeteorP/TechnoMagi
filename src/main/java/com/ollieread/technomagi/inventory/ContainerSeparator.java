@@ -23,8 +23,8 @@ public class ContainerSeparator extends Container
         crafter = tile;
 
         addSlotToContainer(new Slot(crafter, 0, 5, 29));
-        addSlotToContainer(new Slot(crafter, 1, 133, 29));
-        addSlotToContainer(new Slot(crafter, 2, 155, 29));
+        addSlotToContainer(new SlotResult(crafter, 1, 133, 29));
+        addSlotToContainer(new SlotResult(crafter, 2, 155, 29));
 
         addPlayerSlots(playerInventory);
     }

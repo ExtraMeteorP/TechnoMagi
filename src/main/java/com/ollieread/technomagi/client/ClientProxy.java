@@ -20,15 +20,22 @@ import com.ollieread.technomagi.client.renderer.item.RenderAnalysisItem;
 import com.ollieread.technomagi.client.renderer.item.RenderArchiveItem;
 import com.ollieread.technomagi.client.renderer.item.RenderChamberItem;
 import com.ollieread.technomagi.client.renderer.item.RenderCraftingItem;
+import com.ollieread.technomagi.client.renderer.item.RenderFocusChargerItem;
+import com.ollieread.technomagi.client.renderer.item.RenderFocuserItem;
+import com.ollieread.technomagi.client.renderer.item.RenderFurnaceItem;
 import com.ollieread.technomagi.client.renderer.item.RenderReplicatorItem;
+import com.ollieread.technomagi.client.renderer.item.RenderSeparatorItem;
 import com.ollieread.technomagi.client.renderer.item.RenderStorageItem;
 import com.ollieread.technomagi.client.renderer.item.RenderTankItem;
 import com.ollieread.technomagi.client.renderer.item.RenderTechnomageStaff;
 import com.ollieread.technomagi.client.renderer.tileentity.TileEntityAnalysisRenderer;
 import com.ollieread.technomagi.client.renderer.tileentity.TileEntityArchiveRenderer;
+import com.ollieread.technomagi.client.renderer.tileentity.TileEntityChamberRenderer;
 import com.ollieread.technomagi.client.renderer.tileentity.TileEntityCraftingRenderer;
-import com.ollieread.technomagi.client.renderer.tileentity.TileEntityNaniteReplicatorRenderer;
-import com.ollieread.technomagi.client.renderer.tileentity.TileEntityObservationChamberRenderer;
+import com.ollieread.technomagi.client.renderer.tileentity.TileEntityFocusChargerRenderer;
+import com.ollieread.technomagi.client.renderer.tileentity.TileEntityFocuserRenderer;
+import com.ollieread.technomagi.client.renderer.tileentity.TileEntityFurnaceRenderer;
+import com.ollieread.technomagi.client.renderer.tileentity.TileEntityReplicatorRenderer;
 import com.ollieread.technomagi.client.renderer.tileentity.TileEntitySeparatorRenderer;
 import com.ollieread.technomagi.client.renderer.tileentity.TileEntityStorageRenderer;
 import com.ollieread.technomagi.client.renderer.tileentity.TileEntityTankRenderer;
@@ -45,6 +52,9 @@ import com.ollieread.technomagi.event.handler.RenderEventHandler;
 import com.ollieread.technomagi.tileentity.TileEntityAnalysis;
 import com.ollieread.technomagi.tileentity.TileEntityArchive;
 import com.ollieread.technomagi.tileentity.TileEntityCrafting;
+import com.ollieread.technomagi.tileentity.TileEntityFocusCharger;
+import com.ollieread.technomagi.tileentity.TileEntityFocuser;
+import com.ollieread.technomagi.tileentity.TileEntityFurnace;
 import com.ollieread.technomagi.tileentity.TileEntityNaniteReplicator;
 import com.ollieread.technomagi.tileentity.TileEntityObservationChamber;
 import com.ollieread.technomagi.tileentity.TileEntitySeparator;
@@ -95,13 +105,16 @@ public class ClientProxy extends CommonProxy
         RenderingRegistry.registerEntityRenderingHandler(EntityRobotZombie.class, new RenderRobotZombie(new ModelRobotZombie(), 0.5F));
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityArchive.class, new TileEntityArchiveRenderer());
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityNaniteReplicator.class, new TileEntityNaniteReplicatorRenderer());
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityObservationChamber.class, new TileEntityObservationChamberRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityNaniteReplicator.class, new TileEntityReplicatorRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityObservationChamber.class, new TileEntityChamberRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCrafting.class, new TileEntityCraftingRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAnalysis.class, new TileEntityAnalysisRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTank.class, new TileEntityTankRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityStorage.class, new TileEntityStorageRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySeparator.class, new TileEntitySeparatorRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFurnace.class, new TileEntityFurnaceRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFocuser.class, new TileEntityFocuserRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFocusCharger.class, new TileEntityFocusChargerRenderer());
 
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Blocks.blockArchive), new RenderArchiveItem());
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Blocks.blockNaniteReplicator), new RenderReplicatorItem());
@@ -111,6 +124,10 @@ public class ClientProxy extends CommonProxy
         MinecraftForgeClient.registerItemRenderer(Items.itemTechnomageStaff, new RenderTechnomageStaff());
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Blocks.blockTank), new RenderTankItem());
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Blocks.blockStorage), new RenderStorageItem());
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Blocks.blockSeparator), new RenderSeparatorItem());
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Blocks.blockFurnace), new RenderFurnaceItem());
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Blocks.blockFocuser), new RenderFocuserItem());
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Blocks.blockFocusCharger), new RenderFocusChargerItem());
     }
 
 }

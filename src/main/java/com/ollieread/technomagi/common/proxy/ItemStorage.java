@@ -42,6 +42,7 @@ public class ItemStorage
 
             nbt.setTag("ItemStack", item);
             nbt.setInteger("Amount", amount);
+            nbt.setInteger("Capacity", capacity);
 
             if (tag != null) {
                 nbt.setTag("Tag", tag);
@@ -58,6 +59,7 @@ public class ItemStorage
         if (!nbt.hasKey("Empty")) {
             stack = ItemStack.loadItemStackFromNBT((NBTTagCompound) nbt.getTag("ItemStack"));
             amount = nbt.getInteger("Amount");
+            capacity = nbt.getInteger("Capacity");
 
             if (nbt.hasKey("Tag")) {
                 tag = (NBTTagCompound) nbt.getTag("Tag");
@@ -185,7 +187,7 @@ public class ItemStorage
     public String getLocalizedName()
     {
         if (stack != null) {
-            return StatCollector.translateToLocal(getUnlocalizedName());
+            return StatCollector.translateToLocal(getUnlocalizedName() + ".name");
         }
 
         return null;

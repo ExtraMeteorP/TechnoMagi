@@ -11,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
@@ -87,6 +88,8 @@ public class ItemStaff extends ItemTMNBT implements IStaff
     public boolean hasEnhancement(ItemStack staff, String enhancement, int level)
     {
         NBTTagCompound compound = getNBT(staff);
+        System.out.println(enhancement);
+        System.out.println(level);
 
         if (compound.hasKey("Enhancements")) {
             NBTTagList enhancements = compound.getTagList("Enhancements", compound.getId());
@@ -106,16 +109,28 @@ public class ItemStaff extends ItemTMNBT implements IStaff
     public void setEnhancement(ItemStack staff, String enhancement, int level)
     {
         NBTTagCompound compound = getNBT(staff);
+        NBTTagList enhancements;
 
         if (compound.hasKey("Enhancements")) {
-            NBTTagList enhancements = compound.getTagList("Enhancements", compound.getId());
-            NBTTagCompound entry = new NBTTagCompound();
-            entry.setString("Enhancement", enhancement);
-            entry.setInteger("Level", level);
-            enhancements.appendTag(entry);
+            enhancements = compound.getTagList("Enhancements", compound.getId());
 
-            compound.setTag("Enhancements", enhancements);
+            for (int i = 0; i < enhancements.tagCount(); i++) {
+                NBTTagCompound tag = enhancements.getCompoundTagAt(i);
+
+                if (tag.getString("Enhancement") != null && tag.getString("Enhancement").equals(enhancement) && tag.getInteger("Level") <= level) {
+                    tag.setInteger("Level", level);
+                    compound.setTag("Enhancements", enhancements);
+                    return;
+                }
+            }
+        } else {
+            enhancements = new NBTTagList();
         }
+
+        NBTTagCompound entry = new NBTTagCompound();
+        entry.setString("Enhancement", enhancement);
+        entry.setInteger("Level", level);
+        enhancements.appendTag(entry);
     }
 
     @Override
@@ -204,7 +219,7 @@ public class ItemStaff extends ItemTMNBT implements IStaff
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4)
     {
-        list.add("Enhancements:");
+        list.add(EnumChatFormatting.BOLD + "Enhancements:");
         NBTTagCompound compound = getNBT(stack);
 
         if (compound.hasKey("Enhancements")) {
@@ -213,9 +228,19 @@ public class ItemStaff extends ItemTMNBT implements IStaff
             for (int i = 0; i < enhancements.tagCount(); i++) {
                 NBTTagCompound tag = enhancements.getCompoundTagAt(i);
                 String enhancement = tag.getString("Enhancement");
+                int level = tag.getInteger("Level");
+                EnumChatFormatting colour = null;
+
+                if (level == 1) {
+                    colour = EnumChatFormatting.WHITE;
+                } else if (level == 2) {
+                    colour = EnumChatFormatting.GOLD;
+                } else if (level == 3) {
+                    colour = EnumChatFormatting.AQUA;
+                }
 
                 if (enhancement != null) {
-                    list.add(StatCollector.translateToLocal("enhancement." + enhancement));
+                    list.add(colour + StatCollector.translateToLocal("enhancement." + enhancement));
                 }
             }
         }

@@ -10,6 +10,7 @@ import com.ollieread.technomagi.client.gui.GuiAnalysis;
 import com.ollieread.technomagi.client.gui.GuiArchive;
 import com.ollieread.technomagi.client.gui.GuiConstruct;
 import com.ollieread.technomagi.client.gui.GuiCrafting;
+import com.ollieread.technomagi.client.gui.GuiFocuser;
 import com.ollieread.technomagi.client.gui.GuiFurnace;
 import com.ollieread.technomagi.client.gui.GuiNaniteReplicator;
 import com.ollieread.technomagi.client.gui.GuiObservationChamber;
@@ -32,6 +33,7 @@ import com.ollieread.technomagi.inventory.ContainerAnalysis;
 import com.ollieread.technomagi.inventory.ContainerArchive;
 import com.ollieread.technomagi.inventory.ContainerConstruct;
 import com.ollieread.technomagi.inventory.ContainerCrafting;
+import com.ollieread.technomagi.inventory.ContainerFocuser;
 import com.ollieread.technomagi.inventory.ContainerFurnace;
 import com.ollieread.technomagi.inventory.ContainerNaniteReplicator;
 import com.ollieread.technomagi.inventory.ContainerObservation;
@@ -41,6 +43,7 @@ import com.ollieread.technomagi.tileentity.TileEntityAnalysis;
 import com.ollieread.technomagi.tileentity.TileEntityArchive;
 import com.ollieread.technomagi.tileentity.TileEntityConstruct;
 import com.ollieread.technomagi.tileentity.TileEntityCrafting;
+import com.ollieread.technomagi.tileentity.TileEntityFocuser;
 import com.ollieread.technomagi.tileentity.TileEntityFurnace;
 import com.ollieread.technomagi.tileentity.TileEntityNaniteReplicator;
 import com.ollieread.technomagi.tileentity.TileEntityObservationChamber;
@@ -67,6 +70,7 @@ public class CommonProxy implements IGuiHandler
     public static int GUI_TELEPORTER = 10;
     public static int GUI_SEPARATOR = 11;
     public static int GUI_FURNACE = 12;
+    public static int GUI_FOCUSER = 13;
 
     public static PlayerEventHandler playerEventHandler = new PlayerEventHandler();
 
@@ -122,6 +126,12 @@ public class CommonProxy implements IGuiHandler
 
             if (crafter != null) {
                 return new ContainerFurnace(player.inventory, crafter);
+            }
+        } else if (ID == GUI_FOCUSER) {
+            TileEntityFocuser focuser = (TileEntityFocuser) world.getTileEntity(x, y, z);
+
+            if (focuser != null) {
+                return new ContainerFocuser(player.inventory, focuser);
             }
         }
 
@@ -228,6 +238,12 @@ public class CommonProxy implements IGuiHandler
 
             if (furnace != null) {
                 return new GuiFurnace(player.inventory, furnace);
+            }
+        } else if (ID == GUI_FOCUSER) {
+            TileEntityFocuser focuser = (TileEntityFocuser) world.getTileEntity(x, y, z);
+
+            if (focuser != null) {
+                return new GuiFocuser(player.inventory, focuser);
             }
         }
 

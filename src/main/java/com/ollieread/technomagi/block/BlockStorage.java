@@ -70,6 +70,10 @@ public class BlockStorage extends BlockTMContainer implements IDigitalToolable
 
         TileEntityStorage storage = (TileEntityStorage) te;
 
+        if (storage.getBlockMetadata() > 0) {
+            storage.setCapacity(4096 * (storage.getBlockMetadata() * 5));
+        }
+
         if (stack.stackTagCompound != null) {
             storage.readFromNBT(stack.stackTagCompound);
             storage.xCoord = x;

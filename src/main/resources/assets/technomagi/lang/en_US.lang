@@ -24,6 +24,9 @@ technomagi.nanites=Nanites
 technomagi.data=Data
 technomagi.progress=Progress
 technomagi.type=Replicate Type
+technomagi.separator.gui=Resource Separator
+technomagi.furnace.gui=Energy Furnace
+technomagi.focuser.gui=Relux Focuser
 
 specialisation.scholar=Scholar
 specialisation.medic=Sage
@@ -73,6 +76,17 @@ knowledge.entitySkeleton=Sharpshooting Annoyance
 knowledge.entityCreeper=I'll Ruin Your Day
 knowledge.entityAggressive=I'll Kill You First
 
+enhancement.life=Life
+enhancement.light=Light
+enhancement.teleport=Teleportation
+enhancement.subspace=Subspace
+enhancement.nanite=Nanite
+enhancement.power=Power
+enhancement.exo=Exothermic
+enhancement.endo=Endothermic
+enhancement.force=Force
+enhancement.void=Void
+
 potionHardness=Hardness
 
 itemGroup.tabTm=TechnoMagi
@@ -106,6 +120,14 @@ tile.voidstone.name=Voidstone
 tile.tank.0.name=Basic Tank
 tile.tank.1.name=Advanced Tank
 tile.tank.2.name=Elite Tank
+tile.separator.name=Resource Separator
+tile.storage.0.name=Basic Storage
+tile.storage.1.name=Advanced Storage
+tile.storage.2.name=Elite Storage
+tile.furnace.name=Energy Furnace
+tile.focuser.name=Relux Focuser
+tile.focusCharger.name=Relux Focus Charger
+tile.encourager.name=Growth Encourager
 
 item.mobBrain.name=Brain
 item.sampleExtractor.name=Sample Extractor

@@ -90,7 +90,7 @@ public class RenderTankItem implements IItemRenderer
                 int amount = tank.getFluidAmount();
                 int capacity = tank.getCapacity();
 
-                float scaleF = (0.7F / capacity) * amount;
+                float scaleF = (0.7F / (FluidContainerRegistry.BUCKET_VOLUME * 100)) * (amount / (item.getItemDamage() * 5));
 
                 if (scaleF < 0.1F) {
                     scaleF = 0.1F;

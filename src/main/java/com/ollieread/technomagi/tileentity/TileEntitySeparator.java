@@ -9,9 +9,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
-import cofh.api.energy.IEnergyHandler;
 import cofh.lib.util.helpers.EnergyHelper;
 
+import com.ollieread.technomagi.common.init.Config;
 import com.ollieread.technomagi.common.proxy.BasicEnergy;
 import com.ollieread.technomagi.common.proxy.BasicInventory;
 import com.ollieread.technomagi.common.proxy.PlayerLocked;
@@ -19,14 +19,10 @@ import com.ollieread.technomagi.item.crafting.SeparatorRecipes;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 
-public class TileEntitySeparator extends TileEntityTM implements IPlayerLocked, IInventory, IEnergyHandler
+public class TileEntitySeparator extends TileEntityMachineTM implements IInventory
 {
 
-    protected PlayerLocked locked = null;
     protected BasicInventory inventory = null;
-    protected BasicEnergy storage = null;
-
-    protected int progress = 0;
     public SeparatorRecipes crafting = SeparatorRecipes.getInstance();
 
     public int field_145926_a;
@@ -41,13 +37,14 @@ public class TileEntitySeparator extends TileEntityTM implements IPlayerLocked, 
     public float field_145924_q;
     private static Random field_145923_r = new Random();
 
-    protected int powerUsage = 7;
-
     public TileEntitySeparator()
     {
         locked = new PlayerLocked();
         inventory = new BasicInventory(3);
-        storage = new BasicEnergy(3200, 5, 0);
+        storage = new BasicEnergy(Config.separatorPowerMax, Config.separatorPowerRecieve, 0);
+
+        maxProgress = Config.separatorProgressMax;
+        usage = Config.separatorPowerUse;
     }
 
     public int getProgress()
@@ -190,11 +187,11 @@ public class TileEntitySeparator extends TileEntityTM implements IPlayerLocked, 
                     ItemStack result = inventory.getStackInSlot(1);
 
                     if (result == null) {
-                        return getEnergyStored(null) > powerUsage;
+                        return getEnergyStored(null) > usage;
                     }
 
                     if (result.isItemEqual(recipe) && (result.stackSize + recipe.stackSize) <= result.getMaxStackSize()) {
-                        return getEnergyStored(null) > powerUsage;
+                        return getEnergyStored(null) > usage;
                     }
                 }
             }
@@ -205,10 +202,10 @@ public class TileEntitySeparator extends TileEntityTM implements IPlayerLocked, 
 
     public void separate()
     {
-        if (storage.modifyEnergyStored(powerUsage)) {
+        if (storage.modifyEnergyStored(usage)) {
             progress++;
 
-            if (progress >= 100) {
+            if (progress >= maxProgress) {
                 if (getPlayer() != null) {
                     EntityPlayer player = worldObj.getPlayerEntityByName(getPlayer());
                     ItemStack recipe = crafting.findMatchingRecipe(inventory.getStackInSlot(0));
@@ -338,83 +335,6 @@ public class TileEntitySeparator extends TileEntityTM implements IPlayerLocked, 
     public boolean isItemValidForSlot(int i, ItemStack stack)
     {
         return inventory.isItemValidForSlot(i, stack);
-    }
-
-    /* ENERGY */
-
-    @Override
-    public boolean canConnectEnergy(ForgeDirection from)
-    {
-        return from.equals(ForgeDirection.DOWN);
-    }
-
-    @Override
-    public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate)
-    {
-        int r = storage.receiveEnergy(ForgeDirection.DOWN, maxReceive, simulate);
-
-        if (r > 0) {
-            sync();
-            return r;
-        }
-
-        return 0;
-    }
-
-    @Override
-    public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate)
-    {
-        int r = storage.extractEnergy(ForgeDirection.DOWN, maxExtract, simulate);
-
-        if (r > 0) {
-            sync();
-            return r;
-        }
-
-        return 0;
-    }
-
-    @Override
-    public int getEnergyStored(ForgeDirection from)
-    {
-        return storage.getEnergyStored(null);
-    }
-
-    @Override
-    public int getMaxEnergyStored(ForgeDirection from)
-    {
-        return storage.getMaxEnergyStored(null);
-    }
-
-    /* LOCKED */
-
-    @Override
-    public boolean hasPlayer()
-    {
-        return locked.hasPlayer();
-    }
-
-    @Override
-    public void setPlayer(String name)
-    {
-        locked.setPlayer(name);
-    }
-
-    @Override
-    public String getPlayer()
-    {
-        return locked.getPlayer();
-    }
-
-    @Override
-    public boolean isPlayer(String name)
-    {
-        return locked.isPlayer(name);
-    }
-
-    public boolean isPlayer(EntityPlayer player)
-    {
-        return isPlayer(player.getCommandSenderName());
     }
 
 }
