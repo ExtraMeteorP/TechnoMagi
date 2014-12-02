@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Level;
 import com.ollieread.ennds.ability.IAbilityActive;
 import com.ollieread.ennds.ability.IAbilityPassive;
 import com.ollieread.technomagi.TechnoMagi;
+import com.ollieread.technomagi.ability.active.ActiveAbilityAtmosphere;
 import com.ollieread.technomagi.ability.active.ActiveAbilityBlink;
 import com.ollieread.technomagi.ability.active.ActiveAbilityFire;
 import com.ollieread.technomagi.ability.active.ActiveAbilityFireball;
@@ -18,6 +19,7 @@ import com.ollieread.technomagi.ability.active.ActiveAbilityHeal;
 import com.ollieread.technomagi.ability.active.ActiveAbilityProjectile;
 import com.ollieread.technomagi.ability.active.ActiveAbilityProjectileExothermic;
 import com.ollieread.technomagi.ability.active.ActiveAbilityReactive;
+import com.ollieread.technomagi.ability.active.ActiveAbilityShield;
 import com.ollieread.technomagi.ability.passive.PassiveAbilityNanites;
 
 public class Abilities
@@ -39,6 +41,8 @@ public class Abilities
     public static IAbilityActive abilityActiveAtmosphereI;
     public static IAbilityActive abilityActiveProjectile;
     public static IAbilityActive abilityActiveProjectileExothermic;
+    public static IAbilityActive abilityActiveAtmosphere;
+    public static IAbilityActive abilityActiveShield;
 
     public static IAbilityPassive abilityPassiveScholarResearch;
     public static IAbilityPassive abilityPassiveNanites;
@@ -48,6 +52,9 @@ public class Abilities
     {
         TechnoMagi.logger.log(Level.INFO, "Initiating & registering abilities");
 
+        if (Config.atmosphereEnabled) {
+            abilityActiveAtmosphere = new ActiveAbilityAtmosphere("atmosphere");
+        }
         if (Config.blinkEnabled) {
             abilityActiveBlink = new ActiveAbilityBlink("blink");
         }
@@ -86,6 +93,9 @@ public class Abilities
         }
         if (Config.reactiveEnabled) {
             abilityActiveReactive = new ActiveAbilityReactive("reactive");
+        }
+        if (Config.shieldEnabled) {
+            abilityActiveShield = new ActiveAbilityShield("shield");
         }
 
         abilityPassiveNanites = new PassiveAbilityNanites("nanites");

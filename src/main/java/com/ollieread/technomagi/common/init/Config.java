@@ -35,6 +35,7 @@ public class Config
     public static int harvestCost;
     public static boolean healEnabled;
     public static int healCost;
+    public static int healDuration;
     public static boolean invisibilityEnabled;
     public static int invisibilityCost;
     public static int invisibilityDuration;
@@ -44,6 +45,9 @@ public class Config
     public static int projectileExothermicCost;
     public static boolean reactiveEnabled;
     public static int reactiveCost;
+    public static boolean shieldEnabled;
+    public static int shieldCost;
+    public static int shieldDuration;
 
     public static int furnacePowerMax;
     public static int furnacePowerReceive;
@@ -99,7 +103,7 @@ public class Config
         // Atmosphere
         atmosphereEnabled = config.getBoolean("atmosphereEnabled", "Ability", true, "Whether or not the atmosphere ability should be available");
         atmosphereCost = config.getInt("atmosphereCost", "Ability", 10, 1, 100, "Cost of the atmosphere ability");
-        atmosphereDuration = config.getInt("atmosphereDistance", "Ability", 15, 1, 32, "Duration of the atmosphere ability");
+        atmosphereDuration = config.getInt("atmosphereDuration", "Ability", 200, 1, 36000, "Duration of the atmosphere ability");
         // Blink
         blinkEnabled = config.getBoolean("blinkEnabled", "Ability", true, "Whether or not the blink ability should be available");
         blinkCost = config.getInt("blinkCost", "Ability", 10, 1, 100, "Cost of the blink ability");
@@ -129,10 +133,11 @@ public class Config
         // Heal
         healEnabled = config.getBoolean("healEnabled", "Ability", true, "Whether or not the heal ability should be available");
         healCost = config.getInt("healCost", "Ability", 6, 1, 100, "Cost of the heal ability");
+        healDuration = config.getInt("healDuration", "Ability", 100, 20, 36000, "Duration of the heal ability");
         // Invisibility
         invisibilityEnabled = config.getBoolean("invisibilityEnabled", "Ability", true, "Whether or not the invisibility ability should be available");
         invisibilityCost = config.getInt("invisibilityCost", "Ability", 10, 1, 100, "Cost of the invisibility ability");
-        invisibilityDuration = config.getInt("invisibilityDuration", "Ability", 200, 20, 1000, "Duration of the invisibility ability");
+        invisibilityDuration = config.getInt("invisibilityDuration", "Ability", 200, 20, 36000, "Duration of the invisibility ability");
         // Projectile
         projectileEnabled = config.getBoolean("projectileEnabled", "Abilities", true, "Whether or not the projectile ability should be available");
         projectileCost = config.getInt("projectileCost", "Abilities", 10, 1, 100, "Cost of the projectile ability");
@@ -142,6 +147,10 @@ public class Config
         // Reactive
         reactiveEnabled = config.getBoolean("reactiveEnabled", "Abilities", true, "Whether or not the reactive ability should be available");
         reactiveCost = config.getInt("reactiveCost", "Abilities", 10, 1, 100, "Cost of the reactive ability");
+        // Shield
+        shieldEnabled = config.getBoolean("shieldEnabled", "Ability", true, "Whether or not the shield ability should be available");
+        shieldCost = config.getInt("shieldCost", "Ability", 20, 1, 100, "Cost of the shield ability");
+        shieldDuration = config.getInt("shieldDuration", "Ability", 200, 20, 36000, "Duration of the shield ability");
 
         // Machine Config
         // Furnace

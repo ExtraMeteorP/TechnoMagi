@@ -14,6 +14,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 
 import com.ollieread.ennds.ability.AbilityActive;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
+import com.ollieread.ennds.item.IStaff;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.common.init.Config;
 
@@ -39,6 +40,7 @@ public class ActiveAbilityAtmosphere extends AbilityActive
     public boolean use(ExtendedPlayerKnowledge charon, Event event, ItemStack stack)
     {
         Random rand = new Random();
+        int level = ((IStaff) stack.getItem()).getEnhancement(stack, "life");
 
         if (event instanceof PlayerInteractEvent) {
             PlayerInteractEvent interact = (PlayerInteractEvent) event;
@@ -46,8 +48,9 @@ public class ActiveAbilityAtmosphere extends AbilityActive
             if (interact.action.equals(Action.RIGHT_CLICK_AIR) && !interact.entityPlayer.isPotionActive(Potion.waterBreathing)) {
                 if (decreaseNanites(charon, cost)) {
                     if (!interact.entityPlayer.worldObj.isRemote) {
+
                         interact.entityPlayer.worldObj.playSoundEffect((double) interact.entityPlayer.posX + 0.5D, (double) interact.entityPlayer.posY + 0.5D, (double) interact.entityPlayer.posZ + 0.5D, Reference.MODID.toLowerCase() + ":cast", 1.0F, rand.nextFloat() * 0.4F + 0.8F);
-                        interact.entityPlayer.addPotionEffect(new PotionEffect(Potion.waterBreathing.id, duration, 0, false));
+                        interact.entityPlayer.addPotionEffect(new PotionEffect(Potion.waterBreathing.id, duration * level, level));
                     }
 
                     return true;
@@ -62,7 +65,7 @@ public class ActiveAbilityAtmosphere extends AbilityActive
                     if (decreaseNanites(charon, cost)) {
                         if (!interact.entityPlayer.worldObj.isRemote) {
                             interact.entityPlayer.worldObj.playSoundEffect((double) interact.entityPlayer.posX + 0.5D, (double) interact.entityPlayer.posY + 0.5D, (double) interact.entityPlayer.posZ + 0.5D, Reference.MODID.toLowerCase() + ":cast", 1.0F, rand.nextFloat() * 0.4F + 0.8F);
-                            interact.entityPlayer.addPotionEffect(new PotionEffect(Potion.waterBreathing.id, duration, 0, false));
+                            interact.entityPlayer.addPotionEffect(new PotionEffect(Potion.waterBreathing.id, duration * level, level));
                         }
 
                         return true;
