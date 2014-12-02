@@ -2,6 +2,7 @@ package com.ollieread.technomagi.ability.active;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.item.ItemStack;
@@ -34,6 +35,8 @@ public class ActiveAbilityHeal extends AbilityActive
     @Override
     public boolean use(ExtendedPlayerKnowledge charon, Event event, ItemStack stack)
     {
+        Random rand = new Random();
+
         if (event instanceof PlayerInteractEvent) {
             PlayerInteractEvent interact = (PlayerInteractEvent) event;
 
@@ -48,29 +51,33 @@ public class ActiveAbilityHeal extends AbilityActive
                         }
 
                         interact.entityPlayer.heal(health);
+                        interact.entityPlayer.worldObj.playSoundEffect((double) interact.entityPlayer.posX + 0.5D, (double) interact.entityPlayer.posY + 0.5D, (double) interact.entityPlayer.posZ + 0.5D, Reference.MODID.toLowerCase() + ":cast", 1.0F, rand.nextFloat() * 0.4F + 0.8F);
                     }
 
                     return true;
                 }
             }
         } else if (event instanceof EntityInteractEvent) {
-            EntityInteractEvent interact = (EntityInteractEvent) event;
+            if (charon.isSpecialisation("medic")) {
+                EntityInteractEvent interact = (EntityInteractEvent) event;
 
-            if (interact.target instanceof EntityLiving) {
-                EntityLiving entity = (EntityLiving) interact.target;
-                if (decreaseNanites(charon, cost)) {
-                    if (!interact.entityPlayer.worldObj.isRemote) {
-                        float health = 3.0F;
-                        int level = ((IStaff) stack.getItem()).getEnhancement(stack, "life");
+                if (interact.target instanceof EntityLiving) {
+                    EntityLiving entity = (EntityLiving) interact.target;
+                    if (decreaseNanites(charon, cost)) {
+                        if (!interact.entityPlayer.worldObj.isRemote) {
+                            float health = 3.0F;
+                            int level = ((IStaff) stack.getItem()).getEnhancement(stack, "life");
 
-                        if (level > 1) {
-                            health += (level - 1) * 1F;
+                            if (level > 1) {
+                                health += (level - 1) * 1F;
+                            }
+
+                            entity.heal(health);
+                            entity.worldObj.playSoundEffect((double) interact.entityPlayer.posX + 0.5D, (double) interact.entityPlayer.posY + 0.5D, (double) interact.entityPlayer.posZ + 0.5D, Reference.MODID.toLowerCase() + ":cast", 1.0F, rand.nextFloat() * 0.4F + 0.8F);
                         }
 
-                        entity.heal(health);
+                        return true;
                     }
-
-                    return true;
                 }
             }
         }

@@ -110,14 +110,18 @@ public class ActiveAbilityFire extends AbilityActive
                 return false;
             }
 
-            if (interact.target instanceof EntityLiving && decreaseNanites(charon, costEntity)) {
+            if (interact.target instanceof EntityLiving) {
                 EntityLiving target = (EntityLiving) interact.target;
 
                 if (!interact.entityPlayer.worldObj.isRemote) {
                     if (target.isBurning()) {
-                        target.extinguish();
+                        if (charon.isSpecialisation("medic") && decreaseNanites(charon, costEntity)) {
+                            target.extinguish();
+                        }
                     } else {
-                        target.setFire(burnTime);
+                        if (charon.isSpecialisation("warrior") && decreaseNanites(charon, costEntity)) {
+                            target.extinguish();
+                        }
                     }
                 }
 
