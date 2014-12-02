@@ -7,6 +7,14 @@ import org.apache.logging.log4j.Level;
 import com.ollieread.ennds.ability.IAbilityActive;
 import com.ollieread.ennds.ability.IAbilityPassive;
 import com.ollieread.technomagi.TechnoMagi;
+import com.ollieread.technomagi.ability.active.ActiveAbilityBlink;
+import com.ollieread.technomagi.ability.active.ActiveAbilityFire;
+import com.ollieread.technomagi.ability.active.ActiveAbilityFireball;
+import com.ollieread.technomagi.ability.active.ActiveAbilityFlashstep;
+import com.ollieread.technomagi.ability.active.ActiveAbilityForce;
+import com.ollieread.technomagi.ability.active.ActiveAbilityHarden;
+import com.ollieread.technomagi.ability.active.ActiveAbilityHarvest;
+import com.ollieread.technomagi.ability.active.ActiveAbilityHeal;
 import com.ollieread.technomagi.ability.active.ActiveAbilityProjectile;
 import com.ollieread.technomagi.ability.active.ActiveAbilityProjectileExothermic;
 import com.ollieread.technomagi.ability.active.ActiveAbilityReactive;
@@ -25,11 +33,9 @@ public class Abilities
     public static IAbilityActive abilityActiveInvisibility;
     public static IAbilityActive abilityActiveFlashstep;
     public static IAbilityActive abilityActiveBlink;
-    public static IAbilityActive abilityActiveForceTarget;
-    public static IAbilityActive abilityActiveForceArea;
-    public static IAbilityActive abilityActiveHarvestI;
-    public static IAbilityActive abilityActiveHarvestII;
-    public static IAbilityActive abilityActiveHarvestIII;
+    public static IAbilityActive abilityActiveForce;
+    public static IAbilityActive abilityActiveHarvest;
+    public static IAbilityActive abilityActiveHeal;
     public static IAbilityActive abilityActiveAtmosphereI;
     public static IAbilityActive abilityActiveProjectile;
     public static IAbilityActive abilityActiveProjectileExothermic;
@@ -42,14 +48,44 @@ public class Abilities
     {
         TechnoMagi.logger.log(Level.INFO, "Initiating & registering abilities");
 
-        if (Config.reactiveEnabled) {
-            abilityActiveReactive = new ActiveAbilityReactive("reactive", Config.reactiveCost);
+        if (Config.blinkEnabled) {
+            abilityActiveBlink = new ActiveAbilityBlink("blink");
+        }
+        if (Config.fireEnabled) {
+            abilityActiveFire = new ActiveAbilityFire("fire");
+        }
+        if (Config.fireballEnabled) {
+            abilityActiveFireball = new ActiveAbilityFireball("fireball");
+        }
+        if (Config.flashstepEnabled) {
+            abilityActiveFlashstep = new ActiveAbilityFlashstep("flashstep");
+        }
+        if (Config.forceEnabled) {
+            abilityActiveForce = new ActiveAbilityForce("force");
+        }
+        if (Config.hardenEnabled) {
+            abilityActiveHarden = new ActiveAbilityHarden("harden");
+        }
+        if (Config.harvestEnabled) {
+            abilityActiveHarvest = new ActiveAbilityHarvest("harvest");
+        }
+        if (Config.healEnabled) {
+            abilityActiveHeal = new ActiveAbilityHeal("heal");
+        }
+        if (Config.invisibilityEnabled) {
+            abilityActiveInvisibility = new ActiveAbilityHarvest("invisibility");
+        }
+        if (Config.harvestEnabled) {
+            abilityActiveHarvest = new ActiveAbilityHarvest("harvest");
         }
         if (Config.projectileEnabled) {
-            abilityActiveProjectile = new ActiveAbilityProjectile("projectile", Config.projectileCost);
+            abilityActiveProjectile = new ActiveAbilityProjectile("projectile");
         }
         if (Config.projectileExothermicEnabled) {
-            abilityActiveProjectileExothermic = new ActiveAbilityProjectileExothermic("projectileExothermic", Config.projectileExothermicCost);
+            abilityActiveProjectileExothermic = new ActiveAbilityProjectileExothermic("projectileExothermic");
+        }
+        if (Config.reactiveEnabled) {
+            abilityActiveReactive = new ActiveAbilityReactive("reactive");
         }
 
         abilityPassiveNanites = new PassiveAbilityNanites("nanites");

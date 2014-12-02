@@ -6,32 +6,34 @@ import java.util.Random;
 
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
 import com.ollieread.ennds.ability.AbilityActive;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.common.Reference;
+import com.ollieread.technomagi.common.init.Config;
 
 import cpw.mods.fml.common.eventhandler.Event;
 
 public class ActiveAbilityProjectileExothermic extends AbilityActive
 {
 
-    public int cost = 0;
     protected Map<String, Integer> enhancements;
+    protected int cost;
 
-    public ActiveAbilityProjectileExothermic(String name, int cost)
+    public ActiveAbilityProjectileExothermic(String name)
     {
         super(name, Reference.MODID.toLowerCase());
 
-        this.cost = cost;
         this.enhancements = new HashMap<String, Integer>();
-        this.enhancements.put("force", 1);
+        this.enhancements.put("force", 3);
         this.enhancements.put("exo", 1);
+        this.cost = Config.projectileExothermicCost;
     }
 
     @Override
-    public boolean use(ExtendedPlayerKnowledge charon, Event event)
+    public boolean use(ExtendedPlayerKnowledge charon, Event event, ItemStack stack)
     {
         if (event instanceof PlayerInteractEvent) {
             PlayerInteractEvent interact = (PlayerInteractEvent) event;

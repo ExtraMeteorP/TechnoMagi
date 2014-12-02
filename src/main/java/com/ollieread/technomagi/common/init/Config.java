@@ -11,12 +11,36 @@ public class Config
 
     public static boolean versionCheck;
 
-    public static boolean reactiveEnabled;
-    public static int reactiveCost;
+    public static boolean blinkEnabled;
+    public static int blinkCost;
+    public static int blinkDistance;
+    public static boolean fireEnabled;
+    public static int fireCost;
+    public static int fireExtinguishCost;
+    public static int fireEntityCost;
+    public static int fireBurnTime;
+    public static boolean fireballEnabled;
+    public static int fireballCost;
+    public static boolean flashstepEnabled;
+    public static int flashstepCost;
+    public static int flashstepDistance;
+    public static boolean forceEnabled;
+    public static int forceCost;
+    public static boolean hardenEnabled;
+    public static int hardenCost;
+    public static boolean harvestEnabled;
+    public static int harvestCost;
+    public static boolean healEnabled;
+    public static int healCost;
+    public static boolean invisibilityEnabled;
+    public static int invisibilityCost;
+    public static int invisibilityDuration;
     public static boolean projectileEnabled;
     public static int projectileCost;
     public static boolean projectileExothermicEnabled;
     public static int projectileExothermicCost;
+    public static boolean reactiveEnabled;
+    public static int reactiveCost;
 
     public static int furnacePowerMax;
     public static int furnacePowerReceive;
@@ -67,6 +91,50 @@ public class Config
 
         // General Config
         versionCheck = config.getBoolean("versionCheck", "General", true, "Whether or not to check version for recommended");
+
+        // Ability Config
+        // Blink
+        blinkEnabled = config.getBoolean("blinkEnabled", "Ability", true, "Whether or not the blink ability should be available");
+        blinkCost = config.getInt("blinkCost", "Ability", 10, 1, 100, "Cost of the blink ability");
+        blinkDistance = config.getInt("blinkDistance", "Ability", 15, 1, 32, "Distance of the blink ability");
+        // Fire
+        fireEnabled = config.getBoolean("fireEnabled", "Ability", true, "Whether or not the fire ability should be available");
+        fireCost = config.getInt("fireCost", "Ability", 4, 1, 100, "Cost of the fire ability");
+        fireExtinguishCost = config.getInt("fireExtinguishCost", "Ability", 6, 1, 100, "Cost of the fire ability when extinguishing");
+        fireEntityCost = config.getInt("fireEntityCost", "Ability", 8, 1, 100, "Cost of the fire ability when casting on living entities");
+        fireBurnTime = config.getInt("fireBurnTime", "Ability", 5, 1, 60, "Time a living entity should burn for");
+        // Fireball
+        fireballEnabled = config.getBoolean("fireballEnabled", "Ability", true, "Whether or not the fireball ability should be available");
+        fireballCost = config.getInt("fireballCost", "Ability", 15, 1, 100, "Cost of the fireball ability");
+        // Flashstep
+        flashstepEnabled = config.getBoolean("flashstepEnabled", "Ability", true, "Whether or not the flashstep ability should be available");
+        flashstepCost = config.getInt("flashstepCost", "Ability", 8, 1, 100, "Cost of the flashstep ability");
+        flashstepDistance = config.getInt("flashstepDistance", "Ability", 11, 1, 32, "Distance of the flashstep ability");
+        // Force
+        forceEnabled = config.getBoolean("forceEnabled", "Ability", true, "Whether or not the force ability should be available");
+        forceCost = config.getInt("forceCost", "Ability", 6, 1, 100, "Cost of the force ability");
+        // Harden
+        hardenEnabled = config.getBoolean("hardenEnabled", "Ability", true, "Whether or not the harden ability should be available");
+        hardenCost = config.getInt("hardenCost", "Ability", 6, 1, 100, "Cost of the harden ability");
+        // Harvest
+        harvestEnabled = config.getBoolean("harvestEnabled", "Ability", true, "Whether or not the harvest ability should be available");
+        harvestCost = config.getInt("harvestCost", "Ability", 6, 1, 100, "Cost of the harvest ability");
+        // Heal
+        healEnabled = config.getBoolean("healEnabled", "Ability", true, "Whether or not the heal ability should be available");
+        healCost = config.getInt("healCost", "Ability", 6, 1, 100, "Cost of the heal ability");
+        // Invisibility
+        invisibilityEnabled = config.getBoolean("invisibilityEnabled", "Ability", true, "Whether or not the invisibility ability should be available");
+        invisibilityCost = config.getInt("invisibilityCost", "Ability", 10, 1, 100, "Cost of the invisibility ability");
+        invisibilityDuration = config.getInt("invisibilityDuration", "Ability", 200, 20, 1000, "Duration of the invisibility ability");
+        // Projectile
+        projectileEnabled = config.getBoolean("projectileEnabled", "Abilities", true, "Whether or not the projectile ability should be available");
+        projectileCost = config.getInt("projectileCost", "Abilities", 10, 1, 100, "Cost of the projectile ability");
+        // Exothermic Projectile
+        projectileExothermicEnabled = config.getBoolean("projectileExothermicEnabled", "Abilities", true, "Whether or not the exothermic projectile ability should be available");
+        projectileExothermicCost = config.getInt("projectileExothermicCost", "Abilities", 10, 1, 100, "Cost of the exothermic projectile ability");
+        // Reactive
+        reactiveEnabled = config.getBoolean("reactiveEnabled", "Abilities", true, "Whether or not the reactive ability should be available");
+        reactiveCost = config.getInt("reactiveCost", "Abilities", 10, 1, 100, "Cost of the reactive ability");
 
         // Machine Config
         // Furnace
@@ -120,13 +188,6 @@ public class Config
         generatorVoidPowerOutput = config.getInt("generatorVoidPowerOutput", "Machine", 5, 1, 100, "Maximum output for the void generator");
         generatorVoidMaxTicks = config.getInt("generatorVoidMaxTicks", "Machine", 40, 1, 100, "Amount of ticks before energy is generated");
         generatorVoidModifier = config.getInt("generatorVoidModifier", "Machine", 5, 1, 10, "Modifier for energy generation, higher the number, the lower the energy");
-
-        reactiveEnabled = config.getBoolean("reactive", "Ability States", true, null);
-        reactiveCost = config.getInt("reactive", "Ability Cost", 10, 1, 100, null);
-        projectileEnabled = config.getBoolean("projectile", "Ability States", true, null);
-        projectileCost = config.getInt("projectile", "Ability Cost", 10, 1, 100, null);
-        projectileExothermicEnabled = config.getBoolean("projectileExothermic", "Ability States", true, null);
-        projectileExothermicCost = config.getInt("projectileExothermic", "Ability Cost", 10, 1, 100, null);
 
         config.save();
     }

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -26,7 +27,7 @@ public class ActiveAbilityAtmosphereI extends AbilityActive
     }
 
     @Override
-    public boolean use(ExtendedPlayerKnowledge charon, Event event)
+    public boolean use(ExtendedPlayerKnowledge charon, Event event, ItemStack stack)
     {
         if (event instanceof PlayerInteractEvent) {
             PlayerInteractEvent interact = (PlayerInteractEvent) event;

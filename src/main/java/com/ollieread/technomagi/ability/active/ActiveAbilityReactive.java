@@ -15,6 +15,7 @@ import com.ollieread.ennds.ability.AbilityActive;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.common.init.Blocks;
+import com.ollieread.technomagi.common.init.Config;
 import com.ollieread.technomagi.tileentity.TileEntityReactiveCrafting;
 
 import cpw.mods.fml.common.eventhandler.Event;
@@ -22,21 +23,21 @@ import cpw.mods.fml.common.eventhandler.Event;
 public class ActiveAbilityReactive extends AbilityActive
 {
 
-    public int cost = 0;
     protected Map<String, Integer> enhancements;
+    protected int cost;
 
-    public ActiveAbilityReactive(String name, int cost)
+    public ActiveAbilityReactive(String name)
     {
         super(name, Reference.MODID.toLowerCase());
 
-        this.cost = cost;
         this.enhancements = new HashMap<String, Integer>();
         this.enhancements.put("endo", 1);
         this.enhancements.put("exo", 1);
+        this.cost = Config.reactiveCost;
     }
 
     @Override
-    public boolean use(ExtendedPlayerKnowledge charon, Event event)
+    public boolean use(ExtendedPlayerKnowledge charon, Event event, ItemStack stack)
     {
         if (event instanceof PlayerInteractEvent) {
             PlayerInteractEvent interact = (PlayerInteractEvent) event;
@@ -51,10 +52,10 @@ public class ActiveAbilityReactive extends AbilityActive
                 Item item = Item.getItemFromBlock(block);
 
                 if (item != null) {
-                    ItemStack stack = new ItemStack(block, 1, meta);
+                    ItemStack target = new ItemStack(block, 1, meta);
 
-                    if (stack != null) {
-                        ItemStack recipe = FurnaceRecipes.smelting().getSmeltingResult(stack);
+                    if (target != null) {
+                        ItemStack recipe = FurnaceRecipes.smelting().getSmeltingResult(target);
 
                         if (recipe != null) {
                             if (recipe.getItem() != null) {

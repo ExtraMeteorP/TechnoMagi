@@ -6,6 +6,7 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -14,6 +15,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 import com.ollieread.ennds.ability.AbilityActive;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.common.Reference;
+import com.ollieread.technomagi.common.init.Config;
 import com.ollieread.technomagi.util.EntityHelper;
 
 import cpw.mods.fml.common.eventhandler.Event;
@@ -21,15 +23,20 @@ import cpw.mods.fml.common.eventhandler.Event;
 public class ActiveAbilityFlashstep extends AbilityActive
 {
     protected Map<String, Integer> enhancements;
+    protected int cost;
+    protected int distance;
 
     public ActiveAbilityFlashstep(String name)
     {
         super(name, Reference.MODID.toLowerCase());
         this.enhancements = new HashMap<String, Integer>();
+        this.enhancements.put("force", 2);
+        this.cost = Config.flashstepCost;
+        this.distance = Config.flashstepDistance;
     }
 
     @Override
-    public boolean use(ExtendedPlayerKnowledge charon, Event event)
+    public boolean use(ExtendedPlayerKnowledge charon, Event event, ItemStack stack)
     {
         if (event instanceof PlayerInteractEvent) {
             PlayerInteractEvent interact = (PlayerInteractEvent) event;
@@ -40,7 +47,7 @@ public class ActiveAbilityFlashstep extends AbilityActive
 
                 Vec3 target = Vec3.createVectorHelper(look.xCoord, look.yCoord, look.zCoord);
                 Vec3 dest = null;
-                int max = 11 * 11;
+                int max = distance * distance;
                 int dmg = 0;
                 Random rand = new Random();
 
@@ -58,7 +65,7 @@ public class ActiveAbilityFlashstep extends AbilityActive
                     }
                 }
 
-                if (dest != null && eye.squareDistanceTo(dest) < max && decreaseNanites(charon, 8)) {
+                if (dest != null && eye.squareDistanceTo(dest) < max && decreaseNanites(charon, cost)) {
                     // Random rand = new Random();
                     // interact.entityPlayer.worldObj.playSoundEffect(dest.xCoord
                     // + 0.5D, dest.yCoord + 0.5D, dest.zCoord + 0.5D,
@@ -79,7 +86,7 @@ public class ActiveAbilityFlashstep extends AbilityActive
     @Override
     public Map<String, Integer> getEnhancements()
     {
-        return null;
+        return enhancements;
     }
 
     @Override

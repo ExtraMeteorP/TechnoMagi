@@ -7,6 +7,7 @@ import java.util.Random;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityFireball;
 import net.minecraft.entity.projectile.EntitySmallFireball;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -15,6 +16,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 import com.ollieread.ennds.ability.AbilityActive;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.common.Reference;
+import com.ollieread.technomagi.common.init.Config;
 import com.ollieread.technomagi.util.EntityHelper;
 
 import cpw.mods.fml.common.eventhandler.Event;
@@ -22,17 +24,19 @@ import cpw.mods.fml.common.eventhandler.Event;
 public class ActiveAbilityFireball extends AbilityActive
 {
     protected Map<String, Integer> enhancements;
+    protected int cost;
 
     public ActiveAbilityFireball(String name)
     {
         super(name, Reference.MODID.toLowerCase());
         this.enhancements = new HashMap<String, Integer>();
         this.enhancements.put("exo", 1);
-        this.enhancements.put("force", 1);
+        this.enhancements.put("force", 3);
+        this.cost = Config.fireballCost;
     }
 
     @Override
-    public boolean use(ExtendedPlayerKnowledge charon, Event event)
+    public boolean use(ExtendedPlayerKnowledge charon, Event event, ItemStack stack)
     {
         if (event instanceof PlayerInteractEvent) {
             PlayerInteractEvent interact = (PlayerInteractEvent) event;
@@ -40,7 +44,7 @@ public class ActiveAbilityFireball extends AbilityActive
             if (interact.action.equals(Action.RIGHT_CLICK_AIR)) {
                 EntityPlayer player = interact.entityPlayer;
 
-                if (decreaseNanites(charon, 15)) {
+                if (decreaseNanites(charon, cost)) {
                     if (!player.worldObj.isRemote) {
                         Vec3 look = EntityHelper.getLookVector(player);
                         Vec3 eye = EntityHelper.getEyeVector(player);
