@@ -4,6 +4,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 
+import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.tileentity.TileEntityTeleporter;
 
 public class TeleportHelper
@@ -60,6 +61,7 @@ public class TeleportHelper
     public static void teleportPlayerTo(EntityPlayer player, double x, double y, double z)
     {
         player.setPositionAndUpdate(x, y, z);
+        player.worldObj.playSoundEffect(x + 0.5D, y + 0.5D, z + 0.5D, Reference.MODID.toLowerCase() + ":teleport", 0.5F, player.worldObj.rand.nextFloat() * 0.4F + 0.8F);
     }
 
     public static void teleportPlayerToTeleporter(EntityPlayer player, TileEntityTeleporter location, TileEntityTeleporter destination)
@@ -71,6 +73,7 @@ public class TeleportHelper
     public static void teleportEntityTo(EntityLivingBase entity, double x, double y, double z)
     {
         entity.setPositionAndUpdate(x, y, z);
+        entity.worldObj.playSoundEffect(x + 0.5D, y + 0.5D, z + 0.5D, Reference.MODID.toLowerCase() + ":teleport", 0.5F, entity.worldObj.rand.nextFloat() * 0.4F + 0.8F);
     }
 
     public static void teleportEntityToTeleporter(EntityLivingBase entity, TileEntityTeleporter location, TileEntityTeleporter destination)
