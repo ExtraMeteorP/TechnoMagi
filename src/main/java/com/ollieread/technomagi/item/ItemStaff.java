@@ -87,22 +87,7 @@ public class ItemStaff extends ItemTMNBT implements IStaff
     @Override
     public boolean hasEnhancement(ItemStack staff, String enhancement, int level)
     {
-        NBTTagCompound compound = getNBT(staff);
-        System.out.println(enhancement);
-        System.out.println(level);
-
-        if (compound.hasKey("Enhancements")) {
-            NBTTagList enhancements = compound.getTagList("Enhancements", compound.getId());
-
-            for (int i = 0; i < enhancements.tagCount(); i++) {
-                NBTTagCompound tag = enhancements.getCompoundTagAt(i);
-
-                if (tag.getString("Enhancement") != null) {
-                    return tag.getString("Enhancement").equals(enhancement) && tag.getInteger("Level") <= level;
-                }
-            }
-        }
-        return false;
+        return getEnhancement(staff, enhancement) >= level;
     }
 
     @Override
@@ -131,6 +116,26 @@ public class ItemStaff extends ItemTMNBT implements IStaff
         entry.setString("Enhancement", enhancement);
         entry.setInteger("Level", level);
         enhancements.appendTag(entry);
+    }
+
+    @Override
+    public int getEnhancement(ItemStack staff, String enhancement)
+    {
+        NBTTagCompound compound = getNBT(staff);
+
+        if (compound.hasKey("Enhancements")) {
+            NBTTagList enhancements = compound.getTagList("Enhancements", compound.getId());
+
+            for (int i = 0; i < enhancements.tagCount(); i++) {
+                NBTTagCompound tag = enhancements.getCompoundTagAt(i);
+
+                if (tag.getString("Enhancement") != null && tag.getString("Enhancement").equals(enhancement)) {
+                    return tag.getInteger("Level");
+                }
+            }
+        }
+
+        return 0;
     }
 
     @Override
