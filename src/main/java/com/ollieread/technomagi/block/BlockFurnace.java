@@ -1,5 +1,7 @@
 package com.ollieread.technomagi.block;
 
+import java.util.Random;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
@@ -102,6 +104,35 @@ public class BlockFurnace extends BlockOwnable
         }
 
         return true;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void randomDisplayTick(World world, int x, int y, int z, Random rand)
+    {
+        TileEntityFurnace furnace = (TileEntityFurnace) world.getTileEntity(x, y, z);
+
+        if (furnace != null && furnace.canSmelt()) {
+            int l = world.getBlockMetadata(x, y, z);
+            float f = (float) x + 0.5F;
+            float f1 = (float) y + 0.6F + rand.nextFloat() * 6.0F / 16.0F;
+            float f2 = (float) z;
+            float f3 = 0.52F;
+            float f4 = rand.nextFloat() * 0.6F - 0.3F;
+
+            if (l == 4) {
+                world.spawnParticle("smoke", (double) (f - f3), (double) f1, (double) (f2 + f4), 0.0D, 0.0D, 0.0D);
+                world.spawnParticle("flame", (double) (f - f3), (double) f1, (double) (f2 + f4), 0.0D, 0.0D, 0.0D);
+            } else if (l == 5) {
+                world.spawnParticle("smoke", (double) (f + f3), (double) f1, (double) (f2 + f4), 0.0D, 0.0D, 0.0D);
+                world.spawnParticle("flame", (double) (f + f3), (double) f1, (double) (f2 + f4), 0.0D, 0.0D, 0.0D);
+            } else if (l == 2) {
+                world.spawnParticle("smoke", (double) (f + f4), (double) f1, (double) (f2 - f3), 0.0D, 0.0D, 0.0D);
+                world.spawnParticle("flame", (double) (f + f4), (double) f1, (double) (f2 - f3), 0.0D, 0.0D, 0.0D);
+            } else if (l == 3) {
+                world.spawnParticle("smoke", (double) (f + f4), (double) f1, (double) (f2 + f3), 0.0D, 0.0D, 0.0D);
+                world.spawnParticle("flame", (double) (f + f4), (double) f1, (double) (f2 + f3), 0.0D, 0.0D, 0.0D);
+            }
+        }
     }
 
 }

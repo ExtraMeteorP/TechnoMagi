@@ -23,7 +23,7 @@ public class ContainerFurnace extends Container
         furnace = tile;
 
         addSlotToContainer(new Slot(furnace, 0, 5, 29));
-        addSlotToContainer(new Slot(furnace, 1, 155, 29));
+        addSlotToContainer(new SlotResult(furnace, 1, 155, 29));
 
         addPlayerSlots(playerInventory);
     }

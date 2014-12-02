@@ -19,7 +19,6 @@ public class GuiFurnace extends GuiEnergyContainer
 
     private static final ResourceLocation texture = new ResourceLocation(Reference.MODID.toLowerCase(), "textures/gui/furnace.png");
     protected TileEntityFurnace furnace;
-    protected GuiTMButton analyseButton;
 
     public GuiFurnace(InventoryPlayer playerInventory, TileEntityFurnace tile)
     {
@@ -45,7 +44,7 @@ public class GuiFurnace extends GuiEnergyContainer
         this.mc.getTextureManager().bindTexture(texture);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 
-        int progress = furnace.getProgress();
+        int progress = furnace.getProgress(100);
 
         if (progress > 0) {
             this.drawTexturedModalRect(this.guiLeft + 38, this.guiTop + 35, 0, 176, progress, 3);
