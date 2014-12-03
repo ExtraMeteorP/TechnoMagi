@@ -178,9 +178,8 @@ public class Config
         analysisPowerMax = config.getInt("analysisPowerMax", "Machine", 3200, 1000, 100000, "Max power a encourager can store");
         analysisPowerRecieve = config.getInt("analysisPowerRecieve", "Machine", 5, 1, 1000, "Max power an analysis machine can receive per tick");
         analysisPowerUse = config.getInt("analysisPowerUse", "Machine", 2, 1, 1000, "Power usage per tick");
-        analysisProgressMax = config.getInt("analysisProgressMax", "Machine", 20, 10, 1000, "The maximum progress to complete analysis");
+        analysisProgressMax = config.getInt("analysisProgressMax", "Machine", 200, 20, 1000, "The maximum progress to complete analysis");
         analysisWaitingMax = config.getInt("analysisWaitingMax", "Machine", 30, 20, 100000, "Time to wait before resetting");
-        analysisTicksMax = config.getInt("analysisTicksMax", "Machine", 20, 20, 100, "Ticks before progressing");
         // Crafting
         craftingPowerMax = config.getInt("craftingPowerMax", "Machine", 3200, 1000, 100000, "Max power a crafter can store");
         craftingPowerRecieve = config.getInt("craftingPowerRecieve", "Machine", 5, 1, 1000, "Max power a crafter can receive per tick");

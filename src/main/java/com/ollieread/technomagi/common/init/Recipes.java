@@ -70,9 +70,16 @@ public class Recipes
         RecipeHelper.addShapedRecipe(Knowledge.knowledgeTeleportation.getName(), new ItemStack(Items.itemUnit, 1, 4), "x x", " y ", "x x", 'x', goldIngot, 'y', new ItemStack(Items.itemUnit, 1, 3));
         RecipeHelper.addShapedRecipe(Knowledge.knowledgeTeleportation.getName(), new ItemStack(Items.itemUnit, 1, 5), "x x", " y ", "x x", 'x', diamond, 'y', new ItemStack(Items.itemUnit, 1, 4));
         // subspace unit
-        RecipeHelper.addShapedRecipe(Knowledge.knowledgeSubspace.getName(), new ItemStack(Items.itemUnit, 1, 6), "xzx", " y ", "x x", 'x', ironIngot, 'y', new ItemStack(net.minecraft.init.Items.ender_pearl, 1), 'z', new ItemStack(Items.itemComponent, 1, 5));
-        RecipeHelper.addShapedRecipe(Knowledge.knowledgeSubspace.getName(), new ItemStack(Items.itemUnit, 1, 7), "x x", " y ", "x x", 'x', goldIngot, 'y', new ItemStack(Items.itemUnit, 1, 6));
-        RecipeHelper.addShapedRecipe(Knowledge.knowledgeSubspace.getName(), new ItemStack(Items.itemUnit, 1, 8), "x x", " y ", "x x", 'x', diamond, 'y', new ItemStack(Items.itemUnit, 1, 7));
+        // RecipeHelper.addShapedRecipe(Knowledge.knowledgeSubspace.getName(),
+        // new ItemStack(Items.itemUnit, 1, 6), "xzx", " y ", "x x", 'x',
+        // ironIngot, 'y', new ItemStack(net.minecraft.init.Items.ender_pearl,
+        // 1), 'z', new ItemStack(Items.itemComponent, 1, 5));
+        // RecipeHelper.addShapedRecipe(Knowledge.knowledgeSubspace.getName(),
+        // new ItemStack(Items.itemUnit, 1, 7), "x x", " y ", "x x", 'x',
+        // goldIngot, 'y', new ItemStack(Items.itemUnit, 1, 6));
+        // RecipeHelper.addShapedRecipe(Knowledge.knowledgeSubspace.getName(),
+        // new ItemStack(Items.itemUnit, 1, 8), "x x", " y ", "x x", 'x',
+        // diamond, 'y', new ItemStack(Items.itemUnit, 1, 7));
         // nanite unit
         RecipeHelper.addShapedRecipe(null, new ItemStack(Items.itemUnit, 1, 9), "xzx", " y ", "x x", 'x', ironIngot, 'y', stackNaniteContainer, 'z', new ItemStack(Items.itemComponent, 1, 5));
         RecipeHelper.addShapedRecipe(null, new ItemStack(Items.itemUnit, 1, 10), "x x", " y ", "x x", 'x', goldIngot, 'y', new ItemStack(Items.itemUnit, 1, 9));

@@ -41,7 +41,6 @@ public class TileEntityAnalysis extends TileEntityResearch implements IPlayerLoc
     protected Random rand = new Random();
 
     protected int maxProgress;
-    protected int maxTicks;
     protected int maxWaiting;
     protected int usage;
 
@@ -52,7 +51,6 @@ public class TileEntityAnalysis extends TileEntityResearch implements IPlayerLoc
         storage = new BasicEnergy(Config.analysisPowerMax, Config.analysisPowerRecieve, 0);
 
         maxProgress = Config.analysisProgressMax;
-        maxTicks = Config.analysisTicksMax;
         maxWaiting = Config.analysisWaitingMax;
         usage = Config.analysisPowerUse;
     }
@@ -173,6 +171,11 @@ public class TileEntityAnalysis extends TileEntityResearch implements IPlayerLoc
         }
     }
 
+    public int getProgress(int width)
+    {
+        return progress / (maxProgress / width);
+    }
+
     public boolean canAnalyse()
     {
         if (data == 100) {
@@ -208,12 +211,7 @@ public class TileEntityAnalysis extends TileEntityResearch implements IPlayerLoc
     public void analyse()
     {
         if (storage.modifyEnergyStored(usage)) {
-            ticks++;
-
-            if (ticks >= maxTicks) {
-                ticks = 0;
-                progress++;
-            }
+            progress++;
 
             if (progress >= maxProgress) {
                 IResearchAnalysis analysis = getResearchAnalysis();
@@ -221,11 +219,15 @@ public class TileEntityAnalysis extends TileEntityResearch implements IPlayerLoc
 
                 IResearch research = (IResearch) analysis;
                 EntityPlayer player = worldObj.getPlayerEntityByName(getPlayer());
-                ExtendedPlayerKnowledge playerKnowledge = ExtendedPlayerKnowledge.get(player);
+                ExtendedPlayerKnowledge charon = ExtendedPlayerKnowledge.get(player);
 
-                if (!playerKnowledge.hasResearched(research.getName())) {
-                    ResearchRegistry.researchAnalysis(Arrays.asList(inventory.getInventory()), ExtendedPlayerKnowledge.get(player), this, c);
-                    data += research.getProgress();
+                if (rand.nextInt(research.getChance()) == 0 && !charon.hasResearched(research.getName()) && research.canPerform(charon)) {
+                    addResearch(research.getKnowledge(), research.getProgress());
+
+                    if (!research.isRepeating()) {
+                        charon.addNonRepeatibleResearch(research.getKnowledge());
+                    }
+
                     reduceStacks(1);
                 }
 

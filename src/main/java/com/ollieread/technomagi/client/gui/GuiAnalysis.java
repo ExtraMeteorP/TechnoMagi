@@ -51,7 +51,7 @@ public class GuiAnalysis extends GuiEnergyContainer
     {
         this.fontRendererObj.drawString(I18n.format("technomagi.analysis.gui"), 7, 9, 16777215);
 
-        int progress = analysis.getProgress();
+        int progress = analysis.getProgress(100);
         int data = analysis.getData();
 
         this.fontRendererObj.drawString(I18n.format("technomagi.progress"), 65, 44, 16777215);
@@ -68,7 +68,7 @@ public class GuiAnalysis extends GuiEnergyContainer
         this.mc.getTextureManager().bindTexture(texture);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 
-        int progress = analysis.getProgress();
+        int progress = analysis.getProgress(100);
         int data = analysis.getData();
 
         if (progress > 0) {

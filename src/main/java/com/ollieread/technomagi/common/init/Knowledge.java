@@ -21,7 +21,6 @@ import com.ollieread.technomagi.knowledge.KnowledgePig;
 import com.ollieread.technomagi.knowledge.KnowledgeProjectile;
 import com.ollieread.technomagi.knowledge.KnowledgeSheep;
 import com.ollieread.technomagi.knowledge.KnowledgeSkeleton;
-import com.ollieread.technomagi.knowledge.KnowledgeSubspace;
 import com.ollieread.technomagi.knowledge.KnowledgeTeleportation;
 import com.ollieread.technomagi.knowledge.KnowledgeVoid;
 import com.ollieread.technomagi.knowledge.KnowledgeZombie;
@@ -64,17 +63,20 @@ public class Knowledge
         knowledgeLight = new KnowledgeLight("light");
         knowledgeMotion = new KnowledgeMotion("motion");
         knowledgeProjectile = new KnowledgeProjectile("projectile");
-        knowledgeSubspace = new KnowledgeSubspace("subspace");
+        // This is removed until I figure out wtf to do for it
+        // Maybe something tying off the back of teleportation? I don't know
+        // and I imagine no one will see this..
+        // knowledgeSubspace = new KnowledgeSubspace("subspace");
         knowledgeTeleportation = new KnowledgeTeleportation("teleportation");
         knowledgeVoid = new KnowledgeVoid("void");
         knowledgeNanites = new KnowledgeNanites("nanites");
-
+        // Passive Knowledge
         knowledgeCow = new KnowledgeCow("entityCow");
         knowledgePig = new KnowledgePig("entityPig");
         knowledgeSheep = new KnowledgeSheep("entitySheep");
         knowledgeChicken = new KnowledgeChicken("entityChicken");
         knowledgePassive = new KnowledgePassive("entityPassive");
-
+        // Aggressive Knowledge
         knowledgeZombie = new KnowledgeZombie("entityZombie");
         knowledgeSkeleton = new KnowledgeSkeleton("entitySkeleton");
         knowledgeCreeper = new KnowledgeCreeper("entityCreeper");

@@ -202,6 +202,9 @@ public class TileEntityArchive extends TileEntityTM implements IPlayerLocked, II
                                     String name = it.next();
                                     int value = knowledge.get(name);
 
+                                    System.out.println("Name: " + name);
+                                    System.out.println("Value: " + value);
+
                                     if (playerKnowledge.hasKnowledge(name)) {
                                         machine.removeKnowledge(name);
                                         continue;

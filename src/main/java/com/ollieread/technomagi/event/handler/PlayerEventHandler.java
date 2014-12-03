@@ -64,6 +64,7 @@ import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.ItemSmeltedEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
 
 public class PlayerEventHandler
 {
@@ -74,16 +75,6 @@ public class PlayerEventHandler
         if (!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer) {
             if (TechnoMagi.version) {
                 new Thread(new VersionChecker((EntityPlayer) event.entity)).start();
-            }
-
-            World world = event.entity.worldObj;
-
-            if (world.provider.dimensionId != 0) {
-                if (world.provider.dimensionId == -1) {
-                    ResearchRegistry.researchEvent("toNether", event, ExtendedPlayerKnowledge.get((EntityPlayer) event.entity), true);
-                } else if (world.provider.dimensionId == 1) {
-                    ResearchRegistry.researchEvent("toEnd", event, ExtendedPlayerKnowledge.get((EntityPlayer) event.entity), true);
-                }
             }
         }
     }
@@ -445,6 +436,26 @@ public class PlayerEventHandler
     {
         if (!event.world.isRemote && event.harvester != null) {
             ResearchRegistry.researchMining(event, ExtendedPlayerKnowledge.get(event.harvester));
+        }
+    }
+
+    @SubscribeEvent
+    public void onPlayerChangedDimension(PlayerChangedDimensionEvent event)
+    {
+        if (event.player != null && !event.player.worldObj.isRemote) {
+            ExtendedPlayerKnowledge knowledge = ExtendedPlayerKnowledge.get(event.player);
+
+            if (knowledge != null && !knowledge.canSpecialise()) {
+                ResearchRegistry.researchEvent("playerChangedDimension", event, knowledge, true);
+
+                if (event.toDim == -1) {
+                    ResearchRegistry.researchEvent("toNether", event, knowledge, true);
+                } else if (event.toDim == 0) {
+                    ResearchRegistry.researchEvent("toOverworld", event, knowledge, true);
+                } else if (event.toDim == 1) {
+                    ResearchRegistry.researchEvent("toEnd", event, knowledge, true);
+                }
+            }
         }
     }
 
