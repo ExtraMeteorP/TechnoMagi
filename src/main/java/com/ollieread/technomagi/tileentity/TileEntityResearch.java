@@ -14,12 +14,12 @@ import com.ollieread.technomagi.util.PacketHelper;
 public class TileEntityResearch extends TileEntityTM implements IResearchMachine
 {
 
-    protected int data = 0;
-    protected int progress = 0;
-    protected int ticks;
-    protected int waiting;
-    protected boolean inProgress;
-    protected boolean isConnected;
+    public int data = 0;
+    public int progress = 0;
+    public int ticks;
+    public int waiting;
+    public boolean inProgress;
+    protected boolean isConnected = false;
     protected Map<String, Integer> researchingKnowledge = new HashMap<String, Integer>();
 
     public boolean inProgress()
@@ -56,7 +56,7 @@ public class TileEntityResearch extends TileEntityTM implements IResearchMachine
     @Override
     public boolean isConnected()
     {
-        return isConnected;
+        return false;
     }
 
     @Override
@@ -111,10 +111,10 @@ public class TileEntityResearch extends TileEntityTM implements IResearchMachine
     {
         if (researchingKnowledge.containsKey(name)) {
             researchingKnowledge.put(name, researchingKnowledge.get(name) + progress);
-            sync();
+            data += progress;
         } else {
             researchingKnowledge.put(name, progress);
-            sync();
+            data += progress;
         }
     }
 

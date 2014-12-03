@@ -106,19 +106,17 @@ public class BlockObservationChamber extends BlockOwnable
             ItemStack stack = player.getHeldItem();
 
             if (!world.isRemote) {
-                TileEntityObservationChamber entity = (TileEntityObservationChamber) world.getTileEntity(x, y, z);
+                TileEntityObservationChamber tile = (TileEntityObservationChamber) world.getTileEntity(x, y, z);
 
-                if (entity != null) {
-                    if (entity.isPlayer(player)) {
+                if (tile != null) {
+                    if (tile.isPlayer(player)) {
                         player.openGui(TechnoMagi.instance, CommonProxy.GUI_OBSERVATION, world, x, y, z);
                     }
                 }
-
-                return true;
             }
         }
 
-        return false;
+        return true;
     }
 
     public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity)

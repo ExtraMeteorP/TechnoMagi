@@ -1,18 +1,26 @@
 package com.ollieread.technomagi.tileentity;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import cofh.api.energy.IEnergyHandler;
+import cofh.lib.util.helpers.EnergyHelper;
 
+import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
+import com.ollieread.ennds.research.IResearch;
+import com.ollieread.ennds.research.IResearchObservation;
+import com.ollieread.ennds.research.ResearchRegistry;
 import com.ollieread.technomagi.common.init.Blocks;
 import com.ollieread.technomagi.common.proxy.BasicEnergy;
 import com.ollieread.technomagi.common.proxy.BasicInventory;
@@ -25,26 +33,40 @@ public class TileEntityObservationChamber extends TileEntityResearch implements 
     protected BasicInventory inventory = null;
 
     protected String entity = null;
-    protected int profession = -1;
     protected int health = 0;
     protected Random rand = new Random();
+    protected NBTTagCompound entityNBT;
+
+    protected int maxProgress;
+    protected int usage;
+    protected int checking = 0;
 
     public TileEntityObservationChamber()
     {
         locked = new PlayerLocked();
         inventory = new BasicInventory(2);
         storage = new BasicEnergy(6400, 5, 0);
+
+        maxProgress = 200;
+        usage = 3;
     }
 
     public void setEntity(EntityLivingBase entity)
     {
-        this.entity = (String) EntityList.classToStringMapping.get(entity.getClass());
+        if (entity != null) {
+            if (ResearchRegistry.getObservableEntities().contains(entity.getClass())) {
+                this.entity = (String) EntityList.classToStringMapping.get(entity.getClass());
+                this.entityNBT = new NBTTagCompound();
+                entity.writeEntityToNBT(entityNBT);
+                health = (int) entity.getHealth();
 
-        if (entity instanceof EntityVillager) {
-            this.profession = ((EntityVillager) entity).getProfession();
+                return;
+            }
         }
 
-        health = (int) entity.getHealth();
+        this.entityNBT = new NBTTagCompound();
+        this.entity = null;
+        health = 0;
     }
 
     public String getEntity()
@@ -52,16 +74,38 @@ public class TileEntityObservationChamber extends TileEntityResearch implements 
         return entity;
     }
 
+    public int getProgress(int width)
+    {
+        return progress / (maxProgress / width);
+    }
+
+    public void setHealth(int m)
+    {
+        health += m;
+
+        if (health <= 0) {
+            setEntity(null);
+        }
+    }
+
     public EntityLiving getEntityLiving()
     {
-        if (entity != null) {
+        if (entity != null && !entity.isEmpty()) {
             EntityLiving entityLiving = (EntityLiving) EntityList.createEntityByName(entity, worldObj);
-
-            if (entityLiving instanceof EntityVillager) {
-                ((EntityVillager) entityLiving).setProfession(profession);
-            }
+            entityLiving.readEntityFromNBT(entityNBT);
 
             return entityLiving;
+        }
+
+        return null;
+    }
+
+    public Class getEntityClass()
+    {
+        if (entity != null && !entity.isEmpty()) {
+            Class entityClass = (Class) EntityList.stringToClassMapping.get(entity);
+
+            return entityClass;
         }
 
         return null;
@@ -77,11 +121,16 @@ public class TileEntityObservationChamber extends TileEntityResearch implements 
     {
         super.readFromNBT(compound);
 
+        locked.readFromNBT(compound);
+        inventory.readFromNBT(compound);
+        storage.readFromNBT(compound);
+
         health = compound.getInteger("Health");
 
-        if (compound.hasKey("Entity")) {
+        if (!compound.hasKey("Empty")) {
             entity = compound.getString("Entity");
-            profession = compound.getInteger("Profession");
+            entityNBT = compound.getCompoundTag("EntityNBT");
+            checking = compound.getInteger("Waiting");
         }
     }
 
@@ -90,11 +139,18 @@ public class TileEntityObservationChamber extends TileEntityResearch implements 
     {
         super.writeToNBT(compound);
 
+        locked.writeToNBT(compound);
+        inventory.writeToNBT(compound);
+        storage.writeToNBT(compound);
+
         compound.setInteger("Health", health);
 
         if (entity != null) {
             compound.setString("Entity", entity);
-            compound.setInteger("Profession", profession);
+            compound.setTag("EntityNBT", entityNBT);
+            compound.setInteger("Waiting", checking);
+        } else {
+            compound.setString("Empty", "");
         }
     }
 
@@ -117,6 +173,190 @@ public class TileEntityObservationChamber extends TileEntityResearch implements 
         worldObj.setBlockToAir(xCoord, yCoord + 2, zCoord);
         invalidate();
         worldObj.setBlockToAir(xCoord, yCoord, zCoord);
+    }
+
+    @Override
+    public void updateEntity()
+    {
+        super.updateEntity();
+
+        if (!worldObj.isRemote) {
+            if (entity != null && !entity.isEmpty()) {
+                if (storage.getEnergyStored(null) >= usage) {
+                    if (storage.modifyEnergyStored(usage)) {
+                        checking = 0;
+
+                        if (canTest()) {
+                            setInProgress(true);
+                            test();
+                        } else {
+                            progress = 0;
+                        }
+                    }
+                } else {
+                    checking++;
+
+                    if (checking == 100) {
+                        release();
+                        checking = 0;
+                    }
+                }
+            }
+
+            if (EnergyHelper.isAdjacentEnergyHandlerFromSide(this, ForgeDirection.DOWN.ordinal())) {
+                int input = storage.getMaxReceive();
+                int receive = storage.receiveEnergy(ForgeDirection.DOWN, input, true);
+                int extract = EnergyHelper.extractEnergyFromAdjacentEnergyHandler(this, ForgeDirection.DOWN.ordinal(), receive, true);
+
+                if (receive > 0 && extract > 0) {
+
+                    if (receive == extract) {
+                        extract = EnergyHelper.extractEnergyFromAdjacentEnergyHandler(this, ForgeDirection.DOWN.ordinal(), receive, false);
+                    } else if (receive > extract) {
+                        extract = EnergyHelper.extractEnergyFromAdjacentEnergyHandler(this, ForgeDirection.DOWN.ordinal(), extract, false);
+                    } else if (receive < extract) {
+                        extract = EnergyHelper.extractEnergyFromAdjacentEnergyHandler(this, ForgeDirection.DOWN.ordinal(), receive, false);
+                    }
+                    receiveEnergy(ForgeDirection.DOWN, extract, false);
+                }
+            }
+        }
+    }
+
+    public boolean canTest()
+    {
+        if (!worldObj.isRemote) {
+            ItemStack input = inventory.getStackInSlot(0);
+
+            if (input != null && input.getItem() != null) {
+                EntityPlayer player = worldObj.getPlayerEntityByName(getPlayer());
+
+                if (player != null) {
+                    ExtendedPlayerKnowledge charon = ExtendedPlayerKnowledge.get(player);
+
+                    if (!charon.canSpecialise()) {
+                        Map<Class, Map<ItemStack, List<Integer>>> researchObservation = ResearchRegistry.getObservableResearch();
+                        Class entityClass = (Class) EntityList.stringToClassMapping.get(entity);
+
+                        if (researchObservation.containsKey(entityClass)) {
+                            for (Iterator<Entry<ItemStack, List<Integer>>> i = researchObservation.get(entityClass).entrySet().iterator(); i.hasNext();) {
+                                Entry<ItemStack, List<Integer>> current = i.next();
+
+                                if (current.getKey().isItemEqual(input)) {
+                                    List<Integer> list = current.getValue();
+
+                                    for (int x = 0; x < list.size(); x++) {
+                                        if (list.get(x) != null) {
+                                            IResearch research = ResearchRegistry.getResearch(ResearchRegistry.getResearchName(list.get(x)));
+                                            IResearchObservation observation = (IResearchObservation) research;
+
+                                            if (!charon.hasResearched(research.getName()) && research.canPerform(charon) && (data + research.getProgress() < 100)) {
+                                                return true;
+                                            } else {
+                                                return false;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public void test()
+    {
+        if (!worldObj.isRemote) {
+            progress++;
+
+            if (progress >= maxProgress) {
+                ItemStack input = inventory.getStackInSlot(0);
+
+                if (input == null || input.getItem() == null) {
+                    setInProgress(false);
+                    progress = 0;
+                    return;
+                }
+
+                EntityPlayer player = worldObj.getPlayerEntityByName(getPlayer());
+
+                if (player != null) {
+                    ExtendedPlayerKnowledge charon = ExtendedPlayerKnowledge.get(player);
+
+                    if (!charon.canSpecialise()) {
+                        Map<Class, Map<ItemStack, List<Integer>>> researchObservation = ResearchRegistry.getObservableResearch();
+                        Class entityClass = (Class) EntityList.stringToClassMapping.get(entity);
+
+                        if (researchObservation.containsKey(entityClass)) {
+                            for (Iterator<Entry<ItemStack, List<Integer>>> i = researchObservation.get(entityClass).entrySet().iterator(); i.hasNext();) {
+                                Entry<ItemStack, List<Integer>> current = i.next();
+
+                                if (input == null) {
+                                    break;
+                                }
+
+                                if (current.getKey().isItemEqual(input)) {
+                                    List<Integer> list = current.getValue();
+
+                                    for (int x = 0; x < list.size(); x++) {
+                                        if (list.get(x) != null) {
+                                            IResearch research = ResearchRegistry.getResearch(ResearchRegistry.getResearchName(list.get(x)));
+                                            IResearchObservation observation = (IResearchObservation) research;
+
+                                            if (storage.modifyEnergyStored(usage * 2) && rand.nextInt(research.getChance()) == 0 && !charon.hasResearched(research.getName()) && research.canPerform(charon) && (data + research.getProgress() < 100)) {
+                                                addResearch(research.getKnowledge(), research.getProgress());
+
+                                                if (!research.isRepeating()) {
+                                                    charon.addNonRepeatibleResearch(research.getName());
+                                                }
+
+                                                setHealth(observation.getModifiedHealth());
+                                            }
+
+                                            input.stackSize--;
+
+                                            if (input.stackSize == 0) {
+                                                input = null;
+                                            }
+
+                                            inventory.setInventorySlotContents(0, input);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                setInProgress(false);
+                progress = 0;
+            }
+
+            sync();
+        }
+    }
+
+    public void release()
+    {
+        EntityLiving release = getEntityLiving();
+        ForgeDirection dir = ForgeDirection.getOrientation(worldObj.getBlockMetadata(xCoord, yCoord, zCoord));
+
+        release.setHealth(health);
+        release.setWorld(worldObj);
+        release.setPosition(xCoord + dir.offsetX, yCoord + dir.offsetY, zCoord + dir.offsetZ);
+        worldObj.spawnEntityInWorld(release);
+        setEntity(null);
+        sync();
+    }
+
+    public void flush()
+    {
+        setEntity(null);
     }
 
     /* Everything below is just a proxy for the interfaces */
@@ -200,19 +440,33 @@ public class TileEntityObservationChamber extends TileEntityResearch implements 
     @Override
     public boolean canConnectEnergy(ForgeDirection from)
     {
-        return storage.canConnectEnergy(from);
+        return from.equals(ForgeDirection.DOWN);
     }
 
     @Override
     public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate)
     {
-        return storage.receiveEnergy(ForgeDirection.DOWN, maxReceive, simulate);
+        int r = storage.receiveEnergy(ForgeDirection.DOWN, maxReceive, simulate);
+
+        if (r > 0) {
+            sync();
+            return r;
+        }
+
+        return 0;
     }
 
     @Override
     public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate)
     {
-        return storage.extractEnergy(ForgeDirection.DOWN, maxExtract, simulate);
+        int r = storage.extractEnergy(ForgeDirection.DOWN, maxExtract, simulate);
+
+        if (r > 0) {
+            sync();
+            return r;
+        }
+
+        return 0;
     }
 
     @Override

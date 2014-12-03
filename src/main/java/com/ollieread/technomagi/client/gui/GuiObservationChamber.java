@@ -43,7 +43,7 @@ public class GuiObservationChamber extends GuiEnergyContainer
     {
         this.fontRendererObj.drawString(I18n.format("technomagi.observation.gui"), 11, 9, 16777215);
 
-        int progress = chamber.getProgress();
+        int progress = chamber.getProgress(100);
         int data = chamber.getData();
         int health = chamber.getHealth();
 
@@ -63,7 +63,7 @@ public class GuiObservationChamber extends GuiEnergyContainer
         this.mc.getTextureManager().bindTexture(texture);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 
-        int progress = chamber.getProgress();
+        int progress = chamber.getProgress(100);
         int data = chamber.getData();
 
         if (progress > 0) {
