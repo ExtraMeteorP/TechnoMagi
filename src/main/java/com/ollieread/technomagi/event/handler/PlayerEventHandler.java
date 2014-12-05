@@ -20,7 +20,6 @@ import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -44,9 +43,9 @@ import com.ollieread.ennds.extended.ExtendedPlayerAbilities;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.ennds.item.IStaff;
 import com.ollieread.ennds.research.ResearchRegistry;
-import com.ollieread.technomagi.TechnoMagi;
 import com.ollieread.technomagi.block.IDigitalToolable;
 import com.ollieread.technomagi.common.init.Blocks;
+import com.ollieread.technomagi.common.init.Config;
 import com.ollieread.technomagi.common.init.Items;
 import com.ollieread.technomagi.common.init.Potions;
 import com.ollieread.technomagi.common.init.Research;
@@ -65,17 +64,16 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.ItemSmeltedEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 
 public class PlayerEventHandler
 {
 
     @SubscribeEvent
-    public void onEntityJoinWorld(EntityJoinWorldEvent event)
+    public void onPlayerLoggedIn(PlayerLoggedInEvent event)
     {
-        if (!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer) {
-            if (TechnoMagi.version) {
-                new Thread(new VersionChecker((EntityPlayer) event.entity)).start();
-            }
+        if (!event.player.worldObj.isRemote && Config.versionCheck) {
+            new Thread(new VersionChecker((EntityPlayer) event.player)).start();
         }
     }
 

@@ -54,8 +54,6 @@ public class TechnoMagi
 
     public static final Logger logger = LogManager.getLogger(Reference.MODID);
 
-    public static boolean version = true;
-
     @EventHandler
     public void pre(FMLPreInitializationEvent event)
     {
