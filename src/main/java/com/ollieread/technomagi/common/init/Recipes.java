@@ -44,11 +44,12 @@ public class Recipes
         recipes.add(GameRegistry.addShapedRecipe(new ItemStack(Items.itemComponent, 1, 5), "x", "x", 'x', goldIngot));
         recipes.add(GameRegistry.addShapedRecipe(new ItemStack(Items.itemComponent, 2, 7), "xx", "xx", 'x', diamond));
         recipes.add(GameRegistry.addShapedRecipe(new ItemStack(Items.itemComponent, 1, 8), "x", "x", 'x', diamond));
+        recipes.add(GameRegistry.addShapedRecipe(new ItemStack(Items.itemComponent, 2, 11), "xx", "y", 'x', new ItemStack(Items.itemComponent, 1, 10), 'y', new ItemStack(Items.itemComponent, 2, 3)));
 
         RecipeHelper.addSeparatorRecipe(new ItemStack(net.minecraft.init.Blocks.iron_ore), new ItemStack(Items.itemComponent, 2, 0), new ItemStack(net.minecraft.init.Blocks.cobblestone), 3);
         RecipeHelper.addSeparatorRecipe(new ItemStack(net.minecraft.init.Blocks.gold_ore), new ItemStack(Items.itemComponent, 2, 3), new ItemStack(net.minecraft.init.Blocks.cobblestone), 3);
         RecipeHelper.addSeparatorRecipe(new ItemStack(net.minecraft.init.Blocks.diamond_ore), new ItemStack(Items.itemComponent, 1, 6), new ItemStack(net.minecraft.init.Blocks.cobblestone), 3);
-        RecipeHelper.addSeparatorRecipe(new ItemStack(Items.itemEtherium), new ItemStack(Items.itemComponent, 2, 11), null, 1);
+        RecipeHelper.addSeparatorRecipe(new ItemStack(Items.itemEtherium), new ItemStack(Items.itemComponent, 2, 10), null, 1);
 
         RecipeHelper.addConstructRecipe(Blocks.blockArchive, new ItemStack[] { stackNaniteContainer2, new ItemStack(Items.itemComponent, 2, 5), new ItemStack(net.minecraft.init.Items.redstone, 4), new ItemStack(net.minecraft.init.Items.book, 1) }, null);
         RecipeHelper.addConstructRecipe(Blocks.blockCrafting, new ItemStack[] { stackNaniteContainer2, new ItemStack(Items.itemComponent, 2, 5), new ItemStack(net.minecraft.init.Blocks.crafting_table, 1), new ItemStack(net.minecraft.init.Items.redstone, 4) }, null);
@@ -56,6 +57,14 @@ public class Recipes
 
         RecipeHelper.addFurnaceRecipe(new ItemStack(Items.itemComponent, 1, 0), ironIngot, 0.7F);
         RecipeHelper.addFurnaceRecipe(new ItemStack(Items.itemComponent, 1, 3), goldIngot, 1F);
+
+        RecipeHelper.addShapedRecipe(null, new ItemStack(Items.itemComponent, 2, 11), "xx", "y", 'x', new ItemStack(Items.itemComponent, 1, 10), 'y', new ItemStack(Items.itemComponent, 2, 3));
+        RecipeHelper.addShapedRecipe(null, new ItemStack(Items.itemComponent, 4, 1), "xx", "xx", 'x', ironIngot);
+        RecipeHelper.addShapedRecipe(null, new ItemStack(Items.itemComponent, 2, 2), "x", "x", 'x', ironIngot);
+        RecipeHelper.addShapedRecipe(null, new ItemStack(Items.itemComponent, 4, 4), "xx", "xx", 'x', goldIngot);
+        RecipeHelper.addShapedRecipe(null, new ItemStack(Items.itemComponent, 2, 5), "x", "x", 'x', goldIngot);
+        RecipeHelper.addShapedRecipe(null, new ItemStack(Items.itemComponent, 4, 7), "xx", "xx", 'x', diamond);
+        RecipeHelper.addShapedRecipe(null, new ItemStack(Items.itemComponent, 2, 8), "x", "x", 'x', diamond);
 
         // teleporter
         RecipeHelper.addShapedRecipe(Knowledge.knowledgeTeleportation.getName(), new ItemStack(Blocks.blockTeleporter, 1, 0), " w ", " y ", " z ", 'y', new ItemStack(Items.itemUnit, 1, 3), 'z', new ItemStack(Blocks.blockConstruct, 1), 'w', new ItemStack(net.minecraft.init.Blocks.piston, 1));
