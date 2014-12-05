@@ -139,14 +139,14 @@ public class Config
         invisibilityCost = config.getInt("invisibilityCost", "Ability", 10, 1, 100, "Cost of the invisibility ability");
         invisibilityDuration = config.getInt("invisibilityDuration", "Ability", 200, 20, 36000, "Duration of the invisibility ability");
         // Projectile
-        projectileEnabled = config.getBoolean("projectileEnabled", "Abilities", true, "Whether or not the projectile ability should be available");
-        projectileCost = config.getInt("projectileCost", "Abilities", 10, 1, 100, "Cost of the projectile ability");
+        projectileEnabled = config.getBoolean("projectileEnabled", "Ability", true, "Whether or not the projectile ability should be available");
+        projectileCost = config.getInt("projectileCost", "Ability", 10, 1, 100, "Cost of the projectile ability");
         // Exothermic Projectile
-        projectileExothermicEnabled = config.getBoolean("projectileExothermicEnabled", "Abilities", true, "Whether or not the exothermic projectile ability should be available");
-        projectileExothermicCost = config.getInt("projectileExothermicCost", "Abilities", 10, 1, 100, "Cost of the exothermic projectile ability");
+        projectileExothermicEnabled = config.getBoolean("projectileExothermicEnabled", "Ability", true, "Whether or not the exothermic projectile ability should be available");
+        projectileExothermicCost = config.getInt("projectileExothermicCost", "Ability", 10, 1, 100, "Cost of the exothermic projectile ability");
         // Reactive
-        reactiveEnabled = config.getBoolean("reactiveEnabled", "Abilities", true, "Whether or not the reactive ability should be available");
-        reactiveCost = config.getInt("reactiveCost", "Abilities", 10, 1, 100, "Cost of the reactive ability");
+        reactiveEnabled = config.getBoolean("reactiveEnabled", "Ability", true, "Whether or not the reactive ability should be available");
+        reactiveCost = config.getInt("reactiveCost", "Ability", 10, 1, 100, "Cost of the reactive ability");
         // Shield
         shieldEnabled = config.getBoolean("shieldEnabled", "Ability", true, "Whether or not the shield ability should be available");
         shieldCost = config.getInt("shieldCost", "Ability", 20, 1, 100, "Cost of the shield ability");
