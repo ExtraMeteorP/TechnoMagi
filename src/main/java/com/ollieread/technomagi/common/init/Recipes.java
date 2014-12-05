@@ -48,6 +48,7 @@ public class Recipes
         RecipeHelper.addSeparatorRecipe(new ItemStack(net.minecraft.init.Blocks.iron_ore), new ItemStack(Items.itemComponent, 2, 0), new ItemStack(net.minecraft.init.Blocks.cobblestone), 3);
         RecipeHelper.addSeparatorRecipe(new ItemStack(net.minecraft.init.Blocks.gold_ore), new ItemStack(Items.itemComponent, 2, 3), new ItemStack(net.minecraft.init.Blocks.cobblestone), 3);
         RecipeHelper.addSeparatorRecipe(new ItemStack(net.minecraft.init.Blocks.diamond_ore), new ItemStack(Items.itemComponent, 1, 6), new ItemStack(net.minecraft.init.Blocks.cobblestone), 3);
+        RecipeHelper.addSeparatorRecipe(new ItemStack(Items.itemEtherium), new ItemStack(Items.itemComponent, 2, 11), null, 1);
 
         RecipeHelper.addConstructRecipe(Blocks.blockArchive, new ItemStack[] { stackNaniteContainer2, new ItemStack(Items.itemComponent, 2, 5), new ItemStack(net.minecraft.init.Items.redstone, 4), new ItemStack(net.minecraft.init.Items.book, 1) }, null);
         RecipeHelper.addConstructRecipe(Blocks.blockCrafting, new ItemStack[] { stackNaniteContainer2, new ItemStack(Items.itemComponent, 2, 5), new ItemStack(net.minecraft.init.Blocks.crafting_table, 1), new ItemStack(net.minecraft.init.Items.redstone, 4) }, null);
@@ -81,9 +82,9 @@ public class Recipes
         // new ItemStack(Items.itemUnit, 1, 8), "x x", " y ", "x x", 'x',
         // diamond, 'y', new ItemStack(Items.itemUnit, 1, 7));
         // nanite unit
-        RecipeHelper.addShapedRecipe(null, new ItemStack(Items.itemUnit, 1, 9), "xzx", " y ", "x x", 'x', ironIngot, 'y', stackNaniteContainer, 'z', new ItemStack(Items.itemComponent, 1, 5));
-        RecipeHelper.addShapedRecipe(null, new ItemStack(Items.itemUnit, 1, 10), "x x", " y ", "x x", 'x', goldIngot, 'y', new ItemStack(Items.itemUnit, 1, 9));
-        RecipeHelper.addShapedRecipe(null, new ItemStack(Items.itemUnit, 1, 11), "x x", " y ", "x x", 'x', diamond, 'y', new ItemStack(Items.itemUnit, 1, 10));
+        RecipeHelper.addShapedRecipe(Knowledge.knowledgeNanites.getName(), new ItemStack(Items.itemUnit, 1, 9), "xzx", " y ", "x x", 'x', ironIngot, 'y', stackNaniteContainer, 'z', new ItemStack(Items.itemComponent, 1, 5));
+        RecipeHelper.addShapedRecipe(Knowledge.knowledgeNanites.getName(), new ItemStack(Items.itemUnit, 1, 10), "x x", " y ", "x x", 'x', goldIngot, 'y', new ItemStack(Items.itemUnit, 1, 9));
+        RecipeHelper.addShapedRecipe(Knowledge.knowledgeNanites.getName(), new ItemStack(Items.itemUnit, 1, 11), "x x", " y ", "x x", 'x', diamond, 'y', new ItemStack(Items.itemUnit, 1, 10));
         // power unit
         RecipeHelper.addShapedRecipe(null, new ItemStack(Items.itemUnit, 1, 12), "xzx", " y ", "x x", 'x', ironIngot, 'y', new ItemStack(net.minecraft.init.Items.redstone, 1), 'z', new ItemStack(Items.itemComponent, 1, 5));
         RecipeHelper.addShapedRecipe(null, new ItemStack(Items.itemUnit, 1, 13), "x x", " y ", "x x", 'x', goldIngot, 'y', new ItemStack(Items.itemUnit, 1, 12));

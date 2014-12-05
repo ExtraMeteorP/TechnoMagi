@@ -8,6 +8,7 @@ import net.minecraft.world.World;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.ennds.item.IStaff;
 import com.ollieread.ennds.item.IStaffEnhancement;
+import com.ollieread.technomagi.TechnoMagi;
 
 import cpw.mods.fml.common.eventhandler.Event;
 
@@ -19,6 +20,8 @@ public class ItemUnit extends ItemTMSubtypes implements IStaffEnhancement
     public ItemUnit(String name)
     {
         super(name, new String[] { "lifeUnitBasic", "lifeUnitAdvanced", "lifeUnitElite", "lightUnitBasic", "lightUnitAdvanced", "lightUnitElite", "teleportUnitBasic", "teleportUnitAdvanced", "teleportUnitElite", "subspaceUnitBasic", "subspaceUnitAdvanced", "subspaceUnitElite", "naniteUnitBasic", "naniteUnitAdvanced", "naniteUnitElite", "powerUnitBasic", "powerUnitAdvanced", "powerUnitElite", "exoUnitBasic", "exoUnitAdvanced", "exoUnitElite", "endoUnitBasic", "endoUnitAdvanced", "endoUnitElite", "forceUnitBasic", "forceUnitAdvanced", "forceUnitElite", "voidUnitBasic", "voidUnitAdvanced", "voidUnitElite" });
+
+        setCreativeTab(TechnoMagi.tabTMUnit);
     }
 
     @Override

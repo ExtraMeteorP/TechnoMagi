@@ -153,6 +153,9 @@ item.component.diamondDust.name=Diamond Dust
 item.component.diamondSheet.name=Diamond Plate
 item.component.diamondRod.name=Diamond Rod
 item.component.basicPowerWater.name=Basic Energised Water
+item.component.etheriumDust.name=Etherium Dust
+item.component.mouldableDust.name=Mouldable Dust
+item.component.mouldableIngot.name=Mouldable Ingot
 item.unit.10.name=Analysis Unit
 item.unit.lifeUnitBasic.name=Basic Life Unit
 item.unit.lifeUnitAdvanced.name=Advanced Life unit
@@ -184,6 +187,7 @@ item.unit.forceUnitElite.name=Elite Force Unit
 item.unit.voidUnitBasic.name=Basic Void Unit
 item.unit.voidUnitAdvanced.name=Advanced Void Unit
 item.unit.voidUnitElite.name=Elite Void Unit
+item.malleableCircuit.name=Malleable Circuit
 
 message.specialisation.chosen=You have activated your internal nanites, your first step towards rebuilding the TechnoMage order.
 message.specialisation.chosen.scholar=Your internal nanites have calibrated themselves to you, manifesting your internal desires, morals and ambitions, aligning you with the Scholar specialisation.
