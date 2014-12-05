@@ -63,6 +63,11 @@ public class TileEntityStorage extends TileEntityTM implements IPlayerLocked, II
         return (waiting > 0 && waiting < 20);
     }
 
+    public boolean shouldRenderInPass(int pass)
+    {
+        return pass == 0 || pass == 1;
+    }
+
     /* Everything below is just a proxy for the interfaces */
 
     /* INVENTORY */

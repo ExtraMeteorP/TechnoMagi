@@ -1,6 +1,8 @@
 package com.ollieread.technomagi.client.renderer.item;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -101,9 +103,15 @@ public class RenderStorageItem implements IItemRenderer
                     GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
 
                     ItemStack stack2 = itemStack.copy();
+
+                    RenderBlocks renderBlocks = new RenderBlocks();
+                    RenderItem renderItem = ((RenderItem) RenderManager.instance.getEntityClassRenderObject(EntityItem.class));
+
                     EntityItem entityItem = new EntityItem(null, 0.0D, 0.0D, 0.0D, stack2);
                     entityItem.getEntityItem().stackSize = 1;
                     entityItem.hoverStart = 0.0F;
+                    entityItem.rotationPitch = 0.0F;
+                    entityItem.rotationYaw = 0.0F;
                     RenderManager.instance.renderEntityWithPosYaw(entityItem, 0D, offset, 0D, 0.0F, 0.0F);
 
                     GL11.glPopMatrix();

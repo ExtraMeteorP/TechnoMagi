@@ -32,6 +32,11 @@ public class TileEntityTank extends TileEntityTMFluid implements IPlayerLocked, 
         locked.writeToNBT(compound);
     }
 
+    public boolean shouldRenderInPass(int pass)
+    {
+        return pass == 0 || pass == 1;
+    }
+
     /* Everything below is just a proxy for the interfaces */
 
     /* INVENTORY */

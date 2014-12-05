@@ -89,8 +89,13 @@ public class RenderTankItem implements IItemRenderer
 
                 int amount = tank.getFluidAmount();
                 int capacity = tank.getCapacity();
+                int m = 1;
 
-                float scaleF = (0.7F / (FluidContainerRegistry.BUCKET_VOLUME * 100)) * (amount / (item.getItemDamage() * 5));
+                if (item.getItemDamage() > 0) {
+                    m = amount / (item.getItemDamage() * 5);
+                }
+
+                float scaleF = (0.7F / capacity) * amount;
 
                 if (scaleF < 0.1F) {
                     scaleF = 0.1F;
@@ -189,5 +194,4 @@ public class RenderTankItem implements IItemRenderer
 
         GL11.glPopMatrix();
     }
-
 }
