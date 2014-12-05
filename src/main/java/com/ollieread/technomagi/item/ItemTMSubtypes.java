@@ -17,6 +17,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public abstract class ItemTMSubtypes extends ItemTM
 {
 
+    @SideOnly(Side.CLIENT)
     protected IIcon[] itemIcons;
     public String[] itemNames;
 

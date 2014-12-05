@@ -8,6 +8,7 @@ import com.ollieread.technomagi.item.ItemDigitalTool;
 import com.ollieread.technomagi.item.ItemEtherium;
 import com.ollieread.technomagi.item.ItemEtheriumIngot;
 import com.ollieread.technomagi.item.ItemHectoStorage;
+import com.ollieread.technomagi.item.ItemMalleableCircuit;
 import com.ollieread.technomagi.item.ItemNaniteContainer;
 import com.ollieread.technomagi.item.ItemRelux;
 import com.ollieread.technomagi.item.ItemReluxIngot;
@@ -40,6 +41,7 @@ public class Items
     public static ItemTM itemTechnomageStaff;
     public static ItemTM itemVoidCrystal;
     public static ItemTM itemVoidIngot;
+    public static ItemTM itemMalleableCircuit;
 
     public static void init()
     {
@@ -60,6 +62,7 @@ public class Items
         itemTechnomageStaff = new ItemStaff("technomageStaff");
         itemVoidCrystal = new ItemVoidCrystal("voidCrystal");
         itemVoidIngot = new ItemVoidIngot("voidIngot");
+        itemMalleableCircuit = new ItemMalleableCircuit("malleableCircuit");
 
         GameRegistry.registerItem(itemTechnomageStaff, "technomageStaff");
         GameRegistry.registerItem(itemSampleVile, "sampleVile");
@@ -74,5 +77,6 @@ public class Items
         GameRegistry.registerItem(itemHectoStorage, "hectoStorage");
         GameRegistry.registerItem(itemComponent, "component");
         GameRegistry.registerItem(itemUnit, "unit");
+        GameRegistry.registerItem(itemMalleableCircuit, "malleableCircuit");
     }
 }

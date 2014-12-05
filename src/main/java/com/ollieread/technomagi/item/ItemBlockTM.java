@@ -64,7 +64,7 @@ public class ItemBlockTM extends ItemBlock
                         list.add(tank.getFluid().getLocalizedName());
                     }
 
-                    list.add(tank.getFluidAmount() + "/" + FluidContainerRegistry.BUCKET_VOLUME * (100 * (stack.getItemDamage() * 5)));
+                    list.add(tank.getFluidAmount() + "/" + tank.getCapacity());
                 }
             } else if (Block.getBlockFromItem(stack.getItem()) instanceof BlockStorage) {
                 if (stack.stackTagCompound != null) {
@@ -75,7 +75,7 @@ public class ItemBlockTM extends ItemBlock
                         list.add(storage.getLocalizedName());
                     }
 
-                    list.add(storage.getAmount() + "/" + (4096 * (stack.getItemDamage() * 5)));
+                    list.add(storage.getAmount() + "/" + storage.getCapacity());
                 }
             }
         }
