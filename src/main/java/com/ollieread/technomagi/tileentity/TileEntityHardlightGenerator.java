@@ -1,6 +1,5 @@
 package com.ollieread.technomagi.tileentity;
 
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -18,7 +17,7 @@ public class TileEntityHardlightGenerator extends TileEntityTM implements IPlaye
     protected boolean proximity = false;
     protected PlayerLocked locked = new PlayerLocked();
     protected int checked = 0;
-    protected boolean complete = false;
+    protected boolean complete = true;
     protected int count = 0;
     protected int ticks = 0;
     protected int maxTicks = 5;
@@ -70,15 +69,6 @@ public class TileEntityHardlightGenerator extends TileEntityTM implements IPlaye
                             if (worldObj.isAirBlock(x, y, z)) {
                                 worldObj.setBlock(x, y, z, Blocks.blockHardlight);
                                 count++;
-                            } else if (worldObj.getBlock(x, y, z) == Blocks.blockHardlightGenerator) {
-                                Block partner = worldObj.getBlock(x, y, z);
-
-                                if (ForgeDirection.getOrientation(worldObj.getBlockMetadata(x, y, z)).getOpposite().equals(dir)) {
-                                    TileEntityHardlightGenerator generator = (TileEntityHardlightGenerator) worldObj.getTileEntity(x, y, z);
-                                    generator.toggleStatus(true, false);
-                                    complete = true;
-                                    count = 0;
-                                }
                             } else {
                                 complete = true;
                                 count = 0;
@@ -87,15 +77,6 @@ public class TileEntityHardlightGenerator extends TileEntityTM implements IPlaye
                             if (worldObj.getBlock(x, y, z) == Blocks.blockHardlight) {
                                 worldObj.setBlockToAir(x, y, z);
                                 count++;
-                            } else if (worldObj.getBlock(x, y, z) == Blocks.blockHardlightGenerator) {
-                                Block partner = worldObj.getBlock(x, y, z);
-
-                                if (ForgeDirection.getOrientation(worldObj.getBlockMetadata(x, y, z)).getOpposite().equals(dir)) {
-                                    TileEntityHardlightGenerator generator = (TileEntityHardlightGenerator) worldObj.getTileEntity(x, y, z);
-                                    generator.toggleStatus(true, false);
-                                    complete = true;
-                                    count = 0;
-                                }
                             } else {
                                 complete = true;
                                 count = 0;
@@ -117,24 +98,19 @@ public class TileEntityHardlightGenerator extends TileEntityTM implements IPlaye
         return on;
     }
 
-    public void toggleStatus(boolean proxy, boolean neighbour)
+    public void toggleStatus()
     {
         if (!worldObj.isRemote) {
-            int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
-            ForgeDirection dir = ForgeDirection.getOrientation(meta);
-
             if (on) {
                 on = false;
             } else {
                 on = true;
             }
 
-            if (!proxy) {
-                complete = false;
-                count = 1;
+            complete = false;
+            count = 1;
 
-                // toggleNeighbours();
-            }
+            sync();
         }
     }
 
@@ -156,52 +132,6 @@ public class TileEntityHardlightGenerator extends TileEntityTM implements IPlaye
                 if (worldObj.getBlock(x, y, z) == Blocks.blockHardlight) {
                     worldObj.setBlockToAir(x, y, z);
                 }
-            }
-        }
-    }
-
-    protected void toggleNeighbours()
-    {
-        if (worldObj.getBlock(xCoord - 1, yCoord, zCoord) == Blocks.blockHardlightGenerator) {
-            TileEntityHardlightGenerator generator = (TileEntityHardlightGenerator) worldObj.getTileEntity(xCoord - 1, yCoord, zCoord);
-
-            if (generator.isOn() != on) {
-                generator.toggleStatus(false, true);
-            }
-        }
-        if (worldObj.getBlock(xCoord + 1, yCoord, zCoord) == Blocks.blockHardlightGenerator) {
-            TileEntityHardlightGenerator generator = (TileEntityHardlightGenerator) worldObj.getTileEntity(xCoord + 1, yCoord, zCoord);
-
-            if (generator.isOn() != on) {
-                generator.toggleStatus(false, true);
-            }
-        }
-        if (worldObj.getBlock(xCoord, yCoord - 1, zCoord) == Blocks.blockHardlightGenerator) {
-            TileEntityHardlightGenerator generator = (TileEntityHardlightGenerator) worldObj.getTileEntity(xCoord, yCoord - 1, zCoord);
-
-            if (generator.isOn() != on) {
-                generator.toggleStatus(false, true);
-            }
-        }
-        if (worldObj.getBlock(xCoord, yCoord + 1, zCoord) == Blocks.blockHardlightGenerator) {
-            TileEntityHardlightGenerator generator = (TileEntityHardlightGenerator) worldObj.getTileEntity(xCoord, yCoord + 1, zCoord);
-
-            if (generator.isOn() != on) {
-                generator.toggleStatus(false, true);
-            }
-        }
-        if (worldObj.getBlock(xCoord, yCoord, zCoord - 1) == Blocks.blockHardlightGenerator) {
-            TileEntityHardlightGenerator generator = (TileEntityHardlightGenerator) worldObj.getTileEntity(xCoord, yCoord, zCoord - 1);
-
-            if (generator.isOn() != on) {
-                generator.toggleStatus(false, true);
-            }
-        }
-        if (worldObj.getBlock(xCoord, yCoord, zCoord + 1) == Blocks.blockHardlightGenerator) {
-            TileEntityHardlightGenerator generator = (TileEntityHardlightGenerator) worldObj.getTileEntity(xCoord, yCoord, zCoord + 1);
-
-            if (generator.isOn() == on) {
-                generator.toggleStatus(false, true);
             }
         }
     }

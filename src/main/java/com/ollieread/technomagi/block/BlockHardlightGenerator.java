@@ -68,11 +68,11 @@ public class BlockHardlightGenerator extends BlockTMContainer implements IDigita
 
         if (world.isBlockIndirectlyGettingPowered(x, y, z)) {
             if (!generator.isOn()) {
-                generator.toggleStatus(false, false);
+                generator.toggleStatus();
             }
         } else {
             if (generator.isOn()) {
-                generator.toggleStatus(false, false);
+                generator.toggleStatus();
             }
         }
     }
