@@ -4,11 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
+import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 
@@ -45,20 +44,18 @@ public class ActiveAbilityFlashstep extends AbilityActive
                 Vec3 look = EntityHelper.getLookVector(interact.entityPlayer);
                 Vec3 eye = EntityHelper.getEyeVector(interact.entityPlayer);
 
-                Vec3 target = Vec3.createVectorHelper(look.xCoord, look.yCoord, look.zCoord);
+                Vec3 target = Vec3.createVectorHelper(look.xCoord, interact.entityPlayer.posY, look.zCoord);
                 Vec3 dest = null;
                 int max = distance * distance;
                 int dmg = 0;
                 Random rand = new Random();
+                World world = interact.entityPlayer.worldObj;
 
                 for (int i = 1; i <= max; i++) {
                     target.xCoord = (look.xCoord * i) + eye.xCoord;
                     target.zCoord = (look.zCoord * i) + eye.zCoord;
 
-                    Block block = interact.entityPlayer.worldObj.getBlock(MathHelper.floor_double(target.xCoord), MathHelper.floor_double(target.yCoord), MathHelper.floor_double(target.zCoord));
-                    Block blockAbove = interact.entityPlayer.worldObj.getBlock(MathHelper.floor_double(target.xCoord), MathHelper.floor_double(target.yCoord) + 1, MathHelper.floor_double(target.zCoord));
-
-                    if (!block.equals(Blocks.air) || eye.squareDistanceTo(target) >= max || !blockAbove.equals(Blocks.air)) {
+                    if (!world.isAirBlock(MathHelper.floor_double(target.xCoord), MathHelper.floor_double(target.yCoord), MathHelper.floor_double(target.zCoord)) || eye.squareDistanceTo(target) >= max || !world.isAirBlock(MathHelper.floor_double(target.xCoord), MathHelper.floor_double(target.yCoord + 1), MathHelper.floor_double(target.zCoord))) {
                         break;
                     } else {
                         dest = Vec3.createVectorHelper(target.xCoord, target.yCoord, target.zCoord);
@@ -72,8 +69,9 @@ public class ActiveAbilityFlashstep extends AbilityActive
                     // Reference.MODID.toLowerCase() + ":flashstep", 1.0F,
                     // rand.nextFloat() * 0.4F + 0.8F);
 
-                    interact.entityPlayer.setPositionAndUpdate(dest.xCoord, dest.yCoord, dest.zCoord);
-                    interact.entityPlayer.worldObj.playSoundEffect((double) interact.entityPlayer.posX + 0.5D, (double) interact.entityPlayer.posY + 0.5D, (double) interact.entityPlayer.posZ + 0.5D, Reference.MODID.toLowerCase() + ":cast", 1.0F, rand.nextFloat() * 0.4F + 0.8F);
+                    if (!world.isRemote) {
+                        interact.entityPlayer.setPositionAndUpdate(dest.xCoord, dest.yCoord, dest.zCoord);
+                    }
 
                     return true;
                 }

@@ -69,6 +69,8 @@ public class ActiveAbilityProjectile extends AbilityActive
                         }
 
                         interact.world.spawnEntityInWorld(entityarrow);
+
+                        return true;
                     }
                 }
             }

@@ -16,7 +16,6 @@ import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.common.init.Config;
 import com.ollieread.technomagi.util.EntityHelper;
-import com.ollieread.technomagi.util.SoundHelper;
 
 import cpw.mods.fml.common.eventhandler.Event;
 
@@ -62,8 +61,9 @@ public class ActiveAbilityBlink extends AbilityActive
                         interact.entityPlayer.worldObj.spawnParticle("portal", teleportEvent.targetX, teleportEvent.targetY + rand.nextDouble() * 2.0D, teleportEvent.targetZ, rand.nextGaussian(), 0.0D, rand.nextGaussian());
                     }
 
-                    interact.entityPlayer.setPositionAndUpdate(teleportEvent.targetX, teleportEvent.targetY, teleportEvent.targetZ);
-                    SoundHelper.playSoundEffectAtPlayer(interact.entityPlayer, "cast", rand);
+                    if (!interact.entityPlayer.worldObj.isRemote) {
+                        interact.entityPlayer.setPositionAndUpdate(teleportEvent.targetX, teleportEvent.targetY, teleportEvent.targetZ);
+                    }
 
                     return true;
                 }

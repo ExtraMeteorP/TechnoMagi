@@ -72,6 +72,8 @@ public class ActiveAbilityProjectileExothermic extends AbilityActive
                         }
 
                         interact.world.spawnEntityInWorld(entityarrow);
+
+                        return true;
                     }
                 }
             }
