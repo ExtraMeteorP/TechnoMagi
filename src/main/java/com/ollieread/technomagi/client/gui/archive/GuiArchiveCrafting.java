@@ -131,12 +131,14 @@ public class GuiArchiveCrafting extends GuiArchive
                     output = recipe.getRecipeOutput();
                 }
 
-                GuiRecipeButton button = new GuiRecipeButton(id, x, y, output.getDisplayName(), output, can);
-                recipeButtons.add(button);
-                button.drawButton(Minecraft.getMinecraft(), x, y);
+                if (can) {
+                    GuiRecipeButton button = new GuiRecipeButton(id, x, y, output.getDisplayName(), output, can);
+                    recipeButtons.add(button);
+                    button.drawButton(Minecraft.getMinecraft(), x, y);
 
-                y += 22;
-                id++;
+                    y += 22;
+                    id++;
+                }
             }
 
             if (end < recipeList.size()) {
