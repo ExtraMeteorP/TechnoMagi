@@ -9,6 +9,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
@@ -29,7 +30,7 @@ public class TileEntityChamberRenderer extends TileEntitySpecialRenderer
     }
 
     @Override
-    public void renderTileEntityAt(TileEntity te, double x, double y, double z, float scale)
+    public void renderTileEntityAt(TileEntity te, double x, double y, double z, float partialTicks)
     {
         TileEntityObservationChamber chamber = (TileEntityObservationChamber) te;
         int side = chamber.getBlockMetadata();
@@ -70,9 +71,11 @@ public class TileEntityChamberRenderer extends TileEntitySpecialRenderer
         ResourceLocation textures = (new ResourceLocation(Reference.MODID.toLowerCase(), "textures/blocks/modelChamber.png"));
         Minecraft.getMinecraft().renderEngine.bindTexture(textures);
 
-        this.model.render((Entity) null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
+        model.render((Entity) null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
 
-        if (entity != null) {
+        if (chamber.hasEntity()) {
+            model.renderDoor((Entity) null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
+
             entity.setLocationAndAngles(x, y, z, 0.0F, 0.0F);
 
             GL11.glPushMatrix();
@@ -84,6 +87,42 @@ public class TileEntityChamberRenderer extends TileEntitySpecialRenderer
             if (entity instanceof EntityEnderman) {
                 yo = -1.5D;
             }
+
+            float f1 = (float) chamber.field_145926_a + partialTicks;
+            GL11.glTranslatef(0.0F, 0.1F + MathHelper.sin(f1 * 0.1F) * 0.01F, 0.0F);
+            float f2;
+
+            for (f2 = chamber.field_145928_o - chamber.field_145925_p; f2 >= (float) Math.PI; f2 -= ((float) Math.PI * 2F)) {
+                ;
+            }
+
+            while (f2 < -(float) Math.PI) {
+                f2 += ((float) Math.PI * 2F);
+            }
+
+            float f4 = chamber.field_145931_j + (chamber.field_145933_i - chamber.field_145931_j) * partialTicks + 0.25F;
+            float f5 = chamber.field_145931_j + (chamber.field_145933_i - chamber.field_145931_j) * partialTicks + 0.75F;
+            f4 = (f4 - (float) MathHelper.truncateDoubleToInt((double) f4)) * 1.6F - 0.3F;
+            f5 = (f5 - (float) MathHelper.truncateDoubleToInt((double) f5)) * 1.6F - 0.3F;
+
+            if (f4 < 0.0F) {
+                f4 = 0.0F;
+            }
+
+            if (f5 < 0.0F) {
+                f5 = 0.0F;
+            }
+
+            if (f4 > 1.0F) {
+                f4 = 1.0F;
+            }
+
+            if (f5 > 1.0F) {
+                f5 = 1.0F;
+            }
+
+            float f6 = chamber.field_145927_n + (chamber.field_145930_m - chamber.field_145927_n) * partialTicks;
+            GL11.glEnable(GL11.GL_CULL_FACE);
 
             RenderManager.instance.renderEntityWithPosYaw(entity, 0.0D, yo, -0.1D, 0.0F, 0F);
             GL11.glPopMatrix();

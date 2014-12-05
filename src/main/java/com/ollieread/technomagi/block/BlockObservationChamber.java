@@ -1,5 +1,6 @@
 package com.ollieread.technomagi.block;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
@@ -87,6 +88,33 @@ public class BlockObservationChamber extends BlockOwnable
         ((IHasFiller) tileEntity).create();
     }
 
+    public void onNeighborBlockChange(World world, int x, int y, int z, Block block)
+    {
+        TileEntityObservationChamber chamber = (TileEntityObservationChamber) world.getTileEntity(x, y, z);
+
+        if (world.isBlockIndirectlyGettingPowered(x, y, z)) {
+            if (chamber.getEntity() != null) {
+
+                if (!world.isRemote) {
+                    chamber.flush();
+
+                    for (int i = 0; i < 32; i++) {
+                        double d6 = (double) i / ((double) 128 - 1.0D);
+                        float f = (world.rand.nextFloat() - 0.5F) * 0.2F;
+                        float f1 = (world.rand.nextFloat() - 0.5F) * 0.2F;
+                        float f2 = (world.rand.nextFloat() - 0.5F) * 0.2F;
+                        double d7 = (z + 0.5D) * d6 + (world.rand.nextDouble() - 0.5D) * (double) 1D;
+                        double d8 = y * d6 + world.rand.nextDouble() * (double) 3D;
+                        double d9 = (z + 0.5D) * d6 + (world.rand.nextDouble() - 0.5D) * (double) 1.0D;
+                        world.spawnParticle("reddust", d7, d8, d9, (double) f, (double) f1, (double) f2);
+                    }
+
+                    world.markBlockForUpdate(x, y, z);
+                }
+            }
+        }
+    }
+
     @Override
     public boolean isBlockSolid(IBlockAccess world, int x, int y, int z, int face)
     {
@@ -121,14 +149,17 @@ public class BlockObservationChamber extends BlockOwnable
 
     public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity)
     {
-        if (entity instanceof EntityLivingBase && !(entity instanceof EntityPlayer) && !world.isRemote) {
+        if (entity instanceof EntityLivingBase && !(entity instanceof EntityPlayer)) {
             if (ResearchRegistry.getObservableEntities().contains(entity.getClass())) {
                 TileEntityObservationChamber tile = (TileEntityObservationChamber) world.getTileEntity(x, y, z);
 
-                if (tile != null && tile.getEntity() == null) {
-                    tile.setEntity((EntityLivingBase) entity);
-                    entity.setDead();
-                    world.markBlockForUpdate(x, y, z);
+                if (!world.isRemote) {
+                    if (tile != null && tile.getEntity() == null) {
+                        tile.setEntity((EntityLivingBase) entity);
+                        entity.setDead();
+
+                        world.markBlockForUpdate(x, y, z);
+                    }
                 }
             }
         }

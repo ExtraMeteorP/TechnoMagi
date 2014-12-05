@@ -180,21 +180,28 @@ public class ModelMachineChamber extends ModelBase
         base.render(f5);
         top.render(f5);
         back.render(f5);
-        panel.render(f5);
 
         lside1.render(f5);
         lside2.render(f5);
         lside3.render(f5);
         lside4.render(f5);
+
+        rside1.render(f5);
+        rside2.render(f5);
+        rside3.render(f5);
+        rside4.render(f5);
+    }
+
+    public void renderDoor(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
+    {
+        panel.render(f5);
+
         lside5.render(f5);
         lside6.render(f5);
         lside7.render(f5);
         lside8.render(f5);
         lside9.render(f5);
-        rside1.render(f5);
-        rside2.render(f5);
-        rside3.render(f5);
-        rside4.render(f5);
+
         rside5.render(f5);
         rside6.render(f5);
         rside7.render(f5);
