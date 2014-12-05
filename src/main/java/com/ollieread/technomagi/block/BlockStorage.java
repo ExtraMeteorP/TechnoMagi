@@ -116,7 +116,14 @@ public class BlockStorage extends BlockTMContainer implements IDigitalToolable
 
                             return true;
                         } else {
-                            ItemStack stack = storage.withdraw(direction, true);
+                            ItemStack stack = null;
+
+                            if (player.isSneaking()) {
+                                stack = storage.withdraw(direction, true, 1);
+                            } else {
+                                stack = storage.withdraw(direction, true);
+                            }
+
                             player.inventory.setInventorySlotContents(player.inventory.currentItem, stack);
 
                             storage.setWaiting(0);

@@ -155,11 +155,16 @@ public class ItemStorage
 
     public ItemStack withdraw(boolean doWithdrawal)
     {
+        return withdraw(doWithdrawal, stack.getMaxStackSize());
+    }
+
+    public ItemStack withdraw(boolean doWithdrawal, int count)
+    {
         if (stack == null) {
             return null;
         }
 
-        int withdrawn = stack.getMaxStackSize();
+        int withdrawn = count;
         if (amount < withdrawn) {
             withdrawn = amount;
         }

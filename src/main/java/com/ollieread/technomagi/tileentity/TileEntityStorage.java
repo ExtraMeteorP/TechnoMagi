@@ -191,6 +191,11 @@ public class TileEntityStorage extends TileEntityTM implements IPlayerLocked, II
         return storage.withdraw(doWithdraw);
     }
 
+    public ItemStack withdraw(ForgeDirection from, boolean doWithdraw, int count)
+    {
+        return storage.withdraw(doWithdraw, count);
+    }
+
     public boolean canDeposit(ForgeDirection from, ItemStack resource)
     {
         return true;
