@@ -44,7 +44,7 @@ public class Recipes
         recipes.add(GameRegistry.addShapedRecipe(new ItemStack(Items.itemComponent, 1, 5), "x", "x", 'x', goldIngot));
         recipes.add(GameRegistry.addShapedRecipe(new ItemStack(Items.itemComponent, 2, 7), "xx", "xx", 'x', diamond));
         recipes.add(GameRegistry.addShapedRecipe(new ItemStack(Items.itemComponent, 1, 8), "x", "x", 'x', diamond));
-        recipes.add(GameRegistry.addShapedRecipe(new ItemStack(Items.itemComponent, 2, 11), "xx", "y", 'x', new ItemStack(Items.itemComponent, 1, 10), 'y', new ItemStack(Items.itemComponent, 2, 3)));
+        recipes.add(GameRegistry.addShapedRecipe(new ItemStack(Items.itemComponent, 2, 11), "xx ", "y  ", 'x', new ItemStack(Items.itemComponent, 1, 10), 'y', new ItemStack(Items.itemComponent, 2, 3)));
 
         RecipeHelper.addSeparatorRecipe(new ItemStack(net.minecraft.init.Blocks.iron_ore), new ItemStack(Items.itemComponent, 2, 0), new ItemStack(net.minecraft.init.Blocks.cobblestone), 3);
         RecipeHelper.addSeparatorRecipe(new ItemStack(net.minecraft.init.Blocks.gold_ore), new ItemStack(Items.itemComponent, 2, 3), new ItemStack(net.minecraft.init.Blocks.cobblestone), 3);
@@ -57,8 +57,9 @@ public class Recipes
 
         RecipeHelper.addFurnaceRecipe(new ItemStack(Items.itemComponent, 1, 0), ironIngot, 0.7F);
         RecipeHelper.addFurnaceRecipe(new ItemStack(Items.itemComponent, 1, 3), goldIngot, 1F);
+        RecipeHelper.addFurnaceRecipe(new ItemStack(Items.itemComponent, 2, 11), new ItemStack(Items.itemComponent, 2, 12), 1F);
 
-        RecipeHelper.addShapedRecipe(null, new ItemStack(Items.itemComponent, 2, 11), "xx", "y", 'x', new ItemStack(Items.itemComponent, 1, 10), 'y', new ItemStack(Items.itemComponent, 2, 3));
+        RecipeHelper.addShapedRecipe(null, new ItemStack(Items.itemComponent, 3, 11), "xx ", "y  ", 'x', new ItemStack(Items.itemComponent, 1, 10), 'y', new ItemStack(Items.itemComponent, 2, 3));
         RecipeHelper.addShapedRecipe(null, new ItemStack(Items.itemComponent, 4, 1), "xx", "xx", 'x', ironIngot);
         RecipeHelper.addShapedRecipe(null, new ItemStack(Items.itemComponent, 2, 2), "x", "x", 'x', ironIngot);
         RecipeHelper.addShapedRecipe(null, new ItemStack(Items.itemComponent, 4, 4), "xx", "xx", 'x', goldIngot);
