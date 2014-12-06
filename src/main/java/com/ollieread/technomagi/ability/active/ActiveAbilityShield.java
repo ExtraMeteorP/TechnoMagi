@@ -85,7 +85,7 @@ public class ActiveAbilityShield extends AbilityActive
     @Override
     public String[] getKnowledge()
     {
-        return new String[] {};
+        return new String[] { "life" };
     }
 
 }

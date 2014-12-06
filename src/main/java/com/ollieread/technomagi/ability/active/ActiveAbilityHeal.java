@@ -85,7 +85,7 @@ public class ActiveAbilityHeal extends AbilityActive
     @Override
     public String[] getKnowledge()
     {
-        return new String[] {};
+        return new String[] { "life" };
     }
 
 }

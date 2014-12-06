@@ -47,7 +47,6 @@ public class ActiveAbilityInvisibility extends AbilityActive
                     if (!interact.entityPlayer.worldObj.isRemote) {
                         Random rand = new Random();
 
-                        interact.entityPlayer.worldObj.playSoundEffect((double) interact.entityPlayer.posX + 0.5D, (double) interact.entityPlayer.posY + 0.5D, (double) interact.entityPlayer.posZ + 0.5D, Reference.MODID.toLowerCase() + ":cast", 1.0F, rand.nextFloat() * 0.4F + 0.8F);
                         interact.entityPlayer.addPotionEffect(new PotionEffect(Potion.invisibility.id, duration * level, level, false));
                     }
 
