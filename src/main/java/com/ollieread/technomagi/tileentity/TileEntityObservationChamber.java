@@ -13,6 +13,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.util.ForgeDirection;
 import cofh.api.energy.IEnergyHandler;
 import cofh.lib.util.helpers.EnergyHelper;
@@ -434,7 +435,15 @@ public class TileEntityObservationChamber extends TileEntityResearch implements 
 
     public void flush()
     {
+        EntityLiving flush = getEntityLiving();
+        ForgeDirection dir = ForgeDirection.getOrientation(worldObj.getBlockMetadata(xCoord, yCoord, zCoord));
+
+        flush.setHealth(health);
+        flush.setWorld(worldObj);
+        flush.setPosition(xCoord, yCoord, zCoord);
         setEntity(null);
+        worldObj.spawnEntityInWorld(flush);
+        flush.attackEntityFrom(DamageSource.wither, 300F);
 
         sync();
     }
