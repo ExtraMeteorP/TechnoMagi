@@ -46,11 +46,15 @@ public class ItemCapture extends ItemTMNBT
         for (Iterator<Class> i = ResearchRegistry.getObservableEntities().iterator(); i.hasNext();) {
             Class entityClass = i.next();
             String name = (String) EntityList.classToStringMapping.get(entityClass);
+            System.out.println(entityClass);
+            System.out.println(name);
 
             if (name != null) {
                 entityIcons.put(name, register.registerIcon(Reference.MODID.toLowerCase() + ":" + getIconString() + "Entity." + name));
             }
         }
+
+        entityIcons.put("unknown", register.registerIcon(Reference.MODID.toLowerCase() + ":" + getIconString() + "Entity.unknown"));
     }
 
     @Override
@@ -67,7 +71,7 @@ public class ItemCapture extends ItemTMNBT
                     return entityIcons.get(name);
                 }
 
-                return null;
+                return entityIcons.get("unknown");
             }
         }
 
