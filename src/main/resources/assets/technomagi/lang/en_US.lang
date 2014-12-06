@@ -193,6 +193,7 @@ item.unit.voidUnitBasic.name=Basic Void Unit
 item.unit.voidUnitAdvanced.name=Advanced Void Unit
 item.unit.voidUnitElite.name=Elite Void Unit
 item.malleableCircuit.name=Malleable Circuit
+item.capture.name=Creature Storage
 
 message.specialisation.chosen=You have activated your internal nanites, your first step towards rebuilding the TechnoMage order.
 message.specialisation.chosen.scholar=Your internal nanites have calibrated themselves to you, manifesting your internal desires, morals and ambitions, aligning you with the Scholar specialisation.

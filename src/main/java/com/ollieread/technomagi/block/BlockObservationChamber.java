@@ -4,6 +4,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -17,6 +19,8 @@ import com.ollieread.ennds.research.ResearchRegistry;
 import com.ollieread.technomagi.TechnoMagi;
 import com.ollieread.technomagi.common.CommonProxy;
 import com.ollieread.technomagi.common.Reference;
+import com.ollieread.technomagi.common.init.Items;
+import com.ollieread.technomagi.item.ItemCapture;
 import com.ollieread.technomagi.tileentity.IHasFiller;
 import com.ollieread.technomagi.tileentity.TileEntityObservationChamber;
 
@@ -88,6 +92,11 @@ public class BlockObservationChamber extends BlockOwnable
         ((IHasFiller) tileEntity).create();
     }
 
+    public boolean canPlaceBlockAt(World world, int x, int y, int z)
+    {
+        return world.isAirBlock(x, y + 1, z) && world.isAirBlock(x, y + 2, z);
+    }
+
     public void onNeighborBlockChange(World world, int x, int y, int z, Block block)
     {
         TileEntityObservationChamber chamber = (TileEntityObservationChamber) world.getTileEntity(x, y, z);
@@ -138,6 +147,35 @@ public class BlockObservationChamber extends BlockOwnable
 
                 if (tile != null) {
                     if (tile.isPlayer(player)) {
+                        if (stack != null && stack.isItemEqual(new ItemStack(Items.itemCapture, 1, 1))) {
+                            ItemCapture capture = (ItemCapture) stack.getItem();
+
+                            if (capture.hasEntity(stack)) {
+                                String name = capture.getName(stack);
+                                String entityName = capture.getEntityName(stack);
+
+                                if (entityName != null) {
+                                    EntityLiving entityLiving = (EntityLiving) EntityList.createEntityByName(entityName, world);
+
+                                    if (entityLiving != null) {
+                                        entityLiving.readEntityFromNBT(ItemCapture.getEntityNBT(stack));
+
+                                        if (name != null) {
+                                            entityLiving.setCustomNameTag(name);
+                                        }
+
+                                        capture.setEntity(null, stack);
+                                        if (ResearchRegistry.getObservableEntities().contains(entityLiving.getClass())) {
+                                            tile.setEntity(entityLiving);
+                                            stack.stackSize--;
+
+                                            return true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
                         player.openGui(TechnoMagi.instance, CommonProxy.GUI_OBSERVATION, world, x, y, z);
                     }
                 }

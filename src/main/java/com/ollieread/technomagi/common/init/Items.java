@@ -3,6 +3,7 @@ package com.ollieread.technomagi.common.init;
 import org.apache.logging.log4j.Level;
 
 import com.ollieread.technomagi.TechnoMagi;
+import com.ollieread.technomagi.item.ItemCapture;
 import com.ollieread.technomagi.item.ItemComponent;
 import com.ollieread.technomagi.item.ItemDigitalTool;
 import com.ollieread.technomagi.item.ItemEtherium;
@@ -42,6 +43,7 @@ public class Items
     public static ItemTM itemVoidCrystal;
     public static ItemTM itemVoidIngot;
     public static ItemTM itemMalleableCircuit;
+    public static ItemTM itemCapture;
 
     public static void init()
     {
@@ -63,6 +65,7 @@ public class Items
         itemVoidCrystal = new ItemVoidCrystal("voidCrystal");
         itemVoidIngot = new ItemVoidIngot("voidIngot");
         itemMalleableCircuit = new ItemMalleableCircuit("malleableCircuit");
+        itemCapture = new ItemCapture("capture");
 
         GameRegistry.registerItem(itemTechnomageStaff, "technomageStaff");
         GameRegistry.registerItem(itemSampleVile, "sampleVile");
@@ -78,5 +81,6 @@ public class Items
         GameRegistry.registerItem(itemComponent, "component");
         GameRegistry.registerItem(itemUnit, "unit");
         GameRegistry.registerItem(itemMalleableCircuit, "malleableCircuit");
+        GameRegistry.registerItem(itemCapture, "capture");
     }
 }
