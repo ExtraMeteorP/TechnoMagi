@@ -40,6 +40,7 @@ import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import org.apache.commons.lang3.StringUtils;
 
 import com.ollieread.ennds.ability.AbilityRegistry;
+import com.ollieread.ennds.event.EnndsEvent.PlayerCastingEvent;
 import com.ollieread.ennds.extended.ExtendedNanites;
 import com.ollieread.ennds.extended.ExtendedPlayerAbilities;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
@@ -92,19 +93,21 @@ public class PlayerEventHandler
                 event.useBlock = Event.Result.DENY;
                 event.useItem = Event.Result.DENY;
 
-                if (abilities.useAbility(event, heldItem)) {
-                    event.entityPlayer.swingItem();
+                if (!abilities.shouldCast(heldItem)) {
+                    if (abilities.useAbility(event, heldItem)) {
+                        event.entityPlayer.swingItem();
 
-                    if (!event.entityPlayer.worldObj.isRemote) {
-                        SoundHelper.playSoundEffectAtPlayer(event.entityPlayer, "cast", new Random());
-                    } else {
-                        if (event.isCanceled()) {
-                            PacketHandler.INSTANCE.sendToServer(new MessagePlayerInteractEvent(event));
+                        if (!event.entityPlayer.worldObj.isRemote) {
+                            SoundHelper.playSoundEffectAtPlayer(event.entityPlayer, "cast", new Random());
+                        } else {
+                            if (event.isCanceled()) {
+                                PacketHandler.INSTANCE.sendToServer(new MessagePlayerInteractEvent(event));
+                            }
                         }
-                    }
-                } else {
-                    if (!event.entityPlayer.worldObj.isRemote) {
-                        SoundHelper.playSoundEffectAtPlayer(event.entityPlayer, "fail", new Random());
+                    } else {
+                        if (!event.entityPlayer.worldObj.isRemote) {
+                            SoundHelper.playSoundEffectAtPlayer(event.entityPlayer, "fail", new Random());
+                        }
                     }
                 }
             } else if (heldItem != null && heldItem.getItem() != null && event.entityPlayer.getHeldItem().isItemEqual(new ItemStack(Items.itemDigitalTool))) {
@@ -148,14 +151,16 @@ public class PlayerEventHandler
                 if (heldItem.getItem() instanceof IStaff) {
                     ExtendedPlayerAbilities abilities = playerKnowledge.abilities;
 
-                    if (abilities.useAbility(event, heldItem)) {
-                        event.entityPlayer.swingItem();
-                        if (event.entityPlayer.worldObj.isRemote && event.isCanceled()) {
-                            PacketHandler.INSTANCE.sendToServer(new MessageEntityInteractEvent(event));
-                        }
-                    } else {
-                        if (!event.entityPlayer.worldObj.isRemote) {
-                            SoundHelper.playSoundEffectAtPlayer(event.entityPlayer, "fail", new Random());
+                    if (!abilities.shouldCast(heldItem)) {
+                        if (abilities.useAbility(event, heldItem)) {
+                            event.entityPlayer.swingItem();
+                            if (event.entityPlayer.worldObj.isRemote && event.isCanceled()) {
+                                PacketHandler.INSTANCE.sendToServer(new MessageEntityInteractEvent(event));
+                            }
+                        } else {
+                            if (!event.entityPlayer.worldObj.isRemote) {
+                                SoundHelper.playSoundEffectAtPlayer(event.entityPlayer, "fail", new Random());
+                            }
                         }
                     }
                 } else if (event.target instanceof EntityAnimal) {
@@ -589,6 +594,25 @@ public class PlayerEventHandler
     {
         if (!event.entityPlayer.worldObj.isRemote) {
             ResearchRegistry.researchEvent("sleep", event, ExtendedPlayerKnowledge.get(event.entityPlayer), true);
+        }
+    }
+
+    @SubscribeEvent
+    public void onPlayerCasting(PlayerCastingEvent event)
+    {
+        ExtendedPlayerKnowledge playerKnowledge = ExtendedPlayerKnowledge.get(event.entityPlayer);
+
+        if (playerKnowledge != null && !playerKnowledge.canSpecialise()) {
+            ItemStack staff = event.entityPlayer.getHeldItem();
+            ExtendedPlayerAbilities abilities = playerKnowledge.abilities;
+
+            if (abilities.shouldCast(staff)) {
+                if (abilities.useAbility(event, staff)) {
+                    if (event.entityPlayer.worldObj.isRemote) {
+                        event.setCanceled(true);
+                    }
+                }
+            }
         }
     }
 
