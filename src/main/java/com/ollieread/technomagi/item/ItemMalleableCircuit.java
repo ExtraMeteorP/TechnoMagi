@@ -51,7 +51,7 @@ public class ItemMalleableCircuit extends ItemTMNBT
 
     public static int getUnit(ItemStack stack)
     {
-        NBTTagCompound compound = stack.stackTagCompound;
+        NBTTagCompound compound = getNBT(stack);
 
         if (compound != null && compound.hasKey("Unit")) {
             return compound.getInteger("Unit");
@@ -62,7 +62,7 @@ public class ItemMalleableCircuit extends ItemTMNBT
 
     public static void setUnit(ItemStack stack, int unit)
     {
-        NBTTagCompound compound = stack.stackTagCompound;
+        NBTTagCompound compound = getNBT(stack);
 
         if (compound == null) {
             stack.stackTagCompound = new NBTTagCompound();

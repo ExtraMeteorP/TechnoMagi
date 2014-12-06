@@ -107,6 +107,12 @@ public class ItemNaniteContainer extends ItemTM
     }
 
     @SideOnly(Side.CLIENT)
+    public IIcon getIconFromDamage(int d)
+    {
+        return d == 0 ? itemIcon : itemIconFull;
+    }
+
+    @SideOnly(Side.CLIENT)
     public IIcon getIconIndex(ItemStack stack)
     {
         String entityName = this.getEntity(stack);
