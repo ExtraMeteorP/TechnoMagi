@@ -1,5 +1,7 @@
 package com.ollieread.technomagi.event.handler;
 
+import net.minecraft.entity.EntityLivingBase;
+
 import com.ollieread.ennds.ability.AbilityRegistry;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.common.init.Blocks;
@@ -21,16 +23,25 @@ public class TickEventHandler
             AbilityRegistry.passiveAbilityEvent("playerTick", event, ExtendedPlayerKnowledge.get(event.player));
 
             if (event.player.isSneaking()) {
+                TileEntityTeleporter destination = null;
+                TileEntityTeleporter teleporter = null;
+
                 if (EntityHelper.isStoodOnMeta(event.player, Blocks.blockTeleporter, 0)) {
-                    TileEntityTeleporter teleporter = (TileEntityTeleporter) EntityHelper.getTileEntityStoodOn(event.player);
+                    teleporter = (TileEntityTeleporter) EntityHelper.getTileEntityStoodOn(event.player);
 
                     if (teleporter != null && teleporter.canUse(event.player)) {
-                        TileEntityTeleporter destination = TeleportHelper.findTeleporterBelow(teleporter, event.player);
-
-                        if (destination != null && destination.canUse(event.player)) {
-                            TeleportHelper.teleportPlayerToTeleporter(event.player, teleporter, destination);
-                        }
+                        destination = TeleportHelper.findTeleporterBelow(teleporter, event.player);
                     }
+                } else if (EntityHelper.isStoodOnMeta(event.player, Blocks.blockTeleporter, 1)) {
+                    teleporter = (TileEntityTeleporter) EntityHelper.getTileEntityStoodOn(event.player);
+
+                    if (!teleporter.canPartner() && teleporter.canUse((EntityLivingBase) event.player)) {
+                        destination = teleporter.getPartner();
+                    }
+                }
+
+                if (teleporter != null && destination != null && destination.canUse(event.player)) {
+                    TeleportHelper.teleportPlayerToTeleporter(event.player, teleporter, destination);
                 }
             }
         }

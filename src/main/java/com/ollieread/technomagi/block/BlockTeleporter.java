@@ -98,7 +98,7 @@ public class BlockTeleporter extends BlockTMContainer implements IDigitalToolabl
     @Override
     public void onEntityWalking(World world, int x, int y, int z, Entity entity)
     {
-        if (!world.isRemote && world.getBlockMetadata(x, y, z) == 1 && entity instanceof EntityLivingBase) {
+        if (!world.isRemote && world.getBlockMetadata(x, y, z) == 1 && entity instanceof EntityLivingBase && !(entity instanceof EntityPlayer)) {
             TileEntityTeleporter teleporter = (TileEntityTeleporter) world.getTileEntity(x, y, z);
 
             if (!teleporter.canPartner() && teleporter.canUse((EntityLivingBase) entity)) {
