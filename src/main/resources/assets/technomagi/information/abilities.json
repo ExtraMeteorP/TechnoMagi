@@ -1,11 +1,46 @@
 {
-  "exothermic": [
+  "fire": [
     ""
   ],
-  "endothermic": [
+  "harden": [
+    ""
+  ],
+  "invisibility": [
+    ""
+  ],
+  "flashstep": [
+    ""
+  ],
+  "blink=Blink": [
+    ""
+  ],all": [
+    ""
+  ],
+  "force": [
+    ""
+  ],
+  "harvest": [
+    ""
+  ],
+  "heal": [
+    ""
+  ],
+  "invisibility": [
+    ""
+  ],
+  "projectile": [
+    ""
+  ],
+  "projectileExothermic": [
+    ""
+  ],
+  "reactive": [
+    ""
+  ],
+  "shield": [
     ""
   ],
   "nanites": [
     ""
-  ]
+  ],
 }
