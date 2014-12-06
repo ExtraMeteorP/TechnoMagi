@@ -74,6 +74,7 @@ public class BlockArchive extends BlockTMContainer
                     if (stack != null && stack.getItem() != null && stack.getItem() instanceof ItemResearchStorage) {
                         if (entity.syncStorage(stack)) {
                             stack.stackSize--;
+                            return true;
                         }
                     }
 

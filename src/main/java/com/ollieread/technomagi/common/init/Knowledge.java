@@ -13,12 +13,15 @@ import com.ollieread.technomagi.knowledge.KnowledgeEnderman;
 import com.ollieread.technomagi.knowledge.KnowledgeEndothermic;
 import com.ollieread.technomagi.knowledge.KnowledgeExothermic;
 import com.ollieread.technomagi.knowledge.KnowledgeForce;
+import com.ollieread.technomagi.knowledge.KnowledgeForceII;
+import com.ollieread.technomagi.knowledge.KnowledgeForceIII;
+import com.ollieread.technomagi.knowledge.KnowledgeLife;
+import com.ollieread.technomagi.knowledge.KnowledgeLifeII;
+import com.ollieread.technomagi.knowledge.KnowledgeLifeIII;
 import com.ollieread.technomagi.knowledge.KnowledgeLight;
-import com.ollieread.technomagi.knowledge.KnowledgeMotion;
 import com.ollieread.technomagi.knowledge.KnowledgeNanites;
 import com.ollieread.technomagi.knowledge.KnowledgePassive;
 import com.ollieread.technomagi.knowledge.KnowledgePig;
-import com.ollieread.technomagi.knowledge.KnowledgeProjectile;
 import com.ollieread.technomagi.knowledge.KnowledgeSheep;
 import com.ollieread.technomagi.knowledge.KnowledgeSkeleton;
 import com.ollieread.technomagi.knowledge.KnowledgeTeleportation;
@@ -39,6 +42,9 @@ public class Knowledge
     public static IKnowledge knowledgeTeleportation;
     public static IKnowledge knowledgeVoid;
     public static IKnowledge knowledgeNanites;
+    public static IKnowledge knowledgeLife;
+    public static IKnowledge knowledgeRebirth;
+    public static IKnowledge knowledgeDeath;
 
     public static IKnowledge knowledgeCow;
     public static IKnowledge knowledgePig;
@@ -61,8 +67,8 @@ public class Knowledge
         knowledgeExothermic = new KnowledgeExothermic("exothermic");
         knowledgeForce = new KnowledgeForce("force");
         knowledgeLight = new KnowledgeLight("light");
-        knowledgeMotion = new KnowledgeMotion("motion");
-        knowledgeProjectile = new KnowledgeProjectile("projectile");
+        knowledgeMotion = new KnowledgeForceII("motion");
+        knowledgeProjectile = new KnowledgeForceIII("projectile");
         // This is removed until I figure out wtf to do for it
         // Maybe something tying off the back of teleportation? I don't know
         // and I imagine no one will see this..
@@ -70,6 +76,9 @@ public class Knowledge
         knowledgeTeleportation = new KnowledgeTeleportation("teleportation");
         knowledgeVoid = new KnowledgeVoid("void");
         knowledgeNanites = new KnowledgeNanites("nanites");
+        knowledgeLife = new KnowledgeLife("life");
+        knowledgeRebirth = new KnowledgeLifeII("rebirth");
+        knowledgeDeath = new KnowledgeLifeIII("death");
         // Passive Knowledge
         knowledgeCow = new KnowledgeCow("entityCow");
         knowledgePig = new KnowledgePig("entityPig");

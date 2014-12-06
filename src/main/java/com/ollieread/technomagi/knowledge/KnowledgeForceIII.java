@@ -11,7 +11,7 @@ import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.knowledge.research.ResearchCrafting;
 import com.ollieread.technomagi.knowledge.research.ResearchEvent;
 
-public class KnowledgeProjectile extends Knowledge
+public class KnowledgeForceIII extends Knowledge
 {
 
     public static IResearchEvent damageArrow;
@@ -21,7 +21,7 @@ public class KnowledgeProjectile extends Knowledge
     public static IResearchCrafting craftArrow;
     public static IResearchCrafting craftDispenser;
 
-    public KnowledgeProjectile(String name)
+    public KnowledgeForceIII(String name)
     {
         super(name, Reference.MODID.toLowerCase());
 

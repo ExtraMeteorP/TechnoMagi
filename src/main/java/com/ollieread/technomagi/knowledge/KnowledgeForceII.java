@@ -13,7 +13,7 @@ import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.knowledge.research.ResearchAnalysis;
 import com.ollieread.technomagi.knowledge.research.ResearchObservation;
 
-public class KnowledgeMotion extends Knowledge
+public class KnowledgeForceII extends Knowledge
 {
 
     public static IResearchAnalysis sugar;
@@ -34,7 +34,7 @@ public class KnowledgeMotion extends Knowledge
     public static IResearchObservation villagerTest10;
     public static IResearchObservation villagerTest11;
 
-    public KnowledgeMotion(String name)
+    public KnowledgeForceII(String name)
     {
         super(name, Reference.MODID.toLowerCase());
 

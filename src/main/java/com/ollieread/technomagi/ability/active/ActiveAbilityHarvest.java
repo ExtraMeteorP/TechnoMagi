@@ -104,8 +104,7 @@ public class ActiveAbilityHarvest extends AbilityActive implements IAbilityActiv
     @Override
     public String[] getKnowledge()
     {
-        // return new String[] { "density", "force" };
-        return null;
+        return new String[] { "density", "force" };
     }
 
     @Override

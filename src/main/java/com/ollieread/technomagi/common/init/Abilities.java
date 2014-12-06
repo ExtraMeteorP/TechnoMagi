@@ -9,6 +9,7 @@ import com.ollieread.ennds.ability.IAbilityPassive;
 import com.ollieread.technomagi.TechnoMagi;
 import com.ollieread.technomagi.ability.active.ActiveAbilityAtmosphere;
 import com.ollieread.technomagi.ability.active.ActiveAbilityBlink;
+import com.ollieread.technomagi.ability.active.ActiveAbilityDrain;
 import com.ollieread.technomagi.ability.active.ActiveAbilityFire;
 import com.ollieread.technomagi.ability.active.ActiveAbilityFireball;
 import com.ollieread.technomagi.ability.active.ActiveAbilityFlashstep;
@@ -43,6 +44,7 @@ public class Abilities
     public static IAbilityActive abilityActiveProjectileExothermic;
     public static IAbilityActive abilityActiveAtmosphere;
     public static IAbilityActive abilityActiveShield;
+    public static IAbilityActive abilityDrain;
 
     public static IAbilityPassive abilityPassiveScholarResearch;
     public static IAbilityPassive abilityPassiveNanites;
@@ -93,6 +95,9 @@ public class Abilities
         }
         if (Config.shieldEnabled) {
             abilityActiveShield = new ActiveAbilityShield("shield");
+        }
+        if (Config.drainEnabled) {
+            abilityDrain = new ActiveAbilityDrain("drain");
         }
 
         abilityPassiveNanites = new PassiveAbilityNanites("nanites");

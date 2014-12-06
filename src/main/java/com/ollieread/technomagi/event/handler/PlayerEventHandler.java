@@ -1,6 +1,7 @@
 package com.ollieread.technomagi.event.handler;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -15,16 +16,19 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemFlintAndSteel;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
@@ -445,6 +449,10 @@ public class PlayerEventHandler
                         ((EntityLiving) event.entityLiving).setAttackTarget(null);
                     }
 
+                    if (event.entityLiving instanceof EntityEnderman) {
+                        ((EntityEnderman) event.entityLiving).setScreaming(false);
+                    }
+
                     event.entityLiving.setRevengeTarget(null);
                 }
             }
@@ -496,6 +504,51 @@ public class PlayerEventHandler
     }
 
     @SubscribeEvent
+    public void onLivingUpdate(LivingUpdateEvent event)
+    {
+        if (event.entityLiving instanceof EntityAnimal) {
+            EntityAnimal animal = (EntityAnimal) event.entityLiving;
+
+            if (animal.getGrowingAge() == 6000) {
+                double d = 5.0D;
+                List entities = animal.worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox(animal.posX - d, animal.posY - d, animal.posZ - d, animal.posX + d, animal.posY + d, animal.posZ + d));
+
+                for (Iterator i = entities.iterator(); i.hasNext();) {
+                    EntityPlayer player = (EntityPlayer) i.next();
+
+                    if (player != null && player.canEntityBeSeen(animal)) {
+                        Class entityClass = animal.getClass();
+                        String entityName = (String) EntityList.classToStringMapping.get(entityClass);
+
+                        if (entityName != null && !entityName.isEmpty()) {
+                            ExtendedPlayerKnowledge knowledge = ExtendedPlayerKnowledge.get(player);
+
+                            if (knowledge != null && !knowledge.canSpecialise()) {
+                                ResearchRegistry.researchEvent("birth" + StringUtils.capitalize(entityName), event, knowledge, true);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onEntityConstructing(EntityConstructing event)
+    {
+        if (event.entity instanceof EntityLiving) {
+            Set<Class> allowedEntities = ResearchRegistry.getMonitorableEntities();
+
+            for (Iterator<Class> i = allowedEntities.iterator(); i.hasNext();) {
+                Class c = i.next();
+                if (c.isInstance(event.entity) && ExtendedNanites.get(event.entity) == null) {
+                    ExtendedNanites.register(event.entity);
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
     public void onEnderTeleport(EnderTeleportEvent event)
     {
         if (!event.entityLiving.worldObj.isRemote) {
@@ -510,7 +563,9 @@ public class PlayerEventHandler
                     ExtendedPlayerKnowledge knowledge = ExtendedPlayerKnowledge.get(player);
 
                     if (knowledge != null && !knowledge.canSpecialise()) {
-                        ResearchRegistry.researchEvent("enderTeleportEnderman", event, knowledge, true);
+                        if (player.canEntityBeSeen(event.entityLiving)) {
+                            ResearchRegistry.researchEvent("enderTeleportEnderman", event, knowledge, true);
+                        }
                     }
                 }
             }

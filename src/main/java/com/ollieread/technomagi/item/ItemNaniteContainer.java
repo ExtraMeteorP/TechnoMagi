@@ -191,6 +191,8 @@ public class ItemNaniteContainer extends ItemTM
                             entityLiving.func_110163_bv();
                         }
 
+                        entityLiving.setAttackTarget(null);
+
                         stack.stackSize--;
                     }
                 }
