@@ -82,9 +82,6 @@ public class Abilities
         if (Config.invisibilityEnabled) {
             abilityActiveInvisibility = new ActiveAbilityHarvest("invisibility");
         }
-        if (Config.harvestEnabled) {
-            abilityActiveHarvest = new ActiveAbilityHarvest("harvest");
-        }
         if (Config.projectileEnabled) {
             abilityActiveProjectile = new ActiveAbilityProjectile("projectile");
         }
