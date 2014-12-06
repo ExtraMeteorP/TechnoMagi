@@ -6,6 +6,7 @@ import java.util.Set;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.passive.EntityAnimal;
@@ -26,6 +27,7 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
@@ -200,11 +202,23 @@ public class PlayerEventHandler
             if (event.entityLiving instanceof EntityPlayer) {
                 player = (EntityPlayer) event.entityLiving;
                 String entityName = null;
+                EntityLivingBase entity = null;
 
                 if (event.source instanceof EntityDamageSourceIndirect || event.source instanceof EntityDamageSource) {
                     if (event.source.getEntity() instanceof EntityLivingBase) {
-                        EntityLivingBase entity = (EntityLivingBase) event.source.getEntity();
+                        entity = (EntityLivingBase) event.source.getEntity();
                         entityName = (String) EntityList.classToStringMapping.get(entity.getClass());
+                    }
+                }
+
+                if (entity != null) {
+                    ExtendedNanites nanites = ExtendedNanites.get(entity);
+
+                    if (nanites != null && nanites.getOwner() != null) {
+                        if (player.getCommandSenderName().equals(nanites.getOwner())) {
+                            event.setCanceled(true);
+                            return;
+                        }
                     }
                 }
 
@@ -215,6 +229,7 @@ public class PlayerEventHandler
                 }
             } else {
                 EntityLivingBase entity = null;
+
                 if (event.source instanceof EntityDamageSourceIndirect || event.source instanceof EntityDamageSource) {
                     if (event.source.getEntity() instanceof EntityLivingBase) {
                         entity = (EntityLivingBase) event.source.getEntity();
@@ -408,6 +423,24 @@ public class PlayerEventHandler
                     if (destination != null) {
                         TeleportHelper.teleportEntityToTeleporter(event.entityLiving, teleporter, destination);
                     }
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onSetTarget(LivingSetAttackTargetEvent event)
+    {
+        if (!event.entityLiving.worldObj.isRemote) {
+            ExtendedNanites nanites = ExtendedNanites.get(event.entityLiving);
+
+            if (nanites != null && nanites.getOwner() != null) {
+                if (event.target instanceof EntityPlayer && event.target.getCommandSenderName().equals(nanites.getOwner())) {
+                    if (event.entityLiving instanceof EntityLiving) {
+                        ((EntityLiving) event.entityLiving).setAttackTarget(null);
+                    }
+
+                    event.entityLiving.setRevengeTarget(null);
                 }
             }
         }
