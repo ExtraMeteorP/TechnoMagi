@@ -17,6 +17,8 @@ import com.ollieread.ennds.research.ResearchRegistry;
 import com.ollieread.technomagi.TechnoMagi;
 import com.ollieread.technomagi.entity.robot.EntityRobotCow;
 import com.ollieread.technomagi.entity.robot.EntityRobotCreeper;
+import com.ollieread.technomagi.entity.robot.EntityRobotEnderman;
+import com.ollieread.technomagi.entity.robot.EntityRobotVillager;
 import com.ollieread.technomagi.entity.robot.EntityRobotZombie;
 
 import cpw.mods.fml.common.registry.EntityRegistry;
@@ -27,22 +29,24 @@ public class Entities
     public static void init()
     {
 
-        EntityRegistry.registerModEntity(EntityRobotCow.class, "robotCow", 1, TechnoMagi.instance, 80, 1, true);
-        EntityRegistry.registerModEntity(EntityRobotCreeper.class, "robotCreeper", 2, TechnoMagi.instance, 80, 1, true);
-        EntityRegistry.registerModEntity(EntityRobotZombie.class, "robotZombie", 3, TechnoMagi.instance, 80, 1, true);
+        EntityRegistry.registerModEntity(EntityRobotCow.class, "robotCow", Config.robotCow, TechnoMagi.instance, 80, 1, true);
+        EntityRegistry.registerModEntity(EntityRobotCreeper.class, "robotCreeper", Config.robotCreeper, TechnoMagi.instance, 80, 1, true);
+        EntityRegistry.registerModEntity(EntityRobotZombie.class, "robotZombie", Config.robotZombie, TechnoMagi.instance, 80, 1, true);
+        EntityRegistry.registerModEntity(EntityRobotEnderman.class, "robotEnderman", Config.robotEnderman, TechnoMagi.instance, 80, 1, true);
+        EntityRegistry.registerModEntity(EntityRobotVillager.class, "robotVillager", Config.robotEnderman, TechnoMagi.instance, 80, 1, true);
 
         ResearchRegistry.registerEntity(EntityCow.class, true, EntityRobotCow.class, false, true);
         ResearchRegistry.registerEntity(EntitySheep.class, false, null, false, true);
         ResearchRegistry.registerEntity(EntityChicken.class, false, null, false, true);
         ResearchRegistry.registerEntity(EntityHorse.class, false, null, false, true);
-        ResearchRegistry.registerEntity(EntityVillager.class, false, null, true, true);
+        ResearchRegistry.registerEntity(EntityVillager.class, true, EntityRobotVillager.class, true, true);
         ResearchRegistry.registerEntity(EntityCreeper.class, true, EntityRobotCreeper.class, true, true);
         ResearchRegistry.registerEntity(EntityZombie.class, true, EntityRobotZombie.class, true, true);
         ResearchRegistry.registerEntity(EntityPigZombie.class, false, null, true, true);
         ResearchRegistry.registerEntity(EntitySkeleton.class, false, null, true, true);
         ResearchRegistry.registerEntity(EntitySpider.class, false, null, false, true);
         ResearchRegistry.registerEntity(EntityCaveSpider.class, false, null, false, true);
-        ResearchRegistry.registerEntity(EntityEnderman.class, false, null, true, true);
+        ResearchRegistry.registerEntity(EntityEnderman.class, true, EntityRobotEnderman.class, true, true);
     }
 
 }
