@@ -149,20 +149,18 @@ public class BlockObservationChamber extends BlockOwnable
 
     public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity)
     {
-        if (entity instanceof EntityLivingBase && !(entity instanceof EntityPlayer)) {
-            if (ResearchRegistry.getObservableEntities().contains(entity.getClass())) {
-                TileEntityObservationChamber tile = (TileEntityObservationChamber) world.getTileEntity(x, y, z);
-
-                if (!world.isRemote) {
-                    if (tile != null && tile.getEntity() == null) {
-                        tile.setEntity((EntityLivingBase) entity);
-                        entity.setDead();
-
-                        world.markBlockForUpdate(x, y, z);
-                    }
-                }
-            }
-        }
+        /*
+         * if (entity instanceof EntityLivingBase && !(entity instanceof
+         * EntityPlayer)) { if
+         * (ResearchRegistry.getObservableEntities().contains
+         * (entity.getClass())) { TileEntityObservationChamber tile =
+         * (TileEntityObservationChamber) world.getTileEntity(x, y, z);
+         * 
+         * if (!world.isRemote) { if (tile != null && tile.getEntity() == null)
+         * { tile.setEntity((EntityLivingBase) entity); entity.setDead();
+         * 
+         * world.markBlockForUpdate(x, y, z); } } } }
+         */
     }
 
     public void onEntityWalking(World world, int x, int y, int z, Entity entity)
