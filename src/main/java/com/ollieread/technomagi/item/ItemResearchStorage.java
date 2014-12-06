@@ -20,7 +20,7 @@ import com.ollieread.ennds.research.ResearchRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemResearchStorage extends ItemTM implements IResearchStorage
+public class ItemResearchStorage extends ItemTMNBT implements IResearchStorage
 {
 
     public ItemResearchStorage(String name, int capacity)
@@ -66,7 +66,7 @@ public class ItemResearchStorage extends ItemTM implements IResearchStorage
 
     public int getCapacity(ItemStack stack)
     {
-        NBTTagCompound compound = stack.stackTagCompound;
+        NBTTagCompound compound = getNBT(stack);
 
         if (compound.hasKey("Capacity")) {
             return compound.getInteger("Capacity");
@@ -77,7 +77,7 @@ public class ItemResearchStorage extends ItemTM implements IResearchStorage
 
     public int getTotal(ItemStack stack)
     {
-        NBTTagCompound compound = stack.stackTagCompound;
+        NBTTagCompound compound = getNBT(stack);
 
         if (compound.hasKey("Total")) {
             return compound.getInteger("Total");
@@ -88,7 +88,7 @@ public class ItemResearchStorage extends ItemTM implements IResearchStorage
 
     public Map<String, Integer> getResearch(ItemStack stack)
     {
-        NBTTagCompound compound = stack.stackTagCompound;
+        NBTTagCompound compound = getNBT(stack);
 
         if (compound.hasKey("ResearchProgress")) {
             NBTTagList researchProgressList = compound.getTagList("ResearchProgress", compound.getId());
@@ -107,19 +107,19 @@ public class ItemResearchStorage extends ItemTM implements IResearchStorage
 
     public void setCapacity(ItemStack stack, int capacity)
     {
-        NBTTagCompound compound = stack.stackTagCompound;
+        NBTTagCompound compound = getNBT(stack);
         compound.setInteger("Capacity", capacity);
     }
 
     public void setTotal(ItemStack stack, int total)
     {
-        NBTTagCompound compound = stack.stackTagCompound;
+        NBTTagCompound compound = getNBT(stack);
         compound.setInteger("Total", total);
     }
 
     public void setResearch(ItemStack stack, Map<String, Integer> researchingKnowledge)
     {
-        NBTTagCompound compound = stack.stackTagCompound;
+        NBTTagCompound compound = getNBT(stack);
         NBTTagList researchProgressList = new NBTTagList();
 
         for (String k : researchingKnowledge.keySet()) {

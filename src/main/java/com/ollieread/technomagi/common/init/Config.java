@@ -10,6 +10,14 @@ public class Config
     public static Configuration config;
 
     public static boolean versionCheck;
+    public static boolean creativeKnowledge;
+    public static boolean creativeKnowledgeAll;
+
+    public static int robotCow;
+    public static int robotZombie;
+    public static int robotCreeper;
+    public static int robotEnderman;
+    public static int robotVillager;
 
     public static boolean atmosphereEnabled;
     public static int atmosphereCost;
@@ -48,6 +56,7 @@ public class Config
     public static boolean shieldEnabled;
     public static int shieldCost;
     public static int shieldDuration;
+    public static boolean drainEnabled;
 
     public static int furnacePowerMax;
     public static int furnacePowerReceive;
@@ -98,6 +107,15 @@ public class Config
 
         // General Config
         versionCheck = config.getBoolean("versionCheck", "General", true, "Whether or not to check version for recommended");
+        creativeKnowledge = config.getBoolean("creativeKnowledge", "General", true, "Whether or not to allow giving knowledge from creative");
+        creativeKnowledgeAll = config.getBoolean("creativeKnowledgeAll", "General", true, "Whether or not to allow giving all knowledge from creative");
+
+        // Entities
+        robotCow = config.getInt("robotCow", "Entity", 1, 1, 100, "Robot cow ID");
+        robotZombie = config.getInt("robotZombie", "Entity", 1, 1, 100, "Robot zombie ID");
+        robotCreeper = config.getInt("robotCreeper", "Entity", 1, 1, 100, "Robot creeper ID");
+        robotEnderman = config.getInt("robotEnderman", "Entity", 1, 1, 100, "Robot enderman ID");
+        robotVillager = config.getInt("robotVillager", "Entity", 1, 1, 100, "Robot villager ID");
 
         // Ability Config
         // Atmosphere
@@ -151,6 +169,8 @@ public class Config
         shieldEnabled = config.getBoolean("shieldEnabled", "Ability", true, "Whether or not the shield ability should be available");
         shieldCost = config.getInt("shieldCost", "Ability", 20, 1, 100, "Cost of the shield ability");
         shieldDuration = config.getInt("shieldDuration", "Ability", 200, 20, 36000, "Duration of the shield ability");
+        // Drain
+        drainEnabled = config.getBoolean("drainEnabled", "Ability", true, "Whether or not the drain ability should be available");
 
         // Machine Config
         // Furnace
