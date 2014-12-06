@@ -7,6 +7,8 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -16,6 +18,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
+import com.ollieread.ennds.extended.ExtendedNanites;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.ennds.research.ResearchRegistry;
 import com.ollieread.technomagi.common.Reference;
@@ -132,7 +135,7 @@ public class ItemNaniteContainer extends ItemTM
         while (iterator.hasNext()) {
             Class entityClass = (Class) iterator.next();
 
-            ItemStack stack = new ItemStack(item, 1);
+            ItemStack stack = new ItemStack(item, 1, 1);
             stack.stackTagCompound = new NBTTagCompound();
             this.setEntity(stack, entityClass);
 
@@ -153,10 +156,42 @@ public class ItemNaniteContainer extends ItemTM
                     player.inventory.addItemStackToInventory(newStack);
                     stack.stackSize--;
                 }
+            } else if (stack.getItemDamage() == 1 && getEntity(stack).equals("player")) {
+                if (charon.nanites.increaseNanites(10)) {
+                    stack.stackSize--;
+                }
             }
         }
 
         return stack;
     }
 
+    public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase entity)
+    {
+        if (entity instanceof EntityLiving) {
+            EntityLiving entityLiving = (EntityLiving) entity;
+            String entityName = (String) EntityList.classToStringMapping.get(entityLiving.getClass());
+
+            if (getEntity(stack).equals(entityName)) {
+                ExtendedNanites nanites = ExtendedNanites.get(entityLiving);
+
+                if (nanites != null && (nanites.getOwner() == null || nanites.getOwner().equals("none"))) {
+                    if (!player.worldObj.isRemote) {
+                        nanites.setOwner(player);
+                        nanites.setNanites(10);
+
+                        if (!entityLiving.hasCustomNameTag()) {
+                            entityLiving.setCustomNameTag("Subject " + entityLiving.getEntityId());
+                            entityLiving.func_110163_bv();
+                        }
+
+                        stack.stackSize--;
+                    }
+                }
+                return true;
+            }
+        }
+
+        return super.itemInteractionForEntity(stack, player, entity);
+    }
 }
