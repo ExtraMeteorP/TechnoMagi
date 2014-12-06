@@ -42,17 +42,22 @@ info.void=The Void
 info.subspace=Subspace
 info.reactive=Reactive Crafting
 
-ability.active.fire=Pyromancy
+ability.active.fire=Ignite/Extinguish
 ability.active.harden=Harden Skin
 ability.active.invisibility=Vanish
 ability.active.flashstep=Flashstep
 ability.active.blink=Blink
 ability.active.fireball=Conjure Fireball
-ability.active.knockback=Knockback Entity
-ability.active.expel=Expel Entities
-ability.active.harvestI=Harvest I (Stone)
-ability.active.harvestII=Harvest II (Iron)
-ability.active.harvestIII=Harvest III (Diamond)
+ability.active.force=Release Force
+ability.active.harvest=Harvest
+ability.active.heal=Heal
+ability.active.invisibility=Invisibility
+ability.active.projectile=Release Arrow
+ability.active.projectileExothermic=Release Fire Arrow
+ability.active.reactive=Reactive Craft
+ability.active.shield=Shield
+
+ability.passive.nanites=Nanite Regeneration
 
 knowledge.density=Density = Mass over Volume
 knowledge.endothermic=Endothermic Understanding
