@@ -14,7 +14,7 @@ import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.item.ItemDigitalTool;
 import com.ollieread.technomagi.tileentity.IDisguisableTile;
 import com.ollieread.technomagi.tileentity.TileEntityAreaLight;
-import com.ollieread.technomagi.util.EntityHelper;
+import com.ollieread.technomagi.util.PlayerHelper;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -77,7 +77,7 @@ public class BlockAreaLight extends BlockTMContainer implements IDigitalToolable
                     } else {
                         light.toggleStatus();
                         world.markBlockForUpdate(x, y, z);
-                        EntityHelper.addChatMessage(player, "Area light " + (light.isOn() ? "enabled" : "disabled"));
+                        PlayerHelper.addChatMessage(player, "Area light " + (light.isOn() ? "enabled" : "disabled"));
 
                         return true;
                     }

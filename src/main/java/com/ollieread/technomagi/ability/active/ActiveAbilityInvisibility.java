@@ -7,16 +7,14 @@ import java.util.Random;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 
 import com.ollieread.ennds.ability.AbilityActive;
+import com.ollieread.ennds.ability.AbilityCast;
+import com.ollieread.ennds.ability.AbilityCast.AbilityUseType;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.ennds.item.IStaff;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.common.init.Config;
-
-import cpw.mods.fml.common.eventhandler.Event;
 
 public class ActiveAbilityInvisibility extends AbilityActive
 {
@@ -32,29 +30,19 @@ public class ActiveAbilityInvisibility extends AbilityActive
         this.enhancements.put("light", 1);
         this.cost = Config.invisibilityCost;
         this.duration = Config.invisibilityDuration;
+
+        this.knowledge = new String[] { "light" };
     }
 
     @Override
-    public boolean use(ExtendedPlayerKnowledge charon, Event event, ItemStack stack)
+    public int getMaxFocus()
     {
-        int level = ((IStaff) stack.getItem()).getEnhancement(stack, "light");
+        return 0;
+    }
 
-        if (event instanceof PlayerInteractEvent) {
-            PlayerInteractEvent interact = (PlayerInteractEvent) event;
-
-            if (interact.action.equals(Action.RIGHT_CLICK_AIR) && !interact.entityPlayer.isPotionActive(Potion.invisibility)) {
-                if (decreaseNanites(charon, cost)) {
-                    if (!interact.entityPlayer.worldObj.isRemote) {
-                        Random rand = new Random();
-
-                        interact.entityPlayer.addPotionEffect(new PotionEffect(Potion.invisibility.id, duration * level, level, false));
-                    }
-
-                    return true;
-                }
-            }
-        }
-
+    @Override
+    public boolean canIntervalFocus()
+    {
         return false;
     }
 
@@ -65,9 +53,35 @@ public class ActiveAbilityInvisibility extends AbilityActive
     }
 
     @Override
-    public String[] getKnowledge()
+    public Map<String, Integer> getEnhancements(int mode)
     {
-        return new String[] { "light" };
+        return getEnhancements();
+    }
+
+    @Override
+    public boolean canUse(ExtendedPlayerKnowledge charon, AbilityCast cast)
+    {
+        return charon.nanites.getMaxNanites() >= cost && cast.type.equals(AbilityUseType.FLASH);
+    }
+
+    @Override
+    public boolean use(ExtendedPlayerKnowledge charon, AbilityCast cast, ItemStack staff)
+    {
+        int level = ((IStaff) staff.getItem()).getEnhancement(staff, "light");
+
+        if (!charon.player.isPotionActive(Potion.invisibility)) {
+            if (decreaseNanites(charon, cost)) {
+                if (!charon.player.worldObj.isRemote) {
+                    Random rand = new Random();
+
+                    charon.player.addPotionEffect(new PotionEffect(Potion.invisibility.id, duration * level, level, false));
+                }
+
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }

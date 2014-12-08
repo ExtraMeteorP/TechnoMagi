@@ -4,21 +4,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 
 import com.ollieread.ennds.ability.AbilityActive;
+import com.ollieread.ennds.ability.AbilityCast;
+import com.ollieread.ennds.ability.AbilityCast.AbilityUseTarget;
+import com.ollieread.ennds.ability.AbilityCast.AbilityUseType;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.common.init.Blocks;
 import com.ollieread.technomagi.common.init.Config;
 import com.ollieread.technomagi.tileentity.TileEntityReactiveCrafting;
-
-import cpw.mods.fml.common.eventhandler.Event;
 
 public class ActiveAbilityReactive extends AbilityActive
 {
@@ -34,56 +31,19 @@ public class ActiveAbilityReactive extends AbilityActive
         this.enhancements.put("endo", 1);
         this.enhancements.put("exo", 1);
         this.cost = Config.reactiveCost;
+
+        this.knowledge = new String[] { "endothermic", "exothermic" };
     }
 
     @Override
-    public boolean use(ExtendedPlayerKnowledge charon, Event event, ItemStack stack)
+    public int getMaxFocus()
     {
-        if (event instanceof PlayerInteractEvent) {
-            PlayerInteractEvent interact = (PlayerInteractEvent) event;
-            EntityPlayer player = interact.entityPlayer;
+        return 0;
+    }
 
-            if (interact.action.equals(Action.RIGHT_CLICK_BLOCK)) {
-                int x = interact.x;
-                int y = interact.y;
-                int z = interact.z;
-                int meta = player.worldObj.getBlockMetadata(x, y, z);
-                Block block = player.worldObj.getBlock(x, y, z);
-                Item item = Item.getItemFromBlock(block);
-
-                if (item != null) {
-                    ItemStack target = new ItemStack(block, 1, meta);
-
-                    if (target != null) {
-                        ItemStack recipe = FurnaceRecipes.smelting().getSmeltingResult(target);
-
-                        if (recipe != null) {
-                            if (recipe.getItem() != null) {
-                                Block result = Block.getBlockFromItem(recipe.getItem());
-
-                                if (result != null) {
-                                    if (charon.nanites.decreaseNanites(cost)) {
-                                        if (!interact.world.isRemote) {
-                                            interact.world.setBlock(x, y, z, Blocks.blockReactiveCrafting);
-                                            TileEntityReactiveCrafting reactive = (TileEntityReactiveCrafting) player.worldObj.getTileEntity(x, y, z);
-
-                                            if (reactive != null) {
-                                                reactive.setResult(recipe, 100, new ItemStack(block, 1, meta));
-                                            }
-                                        }
-
-                                        return true;
-                                    }
-
-                                    return true;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
+    @Override
+    public boolean canIntervalFocus()
+    {
         return false;
     }
 
@@ -94,9 +54,58 @@ public class ActiveAbilityReactive extends AbilityActive
     }
 
     @Override
-    public String[] getKnowledge()
+    public Map<String, Integer> getEnhancements(int mode)
     {
-        return new String[] { "endothermic", "exothermic" };
+        return getEnhancements();
+    }
+
+    @Override
+    public boolean canUse(ExtendedPlayerKnowledge charon, AbilityCast cast)
+    {
+        return charon.nanites.getMaxNanites() >= cost && cast.type.equals(AbilityUseType.FLASH) && cast.target.equals(AbilityUseTarget.BLOCK);
+    }
+
+    @Override
+    public boolean use(ExtendedPlayerKnowledge charon, AbilityCast cast, ItemStack staff)
+    {
+        int x = cast.blockX;
+        int y = cast.blockY;
+        int z = cast.blockZ;
+        int meta = charon.player.worldObj.getBlockMetadata(x, y, z);
+        Block block = charon.player.worldObj.getBlock(x, y, z);
+
+        if (block != null) {
+            ItemStack target = new ItemStack(block, 1, meta);
+            System.out.println(target);
+
+            if (target != null) {
+                ItemStack recipe = FurnaceRecipes.smelting().getSmeltingResult(target);
+                System.out.println(recipe);
+
+                if (recipe != null) {
+                    if (recipe.getItem() != null) {
+                        Block result = Block.getBlockFromItem(recipe.getItem());
+
+                        if (result != null) {
+                            if (charon.nanites.decreaseNanites(cost)) {
+                                if (!charon.player.worldObj.isRemote) {
+                                    charon.player.worldObj.setBlock(x, y, z, Blocks.blockReactiveCrafting);
+                                    TileEntityReactiveCrafting reactive = (TileEntityReactiveCrafting) charon.player.worldObj.getTileEntity(x, y, z);
+
+                                    if (reactive != null) {
+                                        reactive.setResult(recipe, 100, new ItemStack(block, 1, meta), charon.player.isSneaking());
+                                    }
+                                }
+
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 
 }

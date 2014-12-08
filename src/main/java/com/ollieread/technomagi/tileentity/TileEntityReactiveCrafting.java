@@ -1,5 +1,6 @@
 package com.ollieread.technomagi.tileentity;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -13,6 +14,7 @@ public class TileEntityReactiveCrafting extends TileEntityTM implements IDisguis
     protected Disguisable disguise = null;
     protected int ticks = 0;
     protected int crafting = 0;
+    protected boolean mode = false;
 
     public TileEntityReactiveCrafting()
     {
@@ -27,6 +29,7 @@ public class TileEntityReactiveCrafting extends TileEntityTM implements IDisguis
 
         ticks = compound.getInteger("Ticks");
         crafting = compound.getInteger("Crafting");
+        mode = compound.getBoolean("Mode");
 
         result.readFromNBT(compound);
         disguise.readFromNBT(compound);
@@ -39,6 +42,7 @@ public class TileEntityReactiveCrafting extends TileEntityTM implements IDisguis
 
         compound.setInteger("Ticks", ticks);
         compound.setInteger("Crafting", crafting);
+        compound.setBoolean("Mode", mode);
 
         result.writeToNBT(compound);
         disguise.writeToNBT(compound);
@@ -63,17 +67,26 @@ public class TileEntityReactiveCrafting extends TileEntityTM implements IDisguis
                      * return; } }
                      */
 
-                    worldObj.func_147480_a(xCoord, yCoord, zCoord, true);
+                    if (Block.getBlockFromItem(getResult().getItem()) == null) {
+                        mode = false;
+                    }
+
+                    if (!mode) {
+                        worldObj.func_147480_a(xCoord, yCoord, zCoord, true);
+                    } else {
+                        worldObj.setBlock(xCoord, yCoord, zCoord, Block.getBlockFromItem(getResult().getItem()));
+                    }
                 }
             }
         }
     }
 
-    public void setResult(ItemStack stack, int crafting, ItemStack disguise)
+    public void setResult(ItemStack stack, int crafting, ItemStack disguise, boolean mode)
     {
         this.crafting = crafting;
         this.result.setInventorySlotContents(0, stack);
         this.setDisguise(disguise);
+        this.mode = mode;
 
         this.sync();
     }

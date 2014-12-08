@@ -13,16 +13,15 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
-import net.minecraftforge.event.entity.player.EntityInteractEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
 import com.ollieread.ennds.ability.AbilityActive;
+import com.ollieread.ennds.ability.AbilityCast;
+import com.ollieread.ennds.ability.AbilityCast.AbilityUseTarget;
+import com.ollieread.ennds.ability.AbilityCast.AbilityUseType;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.common.init.Config;
 import com.ollieread.technomagi.util.EntityHelper;
-
-import cpw.mods.fml.common.eventhandler.Event;
 
 public class ActiveAbilityForce extends AbilityActive
 {
@@ -35,14 +34,53 @@ public class ActiveAbilityForce extends AbilityActive
         this.enhancements = new HashMap<String, Integer>();
         this.enhancements.put("force", 1);
         this.cost = Config.forceCost;
+
+        this.knowledge = new String[] { "force" };
     }
 
     @Override
-    public boolean use(ExtendedPlayerKnowledge charon, Event event, ItemStack stack)
+    public int getMaxFocus()
     {
-        if (event instanceof PlayerInteractEvent) {
-            PlayerInteractEvent interact = (PlayerInteractEvent) event;
-            EntityPlayer player = interact.entityPlayer;
+        return 0;
+    }
+
+    @Override
+    public boolean canIntervalFocus()
+    {
+        return false;
+    }
+
+    @Override
+    public Map<String, Integer> getEnhancements()
+    {
+        return enhancements;
+    }
+
+    @Override
+    public Map<String, Integer> getEnhancements(int mode)
+    {
+        return getEnhancements();
+    }
+
+    @Override
+    public boolean canUse(ExtendedPlayerKnowledge charon, AbilityCast cast)
+    {
+        if (cast.type.equals(AbilityUseType.FLASH)) {
+            if (cast.target.equals(AbilityUseTarget.ENTITY_LIVING)) {
+                return charon.isSpecialisation("warrior");
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean use(ExtendedPlayerKnowledge charon, AbilityCast cast, ItemStack staff)
+    {
+        if (!cast.target.equals(AbilityUseTarget.ENTITY_LIVING)) {
+            EntityPlayer player = charon.player;
 
             if (decreaseNanites(charon, cost)) {
                 if (!player.worldObj.isRemote) {
@@ -65,7 +103,7 @@ public class ActiveAbilityForce extends AbilityActive
                         double d7 = entity.posZ - player.posZ;
                         double d9 = (double) MathHelper.sqrt_double(d5 * d5 + d6 * d6 + d7 * d7);
 
-                        if (decreaseNanites(charon, 3) && d9 != 0.0D) {
+                        if (decreaseNanites(charon, cost) && d9 != 0.0D) {
                             d5 /= d9;
                             d6 /= d9;
                             d7 /= d9;
@@ -75,41 +113,33 @@ public class ActiveAbilityForce extends AbilityActive
                             entity.attackEntityFrom(DamageSource.generic, 2.0F);
                         }
                     }
-
-                    interact.entityPlayer.worldObj.playSoundEffect((double) interact.entityPlayer.posX + 0.5D, (double) interact.entityPlayer.posY + 0.5D, (double) interact.entityPlayer.posZ + 0.5D, Reference.MODID.toLowerCase() + ":cast", 1.0F, rand.nextFloat() * 0.4F + 0.8F);
                 }
 
                 return true;
             }
-        } else if (event instanceof EntityInteractEvent) {
+        } else if (cast.target.equals(AbilityUseTarget.ENTITY_LIVING)) {
             if (charon.isSpecialisation("warrior")) {
-                EntityInteractEvent interact = (EntityInteractEvent) event;
+                EntityLiving entity = (EntityLiving) cast.targetEntityLiving;
 
-                if (interact.target instanceof EntityLiving) {
-                    EntityLiving entity = (EntityLiving) interact.target;
+                if (decreaseNanites(charon, cost)) {
+                    if (!entity.worldObj.isRemote) {
+                        Vec3 look = EntityHelper.getLookVector(charon.player);
+                        Vec3 eye = EntityHelper.getEyeVector(charon.player);
 
-                    if (decreaseNanites(charon, cost)) {
-                        if (!entity.worldObj.isRemote) {
-                            Vec3 look = EntityHelper.getLookVector(interact.entityPlayer);
-                            Vec3 eye = EntityHelper.getEyeVector(interact.entityPlayer);
+                        Vec3 target = Vec3.createVectorHelper(look.xCoord, look.yCoord, look.zCoord);
+                        Vec3 dest = null;
 
-                            Vec3 target = Vec3.createVectorHelper(look.xCoord, look.yCoord, look.zCoord);
-                            Vec3 dest = null;
+                        Random rand = new Random();
 
-                            Random rand = new Random();
+                        double d3 = (double) MathHelper.sqrt_double(look.xCoord * look.xCoord + look.yCoord * look.yCoord + look.zCoord * look.zCoord);
 
-                            double d3 = (double) MathHelper.sqrt_double(look.xCoord * look.xCoord + look.yCoord * look.yCoord + look.zCoord * look.zCoord);
-
-                            entity.motionX = look.xCoord / d3 * 5.0D;
-                            entity.motionY = look.yCoord / d3 * 5.0D;
-                            entity.motionZ = look.zCoord / d3 * 5.0D;
-                            entity.attackEntityFrom(DamageSource.generic, 2.0F);
-
-                            interact.entityPlayer.worldObj.playSoundEffect((double) interact.entityPlayer.posX + 0.5D, (double) interact.entityPlayer.posY + 0.5D, (double) interact.entityPlayer.posZ + 0.5D, Reference.MODID.toLowerCase() + ":cast", 1.0F, rand.nextFloat() * 0.4F + 0.8F);
-                        }
-
-                        return true;
+                        entity.motionX = look.xCoord / d3 * 5.0D;
+                        entity.motionY = look.yCoord / d3 * 5.0D;
+                        entity.motionZ = look.zCoord / d3 * 5.0D;
+                        entity.attackEntityFrom(DamageSource.generic, 2.0F);
                     }
+
+                    return true;
                 }
             }
         }
@@ -117,15 +147,4 @@ public class ActiveAbilityForce extends AbilityActive
         return false;
     }
 
-    @Override
-    public Map<String, Integer> getEnhancements()
-    {
-        return enhancements;
-    }
-
-    @Override
-    public String[] getKnowledge()
-    {
-        return new String[] { "force" };
-    }
 }

@@ -46,8 +46,6 @@ public class ItemCapture extends ItemTMNBT
         for (Iterator<Class> i = ResearchRegistry.getObservableEntities().iterator(); i.hasNext();) {
             Class entityClass = i.next();
             String name = (String) EntityList.classToStringMapping.get(entityClass);
-            System.out.println(entityClass);
-            System.out.println(name);
 
             if (name != null) {
                 entityIcons.put(name, register.registerIcon(Reference.MODID.toLowerCase() + ":" + getIconString() + "Entity." + name));

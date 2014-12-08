@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.apache.logging.log4j.Level;
 
+import com.ollieread.ennds.ability.AbilityRegistry;
 import com.ollieread.ennds.ability.IAbilityActive;
 import com.ollieread.ennds.ability.IAbilityPassive;
 import com.ollieread.technomagi.TechnoMagi;
@@ -17,10 +18,12 @@ import com.ollieread.technomagi.ability.active.ActiveAbilityForce;
 import com.ollieread.technomagi.ability.active.ActiveAbilityHarden;
 import com.ollieread.technomagi.ability.active.ActiveAbilityHarvest;
 import com.ollieread.technomagi.ability.active.ActiveAbilityHeal;
+import com.ollieread.technomagi.ability.active.ActiveAbilityOverdrive;
 import com.ollieread.technomagi.ability.active.ActiveAbilityProjectile;
 import com.ollieread.technomagi.ability.active.ActiveAbilityProjectileExothermic;
 import com.ollieread.technomagi.ability.active.ActiveAbilityReactive;
 import com.ollieread.technomagi.ability.active.ActiveAbilityShield;
+import com.ollieread.technomagi.ability.data.AbilityDataNanites;
 import com.ollieread.technomagi.ability.passive.PassiveAbilityNanites;
 
 public class Abilities
@@ -45,6 +48,7 @@ public class Abilities
     public static IAbilityActive abilityActiveAtmosphere;
     public static IAbilityActive abilityActiveShield;
     public static IAbilityActive abilityDrain;
+    public static IAbilityActive abilityOverdrive;
 
     public static IAbilityPassive abilityPassiveScholarResearch;
     public static IAbilityPassive abilityPassiveNanites;
@@ -53,6 +57,8 @@ public class Abilities
     public static void init()
     {
         TechnoMagi.logger.log(Level.INFO, "Initiating & registering abilities");
+
+        AbilityRegistry.registerAbilityData("naniteRegen", AbilityDataNanites.class);
 
         if (Config.atmosphereEnabled) {
             abilityActiveAtmosphere = new ActiveAbilityAtmosphere("atmosphere");
@@ -98,6 +104,9 @@ public class Abilities
         }
         if (Config.drainEnabled) {
             abilityDrain = new ActiveAbilityDrain("drain");
+        }
+        if (Config.overdriveEnabled) {
+            abilityOverdrive = new ActiveAbilityOverdrive("overdrive");
         }
 
         abilityPassiveNanites = new PassiveAbilityNanites("nanites");

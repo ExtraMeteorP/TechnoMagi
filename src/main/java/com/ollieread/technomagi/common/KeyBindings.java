@@ -12,15 +12,17 @@ import cpw.mods.fml.client.registry.ClientRegistry;
 public class KeyBindings
 {
 
-    public static KeyBinding tmGui;
+    public static KeyBinding toggleStaff;
+    public static KeyBinding toggleCastMode;
 
     public static void init()
     {
         TechnoMagi.logger.log(Level.INFO, "Initiating & registering key bindings");
 
-        tmGui = new KeyBinding("key.tmGui", Keyboard.KEY_I, "key.categories.technomagi");
+        toggleStaff = new KeyBinding("key.toggleStaff", Keyboard.KEY_I, "key.categories.technomagi");
+        toggleCastMode = new KeyBinding("key.toggleCastMode", Keyboard.KEY_M, "key.categories.technomagi");
 
-        ClientRegistry.registerKeyBinding(tmGui);
+        ClientRegistry.registerKeyBinding(toggleStaff);
     }
 
 }

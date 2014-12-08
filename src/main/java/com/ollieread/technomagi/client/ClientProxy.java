@@ -69,13 +69,15 @@ import cpw.mods.fml.common.FMLCommonHandler;
 public class ClientProxy extends CommonProxy
 {
 
+    public static GuiTMOverlay overlay = new GuiTMOverlay(Minecraft.getMinecraft());
+
     public void registerEventHandlers()
     {
         super.registerEventHandlers();
 
         MinecraftForge.EVENT_BUS.register(new MouseEventHandler());
         FMLCommonHandler.instance().bus().register(new KeyInputHandler());
-        MinecraftForge.EVENT_BUS.register(new GuiTMOverlay(Minecraft.getMinecraft()));
+        MinecraftForge.EVENT_BUS.register(overlay);
 
         KeyBindings.init();
 

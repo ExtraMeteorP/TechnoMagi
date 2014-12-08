@@ -18,7 +18,7 @@ import com.ollieread.technomagi.tileentity.TileEntityGenerator;
 import com.ollieread.technomagi.tileentity.TileEntityGeneratorLife;
 import com.ollieread.technomagi.tileentity.TileEntityGeneratorLight;
 import com.ollieread.technomagi.tileentity.TileEntityGeneratorVoid;
-import com.ollieread.technomagi.util.EntityHelper;
+import com.ollieread.technomagi.util.PlayerHelper;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -101,7 +101,7 @@ public class BlockGenerator extends BlockTMContainer
             TileEntityGenerator entity = (TileEntityGenerator) world.getTileEntity(x, y, z);
 
             if (entity != null) {
-                EntityHelper.addChatMessage(player, "Energy: " + entity.getEnergyStored(null));
+                PlayerHelper.addChatMessage(player, "Energy: " + entity.getEnergyStored(null));
             }
 
             return true;

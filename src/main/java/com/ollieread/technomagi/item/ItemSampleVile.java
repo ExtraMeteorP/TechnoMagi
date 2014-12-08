@@ -147,7 +147,6 @@ public class ItemSampleVile extends ItemTM
 
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float par8, float par9, float par10)
     {
-        System.out.println("In use");
         stack.stackSize--;
 
         if (stack.stackSize == 0) {

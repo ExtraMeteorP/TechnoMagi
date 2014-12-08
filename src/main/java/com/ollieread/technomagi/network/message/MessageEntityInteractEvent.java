@@ -6,7 +6,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
 
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
-import com.ollieread.technomagi.common.CommonProxy;
 
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
@@ -46,7 +45,7 @@ public class MessageEntityInteractEvent implements IMessage, IMessageHandler<Mes
         Entity entity = player.worldObj.getEntityByID(message.target);
 
         EntityInteractEvent event = new EntityInteractEvent(player, entity);
-        CommonProxy.playerEventHandler.onEntityInteract(event);
+        // CommonProxy.playerEventHandler.onEntityInteract(event);
 
         return null;
     }

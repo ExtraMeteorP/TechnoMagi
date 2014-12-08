@@ -7,6 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.EnumAction;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -15,6 +16,7 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
+import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.ennds.item.IStaff;
 import com.ollieread.technomagi.TechnoMagi;
 import com.ollieread.technomagi.common.CommonProxy;
@@ -35,6 +37,15 @@ public class ItemStaff extends ItemTMNBT implements IStaff
 
         setMaxStackSize(1);
         setHasSubtypes(true);
+    }
+
+    public EnumRarity getRarity(ItemStack stack)
+    {
+        if (stack.getItemDamage() == 1) {
+            return EnumRarity.epic;
+        }
+
+        return super.getRarity(stack);
     }
 
     public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5)
@@ -139,26 +150,6 @@ public class ItemStaff extends ItemTMNBT implements IStaff
         return 0;
     }
 
-    @Override
-    public int getCurrentCast(ItemStack staff)
-    {
-        NBTTagCompound compound = getNBT(staff);
-
-        if (compound.hasKey("CastTime")) {
-            return compound.getInteger("CastTime");
-        }
-
-        return 0;
-    }
-
-    @Override
-    public void setCurrentCast(ItemStack staff, int cast)
-    {
-        NBTTagCompound compound = getNBT(staff);
-
-        compound.setInteger("CastTime", cast);
-    }
-
     public static IInventory getInventory(ItemStack staff)
     {
         if (staff.getItemDamage() == 0) {
@@ -194,18 +185,6 @@ public class ItemStaff extends ItemTMNBT implements IStaff
         return false;
     }
 
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int p_77648_7_, float p_77648_8_, float p_77648_9_, float p_77648_10_)
-    {
-        setCurrentCast(stack, getCurrentCast(stack) + 1);
-
-        return true;
-    }
-
-    public void onPlayerStoppedUsing(ItemStack stack, World world, EntityPlayer player, int i)
-    {
-        setCurrentCast(stack, 0);
-    }
-
     public EnumAction getItemUseAction(ItemStack stack)
     {
         return EnumAction.bow;
@@ -217,9 +196,20 @@ public class ItemStaff extends ItemTMNBT implements IStaff
             // if (isPlayer(stack, player)) {
             player.openGui(TechnoMagi.instance, CommonProxy.GUI_STAFF, world, 0, 0, 0);
             // }
+        } else {
+            ExtendedPlayerKnowledge playerKnowledge = ExtendedPlayerKnowledge.get(player);
+
+            if (playerKnowledge != null && !playerKnowledge.canSpecialise()) {
+                player.setItemInUse(stack, 800);
+            }
         }
 
         return stack;
+    }
+
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
+    {
+        return true;
     }
 
     @SideOnly(Side.CLIENT)

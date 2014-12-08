@@ -21,8 +21,8 @@ import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.item.ItemDigitalTool;
 import com.ollieread.technomagi.tileentity.IPlayerLocked;
 import com.ollieread.technomagi.tileentity.TileEntityTeleporter;
-import com.ollieread.technomagi.util.EntityHelper;
 import com.ollieread.technomagi.util.PacketHelper;
+import com.ollieread.technomagi.util.PlayerHelper;
 import com.ollieread.technomagi.util.TeleportHelper;
 
 import cpw.mods.fml.relauncher.Side;
@@ -131,14 +131,14 @@ public class BlockTeleporter extends BlockTMContainer implements IDigitalToolabl
                             thisTeleporter.partner(location[0], location[1], location[2]);
                             otherTeleporter.partner(x, y, z);
                             ItemDigitalTool.resetFocusLocation(tool);
-                            EntityHelper.addChatMessage(player, "Teleporter Paired: " + x + " " + y + " " + z);
+                            PlayerHelper.addChatMessage(player, "Teleporter Paired: " + x + " " + y + " " + z);
                         }
 
                         return true;
                     }
                 } else if (thisTeleporter.canPartner()) {
                     ItemDigitalTool.setFocusLocation(tool, x, y, z);
-                    EntityHelper.addChatMessage(player, "Teleporter Focused: " + x + " " + y + " " + z);
+                    PlayerHelper.addChatMessage(player, "Teleporter Focused: " + x + " " + y + " " + z);
 
                     return true;
                 }

@@ -57,6 +57,9 @@ public class Config
     public static int shieldCost;
     public static int shieldDuration;
     public static boolean drainEnabled;
+    public static boolean overdriveEnabled;
+    public static int overdriveCost;
+    public static int overdriveDuration;
 
     public static int furnacePowerMax;
     public static int furnacePowerReceive;
@@ -107,8 +110,8 @@ public class Config
 
         // General Config
         versionCheck = config.getBoolean("versionCheck", "General", true, "Whether or not to check version for recommended");
-        creativeKnowledge = config.getBoolean("creativeKnowledge", "General", true, "Whether or not to allow giving knowledge from creative");
-        creativeKnowledgeAll = config.getBoolean("creativeKnowledgeAll", "General", true, "Whether or not to allow giving all knowledge from creative");
+        creativeKnowledge = config.getBoolean("creativeKnowledge", "General", false, "Whether or not to allow giving knowledge from creative");
+        creativeKnowledgeAll = config.getBoolean("creativeKnowledgeAll", "General", false, "Whether or not to allow giving all knowledge from creative");
 
         // Entities
         robotCow = config.getInt("robotCow", "Entity", 1, 1, 100, "Robot cow ID");
@@ -171,6 +174,10 @@ public class Config
         shieldDuration = config.getInt("shieldDuration", "Ability", 200, 20, 36000, "Duration of the shield ability");
         // Drain
         drainEnabled = config.getBoolean("drainEnabled", "Ability", true, "Whether or not the drain ability should be available");
+        // Overdrive
+        overdriveEnabled = config.getBoolean("overdriveEnabled", "Ability", true, "Whether or not the overdrive ability should be available");
+        overdriveCost = config.getInt("overdriveCost", "Ability", 20, 1, 100, "Cost of the overdrive ability");
+        overdriveDuration = config.getInt("overdriveDuration", "Ability", 1000, 20, 36000, "Duration of the overdrive ability");
 
         // Machine Config
         // Furnace

@@ -1,6 +1,7 @@
 package com.ollieread.technomagi.item;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -42,6 +43,12 @@ public class ItemUnit extends ItemTMSubtypes implements IStaffEnhancement
         }
 
         return 0;
+    }
+
+    public EnumRarity getRarity(ItemStack stack)
+    {
+        int level = getLevel(stack);
+        return level == 1 ? EnumRarity.common : (level == 2 ? EnumRarity.uncommon : EnumRarity.rare);
     }
 
     @Override

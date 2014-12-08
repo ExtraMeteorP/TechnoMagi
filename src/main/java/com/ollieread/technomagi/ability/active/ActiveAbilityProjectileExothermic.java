@@ -7,14 +7,14 @@ import java.util.Random;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
 import com.ollieread.ennds.ability.AbilityActive;
+import com.ollieread.ennds.ability.AbilityCast;
+import com.ollieread.ennds.ability.AbilityCast.AbilityUseTarget;
+import com.ollieread.ennds.ability.AbilityCast.AbilityUseType;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.common.init.Config;
-
-import cpw.mods.fml.common.eventhandler.Event;
 
 public class ActiveAbilityProjectileExothermic extends AbilityActive
 {
@@ -30,55 +30,19 @@ public class ActiveAbilityProjectileExothermic extends AbilityActive
         this.enhancements.put("force", 3);
         this.enhancements.put("exo", 1);
         this.cost = Config.projectileExothermicCost;
+
+        this.knowledge = new String[] { "projectile", "exothermic" };
     }
 
     @Override
-    public boolean use(ExtendedPlayerKnowledge charon, Event event, ItemStack stack)
+    public int getMaxFocus()
     {
-        if (event instanceof PlayerInteractEvent) {
-            PlayerInteractEvent interact = (PlayerInteractEvent) event;
+        return 0;
+    }
 
-            if (interact.action.equals(PlayerInteractEvent.Action.RIGHT_CLICK_AIR)) {
-                int j = 72000;
-
-                boolean flag = charon.player.capabilities.isCreativeMode;
-                Random rand = new Random();
-
-                if (flag) {
-                    if (charon.player.inventory.hasItem(Items.arrow) && charon.nanites.decreaseNanites(cost)) {
-                        float f = (float) j / 20.0F;
-                        f = (f * f + f * 2.0F) / 3.0F;
-
-                        if ((double) f < 0.1D) {
-                            return false;
-                        }
-
-                        if (f > 1.0F) {
-                            f = 1.0F;
-                        }
-
-                        EntityArrow entityarrow = new EntityArrow(interact.world, charon.player, f * 2.0F);
-
-                        if (f == 1.0F) {
-                            entityarrow.setIsCritical(true);
-                        }
-
-                        entityarrow.setFire(100);
-
-                        if (flag) {
-                            entityarrow.canBePickedUp = 2;
-                        } else {
-                            charon.player.inventory.consumeInventoryItem(Items.arrow);
-                        }
-
-                        interact.world.spawnEntityInWorld(entityarrow);
-
-                        return true;
-                    }
-                }
-            }
-        }
-
+    @Override
+    public boolean canIntervalFocus()
+    {
         return false;
     }
 
@@ -89,9 +53,59 @@ public class ActiveAbilityProjectileExothermic extends AbilityActive
     }
 
     @Override
-    public String[] getKnowledge()
+    public Map<String, Integer> getEnhancements(int mode)
     {
-        return new String[] { "projectile", "exothermic" };
+        return getEnhancements();
+    }
+
+    @Override
+    public boolean canUse(ExtendedPlayerKnowledge charon, AbilityCast cast)
+    {
+        return charon.nanites.getMaxNanites() >= cost && cast.type.equals(AbilityUseType.FLASH) && cast.target.equals(AbilityUseTarget.AIR);
+    }
+
+    @Override
+    public boolean use(ExtendedPlayerKnowledge charon, AbilityCast cast, ItemStack staff)
+    {
+        int j = 72000;
+
+        boolean flag = charon.player.capabilities.isCreativeMode;
+        Random rand = new Random();
+
+        if (flag) {
+            if (charon.player.inventory.hasItem(Items.arrow) && charon.nanites.decreaseNanites(cost)) {
+                float f = (float) j / 20.0F;
+                f = (f * f + f * 2.0F) / 3.0F;
+
+                if ((double) f < 0.1D) {
+                    return false;
+                }
+
+                if (f > 1.0F) {
+                    f = 1.0F;
+                }
+
+                EntityArrow entityarrow = new EntityArrow(charon.player.worldObj, charon.player, f * 2.0F);
+
+                if (f == 1.0F) {
+                    entityarrow.setIsCritical(true);
+                }
+
+                entityarrow.setFire(100);
+
+                if (flag) {
+                    entityarrow.canBePickedUp = 2;
+                } else {
+                    charon.player.inventory.consumeInventoryItem(Items.arrow);
+                }
+
+                charon.player.worldObj.spawnEntityInWorld(entityarrow);
+
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }

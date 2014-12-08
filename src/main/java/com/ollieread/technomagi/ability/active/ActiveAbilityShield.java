@@ -4,21 +4,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraftforge.event.entity.player.EntityInteractEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 
 import com.ollieread.ennds.ability.AbilityActive;
+import com.ollieread.ennds.ability.AbilityCast;
+import com.ollieread.ennds.ability.AbilityCast.AbilityUseTarget;
+import com.ollieread.ennds.ability.AbilityCast.AbilityUseType;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.ennds.item.IStaff;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.common.init.Config;
-
-import cpw.mods.fml.common.eventhandler.Event;
 
 public class ActiveAbilityShield extends AbilityActive
 {
@@ -34,45 +32,19 @@ public class ActiveAbilityShield extends AbilityActive
         this.enhancements.put("life", 2);
         this.cost = Config.shieldCost;
         this.duration = Config.shieldDuration;
+
+        this.knowledge = new String[] { "life" };
     }
 
     @Override
-    public boolean use(ExtendedPlayerKnowledge charon, Event event, ItemStack stack)
+    public int getMaxFocus()
     {
-        Random rand = new Random();
-        int level = ((IStaff) stack.getItem()).getEnhancement(stack, "life");
+        return 0;
+    }
 
-        if (event instanceof PlayerInteractEvent) {
-            PlayerInteractEvent interact = (PlayerInteractEvent) event;
-
-            if (interact.action.equals(Action.RIGHT_CLICK_AIR)) {
-                if (decreaseNanites(charon, 10)) {
-                    if (!interact.entityPlayer.worldObj.isRemote) {
-                        interact.entityPlayer.addPotionEffect(new PotionEffect(Potion.field_76444_x.id, duration * (level - 1), level - 2));
-                        interact.entityPlayer.worldObj.playSoundEffect((double) interact.entityPlayer.posX + 0.5D, (double) interact.entityPlayer.posY + 0.5D, (double) interact.entityPlayer.posZ + 0.5D, Reference.MODID.toLowerCase() + ":cast", 1.0F, rand.nextFloat() * 0.4F + 0.8F);
-                    }
-
-                    return true;
-                }
-            }
-        } else if (event instanceof EntityInteractEvent) {
-            if (charon.isSpecialisation("medic")) {
-                EntityInteractEvent interact = (EntityInteractEvent) event;
-
-                if (interact.target instanceof EntityLiving) {
-                    EntityLiving entity = (EntityLiving) interact.target;
-                    if (decreaseNanites(charon, cost)) {
-                        if (!interact.entityPlayer.worldObj.isRemote) {
-                            entity.addPotionEffect(new PotionEffect(Potion.field_76444_x.id, duration * (level - 1), level - 2));
-                            entity.worldObj.playSoundEffect((double) interact.entityPlayer.posX + 0.5D, (double) interact.entityPlayer.posY + 0.5D, (double) interact.entityPlayer.posZ + 0.5D, Reference.MODID.toLowerCase() + ":cast", 1.0F, rand.nextFloat() * 0.4F + 0.8F);
-                        }
-
-                        return true;
-                    }
-                }
-            }
-        }
-
+    @Override
+    public boolean canIntervalFocus()
+    {
         return false;
     }
 
@@ -83,9 +55,62 @@ public class ActiveAbilityShield extends AbilityActive
     }
 
     @Override
-    public String[] getKnowledge()
+    public Map<String, Integer> getEnhancements(int mode)
     {
-        return new String[] { "life" };
+        return getEnhancements();
+    }
+
+    @Override
+    public boolean canUse(ExtendedPlayerKnowledge charon, AbilityCast cast)
+    {
+        if (charon.nanites.getMaxNanites() >= cost && cast.type.equals(AbilityUseType.FLASH)) {
+            if (cast.target.equals(AbilityUseTarget.ENTITY_LIVING) || cast.target.equals(AbilityUseTarget.PLAYER)) {
+                return charon.isSpecialisation("medic");
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean use(ExtendedPlayerKnowledge charon, AbilityCast cast, ItemStack staff)
+    {
+        Random rand = new Random();
+        int level = ((IStaff) staff.getItem()).getEnhancement(staff, "life");
+
+        if (!cast.target.equals(AbilityUseTarget.ENTITY_LIVING) && !cast.target.equals(AbilityUseTarget.PLAYER)) {
+            if (decreaseNanites(charon, 10)) {
+                if (!charon.player.worldObj.isRemote) {
+                    charon.player.addPotionEffect(new PotionEffect(Potion.field_76444_x.id, duration * (level - 1), level - 2));
+                }
+
+                return true;
+            }
+        } else {
+            EntityLivingBase entity = null;
+
+            if (cast.target.equals(AbilityUseTarget.ENTITY_LIVING)) {
+                entity = cast.targetEntityLiving;
+            } else {
+                entity = cast.targetPlayer;
+            }
+
+            if (entity != null && entity instanceof EntityLivingBase) {
+                if (charon.isSpecialisation("medic")) {
+                    if (decreaseNanites(charon, cost)) {
+                        if (!charon.player.worldObj.isRemote) {
+                            entity.addPotionEffect(new PotionEffect(Potion.field_76444_x.id, duration * (level - 1), level - 2));
+                        }
+
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 
 }

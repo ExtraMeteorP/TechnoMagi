@@ -18,7 +18,7 @@ public class KeyInputHandler
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event)
     {
-        if (KeyBindings.tmGui.isPressed()) {
+        if (KeyBindings.toggleStaff.isPressed()) {
             Minecraft client = FMLClientHandler.instance().getClient();
             EntityPlayer player = client.thePlayer;
             ExtendedPlayerKnowledge charon = ExtendedPlayerKnowledge.get(player);
@@ -28,6 +28,19 @@ public class KeyInputHandler
 
                 if (heldItem == null || (heldItem.getItem() != null && heldItem.getItem() instanceof IStaff)) {
                     charon.syncStaff();
+                }
+            }
+        } else if (KeyBindings.toggleCastMode.isPressed()) {
+            Minecraft client = FMLClientHandler.instance().getClient();
+            EntityPlayer player = client.thePlayer;
+            ExtendedPlayerKnowledge charon = ExtendedPlayerKnowledge.get(player);
+
+            if (charon != null) {
+                ItemStack heldItem = player.getHeldItem();
+
+                if (heldItem == null || (heldItem.getItem() != null && heldItem.getItem() instanceof IStaff)) {
+                    charon.abilities.setMode(charon.abilities.getMode() == 0 ? 1 : 0);
+                    charon.abilities.syncCastMode();
                 }
             }
         }
