@@ -23,19 +23,13 @@ public abstract class ItemTMSubtypes extends ItemTM
 
     public ItemTMSubtypes(String name, int subtypes)
     {
-        this(name, subtypes, new String[subtypes]);
+        this(name, new String[subtypes]);
     }
 
     public ItemTMSubtypes(String name, String[] names)
     {
-        this(name, names.length, names);
-    }
-
-    public ItemTMSubtypes(String name, int subtypes, String[] names)
-    {
         super(name);
         setHasSubtypes(true);
-        itemIcons = new IIcon[subtypes];
         itemNames = names;
     }
 
@@ -52,6 +46,8 @@ public abstract class ItemTMSubtypes extends ItemTM
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister register)
     {
+        itemIcons = new IIcon[itemNames.length];
+
         for (int i = 0; i < itemIcons.length; i++) {
             itemIcons[i] = register.registerIcon(Reference.MODID.toLowerCase() + ":" + itemNames[i]);
         }
