@@ -55,7 +55,7 @@ public class GuiCrafting extends GuiEnergyContainer
         this.mc.getTextureManager().bindTexture(texture);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 
-        int progress = crafter.getProgress();
+        int progress = crafter.getProgress(20);
 
         if (progress > 0) {
             this.drawTexturedModalRect(this.guiLeft + 121, this.guiTop + 51, 176, 0, progress, 3);

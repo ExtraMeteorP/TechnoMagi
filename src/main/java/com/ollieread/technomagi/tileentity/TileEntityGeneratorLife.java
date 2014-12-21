@@ -6,6 +6,7 @@ import net.minecraft.block.BlockGrass;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockTallGrass;
 import net.minecraft.init.Blocks;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class TileEntityGeneratorLife extends TileEntityGenerator
 {
@@ -74,6 +75,12 @@ public class TileEntityGeneratorLife extends TileEntityGenerator
     public boolean canGenerate()
     {
         return true;
+    }
+
+    @Override
+    public boolean canConnectEnergy(ForgeDirection from)
+    {
+        return from.equals(ForgeDirection.DOWN);
     }
 
 }

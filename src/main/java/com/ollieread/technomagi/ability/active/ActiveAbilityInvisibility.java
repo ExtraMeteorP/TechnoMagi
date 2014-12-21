@@ -12,7 +12,6 @@ import com.ollieread.ennds.ability.AbilityActive;
 import com.ollieread.ennds.ability.AbilityCast;
 import com.ollieread.ennds.ability.AbilityCast.AbilityUseType;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
-import com.ollieread.ennds.item.IStaff;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.common.init.Config;
 
@@ -47,18 +46,6 @@ public class ActiveAbilityInvisibility extends AbilityActive
     }
 
     @Override
-    public Map<String, Integer> getEnhancements()
-    {
-        return enhancements;
-    }
-
-    @Override
-    public Map<String, Integer> getEnhancements(int mode)
-    {
-        return getEnhancements();
-    }
-
-    @Override
     public boolean canUse(ExtendedPlayerKnowledge charon, AbilityCast cast)
     {
         return charon.nanites.getMaxNanites() >= cost && cast.type.equals(AbilityUseType.FLASH);
@@ -67,7 +54,7 @@ public class ActiveAbilityInvisibility extends AbilityActive
     @Override
     public boolean use(ExtendedPlayerKnowledge charon, AbilityCast cast, ItemStack staff)
     {
-        int level = ((IStaff) staff.getItem()).getEnhancement(staff, "light");
+        int level = 1;
 
         if (!charon.player.isPotionActive(Potion.invisibility)) {
             if (decreaseNanites(charon, cost)) {

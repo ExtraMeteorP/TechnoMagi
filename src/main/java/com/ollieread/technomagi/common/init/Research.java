@@ -55,15 +55,24 @@ public class Research
             e.printStackTrace();
         }
 
-        itemToResearchMapping.put(new ItemStack(Items.cooked_porkchop), "eatPorkchop");
-        itemToResearchMapping.put(new ItemStack(Items.cooked_beef), "eatBeef");
-        itemToResearchMapping.put(new ItemStack(Items.cooked_chicken), "eatChicken");
-        itemToResearchMapping.put(new ItemStack(Items.cooked_fished), "eatFish");
+        itemToResearchMapping.put(new ItemStack(Items.porkchop), "eatPorkchop");
+        itemToResearchMapping.put(new ItemStack(Items.beef), "eatBeef");
+        itemToResearchMapping.put(new ItemStack(Items.chicken), "eatChicken");
+        itemToResearchMapping.put(new ItemStack(Items.fish), "eatFish");
+        itemToResearchMapping.put(new ItemStack(Items.cooked_porkchop), "eatCookedPorkchop");
+        itemToResearchMapping.put(new ItemStack(Items.cooked_beef), "eatCookedBeef");
+        itemToResearchMapping.put(new ItemStack(Items.cooked_chicken), "eatCookedChicken");
+        itemToResearchMapping.put(new ItemStack(Items.cooked_fished), "eatCookedFish");
         itemToResearchMapping.put(new ItemStack(Items.apple), "eatApple");
+        itemToResearchMapping.put(new ItemStack(Items.potato), "eatPotato");
+        itemToResearchMapping.put(new ItemStack(Items.baked_potato), "eatBakedPotato");
+        itemToResearchMapping.put(new ItemStack(Items.carrot), "eatCarrot");
+        itemToResearchMapping.put(new ItemStack(Items.bread), "eatBread");
         itemToResearchMapping.put(new ItemStack(Items.golden_apple), "eatGoldenApple");
         itemToResearchMapping.put(new ItemStack(Items.golden_carrot), "eatGoldenCarrot");
         itemToResearchMapping.put(new ItemStack(Items.ender_pearl), "useEnderpearl");
         itemToResearchMapping.put(new ItemStack(Items.egg), "useEgg");
         itemToResearchMapping.put(new ItemStack(Items.snowball), "useSnowball");
     }
+
 }

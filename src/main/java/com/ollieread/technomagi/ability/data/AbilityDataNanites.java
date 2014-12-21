@@ -21,4 +21,16 @@ public class AbilityDataNanites implements IAbilityData
         compound.setInteger("Timer", timer);
     }
 
+    @Override
+    public boolean requiresUpdate()
+    {
+        return false;
+    }
+
+    @Override
+    public void update()
+    {
+
+    }
+
 }

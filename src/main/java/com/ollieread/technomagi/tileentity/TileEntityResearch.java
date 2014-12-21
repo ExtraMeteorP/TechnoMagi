@@ -20,7 +20,7 @@ public class TileEntityResearch extends TileEntityTM implements IResearchMachine
     public int waiting;
     public boolean inProgress;
     protected boolean isConnected = false;
-    protected Map<String, Integer> researchingKnowledge = new HashMap<String, Integer>();
+    protected Map<String, Integer> researching = new HashMap<String, Integer>();
 
     public boolean inProgress()
     {
@@ -71,11 +71,11 @@ public class TileEntityResearch extends TileEntityTM implements IResearchMachine
         isConnected = compound.getBoolean("Connected");
 
         NBTTagList researchProgressList = compound.getTagList("ResearchProgress", compound.getId());
-        researchingKnowledge = new HashMap<String, Integer>();
+        researching = new HashMap<String, Integer>();
 
         for (int i = 0; i < researchProgressList.tagCount(); i++) {
             NBTTagCompound research = researchProgressList.getCompoundTagAt(i);
-            researchingKnowledge.put(ResearchRegistry.getResearchName(research.getInteger("Research")), research.getInteger("Progress"));
+            researching.put(ResearchRegistry.getResearchName(research.getInteger("Research")), research.getInteger("Progress"));
         }
     }
 
@@ -92,53 +92,53 @@ public class TileEntityResearch extends TileEntityTM implements IResearchMachine
 
         NBTTagList researchProgressList = new NBTTagList();
 
-        for (String k : researchingKnowledge.keySet()) {
+        for (String k : researching.keySet()) {
             NBTTagCompound research = new NBTTagCompound();
             research.setInteger("Research", ResearchRegistry.getResearchId(k));
-            research.setInteger("Progress", researchingKnowledge.get(k));
+            research.setInteger("Progress", researching.get(k));
             researchProgressList.appendTag(research);
         }
 
         compound.setTag("ResearchProgress", researchProgressList);
     }
 
-    public Map<String, Integer> getKnowledge()
+    public Map<String, Integer> getResearch()
     {
-        return researchingKnowledge;
+        return researching;
     }
 
     public void addResearch(String name, int progress)
     {
-        if (researchingKnowledge.containsKey(name)) {
-            researchingKnowledge.put(name, researchingKnowledge.get(name) + progress);
+        if (researching.containsKey(name)) {
+            researching.put(name, researching.get(name) + progress);
             data += progress;
         } else {
-            researchingKnowledge.put(name, progress);
+            researching.put(name, progress);
             data += progress;
         }
     }
 
-    public void removeKnowledge(String name)
+    public void removeResearch(String name)
     {
-        if (researchingKnowledge.containsKey(name)) {
-            int progress = researchingKnowledge.remove(name);
+        if (researching.containsKey(name)) {
+            int progress = researching.remove(name);
             setData(data - progress);
             sync();
         }
     }
 
-    public boolean decreaseKnowledge(String name, int progress)
+    public boolean decreaseResearch(String name, int progress)
     {
-        if (researchingKnowledge.containsKey(name)) {
-            int value = researchingKnowledge.get(name);
+        if (researching.containsKey(name)) {
+            int value = researching.get(name);
 
             if (value <= progress) {
-                researchingKnowledge.remove(name);
+                researching.remove(name);
                 setData(data - value);
                 sync();
                 return true;
             } else {
-                researchingKnowledge.put(name, value - progress);
+                researching.put(name, value - progress);
                 setData(data - progress);
                 sync();
                 return true;
@@ -148,4 +148,9 @@ public class TileEntityResearch extends TileEntityTM implements IResearchMachine
         return false;
     }
 
+    @Override
+    public boolean hasResearch(String name)
+    {
+        return researching.containsKey(name);
+    }
 }

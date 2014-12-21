@@ -1,5 +1,7 @@
 package com.ollieread.technomagi.tileentity;
 
+import net.minecraftforge.common.util.ForgeDirection;
+
 import com.ollieread.technomagi.common.init.Config;
 
 public class TileEntityGeneratorVoid extends TileEntityGenerator
@@ -21,6 +23,12 @@ public class TileEntityGeneratorVoid extends TileEntityGenerator
     public boolean canGenerate()
     {
         return true;
+    }
+
+    @Override
+    public boolean canConnectEnergy(ForgeDirection from)
+    {
+        return from.equals(ForgeDirection.UP);
     }
 
 }

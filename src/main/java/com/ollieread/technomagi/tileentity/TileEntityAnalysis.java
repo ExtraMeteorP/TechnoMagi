@@ -1,6 +1,5 @@
 package com.ollieread.technomagi.tileentity;
 
-import java.util.Arrays;
 import java.util.Random;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -241,7 +240,7 @@ public class TileEntityAnalysis extends TileEntityResearch implements IPlayerLoc
 
     private IResearchAnalysis getResearchAnalysis()
     {
-        return ResearchRegistry.findMatchingAnalysis(Arrays.asList(inventory.getInventory()));
+        return ResearchRegistry.findMatchingAnalysis(inventory);
     }
 
     protected void reduceStacks(int i)

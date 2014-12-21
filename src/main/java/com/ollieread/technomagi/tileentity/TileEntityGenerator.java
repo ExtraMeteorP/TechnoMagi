@@ -5,7 +5,6 @@ import net.minecraftforge.common.util.ForgeDirection;
 import cofh.api.energy.IEnergyHandler;
 
 import com.ollieread.technomagi.common.proxy.BasicEnergy;
-import com.ollieread.technomagi.util.PowerHelper;
 
 public abstract class TileEntityGenerator extends TileEntityTM implements IEnergyHandler
 {
@@ -74,11 +73,6 @@ public abstract class TileEntityGenerator extends TileEntityTM implements IEnerg
                     }
                 }
             }
-
-            PowerHelper.pushToAdjacent(this, ForgeDirection.NORTH);
-            PowerHelper.pushToAdjacent(this, ForgeDirection.SOUTH);
-            PowerHelper.pushToAdjacent(this, ForgeDirection.EAST);
-            PowerHelper.pushToAdjacent(this, ForgeDirection.WEST);
         }
     }
 
@@ -87,12 +81,6 @@ public abstract class TileEntityGenerator extends TileEntityTM implements IEnerg
     /* Everything below is just a proxy for the interfaces */
 
     /* ENERGY */
-
-    @Override
-    public boolean canConnectEnergy(ForgeDirection from)
-    {
-        return !from.equals(ForgeDirection.DOWN) && !from.equals(ForgeDirection.UP);
-    }
 
     @Override
     public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate)

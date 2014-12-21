@@ -74,13 +74,13 @@ public class TileEntityConstruct extends TileEntityTM implements IInventory, IPl
         ItemStack[] stacks = new ItemStack[] { inventory.getStackInSlot(1), inventory.getStackInSlot(2), inventory.getStackInSlot(3), inventory.getStackInSlot(4) };
 
         EntityPlayer player = worldObj.getPlayerEntityByName(locked.getPlayer());
-        
-        if(player != null) {
+
+        if (player != null) {
             Block block = ConstructManager.getInstance().findMatchingRecipe(stacks, player);
-    
+
             worldObj.setBlock(xCoord, yCoord, zCoord, block, getBlockMetadata(), 2);
             TileEntity tile = worldObj.getTileEntity(xCoord, yCoord, zCoord);
-    
+
             if (tile instanceof IPlayerLocked) {
                 ((IPlayerLocked) tile).setPlayer(getPlayer());
             }

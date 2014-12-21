@@ -9,10 +9,10 @@ import cofh.lib.util.helpers.EnergyHelper;
 
 import com.ollieread.technomagi.common.init.Blocks;
 import com.ollieread.technomagi.common.init.Config;
-import com.ollieread.technomagi.common.init.Items;
 import com.ollieread.technomagi.common.proxy.BasicEnergy;
 import com.ollieread.technomagi.common.proxy.BasicInventory;
 import com.ollieread.technomagi.common.proxy.PlayerLocked;
+import com.ollieread.technomagi.util.ItemHelper;
 
 public class TileEntityFocuser extends TileEntityMachineTM implements IInventory
 {
@@ -125,8 +125,8 @@ public class TileEntityFocuser extends TileEntityMachineTM implements IInventory
             ItemStack output = inventory.getStackInSlot(1);
 
             if (this.getEnergyStored(null) > usage) {
-                if (input != null && input.isItemEqual(new ItemStack(Items.itemEtherium))) {
-                    if (output == null || (output.isItemEqual(new ItemStack(Items.itemRelux)) && output.stackSize < output.getMaxStackSize())) {
+                if (input != null && input.isItemEqual(ItemHelper.resource("etheriumCyrstal", 1))) {
+                    if (output == null || (output.isItemEqual(ItemHelper.resource("reluxCrystal", 1)) && output.stackSize < output.getMaxStackSize())) {
                         if (worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord) && worldObj.isDaytime()) {
                             return true;
                         }
@@ -155,7 +155,7 @@ public class TileEntityFocuser extends TileEntityMachineTM implements IInventory
                 }
 
                 if (output == null) {
-                    output = new ItemStack(Items.itemRelux);
+                    output = ItemHelper.resource("reluxCrystal", 1);
                 } else {
                     output.stackSize++;
                 }

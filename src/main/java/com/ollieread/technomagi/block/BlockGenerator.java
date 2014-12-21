@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.tileentity.TileEntityGenerator;
 import com.ollieread.technomagi.tileentity.TileEntityGeneratorLife;
-import com.ollieread.technomagi.tileentity.TileEntityGeneratorLight;
+import com.ollieread.technomagi.tileentity.TileEntityGeneratorSolar;
 import com.ollieread.technomagi.tileentity.TileEntityGeneratorVoid;
 import com.ollieread.technomagi.util.PlayerHelper;
 
@@ -44,12 +44,28 @@ public class BlockGenerator extends BlockTMContainer
             case 0:
                 return new TileEntityGeneratorVoid();
             case 1:
-                return new TileEntityGeneratorLight();
+                return new TileEntityGeneratorSolar();
             case 2:
                 return new TileEntityGeneratorLife();
         }
 
         return null;
+    }
+
+    @Override
+    public int getRenderType()
+    {
+        return -1;
+    }
+
+    public boolean renderAsNormalBlock()
+    {
+        return false;
+    }
+
+    public boolean isOpaqueCube()
+    {
+        return false;
     }
 
     @SideOnly(Side.CLIENT)

@@ -18,14 +18,16 @@ public class OreGen implements IWorldGenerator
     protected int maxGen = 0;
     protected int amountVein = 0;
     protected int amountChunk = 0;
+    protected int meta = 0;
 
-    public OreGen(Block block, int min, int max, int q, int c)
+    public OreGen(Block block, int m, int min, int max, int q, int c)
     {
         oreBlock = block;
         minGen = min;
         maxGen = max;
         amountVein = q;
         amountChunk = c;
+        meta = m;
     }
 
     @Override
@@ -78,7 +80,7 @@ public class OreGen implements IWorldGenerator
 
                                 Block block = world.getBlock(var38, var41, var44);
                                 if (var39 * var39 + var42 * var42 + var45 * var45 < 1.0D && block == Blocks.stone) {
-                                    world.setBlock(var38, var41, var44, this.oreBlock);
+                                    world.setBlock(var38, var41, var44, this.oreBlock, meta, 2);
                                 }
                             }
                         }

@@ -151,7 +151,6 @@ public class GuiArchiveAbilities extends GuiArchive
 
                 if (ability instanceof IAbilityActive) {
                     name = ((IAbilityActive) ability).getLocalisedName();
-                    enhancements = ((IAbilityActive) ability).getEnhancements();
                 } else if (ability instanceof IAbilityPassive) {
                     name = ((IAbilityPassive) ability).getLocalisedName();
                 }
@@ -174,19 +173,6 @@ public class GuiArchiveAbilities extends GuiArchive
 
                 fontRendererObj.drawString("Requirements", 9, y, 5097727);
                 y += 10;
-
-                if (enhancements != null) {
-                    int x = 0;
-                    for (Iterator<String> i = enhancements.keySet().iterator(); i.hasNext();) {
-                        String key = i.next();
-
-                        y += (10 * x);
-                        fontRendererObj.drawString(I18n.format("enhancement." + key) + " " + enhancements.get(key), 9, y, 16777215);
-                        x++;
-                    }
-                } else {
-                    fontRendererObj.drawString("None", 9, y, 16777215);
-                }
 
                 GL11.glPopMatrix();
 

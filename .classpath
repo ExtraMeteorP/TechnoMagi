@@ -224,5 +224,6 @@
 	<classpathentry exported="true" kind="lib" path="C:/Users/ollie/.gradle/caches/modules-2/files-2.1/tv.twitch/twitch-external-platform/4.5/c3cde57891b935d41b6680a9c5e1502eeab76d86/twitch-external-platform-4.5-natives-windows-64.jar"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/ollie/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.10-10.13.2.1230/start"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/EnndsCore"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/MC-ItemRender"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

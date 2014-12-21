@@ -77,14 +77,23 @@
     "enderTeleport",
     "enderTeleportEnderman",
     "useFlintAndSteel",
+    "useEnderpearl",
     "eatPorkchop",
     "eatBeef",
     "eatChicken",
     "eatFish",
-    "useEnderpearl",
+    "eatCookedPorkchop",
+    "eatCookedBeef",
+    "eatCookedChicken",
+    "eatCookedFish",
     "eatApple",
+    "eatCarrot",
+    "eatPotato",
+    "eatBakedPotato",
+    "eatBread",
     "eatGoldenApple",
     "eatGoldenCarrot",
-    "sleep"
+    "sleep",
+    "castingFinish"
   ]
 }

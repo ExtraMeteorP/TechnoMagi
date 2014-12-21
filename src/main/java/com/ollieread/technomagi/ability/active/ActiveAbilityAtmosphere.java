@@ -14,7 +14,6 @@ import com.ollieread.ennds.ability.AbilityCast;
 import com.ollieread.ennds.ability.AbilityCast.AbilityUseTarget;
 import com.ollieread.ennds.ability.AbilityCast.AbilityUseType;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
-import com.ollieread.ennds.item.IStaff;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.common.init.Config;
 
@@ -47,18 +46,6 @@ public class ActiveAbilityAtmosphere extends AbilityActive
     }
 
     @Override
-    public Map<String, Integer> getEnhancements()
-    {
-        return enhancements;
-    }
-
-    @Override
-    public Map<String, Integer> getEnhancements(int mode)
-    {
-        return getEnhancements();
-    }
-
-    @Override
     public boolean canUse(ExtendedPlayerKnowledge charon, AbilityCast cast)
     {
         return charon.nanites.getMaxNanites() >= cost && cast.type.equals(AbilityUseType.FLASH);
@@ -68,7 +55,7 @@ public class ActiveAbilityAtmosphere extends AbilityActive
     public boolean use(ExtendedPlayerKnowledge charon, AbilityCast cast, ItemStack staff)
     {
         Random rand = new Random();
-        int level = ((IStaff) staff.getItem()).getEnhancement(staff, "life");
+        int level = 1;
 
         if (!cast.target.equals(AbilityUseTarget.ENTITY_LIVING) && !cast.target.equals(AbilityUseTarget.PLAYER)) {
 

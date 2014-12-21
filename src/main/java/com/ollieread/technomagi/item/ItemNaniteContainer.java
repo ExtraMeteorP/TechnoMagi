@@ -2,6 +2,7 @@ package com.ollieread.technomagi.item;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -68,8 +69,11 @@ public class ItemNaniteContainer extends ItemTM
 
         if (!entityClass.equals(EntityPlayer.class)) {
             entityName = (String) EntityList.classToStringMapping.get(entityClass);
+            Set<Class> entities = ResearchRegistry.getMonitorableEntities();
+            stack.setItemDamage(2);
         } else {
             entityName = "player";
+            stack.setItemDamage(1);
         }
 
         compound.setString("Entity", entityName);
@@ -137,15 +141,17 @@ public class ItemNaniteContainer extends ItemTM
         list.add(initial);
 
         Iterator iterator = ResearchRegistry.getMonitorableEntities().iterator();
+        int x = 2;
 
         while (iterator.hasNext()) {
             Class entityClass = (Class) iterator.next();
 
-            ItemStack stack = new ItemStack(item, 1, 1);
+            ItemStack stack = new ItemStack(item, 1, x);
             stack.stackTagCompound = new NBTTagCompound();
             this.setEntity(stack, entityClass);
 
             list.add(stack);
+            x++;
         }
     }
 

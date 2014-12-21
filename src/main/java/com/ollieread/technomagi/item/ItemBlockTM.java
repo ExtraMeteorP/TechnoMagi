@@ -10,6 +10,7 @@ import net.minecraft.util.IIcon;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidTank;
 
+import com.ollieread.technomagi.block.BlockResource;
 import com.ollieread.technomagi.block.BlockStorage;
 import com.ollieread.technomagi.block.BlockTank;
 import com.ollieread.technomagi.common.proxy.ItemStorage;
@@ -55,7 +56,9 @@ public class ItemBlockTM extends ItemBlock
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean bool)
     {
         if (stack != null) {
-            if (Block.getBlockFromItem(stack.getItem()) instanceof BlockTank) {
+            if (Block.getBlockFromItem(stack.getItem()) instanceof BlockResource) {
+                list.add("Resource");
+            } else if (Block.getBlockFromItem(stack.getItem()) instanceof BlockTank) {
                 if (stack.stackTagCompound != null) {
                     FluidTank tank = new FluidTank(FluidContainerRegistry.BUCKET_VOLUME * 100);
                     tank.readFromNBT(stack.stackTagCompound);

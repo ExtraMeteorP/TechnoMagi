@@ -21,7 +21,7 @@ import com.ollieread.technomagi.common.Reference;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemMobBrain extends ItemTM
+public class ItemMobBrain extends ItemTMNBT
 {
     @SideOnly(Side.CLIENT)
     private IIcon theIcon;
@@ -32,11 +32,47 @@ public class ItemMobBrain extends ItemTM
         super(name);
 
         setHasSubtypes(true);
+        setMaxDamage(0);
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister register)
+    {
+        super.registerIcons(register);
+
+        theIcon = register.registerIcon(Reference.MODID.toLowerCase() + ":" + getIconString() + "Preserved");
+    }
+
+    @SideOnly(Side.CLIENT)
+    public IIcon getIconFromDamage(int dmg)
+    {
+        return dmg == 0 ? itemIcon : theIcon;
     }
 
     public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5)
     {
+        if (world.isRemote) {
+            return;
+        }
 
+        if (stack.getItemDamage() == 0) {
+            int ticks = getTicks(stack);
+            int life = getLife(stack);
+            ticks++;
+
+            if (ticks >= 84) {
+                life--;
+                ticks = 0;
+
+                if (life <= 0) {
+                    stack.stackSize--;
+                    return;
+                }
+            }
+
+            setTicks(stack, ticks);
+            setLife(stack, life);
+        }
     }
 
     public void onCreated(ItemStack stack, World world, EntityPlayer player)
@@ -44,9 +80,21 @@ public class ItemMobBrain extends ItemTM
         stack.stackTagCompound = new NBTTagCompound();
     }
 
+    @Override
+    public boolean showDurabilityBar(ItemStack stack)
+    {
+        return getLife(stack) < 100;
+    }
+
+    @Override
+    public double getDurabilityForDisplay(ItemStack stack)
+    {
+        return (double) 1 - ((double) getLife(stack) / (double) 100);
+    }
+
     protected String getEntity(ItemStack stack)
     {
-        NBTTagCompound compound = stack.stackTagCompound;
+        NBTTagCompound compound = getNBT(stack);
 
         if (compound.hasKey("Entity")) {
             return compound.getString("Entity");
@@ -57,8 +105,49 @@ public class ItemMobBrain extends ItemTM
 
     public static void setEntity(ItemStack stack, Class entityClass)
     {
-        NBTTagCompound compound = stack.stackTagCompound;
-        compound.setString("Entity", (String) EntityList.classToStringMapping.get(entityClass));
+        NBTTagCompound compound = getNBT(stack);
+
+        if (ResearchRegistry.getBrainableEntities().contains(entityClass)) {
+            compound.setString("Entity", (String) EntityList.classToStringMapping.get(entityClass));
+            compound.setInteger("Ticks", 0);
+            compound.setInteger("Life", 100);
+        }
+    }
+
+    protected int getTicks(ItemStack stack)
+    {
+        NBTTagCompound compound = getNBT(stack);
+
+        if (compound.hasKey("Ticks")) {
+            return compound.getInteger("Ticks");
+        }
+
+        return 0;
+    }
+
+    protected void setTicks(ItemStack stack, int ticks)
+    {
+        NBTTagCompound compound = getNBT(stack);
+
+        compound.setInteger("Ticks", ticks);
+    }
+
+    protected int getLife(ItemStack stack)
+    {
+        NBTTagCompound compound = getNBT(stack);
+
+        if (compound.hasKey("Life")) {
+            return compound.getInteger("Life");
+        }
+
+        return 0;
+    }
+
+    protected void setLife(ItemStack stack, int ticks)
+    {
+        NBTTagCompound compound = getNBT(stack);
+
+        compound.setInteger("Life", ticks);
     }
 
     public String getItemStackDisplayName(ItemStack stack)
@@ -73,60 +162,34 @@ public class ItemMobBrain extends ItemTM
         return s;
     }
 
-    /**
-     * Callback for item usage. If the item does something special on right
-     * clicking, he will have one of those. Return True if something happen and
-     * false if it don't. This is for ITEMS, not BLOCKS
-     */
     public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
     {
         return false;
     }
 
-    /**
-     * Called whenever this item is equipped and the right mouse button is
-     * pressed. Args: itemStack, world, entityPlayer
-     */
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
-    {
-        return par1ItemStack;
-    }
-
     @SideOnly(Side.CLIENT)
-    public boolean requiresMultipleRenderPasses()
+    public void getSubItems(Item item, CreativeTabs tab, List list)
     {
-        return true;
-    }
+        List<Class> brainable = ResearchRegistry.getBrainableEntities();
 
-    /**
-     * Gets an icon index based on an item's damage value and the given render
-     * pass
-     */
-    @SideOnly(Side.CLIENT)
-    public IIcon getIconFromDamageForRenderPass(int par1, int par2)
-    {
-        return par2 > 0 ? this.theIcon : super.getIconFromDamageForRenderPass(par1, par2);
-    }
-
-    /**
-     * returns a list of items with the same ID, but different meta (eg: dye
-     * returns 16 items)
-     */
-    @SideOnly(Side.CLIENT)
-    public void getSubItems(Item p_150895_1_, CreativeTabs p_150895_2_, List p_150895_3_)
-    {
-        Iterator iterator = ResearchRegistry.getBrainableEntities().iterator();
-
-        while (iterator.hasNext()) {
-            EntityList.EntityEggInfo entityegginfo = (EntityList.EntityEggInfo) EntityList.entityEggs.get(iterator.next());
-            p_150895_3_.add(new ItemStack(p_150895_1_, 1, entityegginfo.spawnedID));
+        for (Iterator<Class> i = brainable.iterator(); i.hasNext();) {
+            Class entity = i.next();
+            ItemStack stack = new ItemStack(item, 1);
+            setEntity(stack, entity);
+            list.add(stack);
         }
     }
 
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister par1IconRegister)
+    @Override
+    public int getItemStackLimit(ItemStack stack)
     {
-        this.itemIcon = par1IconRegister.registerIcon(Reference.MODID.toLowerCase() + ":" + getIconString());
-        this.theIcon = par1IconRegister.registerIcon(Reference.MODID.toLowerCase() + ":" + getIconString() + "_overlay");
+        return 1;
     }
+
+    @Override
+    public int getMaxItemUseDuration(ItemStack itemStack)
+    {
+        return 1;
+    }
+
 }

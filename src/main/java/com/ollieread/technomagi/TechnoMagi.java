@@ -23,8 +23,6 @@ import com.ollieread.technomagi.common.init.Recipes;
 import com.ollieread.technomagi.common.init.Research;
 import com.ollieread.technomagi.common.init.Specialisations;
 import com.ollieread.technomagi.creativetab.CreativeTabTM;
-import com.ollieread.technomagi.creativetab.CreativeTabTMCircuit;
-import com.ollieread.technomagi.creativetab.CreativeTabTMUnit;
 import com.ollieread.technomagi.network.PacketHandler;
 import com.ollieread.technomagi.world.gen.OreGen;
 
@@ -49,8 +47,6 @@ public class TechnoMagi
     public static TechnoMagi instance;
 
     public static CreativeTabs tabTM = new CreativeTabTM();
-    public static CreativeTabs tabTMUnit = new CreativeTabTMUnit();
-    public static CreativeTabs tabTMCircuit = new CreativeTabTMCircuit();
 
     public static final Logger logger = LogManager.getLogger(Reference.MODID);
 
@@ -64,13 +60,12 @@ public class TechnoMagi
         PacketHandler.init();
 
         Specialisations.init();
+        Items.init();
+        Blocks.init();
         Research.init();
         Knowledge.init();
         Abilities.init();
         Entities.init();
-
-        Items.init();
-        Blocks.init();
         Recipes.init();
 
         Potion[] potionTypes = null;
@@ -104,8 +99,8 @@ public class TechnoMagi
         proxy.init();
 
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
-        GameRegistry.registerWorldGenerator(new OreGen(Blocks.blockEtheriumOre, 10, 70, 3, 3), 4);
-        GameRegistry.registerWorldGenerator(new OreGen(Blocks.blockVoidstone, 0, 10, 3, 3), 4);
+        GameRegistry.registerWorldGenerator(new OreGen(Blocks.blockResource, 0, 10, 70, 3, 3), 4);
+        GameRegistry.registerWorldGenerator(new OreGen(Blocks.blockResource, 1, 0, 10, 3, 3), 4);
     }
 
     @EventHandler

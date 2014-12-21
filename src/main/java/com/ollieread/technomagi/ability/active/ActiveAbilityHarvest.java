@@ -17,7 +17,6 @@ import com.ollieread.ennds.ability.AbilityCast;
 import com.ollieread.ennds.ability.AbilityCast.AbilityUseTarget;
 import com.ollieread.ennds.ability.AbilityCast.AbilityUseType;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
-import com.ollieread.ennds.item.IStaff;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.common.init.Config;
 
@@ -50,18 +49,6 @@ public class ActiveAbilityHarvest extends AbilityActive
     }
 
     @Override
-    public Map<String, Integer> getEnhancements()
-    {
-        return enhancements;
-    }
-
-    @Override
-    public Map<String, Integer> getEnhancements(int mode)
-    {
-        return getEnhancements();
-    }
-
-    @Override
     public boolean canUse(ExtendedPlayerKnowledge charon, AbilityCast cast)
     {
         return cast.type.equals(AbilityUseType.FOCUS) && cast.target.equals(AbilityUseTarget.BLOCK);
@@ -83,7 +70,7 @@ public class ActiveAbilityHarvest extends AbilityActive
         }
 
         Block block = player.worldObj.getBlock(x, y, z);
-        int level = ((IStaff) staff.getItem()).getEnhancement(staff, "force");
+        int level = 3;
 
         if (block != null && block.getHarvestLevel(meta) <= level) {
             String tool = block.getHarvestTool(meta);

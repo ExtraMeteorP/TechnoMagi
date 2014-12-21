@@ -11,8 +11,6 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
@@ -20,10 +18,10 @@ import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.ennds.item.IStaff;
 import com.ollieread.technomagi.TechnoMagi;
 import com.ollieread.technomagi.common.CommonProxy;
-import com.ollieread.technomagi.common.init.Items;
 import com.ollieread.technomagi.common.proxy.ItemBasicInventory;
 import com.ollieread.technomagi.common.proxy.ItemBasicInventory.WithInventory;
 import com.ollieread.technomagi.util.InventoryHelper;
+import com.ollieread.technomagi.util.ItemHelper;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -95,61 +93,6 @@ public class ItemStaff extends ItemTMNBT implements IStaff
         list.add(resetNBT(new ItemStack(item, 1, 0)));
     }
 
-    @Override
-    public boolean hasEnhancement(ItemStack staff, String enhancement, int level)
-    {
-        return getEnhancement(staff, enhancement) >= level;
-    }
-
-    @Override
-    public void setEnhancement(ItemStack staff, String enhancement, int level)
-    {
-        NBTTagCompound compound = getNBT(staff);
-        NBTTagList enhancements;
-
-        if (compound.hasKey("Enhancements")) {
-            enhancements = compound.getTagList("Enhancements", compound.getId());
-
-            for (int i = 0; i < enhancements.tagCount(); i++) {
-                NBTTagCompound tag = enhancements.getCompoundTagAt(i);
-
-                if (tag.getString("Enhancement") != null && tag.getString("Enhancement").equals(enhancement) && tag.getInteger("Level") < level) {
-                    tag.setInteger("Level", level);
-                    compound.setTag("Enhancements", enhancements);
-                    return;
-                }
-            }
-        } else {
-            enhancements = new NBTTagList();
-        }
-
-        NBTTagCompound entry = new NBTTagCompound();
-        entry.setString("Enhancement", enhancement);
-        entry.setInteger("Level", level);
-        enhancements.appendTag(entry);
-        compound.setTag("Enhancements", enhancements);
-    }
-
-    @Override
-    public int getEnhancement(ItemStack staff, String enhancement)
-    {
-        NBTTagCompound compound = getNBT(staff);
-
-        if (compound.hasKey("Enhancements")) {
-            NBTTagList enhancements = compound.getTagList("Enhancements", compound.getId());
-
-            for (int i = 0; i < enhancements.tagCount(); i++) {
-                NBTTagCompound tag = enhancements.getCompoundTagAt(i);
-
-                if (tag.getString("Enhancement") != null && tag.getString("Enhancement").equals(enhancement)) {
-                    return tag.getInteger("Level");
-                }
-            }
-        }
-
-        return 0;
-    }
-
     public static IInventory getInventory(ItemStack staff)
     {
         if (staff.getItemDamage() == 0) {
@@ -177,7 +120,7 @@ public class ItemStaff extends ItemTMNBT implements IStaff
         IInventory inventory = getInventory(staff);
 
         if (inventory != null) {
-            if (InventoryHelper.hasInventoryItem(inventory, new ItemStack(Items.itemEtherium)) && InventoryHelper.hasInventoryItem(inventory, new ItemStack(net.minecraft.init.Items.iron_ingot, 2)) && InventoryHelper.hasInventoryItem(inventory, new ItemStack(net.minecraft.init.Items.gold_ingot)) && InventoryHelper.hasInventoryItem(inventory, new ItemStack(net.minecraft.init.Items.redstone, 4))) {
+            if (InventoryHelper.hasInventoryItem(inventory, ItemHelper.resource("etheriumCyrstal", 1)) && InventoryHelper.hasInventoryItem(inventory, ItemHelper.item("iron_ingot", 2)) && InventoryHelper.hasInventoryItem(inventory, ItemHelper.item("gold_ingot")) && InventoryHelper.hasInventoryItem(inventory, ItemHelper.item("redstone", 4))) {
                 return true;
             }
         }
@@ -212,33 +155,4 @@ public class ItemStaff extends ItemTMNBT implements IStaff
         return true;
     }
 
-    @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4)
-    {
-        list.add(EnumChatFormatting.BOLD + "Enhancements:");
-        NBTTagCompound compound = getNBT(stack);
-
-        if (compound.hasKey("Enhancements")) {
-            NBTTagList enhancements = compound.getTagList("Enhancements", compound.getId());
-
-            for (int i = 0; i < enhancements.tagCount(); i++) {
-                NBTTagCompound tag = enhancements.getCompoundTagAt(i);
-                String enhancement = tag.getString("Enhancement");
-                int level = tag.getInteger("Level");
-                EnumChatFormatting colour = null;
-
-                if (level == 1) {
-                    colour = EnumChatFormatting.WHITE;
-                } else if (level == 2) {
-                    colour = EnumChatFormatting.GOLD;
-                } else if (level == 3) {
-                    colour = EnumChatFormatting.AQUA;
-                }
-
-                if (enhancement != null) {
-                    list.add(colour + StatCollector.translateToLocal("enhancement." + enhancement));
-                }
-            }
-        }
-    }
 }

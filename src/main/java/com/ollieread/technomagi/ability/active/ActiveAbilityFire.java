@@ -51,18 +51,6 @@ public class ActiveAbilityFire extends AbilityActive
     }
 
     @Override
-    public Map<String, Integer> getEnhancements()
-    {
-        return enhancements;
-    }
-
-    @Override
-    public Map<String, Integer> getEnhancements(int mode)
-    {
-        return getEnhancements();
-    }
-
-    @Override
     public boolean canUse(ExtendedPlayerKnowledge charon, AbilityCast cast)
     {
         return charon.nanites.getMaxNanites() >= cost && cast.type.equals(AbilityUseType.FLASH);

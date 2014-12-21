@@ -12,6 +12,7 @@ public class Config
     public static boolean versionCheck;
     public static boolean creativeKnowledge;
     public static boolean creativeKnowledgeAll;
+    public static int brainDropChance;
 
     public static int robotCow;
     public static int robotZombie;
@@ -112,6 +113,7 @@ public class Config
         versionCheck = config.getBoolean("versionCheck", "General", true, "Whether or not to check version for recommended");
         creativeKnowledge = config.getBoolean("creativeKnowledge", "General", false, "Whether or not to allow giving knowledge from creative");
         creativeKnowledgeAll = config.getBoolean("creativeKnowledgeAll", "General", false, "Whether or not to allow giving all knowledge from creative");
+        brainDropChance = config.getInt("brainDropChance", "General", 100, 20, 500, "The chance of dropping a brain when killing a mob");
 
         // Entities
         robotCow = config.getInt("robotCow", "Entity", 1, 1, 100, "Robot cow ID");

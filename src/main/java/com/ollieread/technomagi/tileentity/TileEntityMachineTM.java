@@ -49,7 +49,7 @@ public abstract class TileEntityMachineTM extends TileEntityTM implements IEnerg
     @Override
     public boolean canConnectEnergy(ForgeDirection from)
     {
-        return from.equals(ForgeDirection.DOWN) || from.equals(ForgeDirection.getOrientation(worldObj.getBlockMetadata(xCoord, yCoord, zCoord)).getOpposite());
+        return from.equals(ForgeDirection.DOWN) || from.equals(ForgeDirection.getOrientation(getBlockMetadata()).getOpposite());
     }
 
     @Override

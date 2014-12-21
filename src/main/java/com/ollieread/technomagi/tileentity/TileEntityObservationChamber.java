@@ -529,7 +529,7 @@ public class TileEntityObservationChamber extends TileEntityResearch implements 
     @Override
     public boolean canConnectEnergy(ForgeDirection from)
     {
-        return from.equals(ForgeDirection.DOWN);
+        return from.equals(ForgeDirection.DOWN) || from.equals(ForgeDirection.getOrientation(getBlockMetadata()).getOpposite());
     }
 
     @Override

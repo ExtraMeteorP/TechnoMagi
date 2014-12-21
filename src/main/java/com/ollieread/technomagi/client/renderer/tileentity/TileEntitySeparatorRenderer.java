@@ -48,7 +48,7 @@ public class TileEntitySeparatorRenderer extends TileEntitySpecialRenderer
         Tessellator tessellator = Tessellator.instance;
         // This will make your block brightness dependent from surroundings
         // lighting.
-        float f = Blocks.blockArchive.getLightValue(te.getWorldObj(), te.xCoord, te.yCoord, te.zCoord);
+        float f = Blocks.blockSeparator.getLightValue(te.getWorldObj(), te.xCoord, te.yCoord, te.zCoord);
         int l = te.getWorldObj().getLightBrightnessForSkyBlocks(te.xCoord, te.yCoord, te.zCoord, 0);
         int l1 = l % 65536;
         int l2 = l / 65536;

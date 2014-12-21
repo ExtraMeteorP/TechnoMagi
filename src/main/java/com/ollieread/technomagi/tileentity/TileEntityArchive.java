@@ -11,6 +11,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
+import com.ollieread.ennds.research.IResearch;
+import com.ollieread.ennds.research.ResearchRegistry;
 import com.ollieread.technomagi.common.proxy.BasicInventory;
 import com.ollieread.technomagi.common.proxy.PlayerLocked;
 import com.ollieread.technomagi.item.ItemResearchStorage;
@@ -197,24 +199,25 @@ public class TileEntityArchive extends TileEntityTM implements IPlayerLocked, II
                             TileEntityResearch machine = (TileEntityResearch) tile;
 
                             if (machine.getData() > 0) {
-                                Map<String, Integer> knowledge = machine.getKnowledge();
-                                for (Iterator<String> it = knowledge.keySet().iterator(); it.hasNext();) {
+                                Map<String, Integer> research = machine.getResearch();
+                                for (Iterator<String> it = research.keySet().iterator(); it.hasNext();) {
                                     String name = it.next();
-                                    int value = knowledge.get(name);
+                                    int value = research.get(name);
+                                    IResearch knowledge = ResearchRegistry.getResearch(name);
 
-                                    if (playerKnowledge.hasKnowledge(name)) {
-                                        machine.removeKnowledge(name);
+                                    if (playerKnowledge.hasKnowledge(knowledge.getName())) {
+                                        machine.removeResearch(name);
                                         continue;
                                     }
 
                                     if (value > 0) {
                                         if (value >= 5) {
-                                            machine.decreaseKnowledge(name, 5);
-                                            playerKnowledge.addKnowledgeProgress(name, 5);
+                                            machine.decreaseResearch(name, 5);
+                                            playerKnowledge.addKnowledgeProgress(knowledge.getName(), 5);
                                             return;
                                         } else {
-                                            machine.decreaseKnowledge(name, value);
-                                            playerKnowledge.addKnowledgeProgress(name, value);
+                                            machine.decreaseResearch(name, value);
+                                            playerKnowledge.addKnowledgeProgress(knowledge.getName(), value);
                                             return;
                                         }
                                     }

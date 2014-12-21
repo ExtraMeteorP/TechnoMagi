@@ -27,7 +27,7 @@ import com.ollieread.technomagi.client.gui.archive.GuiArchiveKnowledge;
 import com.ollieread.technomagi.client.gui.archive.GuiArchiveMain;
 import com.ollieread.technomagi.event.handler.EnndsEventHandler;
 import com.ollieread.technomagi.event.handler.ItemEventHandler;
-import com.ollieread.technomagi.event.handler.PlayerEventHandler;
+import com.ollieread.technomagi.event.handler.EntityEventHandler;
 import com.ollieread.technomagi.event.handler.TickEventHandler;
 import com.ollieread.technomagi.inventory.ContainerAnalysis;
 import com.ollieread.technomagi.inventory.ContainerArchive;
@@ -72,7 +72,7 @@ public class CommonProxy implements IGuiHandler
     public static int GUI_FURNACE = 12;
     public static int GUI_FOCUSER = 13;
 
-    public static PlayerEventHandler playerEventHandler = new PlayerEventHandler();
+    public static EntityEventHandler playerEventHandler = new EntityEventHandler();
 
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
