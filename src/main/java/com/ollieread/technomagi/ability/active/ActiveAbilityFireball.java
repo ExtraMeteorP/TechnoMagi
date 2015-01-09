@@ -1,6 +1,5 @@
 package com.ollieread.technomagi.ability.active;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
@@ -28,12 +27,8 @@ public class ActiveAbilityFireball extends AbilityActive
     public ActiveAbilityFireball(String name)
     {
         super(name, Reference.MODID.toLowerCase());
-        this.enhancements = new HashMap<String, Integer>();
-        this.enhancements.put("exo", 1);
-        this.enhancements.put("force", 3);
-        this.cost = Config.fireballCost;
 
-        this.knowledge = new String[] { "exothermic", "projectile" };
+        cost = Config.fireballCost;
     }
 
     @Override

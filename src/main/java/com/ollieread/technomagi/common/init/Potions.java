@@ -14,6 +14,6 @@ public class Potions
     {
         TechnoMagi.logger.log(Level.INFO, "Initiating & registering potions");
 
-        potionHardness = new PotionTM(30, "potionHardness", false, 0);
+        // potionHardness = new PotionTM(30, "potionHardness", false, 0);
     }
 }

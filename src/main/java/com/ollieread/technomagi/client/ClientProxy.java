@@ -6,6 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -13,6 +14,8 @@ import com.ollieread.technomagi.client.gui.GuiTMOverlay;
 import com.ollieread.technomagi.client.model.ModelRobotCow;
 import com.ollieread.technomagi.client.model.ModelRobotCreeper;
 import com.ollieread.technomagi.client.model.ModelRobotZombie;
+import com.ollieread.technomagi.client.renderer.block.BlockDisguiseRenderer;
+import com.ollieread.technomagi.client.renderer.block.BlockSmartmetalRenderer;
 import com.ollieread.technomagi.client.renderer.entity.RenderRobotCow;
 import com.ollieread.technomagi.client.renderer.entity.RenderRobotCreeper;
 import com.ollieread.technomagi.client.renderer.entity.RenderRobotZombie;
@@ -25,6 +28,7 @@ import com.ollieread.technomagi.client.renderer.item.RenderFocusChargerItem;
 import com.ollieread.technomagi.client.renderer.item.RenderFocuserItem;
 import com.ollieread.technomagi.client.renderer.item.RenderFurnaceItem;
 import com.ollieread.technomagi.client.renderer.item.RenderGeneratorItem;
+import com.ollieread.technomagi.client.renderer.item.RenderPrismaticPillarItem;
 import com.ollieread.technomagi.client.renderer.item.RenderReplicatorItem;
 import com.ollieread.technomagi.client.renderer.item.RenderSeparatorItem;
 import com.ollieread.technomagi.client.renderer.item.RenderStorageItem;
@@ -39,6 +43,7 @@ import com.ollieread.technomagi.client.renderer.tileentity.TileEntityFocusCharge
 import com.ollieread.technomagi.client.renderer.tileentity.TileEntityFocuserRenderer;
 import com.ollieread.technomagi.client.renderer.tileentity.TileEntityFurnaceRenderer;
 import com.ollieread.technomagi.client.renderer.tileentity.TileEntityGeneratorSolarRenderer;
+import com.ollieread.technomagi.client.renderer.tileentity.TileEntityPrismaticPillarRenderer;
 import com.ollieread.technomagi.client.renderer.tileentity.TileEntityReplicatorRenderer;
 import com.ollieread.technomagi.client.renderer.tileentity.TileEntitySeparatorRenderer;
 import com.ollieread.technomagi.client.renderer.tileentity.TileEntityStorageRenderer;
@@ -63,6 +68,7 @@ import com.ollieread.technomagi.tileentity.TileEntityFurnace;
 import com.ollieread.technomagi.tileentity.TileEntityGeneratorSolar;
 import com.ollieread.technomagi.tileentity.TileEntityNaniteReplicator;
 import com.ollieread.technomagi.tileentity.TileEntityObservationChamber;
+import com.ollieread.technomagi.tileentity.TileEntityPrismaticPillar;
 import com.ollieread.technomagi.tileentity.TileEntitySeparator;
 import com.ollieread.technomagi.tileentity.TileEntityStorage;
 import com.ollieread.technomagi.tileentity.TileEntityTank;
@@ -76,6 +82,8 @@ public class ClientProxy extends CommonProxy
 {
 
     public static GuiTMOverlay overlay = new GuiTMOverlay(Minecraft.getMinecraft());
+
+    public static int renderPass = 0;
 
     public void registerEventHandlers()
     {
@@ -106,6 +114,21 @@ public class ClientProxy extends CommonProxy
         return FMLClientHandler.instance().getClientPlayerEntity();
     }
 
+    public World getClientWorld()
+    {
+        return Minecraft.getMinecraft().theWorld;
+    }
+
+    public boolean isClient()
+    {
+        return true;
+    }
+
+    public boolean isServer()
+    {
+        return false;
+    }
+
     public void init()
     {
         RenderingRegistry.registerEntityRenderingHandler(EntityRobotCow.class, new RenderRobotCow(new ModelRobotCow(), 0.5F));
@@ -125,6 +148,7 @@ public class ClientProxy extends CommonProxy
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFocusCharger.class, new TileEntityFocusChargerRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBattery.class, new TileEntityBatteryRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityGeneratorSolar.class, new TileEntityGeneratorSolarRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPrismaticPillar.class, new TileEntityPrismaticPillarRenderer());
 
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Blocks.blockArchive), new RenderArchiveItem());
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Blocks.blockNaniteReplicator), new RenderReplicatorItem());
@@ -140,6 +164,10 @@ public class ClientProxy extends CommonProxy
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Blocks.blockFocusCharger), new RenderFocusChargerItem());
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Blocks.blockBattery), new RenderBatteryItem());
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Blocks.blockGenerator), new RenderGeneratorItem());
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Blocks.blockPrismaticPillar), new RenderPrismaticPillarItem());
+
+        RenderingRegistry.registerBlockHandler(new BlockSmartmetalRenderer());
+        RenderingRegistry.registerBlockHandler(new BlockDisguiseRenderer());
     }
 
 }

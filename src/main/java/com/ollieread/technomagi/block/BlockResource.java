@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.common.init.Items;
@@ -22,7 +23,7 @@ public class BlockResource extends BlockTM
 {
 
     private Random rand = new Random();
-    protected String[] blockNames = new String[] { "etheriumOre", "voidstone" };
+    public static String[] blockNames = new String[] { "etheriumOre", "voidstone" };
 
     @SideOnly(Side.CLIENT)
     protected IIcon[] blockIcons;
@@ -84,6 +85,37 @@ public class BlockResource extends BlockTM
     public int damageDropped(int meta)
     {
         return meta;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void randomDisplayTick(World world, int x, int y, int z, Random rand)
+    {
+        if (world.getBlockMetadata(x, y, z) == 1) {
+            if (rand.nextInt(100) == 0) {
+                for (int l = 0; l < 4; ++l) {
+                    double d0 = (double) ((float) x + rand.nextFloat());
+                    double d1 = (double) ((float) y + rand.nextFloat());
+                    double d2 = (double) ((float) z + rand.nextFloat());
+                    double d3 = 0.0D;
+                    double d4 = 0.0D;
+                    double d5 = 0.0D;
+                    int i1 = rand.nextInt(2) * 2 - 1;
+                    d3 = ((double) rand.nextFloat() - 0.5D) * 0.5D;
+                    d4 = ((double) rand.nextFloat() - 0.5D) * 0.5D;
+                    d5 = ((double) rand.nextFloat() - 0.5D) * 0.5D;
+
+                    if (world.getBlock(x - 1, y, z) != this && world.getBlock(x + 1, y, z) != this) {
+                        d0 = (double) x + 0.5D + 0.25D * (double) i1;
+                        d3 = (double) (rand.nextFloat() * 2.0F * (float) i1);
+                    } else {
+                        d2 = (double) z + 0.5D + 0.25D * (double) i1;
+                        d5 = (double) (rand.nextFloat() * 2.0F * (float) i1);
+                    }
+
+                    world.spawnParticle("portal", d0, d1, d2, d3, d4, d5);
+                }
+            }
+        }
     }
 
 }

@@ -12,6 +12,11 @@ public class TileEntityBattery extends TileEntityTM implements IEnergyHandler
 
     protected BasicEnergy energy = null;
 
+    public TileEntityBattery()
+    {
+        new BasicEnergy(0, 0, 0);
+    }
+
     public TileEntityBattery(int capacity, int maxInput, int maxExtract)
     {
         energy = new BasicEnergy(capacity, maxInput, maxExtract);

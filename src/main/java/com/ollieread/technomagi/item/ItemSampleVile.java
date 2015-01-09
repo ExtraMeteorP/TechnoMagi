@@ -5,8 +5,8 @@ import java.util.List;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -22,7 +22,7 @@ import com.ollieread.technomagi.common.Reference;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemSampleVile extends ItemTM
+public class ItemSampleVile extends ItemTMNBT
 {
 
     @SideOnly(Side.CLIENT)
@@ -36,19 +36,9 @@ public class ItemSampleVile extends ItemTM
         setHasSubtypes(true);
     }
 
-    public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5)
-    {
-
-    }
-
-    public void onCreated(ItemStack stack, World world, EntityPlayer player)
-    {
-        stack.stackTagCompound = new NBTTagCompound();
-    }
-
     public static String getEntity(ItemStack stack)
     {
-        NBTTagCompound compound = stack.stackTagCompound;
+        NBTTagCompound compound = getNBT(stack);
 
         if (compound != null && compound.hasKey("Entity")) {
             return compound.getString("Entity");
@@ -57,22 +47,40 @@ public class ItemSampleVile extends ItemTM
         return null;
     }
 
-    public static void setEntity(ItemStack stack, Class entityClass)
+    public static String getPlayer(ItemStack stack)
     {
-        NBTTagCompound compound = stack.stackTagCompound;
+        NBTTagCompound compound = getNBT(stack);
 
-        if (compound == null) {
-            stack.stackTagCompound = new NBTTagCompound();
-            compound = stack.stackTagCompound;
+        if (compound != null && compound.hasKey("Entity")) {
+            if (compound.getString("Entity") == "player") {
+                return compound.getString("PlayerName");
+            }
         }
+
+        return null;
+    }
+
+    public static void setEntity(ItemStack stack, EntityLivingBase entity)
+    {
+        NBTTagCompound compound = getNBT(stack);
         String entityName;
 
-        if (!entityClass.equals(EntityPlayer.class)) {
-            entityName = (String) EntityList.classToStringMapping.get(entityClass);
-        } else {
+        if (entity instanceof EntityPlayer) {
             entityName = "player";
+            compound.setString("PlayerName", entity.getCommandSenderName());
+            compound.setString("Entity", entityName);
+        } else {
+            setEntity(stack, entity.getClass());
+            return;
         }
+    }
 
+    public static void setEntity(ItemStack stack, Class entityClass)
+    {
+        NBTTagCompound compound = getNBT(stack);
+        String entityName;
+
+        entityName = (String) EntityList.classToStringMapping.get(entityClass);
         compound.setString("Entity", entityName);
     }
 
@@ -93,7 +101,7 @@ public class ItemSampleVile extends ItemTM
             if (entityClass != null) {
                 info = StatCollector.translateToLocal("entity." + entityName + ".name");
             } else if (entityName.equals("player")) {
-                info = EnumChatFormatting.DARK_PURPLE + "Player";
+                info = EnumChatFormatting.DARK_PURPLE + getPlayer(stack);
             }
 
             list.add(info);
@@ -123,8 +131,8 @@ public class ItemSampleVile extends ItemTM
     public void getSubItems(Item item, CreativeTabs tab, List list)
     {
         ItemStack initial = new ItemStack(item, 1, 0);
-        initial.stackTagCompound = new NBTTagCompound();
-        this.setEntity(initial, EntityPlayer.class);
+        resetNBT(initial);
+        setEntity(initial, EntityPlayer.class);
         list.add(initial);
 
         Iterator iterator = ResearchRegistry.getMonitorableEntities().iterator();

@@ -1,7 +1,5 @@
 package com.ollieread.technomagi.ability.active;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.item.ItemStack;
@@ -18,19 +16,15 @@ import com.ollieread.technomagi.common.init.Config;
 public class ActiveAbilityOverdrive extends AbilityActive
 {
 
-    protected Map<String, Integer> enhancements;
     protected int cost;
     protected int duration;
 
     public ActiveAbilityOverdrive(String name)
     {
         super(name, Reference.MODID.toLowerCase());
-        this.enhancements = new HashMap<String, Integer>();
-        this.enhancements.put("force", 2);
-        this.cost = Config.overdriveCost;
-        this.duration = Config.overdriveDuration;
 
-        this.knowledge = new String[] { "motion" };
+        cost = Config.overdriveCost;
+        duration = Config.overdriveDuration;
     }
 
     @Override

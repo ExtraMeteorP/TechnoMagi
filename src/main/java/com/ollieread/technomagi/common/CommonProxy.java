@@ -25,9 +25,11 @@ import com.ollieread.technomagi.client.gui.archive.GuiArchiveCrafting;
 import com.ollieread.technomagi.client.gui.archive.GuiArchiveInfo;
 import com.ollieread.technomagi.client.gui.archive.GuiArchiveKnowledge;
 import com.ollieread.technomagi.client.gui.archive.GuiArchiveMain;
+import com.ollieread.technomagi.event.handler.ChunkEventHandler;
 import com.ollieread.technomagi.event.handler.EnndsEventHandler;
-import com.ollieread.technomagi.event.handler.ItemEventHandler;
 import com.ollieread.technomagi.event.handler.EntityEventHandler;
+import com.ollieread.technomagi.event.handler.ItemEventHandler;
+import com.ollieread.technomagi.event.handler.ResearchEventHandler;
 import com.ollieread.technomagi.event.handler.TickEventHandler;
 import com.ollieread.technomagi.inventory.ContainerAnalysis;
 import com.ollieread.technomagi.inventory.ContainerArchive;
@@ -71,8 +73,6 @@ public class CommonProxy implements IGuiHandler
     public static int GUI_SEPARATOR = 11;
     public static int GUI_FURNACE = 12;
     public static int GUI_FOCUSER = 13;
-
-    public static EntityEventHandler playerEventHandler = new EntityEventHandler();
 
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
@@ -252,17 +252,35 @@ public class CommonProxy implements IGuiHandler
 
     public void registerEventHandlers()
     {
-        MinecraftForge.EVENT_BUS.register(playerEventHandler);
+        MinecraftForge.EVENT_BUS.register(new EntityEventHandler());
+        MinecraftForge.EVENT_BUS.register(new ResearchEventHandler());
         MinecraftForge.EVENT_BUS.register(new EnndsEventHandler());
         MinecraftForge.EVENT_BUS.register(new ItemEventHandler());
+        MinecraftForge.EVENT_BUS.register(new ChunkEventHandler());
 
         FMLCommonHandler.instance().bus().register(new TickEventHandler());
-        FMLCommonHandler.instance().bus().register(playerEventHandler);
+        FMLCommonHandler.instance().bus().register(new EntityEventHandler());
+        FMLCommonHandler.instance().bus().register(new ResearchEventHandler());
     }
 
     public EntityPlayer getClientPlayer()
     {
         return null;
+    }
+
+    public World getClientWorld()
+    {
+        return null;
+    }
+
+    public boolean isClient()
+    {
+        return false;
+    }
+
+    public boolean isServer()
+    {
+        return true;
     }
 
     public void init()

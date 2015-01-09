@@ -1,7 +1,5 @@
 package com.ollieread.technomagi.ability.active;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.item.ItemStack;
@@ -20,19 +18,16 @@ import com.ollieread.technomagi.util.EntityHelper;
 
 public class ActiveAbilityFlashstep extends AbilityActive
 {
-    protected Map<String, Integer> enhancements;
+
     protected int cost;
     protected int distance;
 
     public ActiveAbilityFlashstep(String name)
     {
         super(name, Reference.MODID.toLowerCase());
-        this.enhancements = new HashMap<String, Integer>();
-        this.enhancements.put("force", 2);
-        this.cost = Config.flashstepCost;
-        this.distance = Config.flashstepDistance;
 
-        this.knowledge = new String[] { "motion" };
+        cost = Config.flashstepCost;
+        distance = Config.flashstepDistance;
     }
 
     @Override

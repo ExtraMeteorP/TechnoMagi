@@ -15,6 +15,7 @@ import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.common.init.Abilities;
 import com.ollieread.technomagi.common.init.Blocks;
 import com.ollieread.technomagi.common.init.Config;
+import com.ollieread.technomagi.common.init.Dimensions;
 import com.ollieread.technomagi.common.init.Entities;
 import com.ollieread.technomagi.common.init.Items;
 import com.ollieread.technomagi.common.init.Knowledge;
@@ -53,20 +54,6 @@ public class TechnoMagi
     @EventHandler
     public void pre(FMLPreInitializationEvent event)
     {
-        Config.init(event.getSuggestedConfigurationFile());
-
-        proxy.registerEventHandlers();
-
-        PacketHandler.init();
-
-        Specialisations.init();
-        Items.init();
-        Blocks.init();
-        Research.init();
-        Knowledge.init();
-        Abilities.init();
-        Entities.init();
-        Recipes.init();
 
         Potion[] potionTypes = null;
 
@@ -90,7 +77,22 @@ public class TechnoMagi
             }
         }
 
+        Config.init(event.getSuggestedConfigurationFile());
+
+        proxy.registerEventHandlers();
+
+        PacketHandler.init();
+
+        Specialisations.init();
+        Items.init();
+        Blocks.init();
+        Entities.init();
+        Knowledge.init();
+        Research.init();
+        Abilities.init();
+        Recipes.init();
         Potions.init();
+        Dimensions.init();
     }
 
     @EventHandler
@@ -101,6 +103,8 @@ public class TechnoMagi
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
         GameRegistry.registerWorldGenerator(new OreGen(Blocks.blockResource, 0, 10, 70, 3, 3), 4);
         GameRegistry.registerWorldGenerator(new OreGen(Blocks.blockResource, 1, 0, 10, 3, 3), 4);
+
+        Config.loadImmuneBlocks();
     }
 
     @EventHandler

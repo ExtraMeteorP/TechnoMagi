@@ -1,7 +1,5 @@
 package com.ollieread.technomagi.ability.active;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.item.ItemStack;
@@ -17,17 +15,13 @@ import com.ollieread.technomagi.common.init.Potions;
 
 public class ActiveAbilityHarden extends AbilityActive
 {
-    protected Map<String, Integer> enhancements;
     protected int cost;
 
     public ActiveAbilityHarden(String name)
     {
         super(name, Reference.MODID.toLowerCase());
 
-        this.enhancements = new HashMap<String, Integer>();
-        this.cost = Config.hardenCost;
-
-        this.knowledge = new String[] { "density" };
+        cost = Config.hardenCost;
     }
 
     @Override

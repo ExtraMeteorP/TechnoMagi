@@ -25,12 +25,17 @@ import com.ollieread.technomagi.block.BlockHardlightGenerator;
 import com.ollieread.technomagi.block.BlockLightAir;
 import com.ollieread.technomagi.block.BlockNaniteReplicator;
 import com.ollieread.technomagi.block.BlockObservationChamber;
+import com.ollieread.technomagi.block.BlockPerceptionFilter;
+import com.ollieread.technomagi.block.BlockPrismaticPillar;
 import com.ollieread.technomagi.block.BlockReactiveCrafting;
 import com.ollieread.technomagi.block.BlockResource;
 import com.ollieread.technomagi.block.BlockSeparator;
+import com.ollieread.technomagi.block.BlockSmartmetal;
+import com.ollieread.technomagi.block.BlockSmartmetalTile;
 import com.ollieread.technomagi.block.BlockStorage;
 import com.ollieread.technomagi.block.BlockTank;
 import com.ollieread.technomagi.block.BlockTeleporter;
+import com.ollieread.technomagi.block.BlockVoidBreach;
 import com.ollieread.technomagi.item.ItemBlockTM;
 import com.ollieread.technomagi.tileentity.TileEntityAnalysis;
 import com.ollieread.technomagi.tileentity.TileEntityArchive;
@@ -52,11 +57,15 @@ import com.ollieread.technomagi.tileentity.TileEntityHardlightGenerator;
 import com.ollieread.technomagi.tileentity.TileEntityLightAir;
 import com.ollieread.technomagi.tileentity.TileEntityNaniteReplicator;
 import com.ollieread.technomagi.tileentity.TileEntityObservationChamber;
+import com.ollieread.technomagi.tileentity.TileEntityPerceptionFilter;
+import com.ollieread.technomagi.tileentity.TileEntityPrismaticPillar;
 import com.ollieread.technomagi.tileentity.TileEntityReactiveCrafting;
 import com.ollieread.technomagi.tileentity.TileEntitySeparator;
+import com.ollieread.technomagi.tileentity.TileEntitySmartmetal;
 import com.ollieread.technomagi.tileentity.TileEntityStorage;
 import com.ollieread.technomagi.tileentity.TileEntityTank;
 import com.ollieread.technomagi.tileentity.TileEntityTeleporter;
+import com.ollieread.technomagi.tileentity.TileEntityVoidBreach;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -89,6 +98,11 @@ public class Blocks
     public static Block blockFocusCharger;
     public static Block blockEncourager;
     public static Block blockBattery;
+    public static Block blockVoidBreach;
+    public static BlockSmartmetal blockSmartmetal;
+    public static Block blockSmartmetalTile;
+    public static Block blockPerceptionFilter;
+    public static Block blockPrismaticPillar;
 
     public static void init()
     {
@@ -120,6 +134,11 @@ public class Blocks
         blockStorage = new BlockStorage("storage").setHardness(5.0F).setResistance(10.0F);
         blockEncourager = new BlockEncourager("encourager").setHardness(5.0F).setResistance(10.0F);
         blockBattery = new BlockBattery("battery").setHardness(5.0F).setResistance(10.0F);
+        blockVoidBreach = new BlockVoidBreach("voidBreach");
+        blockSmartmetal = new BlockSmartmetal("smartmetal");
+        blockSmartmetalTile = new BlockSmartmetalTile("smartmetalTile");
+        blockPerceptionFilter = new BlockPerceptionFilter("perceptionFilter");
+        blockPrismaticPillar = new BlockPrismaticPillar("prismaticPillar");
 
         GameRegistry.registerBlock(blockResource, ItemBlockTM.class, "resourceBlock");
         GameRegistry.registerBlock(blockConstruct, "construct");
@@ -147,6 +166,11 @@ public class Blocks
         GameRegistry.registerBlock(blockTank, ItemBlockTM.class, "tank");
         GameRegistry.registerBlock(blockStorage, ItemBlockTM.class, "storage");
         GameRegistry.registerBlock(blockBattery, "battery");
+        GameRegistry.registerBlock(blockVoidBreach, "voidBreach");
+        GameRegistry.registerBlock(blockSmartmetal, "smartmetal");
+        GameRegistry.registerBlock(blockSmartmetalTile, "smartmetalOverlay");
+        GameRegistry.registerBlock(blockPerceptionFilter, "perceptionFilter");
+        GameRegistry.registerBlock(blockPrismaticPillar, "prismaticPillar");
 
         GameRegistry.registerTileEntity(TileEntityArchive.class, "tileEntityArchive");
         GameRegistry.registerTileEntity(TileEntityNaniteReplicator.class, "tileEntityNaniteReplicator");
@@ -173,5 +197,9 @@ public class Blocks
         GameRegistry.registerTileEntity(TileEntityEncourager.class, "tileEntityEncourager");
         GameRegistry.registerTileEntity(TileEntityFocusCharger.class, "tileEntityFocusCharger");
         GameRegistry.registerTileEntity(TileEntityBattery.class, "tileEntityBattery");
+        GameRegistry.registerTileEntity(TileEntityVoidBreach.class, "tileEntityVoidBreach");
+        GameRegistry.registerTileEntity(TileEntitySmartmetal.class, "tileEntitySmartmetal");
+        GameRegistry.registerTileEntity(TileEntityPerceptionFilter.class, "tileEntityPerceptionFilter");
+        GameRegistry.registerTileEntity(TileEntityPrismaticPillar.class, "tileEntityPrismaticPillar");
     }
 }

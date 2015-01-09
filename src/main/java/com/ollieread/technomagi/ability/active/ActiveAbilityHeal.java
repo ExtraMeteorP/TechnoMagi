@@ -1,7 +1,5 @@
 package com.ollieread.technomagi.ability.active;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.entity.EntityLiving;
@@ -20,7 +18,7 @@ import com.ollieread.technomagi.common.init.Config;
 
 public class ActiveAbilityHeal extends AbilityActive
 {
-    protected Map<String, Integer> enhancements;
+
     protected int cost;
     protected int duration;
 
@@ -28,12 +26,8 @@ public class ActiveAbilityHeal extends AbilityActive
     {
         super(name, Reference.MODID.toLowerCase());
 
-        this.enhancements = new HashMap<String, Integer>();
-        this.enhancements.put("life", 1);
-        this.cost = Config.healCost;
-        this.duration = Config.healDuration;
-
-        this.knowledge = new String[] { "life" };
+        cost = Config.healCost;
+        duration = Config.healDuration;
     }
 
     @Override

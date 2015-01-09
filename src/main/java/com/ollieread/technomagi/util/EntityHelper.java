@@ -77,4 +77,9 @@ public class EntityHelper
         return vec;
     }
 
+    public static boolean isInChunk(EntityLivingBase player, int x, int z)
+    {
+        return player.chunkCoordX == x && player.chunkCoordZ == z;
+    }
+
 }

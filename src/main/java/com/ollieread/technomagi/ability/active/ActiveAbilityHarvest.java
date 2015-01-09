@@ -1,8 +1,5 @@
 package com.ollieread.technomagi.ability.active;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
@@ -23,17 +20,13 @@ import com.ollieread.technomagi.common.init.Config;
 public class ActiveAbilityHarvest extends AbilityActive
 {
 
-    protected Map<String, Integer> enhancements;
     protected int cost;
 
     public ActiveAbilityHarvest(String name)
     {
         super(name, Reference.MODID.toLowerCase());
-        this.enhancements = new HashMap<String, Integer>();
-        this.enhancements.put("force", 1);
-        this.cost = Config.harvestCost;
 
-        this.knowledge = new String[] { "density", "force" };
+        cost = Config.harvestCost;
     }
 
     @Override
@@ -65,7 +58,7 @@ public class ActiveAbilityHarvest extends AbilityActive
 
         MovingObjectPosition mouse = Minecraft.getMinecraft().objectMouseOver;
 
-        if (mouse.blockX != x || mouse.blockY != y || mouse.blockZ != z || mouse.sideHit != cast.sideHit) {
+        if (mouse.blockX != x || mouse.blockY != y || mouse.blockZ != z) {
             return false;
         }
 
@@ -87,6 +80,7 @@ public class ActiveAbilityHarvest extends AbilityActive
                     player.worldObj.destroyBlockInWorldPartially(Block.getIdFromBlock(block), x, y, z, harvested);
                 } else {
                     decreaseNanites(charon, 5);
+
                     if (!player.worldObj.isRemote) {
                         block.onBlockHarvested(player.worldObj, x, y, z, meta, player);
                         block.onBlockDestroyedByPlayer(player.worldObj, x, y, z, meta);
@@ -119,7 +113,7 @@ public class ActiveAbilityHarvest extends AbilityActive
             int y = cast.blockY;
             int z = cast.blockZ;
             Block block = charon.player.worldObj.getBlock(x, y, z);
-            charon.player.worldObj.destroyBlockInWorldPartially(Block.getIdFromBlock(block), x, y, z, 0);
+            charon.player.worldObj.destroyBlockInWorldPartially(Block.getIdFromBlock(block), x, y, z, -1);
         }
     }
 

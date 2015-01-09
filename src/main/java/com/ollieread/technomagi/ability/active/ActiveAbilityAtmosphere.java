@@ -1,7 +1,5 @@
 package com.ollieread.technomagi.ability.active;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.entity.EntityLivingBase;
@@ -19,18 +17,16 @@ import com.ollieread.technomagi.common.init.Config;
 
 public class ActiveAbilityAtmosphere extends AbilityActive
 {
-    protected Map<String, Integer> enhancements;
+
     protected int cost;
     protected int duration;
 
     public ActiveAbilityAtmosphere(String name)
     {
         super(name, Reference.MODID.toLowerCase());
-        this.enhancements = new HashMap<String, Integer>();
-        this.enhancements.put("life", 1);
-        this.enhancements.put("force", 1);
-        this.cost = Config.atmosphereCost;
-        this.duration = Config.atmosphereDuration;
+
+        cost = Config.atmosphereCost;
+        duration = Config.atmosphereDuration;
     }
 
     @Override

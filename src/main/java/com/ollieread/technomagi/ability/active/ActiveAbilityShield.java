@@ -1,7 +1,5 @@
 package com.ollieread.technomagi.ability.active;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.entity.EntityLivingBase;
@@ -19,7 +17,7 @@ import com.ollieread.technomagi.common.init.Config;
 
 public class ActiveAbilityShield extends AbilityActive
 {
-    protected Map<String, Integer> enhancements;
+
     protected int cost;
     protected int duration;
 
@@ -27,12 +25,8 @@ public class ActiveAbilityShield extends AbilityActive
     {
         super(name, Reference.MODID.toLowerCase());
 
-        this.enhancements = new HashMap<String, Integer>();
-        this.enhancements.put("life", 2);
-        this.cost = Config.shieldCost;
-        this.duration = Config.shieldDuration;
-
-        this.knowledge = new String[] { "life" };
+        cost = Config.shieldCost;
+        duration = Config.shieldDuration;
     }
 
     @Override

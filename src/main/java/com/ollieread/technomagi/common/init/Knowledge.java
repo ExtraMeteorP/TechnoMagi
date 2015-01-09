@@ -4,17 +4,10 @@ import org.apache.logging.log4j.Level;
 
 import com.ollieread.ennds.research.IKnowledge;
 import com.ollieread.technomagi.TechnoMagi;
-import com.ollieread.technomagi.knowledge.casting.KnowledgeAmplification;
-import com.ollieread.technomagi.knowledge.casting.KnowledgeNegation;
 import com.ollieread.technomagi.knowledge.cybermind.KnowledgeBrainManipulation;
-import com.ollieread.technomagi.knowledge.cybermind.KnowledgeComputerInteraction;
 import com.ollieread.technomagi.knowledge.cybermind.KnowledgeCybermind;
 import com.ollieread.technomagi.knowledge.cybermind.KnowledgeDataManipulation;
-import com.ollieread.technomagi.knowledge.cybermind.KnowledgeElectrocommunication;
-import com.ollieread.technomagi.knowledge.cybermind.KnowledgeHUD;
-import com.ollieread.technomagi.knowledge.cybermind.KnowledgeMindshifting;
 import com.ollieread.technomagi.knowledge.cybermind.KnowledgeNaniteManipulation;
-import com.ollieread.technomagi.knowledge.cybermind.KnowledgeNavigation;
 import com.ollieread.technomagi.knowledge.cybermind.KnowledgePerception;
 import com.ollieread.technomagi.knowledge.general.KnowledgeGeneral;
 import com.ollieread.technomagi.knowledge.life.KnowledgeAggressive;
@@ -26,15 +19,14 @@ import com.ollieread.technomagi.knowledge.life.KnowledgeReproduction;
 import com.ollieread.technomagi.knowledge.resources.KnowledgeCoal;
 import com.ollieread.technomagi.knowledge.resources.KnowledgeGold;
 import com.ollieread.technomagi.knowledge.resources.KnowledgeIron;
+import com.ollieread.technomagi.knowledge.resources.KnowledgeProcessing;
 import com.ollieread.technomagi.knowledge.resources.KnowledgeRedstone;
-import com.ollieread.technomagi.knowledge.technology.KnowledgeAugmentation;
-import com.ollieread.technomagi.knowledge.technology.KnowledgeCyberlingualism;
-import com.ollieread.technomagi.knowledge.technology.KnowledgeEfficancy;
-import com.ollieread.technomagi.knowledge.technology.KnowledgePhotovoltaic;
-import com.ollieread.technomagi.knowledge.technology.KnowledgePossession;
+import com.ollieread.technomagi.knowledge.technology.KnowledgeEfficiency;
+import com.ollieread.technomagi.knowledge.technology.KnowledgePhotoreactive;
 import com.ollieread.technomagi.knowledge.technology.KnowledgePower;
 import com.ollieread.technomagi.knowledge.technology.KnowledgeScanning;
 import com.ollieread.technomagi.knowledge.technology.KnowledgeTechnology;
+import com.ollieread.technomagi.knowledge.technology.KnowledgeThermal;
 
 public class Knowledge
 {
@@ -45,10 +37,11 @@ public class Knowledge
     public static IKnowledge power;
     public static IKnowledge augmentation;
     public static IKnowledge cyberlingualism;
-    public static IKnowledge efficancy;
+    public static IKnowledge efficiency;
     public static IKnowledge possession;
     public static IKnowledge scanning;
-    public static IKnowledge photovoltaic;
+    public static IKnowledge photoreactive;
+    public static IKnowledge thermal;
 
     public static IKnowledge cybermind;
     public static IKnowledge brainManipulation;
@@ -76,6 +69,7 @@ public class Knowledge
     public static IKnowledge gold;
     public static IKnowledge iron;
     public static IKnowledge redstone;
+    public static IKnowledge processing;
 
     public static void init()
     {
@@ -89,6 +83,7 @@ public class Knowledge
         gold = new KnowledgeGold("gold", new String[] {});
         iron = new KnowledgeIron("iron", new String[] {});
         redstone = new KnowledgeRedstone("redstone", new String[] {});
+        processing = new KnowledgeProcessing("processing", new String[] { coal.getName(), gold.getName(), iron.getName(), redstone.getName() });
 
         // Life
         life = new KnowledgeLife("life", new String[] {});
@@ -100,29 +95,38 @@ public class Knowledge
 
         // Technology
         technology = new KnowledgeTechnology("technology", new String[] {});
-        power = new KnowledgePower("power", new String[] { coal.getName(), iron.getName(), gold.getName(), redstone.getName() });
-        augmentation = new KnowledgeAugmentation("augmentation", new String[] {});
-        cyberlingualism = new KnowledgeCyberlingualism("cyberlingualism", new String[] {});
-        efficancy = new KnowledgeEfficancy("efficancy", new String[] {});
-        possession = new KnowledgePossession("possession", new String[] {});
+        power = new KnowledgePower("power", new String[] {});
+        // augmentation = new KnowledgeAugmentation("augmentation", new String[]
+        // {});
+        // cyberlingualism = new KnowledgeCyberlingualism("cyberlingualism", new
+        // String[] {});
+        efficiency = new KnowledgeEfficiency("efficiency", new String[] {});
+        // possession = new KnowledgePossession("possession", new String[] {});
         scanning = new KnowledgeScanning("scanning", new String[] {});
-        photovoltaic = new KnowledgePhotovoltaic("photovoltaic", new String[] { flora.getName(), power.getName() });
+        photoreactive = new KnowledgePhotoreactive("photoreactive", new String[] { flora.getName(), power.getName() });
+        thermal = new KnowledgeThermal("thermal", new String[] {});
 
         // Cybermind
         cybermind = new KnowledgeCybermind("cybermind", new String[] {});
-        brainManipulation = new KnowledgeBrainManipulation("brainManipulation", new String[] {});
-        computerInteraction = new KnowledgeComputerInteraction("computerInteraction", new String[] {});
+        // computerInteraction = new
+        // KnowledgeComputerInteraction("computerInteraction", new String[] {});
         dataManipulation = new KnowledgeDataManipulation("dataManipulation", new String[] { cybermind.getName() });
-        electrocommunication = new KnowledgeElectrocommunication("electrocommunication", new String[] {});
-        hud = new KnowledgeHUD("hud", new String[] {});
-        mindshifting = new KnowledgeMindshifting("mindshifting", new String[] {});
-        naniteManipulation = new KnowledgeNaniteManipulation("naniteManipulation", new String[] {});
-        navigation = new KnowledgeNavigation("navigation", new String[] {});
-        perception = new KnowledgePerception("perception", new String[] {});
+        naniteManipulation = new KnowledgeNaniteManipulation("naniteManipulation", new String[] { cybermind.getName() });
+        // electrocommunication = new
+        // KnowledgeElectrocommunication("electrocommunication", new String[]
+        // {});
+        // hud = new KnowledgeHUD("hud", new String[] {});
+        // navigation = new KnowledgeNavigation("navigation", new String[] {
+        // scanning.getName() });
+        perception = new KnowledgePerception("perception", new String[] { passive.getName(), aggressive.getName() });
+        // mindshifting = new KnowledgeMindshifting("mindshifting", new String[]
+        // {});
+        brainManipulation = new KnowledgeBrainManipulation("brainManipulation", new String[] {});
 
         // Casting
         casting = new KnowledgeTechnology("casting", new String[] {});
-        amplification = new KnowledgeAmplification("amplification", new String[] {});
-        negation = new KnowledgeNegation("negation", new String[] {});
+        // amplification = new KnowledgeAmplification("amplification", new
+        // String[] {});
+        // negation = new KnowledgeNegation("negation", new String[] {});
     }
 }

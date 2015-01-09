@@ -1,8 +1,5 @@
 package com.ollieread.technomagi.ability.active;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -20,19 +17,13 @@ import com.ollieread.technomagi.tileentity.TileEntityReactiveCrafting;
 public class ActiveAbilityReactive extends AbilityActive
 {
 
-    protected Map<String, Integer> enhancements;
     protected int cost;
 
     public ActiveAbilityReactive(String name)
     {
         super(name, Reference.MODID.toLowerCase());
 
-        this.enhancements = new HashMap<String, Integer>();
-        this.enhancements.put("endo", 1);
-        this.enhancements.put("exo", 1);
-        this.cost = Config.reactiveCost;
-
-        this.knowledge = new String[] { "endothermic", "exothermic" };
+        cost = Config.reactiveCost;
     }
 
     @Override

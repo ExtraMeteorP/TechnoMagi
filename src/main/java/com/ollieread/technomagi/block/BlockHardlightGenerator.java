@@ -159,6 +159,31 @@ public class BlockHardlightGenerator extends BlockTMContainer implements IDigita
         return false;
     }
 
+    @Override
+    public int getLightValue(IBlockAccess world, int x, int y, int z)
+    {
+        TileEntity tile = world.getTileEntity(x, y, z);
+
+        if (tile != null && tile instanceof IDisguisableTile) {
+            IDisguisableTile disguise = (IDisguisableTile) tile;
+
+            if (disguise.isDisguised()) {
+                ItemStack stack = disguise.getDisguise();
+
+                if (stack != null && stack.getItem() != null) {
+                    Block block = Block.getBlockFromItem(stack.getItem());
+
+                    if (block != null) {
+                        return block.getLightValue();
+                    }
+                }
+            }
+        }
+
+        return super.getLightValue(world, x, y, z);
+    }
+
+    @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side)
     {
@@ -180,9 +205,10 @@ public class BlockHardlightGenerator extends BlockTMContainer implements IDigita
             }
         }
 
-        return this.getIcon(side, world.getBlockMetadata(x, y, z));
+        return super.getIcon(world, x, y, z, side);
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public int colorMultiplier(IBlockAccess world, int x, int y, int z)
     {
@@ -204,7 +230,7 @@ public class BlockHardlightGenerator extends BlockTMContainer implements IDigita
             }
         }
 
-        return super.colorMultiplier(world, x, y, z);
+        return 0xffffff;
     }
 
 }

@@ -1,8 +1,5 @@
 package com.ollieread.technomagi.ability.active;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -20,16 +17,13 @@ import com.ollieread.technomagi.common.init.Config;
 public class ActiveAbilityDrain extends AbilityActive
 {
 
-    protected Map<String, Integer> enhancements;
     protected int cost;
 
     public ActiveAbilityDrain(String name)
     {
         super(name, Reference.MODID.toLowerCase());
-        this.enhancements = new HashMap<String, Integer>();
-        this.enhancements.put("life", 2);
-        this.cost = Config.harvestCost;
-        this.knowledge = new String[] { "density", "force" };
+
+        cost = Config.harvestCost;
     }
 
     @Override

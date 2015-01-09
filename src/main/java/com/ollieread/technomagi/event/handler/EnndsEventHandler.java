@@ -88,7 +88,7 @@ public class EnndsEventHandler
         if (!event.entityPlayer.worldObj.isRemote) {
             if (event.complete) {
                 SoundHelper.playSoundEffectAtPlayer(event.entityPlayer, "cast", event.entityPlayer.worldObj.rand);
-                ResearchRegistry.researchEvent("castingFinish", event, event.charon, false);
+                ResearchRegistry.researchEvent("casting", event, event.charon, false);
             }
         }
     }

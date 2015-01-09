@@ -1,78 +1,179 @@
 package com.ollieread.technomagi.common.init;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
+import net.minecraft.entity.EntityList;
+import net.minecraft.entity.monster.EntityBlaze;
+import net.minecraft.entity.monster.EntityCaveSpider;
+import net.minecraft.entity.monster.EntityCreeper;
+import net.minecraft.entity.monster.EntityEnderman;
+import net.minecraft.entity.monster.EntityGhast;
+import net.minecraft.entity.monster.EntityIronGolem;
+import net.minecraft.entity.monster.EntityMagmaCube;
+import net.minecraft.entity.monster.EntityPigZombie;
+import net.minecraft.entity.monster.EntitySilverfish;
+import net.minecraft.entity.monster.EntitySkeleton;
+import net.minecraft.entity.monster.EntitySlime;
+import net.minecraft.entity.monster.EntitySnowman;
+import net.minecraft.entity.monster.EntitySpider;
+import net.minecraft.entity.monster.EntityWitch;
+import net.minecraft.entity.monster.EntityZombie;
+import net.minecraft.entity.passive.EntityBat;
+import net.minecraft.entity.passive.EntityChicken;
+import net.minecraft.entity.passive.EntityCow;
+import net.minecraft.entity.passive.EntityHorse;
+import net.minecraft.entity.passive.EntityMooshroom;
+import net.minecraft.entity.passive.EntityOcelot;
+import net.minecraft.entity.passive.EntityPig;
+import net.minecraft.entity.passive.EntitySheep;
+import net.minecraft.entity.passive.EntitySquid;
+import net.minecraft.entity.passive.EntityVillager;
+import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
 
-import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.ollieread.ennds.EnndsRegistry;
-import com.ollieread.technomagi.TechnoMagi;
-import com.ollieread.technomagi.common.Reference;
+import com.ollieread.ennds.research.ResearchRegistry;
+import com.ollieread.technomagi.util.DamageSourceTM;
+import com.ollieread.technomagi.util.EventHelper;
 
 public class Research
 {
 
-    public static Map<String, List<String>> json = new HashMap<String, List<String>>();
     public static Map<ItemStack, String> itemToResearchMapping = new HashMap<ItemStack, String>();
-    private static Gson gson = new Gson();
 
     public static void init()
     {
-        try {
-            String location = "/assets/" + Reference.MODID.toLowerCase() + "/information/research.json";
-            Type jsonType = new TypeToken<Map<String, List<String>>>()
-            {
-            }.getType();
-            InputStream resource = TechnoMagi.class.getResourceAsStream(location);
-            json = gson.fromJson(IOUtils.toString(resource), jsonType);
+        EnndsRegistry.registerEvent("specialisation");
+        EnndsRegistry.registerEvent("knowledgeProgress");
+        EnndsRegistry.registerEvent("playerTick");
+        EnndsRegistry.registerEvent("shearedSheep");
+        EnndsRegistry.registerEvent("milkCow");
+        EnndsRegistry.registerEvent("toNether");
+        EnndsRegistry.registerEvent("toEnd");
+        EnndsRegistry.registerEvent("toOverworld");
+        EnndsRegistry.registerEvent("playerChangedDimension");
+        EnndsRegistry.registerEvent("enderTeleport");
+        EnndsRegistry.registerEvent("enderTeleportEnderman");
+        EnndsRegistry.registerEvent("sleep");
+        EnndsRegistry.registerEvent("casting");
+        EnndsRegistry.registerEvent("crafting");
+        EnndsRegistry.registerEvent("smelting");
 
-            for (Iterator<List<String>> i = json.values().iterator(); i.hasNext();) {
-                List<String> e = i.next();
+        addItem(new ItemStack(Items.porkchop));
+        addItem(new ItemStack(Items.beef));
+        addItem(new ItemStack(Items.chicken));
+        addItem(new ItemStack(Items.fish));
+        addItem(new ItemStack(Items.cooked_porkchop));
+        addItem(new ItemStack(Items.cooked_beef));
+        addItem(new ItemStack(Items.cooked_chicken));
+        addItem(new ItemStack(Items.cooked_fished));
+        addItem(new ItemStack(Items.apple));
+        addItem(new ItemStack(Items.potato));
+        addItem(new ItemStack(Items.baked_potato));
+        addItem(new ItemStack(Items.carrot));
+        addItem(new ItemStack(Items.bread));
+        addItem(new ItemStack(Items.golden_apple));
+        addItem(new ItemStack(Items.golden_carrot));
+        addItem(new ItemStack(Items.ender_pearl));
+        addItem(new ItemStack(Items.egg));
+        addItem(new ItemStack(Items.snowball));
+        addItem(new ItemStack(Items.flint_and_steel));
 
-                if (e != null && e.size() > 0) {
-                    for (int x = 0; x < e.size(); x++) {
-                        if (e.get(x) != null && !e.get(x).isEmpty()) {
-                            EnndsRegistry.registerEvent(e.get(x));
-                        }
-                    }
-                }
-            }
-        } catch (IOException e) {
-            TechnoMagi.logger.warn("Unable to load research");
-            e.printStackTrace();
-        } catch (Exception e) {
-            TechnoMagi.logger.warn("Unable to load research");
-            e.printStackTrace();
+        addEntity(EntityCreeper.class, true, false);
+        addEntity(EntitySkeleton.class, true, false);
+        addEntity(EntitySpider.class, true, false);
+        addEntity(EntityZombie.class, true, false);
+        addEntity(EntitySlime.class, true, false);
+        addEntity(EntityGhast.class, true, false);
+        addEntity(EntityPigZombie.class, true, false);
+        addEntity(EntityEnderman.class, true, false);
+        addEntity(EntityCaveSpider.class, true, false);
+        addEntity(EntitySilverfish.class, true, false);
+        addEntity(EntityBlaze.class, true, false);
+        addEntity(EntityMagmaCube.class, true, false);
+        addEntity(EntityIronGolem.class, true, false);
+        addEntity(EntitySnowman.class, true, false);
+        addEntity(EntityWolf.class, true, false);
+        addEntity(EntityWitch.class, true, false);
+        addEntity(EntityBat.class, false, false);
+        addEntity(EntityPig.class, false, true);
+        addEntity(EntitySheep.class, false, true);
+        addEntity(EntityCow.class, false, true);
+        addEntity(EntityChicken.class, false, true);
+        addEntity(EntitySquid.class, false, false);
+        addEntity(EntityMooshroom.class, false, true);
+        addEntity(EntityOcelot.class, false, true);
+        addEntity(EntityHorse.class, false, true);
+        addEntity(EntityVillager.class, false, false);
+
+        addDamage(DamageSource.anvil);
+        addDamage(DamageSource.cactus);
+        addDamage(DamageSource.drown);
+        addDamage(DamageSource.fall);
+        addDamage(DamageSource.fallingBlock);
+        addDamage(DamageSource.generic);
+        addDamage(DamageSource.inFire);
+        addDamage(DamageSource.inWall);
+        addDamage(DamageSource.lava);
+        addDamage(DamageSource.magic);
+        addDamage(DamageSource.onFire);
+        addDamage(DamageSource.outOfWorld);
+        addDamage(DamageSource.starve);
+        addDamage(DamageSource.wither);
+        addDamage((new DamageSource("explosion")).setExplosion());
+        addDamage(DamageSourceTM.voidDamage);
+
+        for (Iterator<Class> i = ResearchRegistry.getMonitorableEntities().iterator(); i.hasNext();) {
+            Class entityClass = i.next();
+            String entityName = (String) EntityList.classToStringMapping.get(entityClass);
+
+            EnndsRegistry.registerEvent(EventHelper.entityPassive(entityClass));
         }
 
-        itemToResearchMapping.put(new ItemStack(Items.porkchop), "eatPorkchop");
-        itemToResearchMapping.put(new ItemStack(Items.beef), "eatBeef");
-        itemToResearchMapping.put(new ItemStack(Items.chicken), "eatChicken");
-        itemToResearchMapping.put(new ItemStack(Items.fish), "eatFish");
-        itemToResearchMapping.put(new ItemStack(Items.cooked_porkchop), "eatCookedPorkchop");
-        itemToResearchMapping.put(new ItemStack(Items.cooked_beef), "eatCookedBeef");
-        itemToResearchMapping.put(new ItemStack(Items.cooked_chicken), "eatCookedChicken");
-        itemToResearchMapping.put(new ItemStack(Items.cooked_fished), "eatCookedFish");
-        itemToResearchMapping.put(new ItemStack(Items.apple), "eatApple");
-        itemToResearchMapping.put(new ItemStack(Items.potato), "eatPotato");
-        itemToResearchMapping.put(new ItemStack(Items.baked_potato), "eatBakedPotato");
-        itemToResearchMapping.put(new ItemStack(Items.carrot), "eatCarrot");
-        itemToResearchMapping.put(new ItemStack(Items.bread), "eatBread");
-        itemToResearchMapping.put(new ItemStack(Items.golden_apple), "eatGoldenApple");
-        itemToResearchMapping.put(new ItemStack(Items.golden_carrot), "eatGoldenCarrot");
-        itemToResearchMapping.put(new ItemStack(Items.ender_pearl), "useEnderpearl");
-        itemToResearchMapping.put(new ItemStack(Items.egg), "useEgg");
-        itemToResearchMapping.put(new ItemStack(Items.snowball), "useSnowball");
+        for (Iterator<Class> i = ResearchRegistry.getObservableEntities().iterator(); i.hasNext();) {
+            Class entityClass = i.next();
+            String entityName = (String) EntityList.classToStringMapping.get(entityClass);
+
+            EnndsRegistry.registerEvent(EventHelper.entityPassive(entityClass));
+        }
+
+        for (Iterator<String> i = ResearchRegistry.getKnowledgeNames().iterator(); i.hasNext();) {
+            String name = i.next();
+            EnndsRegistry.registerEvent("knowledge" + StringUtils.capitalize(name));
+        }
     }
 
+    public static void addItem(ItemStack stack)
+    {
+        String eventName = EventHelper.itemUse(stack);
+
+        itemToResearchMapping.put(stack, eventName);
+        EnndsRegistry.registerEvent(eventName);
+    }
+
+    public static void addEntity(Class entityClass, boolean hostile, boolean breed)
+    {
+        EnndsRegistry.registerEvent(EventHelper.entityAttacked(entityClass));
+        EnndsRegistry.registerEvent(EventHelper.entityKilled(entityClass));
+
+        if (hostile) {
+            EnndsRegistry.registerEvent(EventHelper.entityAttackedBy(entityClass));
+        }
+
+        if (breed) {
+            EnndsRegistry.registerEvent(EventHelper.entityBreed(entityClass));
+            EnndsRegistry.registerEvent(EventHelper.entityBirth(entityClass));
+        }
+    }
+
+    public static void addDamage(DamageSource damage)
+    {
+        EnndsRegistry.registerEvent(EventHelper.damage(damage, false));
+    }
 }

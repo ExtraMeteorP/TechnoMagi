@@ -1,7 +1,5 @@
 package com.ollieread.technomagi.ability.active;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.entity.projectile.EntityArrow;
@@ -19,18 +17,13 @@ import com.ollieread.technomagi.common.init.Config;
 public class ActiveAbilityProjectile extends AbilityActive
 {
 
-    protected Map<String, Integer> enhancements;
     protected int cost;
 
     public ActiveAbilityProjectile(String name)
     {
         super(name, Reference.MODID.toLowerCase());
 
-        this.enhancements = new HashMap<String, Integer>();
-        this.enhancements.put("force", 3);
-        this.cost = Config.projectileCost;
-
-        this.knowledge = new String[] { "projectile" };
+        cost = Config.projectileCost;
     }
 
     @Override

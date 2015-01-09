@@ -1,7 +1,5 @@
 package com.ollieread.technomagi.ability.active;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.item.ItemStack;
@@ -19,17 +17,16 @@ import com.ollieread.technomagi.util.EntityHelper;
 
 public class ActiveAbilityBlink extends AbilityActive
 {
-    protected Map<String, Integer> enhancements;
+
     protected int cost;
     protected int distance;
 
     public ActiveAbilityBlink(String name)
     {
         super(name, Reference.MODID.toLowerCase());
-        this.enhancements = new HashMap<String, Integer>();
-        this.enhancements.put("teleport", 1);
-        this.cost = Config.blinkCost;
-        this.distance = Config.blinkDistance;
+
+        cost = Config.blinkCost;
+        distance = Config.blinkDistance;
     }
 
     @Override

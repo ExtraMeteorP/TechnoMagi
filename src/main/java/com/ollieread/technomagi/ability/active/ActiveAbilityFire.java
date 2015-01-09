@@ -1,8 +1,5 @@
 package com.ollieread.technomagi.ability.active;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.init.Blocks;
@@ -18,7 +15,7 @@ import com.ollieread.technomagi.common.init.Config;
 
 public class ActiveAbilityFire extends AbilityActive
 {
-    protected Map<String, Integer> enhancements;
+
     protected int cost;
     protected int costExtinguish;
     protected int costEntity;
@@ -27,15 +24,11 @@ public class ActiveAbilityFire extends AbilityActive
     public ActiveAbilityFire(String name)
     {
         super(name, Reference.MODID.toLowerCase());
-        this.enhancements = new HashMap<String, Integer>();
-        this.enhancements.put("exo", 1);
 
-        this.cost = Config.fireCost;
-        this.costExtinguish = Config.fireExtinguishCost;
-        this.costEntity = Config.fireEntityCost;
-        this.burnTime = Config.fireBurnTime;
-
-        this.knowledge = new String[] { "exothermic" };
+        cost = Config.fireCost;
+        costExtinguish = Config.fireExtinguishCost;
+        costEntity = Config.fireEntityCost;
+        burnTime = Config.fireBurnTime;
     }
 
     @Override

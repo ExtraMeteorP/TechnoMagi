@@ -3,8 +3,10 @@ package com.ollieread.technomagi.util;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityList;
 import net.minecraft.item.Item;
+import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemStack;
 
+import com.ollieread.technomagi.block.BlockResource;
 import com.ollieread.technomagi.common.init.Blocks;
 import com.ollieread.technomagi.common.init.Items;
 import com.ollieread.technomagi.item.ItemMobBrain;
@@ -12,8 +14,42 @@ import com.ollieread.technomagi.item.ItemNaniteContainer;
 import com.ollieread.technomagi.item.ItemSampleVile;
 import com.ollieread.technomagi.item.ItemTMNBT;
 
+import cpw.mods.fml.common.registry.GameRegistry;
+
 public class ItemHelper
 {
+
+    // EnumHelper.addToolMaterial("ENERGY", 4, 2200, 10.0F, 4.0F, 28);
+    public static ToolMaterial ENERGY;
+    public static ToolMaterial ETHERIUM;
+    public static ToolMaterial RELUX;
+
+    public static boolean matchesBlock(ItemStack stack, Block block)
+    {
+        if (stack != null && stack.getItem() != null) {
+            Block block2 = Block.getBlockFromItem(stack.getItem());
+
+            if (block2 != null && block2 == block) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static boolean matches(ItemStack stack1, ItemStack stack2)
+    {
+        return matches(stack1, stack2, true);
+    }
+
+    public static boolean matches(ItemStack stack1, ItemStack stack2, boolean nbt)
+    {
+        if (!nbt) {
+            return stack1.isItemEqual(stack2);
+        }
+
+        return ItemStack.areItemStacksEqual(stack1, stack2);
+    }
 
     public static ItemStack staff(boolean complete)
     {
@@ -60,6 +96,26 @@ public class ItemHelper
     public static ItemStack construct(int count)
     {
         return new ItemStack(Blocks.blockConstruct, count);
+    }
+
+    public static ItemStack ore(String name)
+    {
+        return ore(name, 1);
+    }
+
+    public static ItemStack ore(String name, int count)
+    {
+        ItemStack stack = new ItemStack(Blocks.blockResource, count);
+        String[] blockNames = BlockResource.blockNames;
+
+        for (int i = 0; i < blockNames.length; i++) {
+            if (blockNames[i].equals(name)) {
+                stack.setItemDamage(i);
+                break;
+            }
+        }
+
+        return stack;
     }
 
     public static ItemStack resource(String name, int count)
@@ -132,6 +188,27 @@ public class ItemHelper
         return null;
     }
 
+    public static ItemStack block(String modid, String name)
+    {
+        return block(modid, name, 1, 0);
+    }
+
+    public static ItemStack block(String modid, String name, int meta)
+    {
+        return block(modid, name, 1, meta);
+    }
+
+    public static ItemStack block(String modid, String name, int count, int meta)
+    {
+        Block block = GameRegistry.findBlock(modid, name);
+
+        if (block != null) {
+            return new ItemStack(Item.getItemFromBlock(block), count, meta);
+        }
+
+        return null;
+    }
+
     public static ItemStack block(String name)
     {
         return block(name, 1, 0);
@@ -152,5 +229,4 @@ public class ItemHelper
 
         return null;
     }
-
 }

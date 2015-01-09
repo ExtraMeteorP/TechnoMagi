@@ -95,7 +95,9 @@ enhancement.endo=Endothermic
 enhancement.force=Force
 enhancement.void=Void
 
-potionHardness=Hardness
+potion.voidSickness=Void Sickness
+
+death.attack.void=%1$s has succumb to the void
 
 itemGroup.tabTm=TechnoMagi
 

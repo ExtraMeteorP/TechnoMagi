@@ -1,17 +1,23 @@
 package com.ollieread.technomagi.common.init;
 
+import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.monster.EntityCaveSpider;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityEnderman;
+import net.minecraft.entity.monster.EntityMagmaCube;
 import net.minecraft.entity.monster.EntityPigZombie;
+import net.minecraft.entity.monster.EntitySilverfish;
 import net.minecraft.entity.monster.EntitySkeleton;
+import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.entity.monster.EntitySpider;
+import net.minecraft.entity.monster.EntityWitch;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.passive.EntityVillager;
+import net.minecraft.entity.passive.EntityWolf;
 
 import com.ollieread.ennds.research.ResearchRegistry;
 import com.ollieread.technomagi.TechnoMagi;
@@ -46,6 +52,12 @@ public class Entities
         ResearchRegistry.registerEntity(EntitySkeleton.class, false, null, true, true);
         ResearchRegistry.registerEntity(EntitySpider.class, false, null, false, true);
         ResearchRegistry.registerEntity(EntityCaveSpider.class, false, null, false, true);
+        ResearchRegistry.registerEntity(EntitySlime.class, false, null, false, true);
+        ResearchRegistry.registerEntity(EntityMagmaCube.class, false, null, false, true);
+        ResearchRegistry.registerEntity(EntityBlaze.class, false, null, false, true);
+        ResearchRegistry.registerEntity(EntityWolf.class, false, null, false, true);
+        ResearchRegistry.registerEntity(EntityWitch.class, false, null, false, true);
+        ResearchRegistry.registerEntity(EntitySilverfish.class, false, null, false, true);
         ResearchRegistry.registerEntity(EntityEnderman.class, true, EntityRobotEnderman.class, true, true);
     }
 

@@ -1,7 +1,5 @@
 package com.ollieread.technomagi.ability.active;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.item.ItemStack;
@@ -18,19 +16,15 @@ import com.ollieread.technomagi.common.init.Config;
 public class ActiveAbilityInvisibility extends AbilityActive
 {
 
-    protected Map<String, Integer> enhancements;
     protected int cost;
     protected int duration;
 
     public ActiveAbilityInvisibility(String name)
     {
         super(name, Reference.MODID.toLowerCase());
-        this.enhancements = new HashMap<String, Integer>();
-        this.enhancements.put("light", 1);
-        this.cost = Config.invisibilityCost;
-        this.duration = Config.invisibilityDuration;
 
-        this.knowledge = new String[] { "light" };
+        cost = Config.invisibilityCost;
+        duration = Config.invisibilityDuration;
     }
 
     @Override

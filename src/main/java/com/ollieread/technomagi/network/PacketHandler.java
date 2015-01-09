@@ -12,6 +12,8 @@ import com.ollieread.technomagi.network.message.MessageSetBuilding;
 import com.ollieread.technomagi.network.message.MessageSetCrafting;
 import com.ollieread.technomagi.network.message.MessageSetProgress;
 import com.ollieread.technomagi.network.message.MessageSetTeleporterMode;
+import com.ollieread.technomagi.network.message.MessageSyncPerceptionFilters;
+import com.ollieread.technomagi.network.message.MessageSyncRegions;
 import com.ollieread.technomagi.network.message.MessageSyncTileEntityTM;
 
 import cpw.mods.fml.common.network.NetworkRegistry;
@@ -35,5 +37,7 @@ public class PacketHandler
         INSTANCE.registerMessage(MessageOpenTeleporter.class, MessageOpenTeleporter.class, 6, Side.CLIENT);
         INSTANCE.registerMessage(MessageSetTeleporterMode.class, MessageSetTeleporterMode.class, 7, Side.SERVER);
         INSTANCE.registerMessage(MessageSetArchive.class, MessageSetArchive.class, 8, Side.SERVER);
+        INSTANCE.registerMessage(MessageSyncPerceptionFilters.class, MessageSyncPerceptionFilters.class, 9, Side.CLIENT);
+        INSTANCE.registerMessage(MessageSyncRegions.class, MessageSyncRegions.class, 10, Side.CLIENT);
     }
 }

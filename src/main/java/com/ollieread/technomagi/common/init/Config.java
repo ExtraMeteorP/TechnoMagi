@@ -2,7 +2,12 @@ package com.ollieread.technomagi.common.init;
 
 import java.io.File;
 
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
+
+import com.ollieread.technomagi.common.Reference;
+import com.ollieread.technomagi.util.ItemHelper;
 
 public class Config
 {
@@ -103,6 +108,14 @@ public class Config
     public static int generatorVoidPowerOutput;
     public static int generatorVoidMaxTicks;
     public static int generatorVoidModifier;
+
+    public static int voidBreachMaxTicks;
+    public static int voidBreachSpreadChance;
+    public static int voidBreachStageChance;
+    public static int voidBreachStageSpread;
+    public static ItemStack[] voidBreachImmune;
+    public static boolean perceptionEnabled;
+    public static int[] perceptionDimensions;
 
     public static void init(File configurationFile)
     {
@@ -233,6 +246,47 @@ public class Config
         generatorVoidMaxTicks = config.getInt("generatorVoidMaxTicks", "Machine", 40, 1, 100, "Amount of ticks before energy is generated");
         generatorVoidModifier = config.getInt("generatorVoidModifier", "Machine", 5, 1, 10, "Modifier for energy generation, higher the number, the lower the energy");
 
+        // Environment
+        // Void breach
+        voidBreachMaxTicks = config.getInt("voidBreachMaxTicks", "Environment", 6000, 1200, 100000, "Max ticks for a chance for the void breach to progress");
+        voidBreachSpreadChance = config.getInt("voidBreachSpreadChance", "Environment", 100, 100, 100000, "Chance for the void breach to spread");
+        voidBreachStageChance = config.getInt("voidBreachStageChance", "Environment", 100, 100, 100000, "Chance for the void breach to stage up");
+        voidBreachStageSpread = config.getInt("voidBreachStageSpread", "Environment", 9, 0, 9, "Minimum stage the void breach must be to spread");
+        // Perception filter
+        perceptionEnabled = config.getBoolean("perceptionEnabled", "Environment", true, "Whether or not to allow perception filtering");
+        perceptionDimensions = getIntList("perceptionDimensions", "Environment", new int[] { 0 }, "Dimensions the perception filter works with");
+
         config.save();
+    }
+
+    public static void loadImmuneBlocks()
+    {
+        config.load();
+
+        String[] nonReplaceable = config.getStringList("voidBreachImmune", "Environment", new String[] { Reference.MODID + ":resourceBlock:1", Reference.MODID + ":hardlight", "minecraft:bedrock" }, "Blocks that are immune to the void breach spread");
+
+        voidBreachImmune = new ItemStack[nonReplaceable.length];
+
+        for (int i = 0; i < voidBreachImmune.length; i++) {
+            String name = nonReplaceable[i];
+            String[] blockParts = name.split(":");
+
+            if (blockParts.length == 2) {
+                voidBreachImmune[i] = ItemHelper.block(blockParts[0], blockParts[1]);
+            } else if (blockParts.length == 3) {
+                voidBreachImmune[i] = ItemHelper.block(blockParts[0], blockParts[1], Integer.parseInt(blockParts[2]));
+            }
+        }
+
+        config.save();
+    }
+
+    public static int[] getIntList(String name, String category, int[] defaultValue, String comment)
+    {
+        Property prop = config.get(category, name, defaultValue);
+        prop.setLanguageKey(name);
+        prop.setValidValues(null);
+        prop.comment = comment + " [default: " + prop.getDefault() + "]";
+        return prop.getIntList();
     }
 }

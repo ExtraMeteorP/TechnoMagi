@@ -1,12 +1,15 @@
 package com.ollieread.technomagi.common.init;
 
+import net.minecraft.item.ItemSword;
+
 import org.apache.logging.log4j.Level;
 
 import com.ollieread.technomagi.TechnoMagi;
 import com.ollieread.technomagi.item.ItemCapture;
 import com.ollieread.technomagi.item.ItemComponent;
+import com.ollieread.technomagi.item.ItemDatasheet;
 import com.ollieread.technomagi.item.ItemDigitalTool;
-import com.ollieread.technomagi.item.ItemHectoStorage;
+import com.ollieread.technomagi.item.ItemEnergySword;
 import com.ollieread.technomagi.item.ItemMobBrain;
 import com.ollieread.technomagi.item.ItemNaniteContainer;
 import com.ollieread.technomagi.item.ItemResource;
@@ -28,9 +31,10 @@ public class Items
     public static ItemTM itemMobBrain;
     public static ItemTM itemNaniteContainer;
     public static ItemTM itemDigitalTool;
-    public static ItemTM itemHectoStorage;
+    public static ItemTM itemDatasheet;
     public static ItemTM itemTechnomageStaff;
     public static ItemTM itemCapture;
+    public static ItemSword itemEnergySword;
 
     public static void init()
     {
@@ -43,9 +47,10 @@ public class Items
         itemMobBrain = new ItemMobBrain("mobBrain");
         itemNaniteContainer = new ItemNaniteContainer("naniteContainer");
         itemDigitalTool = new ItemDigitalTool("digitalTool");
-        itemHectoStorage = new ItemHectoStorage("hectoStorage");
+        itemDatasheet = new ItemDatasheet("datasheet");
         itemTechnomageStaff = new ItemStaff("technomageStaff");
         itemCapture = new ItemCapture("capture");
+        itemEnergySword = new ItemEnergySword("energySword");
 
         GameRegistry.registerItem(itemResource, "resourceItem");
         GameRegistry.registerItem(itemComponent, "component");
@@ -55,7 +60,8 @@ public class Items
         GameRegistry.registerItem(itemMobBrain, "mobBrain");
         GameRegistry.registerItem(itemNaniteContainer, "naniteContainer");
         GameRegistry.registerItem(itemDigitalTool, "digitalTool");
-        GameRegistry.registerItem(itemHectoStorage, "hectoStorage");
+        GameRegistry.registerItem(itemDatasheet, "hectoStorage");
         GameRegistry.registerItem(itemCapture, "capture");
+        GameRegistry.registerItem(itemEnergySword, "energySword");
     }
 }

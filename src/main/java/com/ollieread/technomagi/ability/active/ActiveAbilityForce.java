@@ -1,8 +1,6 @@
 package com.ollieread.technomagi.ability.active;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.entity.Entity;
@@ -25,17 +23,14 @@ import com.ollieread.technomagi.util.EntityHelper;
 
 public class ActiveAbilityForce extends AbilityActive
 {
-    protected Map<String, Integer> enhancements;
+
     protected int cost;
 
     public ActiveAbilityForce(String name)
     {
         super(name, Reference.MODID.toLowerCase());
-        this.enhancements = new HashMap<String, Integer>();
-        this.enhancements.put("force", 1);
-        this.cost = Config.forceCost;
 
-        this.knowledge = new String[] { "force" };
+        cost = Config.forceCost;
     }
 
     @Override

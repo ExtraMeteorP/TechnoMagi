@@ -155,4 +155,10 @@ public class ItemStaff extends ItemTMNBT implements IStaff
         return true;
     }
 
+    @Override
+    public boolean canCast()
+    {
+        return true;
+    }
+
 }

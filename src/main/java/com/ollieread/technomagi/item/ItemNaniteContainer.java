@@ -6,7 +6,6 @@ import java.util.Set;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -27,7 +26,7 @@ import com.ollieread.technomagi.common.Reference;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemNaniteContainer extends ItemTM
+public class ItemNaniteContainer extends ItemTMNBT
 {
 
     @SideOnly(Side.CLIENT)
@@ -41,40 +40,55 @@ public class ItemNaniteContainer extends ItemTM
         setHasSubtypes(true);
     }
 
-    public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5)
-    {
-
-    }
-
-    public void onCreated(ItemStack stack, World world, EntityPlayer player)
-    {
-        stack.stackTagCompound = new NBTTagCompound();
-    }
-
     public static String getEntity(ItemStack stack)
     {
-        NBTTagCompound compound = stack.stackTagCompound;
+        NBTTagCompound compound = getNBT(stack);
 
-        if (compound != null && compound.hasKey("Entity")) {
+        if (compound.hasKey("Entity")) {
             return compound.getString("Entity");
         }
 
         return null;
     }
 
-    public static void setEntity(ItemStack stack, Class entityClass)
+    public static String getPlayer(ItemStack stack)
     {
-        NBTTagCompound compound = stack.stackTagCompound;
+        NBTTagCompound compound = getNBT(stack);
+
+        if (compound.hasKey("Entity")) {
+            if (compound.getString("Entity") == "Player") {
+                return compound.getString("PlayerName");
+            }
+        }
+
+        return null;
+    }
+
+    public static void setEntity(ItemStack stack, EntityLivingBase entity)
+    {
+        NBTTagCompound compound = getNBT(stack);
         String entityName;
 
-        if (!entityClass.equals(EntityPlayer.class)) {
-            entityName = (String) EntityList.classToStringMapping.get(entityClass);
-            Set<Class> entities = ResearchRegistry.getMonitorableEntities();
-            stack.setItemDamage(2);
-        } else {
+        if (entity instanceof EntityPlayer) {
             entityName = "player";
+            compound.setString("PlayerName", ((EntityPlayer) entity).getCommandSenderName());
             stack.setItemDamage(1);
+        } else {
+            setEntity(stack, entity.getClass());
+            return;
         }
+
+        compound.setString("Entity", entityName);
+    }
+
+    public static void setEntity(ItemStack stack, Class entityClass)
+    {
+        NBTTagCompound compound = getNBT(stack);
+        String entityName;
+
+        entityName = (String) EntityList.classToStringMapping.get(entityClass);
+        Set<Class> entities = ResearchRegistry.getMonitorableEntities();
+        stack.setItemDamage(2);
 
         compound.setString("Entity", entityName);
     }
@@ -96,7 +110,7 @@ public class ItemNaniteContainer extends ItemTM
             if (entityClass != null) {
                 info = StatCollector.translateToLocal("entity." + entityName + ".name");
             } else if (entityName.equals("player")) {
-                info = EnumChatFormatting.DARK_PURPLE + "Player";
+                info = EnumChatFormatting.DARK_PURPLE + getPlayer(stack);
             }
 
             list.add(info);
@@ -132,13 +146,8 @@ public class ItemNaniteContainer extends ItemTM
     public void getSubItems(Item item, CreativeTabs tab, List list)
     {
         ItemStack empty = new ItemStack(item, 1, 0);
-        empty.stackTagCompound = new NBTTagCompound();
+        resetNBT(empty);
         list.add(empty);
-
-        ItemStack initial = new ItemStack(item, 1, 1);
-        initial.stackTagCompound = new NBTTagCompound();
-        this.setEntity(initial, EntityPlayer.class);
-        list.add(initial);
 
         Iterator iterator = ResearchRegistry.getMonitorableEntities().iterator();
         int x = 2;
@@ -164,7 +173,7 @@ public class ItemNaniteContainer extends ItemTM
                 if (charon.nanites.decreaseNanites(10)) {
                     ItemStack newStack = new ItemStack(this, 1, 1);
                     newStack.stackTagCompound = new NBTTagCompound();
-                    this.setEntity(newStack, EntityPlayer.class);
+                    this.setEntity(newStack, player);
                     player.inventory.addItemStackToInventory(newStack);
                     stack.stackSize--;
                 }
@@ -180,7 +189,15 @@ public class ItemNaniteContainer extends ItemTM
 
     public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase entity)
     {
-        if (entity instanceof EntityLiving) {
+        if (stack.getItemDamage() == 0) {
+            if (entity instanceof EntityPlayer && !entity.equals(player)) {
+                ItemStack newStack = new ItemStack(this, 1, 1);
+                newStack.stackTagCompound = new NBTTagCompound();
+                this.setEntity(newStack, player);
+                player.inventory.addItemStackToInventory(newStack);
+                stack.stackSize--;
+            }
+        } else {
             EntityLiving entityLiving = (EntityLiving) entity;
             String entityName = (String) EntityList.classToStringMapping.get(entityLiving.getClass());
 
