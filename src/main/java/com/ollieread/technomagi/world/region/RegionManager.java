@@ -267,14 +267,18 @@ public class RegionManager
      * 
      * Interaction: Control over what players & entities can do
      * 
-     * Presence: Controller over the presence of players & entities, including
+     * Presence: Control over the presence of players & entities, including
      * spawn control
+     * 
+     * Damage: Control over damage, taking and dishing out
+     * 
+     * Effect: Applies effects to a player, like a beacon
      * 
      * @author ollieread
      *
      */
     public static enum RegionControllerType {
-        PERCEPTION, INTERACTION, PRESENCE
+        PERCEPTION, INTERACTION, PRESENCE, DAMAGE, EFFECT
     }
 
 }
