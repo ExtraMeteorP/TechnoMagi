@@ -143,7 +143,7 @@ public class RenderEventHandler
         World world = player.worldObj;
         List<IRegionController> controllers = RegionManager.getControllers(RegionControllerType.PERCEPTION);
 
-        if (world == null || !(controllers.size() > 0)) {
+        if (world == null || controllers == null || !(controllers.size() > 0)) {
             return;
         }
 

@@ -25,9 +25,9 @@ import com.ollieread.technomagi.block.BlockHardlightGenerator;
 import com.ollieread.technomagi.block.BlockLightAir;
 import com.ollieread.technomagi.block.BlockNaniteReplicator;
 import com.ollieread.technomagi.block.BlockObservationChamber;
-import com.ollieread.technomagi.block.BlockPerceptionFilter;
 import com.ollieread.technomagi.block.BlockPrismaticPillar;
 import com.ollieread.technomagi.block.BlockReactiveCrafting;
+import com.ollieread.technomagi.block.BlockRegionController;
 import com.ollieread.technomagi.block.BlockResource;
 import com.ollieread.technomagi.block.BlockSeparator;
 import com.ollieread.technomagi.block.BlockSmartmetal;
@@ -57,9 +57,9 @@ import com.ollieread.technomagi.tileentity.TileEntityHardlightGenerator;
 import com.ollieread.technomagi.tileentity.TileEntityLightAir;
 import com.ollieread.technomagi.tileentity.TileEntityNaniteReplicator;
 import com.ollieread.technomagi.tileentity.TileEntityObservationChamber;
-import com.ollieread.technomagi.tileentity.TileEntityPerceptionFilter;
 import com.ollieread.technomagi.tileentity.TileEntityPrismaticPillar;
 import com.ollieread.technomagi.tileentity.TileEntityReactiveCrafting;
+import com.ollieread.technomagi.tileentity.TileEntityRegionPerception;
 import com.ollieread.technomagi.tileentity.TileEntitySeparator;
 import com.ollieread.technomagi.tileentity.TileEntitySmartmetal;
 import com.ollieread.technomagi.tileentity.TileEntityStorage;
@@ -101,7 +101,7 @@ public class Blocks
     public static Block blockVoidBreach;
     public static BlockSmartmetal blockSmartmetal;
     public static Block blockSmartmetalTile;
-    public static Block blockPerceptionFilter;
+    public static Block blockRegionController;
     public static Block blockPrismaticPillar;
 
     public static void init()
@@ -137,7 +137,7 @@ public class Blocks
         blockVoidBreach = new BlockVoidBreach("voidBreach");
         blockSmartmetal = new BlockSmartmetal("smartmetal");
         blockSmartmetalTile = new BlockSmartmetalTile("smartmetalTile");
-        blockPerceptionFilter = new BlockPerceptionFilter("perceptionFilter");
+        blockRegionController = new BlockRegionController("regionController");
         blockPrismaticPillar = new BlockPrismaticPillar("prismaticPillar");
 
         GameRegistry.registerBlock(blockResource, ItemBlockTM.class, "resourceBlock");
@@ -169,7 +169,7 @@ public class Blocks
         GameRegistry.registerBlock(blockVoidBreach, "voidBreach");
         GameRegistry.registerBlock(blockSmartmetal, "smartmetal");
         GameRegistry.registerBlock(blockSmartmetalTile, "smartmetalOverlay");
-        GameRegistry.registerBlock(blockPerceptionFilter, "perceptionFilter");
+        GameRegistry.registerBlock(blockRegionController, "regionController");
         GameRegistry.registerBlock(blockPrismaticPillar, "prismaticPillar");
 
         GameRegistry.registerTileEntity(TileEntityArchive.class, "tileEntityArchive");
@@ -199,7 +199,7 @@ public class Blocks
         GameRegistry.registerTileEntity(TileEntityBattery.class, "tileEntityBattery");
         GameRegistry.registerTileEntity(TileEntityVoidBreach.class, "tileEntityVoidBreach");
         GameRegistry.registerTileEntity(TileEntitySmartmetal.class, "tileEntitySmartmetal");
-        GameRegistry.registerTileEntity(TileEntityPerceptionFilter.class, "tileEntityPerceptionFilter");
+        GameRegistry.registerTileEntity(TileEntityRegionPerception.class, "tileEntityPerceptionFilter");
         GameRegistry.registerTileEntity(TileEntityPrismaticPillar.class, "tileEntityPrismaticPillar");
     }
 }

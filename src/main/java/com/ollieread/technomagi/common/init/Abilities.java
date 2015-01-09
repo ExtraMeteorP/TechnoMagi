@@ -8,6 +8,7 @@ import com.ollieread.ennds.ability.AbilityRegistry;
 import com.ollieread.ennds.ability.IAbilityActive;
 import com.ollieread.ennds.ability.IAbilityPassive;
 import com.ollieread.technomagi.TechnoMagi;
+import com.ollieread.technomagi.ability.active.ActiveAbilityAntiGravity;
 import com.ollieread.technomagi.ability.active.ActiveAbilityAtmosphere;
 import com.ollieread.technomagi.ability.active.ActiveAbilityBlink;
 import com.ollieread.technomagi.ability.active.ActiveAbilityDrain;
@@ -49,6 +50,7 @@ public class Abilities
     public static IAbilityActive abilityActiveShield;
     public static IAbilityActive abilityDrain;
     public static IAbilityActive abilityOverdrive;
+    public static IAbilityActive abilityActiveAntiGravity;
 
     public static IAbilityPassive abilityPassiveScholarResearch;
     public static IAbilityPassive abilityPassiveNanites;
@@ -109,6 +111,7 @@ public class Abilities
             abilityOverdrive = new ActiveAbilityOverdrive("overdrive");
         }
 
+        abilityActiveAntiGravity = new ActiveAbilityAntiGravity("antiGravity");
         abilityPassiveNanites = new PassiveAbilityNanites("nanites");
     }
 }

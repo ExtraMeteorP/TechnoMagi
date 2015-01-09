@@ -1,4 +1,4 @@
-package com.ollieread.technomagi.tileentity;
+package com.ollieread.technomagi.common.proxy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,22 +9,17 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
 import com.ollieread.technomagi.world.region.IRegionController;
-import com.ollieread.technomagi.world.region.RegionManager;
 import com.ollieread.technomagi.world.region.RegionManager.RegionControllerType;
 
-public class TileEntityPerceptionFilter extends TileEntityTM implements IRegionController
+public abstract class RegionPerception implements IRegionController
 {
 
     protected int network = -1;
     protected List<String> players = new ArrayList<String>();
     protected boolean enabled = true;
-    protected boolean synced = false;
 
-    @Override
     public void readFromNBT(NBTTagCompound compound)
     {
-        super.readFromNBT(compound);
-
         network = compound.getInteger("Network");
         enabled = compound.getBoolean("Enabled");
 
@@ -37,11 +32,8 @@ public class TileEntityPerceptionFilter extends TileEntityTM implements IRegionC
         }
     }
 
-    @Override
     public void writeToNBT(NBTTagCompound compound)
     {
-        super.writeToNBT(compound);
-
         compound.setInteger("Network", network);
         compound.setBoolean("Enabled", enabled);
 
@@ -54,6 +46,11 @@ public class TileEntityPerceptionFilter extends TileEntityTM implements IRegionC
         }
 
         compound.setTag("Players", playerList);
+    }
+
+    public void setNetwork(int id)
+    {
+        network = id;
     }
 
     @Override
@@ -82,28 +79,6 @@ public class TileEntityPerceptionFilter extends TileEntityTM implements IRegionC
     public boolean enabled()
     {
         return enabled;
-    }
-
-    @Override
-    public int[] getCoords()
-    {
-        return new int[] { xCoord, yCoord, zCoord };
-    }
-
-    @Override
-    public void updateEntity()
-    {
-        if (!worldObj.isRemote) {
-            if (network == -1) {
-                int id = RegionManager.getNetworkForCoords(xCoord, zCoord);
-
-                if (!RegionManager.hasController(id, getType())) {
-                    network = id;
-                    RegionManager.addController(this);
-                    synced = true;
-                }
-            }
-        }
     }
 
 }
