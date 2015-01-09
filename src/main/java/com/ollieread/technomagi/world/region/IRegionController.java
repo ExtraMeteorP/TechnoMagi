@@ -40,4 +40,6 @@ public interface IRegionController
 
     public int[] getCoords();
 
+    public void perform(RegionPayload payload);
+
 }

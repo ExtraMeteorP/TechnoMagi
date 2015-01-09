@@ -180,6 +180,24 @@ public class RegionManager
         return null;
     }
 
+    public static List<IRegionController> getControllers(RegionControllerType type, int id)
+    {
+        if (controllers.containsKey(type)) {
+            List<IRegionController> controllerList = controllers.get(type);
+            List<IRegionController> newControllerList = new ArrayList<IRegionController>();
+
+            for (IRegionController controller : controllerList) {
+                if (controller.getNetworkId() == id) {
+                    newControllerList.add(controller);
+                }
+            }
+
+            return newControllerList;
+        }
+
+        return null;
+    }
+
     public static void sync()
     {
         if (TechnoMagi.proxy.isServer()) {
