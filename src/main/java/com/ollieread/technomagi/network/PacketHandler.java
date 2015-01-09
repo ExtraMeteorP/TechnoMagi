@@ -13,6 +13,7 @@ import com.ollieread.technomagi.network.message.MessageSetCrafting;
 import com.ollieread.technomagi.network.message.MessageSetProgress;
 import com.ollieread.technomagi.network.message.MessageSetTeleporterMode;
 import com.ollieread.technomagi.network.message.MessageSyncPerceptionFilters;
+import com.ollieread.technomagi.network.message.MessageSyncPlayerCapabilities;
 import com.ollieread.technomagi.network.message.MessageSyncRegions;
 import com.ollieread.technomagi.network.message.MessageSyncTileEntityTM;
 
@@ -39,5 +40,6 @@ public class PacketHandler
         INSTANCE.registerMessage(MessageSetArchive.class, MessageSetArchive.class, 8, Side.SERVER);
         INSTANCE.registerMessage(MessageSyncPerceptionFilters.class, MessageSyncPerceptionFilters.class, 9, Side.CLIENT);
         INSTANCE.registerMessage(MessageSyncRegions.class, MessageSyncRegions.class, 10, Side.CLIENT);
+        INSTANCE.registerMessage(MessageSyncPlayerCapabilities.class, MessageSyncPlayerCapabilities.class, 11, Side.CLIENT);
     }
 }

@@ -9,12 +9,16 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.BaseAttributeMap;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 
 import com.google.common.collect.Maps;
 import com.ollieread.technomagi.common.Reference;
+import com.ollieread.technomagi.network.PacketHandler;
+import com.ollieread.technomagi.network.message.MessageSyncPlayerCapabilities;
 import com.ollieread.technomagi.util.DamageSourceTM;
 import com.ollieread.technomagi.util.PotionHelper;
 
@@ -27,6 +31,7 @@ public class PotionTM extends Potion
     public static final PotionTM passify = new PotionPassify();
     public static final PotionTM anger = new PotionTM("potion.anger", true, 8171462).setIconIndex(1, 0);
     public static final PotionTM voidSickness = new PotionTM("potion.voidSickness", true, 8171462).setIconIndex(2, 0);
+    public static final PotionTM antiGravity = new PotionTM("potion.antiGravity", true, 8171462).setIconIndex(0, 0);
 
     private final Map modifiers = Maps.newHashMap();
     private int statusIconIndex = -1;
@@ -68,6 +73,14 @@ public class PotionTM extends Potion
     @Override
     public void applyAttributesModifiersToEntity(EntityLivingBase entity, BaseAttributeMap map, int amplifier)
     {
+        if (id == antiGravity.id) {
+            if (entity instanceof EntityPlayer && !((EntityPlayer) entity).capabilities.allowFlying) {
+                ((EntityPlayer) entity).capabilities.allowFlying = true;
+                ((EntityPlayer) entity).capabilities.isFlying = true;
+                PacketHandler.INSTANCE.sendTo(new MessageSyncPlayerCapabilities(((EntityPlayer) entity).capabilities), (EntityPlayerMP) entity);
+            }
+        }
+
         Iterator iterator = modifiers.entrySet().iterator();
 
         while (iterator.hasNext()) {
@@ -80,6 +93,20 @@ public class PotionTM extends Potion
                 iattributeinstance.applyModifier(new AttributeModifier(attributemodifier.getID(), this.getName() + " " + amplifier, func_111183_a(amplifier, attributemodifier), attributemodifier.getOperation()));
             }
         }
+    }
+
+    @Override
+    public void removeAttributesModifiersFromEntity(EntityLivingBase entity, BaseAttributeMap map, int amplifier)
+    {
+        if (id == antiGravity.id) {
+            if (entity instanceof EntityPlayer && !((EntityPlayer) entity).capabilities.isCreativeMode && ((EntityPlayer) entity).capabilities.allowFlying) {
+                ((EntityPlayer) entity).capabilities.allowFlying = false;
+                ((EntityPlayer) entity).capabilities.isFlying = false;
+                PacketHandler.INSTANCE.sendTo(new MessageSyncPlayerCapabilities(((EntityPlayer) entity).capabilities), (EntityPlayerMP) entity);
+            }
+        }
+
+        super.removeAttributesModifiersFromEntity(entity, map, amplifier);
     }
 
     public void performEffect(EntityLivingBase entity, int effect)
@@ -98,6 +125,8 @@ public class PotionTM extends Potion
         if (id == voidSickness.id) {
             k = 25 >> modifier;
             return k > 0 ? duration % k == 0 : true;
+        } else if (id == antiGravity.id) {
+            return true;
         }
 
         return false;
