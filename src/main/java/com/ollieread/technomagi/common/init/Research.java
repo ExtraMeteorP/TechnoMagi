@@ -46,8 +46,10 @@ public class Research
 {
 
     public static Map<ItemStack, String> itemToResearchMapping = new HashMap<ItemStack, String>();
-    public static String lavaCreatedObsidian = "lavaCreatedObsidian";
-    public static String lavaCreatedCobblestone = "lavaCreatedCobblestone";
+    public static String OBSIDIAN = "lavaCreatedObsidian";
+    public static String COBBLESTONE = "lavaCreatedCobblestone";
+    public static String PORTAL_NETHER = "createdNetherPortal";
+    public static String PORTAL_END = "fixedNetherPortal";
 
     public static void init()
     {
