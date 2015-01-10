@@ -2,12 +2,14 @@ package com.ollieread.technomagi.util;
 
 import java.util.List;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.world.World;
 
 import org.apache.commons.lang3.StringUtils;
@@ -46,6 +48,19 @@ public class EventHelper
         }
 
         return "damage" + StringUtils.capitalize(damage.damageType);
+    }
+
+    public static String damageProjectile(EntityDamageSourceIndirect damage)
+    {
+        Entity source = damage.getSourceOfDamage();
+        return damageProjectile(source.getClass());
+    }
+
+    public static String damageProjectile(Class damage)
+    {
+        String entityName = (String) EntityList.classToStringMapping.get(damage);
+
+        return "damage" + StringUtils.capitalize(entityName);
     }
 
     public static String item(ItemStack stack)

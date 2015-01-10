@@ -391,6 +391,12 @@ public class ResearchEventHandler
                 if (eventName != null) {
                     ResearchRegistry.researchEvent(eventName, event, charon, true);
                     AbilityRegistry.passiveAbilityEvent(eventName, event, charon);
+
+                    if (event.source.isProjectile() && event.source instanceof EntityDamageSourceIndirect) {
+                        eventName = EventHelper.damageProjectile((EntityDamageSourceIndirect) event.source);
+                        ResearchRegistry.researchEvent(eventName, event, charon, true);
+                        AbilityRegistry.passiveAbilityEvent(eventName, event, charon);
+                    }
                 }
             } else {
                 Class entityClass = event.entityLiving.getClass();
@@ -400,12 +406,18 @@ public class ResearchEventHandler
 
                     if (nanites != null) {
                         EntityPlayer player = nanites.getOwnerPlayer();
+                        ExtendedPlayerKnowledge charon = PlayerHelper.getPlayerKnowledge(player);
 
                         if (player != null) {
                             String eventName = EventHelper.damage(event.source, false);
 
                             if (eventName != null) {
-                                ResearchRegistry.researchMonitoring(entityClass, eventName, PlayerHelper.getPlayerKnowledge(player), nanites);
+                                ResearchRegistry.researchMonitoring(entityClass, eventName, charon, nanites);
+
+                                if (event.source.isProjectile() && event.source instanceof EntityDamageSourceIndirect) {
+                                    eventName = EventHelper.damageProjectile((EntityDamageSourceIndirect) event.source);
+                                    ResearchRegistry.researchEvent(eventName, event, charon, true);
+                                }
                             }
                         }
                     }
