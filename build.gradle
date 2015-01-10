@@ -51,6 +51,13 @@ minecraft {
     replace "@VERSION@", "${config.version.major}.${config.version.minor}.${config.version.revis}.${System.getenv("BUILD_NUMBER") ?: 0}${config.version.stage ? "-${config.version.stage}" : ""}"
 }
 
+jar {
+        manifest {
+        attributes 'FMLCorePlugin': 'com.ollieread.technomagi.asm.TechnoMagiCoreLoadingPlugin',
+                        'FMLCorePluginContainsFMLMod': 'true'
+    }
+}
+
 task deobfJar(type: Jar) {
     from sourceSets.main.output
     classifier = 'deobf'
@@ -110,7 +117,6 @@ task createChangelog(type: ChangelogTask) {
         setAuthName(new DelayedString(project, "${System.getenv("jenkins_user")}"))
         setAuthPassword(new DelayedString(project, "${System.getenv("jenkins_pass")}"))
         setTargetBuild({ buildNumber.toString() });
-        setOutput(new DelayedFile(project, 'build/libs/changelog.txt'));
     }
     
 }
