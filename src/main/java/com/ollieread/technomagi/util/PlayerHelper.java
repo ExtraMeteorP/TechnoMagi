@@ -6,12 +6,19 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.Vec3;
 
+import com.ollieread.ennds.extended.ExtendedNanites;
 import com.ollieread.ennds.extended.ExtendedPlayerAbilities;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 
 public class PlayerHelper
 {
+
+    public static boolean canSeeBlock(EntityPlayer player, int x, int y, int z)
+    {
+        return player.worldObj.rayTraceBlocks(Vec3.createVectorHelper(player.posX, player.posY + (double) player.getEyeHeight(), player.posZ), Vec3.createVectorHelper(x, y, z)) == null;
+    }
 
     public static ExtendedPlayerKnowledge getPlayerKnowledge(EntityPlayer player)
     {
@@ -24,6 +31,17 @@ public class PlayerHelper
 
         if (knowledge != null) {
             return knowledge.abilities;
+        }
+
+        return null;
+    }
+
+    public static ExtendedNanites getPlayerNanites(EntityPlayer player)
+    {
+        ExtendedPlayerKnowledge knowledge = getPlayerKnowledge(player);
+
+        if (knowledge != null) {
+            return knowledge.nanites;
         }
 
         return null;

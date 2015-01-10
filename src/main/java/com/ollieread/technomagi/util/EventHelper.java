@@ -24,8 +24,8 @@ public class EventHelper
         List<EntityPlayer> players = world.playerEntities;
 
         for (EntityPlayer player : players) {
-            if (player.getDistance(x, y, z) <= 16) {
-                ExtendedPlayerKnowledge playerKnowledge = ExtendedPlayerKnowledge.get(player);
+            if (PlayerHelper.canSeeBlock(player, x, y, z)) {
+                ExtendedPlayerKnowledge playerKnowledge = PlayerHelper.getPlayerKnowledge(player);
 
                 if (playerKnowledge != null && !playerKnowledge.canSpecialise()) {
                     ResearchRegistry.researchEvent(event, null, playerKnowledge, true);
