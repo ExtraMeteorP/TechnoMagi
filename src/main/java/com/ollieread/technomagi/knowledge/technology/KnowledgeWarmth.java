@@ -34,11 +34,11 @@ public class KnowledgeWarmth extends Knowledge
 
         coal = new ResearchEvent("coal", getName(), 15, EventHelper.knowledge(com.ollieread.technomagi.common.init.Knowledge.coal), 1, 1, true, new String[] {});
         photoreactive = new ResearchEvent("photoreactive", getName(), 15, EventHelper.knowledge(com.ollieread.technomagi.common.init.Knowledge.photoreactive), 1, 1, true, new String[] {});
-        flintAndSteelRecipe = new ResearchAnalysis("flintAndSteelRecipe", getName(), 10, new ShapelessAnalysisRecipe(ItemHelper.item("iron_ingot"), ItemHelper.item("stick")), 4, 1, new String[] {});
-        flintAndSteelCrafting = new ResearchCrafting("flintAndSteelCrafting", getName(), 10, ItemHelper.item("flint_and_steel"), 4, 1, new String[] {});
-        flintAndSteelRecipe = new ResearchAnalysis("flintAndSteelAnalysis", getName(), 15, new ShapelessAnalysisRecipe(ItemHelper.item("flint_and_steel")), 4, 1, new String[] {});
-        torchRecipe = new ResearchAnalysis("torchRecipe", getName(), 10, new ShapedAnalysisRecipe("X", "#", '#', Items.stick, 'X', Items.redstone), 4, 1, new String[] {});
+        flintAndSteelRecipe = new ResearchAnalysis("flintAndSteelRecipe", getName(), 10, new ShapelessAnalysisRecipe(ItemHelper.item("iron_ingot"), ItemHelper.item("stick")), 1, 4, new String[] {});
+        flintAndSteelCrafting = new ResearchCrafting("flintAndSteelCrafting", getName(), 10, ItemHelper.item("flint_and_steel"), 1, 4, new String[] {});
+        flintAndSteelRecipe = new ResearchAnalysis("flintAndSteelAnalysis", getName(), 15, new ShapelessAnalysisRecipe(ItemHelper.item("flint_and_steel")), 1, 4, new String[] {});
+        torchRecipe = new ResearchAnalysis("torchRecipe", getName(), 10, new ShapedAnalysisRecipe("X", "#", '#', Items.stick, 'X', Items.redstone), 1, 4, new String[] {});
         torchCrafting = new ResearchCrafting("torchCrafting", getName(), 10, ItemHelper.block("torch"), 4, 1, new String[] {});
-        torchAnalysis = new ResearchAnalysis("torchAnalysis", getName(), 15, new ShapelessAnalysisRecipe(ItemHelper.block("torch")), 4, 1, new String[] {});
+        torchAnalysis = new ResearchAnalysis("torchAnalysis", getName(), 15, new ShapelessAnalysisRecipe(ItemHelper.block("torch")), 1, 4, new String[] {});
     }
 }
