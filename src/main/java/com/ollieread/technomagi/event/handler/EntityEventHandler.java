@@ -12,6 +12,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.launchwrapper.Launch;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.world.World;
@@ -55,7 +56,7 @@ public class EntityEventHandler
     @SubscribeEvent
     public void onPlayerLoggedIn(PlayerLoggedInEvent event)
     {
-        if (!event.player.worldObj.isRemote && Config.versionCheck) {
+        if (!event.player.worldObj.isRemote && Config.versionCheck && !((Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment"))) {
             new Thread(new VersionChecker((EntityPlayer) event.player)).start();
         }
     }

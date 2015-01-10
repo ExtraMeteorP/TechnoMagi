@@ -1,6 +1,7 @@
 package com.ollieread.technomagi;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.launchwrapper.Launch;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -44,13 +45,17 @@ public class TechnoMagi
     public static TechnoMagi instance;
 
     public static CreativeTabs tabTM = new CreativeTabTM();
-
     public static final Logger logger = LogManager.getLogger(Reference.MODID);
+    public static boolean debug = false;
 
     @EventHandler
     public void pre(FMLPreInitializationEvent event)
     {
         Config.init(event.getSuggestedConfigurationFile());
+
+        if ((Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment") || Config.debugMode) {
+            debug = true;
+        }
 
         proxy.registerEventHandlers();
 

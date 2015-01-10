@@ -21,6 +21,7 @@ public class Config
     public static String CATEGORY_ENVIRONMENT = "Environment";
 
     // General
+    public static boolean debugMode;
     public static boolean versionCheck;
     public static boolean creativeKnowledge;
     public static boolean creativeKnowledgeAll;
@@ -133,6 +134,7 @@ public class Config
         config.load();
 
         // General Config
+        debugMode = config.getBoolean("debugMode", CATEGORY_GENERAL, false, "Whether or not enable debug messages");
         versionCheck = config.getBoolean("versionCheck", CATEGORY_GENERAL, true, "Whether or not to check version for recommended");
         creativeKnowledge = config.getBoolean("creativeKnowledge", CATEGORY_GENERAL, false, "Whether or not to allow giving knowledge from creative");
         creativeKnowledgeAll = config.getBoolean("creativeKnowledgeAll", CATEGORY_GENERAL, false, "Whether or not to allow giving all knowledge from creative");
