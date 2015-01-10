@@ -1,10 +1,6 @@
 package com.ollieread.technomagi;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.potion.Potion;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -54,29 +50,6 @@ public class TechnoMagi
     @EventHandler
     public void pre(FMLPreInitializationEvent event)
     {
-
-        Potion[] potionTypes = null;
-
-        for (Field f : Potion.class.getDeclaredFields()) {
-            f.setAccessible(true);
-
-            try {
-                if (f.getName().equals("potionTypes") || f.getName().equals("field_76425_a")) {
-                    Field modfield = Field.class.getDeclaredField("modifiers");
-                    modfield.setAccessible(true);
-                    modfield.setInt(f, f.getModifiers() & ~Modifier.FINAL);
-
-                    potionTypes = (Potion[]) f.get(null);
-                    final Potion[] newPotionType = new Potion[256];
-                    System.arraycopy(potionTypes, 0, newPotionType, 0, potionTypes.length);
-                    f.set(null, newPotionType);
-                }
-            } catch (Exception e) {
-                System.err.println("Severe error, please report this to the mod author");
-                System.err.println(e);
-            }
-        }
-
         Config.init(event.getSuggestedConfigurationFile());
 
         proxy.registerEventHandlers();
