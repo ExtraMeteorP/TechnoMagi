@@ -12,6 +12,8 @@ import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemEnderEye;
 import net.minecraft.item.ItemFlintAndSteel;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
@@ -40,7 +42,9 @@ import com.ollieread.ennds.extended.ExtendedNanites;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.ennds.research.ResearchRegistry;
 import com.ollieread.technomagi.common.init.Research;
+import com.ollieread.technomagi.util.ClairvoyanceHelper;
 import com.ollieread.technomagi.util.EventHelper;
+import com.ollieread.technomagi.util.PlayerHelper;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
@@ -53,7 +57,7 @@ public class ResearchEventHandler
     @SubscribeEvent
     public void onPlayerInteract(PlayerInteractEvent event)
     {
-        ExtendedPlayerKnowledge playerKnowledge = ExtendedPlayerKnowledge.get(event.entityPlayer);
+        ExtendedPlayerKnowledge playerKnowledge = PlayerHelper.getPlayerKnowledge(event.entityPlayer);
 
         if (playerKnowledge != null && !playerKnowledge.canSpecialise()) {
             ItemStack heldItem = event.entityPlayer.getHeldItem();
@@ -66,6 +70,20 @@ public class ResearchEventHandler
 
                             if (block.isFlammable(event.world, event.x, event.y, event.z, ForgeDirection.getOrientation(event.face))) {
                                 ResearchRegistry.researchEvent(Research.itemToResearchMapping.get(heldItem), event, playerKnowledge, true);
+                            }
+
+                            if (block == Blocks.obsidian) {
+                                if (ClairvoyanceHelper.canBeNetherPortal(event.world, event.x, event.y, event.z)) {
+                                    ResearchRegistry.researchEvent(Research.PORTAL_NETHER, event, playerKnowledge, true);
+                                }
+                            }
+                        } else if (heldItem.getItem() instanceof ItemEnderEye) {
+                            Block block = event.world.getBlock(event.x, event.y, event.z);
+
+                            if (block == Blocks.end_portal_frame) {
+                                if (ClairvoyanceHelper.canBeEndPortal(event.world, event.x, event.y, event.z)) {
+                                    ResearchRegistry.researchEvent(Research.PORTAL_END, event, playerKnowledge, true);
+                                }
                             }
                         } else {
                             for (Iterator<ItemStack> i = Research.itemToResearchMapping.keySet().iterator(); i.hasNext();) {
@@ -85,7 +103,7 @@ public class ResearchEventHandler
     @SubscribeEvent
     public void onPlayerInteractWithEntity(EntityInteractEvent event)
     {
-        ExtendedPlayerKnowledge playerKnowledge = ExtendedPlayerKnowledge.get(event.entityPlayer);
+        ExtendedPlayerKnowledge playerKnowledge = PlayerHelper.getPlayerKnowledge(event.entityPlayer);
 
         if (playerKnowledge != null && !playerKnowledge.canSpecialise()) {
             ItemStack heldItem = event.entityPlayer.getHeldItem();
@@ -128,7 +146,7 @@ public class ResearchEventHandler
             String eventName = EventHelper.entityAttacked(event.target.getClass());
 
             if (eventName != null) {
-                ResearchRegistry.researchEvent(eventName, event, ExtendedPlayerKnowledge.get(player), true);
+                ResearchRegistry.researchEvent(eventName, event, PlayerHelper.getPlayerKnowledge(player), true);
             }
         }
     }
@@ -140,7 +158,7 @@ public class ResearchEventHandler
 
             if (event.target instanceof EntityPlayer) {
                 EntityPlayer player = (EntityPlayer) event.target;
-                ExtendedPlayerKnowledge knowledge = ExtendedPlayerKnowledge.get(player);
+                ExtendedPlayerKnowledge knowledge = PlayerHelper.getPlayerKnowledge(player);
                 ExtendedNanites nanites = ExtendedNanites.get(event.entityLiving);
 
                 if (knowledge != null && !knowledge.canSpecialise()) {
@@ -160,10 +178,10 @@ public class ResearchEventHandler
         if (!event.entityPlayer.worldObj.isRemote) {
             String eventName = EventHelper.itemBroke(event.original);
 
-            ExtendedPlayerKnowledge playerKnowledge = ExtendedPlayerKnowledge.get(event.entityPlayer);
+            ExtendedPlayerKnowledge playerKnowledge = PlayerHelper.getPlayerKnowledge(event.entityPlayer);
 
-            if (playerKnowledge != null && !playerKnowledge.canSpecialise()) {
-                ResearchRegistry.researchEvent("broke" + eventName, event, playerKnowledge, true);
+            if (eventName != null && playerKnowledge != null && !playerKnowledge.canSpecialise()) {
+                ResearchRegistry.researchEvent(eventName, event, playerKnowledge, true);
             }
         }
     }
@@ -181,7 +199,7 @@ public class ResearchEventHandler
     {
         if (!event.entityLiving.worldObj.isRemote) {
             if (event.entityLiving instanceof EntityPlayer) {
-                ExtendedPlayerKnowledge playerKnowledge = ExtendedPlayerKnowledge.get((EntityPlayer) event.entityLiving);
+                ExtendedPlayerKnowledge playerKnowledge = PlayerHelper.getPlayerKnowledge((EntityPlayer) event.entityLiving);
 
                 if (playerKnowledge != null && !playerKnowledge.canSpecialise()) {
                     ResearchRegistry.researchEvent("enderTeleport", event, playerKnowledge, true);
@@ -192,7 +210,7 @@ public class ResearchEventHandler
 
                 for (Iterator<EntityPlayer> i = players.iterator(); i.hasNext();) {
                     EntityPlayer player = i.next();
-                    ExtendedPlayerKnowledge knowledge = ExtendedPlayerKnowledge.get(player);
+                    ExtendedPlayerKnowledge knowledge = PlayerHelper.getPlayerKnowledge(player);
 
                     if (knowledge != null && !knowledge.canSpecialise()) {
                         if (player.canEntityBeSeen(event.entityLiving)) {
@@ -223,7 +241,7 @@ public class ResearchEventHandler
                         String eventName = EventHelper.entityBirth(entityClass);
 
                         if (eventName != null && !eventName.isEmpty()) {
-                            ExtendedPlayerKnowledge knowledge = ExtendedPlayerKnowledge.get(player);
+                            ExtendedPlayerKnowledge knowledge = PlayerHelper.getPlayerKnowledge(player);
 
                             if (knowledge != null && !knowledge.canSpecialise()) {
                                 if (player.canEntityBeSeen(animal)) {
@@ -233,7 +251,7 @@ public class ResearchEventHandler
                                 ExtendedNanites nanites = ExtendedNanites.get(event.entityLiving);
 
                                 if (nanites != null && nanites.getOwner() != null && nanites.getOwner().equals(player.getCommandSenderName())) {
-                                    ResearchRegistry.researchMonitoring(entityClass, "birth", ExtendedPlayerKnowledge.get(player), nanites);
+                                    ResearchRegistry.researchMonitoring(entityClass, "birth", PlayerHelper.getPlayerKnowledge(player), nanites);
                                 }
                             }
                         }
@@ -269,11 +287,11 @@ public class ResearchEventHandler
                 }
 
                 if (monitoringName != null) {
-                    ResearchRegistry.researchMonitoring(entityClass, eventName, ExtendedPlayerKnowledge.get(player), nanites);
+                    ResearchRegistry.researchMonitoring(entityClass, eventName, PlayerHelper.getPlayerKnowledge(player), nanites);
                 }
 
                 if (eventName != null) {
-                    ResearchRegistry.researchEvent(eventName, event, ExtendedPlayerKnowledge.get(player), false);
+                    ResearchRegistry.researchEvent(eventName, event, PlayerHelper.getPlayerKnowledge(player), false);
                 }
             }
         }
@@ -283,8 +301,8 @@ public class ResearchEventHandler
     public void onPlayerCrafting(ItemCraftedEvent event)
     {
         if (!event.player.worldObj.isRemote) {
-            ResearchRegistry.researchCrafting(event, ExtendedPlayerKnowledge.get(event.player));
-            ResearchRegistry.researchEvent("crafting", event, ExtendedPlayerKnowledge.get(event.player), true);
+            ResearchRegistry.researchCrafting(event, PlayerHelper.getPlayerKnowledge(event.player));
+            ResearchRegistry.researchEvent("crafting", event, PlayerHelper.getPlayerKnowledge(event.player), true);
         }
     }
 
@@ -292,8 +310,8 @@ public class ResearchEventHandler
     public void onPlayerSmelting(ItemSmeltedEvent event)
     {
         if (!event.player.worldObj.isRemote) {
-            ResearchRegistry.researchCrafting(event, ExtendedPlayerKnowledge.get(event.player));
-            ResearchRegistry.researchEvent("smelting", event, ExtendedPlayerKnowledge.get(event.player), true);
+            ResearchRegistry.researchCrafting(event, PlayerHelper.getPlayerKnowledge(event.player));
+            ResearchRegistry.researchEvent("smelting", event, PlayerHelper.getPlayerKnowledge(event.player), true);
         }
     }
 
@@ -301,7 +319,7 @@ public class ResearchEventHandler
     public void onPlayerHarvest(HarvestDropsEvent event)
     {
         if (!event.world.isRemote && event.harvester != null) {
-            ResearchRegistry.researchMining(event, ExtendedPlayerKnowledge.get(event.harvester));
+            ResearchRegistry.researchMining(event, PlayerHelper.getPlayerKnowledge(event.harvester));
         }
     }
 
@@ -354,7 +372,7 @@ public class ResearchEventHandler
                         EntityPlayer player = nanites.getOwnerPlayer();
 
                         if (player != null) {
-                            ResearchRegistry.researchMonitoring(entityClass, "fall", ExtendedPlayerKnowledge.get(player), nanites);
+                            ResearchRegistry.researchMonitoring(entityClass, "fall", PlayerHelper.getPlayerKnowledge(player), nanites);
                         }
                     }
                 }
@@ -367,7 +385,7 @@ public class ResearchEventHandler
     {
         if (!event.entityLiving.worldObj.isRemote) {
             if (event.entityLiving instanceof EntityPlayer) {
-                ExtendedPlayerKnowledge charon = ExtendedPlayerKnowledge.get((EntityPlayer) event.entityLiving);
+                ExtendedPlayerKnowledge charon = PlayerHelper.getPlayerKnowledge((EntityPlayer) event.entityLiving);
                 String eventName = EventHelper.damage(event.source, false);
 
                 if (eventName != null) {
@@ -387,7 +405,7 @@ public class ResearchEventHandler
                             String eventName = EventHelper.damage(event.source, false);
 
                             if (eventName != null) {
-                                ResearchRegistry.researchMonitoring(entityClass, eventName, ExtendedPlayerKnowledge.get(player), nanites);
+                                ResearchRegistry.researchMonitoring(entityClass, eventName, PlayerHelper.getPlayerKnowledge(player), nanites);
                             }
                         }
                     }
@@ -409,7 +427,7 @@ public class ResearchEventHandler
                         String eventName = EventHelper.entityKilled(entity.getClass());
 
                         if (eventName != null) {
-                            ResearchRegistry.researchEvent(eventName, event, ExtendedPlayerKnowledge.get(player), true);
+                            ResearchRegistry.researchEvent(eventName, event, PlayerHelper.getPlayerKnowledge(player), true);
                         }
                     }
                 }
