@@ -19,6 +19,7 @@ import com.ollieread.technomagi.knowledge.resources.KnowledgeGold;
 import com.ollieread.technomagi.knowledge.resources.KnowledgeIron;
 import com.ollieread.technomagi.knowledge.resources.KnowledgeProcessing;
 import com.ollieread.technomagi.knowledge.resources.KnowledgeRedstone;
+import com.ollieread.technomagi.knowledge.technology.KnowledgeCold;
 import com.ollieread.technomagi.knowledge.technology.KnowledgeEfficiency;
 import com.ollieread.technomagi.knowledge.technology.KnowledgePhotoreactive;
 import com.ollieread.technomagi.knowledge.technology.KnowledgePower;
@@ -94,6 +95,7 @@ public class Knowledge
         scanning = new KnowledgeScanning("scanning", new String[] {});
         photoreactive = new KnowledgePhotoreactive("photoreactive", new String[] { flora.getName(), power.getName() });
         warmth = new KnowledgeWarmth("warmth", new String[] {});
+        cold = new KnowledgeCold("cold", new String[] {});
 
         // Cybermind
         dataManipulation = new KnowledgeDataManipulation("dataManipulation", new String[] {});
