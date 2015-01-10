@@ -52,9 +52,8 @@ minecraft {
 }
 
 jar {
-        manifest {
-        attributes 'FMLCorePlugin': 'com.ollieread.technomagi.asm.TechnoMagiCoreLoadingPlugin',
-                        'FMLCorePluginContainsFMLMod': 'true'
+    manifest {
+        attributes 'FMLCorePlugin': 'com.ollieread.technomagi.asm.TechnoMagiCoreLoadingPlugin', 'FMLCorePluginContainsFMLMod': 'true'
     }
 }
 
@@ -117,6 +116,7 @@ task createChangelog(type: ChangelogTask) {
         setAuthName(new DelayedString(project, "${System.getenv("jenkins_user")}"))
         setAuthPassword(new DelayedString(project, "${System.getenv("jenkins_pass")}"))
         setTargetBuild({ buildNumber.toString() });
+        setOutput(new DelayedFile(project, 'build/libs/changelog.txt'));
     }
     
 }
