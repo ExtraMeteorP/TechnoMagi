@@ -1,53 +1,51 @@
 package com.ollieread.technomagi.event.handler;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import net.minecraft.block.Block;
-import net.minecraft.entity.EntityList;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
+import net.minecraftforge.event.entity.living.LivingSpawnEvent.CheckSpawn;
 import net.minecraftforge.event.entity.player.PlayerEvent.StartTracking;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.ollieread.ennds.ability.AbilityCast.AbilityUseType;
-import com.ollieread.ennds.ability.AbilityRegistry;
 import com.ollieread.ennds.event.PlayerCastingEvent.Start;
 import com.ollieread.ennds.extended.ExtendedNanites;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
-import com.ollieread.ennds.item.IStaff;
 import com.ollieread.ennds.research.ResearchRegistry;
 import com.ollieread.technomagi.block.IDigitalToolable;
 import com.ollieread.technomagi.common.init.Blocks;
 import com.ollieread.technomagi.common.init.Config;
 import com.ollieread.technomagi.common.init.Items;
-import com.ollieread.technomagi.common.init.Potions;
 import com.ollieread.technomagi.item.ItemMobBrain;
-import com.ollieread.technomagi.item.ItemStaff;
 import com.ollieread.technomagi.tileentity.TileEntityTeleporter;
 import com.ollieread.technomagi.util.EntityHelper;
 import com.ollieread.technomagi.util.TeleportHelper;
 import com.ollieread.technomagi.util.VersionChecker;
+import com.ollieread.technomagi.world.region.IRegionController;
+import com.ollieread.technomagi.world.region.RegionManager;
+import com.ollieread.technomagi.world.region.RegionManager.RegionControllerType;
+import com.ollieread.technomagi.world.region.RegionPayload;
 
+import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 
@@ -83,6 +81,44 @@ public class EntityEventHandler
                 }
             }
         }
+
+        if (!event.entityPlayer.worldObj.isRemote) {
+            int network = RegionManager.getNetworkForCoords((int) event.entityPlayer.posX, (int) event.entityPlayer.posZ);
+
+            if (network > -1) {
+                List<IRegionController> controllers = RegionManager.getControllers(RegionControllerType.INTERACTION, network);
+                RegionPayload payload = new RegionPayload<PlayerInteractEvent>(event.entityPlayer, null, event);
+
+                for (IRegionController controller : controllers) {
+                    if (!event.isCanceled()) {
+                        controller.perform(payload);
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onCheckSpawn(CheckSpawn event)
+    {
+        if (!event.entityLiving.worldObj.isRemote) {
+            int network = RegionManager.getNetworkForCoords((int) event.x, (int) event.z);
+
+            if (network > -1) {
+                List<IRegionController> controllers = RegionManager.getControllers(RegionControllerType.PRESENCE, network);
+                RegionPayload payload = new RegionPayload<CheckSpawn>(event.entityLiving, null, event);
+
+                for (IRegionController controller : controllers) {
+                    if (!event.hasResult() || !event.getResult().equals(Result.DENY)) {
+                        controller.perform(payload);
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     @SubscribeEvent
@@ -97,7 +133,75 @@ public class EntityEventHandler
     public void onLivingAttack(LivingAttackEvent event)
     {
         if (!event.entityLiving.worldObj.isRemote) {
+            int network = RegionManager.getNetworkForCoords((int) event.entityLiving.posX, (int) event.entityLiving.posZ);
 
+            if (network > -1) {
+                List<IRegionController> controllers = RegionManager.getControllers(RegionControllerType.DAMAGE, network);
+                EntityLivingBase entity = null;
+                EntityLivingBase target = event.entityLiving;
+
+                if (event.source instanceof EntityDamageSource) {
+                    Entity first = ((EntityDamageSource) event.source).getEntity();
+
+                    if (first instanceof EntityLivingBase) {
+                        entity = (EntityLivingBase) first;
+                    }
+                } else if (event.source instanceof EntityDamageSourceIndirect) {
+                    Entity first = ((EntityDamageSourceIndirect) event.source).getEntity();
+
+                    if (first instanceof EntityLivingBase) {
+                        entity = (EntityLivingBase) first;
+                    }
+                }
+
+                RegionPayload payload = new RegionPayload<LivingHurtEvent>(entity, target, event);
+
+                for (IRegionController controller : controllers) {
+                    if (!event.isCanceled()) {
+                        controller.perform(payload);
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onLivingHurt(LivingHurtEvent event)
+    {
+        if (!event.entityLiving.worldObj.isRemote) {
+            int network = RegionManager.getNetworkForCoords((int) event.entityLiving.posX, (int) event.entityLiving.posZ);
+
+            if (network > -1) {
+                List<IRegionController> controllers = RegionManager.getControllers(RegionControllerType.DAMAGE, network);
+                EntityLivingBase entity = null;
+                EntityLivingBase target = event.entityLiving;
+
+                if (event.source instanceof EntityDamageSource) {
+                    Entity first = ((EntityDamageSource) event.source).getEntity();
+
+                    if (first instanceof EntityLivingBase) {
+                        entity = (EntityLivingBase) first;
+                    }
+                } else if (event.source instanceof EntityDamageSourceIndirect) {
+                    Entity first = ((EntityDamageSourceIndirect) event.source).getEntity();
+
+                    if (first instanceof EntityLivingBase) {
+                        entity = (EntityLivingBase) first;
+                    }
+                }
+
+                RegionPayload payload = new RegionPayload<LivingHurtEvent>(entity, target, event);
+
+                for (IRegionController controller : controllers) {
+                    if (!event.isCanceled()) {
+                        controller.perform(payload);
+                    } else {
+                        break;
+                    }
+                }
+            }
         }
     }
 
@@ -120,6 +224,21 @@ public class EntityEventHandler
                         }
 
                         event.entityLiving.setRevengeTarget(null);
+                    }
+                }
+            }
+
+            int network = RegionManager.getNetworkForCoords((int) event.entityLiving.posX, (int) event.entityLiving.posZ);
+
+            if (network > -1) {
+                List<IRegionController> controllers = RegionManager.getControllers(RegionControllerType.DAMAGE, network);
+                RegionPayload payload = new RegionPayload<LivingHurtEvent>(event.entityLiving, event.target, event);
+
+                for (IRegionController controller : controllers) {
+                    if (!event.isCanceled()) {
+                        controller.perform(payload);
+                    } else {
+                        break;
                     }
                 }
             }

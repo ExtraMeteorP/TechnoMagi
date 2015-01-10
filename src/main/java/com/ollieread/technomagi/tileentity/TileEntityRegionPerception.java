@@ -7,6 +7,7 @@ import com.ollieread.technomagi.common.proxy.RegionPerception;
 import com.ollieread.technomagi.world.region.IRegionController;
 import com.ollieread.technomagi.world.region.RegionManager;
 import com.ollieread.technomagi.world.region.RegionManager.RegionControllerType;
+import com.ollieread.technomagi.world.region.RegionPayload;
 
 public class TileEntityRegionPerception extends TileEntityTM implements IRegionController
 {
@@ -74,6 +75,12 @@ public class TileEntityRegionPerception extends TileEntityTM implements IRegionC
                 }
             }
         }
+    }
+
+    @Override
+    public void perform(RegionPayload payload)
+    {
+
     }
 
 }

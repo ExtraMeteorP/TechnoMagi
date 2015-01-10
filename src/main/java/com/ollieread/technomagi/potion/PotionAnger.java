@@ -7,9 +7,9 @@ public class PotionAnger extends PotionTM
 
     public PotionAnger()
     {
-        super("anger", false, 8171462);
+        super("potion.tm.anger", false, 8171462);
 
-        setIconIndex(0, 1);
+        setTexture("textures/abilities/anger.png");
     }
 
     @Override

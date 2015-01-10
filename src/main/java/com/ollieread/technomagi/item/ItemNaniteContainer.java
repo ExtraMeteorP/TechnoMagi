@@ -21,6 +21,7 @@ import net.minecraft.world.World;
 import com.ollieread.ennds.extended.ExtendedNanites;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.ennds.research.ResearchRegistry;
+import com.ollieread.technomagi.TechnoMagi;
 import com.ollieread.technomagi.common.Reference;
 
 import cpw.mods.fml.relauncher.Side;
@@ -56,7 +57,7 @@ public class ItemNaniteContainer extends ItemTMNBT
         NBTTagCompound compound = getNBT(stack);
 
         if (compound.hasKey("Entity")) {
-            if (compound.getString("Entity") == "Player") {
+            if (compound.getString("Entity") == "player") {
                 return compound.getString("PlayerName");
             }
         }
@@ -148,6 +149,11 @@ public class ItemNaniteContainer extends ItemTMNBT
         ItemStack empty = new ItemStack(item, 1, 0);
         resetNBT(empty);
         list.add(empty);
+
+        ItemStack player = new ItemStack(item, 1, 1);
+        resetNBT(player);
+        setEntity(player, TechnoMagi.proxy.getClientPlayer());
+        list.add(player);
 
         Iterator iterator = ResearchRegistry.getMonitorableEntities().iterator();
         int x = 2;

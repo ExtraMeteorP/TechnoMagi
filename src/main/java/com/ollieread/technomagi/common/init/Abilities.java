@@ -8,13 +8,13 @@ import com.ollieread.ennds.ability.AbilityRegistry;
 import com.ollieread.ennds.ability.IAbilityActive;
 import com.ollieread.ennds.ability.IAbilityPassive;
 import com.ollieread.technomagi.TechnoMagi;
-import com.ollieread.technomagi.ability.active.ActiveAbilityAntiGravity;
 import com.ollieread.technomagi.ability.active.ActiveAbilityAtmosphere;
 import com.ollieread.technomagi.ability.active.ActiveAbilityBlink;
 import com.ollieread.technomagi.ability.active.ActiveAbilityDrain;
 import com.ollieread.technomagi.ability.active.ActiveAbilityFire;
 import com.ollieread.technomagi.ability.active.ActiveAbilityFireball;
 import com.ollieread.technomagi.ability.active.ActiveAbilityFlashstep;
+import com.ollieread.technomagi.ability.active.ActiveAbilityFlight;
 import com.ollieread.technomagi.ability.active.ActiveAbilityForce;
 import com.ollieread.technomagi.ability.active.ActiveAbilityHarden;
 import com.ollieread.technomagi.ability.active.ActiveAbilityHarvest;
@@ -110,8 +110,10 @@ public class Abilities
         if (Config.overdriveEnabled) {
             abilityOverdrive = new ActiveAbilityOverdrive("overdrive");
         }
+        if (Config.flightEnabled) {
+            abilityActiveAntiGravity = new ActiveAbilityFlight("flight");
+        }
 
-        abilityActiveAntiGravity = new ActiveAbilityAntiGravity("antiGravity");
         abilityPassiveNanites = new PassiveAbilityNanites("nanites");
     }
 }

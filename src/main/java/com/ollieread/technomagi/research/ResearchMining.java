@@ -58,7 +58,7 @@ public class ResearchMining extends Research implements IResearchMining
     @Override
     public ItemStack getMining()
     {
-        return null;
+        return mining;
     }
 
 }

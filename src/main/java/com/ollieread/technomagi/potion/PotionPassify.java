@@ -10,10 +10,10 @@ public class PotionPassify extends PotionTM
 
     public PotionPassify()
     {
-        super("potion.passify", false, 8171462);
+        super("potion.tm.passify", false, 8171462);
 
         addModifier(SharedMonsterAttributes.movementSpeed, -0.15000000596046448D, 2);
-        setIconIndex(0, 0);
+        setTexture("textures/abilities/passify.png");
     }
 
     @Override

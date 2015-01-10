@@ -136,6 +136,7 @@ public class BlockSmartmetal extends BlockTMContainer implements IDigitalToolabl
 
                             return true;
                         }
+                        smartmetal.setMode(0);
                     } else {
                         Item dropItem = Item.getItemFromBlock(this);
 

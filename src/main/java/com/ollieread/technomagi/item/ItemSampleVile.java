@@ -17,6 +17,7 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 import com.ollieread.ennds.research.ResearchRegistry;
+import com.ollieread.technomagi.TechnoMagi;
 import com.ollieread.technomagi.common.Reference;
 
 import cpw.mods.fml.relauncher.Side;
@@ -132,7 +133,7 @@ public class ItemSampleVile extends ItemTMNBT
     {
         ItemStack initial = new ItemStack(item, 1, 0);
         resetNBT(initial);
-        setEntity(initial, EntityPlayer.class);
+        setEntity(initial, TechnoMagi.proxy.getClientPlayer());
         list.add(initial);
 
         Iterator iterator = ResearchRegistry.getMonitorableEntities().iterator();

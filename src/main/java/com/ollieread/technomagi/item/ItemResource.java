@@ -12,7 +12,7 @@ public class ItemResource extends ItemTMSubtypes
 
     public ItemResource(String name)
     {
-        super(name, new String[] { "etheriumCrystal", "reluxCrystal", "voidCrystal", "etheriumDust", "ironDust", "goldDust", "diamondDust", "mouldableDust", "etheriumIngot", "reluxIngot", "voidIngot", "mouldableIngot", "ironRod", "goldRod", "diamondRod", "ironSheet", "goldSheet", "diamondSheet" });
+        super(name, new String[] { "etheriumCrystal", "reluxCrystal", "voidCrystal", "etheriumDust", "ironDust", "goldDust", "diamondDust", "mouldableDust", "etheriumIngot", "reluxIngot", "voidIngot", "mouldableIngot", "smartmetalIngot", "ironRod", "goldRod", "diamondRod", "ironSheet", "goldSheet", "diamondSheet", "smartmetalSheet" });
     }
 
     @SideOnly(Side.CLIENT)

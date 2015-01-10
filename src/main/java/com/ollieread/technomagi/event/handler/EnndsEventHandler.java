@@ -12,7 +12,6 @@ import com.ollieread.ennds.event.PlayerCastingEvent;
 import com.ollieread.ennds.research.ResearchRegistry;
 import com.ollieread.technomagi.client.ClientProxy;
 import com.ollieread.technomagi.common.init.Items;
-import com.ollieread.technomagi.common.init.Knowledge;
 import com.ollieread.technomagi.item.ItemStaff;
 import com.ollieread.technomagi.util.InventoryHelper;
 import com.ollieread.technomagi.util.PlayerHelper;
@@ -39,11 +38,6 @@ public class EnndsEventHandler
 
             AbilityRegistry.passiveAbilityEvent("specialisation", event, event.charon);
             ResearchRegistry.researchEvent("specialisation", event, event.charon, false);
-
-            event.charon.unlockKnowledge(Knowledge.casting.getName());
-            event.charon.unlockKnowledge(Knowledge.life.getName());
-            event.charon.unlockKnowledge(Knowledge.technology.getName());
-            event.charon.unlockKnowledge(Knowledge.cybermind.getName());
         }
     }
 

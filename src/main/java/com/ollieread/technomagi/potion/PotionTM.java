@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.BaseAttributeMap;
 import net.minecraft.entity.ai.attributes.IAttribute;
@@ -28,10 +29,10 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class PotionTM extends Potion
 {
 
-    public static final PotionTM passify = new PotionPassify();
-    public static final PotionTM anger = new PotionTM("potion.anger", true, 8171462).setIconIndex(1, 0);
-    public static final PotionTM voidSickness = new PotionTM("potion.voidSickness", true, 8171462).setIconIndex(2, 0);
-    public static final PotionTM antiGravity = new PotionTM("potion.antiGravity", true, 8171462).setIconIndex(0, 0);
+    public static final PotionTM anger = new PotionAnger();
+    public static final PotionTM passify = new PotionPassify().addModifier(SharedMonsterAttributes.attackDamage, 5.0D, 0);
+    public static final PotionTM voidSickness = new PotionTM("potion.tm.voidSickness", true, 8171462).setTexture("textures/abilities/void.png");
+    public static final PotionTM flight = new PotionTM("potion.tm.flight", true, 8171462).setTexture("textures/abilities/flight.png");
 
     private final Map modifiers = Maps.newHashMap();
     private int statusIconIndex = -1;
@@ -51,9 +52,15 @@ public class PotionTM extends Potion
         renderInv = inv;
     }
 
-    protected PotionTM setIconIndex(int p_76399_1_, int p_76399_2_)
+    public PotionTM setTexture(String texture)
     {
-        statusIconIndex = p_76399_1_ + p_76399_2_ * 8;
+        setTexture(new ResourceLocation(Reference.MODID.toLowerCase(), texture));
+        return this;
+    }
+
+    protected PotionTM setTexture(ResourceLocation texture)
+    {
+        this.texture = texture;
         return this;
     }
 
@@ -73,7 +80,7 @@ public class PotionTM extends Potion
     @Override
     public void applyAttributesModifiersToEntity(EntityLivingBase entity, BaseAttributeMap map, int amplifier)
     {
-        if (id == antiGravity.id) {
+        if (id == flight.id) {
             if (entity instanceof EntityPlayer && !((EntityPlayer) entity).capabilities.allowFlying) {
                 ((EntityPlayer) entity).capabilities.allowFlying = true;
                 ((EntityPlayer) entity).capabilities.isFlying = true;
@@ -98,7 +105,7 @@ public class PotionTM extends Potion
     @Override
     public void removeAttributesModifiersFromEntity(EntityLivingBase entity, BaseAttributeMap map, int amplifier)
     {
-        if (id == antiGravity.id) {
+        if (id == flight.id) {
             if (entity instanceof EntityPlayer && !((EntityPlayer) entity).capabilities.isCreativeMode && ((EntityPlayer) entity).capabilities.allowFlying) {
                 ((EntityPlayer) entity).capabilities.allowFlying = false;
                 ((EntityPlayer) entity).capabilities.isFlying = false;
@@ -125,7 +132,7 @@ public class PotionTM extends Potion
         if (id == voidSickness.id) {
             k = 25 >> modifier;
             return k > 0 ? duration % k == 0 : true;
-        } else if (id == antiGravity.id) {
+        } else if (id == flight.id) {
             return true;
         }
 
@@ -147,9 +154,8 @@ public class PotionTM extends Potion
     public void renderInventoryEffect(int x, int y, PotionEffect effect, net.minecraft.client.Minecraft mc)
     {
         mc.getTextureManager().bindTexture(texture);
-        int l = getStatusIconIndex();
 
-        mc.currentScreen.drawTexturedModalRect(x + 6, y + 7, l % 8 * 18, l / 8 * 18, 18, 18);
+        mc.currentScreen.func_146110_a(x + 6, y + 7, 0, 0, 18, 18, 18, 18);
     }
 
 }
