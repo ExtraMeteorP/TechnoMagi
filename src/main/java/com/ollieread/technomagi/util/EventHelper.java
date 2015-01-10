@@ -1,17 +1,38 @@
 package com.ollieread.technomagi.util;
 
+import java.util.List;
+
 import net.minecraft.entity.EntityList;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.world.World;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.ennds.research.IKnowledge;
+import com.ollieread.ennds.research.ResearchRegistry;
 
 public class EventHelper
 {
+
+    public static void findAndFireForPlayers(String event, World world, int x, int y, int z)
+    {
+        List<EntityPlayer> players = world.playerEntities;
+
+        for (EntityPlayer player : players) {
+            if (player.getDistance(x, y, z) <= 16) {
+                ExtendedPlayerKnowledge playerKnowledge = ExtendedPlayerKnowledge.get(player);
+
+                if (playerKnowledge != null && !playerKnowledge.canSpecialise()) {
+                    ResearchRegistry.researchEvent(event, null, playerKnowledge, true);
+                }
+            }
+        }
+    }
 
     public static String knowledge(IKnowledge knowledge)
     {

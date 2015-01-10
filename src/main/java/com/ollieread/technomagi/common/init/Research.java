@@ -46,6 +46,8 @@ public class Research
 {
 
     public static Map<ItemStack, String> itemToResearchMapping = new HashMap<ItemStack, String>();
+    public static String lavaCreatedObsidian = "lavaCreatedObsidian";
+    public static String lavaCreatedCobblestone = "lavaCreatedCobblestone";
 
     public static void init()
     {
@@ -84,6 +86,7 @@ public class Research
         addItem(new ItemStack(Items.egg));
         addItem(new ItemStack(Items.snowball));
         addItem(new ItemStack(Items.flint_and_steel));
+        addItem(new ItemStack(Items.snowball));
 
         addEntity(EntityCreeper.class, true, false);
         addEntity(EntitySkeleton.class, true, false);
