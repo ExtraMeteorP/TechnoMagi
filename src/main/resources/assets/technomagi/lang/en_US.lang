@@ -1,3 +1,8 @@
+key.categories.technomagi=TechnoMagi
+key.toggleStaff=Summon/Unsummon Staff
+key.toggleCastMode=Toggle Cast Mode
+key.selfDiagnosisButton=Self Diagnosis
+
 technomagi.analysis.gui=Item Analysis
 technomagi.analyse.button=Analyse
 
@@ -30,6 +35,8 @@ technomagi.focuser.gui=Relux Focuser
 technomagi.prototyper.gui=Prototyper
 technomagi.prototyper.button=Prototype
 technomagi.results.gui=Results
+technomagi.diagnosis.gui=Self Diagnosis
+technomagi.cooldown=Cooldowns
 
 specialisation.scholar=Scholar
 specialisation.medic=Sage

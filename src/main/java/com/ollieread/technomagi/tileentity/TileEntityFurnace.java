@@ -17,8 +17,6 @@ import com.ollieread.technomagi.common.proxy.BasicEnergy;
 import com.ollieread.technomagi.common.proxy.BasicInventory;
 import com.ollieread.technomagi.common.proxy.PlayerLocked;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-
 public class TileEntityFurnace extends TileEntityMachineTM implements IInventory
 {
 
@@ -229,7 +227,8 @@ public class TileEntityFurnace extends TileEntityMachineTM implements IInventory
 
     private void removeFromGrid(EntityPlayer player, ItemStack stack)
     {
-        FMLCommonHandler.instance().firePlayerCraftingEvent(player, stack, inventory);
+        // FMLCommonHandler.instance().firePlayerCraftingEvent(player, stack,
+        // inventory);
 
         ItemStack itemstack1 = inventory.getStackInSlot(0);
 
