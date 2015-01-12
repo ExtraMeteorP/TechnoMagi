@@ -3,6 +3,7 @@ package com.ollieread.technomagi;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.launchwrapper.Launch;
 
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -65,8 +66,8 @@ public class TechnoMagi
         Items.init();
         Blocks.init();
         Entities.init();
-        Knowledge.init();
         Research.init();
+        Knowledge.init();
         Abilities.init();
         Recipes.init();
         Potions.init();
@@ -93,6 +94,14 @@ public class TechnoMagi
         Information.load("knowledge");
         Information.load("recipes");
         Information.load("abilities");
+        Information.load("intrigue");
+    }
+
+    public static void debug(String message)
+    {
+        if (debug) {
+            logger.log(Level.INFO, message);
+        }
     }
 
 }
