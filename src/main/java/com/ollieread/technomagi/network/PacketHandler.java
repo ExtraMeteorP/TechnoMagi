@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Level;
 import com.ollieread.technomagi.TechnoMagi;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.network.message.MessageEntityInteractEvent;
+import com.ollieread.technomagi.network.message.MessageOpenGUI;
 import com.ollieread.technomagi.network.message.MessageOpenTeleporter;
 import com.ollieread.technomagi.network.message.MessagePlayerInteractEvent;
 import com.ollieread.technomagi.network.message.MessageSetArchive;
@@ -41,5 +42,6 @@ public class PacketHandler
         INSTANCE.registerMessage(MessageSyncPerceptionFilters.class, MessageSyncPerceptionFilters.class, 9, Side.CLIENT);
         INSTANCE.registerMessage(MessageSyncRegions.class, MessageSyncRegions.class, 10, Side.CLIENT);
         INSTANCE.registerMessage(MessageSyncPlayerCapabilities.class, MessageSyncPlayerCapabilities.class, 11, Side.CLIENT);
+        INSTANCE.registerMessage(MessageOpenGUI.class, MessageOpenGUI.class, 12, Side.SERVER);
     }
 }
