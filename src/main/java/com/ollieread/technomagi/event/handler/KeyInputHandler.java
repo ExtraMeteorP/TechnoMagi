@@ -6,7 +6,10 @@ import net.minecraft.item.ItemStack;
 
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.ennds.item.IStaff;
+import com.ollieread.technomagi.common.CommonProxy;
 import com.ollieread.technomagi.common.KeyBindings;
+import com.ollieread.technomagi.network.PacketHandler;
+import com.ollieread.technomagi.network.message.MessageOpenGUI;
 
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -42,6 +45,14 @@ public class KeyInputHandler
                     charon.abilities.setMode(charon.abilities.getMode() == 0 ? 1 : 0);
                     charon.abilities.syncCastMode();
                 }
+            }
+        } else if (KeyBindings.diagnosis.isPressed()) {
+            Minecraft client = FMLClientHandler.instance().getClient();
+            EntityPlayer player = client.thePlayer;
+            ExtendedPlayerKnowledge charon = ExtendedPlayerKnowledge.get(player);
+
+            if (charon != null && !charon.canSpecialise()) {
+                PacketHandler.INSTANCE.sendToServer(new MessageOpenGUI(CommonProxy.GUI_DIAGNOSIS));
             }
         }
     }

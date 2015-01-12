@@ -27,7 +27,7 @@ import net.minecraftforge.event.entity.living.LivingSpawnEvent.CheckSpawn;
 import net.minecraftforge.event.entity.player.PlayerEvent.StartTracking;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
-import com.ollieread.ennds.ability.AbilityCast.AbilityUseType;
+import com.ollieread.ennds.ability.AbilityPayload.AbilityUseType;
 import com.ollieread.ennds.event.PlayerCastingEvent.Start;
 import com.ollieread.ennds.extended.ExtendedNanites;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;

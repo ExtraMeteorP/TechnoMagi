@@ -406,9 +406,9 @@ public class ResearchEventHandler
 
                     if (nanites != null) {
                         EntityPlayer player = nanites.getOwnerPlayer();
-                        ExtendedPlayerKnowledge charon = PlayerHelper.getPlayerKnowledge(player);
 
                         if (player != null) {
+                            ExtendedPlayerKnowledge charon = PlayerHelper.getPlayerKnowledge(player);
                             String eventName = EventHelper.damage(event.source, false);
 
                             if (eventName != null) {
