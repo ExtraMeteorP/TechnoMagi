@@ -1,10 +1,8 @@
 package com.ollieread.technomagi.common.init;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
-import net.minecraft.entity.EntityList;
 import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.monster.EntityCaveSpider;
 import net.minecraft.entity.monster.EntityCreeper;
@@ -35,10 +33,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.ollieread.ennds.EnndsRegistry;
-import com.ollieread.ennds.research.ResearchRegistry;
 import com.ollieread.technomagi.util.DamageSourceTM;
 import com.ollieread.technomagi.util.EventHelper;
 
@@ -133,25 +128,6 @@ public class Research
         addDamage(DamageSource.wither);
         addDamage((new DamageSource("explosion")).setExplosion());
         addDamage(DamageSourceTM.voidDamage);
-
-        for (Iterator<Class> i = ResearchRegistry.getMonitorableEntities().iterator(); i.hasNext();) {
-            Class entityClass = i.next();
-            String entityName = (String) EntityList.classToStringMapping.get(entityClass);
-
-            EnndsRegistry.registerEvent(EventHelper.entityPassive(entityClass));
-        }
-
-        for (Iterator<Class> i = ResearchRegistry.getObservableEntities().iterator(); i.hasNext();) {
-            Class entityClass = i.next();
-            String entityName = (String) EntityList.classToStringMapping.get(entityClass);
-
-            EnndsRegistry.registerEvent(EventHelper.entityPassive(entityClass));
-        }
-
-        for (Iterator<String> i = ResearchRegistry.getKnowledgeNames().iterator(); i.hasNext();) {
-            String name = i.next();
-            EnndsRegistry.registerEvent("knowledge" + StringUtils.capitalize(name));
-        }
     }
 
     public static void addItem(ItemStack stack)

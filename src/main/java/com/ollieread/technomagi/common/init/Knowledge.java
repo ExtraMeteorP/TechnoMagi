@@ -1,8 +1,15 @@
 package com.ollieread.technomagi.common.init;
 
+import java.util.Iterator;
+
+import net.minecraft.entity.EntityList;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.Level;
 
+import com.ollieread.ennds.EnndsRegistry;
 import com.ollieread.ennds.research.IKnowledge;
+import com.ollieread.ennds.research.ResearchRegistry;
 import com.ollieread.technomagi.TechnoMagi;
 import com.ollieread.technomagi.knowledge.cybermind.KnowledgeBrainManipulation;
 import com.ollieread.technomagi.knowledge.cybermind.KnowledgeDataManipulation;
@@ -25,6 +32,7 @@ import com.ollieread.technomagi.knowledge.technology.KnowledgePhotoreactive;
 import com.ollieread.technomagi.knowledge.technology.KnowledgePower;
 import com.ollieread.technomagi.knowledge.technology.KnowledgeScanning;
 import com.ollieread.technomagi.knowledge.technology.KnowledgeWarmth;
+import com.ollieread.technomagi.util.EventHelper;
 
 public class Knowledge
 {
@@ -84,10 +92,10 @@ public class Knowledge
         // Life
         life = new KnowledgeLife("life", new String[] {});
         reproduction = new KnowledgeReproduction("reproduction", new String[] {});
-        passive = new KnowledgePassive("passive", new String[] { life.getName() });
-        aggressive = new KnowledgeAggressive("aggressive", new String[] { life.getName() });
-        flora = new KnowledgeFlora("flora", new String[] { life.getName() });
-        metabolism = new KnowledgeMetabolism("metabolism", new String[] { life.getName() });
+        passive = new KnowledgePassive("passive", new String[] {});
+        aggressive = new KnowledgeAggressive("aggressive", new String[] {});
+        flora = new KnowledgeFlora("flora", new String[] {});
+        metabolism = new KnowledgeMetabolism("metabolism", new String[] {});
 
         // Technology
         power = new KnowledgePower("power", new String[] {});
@@ -108,5 +116,24 @@ public class Knowledge
         // amplification = new KnowledgeAmplification("amplification", new
         // String[] {});
         // negation = new KnowledgeNegation("negation", new String[] {});
+
+        for (Iterator<Class> i = ResearchRegistry.getMonitorableEntities().iterator(); i.hasNext();) {
+            Class entityClass = i.next();
+            String entityName = (String) EntityList.classToStringMapping.get(entityClass);
+
+            EnndsRegistry.registerEvent(EventHelper.entityPassive(entityClass));
+        }
+
+        for (Iterator<Class> i = ResearchRegistry.getObservableEntities().iterator(); i.hasNext();) {
+            Class entityClass = i.next();
+            String entityName = (String) EntityList.classToStringMapping.get(entityClass);
+
+            EnndsRegistry.registerEvent(EventHelper.entityPassive(entityClass));
+        }
+
+        for (Iterator<String> i = ResearchRegistry.getKnowledgeNames().iterator(); i.hasNext();) {
+            String name = i.next();
+            EnndsRegistry.registerEvent("knowledge" + StringUtils.capitalize(name));
+        }
     }
 }

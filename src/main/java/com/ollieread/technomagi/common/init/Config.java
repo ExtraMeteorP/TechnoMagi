@@ -25,6 +25,7 @@ public class Config
     public static boolean versionCheck;
     public static boolean creativeKnowledge;
     public static boolean creativeKnowledgeAll;
+    public static boolean multiplayerMode;
     // Entity
     public static int brainDropChance;
     public static int robotCow;
@@ -138,6 +139,7 @@ public class Config
         versionCheck = config.getBoolean("versionCheck", CATEGORY_GENERAL, true, "Whether or not to check version for recommended");
         creativeKnowledge = config.getBoolean("creativeKnowledge", CATEGORY_GENERAL, false, "Whether or not to allow giving knowledge from creative");
         creativeKnowledgeAll = config.getBoolean("creativeKnowledgeAll", CATEGORY_GENERAL, false, "Whether or not to allow giving all knowledge from creative");
+        multiplayerMode = config.getBoolean("multiplayerMode", CATEGORY_GENERAL, true, "Whether or not to apply class bias for multiplayer, best to leave on");
 
         // Entities
         brainDropChance = config.getInt("brainDropChance", CATEGORY_ENTITY, 100, 20, 500, "The chance of dropping a brain when killing a mob");

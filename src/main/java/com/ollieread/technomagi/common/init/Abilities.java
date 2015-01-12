@@ -93,10 +93,10 @@ public class Abilities
             abilityActiveInvisibility = new ActiveAbilityHarvest("invisibility");
         }
         if (Config.projectileEnabled) {
-            abilityActiveProjectile = new ActiveAbilityProjectile("projectile");
+            abilityActiveProjectile = new ActiveAbilityProjectile("arrow");
         }
         if (Config.projectileExothermicEnabled) {
-            abilityActiveProjectileExothermic = new ActiveAbilityProjectileExothermic("projectileExothermic");
+            abilityActiveProjectileExothermic = new ActiveAbilityProjectileExothermic("arrowFire");
         }
         if (Config.reactiveEnabled) {
             abilityActiveReactive = new ActiveAbilityReactive("reactive");
