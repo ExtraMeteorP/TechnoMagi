@@ -5,6 +5,7 @@ import com.ollieread.ennds.research.IResearchMining;
 import com.ollieread.ennds.research.Knowledge;
 import com.ollieread.ennds.research.ShapedAnalysisRecipe;
 import com.ollieread.ennds.research.ShapelessAnalysisRecipe;
+import com.ollieread.technomagi.common.Information;
 import com.ollieread.technomagi.common.KnowledgeReference;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.research.ResearchAnalysis;
@@ -29,5 +30,10 @@ public class KnowledgePhotoreactive extends Knowledge
         analyseSunflower = new ResearchAnalysis("analyseSunflower", getName(), 20, new ShapelessAnalysisRecipe(ItemHelper.block("double_plant", 1, 1)), 1, 6);
         analyseDetector = new ResearchAnalysis("analyseDetector", getName(), 20, new ShapelessAnalysisRecipe(ItemHelper.block("daylight_detector")), 1, 4);
         analyseDetectorRecipe = new ResearchAnalysis("analyseDetectorRecipe", getName(), 20, new ShapedAnalysisRecipe("xxx", "yyy", "zzz", 'x', ItemHelper.block("glass"), 'y', ItemHelper.item("quartz"), 'z', ItemHelper.block("wooden_slab")), 1, 4, new String[] { analyseDetector.getName() });
+    }
+
+    public String[] getIntrigue()
+    {
+        return Information.getInformation("intrigue", getName());
     }
 }

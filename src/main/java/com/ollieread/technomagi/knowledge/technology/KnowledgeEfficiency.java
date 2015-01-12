@@ -3,6 +3,7 @@ package com.ollieread.technomagi.knowledge.technology;
 import com.ollieread.ennds.research.IResearchCrafting;
 import com.ollieread.ennds.research.IResearchEvent;
 import com.ollieread.ennds.research.Knowledge;
+import com.ollieread.technomagi.common.Information;
 import com.ollieread.technomagi.common.KnowledgeReference;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.research.ResearchCrafting;
@@ -57,5 +58,10 @@ public class KnowledgeEfficiency extends Knowledge
         diamondShovel = new ResearchCrafting("diamondShovel", getName(), 5, ItemHelper.item("diamond_shovel"), 1, 1, new String[] { ironShovel.getName() });
         diamondSword = new ResearchCrafting("diamondSword", getName(), 5, ItemHelper.item("diamond_sword"), 1, 1, new String[] { ironSword.getName() });
 
+    }
+
+    public String[] getIntrigue()
+    {
+        return Information.getInformation("intrigue", getName());
     }
 }

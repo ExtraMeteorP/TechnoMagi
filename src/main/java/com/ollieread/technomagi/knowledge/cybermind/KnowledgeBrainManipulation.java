@@ -2,6 +2,7 @@ package com.ollieread.technomagi.knowledge.cybermind;
 
 import com.ollieread.ennds.research.IResearchEvent;
 import com.ollieread.ennds.research.Knowledge;
+import com.ollieread.technomagi.common.Information;
 import com.ollieread.technomagi.common.KnowledgeReference;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.research.ResearchEvent;
@@ -19,6 +20,11 @@ public class KnowledgeBrainManipulation extends Knowledge
 
         passive = new ResearchEvent("passive", getName(), 50, EventHelper.knowledge(com.ollieread.technomagi.common.init.Knowledge.passive), 1, 1, true, new String[] {});
         aggressive = new ResearchEvent("aggressive", getName(), 50, EventHelper.knowledge(com.ollieread.technomagi.common.init.Knowledge.aggressive), 1, 1, true, new String[] {});
+    }
+
+    public String[] getIntrigue()
+    {
+        return Information.getInformation("intrigue", getName());
     }
 
 }

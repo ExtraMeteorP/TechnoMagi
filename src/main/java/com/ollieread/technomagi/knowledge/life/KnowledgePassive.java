@@ -9,6 +9,7 @@ import com.ollieread.ennds.research.IResearchAnalysis;
 import com.ollieread.ennds.research.IResearchEvent;
 import com.ollieread.ennds.research.Knowledge;
 import com.ollieread.ennds.research.ShapelessAnalysisRecipe;
+import com.ollieread.technomagi.common.Information;
 import com.ollieread.technomagi.common.KnowledgeReference;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.research.ResearchAnalysis;
@@ -41,6 +42,11 @@ public class KnowledgePassive extends Knowledge
         brainChicken = new ResearchAnalysis("analyseChickenBrain", getName(), 15, new ShapelessAnalysisRecipe(ItemHelper.brain(EntityChicken.class)), 1, 4);
         brainCow = new ResearchAnalysis("analyseCowBrain", getName(), 15, new ShapelessAnalysisRecipe(ItemHelper.brain(EntityCow.class)), 1, 4);
         brainSheep = new ResearchAnalysis("analyseSheepBrain", getName(), 15, new ShapelessAnalysisRecipe(ItemHelper.brain(EntitySheep.class)), 1, 4);
+    }
+
+    public String[] getIntrigue()
+    {
+        return Information.getInformation("intrigue", getName());
     }
 
 }

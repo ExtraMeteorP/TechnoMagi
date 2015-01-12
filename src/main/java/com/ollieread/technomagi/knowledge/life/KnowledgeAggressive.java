@@ -9,6 +9,7 @@ import com.ollieread.ennds.research.IResearchAnalysis;
 import com.ollieread.ennds.research.IResearchEvent;
 import com.ollieread.ennds.research.Knowledge;
 import com.ollieread.ennds.research.ShapelessAnalysisRecipe;
+import com.ollieread.technomagi.common.Information;
 import com.ollieread.technomagi.common.KnowledgeReference;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.research.ResearchAnalysis;
@@ -52,6 +53,11 @@ public class KnowledgeAggressive extends Knowledge
         brainSkeleton = new ResearchAnalysis("analyseSkeletonBrain", getName(), 15, new ShapelessAnalysisRecipe(ItemHelper.brain(EntitySkeleton.class)), 1, 4, new String[] {});
         brainCreeper = new ResearchAnalysis("analyseCreeperBrain", getName(), 15, new ShapelessAnalysisRecipe(ItemHelper.brain(EntityCreeper.class)), 1, 4, new String[] {});
         brainSpider = new ResearchAnalysis("analyseSpiderBrain", getName(), 15, new ShapelessAnalysisRecipe(ItemHelper.brain(EntitySpider.class)), 1, 4, new String[] {});
+    }
+
+    public String[] getIntrigue()
+    {
+        return Information.getInformation("intrigue", getName());
     }
 
 }

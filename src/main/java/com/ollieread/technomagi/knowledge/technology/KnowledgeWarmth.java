@@ -8,6 +8,7 @@ import com.ollieread.ennds.research.IResearchEvent;
 import com.ollieread.ennds.research.Knowledge;
 import com.ollieread.ennds.research.ShapedAnalysisRecipe;
 import com.ollieread.ennds.research.ShapelessAnalysisRecipe;
+import com.ollieread.technomagi.common.Information;
 import com.ollieread.technomagi.common.KnowledgeReference;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.research.ResearchAnalysis;
@@ -40,5 +41,10 @@ public class KnowledgeWarmth extends Knowledge
         torchRecipe = new ResearchAnalysis("torchRecipe", getName(), 10, new ShapedAnalysisRecipe("X", "#", '#', Items.stick, 'X', Items.redstone), 1, 4, new String[] {});
         torchCrafting = new ResearchCrafting("torchCrafting", getName(), 10, ItemHelper.block("torch"), 4, 1, new String[] {});
         torchAnalysis = new ResearchAnalysis("torchAnalysis", getName(), 15, new ShapelessAnalysisRecipe(ItemHelper.block("torch")), 1, 4, new String[] {});
+    }
+
+    public String[] getIntrigue()
+    {
+        return Information.getInformation("intrigue", getName());
     }
 }

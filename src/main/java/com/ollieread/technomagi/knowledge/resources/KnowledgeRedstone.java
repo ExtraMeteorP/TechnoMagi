@@ -4,6 +4,7 @@ import com.ollieread.ennds.research.IResearchAnalysis;
 import com.ollieread.ennds.research.IResearchMining;
 import com.ollieread.ennds.research.Knowledge;
 import com.ollieread.ennds.research.ShapelessAnalysisRecipe;
+import com.ollieread.technomagi.common.Information;
 import com.ollieread.technomagi.common.KnowledgeReference;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.research.ResearchAnalysis;
@@ -24,5 +25,10 @@ public class KnowledgeRedstone extends Knowledge
         ore = new ResearchMining("ore", getName(), 30, ItemHelper.block("redstone_ore"), 1, 16, new String[] {});
         dust = new ResearchAnalysis("dust", getName(), 30, new ShapelessAnalysisRecipe(ItemHelper.item("redstone")), 1, 20, new String[] {});
         water = new ResearchAnalysis("water", getName(), 40, new ShapelessAnalysisRecipe(ItemHelper.item("redstone"), ItemHelper.item("water_bucket")), 1, 20, new String[] {});
+    }
+
+    public String[] getIntrigue()
+    {
+        return Information.getInformation("intrigue", getName());
     }
 }

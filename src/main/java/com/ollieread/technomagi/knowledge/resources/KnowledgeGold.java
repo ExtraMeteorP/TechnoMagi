@@ -5,6 +5,7 @@ import com.ollieread.ennds.research.IResearchCrafting;
 import com.ollieread.ennds.research.IResearchMining;
 import com.ollieread.ennds.research.Knowledge;
 import com.ollieread.ennds.research.ShapelessAnalysisRecipe;
+import com.ollieread.technomagi.common.Information;
 import com.ollieread.technomagi.common.KnowledgeReference;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.research.ResearchAnalysis;
@@ -26,5 +27,10 @@ public class KnowledgeGold extends Knowledge
         ore = new ResearchMining("ore", getName(), 25, ItemHelper.block("gold_ore"), 1, 16, new String[] {});
         ingot = new ResearchAnalysis("ingot", getName(), 25, new ShapelessAnalysisRecipe(ItemHelper.item("gold_ingot")), 1, 20, new String[] {});
         smelting = new ResearchCrafting("smelting", getName(), 5, ItemHelper.item("gold_ingot"), 10, 8, new String[] {});
+    }
+
+    public String[] getIntrigue()
+    {
+        return Information.getInformation("intrigue", getName());
     }
 }

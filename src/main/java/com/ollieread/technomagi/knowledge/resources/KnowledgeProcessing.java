@@ -3,6 +3,7 @@ package com.ollieread.technomagi.knowledge.resources;
 import com.ollieread.ennds.research.IResearchCrafting;
 import com.ollieread.ennds.research.IResearchEvent;
 import com.ollieread.ennds.research.Knowledge;
+import com.ollieread.technomagi.common.Information;
 import com.ollieread.technomagi.common.KnowledgeReference;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.research.ResearchCrafting;
@@ -37,6 +38,11 @@ public class KnowledgeProcessing extends Knowledge
         glass = new ResearchCrafting("glass", getName(), 1, ItemHelper.block("glass"), 10, 8, new String[] {});
         brick = new ResearchCrafting("brick", getName(), 1, ItemHelper.item("brick"), 10, 8, new String[] {});
         torch = new ResearchCrafting("torch", getName(), 1, ItemHelper.block("torch"), 10, 8, new String[] {});
+    }
+
+    public String[] getIntrigue()
+    {
+        return Information.getInformation("intrigue", getName());
     }
 
 }

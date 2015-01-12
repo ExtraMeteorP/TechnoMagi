@@ -5,6 +5,7 @@ import net.minecraft.entity.projectile.EntitySnowball;
 import com.ollieread.ennds.research.IResearchEvent;
 import com.ollieread.ennds.research.IResearchMining;
 import com.ollieread.ennds.research.Knowledge;
+import com.ollieread.technomagi.common.Information;
 import com.ollieread.technomagi.common.KnowledgeReference;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.common.init.Research;
@@ -33,5 +34,10 @@ public class KnowledgeCold extends Knowledge
         snowball = new ResearchEvent("snowballDamage", getName(), 4, EventHelper.damageProjectile(EntitySnowball.class), 5, 4, new String[] { snow.getName() });
         obsidian = new ResearchEvent("obsidian", getName(), 4, Research.OBSIDIAN, 5, 4, new String[] { snow.getName() });
         cobblestone = new ResearchEvent("cobblestone", getName(), 4, Research.COBBLESTONE, 5, 4, new String[] { snow.getName() });
+    }
+
+    public String[] getIntrigue()
+    {
+        return Information.getInformation("intrigue", getName());
     }
 }

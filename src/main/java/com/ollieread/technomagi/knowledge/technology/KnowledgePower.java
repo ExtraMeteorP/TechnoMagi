@@ -3,6 +3,7 @@ package com.ollieread.technomagi.knowledge.technology;
 import com.ollieread.ennds.research.IResearchCrafting;
 import com.ollieread.ennds.research.IResearchEvent;
 import com.ollieread.ennds.research.Knowledge;
+import com.ollieread.technomagi.common.Information;
 import com.ollieread.technomagi.common.KnowledgeReference;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.research.ResearchCrafting;
@@ -30,5 +31,10 @@ public class KnowledgePower extends Knowledge
         redstoneRepeater = new ResearchCrafting("redstoneRepeater", getName(), 20, ItemHelper.block("unpowered_repeater"), 1, 2, new String[] {});
         powerWater = new ResearchCrafting("powerWater", getName(), 20, ItemHelper.component("powerWater", 1), 1, 2, new String[] {});
         chargeableGeloid = new ResearchCrafting("chargeableGeloid", getName(), 20, ItemHelper.component("chargeableGeloid", 1), 1, 2, new String[] {});
+    }
+
+    public String[] getIntrigue()
+    {
+        return Information.getInformation("intrigue", getName());
     }
 }

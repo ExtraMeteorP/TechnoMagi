@@ -7,6 +7,7 @@ import net.minecraft.entity.passive.EntitySheep;
 
 import com.ollieread.ennds.research.IResearchEvent;
 import com.ollieread.ennds.research.Knowledge;
+import com.ollieread.technomagi.common.Information;
 import com.ollieread.technomagi.common.KnowledgeReference;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.research.ResearchEvent;
@@ -37,6 +38,11 @@ public class KnowledgeReproduction extends Knowledge
         birthPig = new ResearchEvent("birthPig", getName(), 15, EventHelper.entityBirth(EntityPig.class), 1, 6, new String[] { breedPig.getName() });
         birthCow = new ResearchEvent("birthCow", getName(), 15, EventHelper.entityBirth(EntityCow.class), 1, 6, new String[] { breedCow.getName() });
         birthSheep = new ResearchEvent("birthSheep", getName(), 15, EventHelper.entityBirth(EntitySheep.class), 1, 6, new String[] { breedSheep.getName() });
+    }
+
+    public String[] getIntrigue()
+    {
+        return Information.getInformation("intrigue", getName());
     }
 
 }

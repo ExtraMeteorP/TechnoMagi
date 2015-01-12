@@ -7,6 +7,7 @@ import com.ollieread.ennds.research.IResearchAnalysis;
 import com.ollieread.ennds.research.IResearchEvent;
 import com.ollieread.ennds.research.Knowledge;
 import com.ollieread.ennds.research.ShapelessAnalysisRecipe;
+import com.ollieread.technomagi.common.Information;
 import com.ollieread.technomagi.common.KnowledgeReference;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.research.ResearchAnalysis;
@@ -32,5 +33,10 @@ public class KnowledgeScanning extends Knowledge
         spiderBrain = new ResearchAnalysis("spiderBrain", getName(), 20, new ShapelessAnalysisRecipe(ItemHelper.brain(EntitySpider.class)), 1, 6, new String[] { spidereye.getName() });
         skeletonBrain = new ResearchAnalysis("skeletonBrain", getName(), 20, new ShapelessAnalysisRecipe(ItemHelper.brain(EntitySpider.class)), 1, 6);
         endermanBrain = new ResearchAnalysis("endermanBrain", getName(), 20, new ShapelessAnalysisRecipe(ItemHelper.brain(EntityEnderman.class)), 1, 6, new String[] { endermanTarget.getName() });
+    }
+
+    public String[] getIntrigue()
+    {
+        return Information.getInformation("intrigue", getName());
     }
 }

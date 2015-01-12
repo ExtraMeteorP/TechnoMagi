@@ -11,6 +11,7 @@ import com.ollieread.ennds.research.IResearchAnalysis;
 import com.ollieread.ennds.research.IResearchEvent;
 import com.ollieread.ennds.research.Knowledge;
 import com.ollieread.ennds.research.ShapelessAnalysisRecipe;
+import com.ollieread.technomagi.common.Information;
 import com.ollieread.technomagi.common.KnowledgeReference;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.research.ResearchAnalysis;
@@ -52,6 +53,11 @@ public class KnowledgePerception extends Knowledge
         brainSpider = new ResearchAnalysis("analyseSpiderBrain", getName(), 8, new ShapelessAnalysisRecipe(ItemHelper.brain(EntitySpider.class)), 1, 4, new String[] {});
         brainWolf = new ResearchAnalysis("analyseWolfBrain", getName(), 8, new ShapelessAnalysisRecipe(ItemHelper.brain(EntityWolf.class)), 1, 4, new String[] {});
         brainEnderman = new ResearchAnalysis("analyseEndermanBrain", getName(), 8, new ShapelessAnalysisRecipe(ItemHelper.brain(EntityEnderman.class)), 1, 4, new String[] {});
+    }
+
+    public String[] getIntrigue()
+    {
+        return Information.getInformation("intrigue", getName());
     }
 
 }

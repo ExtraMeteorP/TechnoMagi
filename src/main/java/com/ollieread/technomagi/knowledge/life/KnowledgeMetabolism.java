@@ -3,6 +3,7 @@ package com.ollieread.technomagi.knowledge.life;
 import com.ollieread.ennds.research.IResearchCrafting;
 import com.ollieread.ennds.research.IResearchEvent;
 import com.ollieread.ennds.research.Knowledge;
+import com.ollieread.technomagi.common.Information;
 import com.ollieread.technomagi.common.KnowledgeReference;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.research.ResearchCrafting;
@@ -68,5 +69,10 @@ public class KnowledgeMetabolism extends Knowledge
         cookPotato = new ResearchCrafting("cookPotato", getName(), 6, ItemHelper.item("baked_potato"), 1, 12, new String[] { eatPotato.getName() });
 
         eatBakedPotato = new ResearchEvent("eatBakedPotato", getName(), 6, EventHelper.item(ItemHelper.item("baked_potato")), 1, 12, new String[] { cookPotato.getName() });
+    }
+
+    public String[] getIntrigue()
+    {
+        return Information.getInformation("intrigue", getName());
     }
 }

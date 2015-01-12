@@ -4,6 +4,7 @@ import com.ollieread.ennds.research.IResearchAnalysis;
 import com.ollieread.ennds.research.IResearchAnalysisRecipe;
 import com.ollieread.ennds.research.Knowledge;
 import com.ollieread.ennds.research.ShapelessAnalysisRecipe;
+import com.ollieread.technomagi.common.Information;
 import com.ollieread.technomagi.common.KnowledgeReference;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.research.ResearchAnalysis;
@@ -33,6 +34,11 @@ public class KnowledgeFlora extends Knowledge
         saplings = new ResearchAnalysis("saplings", getName(), 20, saplingList, 1, 8);
         leaves = new ResearchAnalysis("leaves", getName(), 20, leafList, 1, 8);
         logs = new ResearchAnalysis("logs", getName(), 20, logList, 1, 8);
+    }
+
+    public String[] getIntrigue()
+    {
+        return Information.getInformation("intrigue", getName());
     }
 
 }
