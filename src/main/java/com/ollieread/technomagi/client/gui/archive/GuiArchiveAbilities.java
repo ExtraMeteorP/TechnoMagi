@@ -142,7 +142,7 @@ public class GuiArchiveAbilities extends GuiArchive
                 fontRendererObj.drawString(ability.getLocalisedName(), 33, 50, 5097727);
                 String name = "";
 
-                String content = Information.getInformation("abilities", name);
+                String content = Information.getInformationParagraphs("abilities", name);
                 String type = (ability instanceof IAbilityActive ? "Active" : "Passive");
                 String[] knowledge = ability.getKnowledge();
                 Map<String, Integer> enhancements = null;

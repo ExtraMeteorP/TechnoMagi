@@ -150,7 +150,7 @@ public class GuiArchiveConstruct extends GuiArchive
                     obfFontRendererObj.drawString(b.getLocalizedName(), 28, 72, 5097727);
                 }
 
-                String content = Information.getInformation("recipes", b.getUnlocalizedName());
+                String content = Information.getInformationParagraphs("recipes", b.getUnlocalizedName());
 
                 drawStringPage(content, 9, 89, 158, 130, !can);
 

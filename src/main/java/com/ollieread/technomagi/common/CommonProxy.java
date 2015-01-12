@@ -10,6 +10,7 @@ import com.ollieread.technomagi.client.gui.GuiAnalysis;
 import com.ollieread.technomagi.client.gui.GuiArchive;
 import com.ollieread.technomagi.client.gui.GuiConstruct;
 import com.ollieread.technomagi.client.gui.GuiCrafting;
+import com.ollieread.technomagi.client.gui.GuiDiagnosis;
 import com.ollieread.technomagi.client.gui.GuiFocuser;
 import com.ollieread.technomagi.client.gui.GuiFurnace;
 import com.ollieread.technomagi.client.gui.GuiNaniteReplicator;
@@ -35,6 +36,7 @@ import com.ollieread.technomagi.inventory.ContainerAnalysis;
 import com.ollieread.technomagi.inventory.ContainerArchive;
 import com.ollieread.technomagi.inventory.ContainerConstruct;
 import com.ollieread.technomagi.inventory.ContainerCrafting;
+import com.ollieread.technomagi.inventory.ContainerDiagnosis;
 import com.ollieread.technomagi.inventory.ContainerFocuser;
 import com.ollieread.technomagi.inventory.ContainerFurnace;
 import com.ollieread.technomagi.inventory.ContainerNaniteReplicator;
@@ -73,6 +75,7 @@ public class CommonProxy implements IGuiHandler
     public static int GUI_SEPARATOR = 11;
     public static int GUI_FURNACE = 12;
     public static int GUI_FOCUSER = 13;
+    public static int GUI_DIAGNOSIS = 14;
 
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
@@ -133,6 +136,8 @@ public class CommonProxy implements IGuiHandler
             if (focuser != null) {
                 return new ContainerFocuser(player.inventory, focuser);
             }
+        } else if (ID == GUI_DIAGNOSIS) {
+            return new ContainerDiagnosis(player);
         }
 
         return null;
@@ -245,6 +250,8 @@ public class CommonProxy implements IGuiHandler
             if (focuser != null) {
                 return new GuiFocuser(player.inventory, focuser);
             }
+        } else if (ID == GUI_DIAGNOSIS) {
+            return new GuiDiagnosis();
         }
 
         return null;

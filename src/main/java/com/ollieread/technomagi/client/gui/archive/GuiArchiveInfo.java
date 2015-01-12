@@ -124,7 +124,7 @@ public class GuiArchiveInfo extends GuiArchive
 
     protected void drawInfoLayer()
     {
-        String content = Information.getInformation("info", "" + info);
+        String content = Information.getInformationParagraphs("info", "" + info);
 
         fontRendererObj.drawString(I18n.format("info." + info), 9, 50, 5097727);
 

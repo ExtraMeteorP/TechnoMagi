@@ -58,7 +58,41 @@ public class Information
         return new LinkedHashMap<String, List<String>>();
     }
 
-    public static String getInformation(String type, String name)
+    public static String[] getInformation(String type, String name)
+    {
+        if (data.containsKey(type)) {
+            Map<String, List<String>> information = data.get(type);
+
+            if (information.containsKey(name)) {
+                Object info = information.get(name);
+
+                if (info instanceof String) {
+                    return new String[] { (String) info };
+                } else if (info instanceof List<?>) {
+                    List<String> list = (List<String>) info;
+
+                    String[] infoList = new String[list.size()];
+                    int i = 0;
+
+                    for (Iterator<String> p = list.iterator(); p.hasNext();) {
+                        String item = p.next();
+
+                        if (item != null && !item.isEmpty()) {
+                            infoList[i] = item;
+                        }
+
+                        i++;
+                    }
+
+                    return infoList;
+                }
+            }
+        }
+
+        return new String[] {};
+    }
+
+    public static String getInformationParagraphs(String type, String name)
     {
         if (data.containsKey(type)) {
             Map<String, List<String>> information = data.get(type);

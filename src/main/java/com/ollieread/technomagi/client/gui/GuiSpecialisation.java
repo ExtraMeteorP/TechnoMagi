@@ -58,7 +58,7 @@ public class GuiSpecialisation extends GuiScreen
         for (Iterator<ISpecialisation> i = specialisations.iterator(); i.hasNext();) {
             ISpecialisation spec = i.next();
             this.buttonSpecialisations.put(buttonId, spec.getName());
-            this.buttonList.add(new GuiTMSpecialiseButton(buttonId, this.xOffset + 57 + ((buttonId - 4) * 40), this.yOffset + 23, I18n.format("technomagi.specialise.button"), spec.getIcon()));
+            this.buttonList.add(new GuiTMSpecialiseButton(buttonId, this.xOffset + 17 + ((buttonId - 4) * 40), this.yOffset + 23, I18n.format("technomagi.specialise.button"), spec.getIcon()));
             buttonId++;
         }
 
@@ -74,9 +74,18 @@ public class GuiSpecialisation extends GuiScreen
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(iconLocation);
         this.drawTexturedModalRect(this.xOffset, this.yOffset, 0, 0, this.xSize, this.ySize);
-        if (selected >= 4) {
-            this.drawTexturedModalRect(this.xOffset + 57 + ((selected - 4) * 40) + 1, this.yOffset + 24, 225, 0, 30, 30);
+
+        int k;
+
+        for (k = 0; k < this.buttonList.size(); ++k) {
+            ((GuiButton) this.buttonList.get(k)).drawButton(this.mc, par1, par2);
         }
+
+        if (selected >= 4) {
+            this.mc.getTextureManager().bindTexture(iconLocation);
+            this.drawTexturedModalRect(this.xOffset + 17 + ((selected - 4) * 40) - 1, this.yOffset + 22, 0, 209, 34, 34);
+        }
+
         int i1;
 
         String s = "technomagi.specialise.gui";
@@ -92,12 +101,10 @@ public class GuiSpecialisation extends GuiScreen
         this.ySize_lo = (float) par2;
 
         if (choice != null) {
-            String paragraphs = Information.getInformation("specialisations", choice);
+            String paragraphs = Information.getInformationParagraphs("specialisations", choice);
             scrollableText.setString(paragraphs);
             scrollableText.drawScreen(par1, par2, par3);
         }
-
-        super.drawScreen(par1, par2, par3);
     }
 
     private void drawGui()

@@ -203,7 +203,7 @@ public class GuiArchiveCrafting extends GuiArchive
                 this.drawItemStack(output, 9, 50, "");
                 String name = output.getUnlocalizedName().replaceAll("item.", "").replaceAll(".name", "").replaceAll("tile.", "");
                 int progress = 0;
-                String content = Information.getInformation("recipes", name);
+                String content = Information.getInformationParagraphs("recipes", name);
 
                 drawStringPage(content, 9, 70, 158, 144, !can);
 

@@ -157,7 +157,7 @@ public class GuiArchiveKnowledge extends GuiArchive
                 this.drawTexturedModalRect(33, 62, 0, 248, 102, 5);
                 this.drawTexturedModalRect(34, 63, 0, 253, progress, 3);
 
-                String content = Information.getInformation("knowledge", k.getName());
+                String content = Information.getInformationParagraphs("knowledge", k.getName());
 
                 drawStringPage(content, 9, 75, 215, 144, progress < 100);
 
@@ -256,7 +256,7 @@ public class GuiArchiveKnowledge extends GuiArchive
         {
             mc.getTextureManager().bindTexture(texture);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            this.func_146110_a(this.xPosition, this.yPosition, 0, 0, 20, 20, 20, 20);
+            this.func_146110_a(this.xPosition, this.yPosition, 0, 0, 16, 16, 16, 16);
 
             if (progress == 100) {
                 mc.fontRenderer.drawString(displayString, this.xPosition + 24, yPosition + 2, 16777215);

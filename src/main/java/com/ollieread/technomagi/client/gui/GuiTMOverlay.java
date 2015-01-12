@@ -18,6 +18,7 @@ import org.lwjgl.opengl.GL12;
 
 import com.ollieread.ennds.ability.AbilityRegistry;
 import com.ollieread.ennds.ability.IAbilityActive;
+import com.ollieread.ennds.ability.IAbilityActiveHasModes;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.ennds.research.IKnowledge;
 import com.ollieread.technomagi.common.Reference;
@@ -177,7 +178,7 @@ public class GuiTMOverlay extends Gui
         int maxNanites = charon.nanites.getMaxNanites();
         int researchNanites = charon.nanites.getData();
         float nanite = 102 / 100;
-        int mode = charon.abilities.getMode();
+        int staffMode = charon.abilities.getMode();
 
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glDisable(GL11.GL_DEPTH_TEST);
@@ -231,9 +232,15 @@ public class GuiTMOverlay extends Gui
                     break;
 
                 IAbilityActive ability = AbilityRegistry.getActiveAbility(abilities.get(aOffset + i));
+                int mode = charon.abilities.getAbilityMode();
 
-                this.mc.getTextureManager().bindTexture(ability.getIcon(mode));
-                this.func_146110_a(5, yOffset + (3 + (20 * i)), 0, 0, 16, 16, 16, 16);
+                if (mode == -1) {
+                    this.mc.getTextureManager().bindTexture(ability.getIcon(staffMode));
+                    this.func_146110_a(5, yOffset + (3 + (20 * i)), 0, 0, 16, 16, 16, 16);
+                } else {
+                    this.mc.getTextureManager().bindTexture(((IAbilityActiveHasModes) ability).getModeIcon(mode, staffMode));
+                    this.func_146110_a(5, yOffset + (3 + (20 * i)), 0, 0, 16, 16, 16, 16);
+                }
             }
 
             this.mc.getTextureManager().bindTexture(texture);
@@ -251,7 +258,16 @@ public class GuiTMOverlay extends Gui
             }
 
             if (currentAbility > -1 && shouldDisplay && highlightTicks > 0) {
-                String display = AbilityRegistry.getActiveAbility(abilities.get(currentAbility)).getLocalisedName(mode);
+                IAbilityActive ability = charon.abilities.getAbility();
+                int mode = charon.abilities.getAbilityMode();
+                String display = null;
+
+                if (mode == 1) {
+                    display = ability.getLocalisedName(staffMode);
+                } else {
+                    display = ((IAbilityActiveHasModes) ability).getModeLocalisedName(mode, staffMode);
+                }
+
                 int k1 = (width - fontrenderer.getStringWidth(display)) / 2;
                 int l1 = height - 72;
 
