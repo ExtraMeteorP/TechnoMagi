@@ -23,7 +23,7 @@ public class PassiveAbilityScholarResearch extends AbilityPassive<KnowledgeProgr
     @Override
     public boolean isAvailable(ExtendedPlayerKnowledge charon)
     {
-        return charon.isSpecialisation(Specialisations.specScholar.getName());
+        return charon.isSpecialisation(Specialisations.scholar.getName());
     }
 
     @Override
