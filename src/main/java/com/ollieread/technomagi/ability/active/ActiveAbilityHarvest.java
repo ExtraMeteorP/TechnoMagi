@@ -10,9 +10,9 @@ import net.minecraft.network.play.server.S23PacketBlockChange;
 import net.minecraft.util.MovingObjectPosition;
 
 import com.ollieread.ennds.ability.AbilityActive;
-import com.ollieread.ennds.ability.AbilityCast;
-import com.ollieread.ennds.ability.AbilityCast.AbilityUseTarget;
-import com.ollieread.ennds.ability.AbilityCast.AbilityUseType;
+import com.ollieread.ennds.ability.AbilityPayload;
+import com.ollieread.ennds.ability.AbilityPayload.AbilityUseTarget;
+import com.ollieread.ennds.ability.AbilityPayload.AbilityUseType;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.common.init.Config;
@@ -42,13 +42,13 @@ public class ActiveAbilityHarvest extends AbilityActive
     }
 
     @Override
-    public boolean canUse(ExtendedPlayerKnowledge charon, AbilityCast cast)
+    public boolean canUse(ExtendedPlayerKnowledge charon, AbilityPayload cast)
     {
         return cast.type.equals(AbilityUseType.FOCUS) && cast.target.equals(AbilityUseTarget.BLOCK);
     }
 
     @Override
-    public boolean use(ExtendedPlayerKnowledge charon, AbilityCast cast, ItemStack staff)
+    public boolean use(ExtendedPlayerKnowledge charon, AbilityPayload cast, ItemStack staff)
     {
         EntityPlayer player = charon.player;
         int x = cast.blockX;
@@ -106,7 +106,7 @@ public class ActiveAbilityHarvest extends AbilityActive
     }
 
     @Override
-    public void stoppedUsing(ExtendedPlayerKnowledge charon, AbilityCast cast, ItemStack staff)
+    public void stoppedUsing(ExtendedPlayerKnowledge charon, AbilityPayload cast, ItemStack staff)
     {
         if (cast != null) {
             int x = cast.blockX;

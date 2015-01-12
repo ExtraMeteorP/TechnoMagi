@@ -13,9 +13,9 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 
 import com.ollieread.ennds.ability.AbilityActive;
-import com.ollieread.ennds.ability.AbilityCast;
-import com.ollieread.ennds.ability.AbilityCast.AbilityUseTarget;
-import com.ollieread.ennds.ability.AbilityCast.AbilityUseType;
+import com.ollieread.ennds.ability.AbilityPayload;
+import com.ollieread.ennds.ability.AbilityPayload.AbilityUseTarget;
+import com.ollieread.ennds.ability.AbilityPayload.AbilityUseType;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.common.init.Config;
@@ -46,7 +46,7 @@ public class ActiveAbilityForce extends AbilityActive
     }
 
     @Override
-    public boolean canUse(ExtendedPlayerKnowledge charon, AbilityCast cast)
+    public boolean canUse(ExtendedPlayerKnowledge charon, AbilityPayload cast)
     {
         if (cast.type.equals(AbilityUseType.FLASH)) {
             if (cast.target.equals(AbilityUseTarget.ENTITY_LIVING)) {
@@ -60,7 +60,7 @@ public class ActiveAbilityForce extends AbilityActive
     }
 
     @Override
-    public boolean use(ExtendedPlayerKnowledge charon, AbilityCast cast, ItemStack staff)
+    public boolean use(ExtendedPlayerKnowledge charon, AbilityPayload cast, ItemStack staff)
     {
         if (!cast.target.equals(AbilityUseTarget.ENTITY_LIVING)) {
             EntityPlayer player = charon.player;

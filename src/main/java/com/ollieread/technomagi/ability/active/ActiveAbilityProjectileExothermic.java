@@ -7,9 +7,9 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 import com.ollieread.ennds.ability.AbilityActive;
-import com.ollieread.ennds.ability.AbilityCast;
-import com.ollieread.ennds.ability.AbilityCast.AbilityUseTarget;
-import com.ollieread.ennds.ability.AbilityCast.AbilityUseType;
+import com.ollieread.ennds.ability.AbilityPayload;
+import com.ollieread.ennds.ability.AbilityPayload.AbilityUseTarget;
+import com.ollieread.ennds.ability.AbilityPayload.AbilityUseType;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.common.init.Config;
@@ -39,13 +39,13 @@ public class ActiveAbilityProjectileExothermic extends AbilityActive
     }
 
     @Override
-    public boolean canUse(ExtendedPlayerKnowledge charon, AbilityCast cast)
+    public boolean canUse(ExtendedPlayerKnowledge charon, AbilityPayload cast)
     {
         return charon.nanites.getMaxNanites() >= cost && cast.type.equals(AbilityUseType.FLASH) && cast.target.equals(AbilityUseTarget.AIR);
     }
 
     @Override
-    public boolean use(ExtendedPlayerKnowledge charon, AbilityCast cast, ItemStack staff)
+    public boolean use(ExtendedPlayerKnowledge charon, AbilityPayload cast, ItemStack staff)
     {
         int j = 72000;
 
