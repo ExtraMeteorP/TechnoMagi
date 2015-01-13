@@ -23,7 +23,6 @@ public class TechnoMagiCoreClassTransformer implements IClassTransformer, Opcode
     public byte[] transform(String name, String transformedName, byte[] basicClass)
     {
         if (name.equals("net.minecraft.block.BlockLiquid")) {
-            System.out.println("********* Found class!");
             return patchBlockLiquid(name, basicClass, false);
         }
 
@@ -43,7 +42,6 @@ public class TechnoMagiCoreClassTransformer implements IClassTransformer, Opcode
             methodName = "n";
             description = "(Lnet/minecraft/world/ahb;III)V";
         }
-        System.out.println("********* Being called!");
 
         ClassNode classNode = new ClassNode();
         ClassReader classReader = new ClassReader(bytes);
@@ -57,8 +55,6 @@ public class TechnoMagiCoreClassTransformer implements IClassTransformer, Opcode
             int loc_index = -1;
 
             if (m.name.equals(methodName) && m.desc.equals(description)) {
-                System.out.println("********* Inside target method!");
-
                 AbstractInsnNode currentNode = null;
                 AbstractInsnNode targetNode = null;
 
