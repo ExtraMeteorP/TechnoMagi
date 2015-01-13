@@ -5,8 +5,6 @@ import java.lang.reflect.Modifier;
 
 import net.minecraft.potion.Potion;
 
-import org.apache.logging.log4j.Level;
-
 import com.ollieread.technomagi.TechnoMagi;
 import com.ollieread.technomagi.potion.PotionTM;
 
@@ -17,7 +15,7 @@ public class Potions
 
     public static void init()
     {
-        TechnoMagi.logger.log(Level.INFO, "Initiating & registering potions");
+        TechnoMagi.info("Initiating & registering potions");
 
         if (Potion.potionTypes.length < 256) {
             Potion[] potionTypes = null;

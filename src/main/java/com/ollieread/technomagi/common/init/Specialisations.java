@@ -1,7 +1,5 @@
 package com.ollieread.technomagi.common.init;
 
-import org.apache.logging.log4j.Level;
-
 import com.ollieread.ennds.ISpecialisation;
 import com.ollieread.technomagi.TechnoMagi;
 import com.ollieread.technomagi.specialisation.SpecialisationCleric;
@@ -21,7 +19,7 @@ public class Specialisations
 
     public static void init()
     {
-        TechnoMagi.logger.log(Level.INFO, "Initiating & registering specialisations");
+        TechnoMagi.info("Initiating & registering specialisations");
 
         scholar = new SpecialisationScholar();
         cleric = new SpecialisationCleric();

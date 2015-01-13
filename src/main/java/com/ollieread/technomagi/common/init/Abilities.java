@@ -2,8 +2,6 @@ package com.ollieread.technomagi.common.init;
 
 import java.util.Map;
 
-import org.apache.logging.log4j.Level;
-
 import com.ollieread.ennds.ability.AbilityRegistry;
 import com.ollieread.ennds.ability.IAbilityActive;
 import com.ollieread.ennds.ability.IAbilityPassive;
@@ -58,7 +56,7 @@ public class Abilities
 
     public static void init()
     {
-        TechnoMagi.logger.log(Level.INFO, "Initiating & registering abilities");
+        TechnoMagi.info("Initiating & registering abilities");
 
         AbilityRegistry.registerAbilityData("naniteRegen", AbilityDataNanites.class);
 

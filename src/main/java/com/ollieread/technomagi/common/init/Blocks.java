@@ -2,8 +2,6 @@ package com.ollieread.technomagi.common.init;
 
 import net.minecraft.block.Block;
 
-import org.apache.logging.log4j.Level;
-
 import com.ollieread.technomagi.TechnoMagi;
 import com.ollieread.technomagi.block.BlockAnalysis;
 import com.ollieread.technomagi.block.BlockArchive;
@@ -106,7 +104,7 @@ public class Blocks
 
     public static void init()
     {
-        TechnoMagi.logger.log(Level.INFO, "Initiating & registering blocks");
+        TechnoMagi.info("Initiating & registering blocks");
 
         blockResource = new BlockResource("resource").setHardness(5.0F).setResistance(10.0F);
         blockConstruct = new BlockConstruct("construct").setHardness(5.0F).setResistance(10.0F);

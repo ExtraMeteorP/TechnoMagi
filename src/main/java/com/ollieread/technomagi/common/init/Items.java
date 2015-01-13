@@ -1,7 +1,5 @@
 package com.ollieread.technomagi.common.init;
 
-import org.apache.logging.log4j.Level;
-
 import com.ollieread.technomagi.TechnoMagi;
 import com.ollieread.technomagi.item.ItemCapture;
 import com.ollieread.technomagi.item.ItemComponent;
@@ -34,7 +32,7 @@ public class Items
 
     public static void init()
     {
-        TechnoMagi.logger.log(Level.INFO, "Initiating & registering items");
+        TechnoMagi.info("Initiating & registering items");
 
         itemResource = new ItemResource("resource");
         itemComponent = new ItemComponent("component");
