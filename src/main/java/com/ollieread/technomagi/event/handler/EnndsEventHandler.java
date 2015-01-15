@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.ollieread.ennds.ability.AbilityRegistry;
 import com.ollieread.ennds.event.EnndsEvent.KnowledgeProgressEvent;
 import com.ollieread.ennds.event.EnndsEvent.KnowledgeUnlockedEvent;
+import com.ollieread.ennds.event.EnndsEvent.ResearchableEvent;
 import com.ollieread.ennds.event.EnndsEvent.SpecialisationChosenEvent;
 import com.ollieread.ennds.event.PlayerCastingEvent;
 import com.ollieread.ennds.research.ResearchRegistry;
@@ -21,6 +22,14 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class EnndsEventHandler
 {
+
+    @SubscribeEvent
+    public void onResearchableEvent(ResearchableEvent event)
+    {
+        if (!event.entityPlayer.worldObj.isRemote) {
+            ResearchRegistry.researchEvent(event.event, event, event.charon, false);
+        }
+    }
 
     @SubscribeEvent
     public void onSpecialisationChosen(SpecialisationChosenEvent event)
