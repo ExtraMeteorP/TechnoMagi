@@ -2,6 +2,8 @@ package com.ollieread.technomagi.asm;
 
 import java.util.Map;
 
+import com.ollieread.technomagi.asm.transformers.BlockTransformer;
+
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin.MCVersion;
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin.TransformerExclusions;
@@ -14,7 +16,7 @@ public class TechnoMagiCoreLoadingPlugin implements IFMLLoadingPlugin
     @Override
     public String[] getASMTransformerClass()
     {
-        return new String[] { TechnoMagiCoreClassTransformer.class.getName() };
+        return new String[] { BlockTransformer.class.getName() };
     }
 
     @Override
