@@ -7,6 +7,7 @@ import com.ollieread.technomagi.item.ItemDatasheet;
 import com.ollieread.technomagi.item.ItemDigitalTool;
 import com.ollieread.technomagi.item.ItemMobBrain;
 import com.ollieread.technomagi.item.ItemNaniteContainer;
+import com.ollieread.technomagi.item.ItemPersonalInterface;
 import com.ollieread.technomagi.item.ItemResource;
 import com.ollieread.technomagi.item.ItemSampleExtractor;
 import com.ollieread.technomagi.item.ItemSampleVile;
@@ -19,6 +20,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class Items
 {
 
+    public static ItemTM itemPersonalInterface;
     public static ItemTMSubtypes itemResource;
     public static ItemTMSubtypes itemComponent;
     public static ItemTM itemSampleVile;
@@ -34,6 +36,7 @@ public class Items
     {
         TechnoMagi.info("Initiating & registering items");
 
+        itemPersonalInterface = new ItemPersonalInterface("personalInterface");
         itemResource = new ItemResource("resource");
         itemComponent = new ItemComponent("component");
         itemSampleVile = new ItemSampleVile("sampleVile");
@@ -45,6 +48,7 @@ public class Items
         itemTechnomageStaff = new ItemStaff("technomageStaff");
         itemCapture = new ItemCapture("capture");
 
+        GameRegistry.registerItem(itemPersonalInterface, "personalInterface");
         GameRegistry.registerItem(itemResource, "resourceItem");
         GameRegistry.registerItem(itemComponent, "component");
         GameRegistry.registerItem(itemTechnomageStaff, "technomageStaff");
