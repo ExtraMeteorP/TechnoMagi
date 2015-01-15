@@ -234,7 +234,7 @@ public class GuiTMOverlay extends Gui
                 IAbilityActive ability = AbilityRegistry.getActiveAbility(abilities.get(aOffset + i));
                 int mode = charon.abilities.getAbilityMode();
 
-                if (mode == -1) {
+                if (!ability.hasModes() || mode == -1) {
                     this.mc.getTextureManager().bindTexture(ability.getIcon(staffMode));
                     this.func_146110_a(5, yOffset + (3 + (20 * i)), 0, 0, 16, 16, 16, 16);
                 } else {
@@ -262,7 +262,7 @@ public class GuiTMOverlay extends Gui
                 int mode = charon.abilities.getAbilityMode();
                 String display = null;
 
-                if (mode == 1) {
+                if (!ability.hasModes() || mode == -1) {
                     display = ability.getLocalisedName(staffMode);
                 } else {
                     display = ((IAbilityActiveHasModes) ability).getModeLocalisedName(mode, staffMode);
