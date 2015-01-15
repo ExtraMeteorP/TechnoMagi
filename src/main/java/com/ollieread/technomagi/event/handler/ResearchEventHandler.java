@@ -5,16 +5,23 @@ import java.util.List;
 import java.util.Set;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFarmland;
+import net.minecraft.block.BlockLeaves;
+import net.minecraft.block.BlockVine;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemEnderEye;
 import net.minecraft.item.ItemFlintAndSteel;
+import net.minecraft.item.ItemHoe;
+import net.minecraft.item.ItemShears;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.EntityDamageSource;
@@ -22,6 +29,7 @@ import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -63,18 +71,20 @@ public class ResearchEventHandler
             ItemStack heldItem = event.entityPlayer.getHeldItem();
 
             if (heldItem != null && heldItem.getItem() != null) {
+                String eventName = null;
+
                 if (Block.getBlockFromItem(heldItem.getItem()) == null) {
                     if (event.action.equals(PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK)) {
                         if (heldItem.getItem() instanceof ItemFlintAndSteel) {
                             Block block = event.world.getBlock(event.x, event.y, event.z);
 
                             if (block.isFlammable(event.world, event.x, event.y, event.z, ForgeDirection.getOrientation(event.face))) {
-                                ResearchRegistry.researchEvent(Research.itemToResearchMapping.get(heldItem), event, playerKnowledge, true);
+                                eventName = EventHelper.itemUse(heldItem);
                             }
 
                             if (block == Blocks.obsidian) {
                                 if (ClairvoyanceHelper.canBeNetherPortal(event.world, event.x, event.y, event.z)) {
-                                    ResearchRegistry.researchEvent(Research.PORTAL_NETHER, event, playerKnowledge, true);
+                                    eventName = Research.PORTAL_NETHER;
                                 }
                             }
                         } else if (heldItem.getItem() instanceof ItemEnderEye) {
@@ -82,19 +92,39 @@ public class ResearchEventHandler
 
                             if (block == Blocks.end_portal_frame) {
                                 if (ClairvoyanceHelper.canBeEndPortal(event.world, event.x, event.y, event.z)) {
-                                    ResearchRegistry.researchEvent(Research.PORTAL_END, event, playerKnowledge, true);
+                                    eventName = Research.PORTAL_END;
                                 }
+                            }
+                        } else if (heldItem.getItem() instanceof ItemHoe) {
+                            Block block = event.world.getBlock(event.x, event.y, event.z);
+
+                            if (block instanceof BlockFarmland) {
+                                eventName = "hoeFarmland";
+                            }
+                        } else if (heldItem.getItem() instanceof ItemShears) {
+                            Block block = event.world.getBlock(event.x, event.y, event.z);
+
+                            if (block instanceof BlockLeaves) {
+                                eventName = "shearedLeaves";
+                            } else if (block instanceof BlockVine) {
+                                eventName = "shearedVines";
                             }
                         } else {
-                            for (Iterator<ItemStack> i = Research.itemToResearchMapping.keySet().iterator(); i.hasNext();) {
-                                ItemStack key = i.next();
+                            boolean plant = true;
+                            Block block = event.world.getBlock(event.x, event.y, event.z);
 
-                                if (key.isItemEqual(heldItem)) {
-                                    ResearchRegistry.researchEvent(Research.itemToResearchMapping.get(key), event, playerKnowledge, true);
-                                }
+                            if (heldItem.getItem() instanceof IPlantable && block.canSustainPlant(event.world, event.x, event.y, event.z, ForgeDirection.getOrientation(event.face), (IPlantable) heldItem.getItem())) {
+                                plant = true;
                             }
+                            eventName = EventHelper.itemUse(heldItem, plant);
                         }
+                    } else if (event.action.equals(PlayerInteractEvent.Action.RIGHT_CLICK_AIR)) {
+                        eventName = EventHelper.itemUse(heldItem);
                     }
+                }
+
+                if (eventName != null) {
+                    ResearchRegistry.researchEvent(eventName, event, playerKnowledge, true);
                 }
             }
         }
@@ -117,10 +147,12 @@ public class ResearchEventHandler
                         entityClass = event.target.getClass();
                         eventName = EventHelper.entityBreed(entityClass);
 
-                    } else if (event.target instanceof EntitySheep) {
+                    } else if (heldItem.getItem() instanceof ItemShears && event.target instanceof EntitySheep) {
                         if (((EntitySheep) event.target).isShearable(heldItem, event.target.worldObj, (int) event.target.posX, (int) event.target.posY, (int) event.target.posZ)) {
                             eventName = "shearedSheep";
                         }
+                    } else if (heldItem.getItem() instanceof ItemBucket && event.target instanceof EntityCow) {
+                        eventName = "milkedCow";
                     }
                 }
 
@@ -228,6 +260,7 @@ public class ResearchEventHandler
 
         if (event.entityLiving instanceof EntityAnimal) {
             EntityAnimal animal = (EntityAnimal) event.entityLiving;
+            Class entityClass = animal.getClass();
 
             if (animal.getGrowingAge() == 6000) {
                 double d = 5.0D;
@@ -237,7 +270,6 @@ public class ResearchEventHandler
                     EntityPlayer player = (EntityPlayer) i.next();
 
                     if (player != null) {
-                        Class entityClass = animal.getClass();
                         String eventName = EventHelper.entityBirth(entityClass);
 
                         if (eventName != null && !eventName.isEmpty()) {
