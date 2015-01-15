@@ -1,8 +1,5 @@
 package com.ollieread.technomagi.common.init;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.monster.EntityCaveSpider;
 import net.minecraft.entity.monster.EntityCreeper;
@@ -29,22 +26,21 @@ import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.passive.EntitySquid;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.passive.EntityWolf;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 
 import com.ollieread.ennds.EnndsRegistry;
 import com.ollieread.technomagi.util.DamageSourceTM;
 import com.ollieread.technomagi.util.EventHelper;
+import com.ollieread.technomagi.util.ItemHelper;
 
 public class Research
 {
 
-    public static Map<ItemStack, String> itemToResearchMapping = new HashMap<ItemStack, String>();
     public static String OBSIDIAN = "lavaCreatedObsidian";
     public static String COBBLESTONE = "lavaCreatedCobblestone";
     public static String PORTAL_NETHER = "createdNetherPortal";
-    public static String PORTAL_END = "fixedNetherPortal";
+    public static String PORTAL_END = "fixedEndPortal";
 
     public static void init()
     {
@@ -63,27 +59,45 @@ public class Research
         EnndsRegistry.registerEvent("casting");
         EnndsRegistry.registerEvent("crafting");
         EnndsRegistry.registerEvent("smelting");
+        EnndsRegistry.registerEvent("lavaCreatedObsidian");
+        EnndsRegistry.registerEvent("lavaCreatedCobblestone");
+        EnndsRegistry.registerEvent("createdNetherPortal");
+        EnndsRegistry.registerEvent("fixedEndPortal");
 
-        addItem(new ItemStack(Items.porkchop));
-        addItem(new ItemStack(Items.beef));
-        addItem(new ItemStack(Items.chicken));
-        addItem(new ItemStack(Items.fish));
-        addItem(new ItemStack(Items.cooked_porkchop));
-        addItem(new ItemStack(Items.cooked_beef));
-        addItem(new ItemStack(Items.cooked_chicken));
-        addItem(new ItemStack(Items.cooked_fished));
-        addItem(new ItemStack(Items.apple));
-        addItem(new ItemStack(Items.potato));
-        addItem(new ItemStack(Items.baked_potato));
-        addItem(new ItemStack(Items.carrot));
-        addItem(new ItemStack(Items.bread));
-        addItem(new ItemStack(Items.golden_apple));
-        addItem(new ItemStack(Items.golden_carrot));
-        addItem(new ItemStack(Items.ender_pearl));
-        addItem(new ItemStack(Items.egg));
-        addItem(new ItemStack(Items.snowball));
-        addItem(new ItemStack(Items.flint_and_steel));
-        addItem(new ItemStack(Items.snowball));
+        // raw food
+        addItem(ItemHelper.item("porkchop"), false);
+        addItem(ItemHelper.item("beef"), false);
+        addItem(ItemHelper.item("chicken"), false);
+        addItem(ItemHelper.item("fish"), false);
+        addItem(ItemHelper.item("apple"), false);
+        addItem(ItemHelper.item("potato"), true);
+        addItem(ItemHelper.item("carrot"), true);
+        addItem(ItemHelper.item("melon"), false);
+        addItem(ItemHelper.item("rotten_flesh"), false);
+        addItem(ItemHelper.item("spider_eye"), false);
+        addItem(ItemHelper.item("poisonous_potato"), false);
+        // prepared food
+        addItem(ItemHelper.item("cooked_porkchop"), false);
+        addItem(ItemHelper.item("cooked_beef"), false);
+        addItem(ItemHelper.item("cooked_chicken"), false);
+        addItem(ItemHelper.item("cooked_fished"), false);
+        addItem(ItemHelper.item("mushroom_stew"), false);
+        addItem(ItemHelper.item("baked_potato"), false);
+        addItem(ItemHelper.item("pumpkin_pie"), false);
+        addItem(ItemHelper.item("bread"), false);
+        addItem(ItemHelper.item("golden_apple"), false);
+        addItem(ItemHelper.item("golden_carrot"), false);
+        // seeds
+        addItem(ItemHelper.item("wheat_seeds"), true);
+        addItem(ItemHelper.item("pumpkin_seeds"), true);
+        addItem(ItemHelper.item("melon_seeds"), true);
+        // throwable
+        addItem(ItemHelper.item("ender_pearl"), false);
+        addItem(ItemHelper.item("egg"), false);
+        addItem(ItemHelper.item("snowball"), false);
+        // useable
+        addItem(ItemHelper.item("flint_and_steel"), false);
+        addItem(ItemHelper.item("flint_and_steel"), false);
 
         addEntity(EntityCreeper.class, true, false);
         addEntity(EntitySkeleton.class, true, false);
@@ -130,12 +144,13 @@ public class Research
         addDamage(DamageSourceTM.voidDamage);
     }
 
-    public static void addItem(ItemStack stack)
+    public static void addItem(ItemStack stack, boolean plant)
     {
-        String eventName = EventHelper.itemUse(stack);
+        EnndsRegistry.registerEvent(EventHelper.itemUse(stack));
 
-        itemToResearchMapping.put(stack, eventName);
-        EnndsRegistry.registerEvent(eventName);
+        if (plant) {
+            EnndsRegistry.registerEvent(EventHelper.itemUse(stack, true));
+        }
     }
 
     public static void addEntity(Class entityClass, boolean hostile, boolean breed)
@@ -150,6 +165,7 @@ public class Research
         if (breed) {
             EnndsRegistry.registerEvent(EventHelper.entityBreed(entityClass));
             EnndsRegistry.registerEvent(EventHelper.entityBirth(entityClass));
+            EnndsRegistry.registerEvent(EventHelper.entityTempt(entityClass));
         }
     }
 
