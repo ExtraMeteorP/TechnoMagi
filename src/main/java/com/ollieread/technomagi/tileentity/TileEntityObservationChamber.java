@@ -24,14 +24,14 @@ import com.ollieread.ennds.research.IResearchObservation;
 import com.ollieread.ennds.research.ResearchRegistry;
 import com.ollieread.technomagi.common.init.Blocks;
 import com.ollieread.technomagi.common.proxy.BasicEnergy;
-import com.ollieread.technomagi.common.proxy.BasicInventory;
+import com.ollieread.technomagi.common.proxy.InventoryBasic;
 import com.ollieread.technomagi.common.proxy.PlayerLocked;
 
 public class TileEntityObservationChamber extends TileEntityResearch implements IHasFiller, IPlayerLocked, IInventory, IEnergyHandler
 {
     protected BasicEnergy storage = null;
     protected PlayerLocked locked = null;
-    protected BasicInventory inventory = null;
+    protected InventoryBasic inventory = null;
 
     public int field_145926_a;
     public float field_145933_i;
@@ -57,7 +57,7 @@ public class TileEntityObservationChamber extends TileEntityResearch implements 
     public TileEntityObservationChamber()
     {
         locked = new PlayerLocked();
-        inventory = new BasicInventory(2);
+        inventory = new InventoryBasic(2);
         storage = new BasicEnergy(6400, 5, 0);
 
         maxProgress = 200;

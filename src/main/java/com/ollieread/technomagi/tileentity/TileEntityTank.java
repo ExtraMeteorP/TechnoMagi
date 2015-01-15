@@ -5,14 +5,14 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-import com.ollieread.technomagi.common.proxy.BasicInventory;
+import com.ollieread.technomagi.common.proxy.InventoryBasic;
 import com.ollieread.technomagi.common.proxy.PlayerLocked;
 
 public class TileEntityTank extends TileEntityTMFluid implements IPlayerLocked, IInventory
 {
 
     protected PlayerLocked locked = new PlayerLocked();
-    protected BasicInventory inventory = new BasicInventory(1);
+    protected InventoryBasic inventory = new InventoryBasic(1);
 
     @Override
     public void readFromNBT(NBTTagCompound compound)

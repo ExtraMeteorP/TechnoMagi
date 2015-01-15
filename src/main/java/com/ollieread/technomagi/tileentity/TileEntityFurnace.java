@@ -13,14 +13,12 @@ import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
 import cofh.lib.util.helpers.EnergyHelper;
 
 import com.ollieread.technomagi.common.init.Config;
-import com.ollieread.technomagi.common.proxy.BasicEnergy;
-import com.ollieread.technomagi.common.proxy.BasicInventory;
-import com.ollieread.technomagi.common.proxy.PlayerLocked;
+import com.ollieread.technomagi.common.proxy.InventoryBasic;
 
-public class TileEntityFurnace extends TileEntityMachineTM implements IInventory
+public class TileEntityFurnace extends TileEntityMachine implements IInventory
 {
 
-    protected BasicInventory inventory = null;
+    protected InventoryBasic inventory = null;
     public FurnaceRecipes smelting = FurnaceRecipes.smelting();
 
     public int field_145926_a;
@@ -37,9 +35,9 @@ public class TileEntityFurnace extends TileEntityMachineTM implements IInventory
 
     public TileEntityFurnace()
     {
-        locked = new PlayerLocked();
-        inventory = new BasicInventory(2);
-        storage = new BasicEnergy(Config.furnacePowerMax, Config.furnacePowerReceive, 0);
+        super(Config.furnacePowerMax, Config.furnacePowerReceive, 0);
+
+        inventory = new InventoryBasic(2);
 
         maxProgress = Config.furnaceProgressMax;
         usage = Config.furnacePowerUse;
@@ -64,7 +62,7 @@ public class TileEntityFurnace extends TileEntityMachineTM implements IInventory
 
         locked.readFromNBT(compound);
         inventory.readFromNBT(compound);
-        storage.readFromNBT(compound);
+        energy.readFromNBT(compound);
     }
 
     @Override
@@ -76,7 +74,7 @@ public class TileEntityFurnace extends TileEntityMachineTM implements IInventory
 
         locked.writeToNBT(compound);
         inventory.writeToNBT(compound);
-        storage.writeToNBT(compound);
+        energy.writeToNBT(compound);
     }
 
     @Override
@@ -153,8 +151,8 @@ public class TileEntityFurnace extends TileEntityMachineTM implements IInventory
             }
 
             if (EnergyHelper.isAdjacentEnergyHandlerFromSide(this, ForgeDirection.DOWN.ordinal())) {
-                int input = storage.getMaxReceive();
-                int receive = storage.receiveEnergy(ForgeDirection.DOWN, input, true);
+                int input = energy.getMaxReceive();
+                int receive = energy.receiveEnergy(ForgeDirection.DOWN, input, true);
                 int extract = EnergyHelper.extractEnergyFromAdjacentEnergyHandler(this, ForgeDirection.DOWN.ordinal(), receive, true);
 
                 if (receive > 0 && extract > 0) {
@@ -200,7 +198,7 @@ public class TileEntityFurnace extends TileEntityMachineTM implements IInventory
 
     public void smelt()
     {
-        if (storage.modifyEnergyStored(usage)) {
+        if (energy.modifyEnergyStored(usage)) {
             progress++;
 
             if (progress >= maxProgress) {

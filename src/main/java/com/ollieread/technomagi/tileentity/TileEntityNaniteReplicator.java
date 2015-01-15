@@ -12,15 +12,13 @@ import cofh.lib.util.helpers.EnergyHelper;
 
 import com.ollieread.technomagi.common.init.Config;
 import com.ollieread.technomagi.common.init.Items;
-import com.ollieread.technomagi.common.proxy.BasicEnergy;
-import com.ollieread.technomagi.common.proxy.BasicInventory;
-import com.ollieread.technomagi.common.proxy.PlayerLocked;
+import com.ollieread.technomagi.common.proxy.InventoryBasic;
 import com.ollieread.technomagi.item.ItemNaniteContainer;
 import com.ollieread.technomagi.item.ItemSampleVile;
 
-public class TileEntityNaniteReplicator extends TileEntityMachineTM implements ISidedInventory
+public class TileEntityNaniteReplicator extends TileEntityMachine implements ISidedInventory
 {
-    protected BasicInventory inventory = null;
+    protected InventoryBasic inventory = null;
 
     protected int nanites = 0;
     protected int sample = 0;
@@ -33,9 +31,9 @@ public class TileEntityNaniteReplicator extends TileEntityMachineTM implements I
 
     public TileEntityNaniteReplicator()
     {
-        locked = new PlayerLocked();
-        inventory = new BasicInventory(3);
-        storage = new BasicEnergy(Config.replicatorPowerMax, Config.replicatorPowerRecieve, 0);
+        super(Config.replicatorPowerMax, Config.replicatorPowerRecieve, 0);
+
+        inventory = new InventoryBasic(3);
 
         maxProgress = Config.replicatorProgressMax;
         usage = Config.replicatorPowerUse;
@@ -104,8 +102,8 @@ public class TileEntityNaniteReplicator extends TileEntityMachineTM implements I
             }
 
             if (EnergyHelper.isAdjacentEnergyHandlerFromSide(this, ForgeDirection.DOWN.ordinal())) {
-                int input = storage.getMaxReceive();
-                int receive = storage.receiveEnergy(ForgeDirection.DOWN, input, true);
+                int input = energy.getMaxReceive();
+                int receive = energy.receiveEnergy(ForgeDirection.DOWN, input, true);
                 int extract = EnergyHelper.extractEnergyFromAdjacentEnergyHandler(this, ForgeDirection.DOWN.ordinal(), receive, true);
 
                 if (receive > 0 && extract > 0) {
@@ -127,7 +125,7 @@ public class TileEntityNaniteReplicator extends TileEntityMachineTM implements I
     {
         boolean flag = false;
 
-        if (storage.modifyEnergyStored(usage)) {
+        if (energy.modifyEnergyStored(usage)) {
             if (sampleType.equals(naniteType)) {
                 // if (storage.extractEnergy(2, true) == 2) {
                 // storage.extractEnergy(2, false);

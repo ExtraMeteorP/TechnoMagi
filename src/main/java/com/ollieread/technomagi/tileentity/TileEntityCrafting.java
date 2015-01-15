@@ -12,16 +12,14 @@ import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
 import cofh.lib.util.helpers.EnergyHelper;
 
 import com.ollieread.technomagi.common.init.Config;
-import com.ollieread.technomagi.common.proxy.BasicEnergy;
 import com.ollieread.technomagi.common.proxy.CraftingInventory;
-import com.ollieread.technomagi.common.proxy.PlayerLocked;
 import com.ollieread.technomagi.item.crafting.CraftingManager;
 import com.ollieread.technomagi.network.message.MessageSyncTileEntityTM;
 import com.ollieread.technomagi.util.PacketHelper;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 
-public class TileEntityCrafting extends TileEntityMachineTM implements IInventory
+public class TileEntityCrafting extends TileEntityMachine implements IInventory
 {
 
     protected CraftingInventory inventory = null;
@@ -43,10 +41,9 @@ public class TileEntityCrafting extends TileEntityMachineTM implements IInventor
 
     public TileEntityCrafting()
     {
-        locked = new PlayerLocked();
-        inventory = new CraftingInventory(10);
-        storage = new BasicEnergy(Config.craftingPowerMax, Config.craftingPowerRecieve, 0);
+        super(Config.craftingPowerMax, Config.craftingPowerRecieve, 0);
 
+        inventory = new CraftingInventory(10);
         maxProgress = Config.craftingProgressMax;
         usage = Config.craftingPowerUse;
     }
@@ -148,8 +145,8 @@ public class TileEntityCrafting extends TileEntityMachineTM implements IInventor
             }
 
             if (EnergyHelper.isAdjacentEnergyHandlerFromSide(this, ForgeDirection.DOWN.ordinal())) {
-                int input = storage.getMaxReceive();
-                int receive = storage.receiveEnergy(ForgeDirection.DOWN, input, true);
+                int input = energy.getMaxReceive();
+                int receive = energy.receiveEnergy(ForgeDirection.DOWN, input, true);
                 int extract = EnergyHelper.extractEnergyFromAdjacentEnergyHandler(this, ForgeDirection.DOWN.ordinal(), receive, true);
 
                 if (receive > 0 && extract > 0) {
@@ -205,7 +202,7 @@ public class TileEntityCrafting extends TileEntityMachineTM implements IInventor
 
     public void craft()
     {
-        if (storage.modifyEnergyStored(usage)) {
+        if (energy.modifyEnergyStored(usage)) {
             progress++;
 
             if (progress >= maxProgress) {

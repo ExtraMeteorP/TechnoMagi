@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 
-import com.ollieread.technomagi.common.proxy.BasicInventory;
+import com.ollieread.technomagi.common.proxy.InventoryBasic;
 import com.ollieread.technomagi.common.proxy.PlayerLocked;
 import com.ollieread.technomagi.item.ItemNaniteContainer;
 import com.ollieread.technomagi.item.crafting.ConstructManager;
@@ -18,7 +18,7 @@ import com.ollieread.technomagi.util.PacketHelper;
 public class TileEntityConstruct extends TileEntityTM implements IInventory, IPlayerLocked
 {
     protected PlayerLocked locked = null;
-    protected BasicInventory inventory = null;
+    protected InventoryBasic inventory = null;
 
     protected Random rand = new Random();
     protected boolean isBuilding = false;
@@ -27,7 +27,7 @@ public class TileEntityConstruct extends TileEntityTM implements IInventory, IPl
     public TileEntityConstruct()
     {
         locked = new PlayerLocked();
-        inventory = new BasicInventory(5);
+        inventory = new InventoryBasic(5);
     }
 
     @Override

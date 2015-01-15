@@ -6,7 +6,7 @@ import net.minecraft.nbt.NBTTagCompound;
 
 import com.ollieread.technomagi.item.ItemTMNBT;
 
-public class ItemBasicInventory extends BasicInventory implements IInventory
+public class ItemBasicInventory extends InventoryBasic implements IInventory
 {
 
     protected final ItemStack stack;

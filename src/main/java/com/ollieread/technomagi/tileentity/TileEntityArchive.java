@@ -13,7 +13,7 @@ import net.minecraft.tileentity.TileEntity;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.ennds.research.IResearch;
 import com.ollieread.ennds.research.ResearchRegistry;
-import com.ollieread.technomagi.common.proxy.BasicInventory;
+import com.ollieread.technomagi.common.proxy.InventoryBasic;
 import com.ollieread.technomagi.common.proxy.PlayerLocked;
 import com.ollieread.technomagi.item.ItemResearchStorage;
 
@@ -21,7 +21,7 @@ public class TileEntityArchive extends TileEntityTM implements IPlayerLocked, II
 {
 
     protected PlayerLocked locked = new PlayerLocked();
-    protected BasicInventory inventory = new BasicInventory(1);
+    protected InventoryBasic inventory = new InventoryBasic(1);
 
     public int field_145926_a;
     public float field_145933_i;

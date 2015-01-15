@@ -12,17 +12,15 @@ import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
 import cofh.lib.util.helpers.EnergyHelper;
 
 import com.ollieread.technomagi.common.init.Config;
-import com.ollieread.technomagi.common.proxy.BasicEnergy;
-import com.ollieread.technomagi.common.proxy.BasicInventory;
-import com.ollieread.technomagi.common.proxy.PlayerLocked;
+import com.ollieread.technomagi.common.proxy.InventoryBasic;
 import com.ollieread.technomagi.item.crafting.SeparatorRecipes;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 
-public class TileEntitySeparator extends TileEntityMachineTM implements IInventory
+public class TileEntitySeparator extends TileEntityMachine implements IInventory
 {
 
-    protected BasicInventory inventory = null;
+    protected InventoryBasic inventory = null;
     public SeparatorRecipes crafting = SeparatorRecipes.getInstance();
 
     public int field_145926_a;
@@ -39,9 +37,9 @@ public class TileEntitySeparator extends TileEntityMachineTM implements IInvento
 
     public TileEntitySeparator()
     {
-        locked = new PlayerLocked();
-        inventory = new BasicInventory(3);
-        storage = new BasicEnergy(Config.separatorPowerMax, Config.separatorPowerRecieve, 0);
+        super(Config.separatorPowerMax, Config.separatorPowerRecieve, 0);
+
+        inventory = new InventoryBasic(3);
 
         maxProgress = Config.separatorProgressMax;
         usage = Config.separatorPowerUse;
@@ -66,7 +64,7 @@ public class TileEntitySeparator extends TileEntityMachineTM implements IInvento
 
         locked.readFromNBT(compound);
         inventory.readFromNBT(compound);
-        storage.readFromNBT(compound);
+        energy.readFromNBT(compound);
     }
 
     @Override
@@ -78,7 +76,7 @@ public class TileEntitySeparator extends TileEntityMachineTM implements IInvento
 
         locked.writeToNBT(compound);
         inventory.writeToNBT(compound);
-        storage.writeToNBT(compound);
+        energy.writeToNBT(compound);
     }
 
     @Override
@@ -155,8 +153,8 @@ public class TileEntitySeparator extends TileEntityMachineTM implements IInvento
             }
 
             if (EnergyHelper.isAdjacentEnergyHandlerFromSide(this, ForgeDirection.DOWN.ordinal())) {
-                int input = storage.getMaxReceive();
-                int receive = storage.receiveEnergy(ForgeDirection.DOWN, input, true);
+                int input = energy.getMaxReceive();
+                int receive = energy.receiveEnergy(ForgeDirection.DOWN, input, true);
                 int extract = EnergyHelper.extractEnergyFromAdjacentEnergyHandler(this, ForgeDirection.DOWN.ordinal(), receive, true);
 
                 if (receive > 0 && extract > 0) {
@@ -202,7 +200,7 @@ public class TileEntitySeparator extends TileEntityMachineTM implements IInvento
 
     public void separate()
     {
-        if (storage.modifyEnergyStored(usage)) {
+        if (energy.modifyEnergyStored(usage)) {
             progress++;
 
             if (progress >= maxProgress) {

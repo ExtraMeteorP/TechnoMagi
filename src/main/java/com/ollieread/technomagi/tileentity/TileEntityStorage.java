@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 
-import com.ollieread.technomagi.common.proxy.BasicInventory;
+import com.ollieread.technomagi.common.proxy.InventoryBasic;
 import com.ollieread.technomagi.common.proxy.ItemStorage;
 import com.ollieread.technomagi.common.proxy.PlayerLocked;
 
@@ -14,7 +14,7 @@ public class TileEntityStorage extends TileEntityTM implements IPlayerLocked, II
 {
 
     protected PlayerLocked locked = new PlayerLocked();
-    protected BasicInventory inventory = new BasicInventory(1);
+    protected InventoryBasic inventory = new InventoryBasic(1);
     protected ItemStorage storage = new ItemStorage(4096);
 
     protected int waiting = 0;

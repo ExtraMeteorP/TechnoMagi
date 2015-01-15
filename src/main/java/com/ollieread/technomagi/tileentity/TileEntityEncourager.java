@@ -7,16 +7,13 @@ import net.minecraftforge.common.util.ForgeDirection;
 import cofh.lib.util.helpers.EnergyHelper;
 
 import com.ollieread.technomagi.common.init.Config;
-import com.ollieread.technomagi.common.proxy.BasicEnergy;
-import com.ollieread.technomagi.common.proxy.PlayerLocked;
 
-public class TileEntityEncourager extends TileEntityMachineTM
+public class TileEntityEncourager extends TileEntityMachine
 {
 
     public TileEntityEncourager()
     {
-        locked = new PlayerLocked();
-        storage = new BasicEnergy(Config.encouragerPowerMax, Config.encouragerPowerRecieve, 0);
+        super(Config.encouragerPowerMax, Config.encouragerPowerRecieve, 0);
 
         maxProgress = Config.encouragerProgressMax;
         usage = Config.encouragerPowerUse;
@@ -30,8 +27,8 @@ public class TileEntityEncourager extends TileEntityMachineTM
             }
 
             if (EnergyHelper.isAdjacentEnergyHandlerFromSide(this, ForgeDirection.DOWN.ordinal())) {
-                int input = storage.getMaxReceive();
-                int receive = storage.receiveEnergy(ForgeDirection.DOWN, input, true);
+                int input = energy.getMaxReceive();
+                int receive = energy.receiveEnergy(ForgeDirection.DOWN, input, true);
                 int extract = EnergyHelper.extractEnergyFromAdjacentEnergyHandler(this, ForgeDirection.DOWN.ordinal(), receive, true);
 
                 if (receive > 0 && extract > 0) {
@@ -56,7 +53,7 @@ public class TileEntityEncourager extends TileEntityMachineTM
 
     public void encourage()
     {
-        if (storage.modifyEnergyStored(usage)) {
+        if (energy.modifyEnergyStored(usage)) {
             progress++;
 
             if (progress >= maxProgress) {

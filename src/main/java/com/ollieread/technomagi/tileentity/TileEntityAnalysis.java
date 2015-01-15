@@ -16,14 +16,14 @@ import com.ollieread.ennds.research.IResearchAnalysis;
 import com.ollieread.ennds.research.ResearchRegistry;
 import com.ollieread.technomagi.common.init.Config;
 import com.ollieread.technomagi.common.proxy.BasicEnergy;
-import com.ollieread.technomagi.common.proxy.BasicInventory;
+import com.ollieread.technomagi.common.proxy.InventoryBasic;
 import com.ollieread.technomagi.common.proxy.PlayerLocked;
 
 public class TileEntityAnalysis extends TileEntityResearch implements IPlayerLocked, IInventory, IEnergyHandler
 {
     protected BasicEnergy storage = null;
     protected PlayerLocked locked = null;
-    protected BasicInventory inventory = null;
+    protected InventoryBasic inventory = null;
 
     public int field_145926_a;
     public float field_145933_i;
@@ -46,7 +46,7 @@ public class TileEntityAnalysis extends TileEntityResearch implements IPlayerLoc
     public TileEntityAnalysis()
     {
         locked = new PlayerLocked();
-        inventory = new BasicInventory(9);
+        inventory = new InventoryBasic(9);
         storage = new BasicEnergy(Config.analysisPowerMax, Config.analysisPowerRecieve, 0);
 
         maxProgress = Config.analysisProgressMax;
