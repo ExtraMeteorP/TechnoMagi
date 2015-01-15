@@ -70,6 +70,7 @@ public class RenderTechnomageStaff implements IItemRenderer
 
             if (player != null) {
                 if (player.isInvisible()) {
+                    GL11.glPopMatrix();
                     return;
                 }
                 if (player.isUsingItem()) {
@@ -87,6 +88,7 @@ public class RenderTechnomageStaff implements IItemRenderer
 
                 if (player != null) {
                     if (player.isInvisible()) {
+                        GL11.glPopMatrix();
                         return;
                     }
                     if (player.isUsingItem()) {
