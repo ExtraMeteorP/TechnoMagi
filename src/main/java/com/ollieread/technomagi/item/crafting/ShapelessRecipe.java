@@ -5,11 +5,11 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
-import com.ollieread.technomagi.common.proxy.CraftingInventory;
 
 public class ShapelessRecipe implements IRecipeTM
 {
@@ -29,13 +29,13 @@ public class ShapelessRecipe implements IRecipeTM
         return this.output;
     }
 
-    public boolean matches(CraftingInventory crafting, World world)
+    public boolean matches(IInventory crafting, World world)
     {
         ArrayList arraylist = new ArrayList(this.items);
 
         for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 3; ++j) {
-                ItemStack itemstack = crafting.getStackInRowAndColumn(j, i);
+                ItemStack itemstack = crafting.getStackInSlot(j + i * 3);
 
                 if (itemstack != null) {
                     boolean flag = false;
@@ -61,7 +61,7 @@ public class ShapelessRecipe implements IRecipeTM
         return arraylist.isEmpty();
     }
 
-    public ItemStack getCraftingResult(CraftingInventory p_77572_1_)
+    public ItemStack getCraftingResult(IInventory p_77572_1_)
     {
         return this.output.copy();
     }

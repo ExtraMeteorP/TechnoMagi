@@ -1,11 +1,11 @@
 package com.ollieread.technomagi.item.crafting;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
-import com.ollieread.technomagi.common.proxy.CraftingInventory;
 
 public class ShapedRecipe implements IRecipeTM
 {
@@ -25,7 +25,7 @@ public class ShapedRecipe implements IRecipeTM
         this.knowledge = knowledge;
     }
 
-    public boolean matches(CraftingInventory crafting, World world)
+    public boolean matches(IInventory crafting, World world)
     {
         for (int i = 0; i <= 3 - this.width; ++i) {
             for (int j = 0; j <= 3 - this.height; ++j) {
@@ -42,7 +42,7 @@ public class ShapedRecipe implements IRecipeTM
         return false;
     }
 
-    public ItemStack getCraftingResult(CraftingInventory crafting)
+    public ItemStack getCraftingResult(IInventory crafting)
     {
         return output;
     }
@@ -57,23 +57,24 @@ public class ShapedRecipe implements IRecipeTM
         return output;
     }
 
-    private boolean checkMatch(CraftingInventory crafting, int i, int j, boolean b)
+    private boolean checkMatch(IInventory crafting, int i, int j, boolean b)
     {
         for (int k = 0; k < 3; ++k) {
             for (int l = 0; l < 3; ++l) {
                 int i1 = k - i;
                 int j1 = l - j;
                 ItemStack itemstack = null;
+                ItemStack itemstack1 = null;
 
                 if (i1 >= 0 && j1 >= 0 && i1 < this.width && j1 < this.height) {
                     if (b) {
                         itemstack = this.items[this.width - i1 - 1 + j1 * this.width];
+                        itemstack1 = crafting.getStackInSlot(this.width - i1 - 1 + j1 * this.width);
                     } else {
                         itemstack = this.items[i1 + j1 * this.width];
+                        itemstack1 = crafting.getStackInSlot(i1 + j1 * this.width);
                     }
                 }
-
-                ItemStack itemstack1 = crafting.getStackInRowAndColumn(k, l);
 
                 if (itemstack1 != null || itemstack != null) {
                     if (itemstack1 == null && itemstack != null || itemstack1 != null && itemstack == null) {
