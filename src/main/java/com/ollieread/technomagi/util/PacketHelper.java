@@ -12,10 +12,10 @@ import com.ollieread.technomagi.network.message.MessageSetTeleporterMode;
 import com.ollieread.technomagi.network.message.MessageSyncTileEntityTM;
 import com.ollieread.technomagi.tileentity.TileEntityArchive;
 import com.ollieread.technomagi.tileentity.TileEntityConstruct;
-import com.ollieread.technomagi.tileentity.TileEntityCrafting;
-import com.ollieread.technomagi.tileentity.TileEntityResearch;
-import com.ollieread.technomagi.tileentity.TileEntityTM;
-import com.ollieread.technomagi.tileentity.TileEntityTeleporter;
+import com.ollieread.technomagi.tileentity.TileEntityMachineAssembler;
+import com.ollieread.technomagi.tileentity.TileEntityMachineTeleporter;
+import com.ollieread.technomagi.tileentity.abstracts.MachineResearch;
+import com.ollieread.technomagi.tileentity.abstracts.Basic;
 
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 
@@ -27,7 +27,7 @@ public class PacketHelper
         PacketHandler.INSTANCE.sendToServer(new MessageSetArchive(archive, type, subtype, page));
     }
 
-    public static void setTeleporterMode(TileEntityTeleporter machine, int mode)
+    public static void setTeleporterMode(TileEntityMachineTeleporter machine, int mode)
     {
         PacketHandler.INSTANCE.sendToServer(new MessageSetTeleporterMode(machine, mode));
     }
@@ -42,12 +42,12 @@ public class PacketHelper
         PacketHandler.INSTANCE.sendToServer(new MessageSetBuilding(machine, building));
     }
 
-    public static void setCrafting(TileEntityCrafting machine, boolean progress)
+    public static void setCrafting(TileEntityMachineAssembler machine, boolean progress)
     {
         PacketHandler.INSTANCE.sendToServer(new MessageSetCrafting(machine, progress));
     }
 
-    public static void setProgress(TileEntityResearch machine, boolean progress)
+    public static void setProgress(MachineResearch machine, boolean progress)
     {
         PacketHandler.INSTANCE.sendToServer(new MessageSetProgress(machine, progress));
     }
@@ -57,7 +57,7 @@ public class PacketHelper
         PacketHandler.INSTANCE.sendToAll(message);
     }
 
-    public static void syncTile(TileEntityTM tile)
+    public static void syncTile(Basic tile)
     {
         syncTile(new MessageSyncTileEntityTM(tile));
     }

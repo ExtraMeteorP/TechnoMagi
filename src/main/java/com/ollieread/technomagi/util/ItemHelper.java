@@ -1,11 +1,16 @@
 package com.ollieread.technomagi.util;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityList;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemStack;
 
+import com.ollieread.technomagi.block.BlockMachine;
 import com.ollieread.technomagi.block.BlockResource;
 import com.ollieread.technomagi.common.init.Blocks;
 import com.ollieread.technomagi.common.init.Items;
@@ -23,6 +28,63 @@ public class ItemHelper
     public static ToolMaterial ENERGY;
     public static ToolMaterial ETHERIUM;
     public static ToolMaterial RELUX;
+
+    public static boolean containsKey(Map map, ItemStack stack, boolean nbt)
+    {
+        for (Iterator<ItemStack> i = map.keySet().iterator(); i.hasNext();) {
+            ItemStack key = i.next();
+
+            if (nbt) {
+                if (ItemStack.areItemStacksEqual(key, stack)) {
+                    return true;
+                }
+            } else {
+                if (key.isItemEqual(key)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public static boolean containsValue(Map map, ItemStack stack, boolean nbt)
+    {
+        for (Iterator<ItemStack> i = map.values().iterator(); i.hasNext();) {
+            ItemStack key = i.next();
+
+            if (nbt) {
+                if (ItemStack.areItemStacksEqual(key, stack)) {
+                    return true;
+                }
+            } else {
+                if (key.isItemEqual(key)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public static boolean contains(List list, ItemStack stack, boolean nbt)
+    {
+        for (Iterator<ItemStack> i = list.iterator(); i.hasNext();) {
+            ItemStack entry = i.next();
+
+            if (nbt) {
+                if (ItemStack.areItemStacksEqual(entry, stack)) {
+                    return true;
+                }
+            } else {
+                if (entry.isItemEqual(entry)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
 
     public static boolean matchesBlock(ItemStack stack, Block block)
     {
@@ -93,9 +155,20 @@ public class ItemHelper
         return stack;
     }
 
+    public static ItemStack machine(String name, int count)
+    {
+        for (int i = 0; i < BlockMachine.blockNames.length; i++) {
+            if (BlockMachine.blockNames[i].equals(name)) {
+                return new ItemStack(Blocks.blockMachine, count, i);
+            }
+        }
+
+        return null;
+    }
+
     public static ItemStack construct(int count)
     {
-        return new ItemStack(Blocks.blockConstruct, count);
+        return machine("construct", count);
     }
 
     public static ItemStack ore(String name)

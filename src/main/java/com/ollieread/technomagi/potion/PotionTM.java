@@ -17,10 +17,12 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 
 import com.google.common.collect.Maps;
+import com.ollieread.ennds.extended.ExtendedNanites;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.network.PacketHandler;
 import com.ollieread.technomagi.network.message.MessageSyncPlayerCapabilities;
 import com.ollieread.technomagi.util.DamageSourceTM;
+import com.ollieread.technomagi.util.PlayerHelper;
 import com.ollieread.technomagi.util.PotionHelper;
 
 import cpw.mods.fml.relauncher.Side;
@@ -33,6 +35,8 @@ public class PotionTM extends Potion
     public static final PotionTM passify = new PotionPassify().addModifier(SharedMonsterAttributes.attackDamage, 5.0D, 0);
     public static final PotionTM voidSickness = new PotionTM("potion.tm.voidSickness", true, 8171462).setTexture("textures/abilities/void.png");
     public static final PotionTM flight = new PotionTM("potion.tm.flight", true, 8171462).setTexture("textures/abilities/flight.png");
+    public static final PotionTM naniteRegeneration = new PotionTM("potion.tm.naniteRegeneration", true, 8171462).setTexture("textures/abilities/naniteRegeneration.png");
+    public static final PotionTM naniteDegeneration = new PotionTM("potion.tm.naniteDegeneration", true, 8171462).setTexture("textures/abilities/naniteDegeneration.png");
 
     private final Map modifiers = Maps.newHashMap();
     private int statusIconIndex = -1;
@@ -122,6 +126,22 @@ public class PotionTM extends Potion
             if (entity.getHealth() > 1.0F) {
                 entity.attackEntityFrom(DamageSourceTM.voidDamage, 1.0F);
             }
+        } else if (id == naniteRegeneration.id) {
+            if (entity instanceof EntityPlayer) {
+                ExtendedNanites nanites = PlayerHelper.getPlayerNanites((EntityPlayer) entity);
+
+                if (nanites.getNanites() < 100) {
+                    nanites.setNanites(nanites.getNanites() + 5);
+                }
+            }
+        } else if (id == naniteDegeneration.id) {
+            if (entity instanceof EntityPlayer) {
+                ExtendedNanites nanites = PlayerHelper.getPlayerNanites((EntityPlayer) entity);
+
+                if (nanites.getNanites() > 0) {
+                    nanites.setNanites(nanites.getNanites() - 5);
+                }
+            }
         }
     }
 
@@ -131,6 +151,12 @@ public class PotionTM extends Potion
 
         if (id == voidSickness.id) {
             k = 25 >> modifier;
+            return k > 0 ? duration % k == 0 : true;
+        } else if (id == naniteRegeneration.id) {
+            k = 50 >> modifier;
+            return k > 0 ? duration % k == 0 : true;
+        } else if (id == naniteDegeneration.id) {
+            k = 50 >> modifier;
             return k > 0 ? duration % k == 0 : true;
         } else if (id == flight.id) {
             return true;

@@ -8,32 +8,11 @@ import com.ollieread.technomagi.common.Reference;
 public class ResearchAnalysis extends com.ollieread.ennds.research.ResearchAnalysis implements IResearchAnalysis
 {
 
-    protected int repeatition;
-
-    public ResearchAnalysis(String name, String knowledge, int progress, IResearchAnalysisRecipe recipe, int repeatition, int chance)
+    public ResearchAnalysis(String name, String knowledge, IResearchAnalysisRecipe recipe)
     {
-        this(name, knowledge, progress, recipe, repeatition, chance, new String[] {});
+        super(name, knowledge, Reference.MODID.toLowerCase(), recipe);
 
-        this.repeatition = repeatition;
-    }
-
-    public ResearchAnalysis(String name, String knowledge, int progress, IResearchAnalysisRecipe recipe, int repeatition, int chance, String[] requirements)
-    {
-        super(name, knowledge, progress, chance, Reference.MODID.toLowerCase(), recipe, requirements);
-
-        this.repeatition = repeatition;
-    }
-
-    @Override
-    public boolean isRepeating()
-    {
-        return repeatition > 1;
-    }
-
-    @Override
-    public int getMaxRepeatition()
-    {
-        return repeatition;
+        this.recipe = recipe;
     }
 
     @Override

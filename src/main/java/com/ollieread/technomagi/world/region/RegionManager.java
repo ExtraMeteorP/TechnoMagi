@@ -12,6 +12,7 @@ import net.minecraft.nbt.NBTTagList;
 import com.ollieread.technomagi.TechnoMagi;
 import com.ollieread.technomagi.network.PacketHandler;
 import com.ollieread.technomagi.network.message.MessageSyncRegions;
+import com.ollieread.technomagi.tileentity.IRegionController;
 
 public class RegionManager
 {

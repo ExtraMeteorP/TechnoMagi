@@ -2,7 +2,7 @@ package com.ollieread.technomagi.network.message;
 
 import io.netty.buffer.ByteBuf;
 
-import com.ollieread.technomagi.tileentity.TileEntityTeleporter;
+import com.ollieread.technomagi.tileentity.TileEntityMachineTeleporter;
 
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
@@ -19,7 +19,7 @@ public class MessageSetTeleporterMode implements IMessage, IMessageHandler<Messa
     {
     }
 
-    public MessageSetTeleporterMode(TileEntityTeleporter tile, int mode)
+    public MessageSetTeleporterMode(TileEntityMachineTeleporter tile, int mode)
     {
         x = tile.xCoord;
         y = tile.yCoord;
@@ -48,7 +48,7 @@ public class MessageSetTeleporterMode implements IMessage, IMessageHandler<Messa
     @Override
     public IMessage onMessage(MessageSetTeleporterMode message, MessageContext ctx)
     {
-        TileEntityTeleporter tile = (TileEntityTeleporter) ctx.getServerHandler().playerEntity.worldObj.getTileEntity(message.x, message.y, message.z);
+        TileEntityMachineTeleporter tile = (TileEntityMachineTeleporter) ctx.getServerHandler().playerEntity.worldObj.getTileEntity(message.x, message.y, message.z);
 
         if (tile != null) {
             tile.setMode(message.mode);

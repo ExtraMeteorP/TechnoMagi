@@ -6,11 +6,13 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.world.World;
+import net.minecraftforge.common.IPlantable;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -65,12 +67,29 @@ public class EventHelper
 
     public static String item(ItemStack stack)
     {
-        return StringUtils.replace((StringUtils.capitalize((Item.itemRegistry.getNameForObject(stack.getItem())).replace('_', ' '))), " ", "");
+        String name = stack.getUnlocalizedName().replaceFirst("tile.", "").replaceFirst("item.", "");
+        return StringUtils.replace((StringUtils.capitalize(name.replace('_', ' '))), " ", "");
     }
 
     public static String itemUse(ItemStack stack)
     {
-        return (stack.getItem() instanceof ItemFood ? "eat" : "use") + item(stack);
+        return itemUse(stack, false);
+    }
+
+    public static String itemUse(ItemStack stack, boolean plant)
+    {
+        Item item = stack.getItem();
+        String prefix = "use";
+
+        if (plant && item instanceof IPlantable) {
+            prefix = "plant";
+        } else if (item instanceof ItemFood) {
+            prefix = "eat";
+        } else if (item instanceof ItemBlock) {
+            prefix = "place";
+        }
+
+        return prefix + item(stack);
     }
 
     public static String itemBroke(ItemStack stack)
@@ -100,6 +119,8 @@ public class EventHelper
                     return "birth" + StringUtils.capitalize(entityName);
                 case 7:
                     return entityName.toLowerCase() + "BurningInSunlight";
+                case 8:
+                    return "tempting" + StringUtils.capitalize(entityName);
             }
         }
 
@@ -153,4 +174,8 @@ public class EventHelper
         return entity(entityClass, 7);
     }
 
+    public static String entityTempt(Class entityClass)
+    {
+        return entity(entityClass, 8);
+    }
 }

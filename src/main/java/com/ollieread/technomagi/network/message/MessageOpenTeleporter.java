@@ -6,8 +6,8 @@ import net.minecraft.nbt.NBTTagCompound;
 
 import com.ollieread.technomagi.TechnoMagi;
 import com.ollieread.technomagi.common.CommonProxy;
-import com.ollieread.technomagi.tileentity.TileEntityTM;
-import com.ollieread.technomagi.tileentity.TileEntityTeleporter;
+import com.ollieread.technomagi.tileentity.TileEntityMachineTeleporter;
+import com.ollieread.technomagi.tileentity.abstracts.Basic;
 
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.network.ByteBufUtils;
@@ -56,9 +56,9 @@ public class MessageOpenTeleporter implements IMessage, IMessageHandler<MessageO
     @Override
     public IMessage onMessage(MessageOpenTeleporter message, MessageContext ctx)
     {
-        TileEntityTM tile = (TileEntityTM) FMLClientHandler.instance().getClient().theWorld.getTileEntity(message.x, message.y, message.z);
+        Basic tile = (Basic) FMLClientHandler.instance().getClient().theWorld.getTileEntity(message.x, message.y, message.z);
 
-        if (tile != null && tile instanceof TileEntityTeleporter) {
+        if (tile != null && tile instanceof TileEntityMachineTeleporter) {
             EntityPlayer player = TechnoMagi.proxy.getClientPlayer();
 
             if (player != null) {

@@ -1,5 +1,35 @@
 {
-  "aggressive": [
+  "botany": [
+    ""
+  ],
+  "bovine": [
+    ""
+  ],
+  "fowl": [
+    ""
+  ],
+  "ovisAries": [
+    ""
+  ],
+  "swine": [
+    ""
+  ],
+  "procreation": [
+    ""
+  ],
+  "metabolism": [
+    ""
+  ],
+  "ethologyAggressive": [
+    ""
+  ],
+  "ethologyPassive": [
+    ""
+  ],
+  "perception": [
+    ""
+  ],
+  "neurology": [
     ""
   ]
 }

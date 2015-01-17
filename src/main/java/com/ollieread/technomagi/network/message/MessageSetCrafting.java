@@ -2,7 +2,7 @@ package com.ollieread.technomagi.network.message;
 
 import io.netty.buffer.ByteBuf;
 
-import com.ollieread.technomagi.tileentity.TileEntityCrafting;
+import com.ollieread.technomagi.tileentity.TileEntityMachineAssembler;
 
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
@@ -19,7 +19,7 @@ public class MessageSetCrafting implements IMessage, IMessageHandler<MessageSetC
     {
     }
 
-    public MessageSetCrafting(TileEntityCrafting tile, boolean crafting)
+    public MessageSetCrafting(TileEntityMachineAssembler tile, boolean crafting)
     {
         x = tile.xCoord;
         y = tile.yCoord;
@@ -48,7 +48,7 @@ public class MessageSetCrafting implements IMessage, IMessageHandler<MessageSetC
     @Override
     public IMessage onMessage(MessageSetCrafting message, MessageContext ctx)
     {
-        TileEntityCrafting tile = (TileEntityCrafting) ctx.getServerHandler().playerEntity.worldObj.getTileEntity(message.x, message.y, message.z);
+        TileEntityMachineAssembler tile = (TileEntityMachineAssembler) ctx.getServerHandler().playerEntity.worldObj.getTileEntity(message.x, message.y, message.z);
 
         if (tile != null) {
             tile.setCrafting(true);
