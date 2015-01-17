@@ -1,5 +1,9 @@
 package com.ollieread.technomagi.asm.transformers;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -11,14 +15,13 @@ import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
-import org.objectweb.asm.tree.FieldInsnNode;
 import org.objectweb.asm.tree.InsnList;
+import org.objectweb.asm.tree.JumpInsnNode;
+import org.objectweb.asm.tree.LabelNode;
 import org.objectweb.asm.tree.LdcInsnNode;
 import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
-
-import scala.actors.threadpool.Arrays;
 
 public class ItemTransformer implements IClassTransformer, Opcodes
 {
@@ -31,21 +34,15 @@ public class ItemTransformer implements IClassTransformer, Opcodes
         if (name.equals("net.minecraft.item.ItemEnderEye")) {
             return patchItemEnderEye(name, basicClass, false);
         }
-        if (name.equals("acn")) {
-            return patchItemEnderEye(name, basicClass, true);
-        }
 
         return basicClass;
     }
 
+    @SuppressWarnings("resource")
     public byte[] patchItemEnderEye(String name, byte[] bytes, boolean obfuscated)
     {
-        List<String> methodNames = Arrays.asList(new String[] { "func_77648_a", "onItemUse", "a" });
+        List<String> methodNames = Arrays.asList(new String[] { "func_77648_a", "onItemUse" });
         String description = "(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/world/World;IIIIFFF)Z";
-
-        if (obfuscated) {
-            description = "(Ladd;Lyz;Lahb;IIIIFFF)Z ";
-        }
 
         ClassNode classNode = new ClassNode();
         ClassReader classReader = new ClassReader(bytes);
@@ -64,42 +61,31 @@ public class ItemTransformer implements IClassTransformer, Opcodes
                 @SuppressWarnings("unchecked")
                 ListIterator<AbstractInsnNode> it = m.instructions.iterator();
 
-                int index = -1;
-
                 while (it.hasNext()) {
                     currentNode = it.next();
 
-                    if (currentNode.getOpcode() == GETSTATIC && ((FieldInsnNode) currentNode).name.equals("rotateRight")) {
-                        while (index == -1) {
-                            AbstractInsnNode prevNode = it.previous();
-
-                            if (prevNode.getOpcode() == ISTORE) {
-                                index = ((VarInsnNode) prevNode).var;
-                            }
-                        }
-                    } else if (index > -1 && currentNode.getOpcode() == ILOAD) {
+                    if (currentNode.getOpcode() == ILOAD) {
+                        int index1 = ((VarInsnNode) currentNode).var;
                         AbstractInsnNode nextNode = it.next();
 
-                        if (((VarInsnNode) currentNode).var == index && nextNode != null && nextNode.getOpcode() == IFEQ) {
-                            InsnList toInject = new InsnList();
-                            // LabelNode label = new LabelNode();
-                            // toInject.add(new VarInsnNode(ILOAD, index));
-                            // toInject.add(new JumpInsnNode(IFEQ, label));
-                            toInject.add(new VarInsnNode(ALOAD, 2));
-                            toInject.add(new LdcInsnNode(PORTAL_END));
-                            if (obfuscated) {
-                                toInject.add(new MethodInsnNode(INVOKESTATIC, "com/ollieread/ennds/event/EnndsHooks", "onResearchableEvent", "(Lyz;Ljava/lang/String;)V"));
-                            } else {
+                        if (nextNode != null && nextNode.getOpcode() == ILOAD) {
+                            int index2 = ((VarInsnNode) nextNode).var;
+                            nextNode = it.next();
+
+                            if (nextNode != null && nextNode.getOpcode() == IF_ICMPGT) {
+                                InsnList toInject = new InsnList();
+                                LabelNode label = new LabelNode();
+                                toInject.add(new VarInsnNode(ILOAD, index1));
+                                toInject.add(new VarInsnNode(ILOAD, index2));
+                                toInject.add(new JumpInsnNode(IF_ICMPLE, label));
+                                toInject.add(new VarInsnNode(ALOAD, 2));
+                                toInject.add(new LdcInsnNode(PORTAL_END));
                                 toInject.add(new MethodInsnNode(INVOKESTATIC, "com/ollieread/ennds/event/EnndsHooks", "onResearchableEvent", "(Lnet/minecraft/entity/player/EntityPlayer;Ljava/lang/String;)V"));
+                                toInject.add(label);
+                                m.instructions.insertBefore(currentNode, toInject);
+                                flag = true;
+                                break;
                             }
-
-                            while (currentNode.getOpcode() != GOTO) {
-                                currentNode = it.previous();
-                            }
-
-                            m.instructions.insert(currentNode, toInject);
-                            flag = true;
-                            break;
                         }
                     }
 
@@ -114,6 +100,18 @@ public class ItemTransformer implements IClassTransformer, Opcodes
             System.out.println("Inserting ItemEnderEye hooks");
             ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
             classNode.accept(writer);
+
+            FileOutputStream file;
+            try {
+                file = new FileOutputStream("ItemEnderEye.class");
+                file.write(writer.toByteArray());
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
 
             return writer.toByteArray();
         }

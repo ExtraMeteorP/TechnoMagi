@@ -33,14 +33,9 @@ public class BlockTransformer implements IClassTransformer, Opcodes
         if (name.equals("net.minecraft.block.BlockLiquid")) {
             return patchBlockLiquid(name, basicClass, false);
         }
-        if (name.equals("alw")) {
-            return patchBlockLiquid(name, basicClass, true);
-        }
+
         if (name.equals("net.minecraft.block.BlockPortal")) {
             return patchBlockPortal(name, basicClass, false);
-        }
-        if (name.equals("amp")) {
-            return patchBlockPortal(name, basicClass, true);
         }
 
         return basicClass;
@@ -54,11 +49,7 @@ public class BlockTransformer implements IClassTransformer, Opcodes
         toInject.add(new VarInsnNode(ILOAD, 2));
         toInject.add(new VarInsnNode(ILOAD, 3));
         toInject.add(new VarInsnNode(ILOAD, 4));
-        if (obfuscated) {
-            toInject.add(new MethodInsnNode(INVOKESTATIC, "com/ollieread/ennds/event/EnndsHooks", "onResearchableEvent", "(Ljava/lang/String;Lahb;III)V"));
-        } else {
-            toInject.add(new MethodInsnNode(INVOKESTATIC, "com/ollieread/ennds/event/EnndsHooks", "onResearchableEvent", "(Ljava/lang/String;Lnet/minecraft/world/World;III)V"));
-        }
+        toInject.add(new MethodInsnNode(INVOKESTATIC, "com/ollieread/ennds/event/EnndsHooks", "onResearchableEvent", "(Ljava/lang/String;Lnet/minecraft/world/World;III)V"));
 
         return toInject;
     }
@@ -67,11 +58,6 @@ public class BlockTransformer implements IClassTransformer, Opcodes
     {
         String methodName = "func_149805_n";
         String description = "(Lnet/minecraft/world/World;III)V";
-
-        if (obfuscated) {
-            methodName = "n";
-            description = "(Lahb;III)V";
-        }
 
         ClassNode classNode = new ClassNode();
         ClassReader classReader = new ClassReader(bytes);

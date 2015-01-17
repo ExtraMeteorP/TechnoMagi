@@ -3,20 +3,23 @@ package com.ollieread.technomagi.asm;
 import java.util.Map;
 
 import com.ollieread.technomagi.asm.transformers.BlockTransformer;
+import com.ollieread.technomagi.asm.transformers.ItemTransformer;
 
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin.MCVersion;
+import cpw.mods.fml.relauncher.IFMLLoadingPlugin.SortingIndex;
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin.TransformerExclusions;
 
 @TransformerExclusions({ "com.ollieread.technomagi.asm" })
 @MCVersion(value = "1.7.10")
+@SortingIndex(1001)
 public class TechnoMagiCoreLoadingPlugin implements IFMLLoadingPlugin
 {
 
     @Override
     public String[] getASMTransformerClass()
     {
-        return new String[] { BlockTransformer.class.getName() };
+        return new String[] { BlockTransformer.class.getName(), ItemTransformer.class.getName() };
     }
 
     @Override
