@@ -10,30 +10,52 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
 import com.ollieread.technomagi.TechnoMagi;
+import com.ollieread.technomagi.common.init.Config;
 import com.ollieread.technomagi.network.PacketHandler;
 import com.ollieread.technomagi.network.message.MessageSyncRegions;
-import com.ollieread.technomagi.tileentity.IRegionController;
+import com.ollieread.technomagi.tileentity.ITileEntityRegionController;
 
 public class RegionManager
 {
 
-    private static int regionId = -1;
-    protected static Map<Integer, RegionNetwork> networks = new HashMap<Integer, RegionNetwork>();
-    protected static Map<RegionControllerType, List<IRegionController>> controllers = new HashMap<RegionControllerType, List<IRegionController>>();
-    protected static Map<Integer, List<RegionControllerType>> networkControllerTypes = new HashMap<Integer, List<RegionControllerType>>();
+    public static Map<Integer, RegionManager> dimensionManagers = new HashMap<Integer, RegionManager>();
+
+    private int dimension;
+    private int regionId = -1;
+    protected Map<Integer, RegionNetwork> networks = new HashMap<Integer, RegionNetwork>();
+    protected Map<RegionControllerType, List<ITileEntityRegionController>> controllers = new HashMap<RegionControllerType, List<ITileEntityRegionController>>();
+    protected Map<Integer, List<RegionControllerType>> networkControllerTypes = new HashMap<Integer, List<RegionControllerType>>();
+
+    public static RegionManager getInstance(int dimension)
+    {
+        if (!dimensionManagers.containsKey(dimension)) {
+            for (int i = 0; i < Config.perceptionDimensions.length; i++) {
+                if (Config.perceptionDimensions[i] == dimension) {
+                    dimensionManagers.put(dimension, new RegionManager(dimension));
+                }
+            }
+        }
+
+        return dimensionManagers.get(dimension);
+    }
+
+    protected RegionManager(int dimension)
+    {
+        this.dimension = dimension;
+    }
 
     /**
      * Get the next available network id and increment by 1
      * 
      * @return int
      */
-    private static int getNextId()
+    private int getNextId()
     {
         regionId++;
         return regionId;
     }
 
-    public static boolean isInside(int x, int z)
+    public boolean isInside(int x, int z)
     {
         for (Iterator<RegionNetwork> i = networks.values().iterator(); i.hasNext();) {
             RegionNetwork network = i.next();
@@ -46,7 +68,7 @@ public class RegionManager
         return false;
     }
 
-    public static boolean isCovering(int[] start, int[] end)
+    public boolean isCovering(int[] start, int[] end)
     {
         for (Iterator<RegionNetwork> i = networks.values().iterator(); i.hasNext();) {
             RegionNetwork network = i.next();
@@ -67,7 +89,7 @@ public class RegionManager
      * @param end
      * @return
      */
-    public static int addNetwork(int[] start, int[] end)
+    public int addNetwork(int[] start, int[] end)
     {
         if (!isCovering(start, end)) {
             int id = getNextId();
@@ -90,7 +112,7 @@ public class RegionManager
      * @param id
      * @return
      */
-    public static RegionNetwork getNetwork(int id)
+    public RegionNetwork getNetwork(int id)
     {
         if (networks.containsKey(id)) {
             return networks.get(id);
@@ -103,7 +125,7 @@ public class RegionManager
      * 
      * @param id
      */
-    public static void removeNetwork(int id)
+    public void removeNetwork(int id)
     {
         if (networks.containsKey(id)) {
             networks.remove(id);
@@ -116,7 +138,7 @@ public class RegionManager
      * @param type
      * @return
      */
-    public static boolean hasController(int id, RegionControllerType type)
+    public boolean hasController(int id, RegionControllerType type)
     {
         if (networks.containsKey(id) && networkControllerTypes.get(id).contains(type)) {
             return true;
@@ -131,7 +153,7 @@ public class RegionManager
      * @param z
      * @return
      */
-    public static int getNetworkForCoords(int x, int z)
+    public int getNetworkForCoords(int x, int z)
     {
         for (Iterator<RegionNetwork> i = networks.values().iterator(); i.hasNext();) {
             RegionNetwork network = i.next();
@@ -149,12 +171,12 @@ public class RegionManager
      * @param type
      * @param controller
      */
-    public static void addController(IRegionController controller)
+    public void addController(ITileEntityRegionController controller)
     {
         RegionControllerType type = controller.getType();
 
         if (!controllers.containsKey(type)) {
-            controllers.put(type, new ArrayList<IRegionController>());
+            controllers.put(type, new ArrayList<ITileEntityRegionController>());
         }
 
         int id = controller.getNetworkId();
@@ -172,7 +194,7 @@ public class RegionManager
      * @param type
      * @return
      */
-    public static List<IRegionController> getControllers(RegionControllerType type)
+    public List<ITileEntityRegionController> getControllers(RegionControllerType type)
     {
         if (controllers.containsKey(type)) {
             return controllers.get(type);
@@ -181,13 +203,13 @@ public class RegionManager
         return null;
     }
 
-    public static List<IRegionController> getControllers(RegionControllerType type, int id)
+    public List<ITileEntityRegionController> getControllers(RegionControllerType type, int id)
     {
         if (controllers.containsKey(type)) {
-            List<IRegionController> controllerList = controllers.get(type);
-            List<IRegionController> newControllerList = new ArrayList<IRegionController>();
+            List<ITileEntityRegionController> controllerList = controllers.get(type);
+            List<ITileEntityRegionController> newControllerList = new ArrayList<ITileEntityRegionController>();
 
-            for (IRegionController controller : controllerList) {
+            for (ITileEntityRegionController controller : controllerList) {
                 if (controller.getNetworkId() == id) {
                     newControllerList.add(controller);
                 }
@@ -199,24 +221,24 @@ public class RegionManager
         return null;
     }
 
-    public static void sync()
+    public void sync()
     {
         if (TechnoMagi.proxy.isServer()) {
             NBTTagCompound compound = new NBTTagCompound();
             writeToNBT(compound);
 
-            PacketHandler.INSTANCE.sendToAll(new MessageSyncRegions(compound));
+            PacketHandler.INSTANCE.sendToAll(new MessageSyncRegions(dimension, compound));
         }
     }
 
-    public static void load(NBTTagCompound compound)
+    public void load(NBTTagCompound compound)
     {
         if (TechnoMagi.proxy.isClient()) {
             readFromNBT(compound);
         }
     }
 
-    public static void writeToNBT(NBTTagCompound compound)
+    public void writeToNBT(NBTTagCompound compound)
     {
         NBTTagList networkList = new NBTTagList();
 
@@ -229,10 +251,10 @@ public class RegionManager
 
         NBTTagList controllerList = new NBTTagList();
 
-        for (Iterator<List<IRegionController>> i = controllers.values().iterator(); i.hasNext();) {
-            List<IRegionController> entry = i.next();
-            for (Iterator<IRegionController> it = entry.iterator(); it.hasNext();) {
-                IRegionController list = it.next();
+        for (Iterator<List<ITileEntityRegionController>> i = controllers.values().iterator(); i.hasNext();) {
+            List<ITileEntityRegionController> entry = i.next();
+            for (Iterator<ITileEntityRegionController> it = entry.iterator(); it.hasNext();) {
+                ITileEntityRegionController list = it.next();
                 NBTTagCompound c = new NBTTagCompound();
                 c.setInteger("Type", list.getType().ordinal());
                 c.setIntArray("Coords", list.getCoords());
@@ -240,9 +262,10 @@ public class RegionManager
         }
 
         compound.setTag("Controllers", controllerList);
+        compound.setInteger("RegionID", regionId);
     }
 
-    public static void readFromNBT(NBTTagCompound compound)
+    public void readFromNBT(NBTTagCompound compound)
     {
         NBTTagList networkList = compound.getTagList("Networks", compound.getId());
         networks = new HashMap<Integer, RegionNetwork>();
@@ -254,7 +277,7 @@ public class RegionManager
         }
 
         NBTTagList controllerList = compound.getTagList("Controllers", compound.getId());
-        controllers = new HashMap<RegionControllerType, List<IRegionController>>();
+        controllers = new HashMap<RegionControllerType, List<ITileEntityRegionController>>();
         networkControllerTypes = new HashMap<Integer, List<RegionControllerType>>();
 
         for (int i = 0; i < controllerList.tagCount(); i++) {
@@ -263,10 +286,10 @@ public class RegionManager
             int[] coords = c.getIntArray("Coords");
 
             if (!controllers.containsKey(type)) {
-                controllers.put(type, new ArrayList<IRegionController>());
+                controllers.put(type, new ArrayList<ITileEntityRegionController>());
             }
 
-            IRegionController controller = (IRegionController) TechnoMagi.proxy.getClientWorld().getTileEntity(coords[0], coords[1], coords[2]);
+            ITileEntityRegionController controller = (ITileEntityRegionController) TechnoMagi.proxy.getClientWorld().getTileEntity(coords[0], coords[1], coords[2]);
 
             controllers.get(type).add(controller);
 
@@ -276,6 +299,8 @@ public class RegionManager
 
             networkControllerTypes.get(controller.getNetworkId()).add(type);
         }
+
+        regionId = compound.getInteger("RegionID");
     }
 
     /**

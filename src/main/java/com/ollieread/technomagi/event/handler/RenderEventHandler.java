@@ -30,7 +30,7 @@ import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.technomagi.TechnoMagi;
 import com.ollieread.technomagi.common.init.Items;
 import com.ollieread.technomagi.potion.PotionTM;
-import com.ollieread.technomagi.tileentity.IRegionController;
+import com.ollieread.technomagi.tileentity.ITileEntityRegionController;
 import com.ollieread.technomagi.util.PlayerHelper;
 import com.ollieread.technomagi.world.region.PerceptionManager;
 import com.ollieread.technomagi.world.region.RegionManager;
@@ -141,7 +141,8 @@ public class RenderEventHandler
         }
 
         World world = player.worldObj;
-        List<IRegionController> controllers = RegionManager.getControllers(RegionControllerType.PERCEPTION);
+        RegionManager manager = RegionManager.getInstance(world.provider.dimensionId);
+        List<ITileEntityRegionController> controllers = manager.getControllers(RegionControllerType.PERCEPTION);
 
         if (world == null || controllers == null || !(controllers.size() > 0)) {
             return;
@@ -170,9 +171,9 @@ public class RenderEventHandler
                         int l1 = ((int) player.posX) + 16 + 1 + 1 >> 4;
                         int i2 = ((int) player.posZ) + 16 + 1 + 1 >> 4;
 
-                        for (Iterator<IRegionController> it = controllers.iterator(); it.hasNext();) {
-                            IRegionController controller = it.next();
-                            RegionNetwork network = RegionManager.getNetwork(controller.getNetworkId());
+                        for (Iterator<ITileEntityRegionController> it = controllers.iterator(); it.hasNext();) {
+                            ITileEntityRegionController controller = it.next();
+                            RegionNetwork network = manager.getNetwork(controller.getNetworkId());
 
                             for (int x = 0; x < chunkArray.length; x++) {
                                 if (chunkArray[x] != null) {
