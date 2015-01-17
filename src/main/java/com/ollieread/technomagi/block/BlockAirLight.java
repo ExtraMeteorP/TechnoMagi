@@ -2,7 +2,6 @@ package com.ollieread.technomagi.block;
 
 import java.util.Random;
 
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
@@ -13,18 +12,19 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import com.ollieread.technomagi.block.abstracts.BlockBasicContainer;
 import com.ollieread.technomagi.common.Reference;
-import com.ollieread.technomagi.tileentity.TileEntityAirDisplaced;
+import com.ollieread.technomagi.tileentity.TileEntityAirLight;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockDisplacedAir extends BlockContainer
+public class BlockAirLight extends BlockBasicContainer
 {
 
-    public BlockDisplacedAir(String name)
+    public BlockAirLight(String name)
     {
-        super(Material.glass);
+        super(Material.air, name);
 
         setBlockName(name);
         setBlockTextureName(name);
@@ -34,7 +34,7 @@ public class BlockDisplacedAir extends BlockContainer
     @Override
     public TileEntity createNewTileEntity(World var1, int var2)
     {
-        return new TileEntityAirDisplaced();
+        return new TileEntityAirLight();
     }
 
     @SideOnly(Side.CLIENT)
@@ -65,12 +65,6 @@ public class BlockDisplacedAir extends BlockContainer
         return true;
     }
 
-    @Override
-    public int quantityDropped(Random random)
-    {
-        return 0;
-    }
-
     public int getRenderType()
     {
         return -1;
@@ -81,14 +75,10 @@ public class BlockDisplacedAir extends BlockContainer
         return 15;
     }
 
-    public boolean canSilkHarvest()
+    @Override
+    public int quantityDropped(Random random)
     {
-        return false;
-    }
-
-    public boolean renderAsNormalBlock()
-    {
-        return false;
+        return 0;
     }
 
     public AxisAlignedBB getCollisionBoundingBoxFromPool(World p_149668_1_, int p_149668_2_, int p_149668_3_, int p_149668_4_)
@@ -112,7 +102,7 @@ public class BlockDisplacedAir extends BlockContainer
 
     public boolean validateSelf(World world, int x, int y, int z)
     {
-        TileEntityAirDisplaced tile = (TileEntityAirDisplaced) world.getTileEntity(x, y, z);
+        TileEntityAirLight tile = (TileEntityAirLight) world.getTileEntity(x, y, z);
 
         if (tile != null) {
             return tile.validateSelf();

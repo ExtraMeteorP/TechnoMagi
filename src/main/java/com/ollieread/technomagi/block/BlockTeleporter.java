@@ -17,10 +17,12 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
+import com.ollieread.technomagi.block.abstracts.BlockBasicContainer;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.item.ItemDigitalTool;
-import com.ollieread.technomagi.tileentity.IPlayerLocked;
-import com.ollieread.technomagi.tileentity.TileEntityTeleporter;
+import com.ollieread.technomagi.tileentity.ITileEntityToolable;
+import com.ollieread.technomagi.tileentity.TileEntityMachineTeleporter;
+import com.ollieread.technomagi.tileentity.component.IHasOwner;
 import com.ollieread.technomagi.util.PacketHelper;
 import com.ollieread.technomagi.util.PlayerHelper;
 import com.ollieread.technomagi.util.TeleportHelper;
@@ -28,7 +30,7 @@ import com.ollieread.technomagi.util.TeleportHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockTeleporter extends BlockTMContainer implements IDigitalToolable
+public class BlockTeleporter extends BlockBasicContainer implements ITileEntityToolable
 {
 
     @SideOnly(Side.CLIENT)
@@ -48,7 +50,7 @@ public class BlockTeleporter extends BlockTMContainer implements IDigitalToolabl
     @Override
     public TileEntity createNewTileEntity(World var1, int var2)
     {
-        return new TileEntityTeleporter();
+        return new TileEntityMachineTeleporter();
     }
 
     @SideOnly(Side.CLIENT)
@@ -99,10 +101,10 @@ public class BlockTeleporter extends BlockTMContainer implements IDigitalToolabl
     public void onEntityWalking(World world, int x, int y, int z, Entity entity)
     {
         if (!world.isRemote && world.getBlockMetadata(x, y, z) == 1 && entity instanceof EntityLivingBase && !(entity instanceof EntityPlayer)) {
-            TileEntityTeleporter teleporter = (TileEntityTeleporter) world.getTileEntity(x, y, z);
+            TileEntityMachineTeleporter teleporter = (TileEntityMachineTeleporter) world.getTileEntity(x, y, z);
 
-            if (!teleporter.canPartner() && teleporter.canUse((EntityLivingBase) entity)) {
-                TileEntityTeleporter partner = teleporter.getPartner();
+            if (teleporter.isLinked() && teleporter.canUse((EntityLivingBase) entity)) {
+                TileEntityMachineTeleporter partner = teleporter.getLinked(world);
 
                 if (entity instanceof EntityPlayer) {
                     TeleportHelper.teleportPlayerToTeleporter((EntityPlayer) entity, teleporter, partner);
@@ -118,25 +120,25 @@ public class BlockTeleporter extends BlockTMContainer implements IDigitalToolabl
     {
         if (!world.isRemote) {
             if (world.getBlockMetadata(x, y, z) == 1) {
-                TileEntityTeleporter thisTeleporter = (TileEntityTeleporter) world.getTileEntity(x, y, z);
+                TileEntityMachineTeleporter thisTeleporter = (TileEntityMachineTeleporter) world.getTileEntity(x, y, z);
 
                 if (ItemDigitalTool.hasFocusLocation(tool)) {
                     int[] location = ItemDigitalTool.getFocusLocation(tool);
                     Block block = world.getBlock(location[0], location[1], location[2]);
 
                     if (block != null && block instanceof BlockTeleporter && world.getBlockMetadata(location[0], location[1], location[2]) == 1) {
-                        TileEntityTeleporter otherTeleporter = (TileEntityTeleporter) world.getTileEntity(location[0], location[1], location[2]);
+                        TileEntityMachineTeleporter otherTeleporter = (TileEntityMachineTeleporter) world.getTileEntity(location[0], location[1], location[2]);
 
-                        if (thisTeleporter.canPartner() && otherTeleporter.canPartner()) {
-                            thisTeleporter.partner(location[0], location[1], location[2]);
-                            otherTeleporter.partner(x, y, z);
+                        if (!thisTeleporter.isLinked() && !otherTeleporter.isLinked()) {
+                            thisTeleporter.setLinked(location[0], location[1], location[2]);
+                            otherTeleporter.setLinked(x, y, z);
                             ItemDigitalTool.resetFocusLocation(tool);
                             PlayerHelper.addChatMessage(player, "Teleporter Paired: " + x + " " + y + " " + z);
                         }
 
                         return true;
                     }
-                } else if (thisTeleporter.canPartner()) {
+                } else if (!thisTeleporter.isLinked()) {
                     ItemDigitalTool.setFocusLocation(tool, x, y, z);
                     PlayerHelper.addChatMessage(player, "Teleporter Focused: " + x + " " + y + " " + z);
 
@@ -155,9 +157,9 @@ public class BlockTeleporter extends BlockTMContainer implements IDigitalToolabl
 
         if (entity instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) entity;
-            IPlayerLocked tile = (IPlayerLocked) tileEntity;
+            IHasOwner tile = (IHasOwner) tileEntity;
 
-            tile.setPlayer(player.getCommandSenderName());
+            tile.setOwner(player.getCommandSenderName());
         }
     }
 
@@ -166,10 +168,10 @@ public class BlockTeleporter extends BlockTMContainer implements IDigitalToolabl
         if (world.isRemote) {
             return true;
         } else {
-            TileEntityTeleporter entity = (TileEntityTeleporter) world.getTileEntity(x, y, z);
+            TileEntityMachineTeleporter entity = (TileEntityMachineTeleporter) world.getTileEntity(x, y, z);
 
             if (entity != null) {
-                if (entity.isPlayer(player)) {
+                if (entity.isOwner(player.getCommandSenderName())) {
                     PacketHelper.openTeleporter(x, y, z, (EntityPlayerMP) player);
                 }
             }

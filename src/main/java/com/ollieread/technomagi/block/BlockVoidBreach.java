@@ -13,14 +13,15 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import com.ollieread.technomagi.block.abstracts.BlockBasicContainer;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.potion.PotionTM;
-import com.ollieread.technomagi.tileentity.TileEntityVoidBreach;
+import com.ollieread.technomagi.tileentity.TileEntityAirVoidBreach;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockVoidBreach extends BlockTMContainer
+public class BlockVoidBreach extends BlockBasicContainer
 {
 
     @SideOnly(Side.CLIENT)
@@ -49,7 +50,7 @@ public class BlockVoidBreach extends BlockTMContainer
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side)
     {
-        TileEntityVoidBreach tile = (TileEntityVoidBreach) world.getTileEntity(x, y, z);
+        TileEntityAirVoidBreach tile = (TileEntityAirVoidBreach) world.getTileEntity(x, y, z);
 
         return blockIcons[tile.getStage()];
     }
@@ -64,7 +65,7 @@ public class BlockVoidBreach extends BlockTMContainer
     @Override
     public TileEntity createNewTileEntity(World world, int meta)
     {
-        return new TileEntityVoidBreach();
+        return new TileEntityAirVoidBreach();
     }
 
     public boolean isReplaceable(IBlockAccess world, int x, int y, int z)

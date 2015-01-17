@@ -13,17 +13,18 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import com.ollieread.technomagi.block.abstracts.BlockBasic;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.common.init.Items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockResource extends BlockTM
+public class BlockResource extends BlockBasic
 {
 
     private Random rand = new Random();
-    public static String[] blockNames = new String[] { "etheriumOre", "voidstone" };
+    public static String[] blockNames = new String[] { "etheriumOre", "voidstone", };
 
     @SideOnly(Side.CLIENT)
     protected IIcon[] blockIcons;

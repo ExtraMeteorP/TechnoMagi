@@ -15,16 +15,17 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 import com.ollieread.technomagi.TechnoMagi;
+import com.ollieread.technomagi.block.abstracts.BlockBasicContainer;
 import com.ollieread.technomagi.common.CommonProxy;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.item.ItemResearchStorage;
-import com.ollieread.technomagi.tileentity.IPlayerLocked;
 import com.ollieread.technomagi.tileentity.TileEntityArchive;
+import com.ollieread.technomagi.tileentity.component.IHasOwner;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockArchive extends BlockTMContainer
+public class BlockArchive extends BlockBasicContainer
 {
 
     public BlockArchive(String name)
@@ -68,7 +69,7 @@ public class BlockArchive extends BlockTMContainer
             TileEntityArchive entity = (TileEntityArchive) world.getTileEntity(x, y, z);
 
             if (entity != null) {
-                if (entity.isPlayer(player)) {
+                if (entity.isOwner(player.getCommandSenderName())) {
                     ItemStack stack = player.getHeldItem();
 
                     if (stack != null && stack.getItem() != null && stack.getItem() instanceof ItemResearchStorage) {
@@ -108,8 +109,8 @@ public class BlockArchive extends BlockTMContainer
 
         TileEntity te = world.getTileEntity(x, y, z);
 
-        if (te instanceof IPlayerLocked) {
-            ((IPlayerLocked) te).setPlayer(((EntityPlayer) entity).getCommandSenderName());
+        if (te instanceof IHasOwner) {
+            ((IHasOwner) te).setOwner(((EntityPlayer) entity).getCommandSenderName());
         }
 
         super.onBlockPlacedBy(world, x, y, z, entity, stack);
@@ -123,7 +124,7 @@ public class BlockArchive extends BlockTMContainer
         TileEntityArchive archive = (TileEntityArchive) world.getTileEntity(x, y, z);
 
         if (archive != null && archive.canSyncPlayer()) {
-            EntityPlayer player = archive.getEntityPlayer();
+            EntityPlayer player = archive.getOwner(world);
 
             EntityFX effect = new EntityPortalFX(world, (double) x + 0.5D, (double) y + 1.0F, (double) z + 0.5D, (double) ((float) (player.posX - x) + random.nextFloat()) - 1.0D, (double) ((float) (player.posY - y) - random.nextFloat() - 1.5F), (double) ((float) (player.posZ - z) + random.nextFloat()) - 1.0D);
             effect.setRBGColorF(147 / 255.0F, 225 / 255.0F, 242 / 255.0F);

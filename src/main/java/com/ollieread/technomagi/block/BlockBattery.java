@@ -5,10 +5,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
+import com.ollieread.technomagi.block.abstracts.BlockBasicContainer;
 import com.ollieread.technomagi.tileentity.TileEntityBattery;
 import com.ollieread.technomagi.util.PlayerHelper;
 
-public class BlockBattery extends BlockTMContainer
+public class BlockBattery extends BlockBasicContainer
 {
 
     public BlockBattery(String name)

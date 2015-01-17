@@ -11,13 +11,14 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-import com.ollieread.technomagi.tileentity.IDisguisableTile;
+import com.ollieread.technomagi.block.abstracts.BlockBasicContainer;
 import com.ollieread.technomagi.tileentity.TileEntityReactiveCrafting;
+import com.ollieread.technomagi.tileentity.component.IDisguisable;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockReactiveCrafting extends BlockTMContainer
+public class BlockReactiveCrafting extends BlockBasicContainer
 {
 
     public BlockReactiveCrafting(String name)
@@ -55,8 +56,8 @@ public class BlockReactiveCrafting extends BlockTMContainer
     {
         TileEntity tile = world.getTileEntity(x, y, z);
 
-        if (tile != null && tile instanceof IDisguisableTile) {
-            IDisguisableTile disguise = (IDisguisableTile) tile;
+        if (tile != null && tile instanceof IDisguisable) {
+            IDisguisable disguise = (IDisguisable) tile;
 
             if (disguise.isDisguised()) {
                 ItemStack stack = disguise.getDisguise();
@@ -79,8 +80,8 @@ public class BlockReactiveCrafting extends BlockTMContainer
     {
         TileEntity tile = world.getTileEntity(x, y, z);
 
-        if (tile != null && tile instanceof IDisguisableTile) {
-            IDisguisableTile disguise = (IDisguisableTile) tile;
+        if (tile != null && tile instanceof IDisguisable) {
+            IDisguisable disguise = (IDisguisable) tile;
 
             if (disguise.isDisguised()) {
                 ItemStack stack = disguise.getDisguise();

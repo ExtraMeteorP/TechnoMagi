@@ -4,8 +4,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityList;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -16,18 +14,15 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import com.ollieread.ennds.research.ResearchRegistry;
-import com.ollieread.technomagi.TechnoMagi;
-import com.ollieread.technomagi.common.CommonProxy;
+import com.ollieread.technomagi.block.abstracts.BlockBasicContainer;
 import com.ollieread.technomagi.common.Reference;
-import com.ollieread.technomagi.common.init.Items;
-import com.ollieread.technomagi.item.ItemCapture;
-import com.ollieread.technomagi.tileentity.IHasFiller;
-import com.ollieread.technomagi.tileentity.TileEntityObservationChamber;
+import com.ollieread.technomagi.tileentity.TileEntityMachineObservation;
+import com.ollieread.technomagi.tileentity.component.IHasFiller;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockObservationChamber extends BlockOwnable
+public class BlockObservationChamber extends BlockBasicContainer
 {
 
     public BlockObservationChamber(String name)
@@ -46,7 +41,7 @@ public class BlockObservationChamber extends BlockOwnable
     @Override
     public TileEntity createNewTileEntity(World world, int var2)
     {
-        return new TileEntityObservationChamber();
+        return new TileEntityMachineObservation();
     }
 
     @Override
@@ -99,7 +94,7 @@ public class BlockObservationChamber extends BlockOwnable
 
     public void onNeighborBlockChange(World world, int x, int y, int z, Block block)
     {
-        TileEntityObservationChamber chamber = (TileEntityObservationChamber) world.getTileEntity(x, y, z);
+        TileEntityMachineObservation chamber = (TileEntityMachineObservation) world.getTileEntity(x, y, z);
 
         if (world.isBlockIndirectlyGettingPowered(x, y, z)) {
             if (chamber.getEntity() != null) {
@@ -136,76 +131,11 @@ public class BlockObservationChamber extends BlockOwnable
         return AxisAlignedBB.getBoundingBox((double) ((float) x + f), (double) y, (double) ((float) z + f), (double) ((float) (x + 1) - f), (double) ((float) (y + 1) - f), (double) ((float) (z + 1) - f));
     }
 
-    @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_)
-    {
-        if (player != null) {
-            ItemStack stack = player.getHeldItem();
-
-            if (!world.isRemote) {
-                TileEntityObservationChamber tile = (TileEntityObservationChamber) world.getTileEntity(x, y, z);
-
-                if (tile != null) {
-                    if (tile.isPlayer(player)) {
-                        if (stack != null && stack.isItemEqual(new ItemStack(Items.itemCapture, 1, 1))) {
-                            ItemCapture capture = (ItemCapture) stack.getItem();
-
-                            if (capture.hasEntity(stack)) {
-                                String name = capture.getName(stack);
-                                String entityName = capture.getEntityName(stack);
-
-                                if (entityName != null) {
-                                    EntityLiving entityLiving = (EntityLiving) EntityList.createEntityByName(entityName, world);
-
-                                    if (entityLiving != null) {
-                                        entityLiving.readEntityFromNBT(ItemCapture.getEntityNBT(stack));
-
-                                        if (name != null) {
-                                            entityLiving.setCustomNameTag(name);
-                                        }
-
-                                        capture.setEntity(null, stack);
-                                        if (ResearchRegistry.getObservableEntities().contains(entityLiving.getClass())) {
-                                            tile.setEntity(entityLiving);
-                                            stack.stackSize--;
-
-                                            return true;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        player.openGui(TechnoMagi.instance, CommonProxy.GUI_OBSERVATION, world, x, y, z);
-                    }
-                }
-            }
-        }
-
-        return true;
-    }
-
-    public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity)
-    {
-        /*
-         * if (entity instanceof EntityLivingBase && !(entity instanceof
-         * EntityPlayer)) { if
-         * (ResearchRegistry.getObservableEntities().contains
-         * (entity.getClass())) { TileEntityObservationChamber tile =
-         * (TileEntityObservationChamber) world.getTileEntity(x, y, z);
-         * 
-         * if (!world.isRemote) { if (tile != null && tile.getEntity() == null)
-         * { tile.setEntity((EntityLivingBase) entity); entity.setDead();
-         * 
-         * world.markBlockForUpdate(x, y, z); } } } }
-         */
-    }
-
     public void onEntityWalking(World world, int x, int y, int z, Entity entity)
     {
         if (entity instanceof EntityLivingBase && !(entity instanceof EntityPlayer) && !world.isRemote) {
             if (ResearchRegistry.getObservableEntities().contains(entity.getClass())) {
-                TileEntityObservationChamber tile = (TileEntityObservationChamber) world.getTileEntity(x, y, z);
+                TileEntityMachineObservation tile = (TileEntityMachineObservation) world.getTileEntity(x, y, z);
 
                 if (tile != null && tile.getEntity() == null) {
                     tile.setEntity((EntityLivingBase) entity);

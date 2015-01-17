@@ -8,10 +8,13 @@ import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.particle.EntityPortalFX;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
+import com.ollieread.technomagi.block.abstracts.BlockBasic;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockSmartmetalTile extends BlockTM
+public class BlockSmartmetalTile extends BlockBasic
 {
 
     public BlockSmartmetalTile(String name)

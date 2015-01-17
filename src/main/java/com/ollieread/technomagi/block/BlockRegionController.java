@@ -12,13 +12,14 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
+import com.ollieread.technomagi.block.abstracts.BlockBasicContainer;
 import com.ollieread.technomagi.common.Reference;
-import com.ollieread.technomagi.tileentity.TileEntityRegionPerception;
+import com.ollieread.technomagi.tileentity.TileEntityMachineRegionPerception;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockRegionController extends BlockTMContainer
+public class BlockRegionController extends BlockBasicContainer
 {
 
     private Random rand = new Random();
@@ -61,7 +62,7 @@ public class BlockRegionController extends BlockTMContainer
     public TileEntity createNewTileEntity(World world, int meta)
     {
         if (meta == 0) {
-            return new TileEntityRegionPerception();
+            return new TileEntityMachineRegionPerception();
         }
 
         return null;

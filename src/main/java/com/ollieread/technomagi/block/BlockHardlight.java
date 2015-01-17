@@ -5,10 +5,13 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.world.IBlockAccess;
+
+import com.ollieread.technomagi.block.abstracts.BlockBasic;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockHardlight extends BlockTM
+public class BlockHardlight extends BlockBasic
 {
 
     public BlockHardlight(String name)
@@ -16,7 +19,6 @@ public class BlockHardlight extends BlockTM
         super(Material.rock, name);
 
         setLightOpacity(0);
-        setBlockTextureName("hardlight");
         setBlockUnbreakable();
     }
 

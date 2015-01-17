@@ -16,15 +16,17 @@ import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
+import com.ollieread.technomagi.block.abstracts.BlockBasicContainer;
 import com.ollieread.technomagi.common.Reference;
-import com.ollieread.technomagi.tileentity.IPlayerLocked;
-import com.ollieread.technomagi.tileentity.TileEntityTank;
+import com.ollieread.technomagi.tileentity.ITileEntityToolable;
+import com.ollieread.technomagi.tileentity.TileEntityStorageFluid;
+import com.ollieread.technomagi.tileentity.component.IHasOwner;
 import com.ollieread.technomagi.util.InventoryHelper;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockTank extends BlockTMContainer implements IDigitalToolable
+public class BlockTank extends BlockBasicContainer implements ITileEntityToolable
 {
 
     public BlockTank(String name)
@@ -43,7 +45,7 @@ public class BlockTank extends BlockTMContainer implements IDigitalToolable
     @Override
     public TileEntity createNewTileEntity(World world, int var2)
     {
-        return new TileEntityTank();
+        return new TileEntityStorageFluid();
     }
 
     @Override
@@ -66,11 +68,11 @@ public class BlockTank extends BlockTMContainer implements IDigitalToolable
     {
         TileEntity te = world.getTileEntity(x, y, z);
 
-        if (te instanceof IPlayerLocked) {
-            ((IPlayerLocked) te).setPlayer(((EntityPlayer) entity).getCommandSenderName());
+        if (te instanceof IHasOwner) {
+            ((IHasOwner) te).setOwner(((EntityPlayer) entity).getCommandSenderName());
         }
 
-        TileEntityTank tank = (TileEntityTank) te;
+        TileEntityStorageFluid tank = (TileEntityStorageFluid) te;
 
         if (tank.getBlockMetadata() > 0) {
             tank.setCapacity(FluidContainerRegistry.BUCKET_VOLUME * (100 * (tank.getBlockMetadata() * 5)));
@@ -89,10 +91,10 @@ public class BlockTank extends BlockTMContainer implements IDigitalToolable
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float p_149727_7_, float p_149727_8_, float p_149727_9_)
     {
         if (player != null) {
-            TileEntityTank tank = (TileEntityTank) world.getTileEntity(x, y, z);
+            TileEntityStorageFluid tank = (TileEntityStorageFluid) world.getTileEntity(x, y, z);
 
             if (tank != null) {
-                if (tank.isPlayer(player)) {
+                if (tank.isOwner(player.getCommandSenderName())) {
                     ItemStack stack = player.getHeldItem();
                     ForgeDirection direction = ForgeDirection.getOrientation(side);
 
@@ -175,7 +177,7 @@ public class BlockTank extends BlockTMContainer implements IDigitalToolable
                 ItemStack dropStack = new ItemStack(dropItem, 1, world.getBlockMetadata(x, y, z));
                 dropStack.stackTagCompound = new NBTTagCompound();
 
-                TileEntityTank tank = (TileEntityTank) world.getTileEntity(x, y, z);
+                TileEntityStorageFluid tank = (TileEntityStorageFluid) world.getTileEntity(x, y, z);
 
                 if (tank != null) {
                     tank.writeToNBT(dropStack.stackTagCompound);

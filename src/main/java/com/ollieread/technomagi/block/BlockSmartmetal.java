@@ -16,18 +16,20 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import com.ollieread.technomagi.block.abstracts.BlockBasicContainer;
 import com.ollieread.technomagi.client.ClientProxy;
 import com.ollieread.technomagi.client.renderer.block.BlockSmartmetalRenderer;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.item.ItemDigitalTool;
-import com.ollieread.technomagi.tileentity.IDisguisableTile;
-import com.ollieread.technomagi.tileentity.IPlayerLocked;
+import com.ollieread.technomagi.tileentity.ITileEntityToolable;
 import com.ollieread.technomagi.tileentity.TileEntitySmartmetal;
+import com.ollieread.technomagi.tileentity.component.IDisguisable;
+import com.ollieread.technomagi.tileentity.component.IHasOwner;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockSmartmetal extends BlockTMContainer implements IDigitalToolable
+public class BlockSmartmetal extends BlockBasicContainer implements ITileEntityToolable
 {
 
     @SideOnly(Side.CLIENT)
@@ -99,14 +101,14 @@ public class BlockSmartmetal extends BlockTMContainer implements IDigitalToolabl
                     break;
                 case 2:
                     if (entity instanceof EntityPlayer) {
-                        if (((IPlayerLocked) world.getTileEntity(x, y, z)).isPlayer(((EntityPlayer) entity).getCommandSenderName())) {
+                        if (((IHasOwner) world.getTileEntity(x, y, z)).isOwner(((EntityPlayer) entity).getCommandSenderName())) {
                             return;
                         }
                     }
                     break;
                 case 4:
                     if (entity instanceof EntityPlayer) {
-                        if (!((IPlayerLocked) world.getTileEntity(x, y, z)).isPlayer(((EntityPlayer) entity).getCommandSenderName())) {
+                        if (!((IHasOwner) world.getTileEntity(x, y, z)).isOwner(((EntityPlayer) entity).getCommandSenderName())) {
                             return;
                         }
                     } else {
@@ -156,8 +158,8 @@ public class BlockSmartmetal extends BlockTMContainer implements IDigitalToolabl
     @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack)
     {
-        IPlayerLocked te = (IPlayerLocked) world.getTileEntity(x, y, z);
-        ((IPlayerLocked) te).setPlayer(((EntityPlayer) entity).getCommandSenderName());
+        IHasOwner te = (IHasOwner) world.getTileEntity(x, y, z);
+        ((IHasOwner) te).setOwner(((EntityPlayer) entity).getCommandSenderName());
 
         super.onBlockPlacedBy(world, x, y, z, entity, stack);
     }
@@ -177,7 +179,7 @@ public class BlockSmartmetal extends BlockTMContainer implements IDigitalToolabl
                     }
 
                     if (tile != null) {
-                        IDisguisableTile disguise = (IDisguisableTile) tile;
+                        IDisguisable disguise = (IDisguisable) tile;
 
                         if (!disguise.isDisguised()) {
 
@@ -200,8 +202,8 @@ public class BlockSmartmetal extends BlockTMContainer implements IDigitalToolabl
     {
         TileEntity tile = world.getTileEntity(x, y, z);
 
-        if (tile != null && tile instanceof IDisguisableTile) {
-            IDisguisableTile disguise = (IDisguisableTile) tile;
+        if (tile != null && tile instanceof IDisguisable) {
+            IDisguisable disguise = (IDisguisable) tile;
 
             if (disguise.isDisguised()) {
                 ItemStack stack = disguise.getDisguise();
@@ -227,8 +229,8 @@ public class BlockSmartmetal extends BlockTMContainer implements IDigitalToolabl
 
         if (tile != null) {
             if (tile.getBlockMetadata() != 3) {
-                if (tile instanceof IDisguisableTile) {
-                    IDisguisableTile disguise = (IDisguisableTile) tile;
+                if (tile instanceof IDisguisable) {
+                    IDisguisable disguise = (IDisguisable) tile;
 
                     if (disguise.isDisguised()) {
                         ItemStack stack = disguise.getDisguise();
@@ -258,8 +260,8 @@ public class BlockSmartmetal extends BlockTMContainer implements IDigitalToolabl
 
         if (tile != null) {
             if (tile.getBlockMetadata() != 3) {
-                if (tile instanceof IDisguisableTile) {
-                    IDisguisableTile disguise = (IDisguisableTile) tile;
+                if (tile instanceof IDisguisable) {
+                    IDisguisable disguise = (IDisguisable) tile;
 
                     if (disguise.isDisguised()) {
                         ItemStack stack = disguise.getDisguise();

@@ -13,15 +13,17 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import com.ollieread.technomagi.block.abstracts.BlockBasicContainer;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.item.ItemDigitalTool;
-import com.ollieread.technomagi.tileentity.IDisguisableTile;
+import com.ollieread.technomagi.tileentity.ITileEntityToolable;
 import com.ollieread.technomagi.tileentity.TileEntityHardlightGenerator;
+import com.ollieread.technomagi.tileentity.component.IDisguisable;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockHardlightGenerator extends BlockTMContainer implements IDigitalToolable
+public class BlockHardlightGenerator extends BlockBasicContainer implements ITileEntityToolable
 {
 
     @SideOnly(Side.CLIENT)
@@ -141,8 +143,8 @@ public class BlockHardlightGenerator extends BlockTMContainer implements IDigita
             if (!world.isRemote) {
                 TileEntity tile = world.getTileEntity(x, y, z);
 
-                if (tile != null && tile instanceof IDisguisableTile) {
-                    IDisguisableTile disguise = (IDisguisableTile) tile;
+                if (tile != null && tile instanceof IDisguisable) {
+                    IDisguisable disguise = (IDisguisable) tile;
 
                     if (!disguise.isDisguised()) {
 
@@ -164,8 +166,8 @@ public class BlockHardlightGenerator extends BlockTMContainer implements IDigita
     {
         TileEntity tile = world.getTileEntity(x, y, z);
 
-        if (tile != null && tile instanceof IDisguisableTile) {
-            IDisguisableTile disguise = (IDisguisableTile) tile;
+        if (tile != null && tile instanceof IDisguisable) {
+            IDisguisable disguise = (IDisguisable) tile;
 
             if (disguise.isDisguised()) {
                 ItemStack stack = disguise.getDisguise();
@@ -189,8 +191,8 @@ public class BlockHardlightGenerator extends BlockTMContainer implements IDigita
     {
         TileEntity tile = world.getTileEntity(x, y, z);
 
-        if (tile != null && tile instanceof IDisguisableTile) {
-            IDisguisableTile disguise = (IDisguisableTile) tile;
+        if (tile != null && tile instanceof IDisguisable) {
+            IDisguisable disguise = (IDisguisable) tile;
 
             if (disguise.isDisguised()) {
                 ItemStack stack = disguise.getDisguise();
@@ -214,8 +216,8 @@ public class BlockHardlightGenerator extends BlockTMContainer implements IDigita
     {
         TileEntity tile = world.getTileEntity(x, y, z);
 
-        if (tile != null && tile instanceof IDisguisableTile) {
-            IDisguisableTile disguise = (IDisguisableTile) tile;
+        if (tile != null && tile instanceof IDisguisable) {
+            IDisguisable disguise = (IDisguisable) tile;
 
             if (disguise.isDisguised()) {
                 ItemStack stack = disguise.getDisguise();

@@ -13,17 +13,18 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
+import com.ollieread.technomagi.block.abstracts.BlockBasicContainer;
 import com.ollieread.technomagi.common.Reference;
-import com.ollieread.technomagi.tileentity.TileEntityGenerator;
 import com.ollieread.technomagi.tileentity.TileEntityGeneratorLife;
 import com.ollieread.technomagi.tileentity.TileEntityGeneratorSolar;
 import com.ollieread.technomagi.tileentity.TileEntityGeneratorVoid;
+import com.ollieread.technomagi.tileentity.abstracts.Generator;
 import com.ollieread.technomagi.util.PlayerHelper;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockGenerator extends BlockTMContainer
+public class BlockGenerator extends BlockBasicContainer
 {
     @SideOnly(Side.CLIENT)
     protected IIcon voidIcon;
@@ -114,7 +115,7 @@ public class BlockGenerator extends BlockTMContainer
         if (world.isRemote) {
             return true;
         } else {
-            TileEntityGenerator entity = (TileEntityGenerator) world.getTileEntity(x, y, z);
+            Generator entity = (Generator) world.getTileEntity(x, y, z);
 
             if (entity != null) {
                 PlayerHelper.addChatMessage(player, "Energy: " + entity.getEnergyStored(null));
