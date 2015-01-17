@@ -14,6 +14,7 @@ import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityCow;
+import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -21,6 +22,7 @@ import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemEnderEye;
 import net.minecraft.item.ItemFlintAndSteel;
 import net.minecraft.item.ItemHoe;
+import net.minecraft.item.ItemSaddle;
 import net.minecraft.item.ItemShears;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
@@ -154,6 +156,8 @@ public class ResearchEventHandler
                         }
                     } else if (heldItem.getItem() instanceof ItemBucket && event.target instanceof EntityCow) {
                         eventName = "milkedCow";
+                    } else if (heldItem.getItem() instanceof ItemSaddle && event.target instanceof EntityPig) {
+                        eventName = "saddledPig";
                     }
                 }
 
@@ -164,6 +168,10 @@ public class ResearchEventHandler
                     if (nanites != null && nanites.getOwner() != null && nanites.getOwner().equals(event.entityPlayer.getCommandSenderName())) {
                         ResearchRegistry.researchMonitoring(entityClass, eventName, playerKnowledge, nanites);
                     }
+                }
+            } else {
+                if (event.target instanceof EntityPig && ((EntityPig) event.target).getSaddled()) {
+                    ResearchRegistry.researchEvent("ridingPig", event, playerKnowledge, true);
                 }
             }
         }
