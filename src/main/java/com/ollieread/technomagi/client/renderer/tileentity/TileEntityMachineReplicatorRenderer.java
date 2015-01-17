@@ -1,9 +1,6 @@
 package com.ollieread.technomagi.client.renderer.tileentity;
 
-import java.lang.reflect.Field;
-
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -14,32 +11,29 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import com.ollieread.technomagi.client.model.ModelMachineConstruct;
-import com.ollieread.technomagi.client.model.ModelMachineFurnace;
+import com.ollieread.technomagi.client.model.ModelMachineReplicator;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.common.init.Blocks;
-import com.ollieread.technomagi.tileentity.TileEntityMachineFurnace;
+import com.ollieread.technomagi.tileentity.TileEntityMachineReplicator;
 
-import cpw.mods.fml.relauncher.ReflectionHelper;
-
-public class TileEntityFurnaceRenderer extends TileEntitySpecialRenderer
+public class TileEntityMachineReplicatorRenderer extends TileEntitySpecialRenderer
 {
 
     private final ModelMachineConstruct construct;
-    private final ModelMachineFurnace furnace;
-    private static Field rollField = ReflectionHelper.findField(EntityRenderer.class, "camRoll", "field_78495_O");
-    private static Field prevRollField = ReflectionHelper.findField(EntityRenderer.class, "prevCamRoll", "field_78505_P");
+    private final ModelMachineReplicator replicator;
 
-    public TileEntityFurnaceRenderer()
+    public TileEntityMachineReplicatorRenderer()
     {
         construct = new ModelMachineConstruct();
-        furnace = new ModelMachineFurnace();
+        replicator = new ModelMachineReplicator();
     }
 
     @Override
-    public void renderTileEntityAt(TileEntity te, double x, double y, double z, float partialTicks)
+    public void renderTileEntityAt(TileEntity te, double x, double y, double z, float scale)
     {
-        TileEntityMachineFurnace machine = (TileEntityMachineFurnace) te;
+        TileEntityMachineReplicator machine = (TileEntityMachineReplicator) te;
 
+        replicator.setTileEntity(machine);
         int side = machine.getFacing();
         Tessellator tessellator = Tessellator.instance;
         // This will make your block brightness dependent from surroundings
@@ -52,7 +46,7 @@ public class TileEntityFurnaceRenderer extends TileEntitySpecialRenderer
         OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) l1, (float) l2);
 
         ResourceLocation textureConstruct = (new ResourceLocation(Reference.MODID.toLowerCase(), "textures/blocks/modelConstruct.png"));
-        ResourceLocation textureFurnace = (new ResourceLocation(Reference.MODID.toLowerCase(), "textures/blocks/modelFurnace.png"));
+        ResourceLocation textureReplicator = (new ResourceLocation(Reference.MODID.toLowerCase(), "textures/blocks/modelReplicator.png"));
 
         GL11.glPushMatrix();
         GL11.glTranslatef((float) x + 0.5F, (float) y + 1.5F, (float) z + 0.5F);
@@ -78,15 +72,10 @@ public class TileEntityFurnaceRenderer extends TileEntitySpecialRenderer
         Minecraft.getMinecraft().renderEngine.bindTexture(textureConstruct);
         construct.render((Entity) null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
 
+        Minecraft.getMinecraft().renderEngine.bindTexture(textureReplicator);
+        replicator.render((Entity) null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F, machine.getSample());
+
         GL11.glPopMatrix();
-        GL11.glEnable(GL11.GL_CULL_FACE);
-        GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
-        GL11.glRotatef(90F, 0.0F, -1.0F, 0.0F);
-
-        Minecraft.getMinecraft().renderEngine.bindTexture(textureFurnace);
-
-        furnace.render((Entity) null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
-
         GL11.glPopMatrix();
     }
 }

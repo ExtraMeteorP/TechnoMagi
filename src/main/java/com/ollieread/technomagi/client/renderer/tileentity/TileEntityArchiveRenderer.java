@@ -33,11 +33,11 @@ public class TileEntityArchiveRenderer extends TileEntitySpecialRenderer
     public void renderTileEntityAt(TileEntity te, double x, double y, double z, float scale)
     {
         TileEntityArchive archive = (TileEntityArchive) te;
-        int side = archive.getBlockMetadata();
+        int side = archive.getFacing();
         Tessellator tessellator = Tessellator.instance;
         // This will make your block brightness dependent from surroundings
         // lighting.
-        float f = Blocks.blockArchive.getLightValue(te.getWorldObj(), te.xCoord, te.yCoord, te.zCoord);
+        float f = Blocks.blockMachine.getLightValue(te.getWorldObj(), te.xCoord, te.yCoord, te.zCoord);
         int l = te.getWorldObj().getLightBrightnessForSkyBlocks(te.xCoord, te.yCoord, te.zCoord, 0);
         int l1 = l % 65536;
         int l2 = l / 65536;

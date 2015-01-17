@@ -21,7 +21,7 @@ import org.lwjgl.opengl.GL11;
 import com.ollieread.technomagi.client.model.ModelTank;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.common.init.Blocks;
-import com.ollieread.technomagi.tileentity.TileEntityStorage;
+import com.ollieread.technomagi.tileentity.TileEntityStorageItems;
 
 public class TileEntityStorageRenderer extends TileEntitySpecialRenderer
 {
@@ -36,7 +36,7 @@ public class TileEntityStorageRenderer extends TileEntitySpecialRenderer
     @Override
     public void renderTileEntityAt(TileEntity te, double x, double y, double z, float scale)
     {
-        TileEntityStorage storage = (TileEntityStorage) te;
+        TileEntityStorageItems storage = (TileEntityStorageItems) te;
         Tessellator tessellator = Tessellator.instance;
 
         ItemStack itemStack = storage.getItem();

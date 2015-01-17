@@ -22,7 +22,7 @@ import org.lwjgl.opengl.GL11;
 import com.ollieread.technomagi.client.model.ModelTank;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.common.init.Blocks;
-import com.ollieread.technomagi.tileentity.TileEntityTank;
+import com.ollieread.technomagi.tileentity.TileEntityStorageFluid;
 
 public class TileEntityTankRenderer extends TileEntitySpecialRenderer
 {
@@ -37,7 +37,7 @@ public class TileEntityTankRenderer extends TileEntitySpecialRenderer
     @Override
     public void renderTileEntityAt(TileEntity te, double x, double y, double z, float scale)
     {
-        TileEntityTank tank = (TileEntityTank) te;
+        TileEntityStorageFluid tank = (TileEntityStorageFluid) te;
         Tessellator tessellator = Tessellator.instance;
 
         FluidStack fluidStack = tank.getFluid();

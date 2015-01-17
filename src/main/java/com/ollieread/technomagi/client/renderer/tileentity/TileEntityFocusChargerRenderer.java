@@ -14,7 +14,7 @@ import org.lwjgl.opengl.GL11;
 import com.ollieread.technomagi.client.model.ModelMachineFocusCharger;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.common.init.Blocks;
-import com.ollieread.technomagi.tileentity.TileEntityFocusCharger;
+import com.ollieread.technomagi.tileentity.TileEntityMachineInfuserCharger;
 
 public class TileEntityFocusChargerRenderer extends TileEntitySpecialRenderer
 {
@@ -29,7 +29,7 @@ public class TileEntityFocusChargerRenderer extends TileEntitySpecialRenderer
     @Override
     public void renderTileEntityAt(TileEntity te, double x, double y, double z, float partialTicks)
     {
-        TileEntityFocusCharger machine = (TileEntityFocusCharger) te;
+        TileEntityMachineInfuserCharger machine = (TileEntityMachineInfuserCharger) te;
 
         int side = machine.getBlockMetadata();
         Tessellator tessellator = Tessellator.instance;
