@@ -7,7 +7,7 @@ import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-import com.ollieread.technomagi.tileentity.TileEntityAnalysis;
+import com.ollieread.technomagi.tileentity.TileEntityMachineAnalysis;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -15,11 +15,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ContainerAnalysis extends Container
 {
 
-    private TileEntityAnalysis analysis;
+    private TileEntityMachineAnalysis analysis;
     private int lastProgress;
     private int lastData;
 
-    public ContainerAnalysis(InventoryPlayer playerInventory, TileEntityAnalysis tile)
+    public ContainerAnalysis(InventoryPlayer playerInventory, TileEntityMachineAnalysis tile)
     {
         analysis = tile;
 

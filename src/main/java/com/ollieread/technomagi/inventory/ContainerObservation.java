@@ -7,7 +7,7 @@ import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-import com.ollieread.technomagi.tileentity.TileEntityObservationChamber;
+import com.ollieread.technomagi.tileentity.TileEntityMachineObservation;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -15,11 +15,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ContainerObservation extends Container
 {
 
-    private TileEntityObservationChamber chamber;
+    private TileEntityMachineObservation chamber;
     private int lastProgress;
     private int lastData;
 
-    public ContainerObservation(InventoryPlayer playerInventory, TileEntityObservationChamber tile)
+    public ContainerObservation(InventoryPlayer playerInventory, TileEntityMachineObservation tile)
     {
         chamber = tile;
 

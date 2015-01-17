@@ -7,7 +7,7 @@ import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-import com.ollieread.technomagi.tileentity.TileEntityNaniteReplicator;
+import com.ollieread.technomagi.tileentity.TileEntityMachineReplicator;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -15,14 +15,14 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ContainerNaniteReplicator extends Container
 {
 
-    private TileEntityNaniteReplicator replicator;
+    private TileEntityMachineReplicator replicator;
     private int lastNanites;
     private int lastSample;
     private String lastNaniteType;
     private String lastSampleType;
     private int lastProgress;
 
-    public ContainerNaniteReplicator(InventoryPlayer playerInventory, TileEntityNaniteReplicator tile)
+    public ContainerNaniteReplicator(InventoryPlayer playerInventory, TileEntityMachineReplicator tile)
     {
         replicator = tile;
 

@@ -13,7 +13,7 @@ import net.minecraftforge.fluids.FluidTank;
 import com.ollieread.technomagi.block.BlockResource;
 import com.ollieread.technomagi.block.BlockStorage;
 import com.ollieread.technomagi.block.BlockTank;
-import com.ollieread.technomagi.common.proxy.ItemStorage;
+import com.ollieread.technomagi.tileentity.component.Storage;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -71,7 +71,7 @@ public class ItemBlockTM extends ItemBlock
                 }
             } else if (Block.getBlockFromItem(stack.getItem()) instanceof BlockStorage) {
                 if (stack.stackTagCompound != null) {
-                    ItemStorage storage = new ItemStorage(4096);
+                    Storage storage = new Storage(4096);
                     storage.readFromNBT(stack.stackTagCompound);
 
                     if (storage.getItem() != null) {

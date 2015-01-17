@@ -7,7 +7,7 @@ import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-import com.ollieread.technomagi.tileentity.TileEntityFocuser;
+import com.ollieread.technomagi.tileentity.TileEntityMachineInfuser;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -15,10 +15,10 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ContainerFocuser extends Container
 {
 
-    private TileEntityFocuser focuser;
+    private TileEntityMachineInfuser focuser;
     private int lastProgress;
 
-    public ContainerFocuser(InventoryPlayer playerInventory, TileEntityFocuser tile)
+    public ContainerFocuser(InventoryPlayer playerInventory, TileEntityMachineInfuser tile)
     {
         focuser = tile;
 

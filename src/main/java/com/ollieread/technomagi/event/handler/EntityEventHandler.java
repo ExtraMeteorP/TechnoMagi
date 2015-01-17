@@ -32,16 +32,16 @@ import com.ollieread.ennds.event.PlayerCastingEvent.Start;
 import com.ollieread.ennds.extended.ExtendedNanites;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.ennds.research.ResearchRegistry;
-import com.ollieread.technomagi.block.IDigitalToolable;
 import com.ollieread.technomagi.common.init.Blocks;
 import com.ollieread.technomagi.common.init.Config;
 import com.ollieread.technomagi.common.init.Items;
 import com.ollieread.technomagi.item.ItemMobBrain;
-import com.ollieread.technomagi.tileentity.TileEntityTeleporter;
+import com.ollieread.technomagi.tileentity.IRegionController;
+import com.ollieread.technomagi.tileentity.ITileEntityToolable;
+import com.ollieread.technomagi.tileentity.TileEntityMachineTeleporter;
 import com.ollieread.technomagi.util.EntityHelper;
 import com.ollieread.technomagi.util.TeleportHelper;
 import com.ollieread.technomagi.util.VersionChecker;
-import com.ollieread.technomagi.world.region.IRegionController;
 import com.ollieread.technomagi.world.region.RegionManager;
 import com.ollieread.technomagi.world.region.RegionManager.RegionControllerType;
 import com.ollieread.technomagi.world.region.RegionPayload;
@@ -73,8 +73,8 @@ public class EntityEventHandler
                 if (event.action.equals(PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK)) {
                     Block block = event.world.getBlock(event.x, event.y, event.z);
 
-                    if (block instanceof IDigitalToolable) {
-                        if (((IDigitalToolable) block).onTooled(event.entityPlayer, event.world, event.x, event.y, event.z, event.entityPlayer.getHeldItem())) {
+                    if (block instanceof ITileEntityToolable) {
+                        if (((ITileEntityToolable) block).onTooled(event.entityPlayer, event.world, event.x, event.y, event.z, event.entityPlayer.getHeldItem())) {
                             event.setCanceled(true);
                             event.entityPlayer.swingItem();
                         }
@@ -261,10 +261,10 @@ public class EntityEventHandler
     {
         if (!event.entityLiving.worldObj.isRemote) {
             if (EntityHelper.isStoodOnMeta(event.entityLiving, Blocks.blockTeleporter, 0)) {
-                TileEntityTeleporter teleporter = (TileEntityTeleporter) EntityHelper.getTileEntityStoodOn(event.entityLiving);
+                TileEntityMachineTeleporter teleporter = (TileEntityMachineTeleporter) EntityHelper.getTileEntityStoodOn(event.entityLiving);
 
                 if (teleporter != null && teleporter.canUse(event.entityLiving)) {
-                    TileEntityTeleporter destination = TeleportHelper.findTeleporterAbove(teleporter, event.entityLiving);
+                    TileEntityMachineTeleporter destination = TeleportHelper.findTeleporterAbove(teleporter, event.entityLiving);
 
                     if (destination != null) {
                         TeleportHelper.teleportEntityToTeleporter(event.entityLiving, teleporter, destination);
@@ -305,7 +305,7 @@ public class EntityEventHandler
             for (int j = startZ; j <= endZ; j++) {
                 for (int k = startY; k <= endY; k++) {
                     if (world.getBlock(i, k, j).equals(Blocks.blockTeleporter) && world.getBlockMetadata(i, k, j) == 2) {
-                        TileEntityTeleporter teleporter = (TileEntityTeleporter) world.getTileEntity(i, k, j);
+                        TileEntityMachineTeleporter teleporter = (TileEntityMachineTeleporter) world.getTileEntity(i, k, j);
 
                         if (teleporter.canUse(event.entityLiving)) {
                             event.targetX = i;
@@ -315,7 +315,7 @@ public class EntityEventHandler
                             return;
                         }
                     } else if (world.getBlock(i, k, j).equals(Blocks.blockTeleporter) && world.getBlockMetadata(i, k, j) == 3) {
-                        TileEntityTeleporter teleporter = (TileEntityTeleporter) world.getTileEntity(i, k, j);
+                        TileEntityMachineTeleporter teleporter = (TileEntityMachineTeleporter) world.getTileEntity(i, k, j);
 
                         if (teleporter.canUse(event.entityLiving)) {
                             event.setCanceled(true);
@@ -338,7 +338,7 @@ public class EntityEventHandler
             for (int j = startZ1; j <= endZ1; j++) {
                 for (int k = startY1; k <= endY1; k++) {
                     if (world.getBlock(i, k, j).equals(Blocks.blockTeleporter) && world.getBlockMetadata(i, k, j) == 3) {
-                        TileEntityTeleporter teleporter = (TileEntityTeleporter) world.getTileEntity(i, k, j);
+                        TileEntityMachineTeleporter teleporter = (TileEntityMachineTeleporter) world.getTileEntity(i, k, j);
 
                         if (teleporter.canUse(event.entityLiving)) {
                             event.setCanceled(true);

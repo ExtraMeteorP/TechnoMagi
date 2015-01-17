@@ -3,7 +3,7 @@ package com.ollieread.technomagi.creativetab;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
-import com.ollieread.technomagi.common.init.Blocks;
+import com.ollieread.technomagi.common.init.Items;
 
 public class CreativeTabTM extends CreativeTabs
 {
@@ -16,7 +16,7 @@ public class CreativeTabTM extends CreativeTabs
     @Override
     public Item getTabIconItem()
     {
-        return Item.getItemFromBlock(Blocks.blockArchive);
+        return Items.itemPersonalInterface;
     }
 
 }

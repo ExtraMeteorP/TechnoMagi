@@ -52,7 +52,7 @@ public class KeyInputHandler
             ExtendedPlayerKnowledge charon = ExtendedPlayerKnowledge.get(player);
 
             if (charon != null && !charon.canSpecialise()) {
-                PacketHandler.INSTANCE.sendToServer(new MessageOpenGUI(CommonProxy.GUI_DIAGNOSIS));
+                PacketHandler.INSTANCE.sendToServer(new MessageOpenGUI(CommonProxy.GUI_PERSONAL_INTERFACE));
             }
         }
     }

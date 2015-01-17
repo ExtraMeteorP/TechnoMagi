@@ -40,4 +40,15 @@ public abstract class ItemTMNBT extends ItemTM
         return stack;
     }
 
+    public static String getNBTString(ItemStack stack, String name)
+    {
+        NBTTagCompound compound = getNBT(stack);
+
+        if (compound.hasKey(name)) {
+            return compound.getString(name);
+        }
+
+        return null;
+    }
+
 }

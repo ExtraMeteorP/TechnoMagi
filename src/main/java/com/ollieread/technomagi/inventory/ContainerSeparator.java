@@ -7,7 +7,7 @@ import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-import com.ollieread.technomagi.tileentity.TileEntitySeparator;
+import com.ollieread.technomagi.tileentity.TileEntityMachineProcessor;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -15,10 +15,10 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ContainerSeparator extends Container
 {
 
-    private TileEntitySeparator crafter;
+    private TileEntityMachineProcessor crafter;
     private int lastProgress;
 
-    public ContainerSeparator(InventoryPlayer playerInventory, TileEntitySeparator tile)
+    public ContainerSeparator(InventoryPlayer playerInventory, TileEntityMachineProcessor tile)
     {
         crafter = tile;
 

@@ -4,15 +4,15 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 
-import com.ollieread.technomagi.tileentity.TileEntityAnalysis;
+import com.ollieread.technomagi.tileentity.TileEntityMachineAnalysis;
 
 public class SlotAnalysis extends Slot
 {
 
     protected boolean empty = false;
-    protected TileEntityAnalysis analysis;
+    protected TileEntityMachineAnalysis analysis;
 
-    public SlotAnalysis(TileEntityAnalysis analysis, int i, int x, int y)
+    public SlotAnalysis(TileEntityMachineAnalysis analysis, int i, int x, int y)
     {
         super((IInventory) analysis, i, x, y);
         this.analysis = analysis;

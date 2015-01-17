@@ -7,7 +7,7 @@ import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-import com.ollieread.technomagi.tileentity.TileEntityFurnace;
+import com.ollieread.technomagi.tileentity.TileEntityMachineFurnace;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -15,10 +15,10 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ContainerFurnace extends Container
 {
 
-    private TileEntityFurnace furnace;
+    private TileEntityMachineFurnace furnace;
     private int lastProgress;
 
-    public ContainerFurnace(InventoryPlayer playerInventory, TileEntityFurnace tile)
+    public ContainerFurnace(InventoryPlayer playerInventory, TileEntityMachineFurnace tile)
     {
         furnace = tile;
 

@@ -7,7 +7,7 @@ import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-import com.ollieread.technomagi.tileentity.TileEntityCrafting;
+import com.ollieread.technomagi.tileentity.TileEntityMachineAssembler;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -15,10 +15,10 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ContainerCrafting extends Container
 {
 
-    private TileEntityCrafting crafter;
+    private TileEntityMachineAssembler crafter;
     private int lastProgress;
 
-    public ContainerCrafting(InventoryPlayer playerInventory, TileEntityCrafting tile)
+    public ContainerCrafting(InventoryPlayer playerInventory, TileEntityMachineAssembler tile)
     {
         crafter = tile;
 
