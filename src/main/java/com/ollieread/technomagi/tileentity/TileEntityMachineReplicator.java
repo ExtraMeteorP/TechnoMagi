@@ -15,10 +15,10 @@ import com.ollieread.technomagi.common.init.Config;
 import com.ollieread.technomagi.common.init.Items;
 import com.ollieread.technomagi.item.ItemNaniteContainer;
 import com.ollieread.technomagi.item.ItemSampleVile;
-import com.ollieread.technomagi.tileentity.abstracts.MachineInventory;
-import com.ollieread.technomagi.tileentity.component.Inventory;
+import com.ollieread.technomagi.tileentity.abstracts.TileEntityMachineInventory;
+import com.ollieread.technomagi.tileentity.component.ComponentInventory;
 
-public class TileEntityMachineReplicator extends MachineInventory implements ISidedInventory
+public class TileEntityMachineReplicator extends TileEntityMachineInventory implements ISidedInventory
 {
 
     protected int nanites = 0;
@@ -32,9 +32,9 @@ public class TileEntityMachineReplicator extends MachineInventory implements ISi
 
     public TileEntityMachineReplicator()
     {
-        super(Config.replicatorPowerMax, Config.replicatorPowerRecieve, 0, new Inventory(3));
+        super(Config.replicatorPowerMax, Config.replicatorPowerRecieve, 0, new ComponentInventory(3));
 
-        inventory = new Inventory(3);
+        inventory = new ComponentInventory(3);
 
         setMaxProgress(Config.replicatorProgressMax);
         setUsage(Config.replicatorPowerUse);

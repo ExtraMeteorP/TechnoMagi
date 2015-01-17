@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 
-import com.ollieread.technomagi.tileentity.component.IDisguisable;
+import com.ollieread.technomagi.tileentity.ITileEntityDisguisable;
 import com.ollieread.technomagi.util.RenderHelper;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
@@ -30,9 +30,9 @@ public class BlockDisguiseRenderer implements ISimpleBlockRenderingHandler
     {
         TileEntity tileEntity = world.getTileEntity(x, y, z);
 
-        if (tileEntity instanceof IDisguisable) {
-            if (((IDisguisable) tileEntity).isDisguised()) {
-                ItemStack stack = ((IDisguisable) tileEntity).getDisguise();
+        if (tileEntity instanceof ITileEntityDisguisable) {
+            if (((ITileEntityDisguisable) tileEntity).isDisguised()) {
+                ItemStack stack = ((ITileEntityDisguisable) tileEntity).getDisguise();
                 Block disguise = Block.getBlockFromItem(stack.getItem());
 
                 if (disguise != null) {

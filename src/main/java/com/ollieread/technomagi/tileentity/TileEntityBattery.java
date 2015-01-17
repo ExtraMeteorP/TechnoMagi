@@ -4,23 +4,23 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import cofh.api.energy.IEnergyHandler;
 
-import com.ollieread.technomagi.tileentity.abstracts.Basic;
-import com.ollieread.technomagi.tileentity.component.Power;
+import com.ollieread.technomagi.tileentity.abstracts.TileEntityBasic;
+import com.ollieread.technomagi.tileentity.component.ComponentPower;
 import com.ollieread.technomagi.util.PowerHelper;
 
-public class TileEntityBattery extends Basic implements IEnergyHandler
+public class TileEntityBattery extends TileEntityBasic implements IEnergyHandler
 {
 
-    protected Power energy = null;
+    protected ComponentPower energy = null;
 
     public TileEntityBattery()
     {
-        new Power(0, 0, 0);
+        new ComponentPower(0, 0, 0);
     }
 
     public TileEntityBattery(int capacity, int maxInput, int maxExtract)
     {
-        energy = new Power(capacity, maxInput, maxExtract);
+        energy = new ComponentPower(capacity, maxInput, maxExtract);
     }
 
     public void readFromNBT(NBTTagCompound compound)

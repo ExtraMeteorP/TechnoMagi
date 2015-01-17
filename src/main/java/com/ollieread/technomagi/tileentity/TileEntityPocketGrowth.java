@@ -8,12 +8,12 @@ import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.terraingen.SaplingGrowTreeEvent;
 
-import com.ollieread.technomagi.tileentity.abstracts.Pocket;
+import com.ollieread.technomagi.tileentity.abstracts.TileEntityPocket;
 
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
-public class TileEntityPocketGrowth extends Pocket
+public class TileEntityPocketGrowth extends TileEntityPocket
 {
 
     public TileEntityPocketGrowth(boolean negative, int size)

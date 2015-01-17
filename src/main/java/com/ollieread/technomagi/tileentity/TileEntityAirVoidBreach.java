@@ -12,9 +12,9 @@ import scala.actors.threadpool.Arrays;
 
 import com.ollieread.technomagi.common.init.Blocks;
 import com.ollieread.technomagi.common.init.Config;
-import com.ollieread.technomagi.tileentity.abstracts.Basic;
+import com.ollieread.technomagi.tileentity.abstracts.TileEntityBasic;
 
-public class TileEntityAirVoidBreach extends Basic
+public class TileEntityAirVoidBreach extends TileEntityBasic
 {
 
     protected int stage = 0;

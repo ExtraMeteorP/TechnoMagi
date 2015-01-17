@@ -4,19 +4,17 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
-import com.ollieread.technomagi.tileentity.abstracts.MachineStorage;
-import com.ollieread.technomagi.tileentity.component.IHasOwner;
-import com.ollieread.technomagi.tileentity.component.IStorage;
-import com.ollieread.technomagi.tileentity.component.Owner;
+import com.ollieread.technomagi.tileentity.abstracts.TileEntityMachineStorage;
+import com.ollieread.technomagi.tileentity.component.ComponentOwner;
 
-public class TileEntityStorageItems extends MachineStorage implements IHasOwner, IStorage
+public class TileEntityStorageItems extends TileEntityMachineStorage implements ITileEntityHasOwner, ITileEntityStorage
 {
 
-    protected Owner owner;
+    protected ComponentOwner owner;
 
     public TileEntityStorageItems()
     {
-        owner = new Owner();
+        owner = new ComponentOwner();
     }
 
     @Override

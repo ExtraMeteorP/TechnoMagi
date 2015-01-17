@@ -7,14 +7,13 @@ import net.minecraft.inventory.Container;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
-import com.ollieread.technomagi.tileentity.abstracts.Machine;
-import com.ollieread.technomagi.tileentity.component.IHasLink;
-import com.ollieread.technomagi.tileentity.component.Linked;
+import com.ollieread.technomagi.tileentity.abstracts.TileEntityMachine;
+import com.ollieread.technomagi.tileentity.component.ComponentLinked;
 
-public class TileEntityMachineTeleporter extends Machine implements IHasLink
+public class TileEntityMachineTeleporter extends TileEntityMachine implements ITileEntityHasLink
 {
 
-    protected Linked linked = new Linked<TileEntityMachineTeleporter>();
+    protected ComponentLinked linked = new ComponentLinked<TileEntityMachineTeleporter>();
     protected int cooldown = -1;
 
     protected int mode = 0;

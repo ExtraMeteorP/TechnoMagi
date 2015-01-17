@@ -9,18 +9,18 @@ import net.minecraft.world.World;
 
 import com.ollieread.technomagi.common.init.Blocks;
 import com.ollieread.technomagi.common.init.Config;
-import com.ollieread.technomagi.tileentity.abstracts.MachineInventory;
-import com.ollieread.technomagi.tileentity.component.Inventory;
+import com.ollieread.technomagi.tileentity.abstracts.TileEntityMachineInventory;
+import com.ollieread.technomagi.tileentity.component.ComponentInventory;
 import com.ollieread.technomagi.util.ItemHelper;
 
-public class TileEntityMachineInfuser extends MachineInventory
+public class TileEntityMachineInfuser extends TileEntityMachineInventory
 {
 
     protected int multiplier = 0;
 
     public TileEntityMachineInfuser()
     {
-        super(Config.focuserPowerMax, Config.focuserPowerRecieve, 0, new Inventory(2));
+        super(Config.focuserPowerMax, Config.focuserPowerRecieve, 0, new ComponentInventory(2));
 
         setMaxProgress(Config.focuserProgressMax);
         setUsage(Config.focuserPowerUse);

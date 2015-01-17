@@ -8,15 +8,15 @@ import net.minecraft.world.World;
 
 import com.ollieread.technomagi.common.init.Config;
 import com.ollieread.technomagi.item.crafting.RecipeManager;
-import com.ollieread.technomagi.tileentity.abstracts.MachineInventory;
-import com.ollieread.technomagi.tileentity.component.Inventory;
+import com.ollieread.technomagi.tileentity.abstracts.TileEntityMachineInventory;
+import com.ollieread.technomagi.tileentity.component.ComponentInventory;
 
-public class TileEntityMachineFurnace extends MachineInventory
+public class TileEntityMachineFurnace extends TileEntityMachineInventory
 {
 
     public TileEntityMachineFurnace()
     {
-        super(Config.furnacePowerMax, Config.furnacePowerReceive, 0, new Inventory(2));
+        super(Config.furnacePowerMax, Config.furnacePowerReceive, 0, new ComponentInventory(2));
 
         setMaxProgress(Config.furnaceProgressMax);
         setUsage(Config.furnacePowerUse);

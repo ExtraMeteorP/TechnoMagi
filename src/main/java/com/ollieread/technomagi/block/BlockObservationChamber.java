@@ -16,8 +16,8 @@ import net.minecraft.world.World;
 import com.ollieread.ennds.research.ResearchRegistry;
 import com.ollieread.technomagi.block.abstracts.BlockBasicContainer;
 import com.ollieread.technomagi.common.Reference;
+import com.ollieread.technomagi.tileentity.ITileEntityHasFiller;
 import com.ollieread.technomagi.tileentity.TileEntityMachineObservation;
-import com.ollieread.technomagi.tileentity.component.IHasFiller;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -84,7 +84,7 @@ public class BlockObservationChamber extends BlockBasicContainer
 
         TileEntity tileEntity = world.getTileEntity(x, y, z);
 
-        ((IHasFiller) tileEntity).create();
+        ((ITileEntityHasFiller) tileEntity).create();
     }
 
     public boolean canPlaceBlockAt(World world, int x, int y, int z)

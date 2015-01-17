@@ -5,9 +5,9 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.world.World;
 
-import com.ollieread.technomagi.tileentity.abstracts.Machine;
+import com.ollieread.technomagi.tileentity.abstracts.TileEntityMachine;
 
-public class TileEntityMachineInfuserCharger extends Machine
+public class TileEntityMachineInfuserCharger extends TileEntityMachine
 {
 
     public TileEntityMachineInfuserCharger()

@@ -15,17 +15,16 @@ import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.ennds.research.IResearch;
 import com.ollieread.ennds.research.ResearchRegistry;
 import com.ollieread.technomagi.item.ItemResearchStorage;
-import com.ollieread.technomagi.tileentity.abstracts.MachineResearch;
-import com.ollieread.technomagi.tileentity.abstracts.Basic;
-import com.ollieread.technomagi.tileentity.component.IHasOwner;
-import com.ollieread.technomagi.tileentity.component.Inventory;
-import com.ollieread.technomagi.tileentity.component.Owner;
+import com.ollieread.technomagi.tileentity.abstracts.TileEntityMachineResearch;
+import com.ollieread.technomagi.tileentity.abstracts.TileEntityBasic;
+import com.ollieread.technomagi.tileentity.component.ComponentInventory;
+import com.ollieread.technomagi.tileentity.component.ComponentOwner;
 
-public class TileEntityArchive extends Basic implements IHasOwner, IInventory, ITileEntityFacing
+public class TileEntityArchive extends TileEntityBasic implements ITileEntityHasOwner, IInventory, ITileEntityFacing
 {
 
-    protected Owner owner = new Owner();
-    protected Inventory inventory = new Inventory(1);
+    protected ComponentOwner owner = new ComponentOwner();
+    protected ComponentInventory inventory = new ComponentInventory(1);
     protected int facing;
 
     public int field_145926_a;
@@ -210,8 +209,8 @@ public class TileEntityArchive extends Basic implements IHasOwner, IInventory, I
                     for (int z = (zCoord - 8); z < (zCoord + 8); z++) {
                         TileEntity tile = worldObj.getTileEntity(x, y, z);
 
-                        if (tile != null && tile instanceof MachineResearch) {
-                            MachineResearch machine = (MachineResearch) tile;
+                        if (tile != null && tile instanceof TileEntityMachineResearch) {
+                            TileEntityMachineResearch machine = (TileEntityMachineResearch) tile;
 
                             if (machine.getData() > 0) {
                                 Map<String, Integer> research = machine.getResearch();

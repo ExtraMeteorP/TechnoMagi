@@ -15,16 +15,15 @@ import net.minecraft.world.World;
 import com.ollieread.technomagi.item.ItemNaniteContainer;
 import com.ollieread.technomagi.item.crafting.ConstructRecipe;
 import com.ollieread.technomagi.item.crafting.RecipeManager;
-import com.ollieread.technomagi.tileentity.abstracts.Basic;
-import com.ollieread.technomagi.tileentity.component.IHasOwner;
-import com.ollieread.technomagi.tileentity.component.Inventory;
-import com.ollieread.technomagi.tileentity.component.Owner;
+import com.ollieread.technomagi.tileentity.abstracts.TileEntityBasic;
+import com.ollieread.technomagi.tileentity.component.ComponentInventory;
+import com.ollieread.technomagi.tileentity.component.ComponentOwner;
 import com.ollieread.technomagi.util.PacketHelper;
 
-public class TileEntityConstruct extends Basic implements IInventory, IHasOwner, ITileEntityGui
+public class TileEntityConstruct extends TileEntityBasic implements IInventory, ITileEntityHasOwner, ITileEntityGui
 {
-    protected Owner owner = null;
-    protected Inventory inventory = null;
+    protected ComponentOwner owner = null;
+    protected ComponentInventory inventory = null;
 
     protected Random rand = new Random();
     protected boolean isBuilding = false;
@@ -32,8 +31,8 @@ public class TileEntityConstruct extends Basic implements IInventory, IHasOwner,
 
     public TileEntityConstruct()
     {
-        owner = new Owner();
-        inventory = new Inventory(5);
+        owner = new ComponentOwner();
+        inventory = new ComponentInventory(5);
     }
 
     @Override
@@ -100,8 +99,8 @@ public class TileEntityConstruct extends Basic implements IInventory, IHasOwner,
             worldObj.setBlock(xCoord, yCoord, zCoord, Block.getBlockFromItem(output.getItem()), output.getItemDamage(), 2);
             TileEntity tile = worldObj.getTileEntity(xCoord, yCoord, zCoord);
 
-            if (tile instanceof IHasOwner) {
-                ((IHasOwner) tile).setOwner(player.getCommandSenderName());
+            if (tile instanceof ITileEntityHasOwner) {
+                ((ITileEntityHasOwner) tile).setOwner(player.getCommandSenderName());
             }
 
             if (tile instanceof ITileEntityFacing) {

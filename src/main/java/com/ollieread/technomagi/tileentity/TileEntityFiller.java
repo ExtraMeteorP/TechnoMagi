@@ -1,11 +1,11 @@
 package com.ollieread.technomagi.tileentity;
 
-import com.ollieread.technomagi.tileentity.abstracts.Basic;
+import com.ollieread.technomagi.tileentity.abstracts.TileEntityBasic;
 
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class TileEntityFiller extends Basic
+public class TileEntityFiller extends TileEntityBasic
 {
 
     public int parentX;

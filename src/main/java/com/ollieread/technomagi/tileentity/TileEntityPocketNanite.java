@@ -7,9 +7,9 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.AxisAlignedBB;
 
 import com.ollieread.technomagi.potion.PotionTM;
-import com.ollieread.technomagi.tileentity.abstracts.Pocket;
+import com.ollieread.technomagi.tileentity.abstracts.TileEntityPocket;
 
-public class TileEntityPocketNanite extends Pocket
+public class TileEntityPocketNanite extends TileEntityPocket
 {
 
     public TileEntityPocketNanite(boolean negative, int size)

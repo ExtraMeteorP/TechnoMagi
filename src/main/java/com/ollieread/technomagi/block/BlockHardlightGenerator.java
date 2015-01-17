@@ -16,9 +16,9 @@ import net.minecraftforge.common.util.ForgeDirection;
 import com.ollieread.technomagi.block.abstracts.BlockBasicContainer;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.item.ItemDigitalTool;
+import com.ollieread.technomagi.tileentity.ITileEntityDisguisable;
 import com.ollieread.technomagi.tileentity.ITileEntityToolable;
 import com.ollieread.technomagi.tileentity.TileEntityHardlightGenerator;
-import com.ollieread.technomagi.tileentity.component.IDisguisable;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -143,8 +143,8 @@ public class BlockHardlightGenerator extends BlockBasicContainer implements ITil
             if (!world.isRemote) {
                 TileEntity tile = world.getTileEntity(x, y, z);
 
-                if (tile != null && tile instanceof IDisguisable) {
-                    IDisguisable disguise = (IDisguisable) tile;
+                if (tile != null && tile instanceof ITileEntityDisguisable) {
+                    ITileEntityDisguisable disguise = (ITileEntityDisguisable) tile;
 
                     if (!disguise.isDisguised()) {
 
@@ -166,8 +166,8 @@ public class BlockHardlightGenerator extends BlockBasicContainer implements ITil
     {
         TileEntity tile = world.getTileEntity(x, y, z);
 
-        if (tile != null && tile instanceof IDisguisable) {
-            IDisguisable disguise = (IDisguisable) tile;
+        if (tile != null && tile instanceof ITileEntityDisguisable) {
+            ITileEntityDisguisable disguise = (ITileEntityDisguisable) tile;
 
             if (disguise.isDisguised()) {
                 ItemStack stack = disguise.getDisguise();
@@ -191,8 +191,8 @@ public class BlockHardlightGenerator extends BlockBasicContainer implements ITil
     {
         TileEntity tile = world.getTileEntity(x, y, z);
 
-        if (tile != null && tile instanceof IDisguisable) {
-            IDisguisable disguise = (IDisguisable) tile;
+        if (tile != null && tile instanceof ITileEntityDisguisable) {
+            ITileEntityDisguisable disguise = (ITileEntityDisguisable) tile;
 
             if (disguise.isDisguised()) {
                 ItemStack stack = disguise.getDisguise();
@@ -216,8 +216,8 @@ public class BlockHardlightGenerator extends BlockBasicContainer implements ITil
     {
         TileEntity tile = world.getTileEntity(x, y, z);
 
-        if (tile != null && tile instanceof IDisguisable) {
-            IDisguisable disguise = (IDisguisable) tile;
+        if (tile != null && tile instanceof ITileEntityDisguisable) {
+            ITileEntityDisguisable disguise = (ITileEntityDisguisable) tile;
 
             if (disguise.isDisguised()) {
                 ItemStack stack = disguise.getDisguise();

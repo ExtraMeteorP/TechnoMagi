@@ -3,9 +3,9 @@ package com.ollieread.technomagi.tileentity;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import com.ollieread.technomagi.common.init.Config;
-import com.ollieread.technomagi.tileentity.abstracts.Generator;
+import com.ollieread.technomagi.tileentity.abstracts.TileEntityGenerator;
 
-public class TileEntityGeneratorVoid extends Generator
+public class TileEntityGeneratorVoid extends TileEntityGenerator
 {
 
     public TileEntityGeneratorVoid()

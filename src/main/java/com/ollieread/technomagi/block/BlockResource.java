@@ -20,7 +20,7 @@ import com.ollieread.technomagi.common.init.Items;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockResource extends BlockBasic
+public class BlockResource extends BlockBasic implements IBlockMulti
 {
 
     private Random rand = new Random();
@@ -86,6 +86,12 @@ public class BlockResource extends BlockBasic
     public int damageDropped(int meta)
     {
         return meta;
+    }
+
+    @Override
+    public String getName(int metadata)
+    {
+        return blockNames[metadata];
     }
 
     @SideOnly(Side.CLIENT)

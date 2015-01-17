@@ -2,7 +2,7 @@ package com.ollieread.technomagi.network.message;
 
 import io.netty.buffer.ByteBuf;
 
-import com.ollieread.technomagi.tileentity.abstracts.MachineResearch;
+import com.ollieread.technomagi.tileentity.abstracts.TileEntityMachineResearch;
 
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
@@ -19,7 +19,7 @@ public class MessageSetProgress implements IMessage, IMessageHandler<MessageSetP
     {
     }
 
-    public MessageSetProgress(MachineResearch tile, boolean progress)
+    public MessageSetProgress(TileEntityMachineResearch tile, boolean progress)
     {
         x = tile.xCoord;
         y = tile.yCoord;
@@ -48,7 +48,7 @@ public class MessageSetProgress implements IMessage, IMessageHandler<MessageSetP
     @Override
     public IMessage onMessage(MessageSetProgress message, MessageContext ctx)
     {
-        MachineResearch tile = (MachineResearch) ctx.getServerHandler().playerEntity.worldObj.getTileEntity(message.x, message.y, message.z);
+        TileEntityMachineResearch tile = (TileEntityMachineResearch) ctx.getServerHandler().playerEntity.worldObj.getTileEntity(message.x, message.y, message.z);
 
         if (tile != null) {
             tile.setInProgress(message.inProgress);

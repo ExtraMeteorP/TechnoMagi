@@ -9,18 +9,16 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import com.ollieread.technomagi.block.BlockSmartmetal;
-import com.ollieread.technomagi.tileentity.abstracts.Basic;
-import com.ollieread.technomagi.tileentity.component.Disguisable;
-import com.ollieread.technomagi.tileentity.component.IDisguisable;
-import com.ollieread.technomagi.tileentity.component.IHasOwner;
-import com.ollieread.technomagi.tileentity.component.Owner;
+import com.ollieread.technomagi.tileentity.abstracts.TileEntityBasic;
+import com.ollieread.technomagi.tileentity.component.ComponentDisguisable;
+import com.ollieread.technomagi.tileentity.component.ComponentOwner;
 import com.ollieread.technomagi.util.ItemHelper;
 
-public class TileEntitySmartmetal extends Basic implements IDisguisable, IHasOwner
+public class TileEntitySmartmetal extends TileEntityBasic implements ITileEntityDisguisable, ITileEntityHasOwner
 {
 
-    protected Disguisable disguise = new Disguisable();
-    protected Owner owner = new Owner();
+    protected ComponentDisguisable disguise = new ComponentDisguisable();
+    protected ComponentOwner owner = new ComponentOwner();
     protected int mode = 0;
 
     public boolean setMode(ItemStack stack)

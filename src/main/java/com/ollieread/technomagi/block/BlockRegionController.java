@@ -14,16 +14,20 @@ import net.minecraft.world.World;
 
 import com.ollieread.technomagi.block.abstracts.BlockBasicContainer;
 import com.ollieread.technomagi.common.Reference;
-import com.ollieread.technomagi.tileentity.TileEntityMachineRegionPerception;
+import com.ollieread.technomagi.tileentity.TileEntityRegionControllerDamage;
+import com.ollieread.technomagi.tileentity.TileEntityRegionControllerEffect;
+import com.ollieread.technomagi.tileentity.TileEntityRegionControllerInteraction;
+import com.ollieread.technomagi.tileentity.TileEntityRegionControllerPerception;
+import com.ollieread.technomagi.tileentity.TileEntityRegionControllerPresence;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockRegionController extends BlockBasicContainer
+public class BlockRegionController extends BlockBasicContainer implements IBlockMulti
 {
 
     private Random rand = new Random();
-    public static String[] blockNames = new String[] { "perceptionController", "interactionController", "presenceController", "damageController" };
+    public static String[] blockNames = new String[] { "perception", "interaction", "presence", "damage", "effect" };
 
     @SideOnly(Side.CLIENT)
     protected IIcon[] blockIcons;
@@ -61,11 +65,26 @@ public class BlockRegionController extends BlockBasicContainer
     @Override
     public TileEntity createNewTileEntity(World world, int meta)
     {
-        if (meta == 0) {
-            return new TileEntityMachineRegionPerception();
+        switch (meta) {
+            case 0:
+                return new TileEntityRegionControllerPerception();
+            case 1:
+                return new TileEntityRegionControllerInteraction();
+            case 2:
+                return new TileEntityRegionControllerPresence();
+            case 3:
+                return new TileEntityRegionControllerDamage();
+            case 4:
+                return new TileEntityRegionControllerEffect();
         }
 
         return null;
+    }
+
+    @Override
+    public String getName(int metadata)
+    {
+        return blockNames[metadata];
     }
 
 }

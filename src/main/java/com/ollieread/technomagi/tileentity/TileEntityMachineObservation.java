@@ -25,11 +25,10 @@ import com.ollieread.ennds.research.ResearchRegistry;
 import com.ollieread.technomagi.common.init.Blocks;
 import com.ollieread.technomagi.common.init.Items;
 import com.ollieread.technomagi.item.ItemCapture;
-import com.ollieread.technomagi.tileentity.abstracts.MachineResearch;
-import com.ollieread.technomagi.tileentity.component.IHasFiller;
-import com.ollieread.technomagi.tileentity.component.Inventory;
+import com.ollieread.technomagi.tileentity.abstracts.TileEntityMachineResearch;
+import com.ollieread.technomagi.tileentity.component.ComponentInventory;
 
-public class TileEntityMachineObservation extends MachineResearch implements IHasFiller
+public class TileEntityMachineObservation extends TileEntityMachineResearch implements ITileEntityHasFiller
 {
 
     protected String entity = null;
@@ -41,7 +40,7 @@ public class TileEntityMachineObservation extends MachineResearch implements IHa
 
     public TileEntityMachineObservation()
     {
-        super(6400, 5, 0, 100, new Inventory(2));
+        super(6400, 5, 0, 100, new ComponentInventory(2));
 
         setMaxProgress(200);
         setUsage(3);

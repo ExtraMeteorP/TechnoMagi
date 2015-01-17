@@ -7,15 +7,14 @@ import net.minecraft.world.World;
 
 import com.ollieread.technomagi.common.init.Blocks;
 import com.ollieread.technomagi.item.ItemDigitalTool;
-import com.ollieread.technomagi.tileentity.abstracts.Basic;
-import com.ollieread.technomagi.tileentity.component.Disguisable;
-import com.ollieread.technomagi.tileentity.component.IDisguisable;
+import com.ollieread.technomagi.tileentity.abstracts.TileEntityBasic;
+import com.ollieread.technomagi.tileentity.component.ComponentDisguisable;
 import com.ollieread.technomagi.util.PlayerHelper;
 
-public class TileEntityMachineAreaLight extends Basic implements IDisguisable, ITileEntityToolable
+public class TileEntityMachineAreaLight extends TileEntityBasic implements ITileEntityDisguisable, ITileEntityToolable
 {
 
-    protected Disguisable disguise = new Disguisable();
+    protected ComponentDisguisable disguise = new ComponentDisguisable();
 
     protected boolean on;
 

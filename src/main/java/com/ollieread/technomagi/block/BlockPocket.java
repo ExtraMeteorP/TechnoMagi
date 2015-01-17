@@ -1,8 +1,12 @@
 package com.ollieread.technomagi.block;
 
+import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
@@ -31,6 +35,19 @@ public class BlockPocket extends BlockBasicContainer
     public IIcon getIcon(int p_149691_1_, int p_149691_2_)
     {
         return net.minecraft.init.Blocks.air.getIcon(p_149691_1_, p_149691_2_);
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void getSubBlocks(Item item, CreativeTabs tab, List list)
+    {
+        int x = 0;
+
+        for (int i = 0; i < blockNames.length; i++) {
+            list.add(new ItemStack(item, 1, x));
+            x++;
+            list.add(new ItemStack(item, 1, x));
+            x++;
+        }
     }
 
     public boolean isReplaceable(IBlockAccess world, int x, int y, int z)

@@ -7,17 +7,15 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import com.ollieread.technomagi.common.init.Blocks;
-import com.ollieread.technomagi.tileentity.abstracts.Basic;
-import com.ollieread.technomagi.tileentity.component.Disguisable;
-import com.ollieread.technomagi.tileentity.component.IDisguisable;
-import com.ollieread.technomagi.tileentity.component.IHasOwner;
-import com.ollieread.technomagi.tileentity.component.Owner;
+import com.ollieread.technomagi.tileentity.abstracts.TileEntityBasic;
+import com.ollieread.technomagi.tileentity.component.ComponentDisguisable;
+import com.ollieread.technomagi.tileentity.component.ComponentOwner;
 
-public class TileEntityHardlightGenerator extends Basic implements IHasOwner, IDisguisable
+public class TileEntityHardlightGenerator extends TileEntityBasic implements ITileEntityHasOwner, ITileEntityDisguisable
 {
 
-    protected Owner owner = new Owner();
-    protected Disguisable disguise = new Disguisable();
+    protected ComponentOwner owner = new ComponentOwner();
+    protected ComponentDisguisable disguise = new ComponentDisguisable();
     protected boolean on = false;
     protected boolean proximity = false;
     protected int checked = 0;

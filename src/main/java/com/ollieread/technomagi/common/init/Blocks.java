@@ -24,8 +24,7 @@ import com.ollieread.technomagi.block.BlockStorage;
 import com.ollieread.technomagi.block.BlockTank;
 import com.ollieread.technomagi.block.BlockTeleporter;
 import com.ollieread.technomagi.block.BlockVoidBreach;
-import com.ollieread.technomagi.item.ItemBlockMachine;
-import com.ollieread.technomagi.item.ItemBlockTM;
+import com.ollieread.technomagi.item.ItemBlockMulti;
 import com.ollieread.technomagi.tileentity.TileEntityAirDisplaced;
 import com.ollieread.technomagi.tileentity.TileEntityAirLight;
 import com.ollieread.technomagi.tileentity.TileEntityAirVoidBreach;
@@ -47,11 +46,11 @@ import com.ollieread.technomagi.tileentity.TileEntityMachineInfuser;
 import com.ollieread.technomagi.tileentity.TileEntityMachineInfuserCharger;
 import com.ollieread.technomagi.tileentity.TileEntityMachineObservation;
 import com.ollieread.technomagi.tileentity.TileEntityMachineProcessor;
-import com.ollieread.technomagi.tileentity.TileEntityMachineRegionPerception;
 import com.ollieread.technomagi.tileentity.TileEntityMachineReplicator;
 import com.ollieread.technomagi.tileentity.TileEntityMachineTeleporter;
 import com.ollieread.technomagi.tileentity.TileEntityPrismaticPillar;
 import com.ollieread.technomagi.tileentity.TileEntityReactiveCrafting;
+import com.ollieread.technomagi.tileentity.TileEntityRegionControllerPerception;
 import com.ollieread.technomagi.tileentity.TileEntitySmartmetal;
 import com.ollieread.technomagi.tileentity.TileEntityStorageFluid;
 import com.ollieread.technomagi.tileentity.TileEntityStorageItems;
@@ -109,10 +108,10 @@ public class Blocks
         blockRegionController = new BlockRegionController("regionController");
         blockPrismaticPillar = new BlockPrismaticPillar("prismaticPillar");
 
-        GameRegistry.registerBlock(blockResource, ItemBlockTM.class, "resourceBlock");
-        GameRegistry.registerBlock(blockMachine, ItemBlockMachine.class, "machine");
+        GameRegistry.registerBlock(blockResource, ItemBlockMulti.class, "resourceBlock");
+        GameRegistry.registerBlock(blockMachine, ItemBlockMulti.class, "machine");
         GameRegistry.registerBlock(blockLightAir, "lightAir");
-        GameRegistry.registerBlock(blockTeleporter, ItemBlockTM.class, "teleporter");
+        GameRegistry.registerBlock(blockTeleporter, ItemBlockMulti.class, "teleporter");
         GameRegistry.registerBlock(blockObservationChamber, "observationChamber");
         GameRegistry.registerBlock(blockFocusCharger, "focusCharger");
         GameRegistry.registerBlock(blockEmptyFiller, "emptyFiller");
@@ -120,10 +119,10 @@ public class Blocks
         GameRegistry.registerBlock(blockHardlightFence, "hardlightFence");
         GameRegistry.registerBlock(blockHardlightGenerator, "hardlightGenerator");
         GameRegistry.registerBlock(blockDisplacedAir, "displacedAir");
-        GameRegistry.registerBlock(blockGenerator, ItemBlockTM.class, "generator");
+        GameRegistry.registerBlock(blockGenerator, ItemBlockMulti.class, "generator");
         GameRegistry.registerBlock(blockReactiveCrafting, "reactiveCrafting");
-        GameRegistry.registerBlock(blockTank, ItemBlockTM.class, "tank");
-        GameRegistry.registerBlock(blockStorage, ItemBlockTM.class, "storage");
+        GameRegistry.registerBlock(blockTank, ItemBlockMulti.class, "tank");
+        GameRegistry.registerBlock(blockStorage, ItemBlockMulti.class, "storage");
         GameRegistry.registerBlock(blockBattery, "battery");
         GameRegistry.registerBlock(blockVoidBreach, "voidBreach");
         GameRegistry.registerBlock(blockSmartmetal, "smartmetal");
@@ -158,7 +157,7 @@ public class Blocks
         GameRegistry.registerTileEntity(TileEntityBattery.class, "tileEntityBattery");
         GameRegistry.registerTileEntity(TileEntityAirVoidBreach.class, "tileEntityVoidBreach");
         GameRegistry.registerTileEntity(TileEntitySmartmetal.class, "tileEntitySmartmetal");
-        GameRegistry.registerTileEntity(TileEntityMachineRegionPerception.class, "tileEntityPerceptionFilter");
+        GameRegistry.registerTileEntity(TileEntityRegionControllerPerception.class, "tileEntityPerceptionFilter");
         GameRegistry.registerTileEntity(TileEntityPrismaticPillar.class, "tileEntityPrismaticPillar");
     }
 }

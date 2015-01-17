@@ -4,18 +4,17 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
-import com.ollieread.technomagi.tileentity.abstracts.MachineFluid;
-import com.ollieread.technomagi.tileentity.component.IHasOwner;
-import com.ollieread.technomagi.tileentity.component.Owner;
+import com.ollieread.technomagi.tileentity.abstracts.TileEntityMachineFluid;
+import com.ollieread.technomagi.tileentity.component.ComponentOwner;
 
-public class TileEntityStorageFluid extends MachineFluid implements IHasOwner
+public class TileEntityStorageFluid extends TileEntityMachineFluid implements ITileEntityHasOwner
 {
 
-    protected Owner owner;
+    protected ComponentOwner owner;
 
     public TileEntityStorageFluid()
     {
-        owner = new Owner();
+        owner = new ComponentOwner();
     }
 
     @Override

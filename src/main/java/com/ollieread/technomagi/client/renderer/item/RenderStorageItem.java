@@ -15,7 +15,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.ollieread.technomagi.client.model.ModelTank;
 import com.ollieread.technomagi.common.Reference;
-import com.ollieread.technomagi.tileentity.component.Storage;
+import com.ollieread.technomagi.tileentity.component.ComponentStorage;
 
 public class RenderStorageItem implements IItemRenderer
 {
@@ -76,7 +76,7 @@ public class RenderStorageItem implements IItemRenderer
         model.render((Entity) null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
 
         if (item.stackTagCompound != null) {
-            Storage storage = new Storage(4096);
+            ComponentStorage storage = new ComponentStorage(4096);
             storage.readFromNBT(item.stackTagCompound);
             ItemStack itemStack = storage.getItem();
 

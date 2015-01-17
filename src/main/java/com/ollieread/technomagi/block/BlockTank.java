@@ -18,9 +18,9 @@ import net.minecraftforge.fluids.FluidStack;
 
 import com.ollieread.technomagi.block.abstracts.BlockBasicContainer;
 import com.ollieread.technomagi.common.Reference;
+import com.ollieread.technomagi.tileentity.ITileEntityHasOwner;
 import com.ollieread.technomagi.tileentity.ITileEntityToolable;
 import com.ollieread.technomagi.tileentity.TileEntityStorageFluid;
-import com.ollieread.technomagi.tileentity.component.IHasOwner;
 import com.ollieread.technomagi.util.InventoryHelper;
 
 import cpw.mods.fml.relauncher.Side;
@@ -68,8 +68,8 @@ public class BlockTank extends BlockBasicContainer implements ITileEntityToolabl
     {
         TileEntity te = world.getTileEntity(x, y, z);
 
-        if (te instanceof IHasOwner) {
-            ((IHasOwner) te).setOwner(((EntityPlayer) entity).getCommandSenderName());
+        if (te instanceof ITileEntityHasOwner) {
+            ((ITileEntityHasOwner) te).setOwner(((EntityPlayer) entity).getCommandSenderName());
         }
 
         TileEntityStorageFluid tank = (TileEntityStorageFluid) te;

@@ -14,8 +14,8 @@ import com.ollieread.technomagi.tileentity.TileEntityArchive;
 import com.ollieread.technomagi.tileentity.TileEntityConstruct;
 import com.ollieread.technomagi.tileentity.TileEntityMachineAssembler;
 import com.ollieread.technomagi.tileentity.TileEntityMachineTeleporter;
-import com.ollieread.technomagi.tileentity.abstracts.MachineResearch;
-import com.ollieread.technomagi.tileentity.abstracts.Basic;
+import com.ollieread.technomagi.tileentity.abstracts.TileEntityMachineResearch;
+import com.ollieread.technomagi.tileentity.abstracts.TileEntityBasic;
 
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 
@@ -47,7 +47,7 @@ public class PacketHelper
         PacketHandler.INSTANCE.sendToServer(new MessageSetCrafting(machine, progress));
     }
 
-    public static void setProgress(MachineResearch machine, boolean progress)
+    public static void setProgress(TileEntityMachineResearch machine, boolean progress)
     {
         PacketHandler.INSTANCE.sendToServer(new MessageSetProgress(machine, progress));
     }
@@ -57,7 +57,7 @@ public class PacketHelper
         PacketHandler.INSTANCE.sendToAll(message);
     }
 
-    public static void syncTile(Basic tile)
+    public static void syncTile(TileEntityBasic tile)
     {
         syncTile(new MessageSyncTileEntityTM(tile));
     }

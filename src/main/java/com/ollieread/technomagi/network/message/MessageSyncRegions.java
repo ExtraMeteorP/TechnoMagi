@@ -13,13 +13,14 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
 public class MessageSyncRegions implements IMessage, IMessageHandler<MessageSyncRegions, IMessage>
 {
+    public int dimension;
     public NBTTagCompound compound;
 
     public MessageSyncRegions()
     {
     }
 
-    public MessageSyncRegions(NBTTagCompound compound)
+    public MessageSyncRegions(int dimension, NBTTagCompound compound)
     {
         this.compound = compound;
     }
@@ -27,12 +28,14 @@ public class MessageSyncRegions implements IMessage, IMessageHandler<MessageSync
     @Override
     public void fromBytes(ByteBuf buffer)
     {
+        dimension = buffer.readInt();
         compound = ByteBufUtils.readTag(buffer);
     }
 
     @Override
     public void toBytes(ByteBuf buffer)
     {
+        buffer.writeInt(dimension);
         ByteBufUtils.writeTag(buffer, compound);
     }
 
@@ -40,7 +43,7 @@ public class MessageSyncRegions implements IMessage, IMessageHandler<MessageSync
     public IMessage onMessage(MessageSyncRegions message, MessageContext ctx)
     {
         if (TechnoMagi.proxy.isClient()) {
-            RegionManager.load(message.compound);
+            RegionManager.getInstance(message.dimension).load(message.compound);
         }
 
         return null;

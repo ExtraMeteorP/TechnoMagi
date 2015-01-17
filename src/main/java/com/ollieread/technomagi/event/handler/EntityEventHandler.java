@@ -36,7 +36,7 @@ import com.ollieread.technomagi.common.init.Blocks;
 import com.ollieread.technomagi.common.init.Config;
 import com.ollieread.technomagi.common.init.Items;
 import com.ollieread.technomagi.item.ItemMobBrain;
-import com.ollieread.technomagi.tileentity.IRegionController;
+import com.ollieread.technomagi.tileentity.ITileEntityRegionController;
 import com.ollieread.technomagi.tileentity.ITileEntityToolable;
 import com.ollieread.technomagi.tileentity.TileEntityMachineTeleporter;
 import com.ollieread.technomagi.util.EntityHelper;
@@ -84,13 +84,14 @@ public class EntityEventHandler
         }
 
         if (!event.entityPlayer.worldObj.isRemote) {
-            int network = RegionManager.getNetworkForCoords((int) event.entityPlayer.posX, (int) event.entityPlayer.posZ);
+            RegionManager manager = RegionManager.getInstance(event.entityPlayer.worldObj.provider.dimensionId);
+            int network = manager.getNetworkForCoords((int) event.entityPlayer.posX, (int) event.entityPlayer.posZ);
 
             if (network > -1) {
-                List<IRegionController> controllers = RegionManager.getControllers(RegionControllerType.INTERACTION, network);
+                List<ITileEntityRegionController> controllers = manager.getControllers(RegionControllerType.INTERACTION, network);
                 RegionPayload payload = new RegionPayload<PlayerInteractEvent>(event.entityPlayer, null, event);
 
-                for (IRegionController controller : controllers) {
+                for (ITileEntityRegionController controller : controllers) {
                     if (!event.isCanceled()) {
                         controller.perform(payload);
                     } else {
@@ -105,13 +106,14 @@ public class EntityEventHandler
     public void onCheckSpawn(CheckSpawn event)
     {
         if (!event.entityLiving.worldObj.isRemote) {
-            int network = RegionManager.getNetworkForCoords((int) event.x, (int) event.z);
+            RegionManager manager = RegionManager.getInstance(event.entityLiving.worldObj.provider.dimensionId);
+            int network = manager.getNetworkForCoords((int) event.x, (int) event.z);
 
             if (network > -1) {
-                List<IRegionController> controllers = RegionManager.getControllers(RegionControllerType.PRESENCE, network);
+                List<ITileEntityRegionController> controllers = manager.getControllers(RegionControllerType.PRESENCE, network);
                 RegionPayload payload = new RegionPayload<CheckSpawn>(event.entityLiving, null, event);
 
-                for (IRegionController controller : controllers) {
+                for (ITileEntityRegionController controller : controllers) {
                     if (!event.hasResult() || !event.getResult().equals(Result.DENY)) {
                         controller.perform(payload);
                     } else {
@@ -134,10 +136,11 @@ public class EntityEventHandler
     public void onLivingAttack(LivingAttackEvent event)
     {
         if (!event.entityLiving.worldObj.isRemote) {
-            int network = RegionManager.getNetworkForCoords((int) event.entityLiving.posX, (int) event.entityLiving.posZ);
+            RegionManager manager = RegionManager.getInstance(event.entityLiving.worldObj.provider.dimensionId);
+            int network = manager.getNetworkForCoords((int) event.entityLiving.posX, (int) event.entityLiving.posZ);
 
             if (network > -1) {
-                List<IRegionController> controllers = RegionManager.getControllers(RegionControllerType.DAMAGE, network);
+                List<ITileEntityRegionController> controllers = manager.getControllers(RegionControllerType.DAMAGE, network);
                 EntityLivingBase entity = null;
                 EntityLivingBase target = event.entityLiving;
 
@@ -157,7 +160,7 @@ public class EntityEventHandler
 
                 RegionPayload payload = new RegionPayload<LivingHurtEvent>(entity, target, event);
 
-                for (IRegionController controller : controllers) {
+                for (ITileEntityRegionController controller : controllers) {
                     if (!event.isCanceled()) {
                         controller.perform(payload);
                     } else {
@@ -172,10 +175,11 @@ public class EntityEventHandler
     public void onLivingHurt(LivingHurtEvent event)
     {
         if (!event.entityLiving.worldObj.isRemote) {
-            int network = RegionManager.getNetworkForCoords((int) event.entityLiving.posX, (int) event.entityLiving.posZ);
+            RegionManager manager = RegionManager.getInstance(event.entityLiving.worldObj.provider.dimensionId);
+            int network = manager.getNetworkForCoords((int) event.entityLiving.posX, (int) event.entityLiving.posZ);
 
             if (network > -1) {
-                List<IRegionController> controllers = RegionManager.getControllers(RegionControllerType.DAMAGE, network);
+                List<ITileEntityRegionController> controllers = manager.getControllers(RegionControllerType.DAMAGE, network);
                 EntityLivingBase entity = null;
                 EntityLivingBase target = event.entityLiving;
 
@@ -195,7 +199,7 @@ public class EntityEventHandler
 
                 RegionPayload payload = new RegionPayload<LivingHurtEvent>(entity, target, event);
 
-                for (IRegionController controller : controllers) {
+                for (ITileEntityRegionController controller : controllers) {
                     if (!event.isCanceled()) {
                         controller.perform(payload);
                     } else {
@@ -229,13 +233,14 @@ public class EntityEventHandler
                 }
             }
 
-            int network = RegionManager.getNetworkForCoords((int) event.entityLiving.posX, (int) event.entityLiving.posZ);
+            RegionManager manager = RegionManager.getInstance(event.entityLiving.worldObj.provider.dimensionId);
+            int network = manager.getNetworkForCoords((int) event.entityLiving.posX, (int) event.entityLiving.posZ);
 
             if (network > -1) {
-                List<IRegionController> controllers = RegionManager.getControllers(RegionControllerType.DAMAGE, network);
+                List<ITileEntityRegionController> controllers = manager.getControllers(RegionControllerType.DAMAGE, network);
                 RegionPayload payload = new RegionPayload<LivingHurtEvent>(event.entityLiving, event.target, event);
 
-                for (IRegionController controller : controllers) {
+                for (ITileEntityRegionController controller : controllers) {
                     if (!event.isCanceled()) {
                         controller.perform(payload);
                     } else {

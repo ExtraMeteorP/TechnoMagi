@@ -11,17 +11,17 @@ import com.ollieread.ennds.research.IResearch;
 import com.ollieread.ennds.research.IResearchAnalysis;
 import com.ollieread.ennds.research.ResearchRegistry;
 import com.ollieread.technomagi.common.init.Config;
-import com.ollieread.technomagi.tileentity.abstracts.MachineResearch;
-import com.ollieread.technomagi.tileentity.component.Inventory;
+import com.ollieread.technomagi.tileentity.abstracts.TileEntityMachineResearch;
+import com.ollieread.technomagi.tileentity.component.ComponentInventory;
 
-public class TileEntityMachineAnalysis extends MachineResearch implements IInventory
+public class TileEntityMachineAnalysis extends TileEntityMachineResearch implements IInventory
 {
 
     protected int maxWaiting;
 
     public TileEntityMachineAnalysis()
     {
-        super(Config.analysisPowerMax, Config.analysisPowerRecieve, 0, 100, new Inventory(9));
+        super(Config.analysisPowerMax, Config.analysisPowerRecieve, 0, 100, new ComponentInventory(9));
 
         maxWaiting = Config.analysisWaitingMax;
         setMaxProgress(Config.analysisProgressMax);

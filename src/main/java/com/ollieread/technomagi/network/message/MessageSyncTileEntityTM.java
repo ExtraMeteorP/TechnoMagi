@@ -3,8 +3,8 @@ package com.ollieread.technomagi.network.message;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.NBTTagCompound;
 
-import com.ollieread.technomagi.tileentity.abstracts.Basic;
-import com.ollieread.technomagi.tileentity.component.IDisguisable;
+import com.ollieread.technomagi.tileentity.ITileEntityDisguisable;
+import com.ollieread.technomagi.tileentity.abstracts.TileEntityBasic;
 
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.network.ByteBufUtils;
@@ -23,7 +23,7 @@ public class MessageSyncTileEntityTM implements IMessage, IMessageHandler<Messag
     {
     }
 
-    public MessageSyncTileEntityTM(Basic tile)
+    public MessageSyncTileEntityTM(TileEntityBasic tile)
     {
         data = new NBTTagCompound();
         tile.writeToNBT(data);
@@ -55,12 +55,12 @@ public class MessageSyncTileEntityTM implements IMessage, IMessageHandler<Messag
     public IMessage onMessage(MessageSyncTileEntityTM message, MessageContext ctx)
     {
         try {
-            Basic tile = (Basic) FMLClientHandler.instance().getClient().theWorld.getTileEntity(message.x, message.y, message.z);
+            TileEntityBasic tile = (TileEntityBasic) FMLClientHandler.instance().getClient().theWorld.getTileEntity(message.x, message.y, message.z);
 
             if (tile != null) {
                 tile.readFromNBT(message.data);
 
-                if (tile instanceof IDisguisable) {
+                if (tile instanceof ITileEntityDisguisable) {
                     tile.getWorldObj().markBlockRangeForRenderUpdate(message.x, message.y, message.z, message.x, message.y, message.z);
                 }
             }

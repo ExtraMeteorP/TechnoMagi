@@ -20,9 +20,9 @@ import net.minecraft.world.World;
 import com.ollieread.technomagi.block.abstracts.BlockBasicContainer;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.item.ItemDigitalTool;
+import com.ollieread.technomagi.tileentity.ITileEntityHasOwner;
 import com.ollieread.technomagi.tileentity.ITileEntityToolable;
 import com.ollieread.technomagi.tileentity.TileEntityMachineTeleporter;
-import com.ollieread.technomagi.tileentity.component.IHasOwner;
 import com.ollieread.technomagi.util.PacketHelper;
 import com.ollieread.technomagi.util.PlayerHelper;
 import com.ollieread.technomagi.util.TeleportHelper;
@@ -157,7 +157,7 @@ public class BlockTeleporter extends BlockBasicContainer implements ITileEntityT
 
         if (entity instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) entity;
-            IHasOwner tile = (IHasOwner) tileEntity;
+            ITileEntityHasOwner tile = (ITileEntityHasOwner) tileEntity;
 
             tile.setOwner(player.getCommandSenderName());
         }

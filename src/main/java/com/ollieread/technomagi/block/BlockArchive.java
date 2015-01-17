@@ -19,8 +19,8 @@ import com.ollieread.technomagi.block.abstracts.BlockBasicContainer;
 import com.ollieread.technomagi.common.CommonProxy;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.item.ItemResearchStorage;
+import com.ollieread.technomagi.tileentity.ITileEntityHasOwner;
 import com.ollieread.technomagi.tileentity.TileEntityArchive;
-import com.ollieread.technomagi.tileentity.component.IHasOwner;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -109,8 +109,8 @@ public class BlockArchive extends BlockBasicContainer
 
         TileEntity te = world.getTileEntity(x, y, z);
 
-        if (te instanceof IHasOwner) {
-            ((IHasOwner) te).setOwner(((EntityPlayer) entity).getCommandSenderName());
+        if (te instanceof ITileEntityHasOwner) {
+            ((ITileEntityHasOwner) te).setOwner(((EntityPlayer) entity).getCommandSenderName());
         }
 
         super.onBlockPlacedBy(world, x, y, z, entity, stack);

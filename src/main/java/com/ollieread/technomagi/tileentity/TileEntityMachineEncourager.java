@@ -9,9 +9,9 @@ import net.minecraft.inventory.Container;
 import net.minecraft.world.World;
 
 import com.ollieread.technomagi.common.init.Config;
-import com.ollieread.technomagi.tileentity.abstracts.Machine;
+import com.ollieread.technomagi.tileentity.abstracts.TileEntityMachine;
 
-public class TileEntityMachineEncourager extends Machine
+public class TileEntityMachineEncourager extends TileEntityMachine
 {
 
     public TileEntityMachineEncourager()

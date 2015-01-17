@@ -15,10 +15,10 @@ import net.minecraft.world.ChunkPosition;
 import net.minecraft.world.World;
 
 import com.ollieread.technomagi.common.init.Blocks;
-import com.ollieread.technomagi.tileentity.abstracts.Machine;
+import com.ollieread.technomagi.tileentity.abstracts.TileEntityMachine;
 import com.ollieread.technomagi.util.GenerationHelper;
 
-public class TileEntityMachineDisplacer extends Machine
+public class TileEntityMachineDisplacer extends TileEntityMachine
 {
     protected boolean on;
 

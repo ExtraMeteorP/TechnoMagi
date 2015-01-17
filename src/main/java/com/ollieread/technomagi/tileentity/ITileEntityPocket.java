@@ -15,6 +15,8 @@ public interface ITileEntityPocket
 
     public int getModifier(double distance);
 
+    public boolean isInside(int x, int z);
+
     public static enum PocketType {
         AREA, EVENT, PLAYER
     }

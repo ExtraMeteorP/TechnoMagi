@@ -19,12 +19,12 @@ import net.minecraft.world.World;
 
 import com.ollieread.technomagi.TechnoMagi;
 import com.ollieread.technomagi.common.Reference;
+import com.ollieread.technomagi.tileentity.ITileEntityDisguisable;
 import com.ollieread.technomagi.tileentity.ITileEntityGui;
+import com.ollieread.technomagi.tileentity.ITileEntityHasFiller;
+import com.ollieread.technomagi.tileentity.ITileEntityHasOwner;
 import com.ollieread.technomagi.tileentity.ITileEntityMachine;
 import com.ollieread.technomagi.tileentity.TileEntityMachineAreaLight;
-import com.ollieread.technomagi.tileentity.component.IDisguisable;
-import com.ollieread.technomagi.tileentity.component.IHasFiller;
-import com.ollieread.technomagi.tileentity.component.IHasOwner;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -56,9 +56,9 @@ public abstract class BlockBasicContainer extends BlockContainer
     {
         TileEntity machine = world.getTileEntity(x, y, z);
 
-        if (machine instanceof IHasOwner) {
+        if (machine instanceof ITileEntityHasOwner) {
             if (entity instanceof EntityPlayer) {
-                ((IHasOwner) machine).setOwner(entity.getCommandSenderName());
+                ((ITileEntityHasOwner) machine).setOwner(entity.getCommandSenderName());
             }
         }
 
@@ -84,8 +84,8 @@ public abstract class BlockBasicContainer extends BlockContainer
             ((ITileEntityMachine) machine).placed(entity, stack);
         }
 
-        if (machine instanceof IHasFiller) {
-            ((IHasFiller) machine).create();
+        if (machine instanceof ITileEntityHasFiller) {
+            ((ITileEntityHasFiller) machine).create();
         }
 
         super.onBlockPlacedBy(world, x, y, z, entity, stack);
@@ -96,8 +96,8 @@ public abstract class BlockBasicContainer extends BlockContainer
     {
         TileEntity tileEntity = world.getTileEntity(x, y, z);
 
-        if (tileEntity instanceof IHasFiller) {
-            ((IHasFiller) tileEntity).destroy();
+        if (tileEntity instanceof ITileEntityHasFiller) {
+            ((ITileEntityHasFiller) tileEntity).destroy();
         }
 
         super.breakBlock(world, x, y, z, block, meta);
@@ -145,14 +145,14 @@ public abstract class BlockBasicContainer extends BlockContainer
             if (!world.isRemote) {
                 TileEntity tile = world.getTileEntity(x, y, z);
 
-                if (tile instanceof IHasOwner) {
-                    if (!((IHasOwner) tile).isOwner(player.getCommandSenderName())) {
+                if (tile instanceof ITileEntityHasOwner) {
+                    if (!((ITileEntityHasOwner) tile).isOwner(player.getCommandSenderName())) {
                         return false;
                     }
                 }
 
-                if (tile != null && tile instanceof IDisguisable) {
-                    IDisguisable disguise = (IDisguisable) tile;
+                if (tile != null && tile instanceof ITileEntityDisguisable) {
+                    ITileEntityDisguisable disguise = (ITileEntityDisguisable) tile;
 
                     if (!disguise.isDisguised()) {
 
@@ -190,8 +190,8 @@ public abstract class BlockBasicContainer extends BlockContainer
     {
         TileEntity tile = world.getTileEntity(x, y, z);
 
-        if (tile != null && tile instanceof IDisguisable) {
-            IDisguisable disguise = (IDisguisable) tile;
+        if (tile != null && tile instanceof ITileEntityDisguisable) {
+            ITileEntityDisguisable disguise = (ITileEntityDisguisable) tile;
 
             if (disguise.isDisguised() && ((TileEntityMachineAreaLight) tile).isOn()) {
                 ItemStack stack = disguise.getDisguise();
@@ -214,8 +214,8 @@ public abstract class BlockBasicContainer extends BlockContainer
     {
         TileEntity tile = world.getTileEntity(x, y, z);
 
-        if (tile != null && tile instanceof IDisguisable) {
-            IDisguisable disguise = (IDisguisable) tile;
+        if (tile != null && tile instanceof ITileEntityDisguisable) {
+            ITileEntityDisguisable disguise = (ITileEntityDisguisable) tile;
 
             if (disguise.isDisguised() && ((TileEntityMachineAreaLight) tile).isOn()) {
                 ItemStack stack = disguise.getDisguise();

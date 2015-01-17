@@ -8,22 +8,20 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 
 import com.ollieread.technomagi.common.init.Blocks;
-import com.ollieread.technomagi.tileentity.abstracts.Basic;
-import com.ollieread.technomagi.tileentity.component.IHasFiller;
-import com.ollieread.technomagi.tileentity.component.IHasOwner;
-import com.ollieread.technomagi.tileentity.component.Linked;
-import com.ollieread.technomagi.tileentity.component.Owner;
+import com.ollieread.technomagi.tileentity.abstracts.TileEntityBasic;
+import com.ollieread.technomagi.tileentity.component.ComponentLinked;
+import com.ollieread.technomagi.tileentity.component.ComponentOwner;
 import com.ollieread.technomagi.world.region.RegionManager;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class TileEntityPrismaticPillar extends Basic implements IHasFiller, IHasOwner
+public class TileEntityPrismaticPillar extends TileEntityBasic implements ITileEntityHasFiller, ITileEntityHasOwner
 {
 
-    protected Owner owner = null;
-    public Linked linkedX = null;
-    public Linked linkedZ = null;
+    protected ComponentOwner owner = null;
+    public ComponentLinked linkedX = null;
+    public ComponentLinked linkedZ = null;
     public int order = -1;
     public int network = -1;
 
@@ -41,9 +39,9 @@ public class TileEntityPrismaticPillar extends Basic implements IHasFiller, IHas
 
     public TileEntityPrismaticPillar()
     {
-        owner = new Owner();
-        linkedX = new Linked<TileEntityPrismaticPillar>();
-        linkedZ = new Linked<TileEntityPrismaticPillar>();
+        owner = new ComponentOwner();
+        linkedX = new ComponentLinked<TileEntityPrismaticPillar>();
+        linkedZ = new ComponentLinked<TileEntityPrismaticPillar>();
     }
 
     public boolean canLink(int x, int y, int z)
@@ -81,7 +79,8 @@ public class TileEntityPrismaticPillar extends Basic implements IHasFiller, IHas
                         if (pillar4 != null && pillar4.isLinked()) {
                             Chunk start = worldObj.getChunkFromBlockCoords(pillar2.xCoord, pillar2.xCoord);
                             Chunk end = worldObj.getChunkFromBlockCoords(pillar4.xCoord, pillar4.xCoord);
-                            int id = RegionManager.addNetwork(new int[] { start.xPosition, start.zPosition }, new int[] { end.xPosition + 15, end.zPosition + 15 });
+                            RegionManager manager = RegionManager.getInstance(worldObj.provider.dimensionId);
+                            int id = manager.addNetwork(new int[] { start.xPosition, start.zPosition }, new int[] { end.xPosition + 15, end.zPosition + 15 });
 
                             if (id > -1) {
                                 setNetwork(id);
@@ -146,6 +145,7 @@ public class TileEntityPrismaticPillar extends Basic implements IHasFiller, IHas
         super.readFromNBT(compound);
 
         order = compound.getInteger("Order");
+        network = compound.getInteger("Network");
 
         owner.readFromNBT(compound.getCompoundTag("Owner"));
         linkedX.readFromNBT(compound.getCompoundTag("LinkedX"));
@@ -158,6 +158,7 @@ public class TileEntityPrismaticPillar extends Basic implements IHasFiller, IHas
         super.writeToNBT(compound);
 
         compound.setInteger("Order", order);
+        compound.setInteger("Network", network);
 
         NBTTagCompound ownerCompound = new NBTTagCompound();
         NBTTagCompound linkedXCompound = new NBTTagCompound();

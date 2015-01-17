@@ -10,18 +10,18 @@ import com.ollieread.technomagi.common.init.Config;
 import com.ollieread.technomagi.item.crafting.IRecipeTM;
 import com.ollieread.technomagi.item.crafting.RecipeManager;
 import com.ollieread.technomagi.network.message.MessageSyncTileEntityTM;
-import com.ollieread.technomagi.tileentity.abstracts.MachineInventory;
-import com.ollieread.technomagi.tileentity.component.Inventory;
+import com.ollieread.technomagi.tileentity.abstracts.TileEntityMachineInventory;
+import com.ollieread.technomagi.tileentity.component.ComponentInventory;
 import com.ollieread.technomagi.util.PacketHelper;
 
-public class TileEntityMachineAssembler extends MachineInventory
+public class TileEntityMachineAssembler extends TileEntityMachineInventory
 {
 
     protected boolean isCrafting = false;
 
     public TileEntityMachineAssembler()
     {
-        super(Config.craftingPowerMax, Config.craftingPowerRecieve, 0, new Inventory(10));
+        super(Config.craftingPowerMax, Config.craftingPowerRecieve, 0, new ComponentInventory(10));
 
         setMaxProgress(Config.craftingProgressMax);
         setUsage(Config.craftingPowerUse);

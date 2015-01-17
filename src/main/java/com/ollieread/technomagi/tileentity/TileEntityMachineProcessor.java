@@ -12,15 +12,15 @@ import net.minecraft.world.World;
 
 import com.ollieread.technomagi.common.init.Config;
 import com.ollieread.technomagi.item.crafting.RecipeManager;
-import com.ollieread.technomagi.tileentity.abstracts.MachineInventory;
-import com.ollieread.technomagi.tileentity.component.Inventory;
+import com.ollieread.technomagi.tileentity.abstracts.TileEntityMachineInventory;
+import com.ollieread.technomagi.tileentity.component.ComponentInventory;
 
-public class TileEntityMachineProcessor extends MachineInventory
+public class TileEntityMachineProcessor extends TileEntityMachineInventory
 {
 
     public TileEntityMachineProcessor()
     {
-        super(Config.separatorPowerMax, Config.separatorPowerRecieve, 0, new Inventory(3));
+        super(Config.separatorPowerMax, Config.separatorPowerRecieve, 0, new ComponentInventory(3));
 
         setMaxProgress(Config.separatorProgressMax);
         setUsage(Config.separatorPowerUse);

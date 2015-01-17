@@ -5,9 +5,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 import com.ollieread.technomagi.item.ItemTMNBT;
-import com.ollieread.technomagi.tileentity.component.Inventory;
+import com.ollieread.technomagi.tileentity.component.ComponentInventory;
 
-public class ItemBasicInventory extends Inventory implements IInventory
+public class ItemBasicInventory extends ComponentInventory implements IInventory
 {
 
     protected final ItemStack stack;

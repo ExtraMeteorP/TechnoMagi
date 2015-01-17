@@ -29,12 +29,12 @@ import com.ollieread.technomagi.tileentity.TileEntityMachineFurnace;
 import com.ollieread.technomagi.tileentity.TileEntityMachineInfuser;
 import com.ollieread.technomagi.tileentity.TileEntityMachineProcessor;
 import com.ollieread.technomagi.tileentity.TileEntityMachineReplicator;
-import com.ollieread.technomagi.tileentity.abstracts.MachineResearch;
+import com.ollieread.technomagi.tileentity.abstracts.TileEntityMachineResearch;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockMachine extends BlockBasicContainer
+public class BlockMachine extends BlockBasicContainer implements IBlockMulti
 {
 
     private Random rand = new Random();
@@ -127,6 +127,12 @@ public class BlockMachine extends BlockBasicContainer
         return false;
     }
 
+    @Override
+    public String getName(int metadata)
+    {
+        return blockNames[metadata];
+    }
+
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(World world, int x, int y, int z, Random rand)
     {
@@ -168,7 +174,7 @@ public class BlockMachine extends BlockBasicContainer
                     Minecraft.getMinecraft().effectRenderer.addEffect(effect6);
                 }
             } else if (meta == 3) {
-                if (((MachineResearch) machine).inProgress() && rand.nextInt(5) == 0) {
+                if (((TileEntityMachineResearch) machine).inProgress() && rand.nextInt(5) == 0) {
                     double d0 = (double) ((float) x + rand.nextFloat());
                     double d1 = (double) ((float) y + rand.nextFloat());
                     double d2 = (double) ((float) z + rand.nextFloat());

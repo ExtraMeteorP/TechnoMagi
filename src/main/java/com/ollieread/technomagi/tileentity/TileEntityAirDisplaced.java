@@ -6,14 +6,13 @@ import net.minecraft.world.World;
 
 import com.ollieread.technomagi.block.BlockDisplacedAir;
 import com.ollieread.technomagi.common.init.Blocks;
-import com.ollieread.technomagi.tileentity.abstracts.Basic;
-import com.ollieread.technomagi.tileentity.component.IHasMaster;
-import com.ollieread.technomagi.tileentity.component.MasterBlock;
+import com.ollieread.technomagi.tileentity.abstracts.TileEntityBasic;
+import com.ollieread.technomagi.tileentity.component.ComponentMasterBlock;
 
-public class TileEntityAirDisplaced extends Basic implements IHasMaster
+public class TileEntityAirDisplaced extends TileEntityBasic implements ITileEntityHasMaster
 {
 
-    public MasterBlock master = new MasterBlock(false);
+    public ComponentMasterBlock master = new ComponentMasterBlock(false);
 
     public int ticks = 0;
 

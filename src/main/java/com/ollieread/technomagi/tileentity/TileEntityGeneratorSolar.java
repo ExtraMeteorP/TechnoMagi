@@ -5,10 +5,10 @@ import java.util.Random;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import com.ollieread.technomagi.common.init.Config;
-import com.ollieread.technomagi.tileentity.abstracts.Generator;
+import com.ollieread.technomagi.tileentity.abstracts.TileEntityGenerator;
 import com.ollieread.technomagi.util.PowerHelper;
 
-public class TileEntityGeneratorSolar extends Generator
+public class TileEntityGeneratorSolar extends TileEntityGenerator
 {
 
     public int field_145926_a;

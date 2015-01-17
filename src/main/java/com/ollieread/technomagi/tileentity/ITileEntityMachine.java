@@ -2,9 +2,7 @@ package com.ollieread.technomagi.tileentity;
 
 import cofh.api.energy.IEnergyHandler;
 
-import com.ollieread.technomagi.tileentity.component.IHasOwner;
-
-public interface ITileEntityMachine extends IEnergyHandler, IHasOwner, ITileEntityFacing, IBlockHandler, ITileEntityGui
+public interface ITileEntityMachine extends IEnergyHandler, ITileEntityHasOwner, ITileEntityFacing, ITileEntityBlockHandler, ITileEntityGui
 {
 
     public int getProgress();

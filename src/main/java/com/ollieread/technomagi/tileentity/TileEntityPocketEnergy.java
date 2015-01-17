@@ -8,9 +8,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import cofh.api.energy.IEnergyContainerItem;
 
-import com.ollieread.technomagi.tileentity.abstracts.Pocket;
+import com.ollieread.technomagi.tileentity.abstracts.TileEntityPocket;
 
-public class TileEntityPocketEnergy extends Pocket
+public class TileEntityPocketEnergy extends TileEntityPocket
 {
 
     public TileEntityPocketEnergy(boolean negative, int size)

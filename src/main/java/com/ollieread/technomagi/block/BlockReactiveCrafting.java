@@ -12,8 +12,8 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import com.ollieread.technomagi.block.abstracts.BlockBasicContainer;
+import com.ollieread.technomagi.tileentity.ITileEntityDisguisable;
 import com.ollieread.technomagi.tileentity.TileEntityReactiveCrafting;
-import com.ollieread.technomagi.tileentity.component.IDisguisable;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -56,8 +56,8 @@ public class BlockReactiveCrafting extends BlockBasicContainer
     {
         TileEntity tile = world.getTileEntity(x, y, z);
 
-        if (tile != null && tile instanceof IDisguisable) {
-            IDisguisable disguise = (IDisguisable) tile;
+        if (tile != null && tile instanceof ITileEntityDisguisable) {
+            ITileEntityDisguisable disguise = (ITileEntityDisguisable) tile;
 
             if (disguise.isDisguised()) {
                 ItemStack stack = disguise.getDisguise();
@@ -80,8 +80,8 @@ public class BlockReactiveCrafting extends BlockBasicContainer
     {
         TileEntity tile = world.getTileEntity(x, y, z);
 
-        if (tile != null && tile instanceof IDisguisable) {
-            IDisguisable disguise = (IDisguisable) tile;
+        if (tile != null && tile instanceof ITileEntityDisguisable) {
+            ITileEntityDisguisable disguise = (ITileEntityDisguisable) tile;
 
             if (disguise.isDisguised()) {
                 ItemStack stack = disguise.getDisguise();
