@@ -16,7 +16,7 @@ import com.ollieread.technomagi.util.EventHelper;
 import com.ollieread.technomagi.util.ItemHelper;
 
 /**
- * @author ollie
+ * @author ollieread
  *
  */
 public class KnowledgeBovine extends Knowledge
@@ -39,7 +39,6 @@ public class KnowledgeBovine extends Knowledge
         analyseBeef = new ResearchAnalysis("analyseBeef", getName(), new ShapelessAnalysisRecipe(ItemHelper.item("beef"))).setProgress(15).setChance(6);
         analyseLeather = new ResearchAnalysis("analyseLeather", getName(), new ShapelessAnalysisRecipe(ItemHelper.item("leather"))).setProgress(15).setChance(6);
         analyseMilk = new ResearchAnalysis("analyseMilk", getName(), new ShapelessAnalysisRecipe(ItemHelper.item("milk_bucket"))).setProgress(20).setChance(6);
-
     }
 
     @Override

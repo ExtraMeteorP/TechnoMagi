@@ -15,7 +15,7 @@ import com.ollieread.technomagi.research.ResearchEvent;
 import com.ollieread.technomagi.util.EventHelper;
 
 /**
- * @author ollie
+ * @author ollieread
  *
  */
 public class KnowledgeProcreation extends Knowledge

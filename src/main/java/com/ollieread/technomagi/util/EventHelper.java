@@ -120,7 +120,7 @@ public class EventHelper
                 case 7:
                     return entityName.toLowerCase() + "BurningInSunlight";
                 case 8:
-                    return "tempting" + StringUtils.capitalize(entityName);
+                    return "tempt" + StringUtils.capitalize(entityName);
             }
         }
 

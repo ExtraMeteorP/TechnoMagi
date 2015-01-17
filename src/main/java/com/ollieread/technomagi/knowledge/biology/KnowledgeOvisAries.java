@@ -16,7 +16,7 @@ import com.ollieread.technomagi.util.EventHelper;
 import com.ollieread.technomagi.util.ItemHelper;
 
 /**
- * @author ollie
+ * @author ollieread
  *
  */
 public class KnowledgeOvisAries extends Knowledge
