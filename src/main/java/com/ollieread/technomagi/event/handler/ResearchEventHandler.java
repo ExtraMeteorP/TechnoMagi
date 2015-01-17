@@ -37,6 +37,7 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
+import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
@@ -255,14 +256,13 @@ public class ResearchEventHandler
     }
 
     @SubscribeEvent
-    public void onLivingUpdate(LivingUpdateEvent event)
+    public void onLivingSpawn(LivingSpawnEvent event)
     {
-
-        if (event.entityLiving instanceof EntityAnimal) {
+        if (!event.entityLiving.worldObj.isRemote) {
             EntityAnimal animal = (EntityAnimal) event.entityLiving;
             Class entityClass = animal.getClass();
 
-            if (animal.getGrowingAge() == 6000) {
+            if (animal.isChild()) {
                 double d = 5.0D;
                 List entities = animal.worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox(animal.posX - d, animal.posY - d, animal.posZ - d, animal.posX + d, animal.posY + d, animal.posZ + d));
 
@@ -291,39 +291,45 @@ public class ResearchEventHandler
                 }
             }
         }
+    }
 
-        if (!(event.entityLiving instanceof EntityPlayer)) {
-            String monitoringName = null;
-            String eventName = null;
-            ExtendedNanites nanites = null;
-            EntityPlayer player = null;
-            Class entityClass = event.entityLiving.getClass();
-            World world = event.entityLiving.worldObj;
-            Set<Class> entities = ResearchRegistry.getMonitorableEntities();
+    @SubscribeEvent
+    public void onLivingUpdate(LivingUpdateEvent event)
+    {
+        if (!event.entityLiving.worldObj.isRemote) {
+            if (!(event.entityLiving instanceof EntityPlayer)) {
+                String monitoringName = null;
+                String eventName = null;
+                ExtendedNanites nanites = null;
+                EntityPlayer player = null;
+                Class entityClass = event.entityLiving.getClass();
+                World world = event.entityLiving.worldObj;
+                Set<Class> entities = ResearchRegistry.getMonitorableEntities();
 
-            if (entityClass != null && entities.contains(entityClass)) {
-                nanites = ExtendedNanites.get(event.entityLiving);
+                if (entityClass != null && entities.contains(entityClass)) {
+                    nanites = ExtendedNanites.get(event.entityLiving);
 
-                if (nanites != null) {
-                    player = nanites.getOwnerPlayer();
+                    if (nanites != null) {
+                        player = nanites.getOwnerPlayer();
 
-                    if (player != null) {
+                        if (player != null) {
 
-                        if (event.entityLiving instanceof EntityZombie || event.entityLiving instanceof EntitySkeleton) {
-                            if (world.isDaytime() && event.entityLiving.isBurning() && world.canBlockSeeTheSky(MathHelper.floor_double(event.entityLiving.posX), MathHelper.floor_double(event.entityLiving.posY), MathHelper.floor_double(event.entityLiving.posZ))) {
-                                monitoringName = "burningInSunlight";
-                                eventName = EventHelper.entitySunlight(entityClass);
+                            if (event.entityLiving instanceof EntityZombie || event.entityLiving instanceof EntitySkeleton) {
+                                if (world.isDaytime() && event.entityLiving.isBurning() && world.canBlockSeeTheSky(MathHelper.floor_double(event.entityLiving.posX), MathHelper.floor_double(event.entityLiving.posY), MathHelper.floor_double(event.entityLiving.posZ))) {
+                                    monitoringName = "burningInSunlight";
+                                    eventName = EventHelper.entitySunlight(entityClass);
+                                }
                             }
                         }
                     }
-                }
 
-                if (monitoringName != null) {
-                    ResearchRegistry.researchMonitoring(entityClass, eventName, PlayerHelper.getPlayerKnowledge(player), nanites);
-                }
+                    if (monitoringName != null) {
+                        ResearchRegistry.researchMonitoring(entityClass, eventName, PlayerHelper.getPlayerKnowledge(player), nanites);
+                    }
 
-                if (eventName != null) {
-                    ResearchRegistry.researchEvent(eventName, event, PlayerHelper.getPlayerKnowledge(player), false);
+                    if (eventName != null) {
+                        ResearchRegistry.researchEvent(eventName, event, PlayerHelper.getPlayerKnowledge(player), false);
+                    }
                 }
             }
         }
