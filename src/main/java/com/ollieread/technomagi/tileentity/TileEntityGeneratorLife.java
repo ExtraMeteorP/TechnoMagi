@@ -1,5 +1,7 @@
 package com.ollieread.technomagi.tileentity;
 
+import com.ollieread.technomagi.tileentity.abstracts.Generator;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.BlockGrass;
@@ -8,7 +10,7 @@ import net.minecraft.block.BlockTallGrass;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileEntityGeneratorLife extends TileEntityGenerator
+public class TileEntityGeneratorLife extends Generator
 {
 
     public TileEntityGeneratorLife()

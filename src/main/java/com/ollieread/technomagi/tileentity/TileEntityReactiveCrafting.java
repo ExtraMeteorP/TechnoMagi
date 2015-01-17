@@ -4,13 +4,15 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-import com.ollieread.technomagi.common.proxy.InventoryBasic;
-import com.ollieread.technomagi.common.proxy.Disguisable;
+import com.ollieread.technomagi.tileentity.abstracts.Basic;
+import com.ollieread.technomagi.tileentity.component.Disguisable;
+import com.ollieread.technomagi.tileentity.component.IDisguisable;
+import com.ollieread.technomagi.tileentity.component.Inventory;
 
-public class TileEntityReactiveCrafting extends TileEntityTM implements IDisguisableTile
+public class TileEntityReactiveCrafting extends Basic implements IDisguisable
 {
 
-    protected InventoryBasic result = null;
+    protected Inventory result = null;
     protected Disguisable disguise = null;
     protected int ticks = 0;
     protected int crafting = 0;
@@ -18,7 +20,7 @@ public class TileEntityReactiveCrafting extends TileEntityTM implements IDisguis
 
     public TileEntityReactiveCrafting()
     {
-        result = new InventoryBasic(1);
+        result = new Inventory(1);
         disguise = new Disguisable();
     }
 

@@ -1,4 +1,4 @@
-package com.ollieread.technomagi.tileentity;
+package com.ollieread.technomagi.tileentity.abstracts;
 
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
@@ -9,7 +9,7 @@ import com.ollieread.technomagi.network.PacketHandler;
 import com.ollieread.technomagi.network.message.MessageSyncTileEntityTM;
 import com.ollieread.technomagi.util.PacketHelper;
 
-public class TileEntityTM extends TileEntity
+public class Basic extends TileEntity
 {
 
     @Override

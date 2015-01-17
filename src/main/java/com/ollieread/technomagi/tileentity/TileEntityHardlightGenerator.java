@@ -3,19 +3,23 @@ package com.ollieread.technomagi.tileentity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import com.ollieread.technomagi.common.init.Blocks;
-import com.ollieread.technomagi.common.proxy.Disguisable;
-import com.ollieread.technomagi.common.proxy.PlayerLocked;
+import com.ollieread.technomagi.tileentity.abstracts.Basic;
+import com.ollieread.technomagi.tileentity.component.Disguisable;
+import com.ollieread.technomagi.tileentity.component.IDisguisable;
+import com.ollieread.technomagi.tileentity.component.IHasOwner;
+import com.ollieread.technomagi.tileentity.component.Owner;
 
-public class TileEntityHardlightGenerator extends TileEntityTM implements IPlayerLocked, IDisguisableTile
+public class TileEntityHardlightGenerator extends Basic implements IHasOwner, IDisguisable
 {
 
+    protected Owner owner = new Owner();
     protected Disguisable disguise = new Disguisable();
     protected boolean on = false;
     protected boolean proximity = false;
-    protected PlayerLocked locked = new PlayerLocked();
     protected int checked = 0;
     protected boolean complete = true;
     protected int count = 0;
@@ -32,8 +36,8 @@ public class TileEntityHardlightGenerator extends TileEntityTM implements IPlaye
         count = compound.getInteger("Count");
         ticks = compound.getInteger("Ticks");
 
-        disguise.readFromNBT(compound);
-        locked.readFromNBT(compound);
+        disguise.readFromNBT(compound.getCompoundTag("Disguise"));
+        owner.readFromNBT(compound.getCompoundTag("Owner"));
     }
 
     @Override
@@ -46,8 +50,14 @@ public class TileEntityHardlightGenerator extends TileEntityTM implements IPlaye
         compound.setInteger("Count", count);
         compound.setInteger("Ticks", ticks);
 
-        disguise.writeToNBT(compound);
-        locked.writeToNBT(compound);
+        NBTTagCompound disguiseCompound = new NBTTagCompound();
+        NBTTagCompound ownerCompound = new NBTTagCompound();
+
+        disguise.writeToNBT(disguiseCompound);
+        owner.writeToNBT(ownerCompound);
+
+        compound.setTag("Disguise", disguiseCompound);
+        compound.setTag("Owner", ownerCompound);
     }
 
     public void updateEntity()
@@ -158,35 +168,24 @@ public class TileEntityHardlightGenerator extends TileEntityTM implements IPlaye
         return disguise.getDisguise();
     }
 
-    /* LOCKED */
+    /* OWNER */
 
     @Override
-    public boolean hasPlayer()
+    public boolean isOwner(String name)
     {
-        return locked.hasPlayer();
+        return owner.isOwner(name);
     }
 
     @Override
-    public void setPlayer(String name)
+    public void setOwner(String name)
     {
-        locked.setPlayer(name);
+        owner.setOwner(name);
     }
 
     @Override
-    public String getPlayer()
+    public EntityPlayer getOwner(World world)
     {
-        return locked.getPlayer();
-    }
-
-    @Override
-    public boolean isPlayer(String name)
-    {
-        return locked.isPlayer(name);
-    }
-
-    public boolean isPlayer(EntityPlayer player)
-    {
-        return isPlayer(player.getCommandSenderName());
+        return owner.getOwner(world);
     }
 
 }

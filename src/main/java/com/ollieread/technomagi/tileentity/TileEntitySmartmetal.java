@@ -5,18 +5,22 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import com.ollieread.technomagi.block.BlockSmartmetal;
-import com.ollieread.technomagi.common.proxy.Disguisable;
-import com.ollieread.technomagi.common.proxy.PlayerLocked;
+import com.ollieread.technomagi.tileentity.abstracts.Basic;
+import com.ollieread.technomagi.tileentity.component.Disguisable;
+import com.ollieread.technomagi.tileentity.component.IDisguisable;
+import com.ollieread.technomagi.tileentity.component.IHasOwner;
+import com.ollieread.technomagi.tileentity.component.Owner;
 import com.ollieread.technomagi.util.ItemHelper;
 
-public class TileEntitySmartmetal extends TileEntityTM implements IDisguisableTile, IPlayerLocked
+public class TileEntitySmartmetal extends Basic implements IDisguisable, IHasOwner
 {
 
     protected Disguisable disguise = new Disguisable();
-    protected PlayerLocked locked = new PlayerLocked();
+    protected Owner owner = new Owner();
     protected int mode = 0;
 
     public boolean setMode(ItemStack stack)
@@ -72,8 +76,8 @@ public class TileEntitySmartmetal extends TileEntityTM implements IDisguisableTi
 
         mode = compound.getInteger("Mode");
 
-        disguise.readFromNBT(compound);
-        locked.readFromNBT(compound);
+        disguise.readFromNBT(compound.getCompoundTag("Disguise"));
+        owner.readFromNBT(compound.getCompoundTag("Owner"));
     }
 
     @Override
@@ -83,9 +87,19 @@ public class TileEntitySmartmetal extends TileEntityTM implements IDisguisableTi
 
         compound.setInteger("Mode", mode);
 
-        disguise.writeToNBT(compound);
-        locked.writeToNBT(compound);
+        NBTTagCompound disguiseCompound = new NBTTagCompound();
+        NBTTagCompound ownerCompound = new NBTTagCompound();
+
+        disguise.writeToNBT(disguiseCompound);
+        owner.writeToNBT(ownerCompound);
+
+        compound.setTag("Disguise", disguiseCompound);
+        compound.setTag("Owner", ownerCompound);
     }
+
+    /* Everything below is just a proxy for the interfaces */
+
+    /* DISGUISABLE */
 
     @Override
     public boolean isDisguised()
@@ -105,33 +119,24 @@ public class TileEntitySmartmetal extends TileEntityTM implements IDisguisableTi
         return disguise.getDisguise();
     }
 
+    /* OWNER */
+
     @Override
-    public boolean hasPlayer()
+    public boolean isOwner(String name)
     {
-        return locked.hasPlayer();
+        return owner.isOwner(name);
     }
 
     @Override
-    public void setPlayer(String name)
+    public void setOwner(String name)
     {
-        locked.setPlayer(name);
+        owner.setOwner(name);
     }
 
     @Override
-    public String getPlayer()
+    public EntityPlayer getOwner(World world)
     {
-        return locked.getPlayer();
-    }
-
-    @Override
-    public boolean isPlayer(String name)
-    {
-        return locked.isPlayer(name);
-    }
-
-    public boolean isPlayer(EntityPlayer player)
-    {
-        return isPlayer(player.getCommandSenderName());
+        return owner.getOwner(world);
     }
 
 }

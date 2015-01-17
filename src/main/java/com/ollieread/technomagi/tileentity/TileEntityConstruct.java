@@ -4,21 +4,27 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 
-import com.ollieread.technomagi.common.proxy.InventoryBasic;
-import com.ollieread.technomagi.common.proxy.PlayerLocked;
 import com.ollieread.technomagi.item.ItemNaniteContainer;
-import com.ollieread.technomagi.item.crafting.ConstructManager;
+import com.ollieread.technomagi.item.crafting.ConstructRecipe;
+import com.ollieread.technomagi.item.crafting.RecipeManager;
+import com.ollieread.technomagi.tileentity.abstracts.Basic;
+import com.ollieread.technomagi.tileentity.component.IHasOwner;
+import com.ollieread.technomagi.tileentity.component.Inventory;
+import com.ollieread.technomagi.tileentity.component.Owner;
 import com.ollieread.technomagi.util.PacketHelper;
 
-public class TileEntityConstruct extends TileEntityTM implements IInventory, IPlayerLocked
+public class TileEntityConstruct extends Basic implements IInventory, IHasOwner, ITileEntityGui
 {
-    protected PlayerLocked locked = null;
-    protected InventoryBasic inventory = null;
+    protected Owner owner = null;
+    protected Inventory inventory = null;
 
     protected Random rand = new Random();
     protected boolean isBuilding = false;
@@ -26,15 +32,27 @@ public class TileEntityConstruct extends TileEntityTM implements IInventory, IPl
 
     public TileEntityConstruct()
     {
-        locked = new PlayerLocked();
-        inventory = new InventoryBasic(5);
+        owner = new Owner();
+        inventory = new Inventory(5);
+    }
+
+    @Override
+    public Container getContainer(InventoryPlayer playerInventory, World world, int x, int y, int z)
+    {
+        return null;
+    }
+
+    @Override
+    public int getGui(World world, int x, int y, int z, EntityPlayer player)
+    {
+        return -1;
     }
 
     @Override
     public void updateEntity()
     {
         if (!worldObj.isRemote) {
-            if (isBuilding && canBuild()) {
+            if (isBuilding || canBuild()) {
                 ticks++;
                 if (ticks == 100) {
                     build();
@@ -54,12 +72,12 @@ public class TileEntityConstruct extends TileEntityTM implements IInventory, IPl
 
         if (nanites != null && nanites.getItem() instanceof ItemNaniteContainer && nanites.getItemDamage() == 1) {
             if (ItemNaniteContainer.getEntity(nanites).equals("player")) {
-                EntityPlayer player = worldObj.getPlayerEntityByName(locked.getPlayer());
+                EntityPlayer player = owner.getOwner(worldObj);
 
                 if (player != null) {
                     ItemStack[] stacks = new ItemStack[] { inventory.getStackInSlot(1), inventory.getStackInSlot(2), inventory.getStackInSlot(3), inventory.getStackInSlot(4) };
 
-                    if (ConstructManager.getInstance().findMatchingRecipe(stacks, player) != null) {
+                    if (RecipeManager.construct.find(stacks, player) != null) {
                         return true;
                     }
                 }
@@ -73,16 +91,21 @@ public class TileEntityConstruct extends TileEntityTM implements IInventory, IPl
     {
         ItemStack[] stacks = new ItemStack[] { inventory.getStackInSlot(1), inventory.getStackInSlot(2), inventory.getStackInSlot(3), inventory.getStackInSlot(4) };
 
-        EntityPlayer player = worldObj.getPlayerEntityByName(locked.getPlayer());
+        EntityPlayer player = owner.getOwner(worldObj);
 
         if (player != null) {
-            Block block = ConstructManager.getInstance().findMatchingRecipe(stacks, player);
+            ConstructRecipe recipe = RecipeManager.construct.find(stacks, player);
+            ItemStack output = recipe.getRecipeOutput();
 
-            worldObj.setBlock(xCoord, yCoord, zCoord, block, getBlockMetadata(), 2);
+            worldObj.setBlock(xCoord, yCoord, zCoord, Block.getBlockFromItem(output.getItem()), output.getItemDamage(), 2);
             TileEntity tile = worldObj.getTileEntity(xCoord, yCoord, zCoord);
 
-            if (tile instanceof IPlayerLocked) {
-                ((IPlayerLocked) tile).setPlayer(getPlayer());
+            if (tile instanceof IHasOwner) {
+                ((IHasOwner) tile).setOwner(player.getCommandSenderName());
+            }
+
+            if (tile instanceof ITileEntityFacing) {
+                ((ITileEntityFacing) tile).setFacing(getBlockMetadata());
             }
         }
     }
@@ -102,7 +125,7 @@ public class TileEntityConstruct extends TileEntityTM implements IInventory, IPl
         ticks = compound.getInteger("Ticks");
         isBuilding = compound.getBoolean("IsBuilding");
 
-        locked.readFromNBT(compound);
+        owner.readFromNBT(compound);
         inventory.readFromNBT(compound);
     }
 
@@ -114,7 +137,7 @@ public class TileEntityConstruct extends TileEntityTM implements IInventory, IPl
         compound.setInteger("Ticks", ticks);
         compound.setBoolean("IsBuilding", isBuilding);
 
-        locked.writeToNBT(compound);
+        owner.writeToNBT(compound);
         inventory.writeToNBT(compound);
     }
 
@@ -194,35 +217,24 @@ public class TileEntityConstruct extends TileEntityTM implements IInventory, IPl
         return inventory.isItemValidForSlot(i, stack);
     }
 
-    /* LOCKED */
+    /* OWNER */
 
     @Override
-    public boolean hasPlayer()
+    public boolean isOwner(String name)
     {
-        return locked.hasPlayer();
+        return owner.isOwner(name);
     }
 
     @Override
-    public void setPlayer(String name)
+    public void setOwner(String name)
     {
-        locked.setPlayer(name);
+        owner.setOwner(name);
     }
 
     @Override
-    public String getPlayer()
+    public EntityPlayer getOwner(World world)
     {
-        return locked.getPlayer();
-    }
-
-    @Override
-    public boolean isPlayer(String name)
-    {
-        return locked.isPlayer(name);
-    }
-
-    public boolean isPlayer(EntityPlayer player)
-    {
-        return isPlayer(player.getCommandSenderName());
+        return owner.getOwner(world);
     }
 
 }

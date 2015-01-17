@@ -4,22 +4,28 @@ import java.util.Random;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 
 import com.ollieread.technomagi.common.init.Blocks;
-import com.ollieread.technomagi.common.proxy.LinkedTile;
-import com.ollieread.technomagi.common.proxy.PlayerLocked;
+import com.ollieread.technomagi.tileentity.abstracts.Basic;
+import com.ollieread.technomagi.tileentity.component.IHasFiller;
+import com.ollieread.technomagi.tileentity.component.IHasOwner;
+import com.ollieread.technomagi.tileentity.component.Linked;
+import com.ollieread.technomagi.tileentity.component.Owner;
 import com.ollieread.technomagi.world.region.RegionManager;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class TileEntityPrismaticPillar extends TileEntityTM implements IHasFiller, IPlayerLocked
+public class TileEntityPrismaticPillar extends Basic implements IHasFiller, IHasOwner
 {
 
-    protected PlayerLocked locked = null;
-    public LinkedTile linkedX = null;
-    public LinkedTile linkedZ = null;
+    protected Owner owner = null;
+    public Linked linkedX = null;
+    public Linked linkedZ = null;
+    public int order = -1;
+    public int network = -1;
 
     public int field_145926_a;
     public float field_145933_i;
@@ -32,14 +38,12 @@ public class TileEntityPrismaticPillar extends TileEntityTM implements IHasFille
     public float field_145925_p;
     public float field_145924_q;
     private static Random field_145923_r = new Random();
-    public int order = -1;
-    public int network = -1;
 
     public TileEntityPrismaticPillar()
     {
-        locked = new PlayerLocked();
-        linkedX = new LinkedTile<TileEntityPrismaticPillar>();
-        linkedZ = new LinkedTile<TileEntityPrismaticPillar>();
+        owner = new Owner();
+        linkedX = new Linked<TileEntityPrismaticPillar>();
+        linkedZ = new Linked<TileEntityPrismaticPillar>();
     }
 
     public boolean canLink(int x, int y, int z)
@@ -143,8 +147,7 @@ public class TileEntityPrismaticPillar extends TileEntityTM implements IHasFille
 
         order = compound.getInteger("Order");
 
-        locked.readFromNBT(compound);
-
+        owner.readFromNBT(compound.getCompoundTag("Owner"));
         linkedX.readFromNBT(compound.getCompoundTag("LinkedX"));
         linkedZ.readFromNBT(compound.getCompoundTag("LinkedZ"));
     }
@@ -156,14 +159,15 @@ public class TileEntityPrismaticPillar extends TileEntityTM implements IHasFille
 
         compound.setInteger("Order", order);
 
-        locked.writeToNBT(compound);
-
+        NBTTagCompound ownerCompound = new NBTTagCompound();
         NBTTagCompound linkedXCompound = new NBTTagCompound();
         NBTTagCompound linkedZCompound = new NBTTagCompound();
 
+        owner.writeToNBT(ownerCompound);
         linkedX.writeToNBT(linkedXCompound);
         linkedZ.writeToNBT(linkedZCompound);
 
+        compound.setTag("Owner", ownerCompound);
         compound.setTag("LinkedX", linkedXCompound);
         compound.setTag("LinkedZ", linkedZCompound);
     }
@@ -174,7 +178,7 @@ public class TileEntityPrismaticPillar extends TileEntityTM implements IHasFille
         worldObj.setBlock(xCoord, yCoord + 1, zCoord, Blocks.blockEmptyFiller);
 
         if (!worldObj.isRemote) {
-            ((TileEntityEmptyFiller) worldObj.getTileEntity(xCoord, yCoord + 1, zCoord)).setParent(xCoord, yCoord, zCoord);
+            ((TileEntityFiller) worldObj.getTileEntity(xCoord, yCoord + 1, zCoord)).setParent(xCoord, yCoord, zCoord);
         }
     }
 
@@ -271,35 +275,24 @@ public class TileEntityPrismaticPillar extends TileEntityTM implements IHasFille
         }
     }
 
-    /* LOCKED */
+    /* OWNER */
 
     @Override
-    public boolean hasPlayer()
+    public boolean isOwner(String name)
     {
-        return locked.hasPlayer();
+        return owner.isOwner(name);
     }
 
     @Override
-    public void setPlayer(String name)
+    public void setOwner(String name)
     {
-        locked.setPlayer(name);
+        owner.setOwner(name);
     }
 
     @Override
-    public String getPlayer()
+    public EntityPlayer getOwner(World world)
     {
-        return locked.getPlayer();
-    }
-
-    @Override
-    public boolean isPlayer(String name)
-    {
-        return locked.isPlayer(name);
-    }
-
-    public boolean isPlayer(EntityPlayer player)
-    {
-        return isPlayer(player.getCommandSenderName());
+        return owner.getOwner(world);
     }
 
 }

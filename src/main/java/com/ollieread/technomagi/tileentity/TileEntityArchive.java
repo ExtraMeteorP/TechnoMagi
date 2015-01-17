@@ -9,19 +9,24 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.ennds.research.IResearch;
 import com.ollieread.ennds.research.ResearchRegistry;
-import com.ollieread.technomagi.common.proxy.InventoryBasic;
-import com.ollieread.technomagi.common.proxy.PlayerLocked;
 import com.ollieread.technomagi.item.ItemResearchStorage;
+import com.ollieread.technomagi.tileentity.abstracts.MachineResearch;
+import com.ollieread.technomagi.tileentity.abstracts.Basic;
+import com.ollieread.technomagi.tileentity.component.IHasOwner;
+import com.ollieread.technomagi.tileentity.component.Inventory;
+import com.ollieread.technomagi.tileentity.component.Owner;
 
-public class TileEntityArchive extends TileEntityTM implements IPlayerLocked, IInventory
+public class TileEntityArchive extends Basic implements IHasOwner, IInventory, ITileEntityFacing
 {
 
-    protected PlayerLocked locked = new PlayerLocked();
-    protected InventoryBasic inventory = new InventoryBasic(1);
+    protected Owner owner = new Owner();
+    protected Inventory inventory = new Inventory(1);
+    protected int facing;
 
     public int field_145926_a;
     public float field_145933_i;
@@ -40,6 +45,16 @@ public class TileEntityArchive extends TileEntityTM implements IPlayerLocked, II
     protected int guiSubType = 0;
     protected int guiPage = 0;
 
+    public void setFacing(int side)
+    {
+        facing = side;
+    }
+
+    public int getFacing()
+    {
+        return facing;
+    }
+
     public void updateEntity()
     {
         super.updateEntity();
@@ -47,7 +62,7 @@ public class TileEntityArchive extends TileEntityTM implements IPlayerLocked, II
         this.field_145925_p = this.field_145928_o;
         EntityPlayer entityplayer = this.worldObj.getClosestPlayer((double) ((float) this.xCoord + 0.5F), (double) ((float) this.yCoord + 0.5F), (double) ((float) this.zCoord + 0.5F), 8.5D);
 
-        if (entityplayer != null && isPlayer(entityplayer)) {
+        if (entityplayer != null && isOwner(entityplayer.getCommandSenderName())) {
             double d0 = entityplayer.posX - (double) ((float) this.xCoord + 0.5F);
             double d1 = entityplayer.posZ - (double) ((float) this.zCoord + 0.5F);
             this.field_145924_q = (float) Math.atan2(d1, d0);
@@ -132,7 +147,7 @@ public class TileEntityArchive extends TileEntityTM implements IPlayerLocked, II
 
     public boolean canSyncPlayer()
     {
-        EntityPlayer owner = getEntityPlayer();
+        EntityPlayer owner = getOwner(worldObj);
 
         if (owner != null && owner.getDistance(xCoord, yCoord, zCoord) <= 8) {
             return true;
@@ -143,7 +158,7 @@ public class TileEntityArchive extends TileEntityTM implements IPlayerLocked, II
 
     protected void syncPlayer()
     {
-        EntityPlayer owner = getEntityPlayer();
+        EntityPlayer owner = getOwner(worldObj);
 
         if (owner == null) {
             // TechnoMagi.logger.error("Something went horribly wrong and the Archive no longer has an owner");
@@ -179,7 +194,7 @@ public class TileEntityArchive extends TileEntityTM implements IPlayerLocked, II
 
     public void syncMachine()
     {
-        EntityPlayer owner = getEntityPlayer();
+        EntityPlayer owner = getOwner(worldObj);
 
         if (owner == null) {
             // TechnoMagi.logger.error("Something went horribly wrong and the Archive no longer has an owner");
@@ -195,8 +210,8 @@ public class TileEntityArchive extends TileEntityTM implements IPlayerLocked, II
                     for (int z = (zCoord - 8); z < (zCoord + 8); z++) {
                         TileEntity tile = worldObj.getTileEntity(x, y, z);
 
-                        if (tile != null && tile instanceof TileEntityResearch) {
-                            TileEntityResearch machine = (TileEntityResearch) tile;
+                        if (tile != null && tile instanceof MachineResearch) {
+                            MachineResearch machine = (MachineResearch) tile;
 
                             if (machine.getData() > 0) {
                                 Map<String, Integer> research = machine.getResearch();
@@ -240,7 +255,7 @@ public class TileEntityArchive extends TileEntityTM implements IPlayerLocked, II
 
                 if (researchingKnowledge.size() > 0) {
 
-                    EntityPlayer owner = getEntityPlayer();
+                    EntityPlayer owner = getOwner(worldObj);
                     ExtendedPlayerKnowledge playerKnowledge = ExtendedPlayerKnowledge.get(owner);
 
                     if (playerKnowledge != null && playerKnowledge.nanites != null) {
@@ -266,8 +281,9 @@ public class TileEntityArchive extends TileEntityTM implements IPlayerLocked, II
         super.readFromNBT(compound);
 
         syncCheck = compound.getInteger("SyncCheck");
+        facing = compound.getInteger("Facing");
 
-        locked.readFromNBT(compound);
+        owner.readFromNBT(compound.getCompoundTag("Owner"));
     }
 
     @Override
@@ -276,19 +292,11 @@ public class TileEntityArchive extends TileEntityTM implements IPlayerLocked, II
         super.writeToNBT(compound);
 
         compound.setInteger("SyncCheck", syncCheck);
+        compound.setInteger("Facing", facing);
 
-        locked.writeToNBT(compound);
-    }
+        NBTTagCompound ownerCompound = new NBTTagCompound();
 
-    public EntityPlayer getEntityPlayer()
-    {
-        String playerName = getPlayer();
-
-        if (playerName != null && !playerName.equals("none")) {
-            return worldObj.getPlayerEntityByName(playerName);
-        }
-
-        return null;
+        owner.writeToNBT(ownerCompound);
     }
 
     public TileEntityArchive setType(int type)
@@ -403,35 +411,24 @@ public class TileEntityArchive extends TileEntityTM implements IPlayerLocked, II
         return inventory.isItemValidForSlot(i, stack);
     }
 
-    /* LOCKED */
+    /* OWNER */
 
     @Override
-    public boolean hasPlayer()
+    public boolean isOwner(String name)
     {
-        return locked.hasPlayer();
+        return owner.isOwner(name);
     }
 
     @Override
-    public void setPlayer(String name)
+    public void setOwner(String name)
     {
-        locked.setPlayer(name);
+        owner.setOwner(name);
     }
 
     @Override
-    public String getPlayer()
+    public EntityPlayer getOwner(World world)
     {
-        return locked.getPlayer();
-    }
-
-    @Override
-    public boolean isPlayer(String name)
-    {
-        return locked.isPlayer(name);
-    }
-
-    public boolean isPlayer(EntityPlayer player)
-    {
-        return isPlayer(player.getCommandSenderName());
+        return owner.getOwner(world);
     }
 
 }
