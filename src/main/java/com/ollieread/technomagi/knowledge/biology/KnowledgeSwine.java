@@ -35,7 +35,7 @@ public class KnowledgeSwine extends Knowledge
         attacked = new ResearchEvent("attacked", getName(), EventHelper.entityAttacked(EntityPig.class)).setProgress(5).setChance(5).setRepeatition(3);
         killed = new ResearchEvent("killed", getName(), EventHelper.entityKilled(EntityPig.class)).setProgress(15).setChance(6);
         saddled = new ResearchEvent("saddled", getName(), "saddledPig").setProgress(4).setChance(6).setRepeatition(5);
-        analysePork = new ResearchAnalysis("analysePork", getName(), new ShapelessAnalysisRecipe(ItemHelper.item("pork"))).setProgress(15).setChance(6);
+        analysePork = new ResearchAnalysis("analysePork", getName(), new ShapelessAnalysisRecipe(ItemHelper.item("porkchop"))).setProgress(15).setChance(6);
         ridden = new ResearchEvent("ridingPig", getName(), "ridingPig").setProgress(5).setChance(6).setRepeatition(7);
     }
 
