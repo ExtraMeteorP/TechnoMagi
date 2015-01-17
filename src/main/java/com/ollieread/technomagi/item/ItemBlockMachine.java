@@ -7,6 +7,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+
+import com.ollieread.technomagi.block.BlockMachine;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -41,7 +44,7 @@ public class ItemBlockMachine extends ItemBlock
 
     public String getUnlocalizedName(ItemStack stack)
     {
-        return getUnlocalizedName() + "." + stack.getItemDamage();
+        return getUnlocalizedName() + "." + BlockMachine.blockNames[stack.getItemDamage()];
     }
 
     @SideOnly(Side.CLIENT)
