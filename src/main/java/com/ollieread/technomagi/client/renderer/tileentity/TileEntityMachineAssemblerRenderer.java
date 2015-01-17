@@ -17,8 +17,8 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
-import com.ollieread.technomagi.client.model.ModelMachineConstruct;
 import com.ollieread.technomagi.client.model.ModelMachineAssembler;
+import com.ollieread.technomagi.client.model.ModelMachineConstruct;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.common.init.Blocks;
 import com.ollieread.technomagi.tileentity.TileEntityMachineAssembler;
@@ -48,7 +48,7 @@ public class TileEntityMachineAssemblerRenderer extends TileEntitySpecialRendere
         Tessellator tessellator = Tessellator.instance;
         // This will make your block brightness dependent from surroundings
         // lighting.
-        float f = Blocks.blockCrafting.getLightValue(te.getWorldObj(), te.xCoord, te.yCoord, te.zCoord);
+        float f = Blocks.blockMachine.getLightValue(te.getWorldObj(), te.xCoord, te.yCoord, te.zCoord);
         int l = te.getWorldObj().getLightBrightnessForSkyBlocks(te.xCoord, te.yCoord, te.zCoord, 0);
         int l1 = l % 65536;
         int l2 = l / 65536;
