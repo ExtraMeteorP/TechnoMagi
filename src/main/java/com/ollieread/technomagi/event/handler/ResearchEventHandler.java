@@ -259,31 +259,33 @@ public class ResearchEventHandler
     public void onLivingSpawn(LivingSpawnEvent event)
     {
         if (!event.entityLiving.worldObj.isRemote) {
-            EntityAnimal animal = (EntityAnimal) event.entityLiving;
-            Class entityClass = animal.getClass();
+            if (event.entityLiving instanceof EntityAnimal) {
+                EntityAnimal animal = (EntityAnimal) event.entityLiving;
+                Class entityClass = animal.getClass();
 
-            if (animal.isChild()) {
-                double d = 5.0D;
-                List entities = animal.worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox(animal.posX - d, animal.posY - d, animal.posZ - d, animal.posX + d, animal.posY + d, animal.posZ + d));
+                if (animal.isChild()) {
+                    double d = 5.0D;
+                    List entities = animal.worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox(animal.posX - d, animal.posY - d, animal.posZ - d, animal.posX + d, animal.posY + d, animal.posZ + d));
 
-                for (Iterator i = entities.iterator(); i.hasNext();) {
-                    EntityPlayer player = (EntityPlayer) i.next();
+                    for (Iterator i = entities.iterator(); i.hasNext();) {
+                        EntityPlayer player = (EntityPlayer) i.next();
 
-                    if (player != null) {
-                        String eventName = EventHelper.entityBirth(entityClass);
+                        if (player != null) {
+                            String eventName = EventHelper.entityBirth(entityClass);
 
-                        if (eventName != null && !eventName.isEmpty()) {
-                            ExtendedPlayerKnowledge knowledge = PlayerHelper.getPlayerKnowledge(player);
+                            if (eventName != null && !eventName.isEmpty()) {
+                                ExtendedPlayerKnowledge knowledge = PlayerHelper.getPlayerKnowledge(player);
 
-                            if (knowledge != null && !knowledge.canSpecialise()) {
-                                if (player.canEntityBeSeen(animal)) {
-                                    ResearchRegistry.researchEvent(eventName, event, knowledge, true);
-                                }
+                                if (knowledge != null && !knowledge.canSpecialise()) {
+                                    if (player.canEntityBeSeen(animal)) {
+                                        ResearchRegistry.researchEvent(eventName, event, knowledge, true);
+                                    }
 
-                                ExtendedNanites nanites = ExtendedNanites.get(event.entityLiving);
+                                    ExtendedNanites nanites = ExtendedNanites.get(event.entityLiving);
 
-                                if (nanites != null && nanites.getOwner() != null && nanites.getOwner().equals(player.getCommandSenderName())) {
-                                    ResearchRegistry.researchMonitoring(entityClass, "birth", PlayerHelper.getPlayerKnowledge(player), nanites);
+                                    if (nanites != null && nanites.getOwner() != null && nanites.getOwner().equals(player.getCommandSenderName())) {
+                                        ResearchRegistry.researchMonitoring(entityClass, "birth", PlayerHelper.getPlayerKnowledge(player), nanites);
+                                    }
                                 }
                             }
                         }
