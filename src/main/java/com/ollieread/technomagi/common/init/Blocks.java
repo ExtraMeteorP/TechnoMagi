@@ -67,7 +67,6 @@ public class Blocks
     public static Block blockTeleporter;
     public static Block blockObservationChamber;
     public static Block blockEmptyFiller;
-    public static Block blockCrafting;
     public static Block blockHardlight;
     public static Block blockHardlightFence;
     public static Block blockHardlightGenerator;
@@ -115,7 +114,6 @@ public class Blocks
         GameRegistry.registerBlock(blockLightAir, "lightAir");
         GameRegistry.registerBlock(blockTeleporter, ItemBlockTM.class, "teleporter");
         GameRegistry.registerBlock(blockObservationChamber, "observationChamber");
-        GameRegistry.registerBlock(blockCrafting, "crafting");
         GameRegistry.registerBlock(blockFocusCharger, "focusCharger");
         GameRegistry.registerBlock(blockEmptyFiller, "emptyFiller");
         GameRegistry.registerBlock(blockHardlight, "hardlight");
