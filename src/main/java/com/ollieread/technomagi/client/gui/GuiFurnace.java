@@ -8,7 +8,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.inventory.ContainerFurnace;
-import com.ollieread.technomagi.tileentity.TileEntityFurnace;
+import com.ollieread.technomagi.tileentity.TileEntityMachineFurnace;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -18,9 +18,9 @@ public class GuiFurnace extends GuiEnergyContainer
 {
 
     private static final ResourceLocation texture = new ResourceLocation(Reference.MODID.toLowerCase(), "textures/gui/furnace.png");
-    protected TileEntityFurnace furnace;
+    protected TileEntityMachineFurnace furnace;
 
-    public GuiFurnace(InventoryPlayer playerInventory, TileEntityFurnace tile)
+    public GuiFurnace(InventoryPlayer playerInventory, TileEntityMachineFurnace tile)
     {
         super(new ContainerFurnace(playerInventory, tile));
 

@@ -4,7 +4,7 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
-import com.ollieread.technomagi.tileentity.TileEntityNaniteReplicator;
+import com.ollieread.technomagi.tileentity.TileEntityMachineReplicator;
 
 public class ModelMachineReplicator extends ModelBase
 {
@@ -17,7 +17,7 @@ public class ModelMachineReplicator extends ModelBase
     ModelRenderer sample3;
     ModelRenderer sample4;
 
-    protected TileEntityNaniteReplicator replicator = null;
+    protected TileEntityMachineReplicator replicator = null;
 
     public ModelMachineReplicator()
     {
@@ -68,7 +68,7 @@ public class ModelMachineReplicator extends ModelBase
         setRotation(sample4, 0F, 0F, 0F);
     }
 
-    public void setTileEntity(TileEntityNaniteReplicator tile)
+    public void setTileEntity(TileEntityMachineReplicator tile)
     {
         replicator = tile;
     }

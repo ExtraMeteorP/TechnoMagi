@@ -8,8 +8,8 @@ import net.minecraft.world.IBlockAccess;
 import com.ollieread.technomagi.TechnoMagi;
 import com.ollieread.technomagi.client.ClientProxy;
 import com.ollieread.technomagi.common.init.Blocks;
-import com.ollieread.technomagi.tileentity.IDisguisableTile;
-import com.ollieread.technomagi.tileentity.IPlayerLocked;
+import com.ollieread.technomagi.tileentity.component.IDisguisable;
+import com.ollieread.technomagi.tileentity.component.IHasOwner;
 import com.ollieread.technomagi.util.RenderHelper;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
@@ -34,8 +34,8 @@ public class BlockSmartmetalRenderer implements ISimpleBlockRenderingHandler
         TileEntity tileEntity = world.getTileEntity(x, y, z);
 
         if (ClientProxy.renderPass == 1) {
-            if (((IPlayerLocked) tileEntity).isPlayer(TechnoMagi.proxy.getClientPlayer().getCommandSenderName())) {
-                if (((IDisguisableTile) tileEntity).isDisguised() && world.getBlockMetadata(x, y, z) != 3) {
+            if (((IHasOwner) tileEntity).isOwner(TechnoMagi.proxy.getClientPlayer().getCommandSenderName())) {
+                if (((IDisguisable) tileEntity).isDisguised() && world.getBlockMetadata(x, y, z) != 3) {
                     renderer.setOverrideBlockTexture(Blocks.blockSmartmetal.overlayIcon);
                 } else {
                     return false;

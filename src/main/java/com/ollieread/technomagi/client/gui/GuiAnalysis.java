@@ -9,7 +9,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.inventory.ContainerAnalysis;
-import com.ollieread.technomagi.tileentity.TileEntityAnalysis;
+import com.ollieread.technomagi.tileentity.TileEntityMachineAnalysis;
 import com.ollieread.technomagi.util.PacketHelper;
 
 import cpw.mods.fml.relauncher.Side;
@@ -20,10 +20,10 @@ public class GuiAnalysis extends GuiEnergyContainer
 {
 
     private static final ResourceLocation texture = new ResourceLocation(Reference.MODID.toLowerCase(), "textures/gui/analysis.png");
-    protected TileEntityAnalysis analysis;
+    protected TileEntityMachineAnalysis analysis;
     protected GuiTMButton analyseButton;
 
-    public GuiAnalysis(InventoryPlayer playerInventory, TileEntityAnalysis tile)
+    public GuiAnalysis(InventoryPlayer playerInventory, TileEntityMachineAnalysis tile)
     {
         super(new ContainerAnalysis(playerInventory, tile));
 
@@ -40,9 +40,9 @@ public class GuiAnalysis extends GuiEnergyContainer
         analyseButton = new GuiTMButton(1, this.guiLeft + 65, this.guiTop + 24, 102, 15, I18n.format("technomagi.analyse.button"));
         this.buttonList.add(analyseButton);
 
-        if (analysis.inProgress() || !analysis.canAnalyse()) {
+        if (analysis.inProgress() || !analysis.canProcess()) {
             analyseButton.enabled = false;
-        } else if (!analysis.inProgress() && analysis.canAnalyse()) {
+        } else if (!analysis.inProgress() && analysis.canProcess()) {
             analyseButton.enabled = true;
         }
     }
@@ -93,9 +93,9 @@ public class GuiAnalysis extends GuiEnergyContainer
 
     public void updateScreen()
     {
-        if (analysis.inProgress() || !analysis.canAnalyse()) {
+        if (analysis.inProgress() || !analysis.canProcess()) {
             analyseButton.enabled = false;
-        } else if (!analysis.inProgress() && analysis.canAnalyse()) {
+        } else if (!analysis.inProgress() && analysis.canProcess()) {
             analyseButton.enabled = true;
         }
     }

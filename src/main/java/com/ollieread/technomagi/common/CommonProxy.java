@@ -10,11 +10,11 @@ import com.ollieread.technomagi.client.gui.GuiAnalysis;
 import com.ollieread.technomagi.client.gui.GuiArchive;
 import com.ollieread.technomagi.client.gui.GuiConstruct;
 import com.ollieread.technomagi.client.gui.GuiCrafting;
-import com.ollieread.technomagi.client.gui.GuiDiagnosis;
 import com.ollieread.technomagi.client.gui.GuiFocuser;
 import com.ollieread.technomagi.client.gui.GuiFurnace;
 import com.ollieread.technomagi.client.gui.GuiNaniteReplicator;
 import com.ollieread.technomagi.client.gui.GuiObservationChamber;
+import com.ollieread.technomagi.client.gui.GuiPersonalInterface;
 import com.ollieread.technomagi.client.gui.GuiSelf;
 import com.ollieread.technomagi.client.gui.GuiSeparator;
 import com.ollieread.technomagi.client.gui.GuiSpecialisation;
@@ -36,23 +36,22 @@ import com.ollieread.technomagi.inventory.ContainerAnalysis;
 import com.ollieread.technomagi.inventory.ContainerArchive;
 import com.ollieread.technomagi.inventory.ContainerConstruct;
 import com.ollieread.technomagi.inventory.ContainerCrafting;
-import com.ollieread.technomagi.inventory.ContainerDiagnosis;
 import com.ollieread.technomagi.inventory.ContainerFocuser;
 import com.ollieread.technomagi.inventory.ContainerFurnace;
 import com.ollieread.technomagi.inventory.ContainerNaniteReplicator;
 import com.ollieread.technomagi.inventory.ContainerObservation;
 import com.ollieread.technomagi.inventory.ContainerSeparator;
 import com.ollieread.technomagi.inventory.ContainerStaff;
-import com.ollieread.technomagi.tileentity.TileEntityAnalysis;
 import com.ollieread.technomagi.tileentity.TileEntityArchive;
 import com.ollieread.technomagi.tileentity.TileEntityConstruct;
-import com.ollieread.technomagi.tileentity.TileEntityCrafting;
-import com.ollieread.technomagi.tileentity.TileEntityFocuser;
-import com.ollieread.technomagi.tileentity.TileEntityFurnace;
-import com.ollieread.technomagi.tileentity.TileEntityNaniteReplicator;
-import com.ollieread.technomagi.tileentity.TileEntityObservationChamber;
-import com.ollieread.technomagi.tileentity.TileEntitySeparator;
-import com.ollieread.technomagi.tileentity.TileEntityTeleporter;
+import com.ollieread.technomagi.tileentity.TileEntityMachineAnalysis;
+import com.ollieread.technomagi.tileentity.TileEntityMachineAssembler;
+import com.ollieread.technomagi.tileentity.TileEntityMachineFurnace;
+import com.ollieread.technomagi.tileentity.TileEntityMachineInfuser;
+import com.ollieread.technomagi.tileentity.TileEntityMachineObservation;
+import com.ollieread.technomagi.tileentity.TileEntityMachineProcessor;
+import com.ollieread.technomagi.tileentity.TileEntityMachineReplicator;
+import com.ollieread.technomagi.tileentity.TileEntityMachineTeleporter;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.IGuiHandler;
@@ -75,25 +74,25 @@ public class CommonProxy implements IGuiHandler
     public static int GUI_SEPARATOR = 11;
     public static int GUI_FURNACE = 12;
     public static int GUI_FOCUSER = 13;
-    public static int GUI_DIAGNOSIS = 14;
+    public static int GUI_PERSONAL_INTERFACE = 14;
 
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
     {
         if (ID == GUI_REPLICATOR) {
-            TileEntityNaniteReplicator replicator = (TileEntityNaniteReplicator) world.getTileEntity(x, y, z);
+            TileEntityMachineReplicator replicator = (TileEntityMachineReplicator) world.getTileEntity(x, y, z);
 
             if (replicator != null) {
                 return new ContainerNaniteReplicator(player.inventory, replicator);
             }
         } else if (ID == GUI_ANALYSIS) {
-            TileEntityAnalysis analysis = (TileEntityAnalysis) world.getTileEntity(x, y, z);
+            TileEntityMachineAnalysis analysis = (TileEntityMachineAnalysis) world.getTileEntity(x, y, z);
 
             if (analysis != null) {
                 return new ContainerAnalysis(player.inventory, analysis);
             }
         } else if (ID == GUI_OBSERVATION) {
-            TileEntityObservationChamber chamber = (TileEntityObservationChamber) world.getTileEntity(x, y, z);
+            TileEntityMachineObservation chamber = (TileEntityMachineObservation) world.getTileEntity(x, y, z);
 
             if (chamber != null) {
                 return new ContainerObservation(player.inventory, chamber);
@@ -105,7 +104,7 @@ public class CommonProxy implements IGuiHandler
                 return new ContainerArchive(player.inventory, archive);
             }
         } else if (ID == GUI_CRAFTING) {
-            TileEntityCrafting crafter = (TileEntityCrafting) world.getTileEntity(x, y, z);
+            TileEntityMachineAssembler crafter = (TileEntityMachineAssembler) world.getTileEntity(x, y, z);
 
             if (crafter != null) {
                 return new ContainerCrafting(player.inventory, crafter);
@@ -119,25 +118,25 @@ public class CommonProxy implements IGuiHandler
                 return new ContainerConstruct(player.inventory, construct);
             }
         } else if (ID == GUI_SEPARATOR) {
-            TileEntitySeparator crafter = (TileEntitySeparator) world.getTileEntity(x, y, z);
+            TileEntityMachineProcessor crafter = (TileEntityMachineProcessor) world.getTileEntity(x, y, z);
 
             if (crafter != null) {
                 return new ContainerSeparator(player.inventory, crafter);
             }
         } else if (ID == GUI_FURNACE) {
-            TileEntityFurnace crafter = (TileEntityFurnace) world.getTileEntity(x, y, z);
+            TileEntityMachineFurnace crafter = (TileEntityMachineFurnace) world.getTileEntity(x, y, z);
 
             if (crafter != null) {
                 return new ContainerFurnace(player.inventory, crafter);
             }
         } else if (ID == GUI_FOCUSER) {
-            TileEntityFocuser focuser = (TileEntityFocuser) world.getTileEntity(x, y, z);
+            TileEntityMachineInfuser focuser = (TileEntityMachineInfuser) world.getTileEntity(x, y, z);
 
             if (focuser != null) {
                 return new ContainerFocuser(player.inventory, focuser);
             }
-        } else if (ID == GUI_DIAGNOSIS) {
-            return new ContainerDiagnosis(player);
+        } else if (ID == GUI_PERSONAL_INTERFACE) {
+            // return new ContainerDiagnosis(player);
         }
 
         return null;
@@ -160,19 +159,19 @@ public class CommonProxy implements IGuiHandler
                 return new GuiSpecialisation();
             }
         } else if (ID == GUI_REPLICATOR) {
-            TileEntityNaniteReplicator replicator = (TileEntityNaniteReplicator) world.getTileEntity(x, y, z);
+            TileEntityMachineReplicator replicator = (TileEntityMachineReplicator) world.getTileEntity(x, y, z);
 
             if (replicator != null) {
                 return new GuiNaniteReplicator(player.inventory, replicator);
             }
         } else if (ID == GUI_ANALYSIS) {
-            TileEntityAnalysis analysis = (TileEntityAnalysis) world.getTileEntity(x, y, z);
+            TileEntityMachineAnalysis analysis = (TileEntityMachineAnalysis) world.getTileEntity(x, y, z);
 
             if (analysis != null) {
                 return new GuiAnalysis(player.inventory, analysis);
             }
         } else if (ID == GUI_OBSERVATION) {
-            TileEntityObservationChamber chamber = (TileEntityObservationChamber) world.getTileEntity(x, y, z);
+            TileEntityMachineObservation chamber = (TileEntityMachineObservation) world.getTileEntity(x, y, z);
 
             if (chamber != null) {
                 return new GuiObservationChamber(player.inventory, chamber);
@@ -213,7 +212,7 @@ public class CommonProxy implements IGuiHandler
                 }
             }
         } else if (ID == GUI_CRAFTING) {
-            TileEntityCrafting crafter = (TileEntityCrafting) world.getTileEntity(x, y, z);
+            TileEntityMachineAssembler crafter = (TileEntityMachineAssembler) world.getTileEntity(x, y, z);
 
             if (crafter != null) {
                 return new GuiCrafting(player.inventory, crafter);
@@ -227,31 +226,31 @@ public class CommonProxy implements IGuiHandler
                 return new GuiConstruct(player.inventory, construct);
             }
         } else if (ID == GUI_TELEPORTER) {
-            TileEntityTeleporter teleporter = (TileEntityTeleporter) world.getTileEntity(x, y, z);
+            TileEntityMachineTeleporter teleporter = (TileEntityMachineTeleporter) world.getTileEntity(x, y, z);
 
             if (teleporter != null) {
                 return new GuiTeleporter(teleporter);
             }
         } else if (ID == GUI_SEPARATOR) {
-            TileEntitySeparator separator = (TileEntitySeparator) world.getTileEntity(x, y, z);
+            TileEntityMachineProcessor separator = (TileEntityMachineProcessor) world.getTileEntity(x, y, z);
 
             if (separator != null) {
                 return new GuiSeparator(player.inventory, separator);
             }
         } else if (ID == GUI_FURNACE) {
-            TileEntityFurnace furnace = (TileEntityFurnace) world.getTileEntity(x, y, z);
+            TileEntityMachineFurnace furnace = (TileEntityMachineFurnace) world.getTileEntity(x, y, z);
 
             if (furnace != null) {
                 return new GuiFurnace(player.inventory, furnace);
             }
         } else if (ID == GUI_FOCUSER) {
-            TileEntityFocuser focuser = (TileEntityFocuser) world.getTileEntity(x, y, z);
+            TileEntityMachineInfuser focuser = (TileEntityMachineInfuser) world.getTileEntity(x, y, z);
 
             if (focuser != null) {
                 return new GuiFocuser(player.inventory, focuser);
             }
-        } else if (ID == GUI_DIAGNOSIS) {
-            return new GuiDiagnosis();
+        } else if (ID == GUI_PERSONAL_INTERFACE) {
+            return new GuiPersonalInterface();
         }
 
         return null;

@@ -15,7 +15,7 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import com.ollieread.technomagi.common.Reference;
-import com.ollieread.technomagi.tileentity.TileEntityTeleporter;
+import com.ollieread.technomagi.tileentity.TileEntityMachineTeleporter;
 import com.ollieread.technomagi.util.PacketHelper;
 
 import cpw.mods.fml.relauncher.Side;
@@ -30,12 +30,12 @@ public class GuiTeleporter extends GuiScreen
     protected int xOffset;
     protected int yOffset;
     private static final ResourceLocation texture = new ResourceLocation(Reference.MODID.toLowerCase(), "textures/gui/teleporter.png");
-    protected TileEntityTeleporter teleporter;
+    protected TileEntityMachineTeleporter teleporter;
     protected int mode;
     protected int mouseX;
     protected int mouseY;
 
-    public GuiTeleporter(TileEntityTeleporter tile)
+    public GuiTeleporter(TileEntityMachineTeleporter tile)
     {
         super();
 

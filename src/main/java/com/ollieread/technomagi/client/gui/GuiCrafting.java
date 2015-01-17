@@ -9,17 +9,17 @@ import org.lwjgl.opengl.GL11;
 
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.inventory.ContainerCrafting;
-import com.ollieread.technomagi.tileentity.TileEntityCrafting;
+import com.ollieread.technomagi.tileentity.TileEntityMachineAssembler;
 import com.ollieread.technomagi.util.PacketHelper;
 
 public class GuiCrafting extends GuiEnergyContainer
 {
 
     private static final ResourceLocation texture = new ResourceLocation(Reference.MODID.toLowerCase(), "textures/gui/crafting.png");
-    protected TileEntityCrafting crafter;
+    protected TileEntityMachineAssembler crafter;
     protected GuiTMButton craftingButton;
 
-    public GuiCrafting(InventoryPlayer playerInventory, TileEntityCrafting tile)
+    public GuiCrafting(InventoryPlayer playerInventory, TileEntityMachineAssembler tile)
     {
         super(new ContainerCrafting(playerInventory, tile));
 
@@ -36,9 +36,9 @@ public class GuiCrafting extends GuiEnergyContainer
         craftingButton = new GuiTMButton(1, this.guiLeft + 96, this.guiTop + 62, 70, 15, I18n.format("technomagi.craft.button"));
         this.buttonList.add(craftingButton);
 
-        if (!crafter.canCraft() || crafter.isCrafting()) {
+        if (!crafter.canProcess() || crafter.isProcessing()) {
             craftingButton.enabled = false;
-        } else if (crafter.canCraft() && !crafter.isCrafting()) {
+        } else if (crafter.canProcess() && !crafter.isProcessing()) {
             craftingButton.enabled = true;
         }
     }
@@ -66,7 +66,7 @@ public class GuiCrafting extends GuiEnergyContainer
 
     protected void actionPerformed(GuiButton button)
     {
-        if (button.id == 1 && crafter.canCraft()) {
+        if (button.id == 1 && crafter.canProcess()) {
             crafter.setCrafting(true);
             button.enabled = false;
             PacketHelper.setCrafting(crafter, true);
@@ -75,9 +75,9 @@ public class GuiCrafting extends GuiEnergyContainer
 
     public void updateScreen()
     {
-        if (!crafter.canCraft() || crafter.isCrafting()) {
+        if (!crafter.canProcess() || crafter.isProcessing()) {
             craftingButton.enabled = false;
-        } else if (crafter.canCraft() && !crafter.isCrafting()) {
+        } else if (crafter.canProcess() && !crafter.isProcessing()) {
             craftingButton.enabled = true;
         }
     }

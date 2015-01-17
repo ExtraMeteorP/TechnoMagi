@@ -1,11 +1,10 @@
 package com.ollieread.technomagi.client.gui.archive;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
@@ -21,7 +20,8 @@ import com.ollieread.technomagi.client.gui.GuiArchive;
 import com.ollieread.technomagi.client.gui.GuiTMButton;
 import com.ollieread.technomagi.common.Information;
 import com.ollieread.technomagi.common.Reference;
-import com.ollieread.technomagi.item.crafting.ConstructManager;
+import com.ollieread.technomagi.item.crafting.ConstructRecipe;
+import com.ollieread.technomagi.item.crafting.RecipeManager;
 import com.ollieread.technomagi.tileentity.TileEntityArchive;
 import com.ollieread.technomagi.util.PacketHelper;
 
@@ -33,8 +33,7 @@ public class GuiArchiveConstruct extends GuiArchive
 {
 
     protected static ResourceLocation texture;
-    protected List<Block> blockList;
-    protected Map<Block, List<ItemStack>> recipeList;
+    protected List<ConstructRecipe> recipeList;
     protected List recipeButtons = new ArrayList();
     protected ExtendedPlayerKnowledge playerKnowledge;
     private GuiButton selectedButton;
@@ -47,9 +46,7 @@ public class GuiArchiveConstruct extends GuiArchive
     {
         super(player, archive);
 
-        recipeList = ConstructManager.getInstance().getRecipeList();
-        blockList = new ArrayList<Block>();
-        blockList.addAll(recipeList.keySet());
+        recipeList = RecipeManager.construct.getRecipes();
     }
 
     public void initGui()
@@ -97,18 +94,19 @@ public class GuiArchiveConstruct extends GuiArchive
     {
         fontRendererObj.drawString(I18n.format("technomagi.archive.name.recipes"), 9, 50, 5097727);
 
-        if (blockList != null && blockList.size() > 0) {
+        if (recipeList != null && recipeList.size() > 0) {
             int start = 7 * page;
             int end = start + 7;
 
-            List<Block> sublist = blockList.subList(7 * page, end > recipeList.size() ? recipeList.size() : end);
+            List<ConstructRecipe> sublist = recipeList.subList(7 * page, end > recipeList.size() ? recipeList.size() : end);
 
             int x = 9;
             int y = 65;
             int id = 5;
 
-            for (Iterator<Block> i = sublist.iterator(); i.hasNext();) {
-                Block block = i.next();
+            for (Iterator<ConstructRecipe> i = sublist.iterator(); i.hasNext();) {
+                ConstructRecipe recipe = i.next();
+                ItemStack block = recipe.getRecipeOutput();
 
                 GuiRecipeButton button = new GuiRecipeButton(id, x, y, block);
                 recipeButtons.add(button);
@@ -135,22 +133,23 @@ public class GuiArchiveConstruct extends GuiArchive
     protected void drawRecipeLayer()
     {
         if (recipeList != null && recipeList.size() > recipe) {
-            Block b = blockList.get(this.recipe);
+            ConstructRecipe recipe = recipeList.get(this.recipe);
+            ItemStack output = recipe.getRecipeOutput();
             boolean can = true;
 
-            if (b != null) {
-                List<ItemStack> items = recipeList.get(b);
+            if (output != null) {
+                List<ItemStack> items = Arrays.asList(recipe.getRecipeInput());
 
-                drawItemStack(new ItemStack(b), 9, 68, "");
+                drawItemStack(output, 9, 68, "");
                 int progress = 0;
 
                 if (can) {
-                    fontRendererObj.drawString(b.getLocalizedName(), 28, 72, 5097727);
+                    fontRendererObj.drawString(output.getDisplayName(), 28, 72, 5097727);
                 } else {
-                    obfFontRendererObj.drawString(b.getLocalizedName(), 28, 72, 5097727);
+                    obfFontRendererObj.drawString(output.getDisplayName(), 28, 72, 5097727);
                 }
 
-                String content = Information.getInformationParagraphs("recipes", b.getUnlocalizedName());
+                String content = Information.getInformationParagraphs("recipes", output.getUnlocalizedName());
 
                 drawStringPage(content, 9, 89, 158, 130, !can);
 
@@ -233,7 +232,7 @@ public class GuiArchiveConstruct extends GuiArchive
     public static class GuiRecipeButton extends GuiButton
     {
 
-        protected Block block;
+        protected ItemStack block;
         /** The x position of this control. */
         public int xPosition;
         /** The y position of this control. */
@@ -241,9 +240,9 @@ public class GuiArchiveConstruct extends GuiArchive
 
         public boolean can = true;
 
-        public GuiRecipeButton(int id, int x, int y, Block b)
+        public GuiRecipeButton(int id, int x, int y, ItemStack b)
         {
-            super(id, GuiArchiveConstruct.leftOffset + x, GuiArchiveConstruct.topOffset + y, 200, 20, b.getLocalizedName());
+            super(id, GuiArchiveConstruct.leftOffset + x, GuiArchiveConstruct.topOffset + y, 200, 20, b.getDisplayName());
 
             xPosition = x;
             yPosition = y;
@@ -254,7 +253,7 @@ public class GuiArchiveConstruct extends GuiArchive
         public void drawButton(Minecraft mc, int x, int y)
         {
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            this.drawItemStack(new ItemStack(block), this.xPosition, this.yPosition, "");
+            this.drawItemStack(block, this.xPosition, this.yPosition, "");
 
             if (can) {
                 mc.fontRenderer.drawString(displayString, this.xPosition + 19, yPosition + 5, 16777215);

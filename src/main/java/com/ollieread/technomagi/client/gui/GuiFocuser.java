@@ -11,7 +11,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.inventory.ContainerFocuser;
-import com.ollieread.technomagi.tileentity.TileEntityFocuser;
+import com.ollieread.technomagi.tileentity.TileEntityMachineInfuser;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -21,9 +21,9 @@ public class GuiFocuser extends GuiEnergyContainer
 {
 
     private static final ResourceLocation texture = new ResourceLocation(Reference.MODID.toLowerCase(), "textures/gui/furnace.png");
-    protected TileEntityFocuser focuser;
+    protected TileEntityMachineInfuser focuser;
 
-    public GuiFocuser(InventoryPlayer playerInventory, TileEntityFocuser tile)
+    public GuiFocuser(InventoryPlayer playerInventory, TileEntityMachineInfuser tile)
     {
         super(new ContainerFocuser(playerInventory, tile));
 

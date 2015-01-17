@@ -16,7 +16,7 @@ import org.lwjgl.opengl.GL12;
 
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.inventory.ContainerObservation;
-import com.ollieread.technomagi.tileentity.TileEntityObservationChamber;
+import com.ollieread.technomagi.tileentity.TileEntityMachineObservation;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -26,10 +26,10 @@ public class GuiObservationChamber extends GuiEnergyContainer
 {
 
     private static final ResourceLocation texture = new ResourceLocation(Reference.MODID.toLowerCase(), "textures/gui/observation.png");
-    protected TileEntityObservationChamber chamber;
+    protected TileEntityMachineObservation chamber;
     protected GuiTMButton analyseButton;
 
-    public GuiObservationChamber(InventoryPlayer playerInventory, TileEntityObservationChamber tile)
+    public GuiObservationChamber(InventoryPlayer playerInventory, TileEntityMachineObservation tile)
     {
         super(new ContainerObservation(playerInventory, tile));
 

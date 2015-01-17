@@ -21,9 +21,8 @@ import com.ollieread.technomagi.client.gui.GuiArchive;
 import com.ollieread.technomagi.client.gui.GuiTMButton;
 import com.ollieread.technomagi.common.Information;
 import com.ollieread.technomagi.common.Reference;
-import com.ollieread.technomagi.common.init.Recipes;
-import com.ollieread.technomagi.item.crafting.CraftingManager;
 import com.ollieread.technomagi.item.crafting.IRecipeTM;
+import com.ollieread.technomagi.item.crafting.RecipeManager;
 import com.ollieread.technomagi.item.crafting.ShapedRecipe;
 import com.ollieread.technomagi.tileentity.TileEntityArchive;
 import com.ollieread.technomagi.util.PacketHelper;
@@ -49,9 +48,7 @@ public class GuiArchiveCrafting extends GuiArchive
     {
         super(player, archive);
 
-        recipeList = new ArrayList();
-        recipeList.addAll(Recipes.recipes);
-        recipeList.addAll(CraftingManager.getInstance().getRecipeList());
+        recipeList = RecipeManager.assembler.getRecipes();
         playerKnowledge = ExtendedPlayerKnowledge.get(player);
     }
 

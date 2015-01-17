@@ -8,7 +8,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.inventory.ContainerSeparator;
-import com.ollieread.technomagi.tileentity.TileEntitySeparator;
+import com.ollieread.technomagi.tileentity.TileEntityMachineProcessor;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -18,9 +18,9 @@ public class GuiSeparator extends GuiEnergyContainer
 {
 
     private static final ResourceLocation texture = new ResourceLocation(Reference.MODID.toLowerCase(), "textures/gui/separator.png");
-    protected TileEntitySeparator separator;
+    protected TileEntityMachineProcessor separator;
 
-    public GuiSeparator(InventoryPlayer playerInventory, TileEntitySeparator tile)
+    public GuiSeparator(InventoryPlayer playerInventory, TileEntityMachineProcessor tile)
     {
         super(new ContainerSeparator(playerInventory, tile));
 

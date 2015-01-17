@@ -12,7 +12,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.inventory.ContainerNaniteReplicator;
-import com.ollieread.technomagi.tileentity.TileEntityNaniteReplicator;
+import com.ollieread.technomagi.tileentity.TileEntityMachineReplicator;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -24,9 +24,9 @@ public class GuiNaniteReplicator extends GuiEnergyContainer
     protected int xOffset;
     protected int yOffset;
     private static final ResourceLocation texture = new ResourceLocation(Reference.MODID.toLowerCase(), "textures/gui/replicator.png");
-    protected TileEntityNaniteReplicator replicator;
+    protected TileEntityMachineReplicator replicator;
 
-    public GuiNaniteReplicator(InventoryPlayer playerInventory, TileEntityNaniteReplicator tile)
+    public GuiNaniteReplicator(InventoryPlayer playerInventory, TileEntityMachineReplicator tile)
     {
         super(new ContainerNaniteReplicator(playerInventory, tile));
 
