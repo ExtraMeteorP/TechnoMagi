@@ -3,7 +3,15 @@ package com.ollieread.technomagi.knowledge;
 import com.ollieread.ennds.research.IKnowledge;
 import com.ollieread.technomagi.knowledge.biology.KnowledgeBotany;
 import com.ollieread.technomagi.knowledge.biology.KnowledgeBovine;
+import com.ollieread.technomagi.knowledge.biology.KnowledgeEthologyAggressive;
+import com.ollieread.technomagi.knowledge.biology.KnowledgeEthologyPassive;
+import com.ollieread.technomagi.knowledge.biology.KnowledgeFowl;
+import com.ollieread.technomagi.knowledge.biology.KnowledgeMetabolism;
+import com.ollieread.technomagi.knowledge.biology.KnowledgeNeurology;
 import com.ollieread.technomagi.knowledge.biology.KnowledgeOvisAries;
+import com.ollieread.technomagi.knowledge.biology.KnowledgePerception;
+import com.ollieread.technomagi.knowledge.biology.KnowledgeProcreation;
+import com.ollieread.technomagi.knowledge.biology.KnowledgeSwine;
 
 public class KnowledgeCategoryBiology
 {
@@ -28,15 +36,15 @@ public class KnowledgeCategoryBiology
 
         botany = new KnowledgeBotany("botany", new String[] {}, getName());
         bovine = new KnowledgeBovine("bovine", new String[] {}, getName());
-        fowl = new KnowledgeBotany("fowl", new String[] {}, getName());
+        fowl = new KnowledgeFowl("fowl", new String[] {}, getName());
         ovisAries = new KnowledgeOvisAries("ovisAries", new String[] {}, getName());
-        swine = new KnowledgeBotany("swine", new String[] {}, getName());
-        procreation = new KnowledgeBotany("procreation", new String[] {}, getName());
-        metabolism = new KnowledgeBotany("metabolism", new String[] {}, getName());
-        ethologyAggressive = new KnowledgeBotany("ethologyAggressive", new String[] {}, getName());
-        ethologyPassive = new KnowledgeBotany("ethologyPassive", new String[] {}, getName());
-        perception = new KnowledgeBotany("perception", new String[] {}, getName());
-        neurology = new KnowledgeBotany("neurology", new String[] {}, getName());
+        swine = new KnowledgeSwine("swine", new String[] {}, getName());
+        procreation = new KnowledgeProcreation("procreation", new String[] {}, getName());
+        metabolism = new KnowledgeMetabolism("metabolism", new String[] {}, getName());
+        ethologyAggressive = new KnowledgeEthologyAggressive("ethologyAggressive", new String[] {}, getName());
+        ethologyPassive = new KnowledgeEthologyPassive("ethologyPassive", new String[] {}, getName());
+        perception = new KnowledgePerception("perception", new String[] {}, getName());
+        neurology = new KnowledgeNeurology("neurology", new String[] {}, getName());
     }
 
     public String getName()
