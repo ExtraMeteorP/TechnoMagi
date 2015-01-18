@@ -26,14 +26,22 @@ import com.ollieread.technomagi.util.InventoryHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockTank extends BlockBasicContainer implements ITileEntityToolable
+public class BlockTank extends BlockBasicContainer implements ITileEntityToolable, IBlockMulti
 {
+
+    public static String[] blockNames = new String[] { "normal", "advanced", "elite" };
 
     public BlockTank(String name)
     {
         super(Material.iron, name);
         setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
         setBlockTextureName("construct");
+    }
+
+    @Override
+    public String getName(int metadata)
+    {
+        return blockNames[metadata];
     }
 
     @SideOnly(Side.CLIENT)

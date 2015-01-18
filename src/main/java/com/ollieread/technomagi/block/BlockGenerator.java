@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 import com.ollieread.technomagi.block.abstracts.BlockBasicContainer;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.tileentity.TileEntityGeneratorLife;
-import com.ollieread.technomagi.tileentity.TileEntityGeneratorSolar;
+import com.ollieread.technomagi.tileentity.TileEntityGeneratorLight;
 import com.ollieread.technomagi.tileentity.TileEntityGeneratorVoid;
 import com.ollieread.technomagi.tileentity.abstracts.TileEntityGenerator;
 import com.ollieread.technomagi.util.PlayerHelper;
@@ -24,8 +24,10 @@ import com.ollieread.technomagi.util.PlayerHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockGenerator extends BlockBasicContainer
+public class BlockGenerator extends BlockBasicContainer implements IBlockMulti
 {
+
+    public static String[] blockNames = new String[] { "void", "light", "life" };
     @SideOnly(Side.CLIENT)
     protected IIcon voidIcon;
     @SideOnly(Side.CLIENT)
@@ -45,7 +47,7 @@ public class BlockGenerator extends BlockBasicContainer
             case 0:
                 return new TileEntityGeneratorVoid();
             case 1:
-                return new TileEntityGeneratorSolar();
+                return new TileEntityGeneratorLight();
             case 2:
                 return new TileEntityGeneratorLife();
         }
@@ -67,6 +69,12 @@ public class BlockGenerator extends BlockBasicContainer
     public boolean isOpaqueCube()
     {
         return false;
+    }
+
+    @Override
+    public String getName(int metadata)
+    {
+        return blockNames[metadata];
     }
 
     @SideOnly(Side.CLIENT)

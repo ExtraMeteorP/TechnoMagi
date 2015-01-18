@@ -30,8 +30,10 @@ import com.ollieread.technomagi.util.TeleportHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockTeleporter extends BlockBasicContainer implements ITileEntityToolable
+public class BlockTeleporter extends BlockBasicContainer implements ITileEntityToolable, IBlockMulti
 {
+
+    public static String[] blockNames = new String[] { "elevator", "paired", "relocator", "disruptor" };
 
     @SideOnly(Side.CLIENT)
     public IIcon sideIcon;
@@ -51,6 +53,12 @@ public class BlockTeleporter extends BlockBasicContainer implements ITileEntityT
     public TileEntity createNewTileEntity(World var1, int var2)
     {
         return new TileEntityMachineTeleporter();
+    }
+
+    @Override
+    public String getName(int metadata)
+    {
+        return blockNames[metadata];
     }
 
     @SideOnly(Side.CLIENT)
