@@ -12,6 +12,7 @@ import net.minecraft.entity.monster.EntityZombie;
 
 import com.ollieread.ennds.research.IResearch;
 import com.ollieread.ennds.research.Knowledge;
+import com.ollieread.technomagi.common.Information;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.research.ResearchEvent;
 import com.ollieread.technomagi.util.EventHelper;
@@ -63,7 +64,7 @@ public class KnowledgeEthologyAggressive extends Knowledge
     @Override
     public String[] getIntrigue()
     {
-        return null;
+        return Information.getInformation("intrigue", getName());
     }
 
 }

@@ -13,9 +13,15 @@ public class ResearchEvent extends Research implements IResearchEvent
 
     public ResearchEvent(String name, String knowledge, String event)
     {
+        this(name, knowledge, event, false);
+    }
+
+    public ResearchEvent(String name, String knowledge, String event, boolean instant)
+    {
         super(name, knowledge, Reference.MODID.toLowerCase());
 
         this.event = event;
+        this.instant = instant;
     }
 
     @Override
