@@ -28,12 +28,12 @@ import com.ollieread.technomagi.util.EventHelper;
 public class KnowledgeEthologyAggressive extends Knowledge
 {
 
-    public static IResearch targettedByCreeper;
-    public static IResearch targettedBySkeleton;
-    public static IResearch targettedByZombie;
-    public static IResearch targettedBySpider;
-    public static IResearch targettedBySlime;
-    public static IResearch targettedByEnderman;
+    public static IResearch targetedByCreeper;
+    public static IResearch targetedBySkeleton;
+    public static IResearch targetedByZombie;
+    public static IResearch targetedBySpider;
+    public static IResearch targetedBySlime;
+    public static IResearch targetedByEnderman;
 
     public static IResearch attackedByCreeper;
     public static IResearch attackedBySkeleton;
@@ -46,12 +46,12 @@ public class KnowledgeEthologyAggressive extends Knowledge
     {
         super(name, Reference.MODID.toLowerCase(), knowledge, category);
 
-        targettedByCreeper = new ResearchEvent("targettedByCreeper", getName(), EventHelper.entityTargeted(EntityCreeper.class)).setProgress(1).setChance(6).setRepeatition(10);
-        targettedBySkeleton = new ResearchEvent("targettedBySkeleton", getName(), EventHelper.entityTargeted(EntitySkeleton.class)).setProgress(1).setChance(6).setRepeatition(10);
-        targettedByZombie = new ResearchEvent("targettedByZombie", getName(), EventHelper.entityTargeted(EntityZombie.class)).setProgress(1).setChance(6).setRepeatition(10);
-        targettedBySpider = new ResearchEvent("targettedBySpider", getName(), EventHelper.entityTargeted(EntitySpider.class)).setProgress(1).setChance(6).setRepeatition(10);
-        targettedBySlime = new ResearchEvent("targettedBySlime", getName(), EventHelper.entityTargeted(EntitySlime.class)).setProgress(1).setChance(6).setRepeatition(10);
-        targettedByEnderman = new ResearchEvent("targettedByEnderman", getName(), EventHelper.entityTargeted(EntityEnderman.class)).setProgress(1).setChance(6).setRepeatition(10);
+        targetedByCreeper = new ResearchEvent("targetedByCreeper", getName(), EventHelper.entityTargeted(EntityCreeper.class)).setProgress(1).setChance(6).setRepeatition(10);
+        targetedBySkeleton = new ResearchEvent("targetedBySkeleton", getName(), EventHelper.entityTargeted(EntitySkeleton.class)).setProgress(1).setChance(6).setRepeatition(10);
+        targetedByZombie = new ResearchEvent("targetedByZombie", getName(), EventHelper.entityTargeted(EntityZombie.class)).setProgress(1).setChance(6).setRepeatition(10);
+        targetedBySpider = new ResearchEvent("targetedBySpider", getName(), EventHelper.entityTargeted(EntitySpider.class)).setProgress(1).setChance(6).setRepeatition(10);
+        targetedBySlime = new ResearchEvent("targetedBySlime", getName(), EventHelper.entityTargeted(EntitySlime.class)).setProgress(1).setChance(6).setRepeatition(10);
+        targetedByEnderman = new ResearchEvent("targetedByEnderman", getName(), EventHelper.entityTargeted(EntityEnderman.class)).setProgress(1).setChance(6).setRepeatition(10);
 
         attackedByCreeper = new ResearchEvent("attackedByCreeper", getName(), EventHelper.entityAttackedBy(EntityCreeper.class)).setProgress(2).setChance(8).setRepeatition(6);
         attackedBySkeleton = new ResearchEvent("attackedBySkeleton", getName(), EventHelper.entityAttackedBy(EntitySkeleton.class)).setProgress(2).setChance(8).setRepeatition(6);
