@@ -240,6 +240,13 @@ public class ItemHelper
         return stack;
     }
 
+    public static ItemStack brain()
+    {
+        ItemStack stack = new ItemStack(Items.itemMobBrain, 1);
+
+        return stack;
+    }
+
     public static ItemStack item(String name)
     {
         return item(name, 1, 0);

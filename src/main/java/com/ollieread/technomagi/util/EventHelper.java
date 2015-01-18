@@ -136,7 +136,7 @@ public class EventHelper
     {
         String targetName = (String) EntityList.classToStringMapping.get(targetClass);
 
-        return StringUtils.replace(entity(entityClass, 0), "Player", targetName);
+        return StringUtils.replace(entity(entityClass, 0), "Player", StringUtils.capitalize(targetName));
     }
 
     public static String entityPassive(Class entityClass)
