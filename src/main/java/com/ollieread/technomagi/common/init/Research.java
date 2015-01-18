@@ -126,6 +126,11 @@ public class Research
         addEntity(EntityHorse.class, false, true);
         addEntity(EntityVillager.class, false, false);
 
+        EnndsRegistry.registerEvent(EventHelper.entityTargeted(EntityZombie.class, EntityVillager.class));
+        EnndsRegistry.registerEvent(EventHelper.entityTargeted(EntityIronGolem.class, EntityZombie.class));
+        EnndsRegistry.registerEvent(EventHelper.entityTargeted(EntityWolf.class, EntitySheep.class));
+        EnndsRegistry.registerEvent(EventHelper.entityTargeted(EntityOcelot.class, EntityChicken.class));
+
         addDamage(DamageSource.anvil);
         addDamage(DamageSource.cactus);
         addDamage(DamageSource.drown);
@@ -157,6 +162,7 @@ public class Research
     {
         EnndsRegistry.registerEvent(EventHelper.entityAttacked(entityClass));
         EnndsRegistry.registerEvent(EventHelper.entityKilled(entityClass));
+        EnndsRegistry.registerEvent(EventHelper.entityTargeted(entityClass));
 
         if (hostile) {
             EnndsRegistry.registerEvent(EventHelper.entityAttackedBy(entityClass));
