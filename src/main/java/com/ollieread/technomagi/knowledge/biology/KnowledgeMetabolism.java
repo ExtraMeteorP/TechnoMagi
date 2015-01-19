@@ -44,23 +44,23 @@ public class KnowledgeMetabolism extends Knowledge
     {
         super(name, Reference.MODID.toLowerCase(), knowledge, category);
 
-        eatPorkchop = new ResearchEvent("eatPorkchop", getName(), EventHelper.itemUse(ItemHelper.item("porkchop"))).setProgress(2).setChance(8).setRepeatition(5);
-        eatBeef = new ResearchEvent("eatBeef", getName(), EventHelper.itemUse(ItemHelper.item("beef"))).setProgress(2).setChance(8).setRepeatition(5);
-        eatChicken = new ResearchEvent("eatChicken", getName(), EventHelper.itemUse(ItemHelper.item("chicken"))).setProgress(2).setChance(8).setRepeatition(5);
-        eatFish = new ResearchEvent("eatFish", getName(), EventHelper.itemUse(ItemHelper.item("fish"))).setProgress(2).setChance(8).setRepeatition(5);
-        eatApple = new ResearchEvent("eatApple", getName(), EventHelper.itemUse(ItemHelper.item("apple"))).setProgress(2).setChance(8).setRepeatition(5);
-        eatPotato = new ResearchEvent("eatPotato", getName(), EventHelper.itemUse(ItemHelper.item("potato"))).setProgress(2).setChance(8).setRepeatition(5);
-        eatCarrot = new ResearchEvent("eatCarrot", getName(), EventHelper.itemUse(ItemHelper.item("carrot"))).setProgress(2).setChance(8).setRepeatition(5);
-        eatMelon = new ResearchEvent("eatMelon", getName(), EventHelper.itemUse(ItemHelper.item("melon"))).setProgress(2).setChance(8).setRepeatition(5);
+        eatPorkchop = new ResearchEvent("eatPorkchop", getName(), EventHelper.itemUse(ItemHelper.item("porkchop"))).setProgress(2).setChance(8).setRepeatition(5).register();
+        eatBeef = new ResearchEvent("eatBeef", getName(), EventHelper.itemUse(ItemHelper.item("beef"))).setProgress(2).setChance(8).setRepeatition(5).register();
+        eatChicken = new ResearchEvent("eatChicken", getName(), EventHelper.itemUse(ItemHelper.item("chicken"))).setProgress(2).setChance(8).setRepeatition(5).register();
+        eatFish = new ResearchEvent("eatFish", getName(), EventHelper.itemUse(ItemHelper.item("fish"))).setProgress(2).setChance(8).setRepeatition(5).register();
+        eatApple = new ResearchEvent("eatApple", getName(), EventHelper.itemUse(ItemHelper.item("apple"))).setProgress(2).setChance(8).setRepeatition(5).register();
+        eatPotato = new ResearchEvent("eatPotato", getName(), EventHelper.itemUse(ItemHelper.item("potato"))).setProgress(2).setChance(8).setRepeatition(5).register();
+        eatCarrot = new ResearchEvent("eatCarrot", getName(), EventHelper.itemUse(ItemHelper.item("carrot"))).setProgress(2).setChance(8).setRepeatition(5).register();
+        eatMelon = new ResearchEvent("eatMelon", getName(), EventHelper.itemUse(ItemHelper.item("melon"))).setProgress(2).setChance(8).setRepeatition(5).register();
 
-        eatCookedPorkchop = new ResearchEvent("eatCookedPorkchop", getName(), EventHelper.itemUse(ItemHelper.item("cooked_porkchop"))).setProgress(2).setChance(8).setRepeatition(5);
-        eatCookedBeef = new ResearchEvent("eatCookedBeef", getName(), EventHelper.itemUse(ItemHelper.item("cooked_beef"))).setProgress(2).setChance(8).setRepeatition(5);
-        eatCookedChicken = new ResearchEvent("eatCookedChicken", getName(), EventHelper.itemUse(ItemHelper.item("cooked_chicken"))).setProgress(2).setChance(8).setRepeatition(5);
-        eatCookedFish = new ResearchEvent("eatCookedFish", getName(), EventHelper.itemUse(ItemHelper.item("cooked_fished"))).setProgress(2).setChance(8).setRepeatition(5);
-        eatCookedPotato = new ResearchEvent("eatCookedPotato", getName(), EventHelper.itemUse(ItemHelper.item("baked_potato"))).setProgress(2).setChance(8).setRepeatition(5);
-        eatMushroomStew = new ResearchEvent("eatMushroomStew", getName(), EventHelper.itemUse(ItemHelper.item("mushroom_stew"))).setProgress(2).setChance(8).setRepeatition(5);
-        eatPumpkinPie = new ResearchEvent("eatPumpkinPie", getName(), EventHelper.itemUse(ItemHelper.item("pumpkin_pie"))).setProgress(2).setChance(8).setRepeatition(5);
-        eatBread = new ResearchEvent("eatBread", getName(), EventHelper.itemUse(ItemHelper.item("bread"))).setProgress(2).setChance(8).setRepeatition(5);
+        eatCookedPorkchop = new ResearchEvent("eatCookedPorkchop", getName(), EventHelper.itemUse(ItemHelper.item("cooked_porkchop"))).setProgress(2).setChance(8).setRepeatition(5).register();
+        eatCookedBeef = new ResearchEvent("eatCookedBeef", getName(), EventHelper.itemUse(ItemHelper.item("cooked_beef"))).setProgress(2).setChance(8).setRepeatition(5).register();
+        eatCookedChicken = new ResearchEvent("eatCookedChicken", getName(), EventHelper.itemUse(ItemHelper.item("cooked_chicken"))).setProgress(2).setChance(8).setRepeatition(5).register();
+        eatCookedFish = new ResearchEvent("eatCookedFish", getName(), EventHelper.itemUse(ItemHelper.item("cooked_fished"))).setProgress(2).setChance(8).setRepeatition(5).register();
+        eatCookedPotato = new ResearchEvent("eatCookedPotato", getName(), EventHelper.itemUse(ItemHelper.item("baked_potato"))).setProgress(2).setChance(8).setRepeatition(5).register();
+        eatMushroomStew = new ResearchEvent("eatMushroomStew", getName(), EventHelper.itemUse(ItemHelper.item("mushroom_stew"))).setProgress(2).setChance(8).setRepeatition(5).register();
+        eatPumpkinPie = new ResearchEvent("eatPumpkinPie", getName(), EventHelper.itemUse(ItemHelper.item("pumpkin_pie"))).setProgress(2).setChance(8).setRepeatition(5).register();
+        eatBread = new ResearchEvent("eatBread", getName(), EventHelper.itemUse(ItemHelper.item("bread"))).setProgress(2).setChance(8).setRepeatition(5).register();
     }
 
     @Override

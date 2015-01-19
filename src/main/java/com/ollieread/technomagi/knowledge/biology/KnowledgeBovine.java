@@ -33,12 +33,12 @@ public class KnowledgeBovine extends Knowledge
     {
         super(name, Reference.MODID.toLowerCase(), knowledge, category);
 
-        attacked = new ResearchEvent("attacked", getName(), EventHelper.entityAttacked(EntityCow.class)).setProgress(5).setChance(5).setRepeatition(3);
-        killed = new ResearchEvent("killed", getName(), EventHelper.entityKilled(EntityCow.class)).setProgress(15).setChance(6);
-        milked = new ResearchEvent("milked", getName(), "milkedCow").setProgress(4).setChance(6).setRepeatition(5);
-        analyseBeef = new ResearchAnalysis("analyseBeef", getName(), new ShapelessAnalysisRecipe(ItemHelper.item("beef"))).setProgress(15).setChance(6);
-        analyseLeather = new ResearchAnalysis("analyseLeather", getName(), new ShapelessAnalysisRecipe(ItemHelper.item("leather"))).setProgress(15).setChance(6);
-        analyseMilk = new ResearchAnalysis("analyseMilk", getName(), new ShapelessAnalysisRecipe(ItemHelper.item("milk_bucket"))).setProgress(20).setChance(6);
+        attacked = new ResearchEvent("attacked", getName(), EventHelper.entityAttacked(EntityCow.class)).setProgress(5).setChance(5).setRepeatition(3).register();
+        killed = new ResearchEvent("killed", getName(), EventHelper.entityKilled(EntityCow.class)).setProgress(15).setChance(6).register();
+        milked = new ResearchEvent("milked", getName(), "milkedCow").setProgress(4).setChance(6).setRepeatition(5).register();
+        analyseBeef = new ResearchAnalysis("analyseBeef", getName(), new ShapelessAnalysisRecipe(ItemHelper.item("beef"))).setProgress(15).setChance(6).register();
+        analyseLeather = new ResearchAnalysis("analyseLeather", getName(), new ShapelessAnalysisRecipe(ItemHelper.item("leather"))).setProgress(15).setChance(6).register();
+        analyseMilk = new ResearchAnalysis("analyseMilk", getName(), new ShapelessAnalysisRecipe(ItemHelper.item("milk_bucket"))).setProgress(20).setChance(6).register();
     }
 
     @Override

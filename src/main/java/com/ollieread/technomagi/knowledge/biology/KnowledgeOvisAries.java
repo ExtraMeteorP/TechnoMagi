@@ -36,15 +36,15 @@ public class KnowledgeOvisAries extends Knowledge
     {
         super(name, Reference.MODID.toLowerCase(), knowledge, category);
 
-        attacked = new ResearchEvent("attacked", getName(), EventHelper.entityAttacked(EntitySheep.class)).setProgress(5).setChance(5).setRepeatition(3);
-        killed = new ResearchEvent("killed", getName(), EventHelper.entityKilled(EntitySheep.class)).setProgress(15).setChance(6);
-        sheared = new ResearchEvent("sheared", getName(), "shearedSheep").setProgress(4).setChance(6).setRepeatition(5);
-        analyseWoolWhite = new ResearchAnalysis("analyseWoolWhite", getName(), new ShapelessAnalysisRecipe(ItemHelper.block("wool", 1, 0))).setProgress(10).setChance(6);
-        analyseWoolLightGray = new ResearchAnalysis("analyseWoolLightGray", getName(), new ShapelessAnalysisRecipe(ItemHelper.block("wool", 1, 8))).setProgress(10).setChance(6);
-        analyseWoolDarkGray = new ResearchAnalysis("analyseWoolDarkGray", getName(), new ShapelessAnalysisRecipe(ItemHelper.block("wool", 1, 7))).setProgress(15).setChance(6);
-        analyseWoolBlack = new ResearchAnalysis("analyseWoolBlack", getName(), new ShapelessAnalysisRecipe(ItemHelper.block("wool", 1, 15))).setProgress(15).setChance(6);
-        analyseWoolBrown = new ResearchAnalysis("analyseWoolBrown", getName(), new ShapelessAnalysisRecipe(ItemHelper.block("wool", 1, 12))).setProgress(30).setChance(6);
-        analyseWoolPink = new ResearchAnalysis("analyseWoolPink", getName(), new ShapelessAnalysisRecipe(ItemHelper.block("wool", 1, 6))).setProgress(40).setChance(6);
+        attacked = new ResearchEvent("attacked", getName(), EventHelper.entityAttacked(EntitySheep.class)).setProgress(5).setChance(5).setRepeatition(3).register();
+        killed = new ResearchEvent("killed", getName(), EventHelper.entityKilled(EntitySheep.class)).setProgress(15).setChance(6).register();
+        sheared = new ResearchEvent("sheared", getName(), "shearedSheep").setProgress(4).setChance(6).setRepeatition(5).register();
+        analyseWoolWhite = new ResearchAnalysis("analyseWoolWhite", getName(), new ShapelessAnalysisRecipe(ItemHelper.block("wool", 1, 0))).setProgress(10).setChance(6).register();
+        analyseWoolLightGray = new ResearchAnalysis("analyseWoolLightGray", getName(), new ShapelessAnalysisRecipe(ItemHelper.block("wool", 1, 8))).setProgress(10).setChance(6).register();
+        analyseWoolDarkGray = new ResearchAnalysis("analyseWoolDarkGray", getName(), new ShapelessAnalysisRecipe(ItemHelper.block("wool", 1, 7))).setProgress(15).setChance(6).register();
+        analyseWoolBlack = new ResearchAnalysis("analyseWoolBlack", getName(), new ShapelessAnalysisRecipe(ItemHelper.block("wool", 1, 15))).setProgress(15).setChance(6).register();
+        analyseWoolBrown = new ResearchAnalysis("analyseWoolBrown", getName(), new ShapelessAnalysisRecipe(ItemHelper.block("wool", 1, 12))).setProgress(30).setChance(6).register();
+        analyseWoolPink = new ResearchAnalysis("analyseWoolPink", getName(), new ShapelessAnalysisRecipe(ItemHelper.block("wool", 1, 6))).setProgress(40).setChance(6).register();
     }
 
     @Override

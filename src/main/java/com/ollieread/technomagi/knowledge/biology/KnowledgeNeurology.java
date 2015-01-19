@@ -30,11 +30,11 @@ public class KnowledgeNeurology extends Knowledge
     {
         super(name, Reference.MODID.toLowerCase(), knowledge, category);
 
-        aggressive = new ResearchEvent("aggressive", getName(), EventHelper.knowledge(KnowledgeCategoryBiology.ethologyAggressive), true).setProgress(20);
-        passive = new ResearchEvent("passive", getName(), EventHelper.knowledge(KnowledgeCategoryBiology.ethologyPassive), true).setProgress(20);
-        perception = new ResearchEvent("perception", getName(), EventHelper.knowledge(KnowledgeCategoryBiology.perception), true).setProgress(20);
+        aggressive = new ResearchEvent("aggressive", getName(), EventHelper.knowledge(KnowledgeCategoryBiology.ethologyAggressive), true).setProgress(20).register();
+        passive = new ResearchEvent("passive", getName(), EventHelper.knowledge(KnowledgeCategoryBiology.ethologyPassive), true).setProgress(20).register();
+        perception = new ResearchEvent("perception", getName(), EventHelper.knowledge(KnowledgeCategoryBiology.perception), true).setProgress(20).register();
 
-        analysis = new ResearchAnalysis("analyseBrain", getName(), new ShapelessAnalysisRecipe(ItemHelper.brain())).setProgress(5).setRepeatition(8);
+        analysis = new ResearchAnalysis("analyseBrain", getName(), new ShapelessAnalysisRecipe(ItemHelper.brain())).setProgress(5).setRepeatition(8).register();
     }
 
     @Override

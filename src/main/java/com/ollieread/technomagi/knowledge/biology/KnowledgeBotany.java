@@ -44,22 +44,22 @@ public class KnowledgeBotany extends Knowledge
         IResearchAnalysisRecipe leafList = new ShapelessAnalysisRecipe(ItemHelper.block("leaves", 1, 0), ItemHelper.block("leaves", 1, 1), ItemHelper.block("leaves", 1, 2), ItemHelper.block("leaves", 1, 3));
         IResearchAnalysisRecipe logList = new ShapelessAnalysisRecipe(ItemHelper.block("log", 1, 0), ItemHelper.block("log", 1, 1), ItemHelper.block("log", 1, 2), ItemHelper.block("log", 1, 3));
 
-        pickingFlowers1 = new ResearchMining("pickingFlowers1", getName(), ItemHelper.block("red_flower", 1, 0)).setChance(3).setProgress(5).setRepeatition(1);
-        pickingFlowers2 = new ResearchMining("pickingFlowers2", getName(), ItemHelper.block("red_flower", 1, 1)).setChance(3).setProgress(5).setRepeatition(1);
-        pickingFlowers3 = new ResearchMining("pickingFlowers3", getName(), ItemHelper.block("red_flower", 1, 2)).setChance(3).setProgress(5).setRepeatition(1);
-        pickingFlowers4 = new ResearchMining("pickingFlowers4", getName(), ItemHelper.block("red_flower", 1, 3)).setChance(3).setProgress(5).setRepeatition(1);
-        pickingFlowers5 = new ResearchMining("pickingFlowers5", getName(), ItemHelper.block("red_flower", 1, 4)).setChance(3).setProgress(5).setRepeatition(1);
-        pickingFlowers6 = new ResearchMining("pickingFlowers6", getName(), ItemHelper.block("red_flower", 1, 5)).setChance(3).setProgress(5).setRepeatition(1);
-        pickingFlowers7 = new ResearchMining("pickingFlowers7", getName(), ItemHelper.block("red_flower", 1, 6)).setChance(3).setProgress(5).setRepeatition(1);
-        pickingFlowers8 = new ResearchMining("pickingFlowers8", getName(), ItemHelper.block("red_flower", 1, 7)).setChance(3).setProgress(5).setRepeatition(1);
-        pickingFlowers9 = new ResearchMining("pickingFlowers9", getName(), ItemHelper.block("red_flower", 1, 8)).setChance(3).setProgress(5).setRepeatition(1);
-        shearedVines = new ResearchEvent("shearedVines", getName(), "shearedVines").setChance(3).setProgress(5).setRepeatition(1);
+        pickingFlowers1 = new ResearchMining("pickingFlowers1", getName(), ItemHelper.block("red_flower", 1, 0)).setChance(3).setProgress(5).setRepeatition(1).register();
+        pickingFlowers2 = new ResearchMining("pickingFlowers2", getName(), ItemHelper.block("red_flower", 1, 1)).setChance(3).setProgress(5).setRepeatition(1).register();
+        pickingFlowers3 = new ResearchMining("pickingFlowers3", getName(), ItemHelper.block("red_flower", 1, 2)).setChance(3).setProgress(5).setRepeatition(1).register();
+        pickingFlowers4 = new ResearchMining("pickingFlowers4", getName(), ItemHelper.block("red_flower", 1, 3)).setChance(3).setProgress(5).setRepeatition(1).register();
+        pickingFlowers5 = new ResearchMining("pickingFlowers5", getName(), ItemHelper.block("red_flower", 1, 4)).setChance(3).setProgress(5).setRepeatition(1).register();
+        pickingFlowers6 = new ResearchMining("pickingFlowers6", getName(), ItemHelper.block("red_flower", 1, 5)).setChance(3).setProgress(5).setRepeatition(1).register();
+        pickingFlowers7 = new ResearchMining("pickingFlowers7", getName(), ItemHelper.block("red_flower", 1, 6)).setChance(3).setProgress(5).setRepeatition(1).register();
+        pickingFlowers8 = new ResearchMining("pickingFlowers8", getName(), ItemHelper.block("red_flower", 1, 7)).setChance(3).setProgress(5).setRepeatition(1).register();
+        pickingFlowers9 = new ResearchMining("pickingFlowers9", getName(), ItemHelper.block("red_flower", 1, 8)).setChance(3).setProgress(5).setRepeatition(1).register();
+        shearedVines = new ResearchEvent("shearedVines", getName(), "shearedVines").setChance(3).setProgress(5).setRepeatition(1).register();
 
-        flowerAnalysis = new ResearchAnalysis("flowerAnalysis", getName(), flowerList).setChance(3).setProgress(10).setRepeatition(1);
-        vineAnalysis = new ResearchAnalysis("vineAnalysis", getName(), vineList).setChance(3).setProgress(10).setRepeatition(1);
-        saplingAnalysis = new ResearchAnalysis("saplingAnalysis", getName(), saplingList).setChance(3).setProgress(10).setRepeatition(1);
-        leafAnalysis = new ResearchAnalysis("leafAnalysis", getName(), leafList).setChance(3).setProgress(10).setRepeatition(1);
-        logAnalysis = new ResearchAnalysis("logAnalysis", getName(), logList).setChance(3).setProgress(10).setRepeatition(1);
+        flowerAnalysis = new ResearchAnalysis("flowerAnalysis", getName(), flowerList).setChance(3).setProgress(10).setRepeatition(1).register();
+        vineAnalysis = new ResearchAnalysis("vineAnalysis", getName(), vineList).setChance(3).setProgress(10).setRepeatition(1).register();
+        saplingAnalysis = new ResearchAnalysis("saplingAnalysis", getName(), saplingList).setChance(3).setProgress(10).setRepeatition(1).register();
+        leafAnalysis = new ResearchAnalysis("leafAnalysis", getName(), leafList).setChance(3).setProgress(10).setRepeatition(1).register();
+        logAnalysis = new ResearchAnalysis("logAnalysis", getName(), logList).setChance(3).setProgress(10).setRepeatition(1).register();
     }
 
     @Override

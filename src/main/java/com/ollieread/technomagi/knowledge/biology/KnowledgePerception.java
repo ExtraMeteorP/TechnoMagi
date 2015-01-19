@@ -44,17 +44,17 @@ public class KnowledgePerception extends Knowledge
     {
         super(name, Reference.MODID.toLowerCase(), knowledge, category);
 
-        targetedByPigmen = new ResearchEvent("targetedByPigmen", getName(), EventHelper.entityTargeted(EntityPigZombie.class)).setProgress(3).setChance(6).setRepeatition(4);
-        targetedByEnderman = new ResearchEvent("targetedByEnderman", getName(), EventHelper.entityTargeted(EntityEnderman.class)).setProgress(3).setChance(6).setRepeatition(4);
-        targetedByWolf = new ResearchEvent("targetedByWolf", getName(), EventHelper.entityTargeted(EntityWolf.class)).setProgress(3).setChance(6).setRepeatition(4);
-        targetedByCow = new ResearchEvent("targetedByCow", getName(), EventHelper.entityTargeted(EntityCow.class)).setProgress(3).setChance(6).setRepeatition(4);
-        targetedByPig = new ResearchEvent("targetedByPig", getName(), EventHelper.entityTargeted(EntityPig.class)).setProgress(3).setChance(6).setRepeatition(4);
-        targetedBySheep = new ResearchEvent("targetedBySheep", getName(), EventHelper.entityTargeted(EntitySheep.class)).setProgress(3).setChance(6).setRepeatition(4);
+        targetedByPigmen = new ResearchEvent("targetedByPigmen", getName(), EventHelper.entityTargeted(EntityPigZombie.class)).setProgress(3).setChance(6).setRepeatition(4).register();
+        targetedByEnderman = new ResearchEvent("targetedByEnderman", getName(), EventHelper.entityTargeted(EntityEnderman.class)).setProgress(3).setChance(6).setRepeatition(4).register();
+        targetedByWolf = new ResearchEvent("targetedByWolf", getName(), EventHelper.entityTargeted(EntityWolf.class)).setProgress(3).setChance(6).setRepeatition(4).register();
+        targetedByCow = new ResearchEvent("targetedByCow", getName(), EventHelper.entityTargeted(EntityCow.class)).setProgress(3).setChance(6).setRepeatition(4).register();
+        targetedByPig = new ResearchEvent("targetedByPig", getName(), EventHelper.entityTargeted(EntityPig.class)).setProgress(3).setChance(6).setRepeatition(4).register();
+        targetedBySheep = new ResearchEvent("targetedBySheep", getName(), EventHelper.entityTargeted(EntitySheep.class)).setProgress(3).setChance(6).setRepeatition(4).register();
 
-        zombieTargetsVillager = new ResearchEvent("zombieTargetsVillager", getName(), EventHelper.entityTargeted(EntityZombie.class, EntityVillager.class)).setProgress(5).setChance(2).setRepeatition(2);
-        ironGolemTargetsZombie = new ResearchEvent("ironGolemTargetsZombie", getName(), EventHelper.entityTargeted(EntityIronGolem.class, EntityZombie.class)).setProgress(5).setChance(2).setRepeatition(2);
-        wolfTargetsSheep = new ResearchEvent("wolfTargetsSheep", getName(), EventHelper.entityTargeted(EntityWolf.class, EntitySheep.class)).setProgress(5).setChance(2).setRepeatition(2);
-        ocelotTargetsChicken = new ResearchEvent("ocelotTargetsChicken", getName(), EventHelper.entityTargeted(EntityOcelot.class, EntityChicken.class)).setProgress(5).setChance(2).setRepeatition(2);
+        zombieTargetsVillager = new ResearchEvent("zombieTargetsVillager", getName(), EventHelper.entityTargeted(EntityZombie.class, EntityVillager.class)).setProgress(5).setChance(2).setRepeatition(2).register();
+        ironGolemTargetsZombie = new ResearchEvent("ironGolemTargetsZombie", getName(), EventHelper.entityTargeted(EntityIronGolem.class, EntityZombie.class)).setProgress(5).setChance(2).setRepeatition(2).register();
+        wolfTargetsSheep = new ResearchEvent("wolfTargetsSheep", getName(), EventHelper.entityTargeted(EntityWolf.class, EntitySheep.class)).setProgress(5).setChance(2).setRepeatition(2).register();
+        ocelotTargetsChicken = new ResearchEvent("ocelotTargetsChicken", getName(), EventHelper.entityTargeted(EntityOcelot.class, EntityChicken.class)).setProgress(5).setChance(2).setRepeatition(2).register();
     }
 
     @Override

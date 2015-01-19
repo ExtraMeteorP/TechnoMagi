@@ -33,12 +33,12 @@ public class KnowledgeFowl extends Knowledge
     {
         super(name, Reference.MODID.toLowerCase(), knowledge, category);
 
-        attacked = new ResearchEvent("attacked", getName(), EventHelper.entityAttacked(EntityChicken.class)).setProgress(5).setChance(5).setRepeatition(3);
-        killed = new ResearchEvent("killed", getName(), EventHelper.entityKilled(EntityChicken.class)).setProgress(15).setChance(6);
-        egged = new ResearchEvent("egged", getName(), EventHelper.itemUse(ItemHelper.item("egg"))).setProgress(4).setChance(6).setRepeatition(5);
-        analyseChicken = new ResearchAnalysis("analyseChicken", getName(), new ShapelessAnalysisRecipe(ItemHelper.item("chicken"))).setProgress(15).setChance(6);
-        analyseFeather = new ResearchAnalysis("analyseFeather", getName(), new ShapelessAnalysisRecipe(ItemHelper.item("feather"))).setProgress(15).setChance(6);
-        analyseEgg = new ResearchAnalysis("analyseEgg", getName(), new ShapelessAnalysisRecipe(ItemHelper.item("egg"))).setProgress(20).setChance(6);
+        attacked = new ResearchEvent("attacked", getName(), EventHelper.entityAttacked(EntityChicken.class)).setProgress(5).setChance(5).setRepeatition(3).register();
+        killed = new ResearchEvent("killed", getName(), EventHelper.entityKilled(EntityChicken.class)).setProgress(15).setChance(6).register();
+        egged = new ResearchEvent("egged", getName(), EventHelper.itemUse(ItemHelper.item("egg"))).setProgress(4).setChance(6).setRepeatition(5).register();
+        analyseChicken = new ResearchAnalysis("analyseChicken", getName(), new ShapelessAnalysisRecipe(ItemHelper.item("chicken"))).setProgress(15).setChance(6).register();
+        analyseFeather = new ResearchAnalysis("analyseFeather", getName(), new ShapelessAnalysisRecipe(ItemHelper.item("feather"))).setProgress(15).setChance(6).register();
+        analyseEgg = new ResearchAnalysis("analyseEgg", getName(), new ShapelessAnalysisRecipe(ItemHelper.item("egg"))).setProgress(20).setChance(6).register();
     }
 
     @Override

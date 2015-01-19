@@ -46,19 +46,19 @@ public class KnowledgeEthologyAggressive extends Knowledge
     {
         super(name, Reference.MODID.toLowerCase(), knowledge, category);
 
-        targetedByCreeper = new ResearchEvent("targetedByCreeper", getName(), EventHelper.entityTargeted(EntityCreeper.class)).setProgress(1).setChance(6).setRepeatition(10);
-        targetedBySkeleton = new ResearchEvent("targetedBySkeleton", getName(), EventHelper.entityTargeted(EntitySkeleton.class)).setProgress(1).setChance(6).setRepeatition(10);
-        targetedByZombie = new ResearchEvent("targetedByZombie", getName(), EventHelper.entityTargeted(EntityZombie.class)).setProgress(1).setChance(6).setRepeatition(10);
-        targetedBySpider = new ResearchEvent("targetedBySpider", getName(), EventHelper.entityTargeted(EntitySpider.class)).setProgress(1).setChance(6).setRepeatition(10);
-        targetedBySlime = new ResearchEvent("targetedBySlime", getName(), EventHelper.entityTargeted(EntitySlime.class)).setProgress(1).setChance(6).setRepeatition(10);
-        targetedByEnderman = new ResearchEvent("targetedByEnderman", getName(), EventHelper.entityTargeted(EntityEnderman.class)).setProgress(1).setChance(6).setRepeatition(10);
+        targetedByCreeper = new ResearchEvent("targetedByCreeper", getName(), EventHelper.entityTargeted(EntityCreeper.class)).setProgress(1).setChance(6).setRepeatition(10).register();
+        targetedBySkeleton = new ResearchEvent("targetedBySkeleton", getName(), EventHelper.entityTargeted(EntitySkeleton.class)).setProgress(1).setChance(6).setRepeatition(10).register();
+        targetedByZombie = new ResearchEvent("targetedByZombie", getName(), EventHelper.entityTargeted(EntityZombie.class)).setProgress(1).setChance(6).setRepeatition(10).register();
+        targetedBySpider = new ResearchEvent("targetedBySpider", getName(), EventHelper.entityTargeted(EntitySpider.class)).setProgress(1).setChance(6).setRepeatition(10).register();
+        targetedBySlime = new ResearchEvent("targetedBySlime", getName(), EventHelper.entityTargeted(EntitySlime.class)).setProgress(1).setChance(6).setRepeatition(10).register();
+        targetedByEnderman = new ResearchEvent("targetedByEnderman", getName(), EventHelper.entityTargeted(EntityEnderman.class)).setProgress(1).setChance(6).setRepeatition(10).register();
 
-        attackedByCreeper = new ResearchEvent("attackedByCreeper", getName(), EventHelper.entityAttackedBy(EntityCreeper.class)).setProgress(2).setChance(8).setRepeatition(6);
-        attackedBySkeleton = new ResearchEvent("attackedBySkeleton", getName(), EventHelper.entityAttackedBy(EntitySkeleton.class)).setProgress(2).setChance(8).setRepeatition(6);
-        attackedByZombie = new ResearchEvent("attackedByZombie", getName(), EventHelper.entityAttackedBy(EntityZombie.class)).setProgress(2).setChance(8).setRepeatition(6);
-        attackedBySpider = new ResearchEvent("attackedBySpider", getName(), EventHelper.entityAttackedBy(EntitySpider.class)).setProgress(2).setChance(8).setRepeatition(6);
-        attackedBySlime = new ResearchEvent("attackedBySlime", getName(), EventHelper.entityAttackedBy(EntitySlime.class)).setProgress(2).setChance(8).setRepeatition(6);
-        attackedByEnderman = new ResearchEvent("attackedByEnderman", getName(), EventHelper.entityAttackedBy(EntityEnderman.class)).setProgress(2).setChance(8).setRepeatition(6);
+        attackedByCreeper = new ResearchEvent("attackedByCreeper", getName(), EventHelper.entityAttackedBy(EntityCreeper.class)).setProgress(2).setChance(8).setRepeatition(6).register();
+        attackedBySkeleton = new ResearchEvent("attackedBySkeleton", getName(), EventHelper.entityAttackedBy(EntitySkeleton.class)).setProgress(2).setChance(8).setRepeatition(6).register();
+        attackedByZombie = new ResearchEvent("attackedByZombie", getName(), EventHelper.entityAttackedBy(EntityZombie.class)).setProgress(2).setChance(8).setRepeatition(6).register();
+        attackedBySpider = new ResearchEvent("attackedBySpider", getName(), EventHelper.entityAttackedBy(EntitySpider.class)).setProgress(2).setChance(8).setRepeatition(6).register();
+        attackedBySlime = new ResearchEvent("attackedBySlime", getName(), EventHelper.entityAttackedBy(EntitySlime.class)).setProgress(2).setChance(8).setRepeatition(6).register();
+        attackedByEnderman = new ResearchEvent("attackedByEnderman", getName(), EventHelper.entityAttackedBy(EntityEnderman.class)).setProgress(2).setChance(8).setRepeatition(6).register();
     }
 
     @Override

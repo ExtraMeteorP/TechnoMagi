@@ -32,11 +32,11 @@ public class KnowledgeSwine extends Knowledge
     {
         super(name, Reference.MODID.toLowerCase(), knowledge, category);
 
-        attacked = new ResearchEvent("attacked", getName(), EventHelper.entityAttacked(EntityPig.class)).setProgress(5).setChance(5).setRepeatition(3);
-        killed = new ResearchEvent("killed", getName(), EventHelper.entityKilled(EntityPig.class)).setProgress(15).setChance(6);
-        saddled = new ResearchEvent("saddled", getName(), "saddledPig").setProgress(4).setChance(6).setRepeatition(5);
-        analysePork = new ResearchAnalysis("analysePork", getName(), new ShapelessAnalysisRecipe(ItemHelper.item("porkchop"))).setProgress(15).setChance(6);
-        ridden = new ResearchEvent("ridingPig", getName(), "ridingPig").setProgress(5).setChance(6).setRepeatition(7);
+        attacked = new ResearchEvent("attacked", getName(), EventHelper.entityAttacked(EntityPig.class)).setProgress(5).setChance(5).setRepeatition(3).register();
+        killed = new ResearchEvent("killed", getName(), EventHelper.entityKilled(EntityPig.class)).setProgress(15).setChance(6).register();
+        saddled = new ResearchEvent("saddled", getName(), "saddledPig").setProgress(4).setChance(6).setRepeatition(5).register();
+        analysePork = new ResearchAnalysis("analysePork", getName(), new ShapelessAnalysisRecipe(ItemHelper.item("porkchop"))).setProgress(15).setChance(6).register();
+        ridden = new ResearchEvent("ridingPig", getName(), "ridingPig").setProgress(5).setChance(6).setRepeatition(7).register();
     }
 
     @Override

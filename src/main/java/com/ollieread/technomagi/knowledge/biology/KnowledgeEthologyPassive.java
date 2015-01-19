@@ -48,21 +48,21 @@ public class KnowledgeEthologyPassive extends Knowledge
     {
         super(name, Reference.MODID.toLowerCase(), knowledge, category);
 
-        bovine = new ResearchEvent("bovine", getName(), EventHelper.knowledge(KnowledgeCategoryBiology.bovine), true).setProgress(15);
-        swine = new ResearchEvent("swine", getName(), EventHelper.knowledge(KnowledgeCategoryBiology.swine), true).setProgress(15);
-        ovisaries = new ResearchEvent("ovisaries", getName(), EventHelper.knowledge(KnowledgeCategoryBiology.ovisAries), true).setProgress(15);
-        fowl = new ResearchEvent("fowl", getName(), EventHelper.knowledge(KnowledgeCategoryBiology.fowl), true).setProgress(15);
+        bovine = new ResearchEvent("bovine", getName(), EventHelper.knowledge(KnowledgeCategoryBiology.bovine), true).setProgress(15).register();
+        swine = new ResearchEvent("swine", getName(), EventHelper.knowledge(KnowledgeCategoryBiology.swine), true).setProgress(15).register();
+        ovisaries = new ResearchEvent("ovisaries", getName(), EventHelper.knowledge(KnowledgeCategoryBiology.ovisAries), true).setProgress(15).register();
+        fowl = new ResearchEvent("fowl", getName(), EventHelper.knowledge(KnowledgeCategoryBiology.fowl), true).setProgress(15).register();
 
-        attackedSquid = new ResearchEvent("attackedSquid", getName(), EventHelper.entityAttacked(EntitySquid.class)).setProgress(3).setChance(5).setRepeatition(3);
-        killedSquid = new ResearchEvent("killedSquid", getName(), EventHelper.entityKilled(EntitySquid.class)).setProgress(8).setChance(6);
-        attackedBat = new ResearchEvent("attackedBat", getName(), EventHelper.entityAttacked(EntityBat.class)).setProgress(3).setChance(5).setRepeatition(3);
-        killedBat = new ResearchEvent("killedBat", getName(), EventHelper.entityKilled(EntityBat.class)).setProgress(8).setChance(6);
-        attackedHorse = new ResearchEvent("attackedHorse", getName(), EventHelper.entityAttacked(EntityHorse.class)).setProgress(3).setChance(5).setRepeatition(3);
-        killedHorse = new ResearchEvent("killedHorse", getName(), EventHelper.entityKilled(EntityHorse.class)).setProgress(8).setChance(6);
-        attackedVillager = new ResearchEvent("attackedVillager", getName(), EventHelper.entityAttacked(EntityVillager.class)).setProgress(3).setChance(5).setRepeatition(3);
-        killedVillager = new ResearchEvent("killedVillager", getName(), EventHelper.entityKilled(EntityVillager.class)).setProgress(8).setChance(6);
-        targettedByIronGolem = new ResearchEvent("targettedByIronGolem", getName(), EventHelper.entityAttacked(EntityIronGolem.class)).setProgress(3).setChance(5).setRepeatition(3);
-        attackedByIronGolem = new ResearchEvent("attackedByIronGolem", getName(), EventHelper.entityKilled(EntityIronGolem.class)).setProgress(8).setChance(6);
+        attackedSquid = new ResearchEvent("attackedSquid", getName(), EventHelper.entityAttacked(EntitySquid.class)).setProgress(3).setChance(5).setRepeatition(3).register();
+        killedSquid = new ResearchEvent("killedSquid", getName(), EventHelper.entityKilled(EntitySquid.class)).setProgress(8).setChance(6).register();
+        attackedBat = new ResearchEvent("attackedBat", getName(), EventHelper.entityAttacked(EntityBat.class)).setProgress(3).setChance(5).setRepeatition(3).register();
+        killedBat = new ResearchEvent("killedBat", getName(), EventHelper.entityKilled(EntityBat.class)).setProgress(8).setChance(6).register();
+        attackedHorse = new ResearchEvent("attackedHorse", getName(), EventHelper.entityAttacked(EntityHorse.class)).setProgress(3).setChance(5).setRepeatition(3).register();
+        killedHorse = new ResearchEvent("killedHorse", getName(), EventHelper.entityKilled(EntityHorse.class)).setProgress(8).setChance(6).register();
+        attackedVillager = new ResearchEvent("attackedVillager", getName(), EventHelper.entityAttacked(EntityVillager.class)).setProgress(3).setChance(5).setRepeatition(3).register();
+        killedVillager = new ResearchEvent("killedVillager", getName(), EventHelper.entityKilled(EntityVillager.class)).setProgress(8).setChance(6).register();
+        targettedByIronGolem = new ResearchEvent("targettedByIronGolem", getName(), EventHelper.entityAttacked(EntityIronGolem.class)).setProgress(3).setChance(5).setRepeatition(3).register();
+        attackedByIronGolem = new ResearchEvent("attackedByIronGolem", getName(), EventHelper.entityKilled(EntityIronGolem.class)).setProgress(8).setChance(6).register();
     }
 
     @Override
