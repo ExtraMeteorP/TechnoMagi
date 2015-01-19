@@ -19,6 +19,7 @@ import net.minecraft.world.World;
 
 import com.ollieread.technomagi.TechnoMagi;
 import com.ollieread.technomagi.common.Reference;
+import com.ollieread.technomagi.tileentity.ITileEntityBlockHandler;
 import com.ollieread.technomagi.tileentity.ITileEntityDisguisable;
 import com.ollieread.technomagi.tileentity.ITileEntityGui;
 import com.ollieread.technomagi.tileentity.ITileEntityHasFiller;
@@ -86,6 +87,10 @@ public abstract class BlockBasicContainer extends BlockContainer
 
         if (machine instanceof ITileEntityHasFiller) {
             ((ITileEntityHasFiller) machine).create();
+        }
+
+        if (machine instanceof ITileEntityBlockHandler) {
+            ((ITileEntityBlockHandler) machine).placed(entity, stack);
         }
 
         super.onBlockPlacedBy(world, x, y, z, entity, stack);
@@ -164,8 +169,8 @@ public abstract class BlockBasicContainer extends BlockContainer
                     }
                 }
 
-                if (tile instanceof ITileEntityMachine) {
-                    ITileEntityMachine machine = (ITileEntityMachine) tile;
+                if (tile instanceof ITileEntityBlockHandler) {
+                    ITileEntityBlockHandler machine = (ITileEntityBlockHandler) tile;
 
                     if (machine.activated(player, side, hitX, hitY, hitZ)) {
                         return true;

@@ -14,7 +14,7 @@ import org.lwjgl.opengl.GL11;
 import com.ollieread.technomagi.client.model.ModelGeneratorSolar;
 import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.common.init.Blocks;
-import com.ollieread.technomagi.tileentity.TileEntityGeneratorSolar;
+import com.ollieread.technomagi.tileentity.TileEntityGeneratorLight;
 
 public class TileEntityGeneratorSolarRenderer extends TileEntitySpecialRenderer
 {
@@ -29,7 +29,7 @@ public class TileEntityGeneratorSolarRenderer extends TileEntitySpecialRenderer
     @Override
     public void renderTileEntityAt(TileEntity te, double x, double y, double z, float partialTicks)
     {
-        TileEntityGeneratorSolar machine = (TileEntityGeneratorSolar) te;
+        TileEntityGeneratorLight machine = (TileEntityGeneratorLight) te;
 
         Tessellator tessellator = Tessellator.instance;
         // This will make your block brightness dependent from surroundings

@@ -8,7 +8,7 @@ import com.ollieread.technomagi.common.init.Config;
 import com.ollieread.technomagi.tileentity.abstracts.TileEntityGenerator;
 import com.ollieread.technomagi.util.PowerHelper;
 
-public class TileEntityGeneratorSolar extends TileEntityGenerator
+public class TileEntityGeneratorLight extends TileEntityGenerator
 {
 
     public int field_145926_a;
@@ -23,7 +23,7 @@ public class TileEntityGeneratorSolar extends TileEntityGenerator
     public float field_145924_q;
     private static Random field_145923_r = new Random();
 
-    public TileEntityGeneratorSolar()
+    public TileEntityGeneratorLight()
     {
         super(Config.generatorLightPowerMax, Config.generatorLightPowerOutput, Config.generatorLightGeneration, Config.generatorLightMaxTicks);
     }

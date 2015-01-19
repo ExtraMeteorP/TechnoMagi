@@ -29,7 +29,7 @@ public class BlockPocket extends BlockBasicContainer implements IBlockMulti
 
     public BlockPocket(String name)
     {
-        super(Material.glass, name);
+        super(Material.air, name);
     }
 
     @SideOnly(Side.CLIENT)
@@ -60,15 +60,13 @@ public class BlockPocket extends BlockBasicContainer implements IBlockMulti
     public int getLightOpacity(IBlockAccess world, int x, int y, int z)
     {
         int metadata = world.getBlockMetadata(x, y, z);
-
-        return metadata == 10 ? 0 : (metadata == 11 ? 255 : getLightOpacity());
+        return metadata == 11 ? 255 : 0;
     }
 
     public int getLightValue(IBlockAccess world, int x, int y, int z)
     {
         int metadata = world.getBlockMetadata(x, y, z);
-
-        return metadata == 10 ? 15 : (metadata == 11 ? 0 : getLightValue());
+        return metadata == 11 ? 0 : 15;
     }
 
     public boolean isReplaceable(IBlockAccess world, int x, int y, int z)
@@ -136,11 +134,6 @@ public class BlockPocket extends BlockBasicContainer implements IBlockMulti
     }
 
     public boolean canSilkHarvest()
-    {
-        return false;
-    }
-
-    public boolean renderAsNormalBlock()
     {
         return false;
     }

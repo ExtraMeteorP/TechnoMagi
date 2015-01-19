@@ -54,7 +54,7 @@ import com.ollieread.technomagi.event.handler.MouseEventHandler;
 import com.ollieread.technomagi.event.handler.RenderEventHandler;
 import com.ollieread.technomagi.tileentity.TileEntityArchive;
 import com.ollieread.technomagi.tileentity.TileEntityBattery;
-import com.ollieread.technomagi.tileentity.TileEntityGeneratorSolar;
+import com.ollieread.technomagi.tileentity.TileEntityGeneratorLight;
 import com.ollieread.technomagi.tileentity.TileEntityMachineAnalysis;
 import com.ollieread.technomagi.tileentity.TileEntityMachineAssembler;
 import com.ollieread.technomagi.tileentity.TileEntityMachineFurnace;
@@ -141,7 +141,7 @@ public class ClientProxy extends CommonProxy
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMachineInfuser.class, new TileEntityMachineInfuserRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMachineInfuserCharger.class, new TileEntityFocusChargerRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBattery.class, new TileEntityBatteryRenderer());
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityGeneratorSolar.class, new TileEntityGeneratorSolarRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityGeneratorLight.class, new TileEntityGeneratorSolarRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPrismaticPillar.class, new TileEntityPrismaticPillarRenderer());
 
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Blocks.blockMachine), new RenderMachineItem());

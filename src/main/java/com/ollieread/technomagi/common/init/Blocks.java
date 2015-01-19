@@ -5,15 +5,18 @@ import net.minecraft.block.Block;
 import com.ollieread.technomagi.TechnoMagi;
 import com.ollieread.technomagi.block.BlockAirLight;
 import com.ollieread.technomagi.block.BlockBattery;
+import com.ollieread.technomagi.block.BlockDarkness;
 import com.ollieread.technomagi.block.BlockDisplacedAir;
 import com.ollieread.technomagi.block.BlockFiller;
 import com.ollieread.technomagi.block.BlockGenerator;
 import com.ollieread.technomagi.block.BlockHardlight;
 import com.ollieread.technomagi.block.BlockHardlightFence;
 import com.ollieread.technomagi.block.BlockHardlightGenerator;
+import com.ollieread.technomagi.block.BlockLight;
 import com.ollieread.technomagi.block.BlockMachine;
 import com.ollieread.technomagi.block.BlockMachineInfuserCharger;
 import com.ollieread.technomagi.block.BlockObservationChamber;
+import com.ollieread.technomagi.block.BlockPocket;
 import com.ollieread.technomagi.block.BlockPrismaticPillar;
 import com.ollieread.technomagi.block.BlockReactiveCrafting;
 import com.ollieread.technomagi.block.BlockRegionController;
@@ -33,7 +36,7 @@ import com.ollieread.technomagi.tileentity.TileEntityBattery;
 import com.ollieread.technomagi.tileentity.TileEntityConstruct;
 import com.ollieread.technomagi.tileentity.TileEntityFiller;
 import com.ollieread.technomagi.tileentity.TileEntityGeneratorLife;
-import com.ollieread.technomagi.tileentity.TileEntityGeneratorSolar;
+import com.ollieread.technomagi.tileentity.TileEntityGeneratorLight;
 import com.ollieread.technomagi.tileentity.TileEntityGeneratorVoid;
 import com.ollieread.technomagi.tileentity.TileEntityHardlightGenerator;
 import com.ollieread.technomagi.tileentity.TileEntityMachineAnalysis;
@@ -48,9 +51,17 @@ import com.ollieread.technomagi.tileentity.TileEntityMachineObservation;
 import com.ollieread.technomagi.tileentity.TileEntityMachineProcessor;
 import com.ollieread.technomagi.tileentity.TileEntityMachineReplicator;
 import com.ollieread.technomagi.tileentity.TileEntityMachineTeleporter;
+import com.ollieread.technomagi.tileentity.TileEntityPocketEnergy;
+import com.ollieread.technomagi.tileentity.TileEntityPocketGrowth;
+import com.ollieread.technomagi.tileentity.TileEntityPocketLight;
+import com.ollieread.technomagi.tileentity.TileEntityPocketNanite;
 import com.ollieread.technomagi.tileentity.TileEntityPrismaticPillar;
 import com.ollieread.technomagi.tileentity.TileEntityReactiveCrafting;
+import com.ollieread.technomagi.tileentity.TileEntityRegionControllerDamage;
+import com.ollieread.technomagi.tileentity.TileEntityRegionControllerEffect;
+import com.ollieread.technomagi.tileentity.TileEntityRegionControllerInteraction;
 import com.ollieread.technomagi.tileentity.TileEntityRegionControllerPerception;
+import com.ollieread.technomagi.tileentity.TileEntityRegionControllerPresence;
 import com.ollieread.technomagi.tileentity.TileEntitySmartmetal;
 import com.ollieread.technomagi.tileentity.TileEntityStorageFluid;
 import com.ollieread.technomagi.tileentity.TileEntityStorageItems;
@@ -81,6 +92,9 @@ public class Blocks
     public static Block blockSmartmetalTile;
     public static Block blockRegionController;
     public static Block blockPrismaticPillar;
+    public static Block blockPocket;
+    public static Block blockLight;
+    public static Block blockDarkness;
 
     public static void init()
     {
@@ -107,6 +121,9 @@ public class Blocks
         blockSmartmetalTile = new BlockSmartmetalTile("smartmetalTile");
         blockRegionController = new BlockRegionController("regionController");
         blockPrismaticPillar = new BlockPrismaticPillar("prismaticPillar");
+        blockPocket = new BlockPocket("pocket");
+        blockLight = new BlockLight("light");
+        blockDarkness = new BlockDarkness("darkness");
 
         GameRegistry.registerBlock(blockResource, ItemBlockMulti.class, "resourceBlock");
         GameRegistry.registerBlock(blockMachine, ItemBlockMulti.class, "machine");
@@ -127,37 +144,51 @@ public class Blocks
         GameRegistry.registerBlock(blockVoidBreach, "voidBreach");
         GameRegistry.registerBlock(blockSmartmetal, "smartmetal");
         GameRegistry.registerBlock(blockSmartmetalTile, "smartmetalOverlay");
-        GameRegistry.registerBlock(blockRegionController, "regionController");
+        GameRegistry.registerBlock(blockRegionController, ItemBlockMulti.class, "regionController");
         GameRegistry.registerBlock(blockPrismaticPillar, "prismaticPillar");
+        GameRegistry.registerBlock(blockPocket, ItemBlockMulti.class, "pocket");
+        GameRegistry.registerBlock(blockLight, "light");
+        GameRegistry.registerBlock(blockDarkness, "darkness");
 
         GameRegistry.registerTileEntity(TileEntityArchive.class, "tileEntityArchive");
         GameRegistry.registerTileEntity(TileEntityMachineReplicator.class, "tileEntityNaniteReplicator");
         GameRegistry.registerTileEntity(TileEntityAirLight.class, "tileEntityLightAir");
-        GameRegistry.registerTileEntity(TileEntityMachineAreaLight.class, "tileEntityAreaLight");
-        GameRegistry.registerTileEntity(TileEntityMachineTeleporter.class, "tileEntityTeleporter");
-        GameRegistry.registerTileEntity(TileEntityMachineObservation.class, "tileEntityObservationChamber");
         GameRegistry.registerTileEntity(TileEntityFiller.class, "tileEntityEmptyFiller");
-        GameRegistry.registerTileEntity(TileEntityHardlightGenerator.class, "tileEntityHardlightGenerator");
-        GameRegistry.registerTileEntity(TileEntityMachineAssembler.class, "tileEntityCrafting");
-        GameRegistry.registerTileEntity(TileEntityMachineAnalysis.class, "tileEntityAnalysis");
-        GameRegistry.registerTileEntity(TileEntityMachineDisplacer.class, "tileEntityDisplacer");
         GameRegistry.registerTileEntity(TileEntityAirDisplaced.class, "tileEntityDisplacedAir");
         GameRegistry.registerTileEntity(TileEntityGeneratorVoid.class, "tileEntityGeneratorVoid");
-        GameRegistry.registerTileEntity(TileEntityGeneratorSolar.class, "tileEntityGeneratorLight");
+        GameRegistry.registerTileEntity(TileEntityGeneratorLight.class, "tileEntityGeneratorLight");
         GameRegistry.registerTileEntity(TileEntityGeneratorLife.class, "tileEntityGeneratorLife");
         GameRegistry.registerTileEntity(TileEntityConstruct.class, "tileEntityConstruct");
         GameRegistry.registerTileEntity(TileEntityReactiveCrafting.class, "tileEntityReactiveCrafting");
         GameRegistry.registerTileEntity(TileEntityStorageFluid.class, "tileEntityTank");
         GameRegistry.registerTileEntity(TileEntityStorageItems.class, "tileEntityStorage");
+        GameRegistry.registerTileEntity(TileEntityBattery.class, "tileEntityBattery");
+        GameRegistry.registerTileEntity(TileEntityAirVoidBreach.class, "tileEntityVoidBreach");
+        GameRegistry.registerTileEntity(TileEntitySmartmetal.class, "tileEntitySmartmetal");
+        GameRegistry.registerTileEntity(TileEntityPrismaticPillar.class, "tileEntityPrismaticPillar");
+        // machines
+        GameRegistry.registerTileEntity(TileEntityMachineAreaLight.class, "tileEntityAreaLight");
+        GameRegistry.registerTileEntity(TileEntityMachineTeleporter.class, "tileEntityTeleporter");
+        GameRegistry.registerTileEntity(TileEntityMachineObservation.class, "tileEntityObservationChamber");
+        GameRegistry.registerTileEntity(TileEntityHardlightGenerator.class, "tileEntityHardlightGenerator");
+        GameRegistry.registerTileEntity(TileEntityMachineAssembler.class, "tileEntityCrafting");
+        GameRegistry.registerTileEntity(TileEntityMachineAnalysis.class, "tileEntityAnalysis");
+        GameRegistry.registerTileEntity(TileEntityMachineDisplacer.class, "tileEntityDisplacer");
         GameRegistry.registerTileEntity(TileEntityMachineProcessor.class, "tileEntitySeparator");
         GameRegistry.registerTileEntity(TileEntityMachineFurnace.class, "tileEntityFurnace");
         GameRegistry.registerTileEntity(TileEntityMachineInfuser.class, "tileEntityFocuser");
         GameRegistry.registerTileEntity(TileEntityMachineEncourager.class, "tileEntityEncourager");
         GameRegistry.registerTileEntity(TileEntityMachineInfuserCharger.class, "tileEntityFocusCharger");
-        GameRegistry.registerTileEntity(TileEntityBattery.class, "tileEntityBattery");
-        GameRegistry.registerTileEntity(TileEntityAirVoidBreach.class, "tileEntityVoidBreach");
-        GameRegistry.registerTileEntity(TileEntitySmartmetal.class, "tileEntitySmartmetal");
+        // region controllers
+        GameRegistry.registerTileEntity(TileEntityRegionControllerDamage.class, "tileEntityDamageFilter");
+        GameRegistry.registerTileEntity(TileEntityRegionControllerEffect.class, "tileEntityEffectFilter");
+        GameRegistry.registerTileEntity(TileEntityRegionControllerInteraction.class, "tileEntityInteractionFilter");
         GameRegistry.registerTileEntity(TileEntityRegionControllerPerception.class, "tileEntityPerceptionFilter");
-        GameRegistry.registerTileEntity(TileEntityPrismaticPillar.class, "tileEntityPrismaticPillar");
+        GameRegistry.registerTileEntity(TileEntityRegionControllerPresence.class, "tileEntityPresenceFilter");
+        // pockets
+        GameRegistry.registerTileEntity(TileEntityPocketEnergy.class, "tileEntityPocketEnergy");
+        GameRegistry.registerTileEntity(TileEntityPocketGrowth.class, "tileEntityPocketGrowth");
+        GameRegistry.registerTileEntity(TileEntityPocketLight.class, "tileEntityPocketLight");
+        GameRegistry.registerTileEntity(TileEntityPocketNanite.class, "tileEntityPocketNanite");
     }
 }

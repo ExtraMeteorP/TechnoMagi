@@ -13,10 +13,10 @@ import com.ollieread.technomagi.block.abstracts.BlockBasic;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockLight extends BlockBasic
+public class BlockDarkness extends BlockBasic
 {
 
-    public BlockLight(String name)
+    public BlockDarkness(String name)
     {
         super(Material.air, name);
     }
@@ -39,12 +39,12 @@ public class BlockLight extends BlockBasic
 
     public int getLightOpacity()
     {
-        return 0;
+        return 255;
     }
 
     public int getLightValue()
     {
-        return 15;
+        return 0;
     }
 
     public int getRenderType()
