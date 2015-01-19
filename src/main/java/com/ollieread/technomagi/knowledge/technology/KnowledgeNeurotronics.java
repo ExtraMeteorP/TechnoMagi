@@ -11,7 +11,7 @@ import com.ollieread.ennds.research.Knowledge;
  * @author ollie
  *
  */
-public class KnowledgeNeutronics extends Knowledge
+public class KnowledgeNeurotronics extends Knowledge
 {
 
     /**
@@ -20,7 +20,7 @@ public class KnowledgeNeutronics extends Knowledge
      * @param knowledge
      * @param category
      */
-    public KnowledgeNeutronics(String name, String Modid, String[] knowledge, String category)
+    public KnowledgeNeurotronics(String name, String Modid, String[] knowledge, String category)
     {
         super(name, Modid, knowledge, category);
         // TODO Auto-generated constructor stub
@@ -32,7 +32,7 @@ public class KnowledgeNeutronics extends Knowledge
      * @param knowledge
      * @param category
      */
-    public KnowledgeNeutronics(String name, ResourceLocation icon, String[] knowledge, String category)
+    public KnowledgeNeurotronics(String name, ResourceLocation icon, String[] knowledge, String category)
     {
         super(name, icon, knowledge, category);
         // TODO Auto-generated constructor stub

@@ -54,6 +54,23 @@ public class ItemPersonalInterface extends ItemTMNBT
         return false;
     }
 
+    public static void setLink(ItemStack stack, String link)
+    {
+        NBTTagCompound compound = getNBT(stack);
+        compound.setString("Link", link);
+    }
+
+    public static String getLink(ItemStack stack)
+    {
+        NBTTagCompound compound = getNBT(stack);
+
+        if (compound.hasKey("Link")) {
+            return compound.getString("Link");
+        }
+
+        return null;
+    }
+
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
         if (getPlayer(stack) == null) {

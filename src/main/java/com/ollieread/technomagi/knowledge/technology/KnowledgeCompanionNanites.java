@@ -3,9 +3,8 @@
  */
 package com.ollieread.technomagi.knowledge.technology;
 
-import net.minecraft.util.ResourceLocation;
-
 import com.ollieread.ennds.research.Knowledge;
+import com.ollieread.technomagi.common.Reference;
 
 /**
  * @author ollie
@@ -14,38 +13,15 @@ import com.ollieread.ennds.research.Knowledge;
 public class KnowledgeCompanionNanites extends Knowledge
 {
 
-    /**
-     * @param name
-     * @param Modid
-     * @param knowledge
-     * @param category
-     */
-    public KnowledgeCompanionNanites(String name, String Modid, String[] knowledge, String category)
+    public KnowledgeCompanionNanites(String name, String[] knowledge, String category)
     {
-        super(name, Modid, knowledge, category);
-        // TODO Auto-generated constructor stub
+        super(name, Reference.MODID.toLowerCase(), knowledge, category);
     }
 
-    /**
-     * @param name
-     * @param icon
-     * @param knowledge
-     * @param category
-     */
-    public KnowledgeCompanionNanites(String name, ResourceLocation icon, String[] knowledge, String category)
-    {
-        super(name, icon, knowledge, category);
-        // TODO Auto-generated constructor stub
-    }
-
-    /* (non-Javadoc)
-     * @see com.ollieread.ennds.research.IKnowledge#getIntrigue()
-     */
     @Override
     public String[] getIntrigue()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return new String[0];
     }
 
 }

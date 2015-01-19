@@ -1,5 +1,7 @@
 package com.ollieread.technomagi.tileentity.abstracts;
 
+import java.util.Random;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -14,6 +16,7 @@ public abstract class TileEntityPocket extends TileEntityBasic implements ITileE
     protected int ticks = 0;
     protected int size = 16;
     protected boolean synced = false;
+    protected Random rand = new Random();
 
     public TileEntityPocket(int size)
     {

@@ -14,6 +14,7 @@ import com.ollieread.ennds.research.ResearchRegistry;
 import com.ollieread.technomagi.client.ClientProxy;
 import com.ollieread.technomagi.common.init.Items;
 import com.ollieread.technomagi.item.ItemStaff;
+import com.ollieread.technomagi.knowledge.KnowledgeCategoryTechnology;
 import com.ollieread.technomagi.util.InventoryHelper;
 import com.ollieread.technomagi.util.PlayerHelper;
 import com.ollieread.technomagi.util.SoundHelper;
@@ -43,6 +44,7 @@ public class EnndsEventHandler
                 ItemStaff.setPlayer(staff, event.entityPlayer.getCommandSenderName());
 
                 event.entityPlayer.inventory.setInventorySlotContents(event.entityPlayer.inventory.currentItem, staff);
+                event.charon.unlockKnowledge(KnowledgeCategoryTechnology.companionNanites.getName());
             }
 
             AbilityRegistry.passiveAbilityEvent("specialisation", event, event.charon);
@@ -65,10 +67,6 @@ public class EnndsEventHandler
     public void onKnowledgeUnlocked(KnowledgeUnlockedEvent event)
     {
         if (!event.entityPlayer.worldObj.isRemote) {
-            // EntityHelper.addTranslatedChatMessage(event.entityPlayer,
-            // "message.knowledge.unlocked");
-            // EntityHelper.addTranslatedChatMessage(event.entityPlayer,
-            // "message.knowledge.unlocked." + event.knowledge.getName());
             ResearchRegistry.researchEvent("knowledge" + StringUtils.capitalize(event.knowledge.getName()), event, event.charon, false);
         } else {
             ClientProxy.overlay.addKnowledge(event.knowledge);

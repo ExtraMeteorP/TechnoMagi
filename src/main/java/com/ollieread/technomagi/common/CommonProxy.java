@@ -26,6 +26,7 @@ import com.ollieread.technomagi.client.gui.archive.GuiArchiveCrafting;
 import com.ollieread.technomagi.client.gui.archive.GuiArchiveInfo;
 import com.ollieread.technomagi.client.gui.archive.GuiArchiveKnowledge;
 import com.ollieread.technomagi.client.gui.archive.GuiArchiveMain;
+import com.ollieread.technomagi.client.gui.builder.GuiBuilderContainer;
 import com.ollieread.technomagi.event.handler.ChunkEventHandler;
 import com.ollieread.technomagi.event.handler.EnndsEventHandler;
 import com.ollieread.technomagi.event.handler.EntityEventHandler;
@@ -40,6 +41,7 @@ import com.ollieread.technomagi.inventory.ContainerFocuser;
 import com.ollieread.technomagi.inventory.ContainerFurnace;
 import com.ollieread.technomagi.inventory.ContainerNaniteReplicator;
 import com.ollieread.technomagi.inventory.ContainerObservation;
+import com.ollieread.technomagi.inventory.ContainerPersonalInterface;
 import com.ollieread.technomagi.inventory.ContainerSeparator;
 import com.ollieread.technomagi.inventory.ContainerStaff;
 import com.ollieread.technomagi.tileentity.TileEntityArchive;
@@ -136,7 +138,7 @@ public class CommonProxy implements IGuiHandler
                 return new ContainerFocuser(player.inventory, focuser);
             }
         } else if (ID == GUI_PERSONAL_INTERFACE) {
-            // return new ContainerDiagnosis(player);
+            return new ContainerPersonalInterface(player, player.getHeldItem());
         }
 
         return null;
@@ -250,7 +252,7 @@ public class CommonProxy implements IGuiHandler
                 return new GuiFocuser(player.inventory, focuser);
             }
         } else if (ID == GUI_PERSONAL_INTERFACE) {
-            return new GuiPersonalInterface();
+            return new GuiBuilderContainer(new ContainerPersonalInterface(player, player.getHeldItem()), new GuiPersonalInterface());
         }
 
         return null;
