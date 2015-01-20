@@ -1,10 +1,10 @@
 package com.ollieread.technomagi.tileentity.component;
 
-import com.ollieread.technomagi.tileentity.ITileEntityHasOwner;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+
+import com.ollieread.technomagi.tileentity.ITileEntityHasOwner;
 
 public class ComponentOwner implements ITileEntityHasOwner
 {
@@ -35,6 +35,8 @@ public class ComponentOwner implements ITileEntityHasOwner
 
         if (nbtOwner.equals("none")) {
             owner = null;
+        } else {
+            owner = nbtOwner;
         }
     }
 

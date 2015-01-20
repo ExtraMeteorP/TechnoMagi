@@ -2,6 +2,7 @@ package com.ollieread.technomagi.client.gui.builder;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +36,8 @@ public class GuiBuilder extends Gui
     public int mouseY;
     public Minecraft mc = Minecraft.getMinecraft();
     protected int buttonIds = -1;
-    protected Map<String, IGuiElement> elements = new HashMap<String, IGuiElement>();
+    protected Map<String, IGuiElement> elements = new LinkedHashMap<String, IGuiElement>();
+    protected Map<String, Integer> scroll = new HashMap<String, Integer>();
     protected String heading;
     public ScaledResolution scaled;
 
@@ -53,21 +55,8 @@ public class GuiBuilder extends Gui
 
     public void setDimensions(int width, int height)
     {
-        if (width > this.width) {
-            this.xOffset -= (width - this.width) / 2;
-            this.width = width;
-        } else if (width < this.width) {
-            this.xOffset += (this.width + width) / 2;
-            this.width = width;
-        }
-
-        if (height > this.height) {
-            this.yOffset -= (height - this.height) / 2;
-            this.height = height;
-        } else if (height < this.height) {
-            this.yOffset += (this.height + height) / 2;
-            this.height = height;
-        }
+        this.width = width;
+        this.height = height;
     }
 
     public void setHeading(String heading)
@@ -79,6 +68,20 @@ public class GuiBuilder extends Gui
     {
         this.mouseX = x;
         this.mouseY = y;
+    }
+
+    public void setScroll(String element, int scroll)
+    {
+        this.scroll.put(element, scroll);
+    }
+
+    public int getScroll(String element)
+    {
+        if (scroll.containsKey(element)) {
+            return scroll.get(element);
+        }
+
+        return 0;
     }
 
     public int getButtonId()
@@ -101,6 +104,7 @@ public class GuiBuilder extends Gui
     public void drawElementBackgrounds()
     {
         this.scaled = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+        drawHeading(heading);
 
         int x = 3;
         int y = 24;
@@ -112,8 +116,6 @@ public class GuiBuilder extends Gui
 
     public void drawElements()
     {
-        drawHeading(heading);
-
         int x = 3;
         int y = 24;
 
@@ -156,10 +158,15 @@ public class GuiBuilder extends Gui
 
     public int drawString(String string, int x, int y, int c)
     {
+        return drawString(string, x, y, c, mc.fontRenderer);
+    }
+
+    public int drawString(String string, int x, int y, int c, FontRenderer font)
+    {
         x += xOffset;
         y += yOffset;
 
-        return mc.fontRenderer.drawString(string, x, y, c);
+        return font.drawString(string, x, y, c);
     }
 
     public void drawBackground()
@@ -456,8 +463,9 @@ public class GuiBuilder extends Gui
     public void drawHoveringText(List list, int x, int y)
     {
         if (!list.isEmpty()) {
-            int w = this.width;
-            int h = this.height;
+            int w = mc.displayWidth;
+            int h = mc.displayHeight;
+
             x -= xOffset;
             y -= yOffset;
 

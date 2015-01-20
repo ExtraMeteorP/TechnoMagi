@@ -2,7 +2,6 @@ package com.ollieread.technomagi.client.gui.builder;
 
 import java.util.List;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 
 public class GuiElementTextMulti extends GuiElementText
@@ -28,14 +27,9 @@ public class GuiElementTextMulti extends GuiElementText
 
         this.lines = s;
         this.height = 0;
-        int p = font.FONT_HEIGHT + this.padding;
 
         for (String line : lines) {
-            if (line.indexOf("\n\n") > -1) {
-                this.height += (p * 2);
-            }
-
-            this.height += p;
+            this.height += font.FONT_HEIGHT + this.padding;
         }
     }
 
@@ -44,7 +38,7 @@ public class GuiElementTextMulti extends GuiElementText
     {
         int x = xOffset + xPadding;
         int y = yOffset + yPadding;
-        FontRenderer font = Minecraft.getMinecraft().fontRenderer;
+        FontRenderer font = GuiBuilder.instance.mc.fontRenderer;
 
         for (String line : lines) {
             GuiBuilder.instance.drawString(line, x, y, this.colour);
@@ -56,6 +50,12 @@ public class GuiElementTextMulti extends GuiElementText
     public int getHeight(boolean includeY)
     {
         return height + (includeY ? yOffset : 0);
+    }
+
+    @Override
+    public int getMaxY()
+    {
+        return yOffset + height;
     }
 
 }

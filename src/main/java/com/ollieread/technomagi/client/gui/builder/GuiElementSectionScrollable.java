@@ -6,7 +6,7 @@ public class GuiElementSectionScrollable extends GuiElementSection
 {
 
     protected int innerHeight;
-    protected static int scrollOffset = 0;
+    public int scrollOffset = 0;
 
     public GuiElementSectionScrollable(String name, IGuiElement parent, int x, int y, int w, int h)
     {
@@ -28,24 +28,30 @@ public class GuiElementSectionScrollable extends GuiElementSection
         return ih;
     }
 
-    public void scrollUp()
+    public int scrollUp()
     {
-        scrollOffset -= 5;
+        scrollOffset -= 15;
 
         if (scrollOffset < 0) {
             scrollOffset = 0;
         }
+
+        GuiBuilder.instance.setScroll(getName(), scrollOffset);
+
+        return scrollOffset;
     }
 
-    public void scrollDown()
+    public int scrollDown()
     {
-        scrollOffset += 5;
-        System.out.println(scrollOffset);
-        System.out.println(innerHeight);
+        scrollOffset += 15;
 
-        if (scrollOffset > innerHeight) {
-            scrollOffset = innerHeight;
+        if (scrollOffset > (innerHeight - (height - 6))) {
+            scrollOffset = (innerHeight - (height - 6));
         }
+
+        GuiBuilder.instance.setScroll(getName(), scrollOffset);
+
+        return scrollOffset;
     }
 
     @Override
@@ -65,6 +71,12 @@ public class GuiElementSectionScrollable extends GuiElementSection
         if (innerHeight > (height - 9)) {
             GuiElementButtonDirectional buttonDown = new GuiElementButtonDirectional("buttonScrollableSectionDown", this, width - 17, height - 15, 0);
             GuiElementButtonDirectional buttonUp = new GuiElementButtonDirectional("buttonScrollableSectionUp", this, width - 17, 1, 1);
+
+            if (scrollOffset == 0) {
+                buttonUp.setInvisible();
+            } else if (scrollOffset == (innerHeight - (height - 6))) {
+                buttonDown.setInvisible();
+            }
 
             this.addElement(buttonDown);
             this.addElement(buttonUp);

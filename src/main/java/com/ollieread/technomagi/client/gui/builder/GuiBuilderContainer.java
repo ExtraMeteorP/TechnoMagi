@@ -24,7 +24,6 @@ public class GuiBuilderContainer extends GuiContainer
         buttonList.clear();
         builder = GuiBuilder.instance;
         instructions.init(builder, (ContainerBuilder) inventorySlots);
-        builder.setOffset(width, height);
     }
 
     public void drawScreen(int mouseX, int mouseY, float p_73863_3_)
@@ -39,6 +38,7 @@ public class GuiBuilderContainer extends GuiContainer
     {
         builder.resetElements();
         instructions.build(builder, (ContainerBuilder) inventorySlots);
+        builder.setOffset(width, height);
 
         builder.drawBackground();
         builder.drawElementBackgrounds();

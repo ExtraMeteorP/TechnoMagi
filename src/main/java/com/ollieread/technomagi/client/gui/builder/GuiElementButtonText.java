@@ -1,6 +1,6 @@
 package com.ollieread.technomagi.client.gui.builder;
 
-public class GuiElementButton implements IGuiElement
+public class GuiElementButtonText implements IGuiElement
 {
 
     protected String name;
@@ -11,29 +11,17 @@ public class GuiElementButton implements IGuiElement
     protected int width;
     protected int height;
     protected String text;
-    protected boolean disabled = false;
-    protected boolean invisible = false;
 
-    public GuiElementButton(String name, IGuiElement parent, int x, int y, int w, String s)
+    public GuiElementButtonText(String name, IGuiElement parent, int x, int y, String s)
     {
         this.id = GuiBuilder.instance.getButtonId();
         this.xOffset = x;
         this.yOffset = y;
-        this.width = w;
-        this.height = 20;
+        this.width = GuiBuilder.instance.mc.fontRenderer.getStringWidth(s);
+        this.height = GuiBuilder.instance.mc.fontRenderer.FONT_HEIGHT + 3;
         this.name = name;
         this.parent = parent;
         this.text = s;
-    }
-
-    public void setDisabled()
-    {
-        disabled = true;
-    }
-
-    public void setInvisible()
-    {
-        invisible = true;
     }
 
     @Override
@@ -45,25 +33,20 @@ public class GuiElementButton implements IGuiElement
     @Override
     public void draw(int xPadding, int yPadding)
     {
-        if (!invisible) {
-            boolean hover = false;
+        boolean hover = false;
+        int x = GuiBuilder.instance.xOffset + xOffset + xPadding;
+        int y = GuiBuilder.instance.yOffset + yOffset + yPadding;
 
-            if (!disabled) {
-                int x = GuiBuilder.instance.xOffset + xOffset + xPadding;
-                int y = GuiBuilder.instance.yOffset + yOffset + yPadding;
+        int mx = GuiBuilder.instance.mouseX;
+        int my = GuiBuilder.instance.mouseY;
 
-                int mx = GuiBuilder.instance.mouseX;
-                int my = GuiBuilder.instance.mouseY;
-
-                if (mx > x && mx < x + width) {
-                    if (my > y && my < y + height) {
-                        hover = true;
-                    }
-                }
+        if (mx > x && mx < x + width) {
+            if (my > y && my < y + height) {
+                hover = true;
             }
-
-            GuiBuilder.instance.drawButton(text, xOffset + xPadding, yOffset + yPadding, width, hover);
         }
+
+        GuiBuilder.instance.drawString(text, xOffset + xPadding, yOffset + yPadding + 3, !hover ? 16777215 : 2529246);
     }
 
     @Override
@@ -117,14 +100,12 @@ public class GuiElementButton implements IGuiElement
     @Override
     public String clicked(int xPadding, int yPadding, int xPosition, int yPosition)
     {
-        if (!invisible && !disabled) {
-            int x = xOffset + xPadding;
-            int y = yOffset + yPadding;
+        int x = xOffset + xPadding;
+        int y = yOffset + yPadding;
 
-            if (xPosition >= x && xPosition <= (x + this.width)) {
-                if (yPosition >= y && yPosition <= (y + this.height)) {
-                    return getName();
-                }
+        if (xPosition >= x && xPosition <= (x + this.width)) {
+            if (yPosition >= y && yPosition <= (y + this.height)) {
+                return getName();
             }
         }
 

@@ -11,6 +11,8 @@ public class GuiElementButtonDirectional implements IGuiElement
     protected int width;
     protected int height;
     protected int direction;
+    protected boolean disabled = false;
+    protected boolean invisible = false;
 
     public GuiElementButtonDirectional(String name, IGuiElement parent, int x, int y, int d)
     {
@@ -30,6 +32,16 @@ public class GuiElementButtonDirectional implements IGuiElement
         return name;
     }
 
+    public void setDisabled()
+    {
+        disabled = true;
+    }
+
+    public void setInvisible()
+    {
+        invisible = true;
+    }
+
     @Override
     public void draw(int xPadding, int yPadding)
     {
@@ -38,12 +50,14 @@ public class GuiElementButtonDirectional implements IGuiElement
     @Override
     public void drawBackground(int xPadding, int yPadding)
     {
-        int x = xOffset + xPadding;
-        int y = yOffset + yPadding;
-        int u = direction == 0 || direction == 1 ? 176 : 187;
-        int v = direction == 0 || direction == 2 ? 0 : direction == 1 ? 7 : 11;
+        if (!invisible) {
+            int x = xOffset + xPadding;
+            int y = yOffset + yPadding;
+            int u = direction == 0 || direction == 1 ? 176 : 187;
+            int v = direction == 0 || direction == 2 ? 0 : direction == 1 ? 7 : 11;
 
-        GuiBuilder.instance.drawTextureArea(xOffset + xPadding, yOffset + yPadding, u, v, this.width, this.height);
+            GuiBuilder.instance.drawTextureArea(xOffset + xPadding, yOffset + yPadding, u, v, this.width, this.height);
+        }
 
     }
 
@@ -92,16 +106,18 @@ public class GuiElementButtonDirectional implements IGuiElement
     @Override
     public String clicked(int xPadding, int yPadding, int xPosition, int yPosition)
     {
-        int x = xPadding + xOffset;
-        int y = yPadding + yOffset;
+        if (!invisible && !disabled) {
+            int x = xPadding + xOffset;
+            int y = yPadding + yOffset;
 
-        if (xPosition >= x && xPosition <= (x + this.width)) {
-            if (yPosition >= y && yPosition <= (y + this.height)) {
-                if (parent instanceof GuiElementSectionScrollable) {
-                    if (direction == 0) {
-                        ((GuiElementSectionScrollable) parent).scrollDown();
-                    } else if (direction == 1) {
-                        ((GuiElementSectionScrollable) parent).scrollUp();
+            if (xPosition >= x && xPosition <= (x + this.width)) {
+                if (yPosition >= y && yPosition <= (y + this.height)) {
+                    if (parent instanceof GuiElementSectionScrollable) {
+                        if (direction == 0) {
+                            ((GuiElementSectionScrollable) parent).scrollDown();
+                        } else if (direction == 1) {
+                            ((GuiElementSectionScrollable) parent).scrollUp();
+                        }
                     }
                 }
             }

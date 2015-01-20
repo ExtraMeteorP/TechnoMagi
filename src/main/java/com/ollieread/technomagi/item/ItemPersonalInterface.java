@@ -71,6 +71,18 @@ public class ItemPersonalInterface extends ItemTMNBT
         return null;
     }
 
+    public static void setSyncing(ItemStack stack, boolean sync)
+    {
+        NBTTagCompound compound = getNBT(stack);
+        compound.setBoolean("Sync", sync);
+    }
+
+    public static boolean getSyncing(ItemStack stack)
+    {
+        NBTTagCompound compound = getNBT(stack);
+        return compound.getBoolean("Sync");
+    }
+
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
         if (getPlayer(stack) == null) {

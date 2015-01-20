@@ -16,6 +16,7 @@ public class GuiElementSection implements IGuiElement
     protected int height;
     protected boolean background;
     protected Map<String, IGuiElement> elements = new HashMap<String, IGuiElement>();
+    protected boolean clickable = false;
 
     public GuiElementSection(String name, IGuiElement parent, int x, int y, int w, int h)
     {
@@ -31,6 +32,11 @@ public class GuiElementSection implements IGuiElement
         this.width = w;
         this.height = h;
         this.background = background;
+    }
+
+    public void setClickable()
+    {
+        clickable = true;
     }
 
     public void addElement(IGuiElement element)

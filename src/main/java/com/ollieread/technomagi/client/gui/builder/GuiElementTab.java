@@ -45,12 +45,12 @@ public class GuiElementTab implements IGuiElement
     @Override
     public void drawBackground(int xPadding, int yPadding)
     {
-        GuiBuilder.instance.drawTab(xOffset, yOffset, type, image, selected);
     }
 
     @Override
     public void draw(int xPadding, int yPadding)
     {
+        GuiBuilder.instance.drawTab(xOffset, yOffset, type, image, selected);
     }
 
     @Override
@@ -110,7 +110,7 @@ public class GuiElementTab implements IGuiElement
 
             if (xPosition >= x && xPosition <= (x + this.width)) {
                 if (yPosition >= y && yPosition <= (y + this.height)) {
-                    GuiBuilder.instance.drawHoveringText(Arrays.asList(new String[] { hover }), x, y);
+                    GuiBuilder.instance.drawHoveringText(Arrays.asList(new String[] { hover }), xPosition - 37, yPosition - 22);
 
                     return true;
                 }

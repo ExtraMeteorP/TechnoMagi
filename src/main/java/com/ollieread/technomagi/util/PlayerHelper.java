@@ -70,15 +70,20 @@ public class PlayerHelper
 
     public static boolean hasInventoryItem(EntityPlayer player, ItemStack stack)
     {
+        return getInventoryItem(player, stack) != null;
+    }
+
+    public static ItemStack getInventoryItem(EntityPlayer player, ItemStack stack)
+    {
         for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
             ItemStack slot = player.inventory.getStackInSlot(i);
 
             if (slot != null && slot.isItemEqual(stack)) {
-                return true;
+                return slot;
             }
         }
 
-        return false;
+        return null;
     }
 
     public static void addChatMessage(EntityPlayer player, String message)

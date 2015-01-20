@@ -14,11 +14,14 @@ import net.minecraft.world.World;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
 import com.ollieread.ennds.research.IResearch;
 import com.ollieread.ennds.research.ResearchRegistry;
+import com.ollieread.technomagi.common.init.Items;
+import com.ollieread.technomagi.item.ItemPersonalInterface;
 import com.ollieread.technomagi.item.ItemResearchStorage;
-import com.ollieread.technomagi.tileentity.abstracts.TileEntityMachineResearch;
 import com.ollieread.technomagi.tileentity.abstracts.TileEntityBasic;
+import com.ollieread.technomagi.tileentity.abstracts.TileEntityMachineResearch;
 import com.ollieread.technomagi.tileentity.component.ComponentInventory;
 import com.ollieread.technomagi.tileentity.component.ComponentOwner;
+import com.ollieread.technomagi.util.PlayerHelper;
 
 public class TileEntityArchive extends TileEntityBasic implements ITileEntityHasOwner, IInventory, ITileEntityFacing
 {
@@ -149,7 +152,11 @@ public class TileEntityArchive extends TileEntityBasic implements ITileEntityHas
         EntityPlayer owner = getOwner(worldObj);
 
         if (owner != null && owner.getDistance(xCoord, yCoord, zCoord) <= 8) {
-            return true;
+            ItemStack inter = PlayerHelper.getInventoryItem(owner, new ItemStack(Items.itemPersonalInterface));
+
+            if (inter != null) {
+                return ItemPersonalInterface.getSyncing(inter);
+            }
         }
 
         return false;
@@ -182,6 +189,9 @@ public class TileEntityArchive extends TileEntityBasic implements ITileEntityHas
 
                     if (value > 0) {
                         if (value >= 5 && playerKnowledge.nanites.decreaseData(5, knowledge)) {
+                            playerKnowledge.addKnowledgeProgress(knowledge, 5);
+                            break;
+                        } else if (playerKnowledge.nanites.decreaseData(value, knowledge)) {
                             playerKnowledge.addKnowledgeProgress(knowledge, 5);
                             break;
                         }
@@ -296,6 +306,8 @@ public class TileEntityArchive extends TileEntityBasic implements ITileEntityHas
         NBTTagCompound ownerCompound = new NBTTagCompound();
 
         owner.writeToNBT(ownerCompound);
+
+        compound.setTag("Owner", ownerCompound);
     }
 
     public TileEntityArchive setType(int type)

@@ -83,6 +83,11 @@ public class BlockMachine extends BlockBasicContainer implements IBlockMulti
         return blockIcons[meta];
     }
 
+    public int damageDropped(int metadata)
+    {
+        return metadata;
+    }
+
     public TileEntity createNewTileEntity(World world, int metadata)
     {
         switch (metadata) {
@@ -137,7 +142,12 @@ public class BlockMachine extends BlockBasicContainer implements IBlockMulti
     public void randomDisplayTick(World world, int x, int y, int z, Random rand)
     {
         int meta = world.getBlockMetadata(x, y, z);
-        ITileEntityMachine machine = (ITileEntityMachine) world.getTileEntity(x, y, z);
+        TileEntity tile = world.getTileEntity(x, y, z);
+        ITileEntityMachine machine = null;
+
+        if (tile instanceof ITileEntityMachine) {
+            machine = (ITileEntityMachine) tile;
+        }
 
         if (machine != null) {
             if (meta == 0) {

@@ -11,10 +11,11 @@ import com.ollieread.technomagi.network.message.MessagePlayerInteractEvent;
 import com.ollieread.technomagi.network.message.MessageSetArchive;
 import com.ollieread.technomagi.network.message.MessageSetBuilding;
 import com.ollieread.technomagi.network.message.MessageSetCrafting;
+import com.ollieread.technomagi.network.message.MessageSetPersonalInterfaceLink;
+import com.ollieread.technomagi.network.message.MessageSetPersonalInterfaceSyncing;
 import com.ollieread.technomagi.network.message.MessageSetProgress;
 import com.ollieread.technomagi.network.message.MessageSetTeleporterMode;
 import com.ollieread.technomagi.network.message.MessageSyncPerceptionFilters;
-import com.ollieread.technomagi.network.message.MessageSyncPersonalInterfaceLink;
 import com.ollieread.technomagi.network.message.MessageSyncPlayerCapabilities;
 import com.ollieread.technomagi.network.message.MessageSyncRegions;
 import com.ollieread.technomagi.network.message.MessageSyncTileEntityTM;
@@ -44,6 +45,7 @@ public class PacketHandler
         INSTANCE.registerMessage(MessageSyncRegions.class, MessageSyncRegions.class, 10, Side.CLIENT);
         INSTANCE.registerMessage(MessageSyncPlayerCapabilities.class, MessageSyncPlayerCapabilities.class, 11, Side.CLIENT);
         INSTANCE.registerMessage(MessageOpenGUI.class, MessageOpenGUI.class, 12, Side.SERVER);
-        INSTANCE.registerMessage(MessageSyncPersonalInterfaceLink.class, MessageSyncPersonalInterfaceLink.class, 13, Side.SERVER);
+        INSTANCE.registerMessage(MessageSetPersonalInterfaceLink.class, MessageSetPersonalInterfaceLink.class, 13, Side.SERVER);
+        INSTANCE.registerMessage(MessageSetPersonalInterfaceSyncing.class, MessageSetPersonalInterfaceSyncing.class, 14, Side.SERVER);
     }
 }
