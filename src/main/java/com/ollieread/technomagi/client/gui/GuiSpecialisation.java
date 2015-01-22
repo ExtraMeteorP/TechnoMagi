@@ -1,139 +1,125 @@
 package com.ollieread.technomagi.client.gui;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
 
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.util.ResourceLocation;
-
-import org.lwjgl.opengl.GL11;
 
 import com.ollieread.ennds.EnndsRegistry;
 import com.ollieread.ennds.ISpecialisation;
 import com.ollieread.ennds.common.PacketHelper;
 import com.ollieread.ennds.extended.ExtendedPlayerKnowledge;
+import com.ollieread.technomagi.client.gui.abstracts.GuiInstructions;
+import com.ollieread.technomagi.client.gui.elements.GuiElementButton;
+import com.ollieread.technomagi.client.gui.elements.GuiElementSection;
+import com.ollieread.technomagi.client.gui.elements.GuiElementSelector;
+import com.ollieread.technomagi.client.gui.elements.GuiElementText;
+import com.ollieread.technomagi.client.gui.elements.IGuiElement;
 import com.ollieread.technomagi.common.Information;
-import com.ollieread.technomagi.common.Reference;
+import com.ollieread.technomagi.inventory.abstracts.ContainerBuilder;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiSpecialisation extends GuiScreen
+public class GuiSpecialisation extends GuiInstructions
 {
 
-    public static String choice;
-    private float xSize_lo;
-    private float ySize_lo;
-    protected int xSize = 225;
-    protected int ySize = 209;
-    protected int xOffset;
-    protected int yOffset;
-    protected HashMap<Integer, String> buttonSpecialisations = new HashMap<Integer, String>();
-    protected int contentWidth = 205;
-    protected int guiScale;
-    protected int selected;
+    public static String choice = "";
 
-    protected GuiButton buttonSpecialise;
-
-    protected GuiScrollableText scrollableText;
-
-    private static final ResourceLocation iconLocation = new ResourceLocation(Reference.MODID.toLowerCase(), "textures/gui/specialisation.png");
-
-    public void initGui()
+    @Override
+    public void init(GuiBuilder builder, ContainerBuilder container)
     {
-        this.buttonList.clear();
-        this.xOffset = (this.width - this.xSize) / 2;
-        this.yOffset = (this.height - this.ySize) / 2;
 
-        this.buttonList.add(this.buttonSpecialise = new GuiTMButton(1, this.xOffset + 53, this.yOffset + 185, 120, 20, I18n.format("technomagi.specialise.button")));
-        guiScale = this.mc.gameSettings.guiScale;
+    }
+
+    @Override
+    public void build(GuiBuilder builder, ContainerBuilder container)
+    {
+        builder.setDimensions(200, 227).setHeading(I18n.format("gui.tm.specialise.choice"));
 
         Collection<ISpecialisation> specialisations = EnndsRegistry.getSpecialisations();
-        int buttonId = 4;
 
-        for (Iterator<ISpecialisation> i = specialisations.iterator(); i.hasNext();) {
-            ISpecialisation spec = i.next();
-            this.buttonSpecialisations.put(buttonId, spec.getName());
-            this.buttonList.add(new GuiTMSpecialiseButton(buttonId, this.xOffset + 17 + ((buttonId - 4) * 40), this.yOffset + 23, I18n.format("technomagi.specialise.button"), spec.getIcon()));
-            buttonId++;
+        int p = (builder.width - 6) / 32;
+        int x = p;
+
+        for (ISpecialisation spec : specialisations) {
+            GuiElementSelector area = new GuiElementSelector(spec.getName(), null, spec.getIcon(), x, 6, true, choice.equals(spec.getName()));
+            area.setLink("specSelector:" + spec.getName());
+            builder.addElement(area);
+            x += 32 + p;
         }
 
-        scrollableText = new GuiScrollableText(xOffset + 7, yOffset + 28, xOffset + 7, yOffset + 72, 211, 109, 5, 5, "", buttonList, 2, 3, this.fontRendererObj);
-    }
+        GuiElementSection section = new GuiElementSection("info", null, 0, 44, 194, 162, true);
+        section.setLink("info:specialise");
+        boolean enabled = false;
 
-    /**
-     * Draws the screen and all the components in it.
-     */
-    public void drawScreen(int par1, int par2, float par3)
-    {
-        this.drawDefaultBackground();
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.getTextureManager().bindTexture(iconLocation);
-        this.drawTexturedModalRect(this.xOffset, this.yOffset, 0, 0, this.xSize, this.ySize);
+        if (linkName.equals("specSelector")) {
+            String selectedSpec = getMetadata(0);
 
-        int k;
+            if (selectedSpec != null && !selectedSpec.isEmpty()) {
+                GuiElementText title = new GuiElementText("title", section, 3, 3, EnndsRegistry.getSpecialisation(selectedSpec).getLocalisedName(), 0, 2529246, builder.mc.fontRenderer);
+                section.addElement(title);
+                section.addElement(new GuiElementText("content", section, 3, 17, 180, Information.getInformationParagraphs("specialisations", selectedSpec), 0, 16777215, builder.mc.fontRenderer));
+            }
 
-        for (k = 0; k < this.buttonList.size(); ++k) {
-            ((GuiButton) this.buttonList.get(k)).drawButton(this.mc, par1, par2);
+            enabled = true;
+            section.setScrollVertical(true).verticalOffset = this.getScroll("info:specialise");
         }
 
-        if (selected >= 4) {
-            this.mc.getTextureManager().bindTexture(iconLocation);
-            this.drawTexturedModalRect(this.xOffset + 17 + ((selected - 4) * 40) - 1, this.yOffset + 22, 0, 209, 34, 34);
+        builder.addElement(section);
+        GuiElementButton button = new GuiElementButton("specialise", null, 7, 210, 180, I18n.format("gui.tm.specialise.complete"));
+        button.setLink("specialise");
+
+        if (!enabled) {
+            button.setDisabled();
         }
 
-        int i1;
-
-        String s = "technomagi.specialise.gui";
-
-        this.fontRendererObj.drawString(I18n.format(s), this.xOffset + 8, this.yOffset + 8, 16777215);
-
-        if (choice != null) {
-            String spec = "specialisation." + choice;
-            this.fontRendererObj.drawString(I18n.format(spec), this.xOffset + 13, this.yOffset + 63, 16777215);
-        }
-
-        this.xSize_lo = (float) par1;
-        this.ySize_lo = (float) par2;
-
-        if (choice != null) {
-            String paragraphs = Information.getInformationParagraphs("specialisations", choice);
-            scrollableText.setString(paragraphs);
-            scrollableText.drawScreen(par1, par2, par3);
-        }
-    }
-
-    private void drawGui()
-    {
+        builder.addElement(button);
 
     }
 
-    protected void actionPerformed(GuiButton button)
+    @Override
+    public void clicked(GuiBuilder builder, ContainerBuilder container, IGuiElement element)
     {
-        if (button.id == 1) {
-            if (choice != null) {
-                ExtendedPlayerKnowledge charon = ExtendedPlayerKnowledge.get(this.mc.thePlayer);
+        IGuiElement prevLinkElement = linkElement;
+
+        super.clicked(builder, container, element);
+
+        if (linkName.equals("up")) {
+            GuiElementSection section = (GuiElementSection) linkElement.getParent();
+            int scrollOffset = section.verticalOffset - 15;
+
+            if (scrollOffset < 0) {
+                scrollOffset = 0;
+            }
+
+            setScroll(section.getLink(), scrollOffset);
+            super.clicked(builder, container, prevLinkElement);
+        } else if (linkName.equals("down")) {
+            GuiElementSection section = (GuiElementSection) linkElement.getParent();
+            int scrollOffset = section.verticalOffset + 15;
+
+            if (scrollOffset > (section.getInnerHeight() - (section.getHeight() - (section.background ? 6 : 0)))) {
+                scrollOffset = (section.getInnerHeight() - (section.getHeight() - (section.background ? 6 : 0)));
+            }
+
+            setScroll(section.getLink(), scrollOffset);
+            super.clicked(builder, container, prevLinkElement);
+        } else if (linkName.equals("specSelector")) {
+            setScroll("info:specialise", 0);
+            String selectedSpec = getMetadata(0);
+            System.out.println(selectedSpec);
+
+            if (selectedSpec != null && !selectedSpec.isEmpty()) {
+                choice = selectedSpec;
+            }
+        } else if (linkName.equals("specialise")) {
+            if (choice != null && !choice.isEmpty()) {
+                setScroll("info:specialise", 0);
+                ExtendedPlayerKnowledge charon = ExtendedPlayerKnowledge.get(builder.mc.thePlayer);
                 charon.setSpecialisation(choice);
                 PacketHelper.specialisationPacket(choice);
-
-                scrollableText.scrollY = 0;
-                this.mc.displayGuiScreen(null);
-            }
-        } else if (button.id == 2) {
-            scrollableText.scrollUp(10);
-        } else if (button.id == 3) {
-            scrollableText.scrollDown(10);
-        } else {
-            selected = button.id;
-            String specName = this.buttonSpecialisations.get(button.id);
-
-            if (specName != null) {
-                this.choice = specName;
-                scrollableText.scrollY = 0;
+                builder.mc.displayGuiScreen(null);
             }
         }
     }

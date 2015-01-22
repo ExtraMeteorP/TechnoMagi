@@ -1,87 +1,65 @@
 package com.ollieread.technomagi.client.gui;
 
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-
-import org.lwjgl.opengl.GL11;
 
 import com.ollieread.technomagi.TechnoMagi;
+import com.ollieread.technomagi.client.gui.abstracts.GuiInstructions;
+import com.ollieread.technomagi.client.gui.elements.GuiElementButton;
+import com.ollieread.technomagi.client.gui.elements.GuiElementPlayerInventory;
+import com.ollieread.technomagi.client.gui.elements.GuiElementSlot;
+import com.ollieread.technomagi.client.gui.elements.IGuiElement;
 import com.ollieread.technomagi.common.CommonProxy;
-import com.ollieread.technomagi.common.Reference;
 import com.ollieread.technomagi.inventory.ContainerStaff;
+import com.ollieread.technomagi.inventory.abstracts.ContainerBuilder;
 import com.ollieread.technomagi.item.ItemStaff;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiStaff extends GuiContainer
+public class GuiStaff extends GuiInstructions
 {
 
-    private static final ResourceLocation texture = new ResourceLocation(Reference.MODID.toLowerCase(), "textures/gui/staff.png");
     protected ItemStack staff;
-    protected GuiTMButton specialiseButton;
     protected EntityPlayer player;
 
-    public GuiStaff(EntityPlayer player, ItemStack staff)
+    @Override
+    public void init(GuiBuilder builder, ContainerBuilder container)
     {
-        super(new ContainerStaff(player, staff));
-
-        this.player = player;
-        this.staff = staff;
-
-        xSize = 185;
-        ySize = 162;
-    }
-
-    public void initGui()
-    {
-        super.initGui();
-
-        specialiseButton = new GuiTMButton(1, this.guiLeft + 42, this.guiTop + 49, 101, 15, I18n.format("technomagi.activate.button"));
-        this.buttonList.add(specialiseButton);
-
-        if (ItemStaff.isComplete(staff)) {
-            specialiseButton.enabled = true;
-        } else {
-            specialiseButton.enabled = false;
-        }
-    }
-
-    protected void drawGuiContainerForegroundLayer(int par1, int par2)
-    {
-        this.fontRendererObj.drawString(I18n.format("technomagi.staff.gui"), 7, 9, 16777215);
+        staff = ((ContainerStaff) container).staff;
+        player = ((ContainerStaff) container).player;
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3)
+    public void build(GuiBuilder builder, ContainerBuilder container)
     {
-        this.drawDefaultBackground();
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.getTextureManager().bindTexture(texture);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+        builder.setDimensions(container.width, container.height).setHeading(I18n.format("gui.tm.staff"));
+
+        builder.addElement(new GuiElementSlot("slot1", null, 20, 0));
+        builder.addElement(new GuiElementSlot("slot2", null, 60, 0));
+        builder.addElement(new GuiElementSlot("slot3", null, 100, 0));
+        builder.addElement(new GuiElementSlot("slot4", null, 140, 0));
+
+        GuiElementButton button = new GuiElementButton("activate", null, 39, 25, 100, I18n.format("gui.tm.activate"));
+        button.setLink("active");
+
+        if (!ItemStaff.isComplete(staff)) {
+            button.setDisabled();
+        }
+
+        builder.addElement(button);
+        builder.addElement(new GuiElementPlayerInventory("inventory", null, 2, 48));
     }
 
-    protected void actionPerformed(GuiButton button)
+    @Override
+    public void clicked(GuiBuilder builder, ContainerBuilder container, IGuiElement link)
     {
-        if (button.id == 1) {
-            if (ItemStaff.isComplete(staff)) {
-                player.openGui(TechnoMagi.instance, CommonProxy.GUI_SPECIALISATION, player.worldObj, 0, 0, 0);
-            }
+        super.clicked(builder, container, link);
+
+        if (linkName.equals("active")) {
+            player.openGui(TechnoMagi.instance, CommonProxy.GUI_SPECIALISATION, player.worldObj, 0, 0, 0);
         }
     }
-
-    public void updateScreen()
-    {
-        if (ItemStaff.isComplete(staff)) {
-            specialiseButton.enabled = true;
-        } else {
-            specialiseButton.enabled = false;
-        }
-    }
-
 }
