@@ -1,0 +1,9 @@
+.git
+.settings
+.gradle
+bin
+build
+eclipse
+psds
+.project
+run
