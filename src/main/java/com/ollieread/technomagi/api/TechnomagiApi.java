@@ -7,6 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import com.ollieread.technomagi.api.knowledge.Knowledge;
 import com.ollieread.technomagi.api.knowledge.KnowledgeCategory;
 import com.ollieread.technomagi.api.knowledge.KnowledgeHandler;
+import com.ollieread.technomagi.api.specialisation.SpecialisationHandler;
 
 import cpw.mods.fml.common.eventhandler.EventBus;
 
@@ -20,7 +21,7 @@ import cpw.mods.fml.common.eventhandler.EventBus;
  * @author ollieread
  *
  */
-public class TechnoMagiApi
+public class TechnomagiApi
 {
 
     /**
@@ -29,11 +30,13 @@ public class TechnoMagiApi
     public final static String PREFIX_CATEGORY = "research.category";
     public final static String PREFIX_KNOWLEDGE = "research.knowledge";
     public final static String PREFIX_RESEARCH = "research.";
+    public final static String PREFIX_SPECIALISATION = "specialisation.";
 
     /**
      * IEEP idents
      */
-    public final static String IDENT_KNOWLEDGE = "TechnoMagi_Knowledge";
+    public final static String IDENT_PLAYER = "TechnoMagi_Player";
+    public final static String IDENT_ENTITY = "TechnoMagi_Entity";
 
     /**
      * The event bus used for TechnoMagi events.
@@ -47,6 +50,7 @@ public class TechnoMagiApi
      * @see KnowledgeHandler
      */
     protected final static KnowledgeHandler HANDLER_KNOWLEDGE = new KnowledgeHandler();
+    protected final static SpecialisationHandler HANDLER_SPECIALISATION = new SpecialisationHandler();
 
     /**
      * Retrieve the knowledge handler.
@@ -57,6 +61,11 @@ public class TechnoMagiApi
     public static KnowledgeHandler knowledge()
     {
         return HANDLER_KNOWLEDGE;
+    }
+
+    public static SpecialisationHandler specialisation()
+    {
+        return HANDLER_SPECIALISATION;
     }
 
     /**

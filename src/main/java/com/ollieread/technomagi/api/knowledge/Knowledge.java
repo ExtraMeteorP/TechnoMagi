@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.minecraft.util.ResourceLocation;
 
-import com.ollieread.technomagi.api.TechnoMagiApi;
+import com.ollieread.technomagi.api.TechnomagiApi;
 
 public class Knowledge
 {
@@ -31,7 +31,7 @@ public class Knowledge
 
     public String getUnlocalisedName()
     {
-        return TechnoMagiApi.PREFIX_KNOWLEDGE + this.name;
+        return TechnomagiApi.PREFIX_KNOWLEDGE + this.name;
     }
 
     public ResourceLocation getIcon()

@@ -2,69 +2,57 @@ package com.ollieread.technomagi.api.event;
 
 import net.minecraft.entity.player.EntityPlayer;
 
-import com.ollieread.technomagi.api.TechnoMagiApi;
 import com.ollieread.technomagi.api.knowledge.Knowledge;
-import com.ollieread.technomagi.api.knowledge.PlayerKnowledge;
 import com.ollieread.technomagi.api.knowledge.research.IResearch;
 
 import cpw.mods.fml.common.eventhandler.Cancelable;
-import cpw.mods.fml.common.eventhandler.Event;
 
-/**
- * This contains all of the TechnoMagi related events and is posted to
- * {@link TechnoMagiApi.EVENT_BUS}.
- * 
- * @author ollieread
- *
- */
-public class TechnoMagiEvent extends Event
+public class KnowledgeEvent extends TechnomagiEvent
 {
 
-    public final EntityPlayer entityPlayer;
-    public final PlayerKnowledge playerKnowledge;
+    public final IResearch research;
+    public final Knowledge knowledge;
 
-    public TechnoMagiEvent(EntityPlayer player)
+    public KnowledgeEvent(EntityPlayer player, IResearch research, Knowledge knowledge)
     {
-        this.entityPlayer = player;
-        this.playerKnowledge = PlayerKnowledge.get(player);
+        super(player);
+
+        this.research = research;
+        this.knowledge = knowledge;
     }
 
-    public static class ResearchChanceEvent extends TechnoMagiEvent
+    public static class Chance extends KnowledgeEvent
     {
 
-        public final IResearch research;
         public int chance;
 
-        public ResearchChanceEvent(EntityPlayer entity, IResearch research, int chance)
+        public Chance(EntityPlayer entity, IResearch research, int chance)
         {
-            super(entity);
-            this.research = research;
+            super(entity, research, null);
             this.chance = chance;
         }
 
     }
 
-    public static class KnowledgeProgressEvent extends TechnoMagiEvent
+    public static class Progress extends KnowledgeEvent
     {
 
-        public final IResearch research;
         public final int current;
         public final int progress;
         public int modifier = 0;
         public final boolean researchFired;
 
-        public KnowledgeProgressEvent(EntityPlayer entity, IResearch research, int current, int progress, boolean researchFired)
+        public Progress(EntityPlayer entity, IResearch research, int current, int progress, boolean researchFired)
         {
-            super(entity);
+            super(entity, research, null);
 
-            this.research = research;
             this.current = current;
             this.progress = progress;
             this.researchFired = researchFired;
         }
 
         @Cancelable
-        public static class Pre extends KnowledgeProgressEvent
+        public static class Pre extends Progress
         {
 
             public Pre(EntityPlayer entity, IResearch research, int current, int progress)
@@ -74,7 +62,7 @@ public class TechnoMagiEvent extends Event
 
         }
 
-        public static class Post extends KnowledgeProgressEvent
+        public static class Post extends Progress
         {
 
             public final boolean intrigue;
@@ -94,12 +82,12 @@ public class TechnoMagiEvent extends Event
 
     }
 
-    public static class KnowledgeUnlockedEvent extends TechnoMagiEvent
+    public static class Unlocked extends TechnomagiEvent
     {
 
         public final Knowledge knowledge;
 
-        public KnowledgeUnlockedEvent(EntityPlayer entity, Knowledge knowledge)
+        public Unlocked(EntityPlayer entity, Knowledge knowledge)
         {
             super(entity);
             this.knowledge = knowledge;

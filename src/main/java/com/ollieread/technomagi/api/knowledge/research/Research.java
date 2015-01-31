@@ -1,6 +1,6 @@
 package com.ollieread.technomagi.api.knowledge.research;
 
-import com.ollieread.technomagi.api.TechnoMagiApi;
+import com.ollieread.technomagi.api.TechnomagiApi;
 
 public class Research implements IResearch
 {
@@ -71,7 +71,7 @@ public class Research implements IResearch
     }
 
     @Override
-    public int getRepeatition()
+    public int getRepetition()
     {
         return repeatition;
     }
@@ -79,7 +79,7 @@ public class Research implements IResearch
     @Override
     public String getUnlocalisedName()
     {
-        return TechnoMagiApi.PREFIX_RESEARCH + name;
+        return TechnomagiApi.PREFIX_RESEARCH + name;
     }
 
 }

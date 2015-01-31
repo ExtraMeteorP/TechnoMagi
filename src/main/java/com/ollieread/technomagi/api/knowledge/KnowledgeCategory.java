@@ -2,7 +2,7 @@ package com.ollieread.technomagi.api.knowledge;
 
 import net.minecraft.util.ResourceLocation;
 
-import com.ollieread.technomagi.api.TechnoMagiApi;
+import com.ollieread.technomagi.api.TechnomagiApi;
 
 public class KnowledgeCategory
 {
@@ -23,7 +23,7 @@ public class KnowledgeCategory
 
     public String getUnlocalisedName()
     {
-        return TechnoMagiApi.PREFIX_CATEGORY + this.name;
+        return TechnomagiApi.PREFIX_CATEGORY + this.name;
     }
 
     public ResourceLocation getIcon()

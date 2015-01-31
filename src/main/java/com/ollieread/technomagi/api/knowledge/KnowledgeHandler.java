@@ -9,9 +9,9 @@ import java.util.Random;
 
 import net.minecraft.entity.player.EntityPlayer;
 
-import com.ollieread.technomagi.api.TechnoMagiApi;
-import com.ollieread.technomagi.api.event.TechnoMagiEvent.ResearchChanceEvent;
-import com.ollieread.technomagi.api.event.TechnoMagiHooks;
+import com.ollieread.technomagi.api.TechnomagiApi;
+import com.ollieread.technomagi.api.entity.PlayerTechnomagi;
+import com.ollieread.technomagi.api.helpers.EntityHelper;
 import com.ollieread.technomagi.api.knowledge.research.IResearch;
 
 /**
@@ -198,45 +198,17 @@ public class KnowledgeHandler
     /**
      * Perform a piece of research.
      * 
-     * This checks to make sure that the knowledge hasn't already been
-     * discovered, the research hasn't already been performed and whether or not
-     * the research has been performed the maximum amount of times. It will also
-     * automatically add knowledge progress.
-     * 
-     * The chance of research succeeding is denoted by
-     * {@link IResearch#getChance()}, but can be modified outside of this using
-     * {@link ResearchChanceEvent} on the {@link TechnoMagiApi.EVENT_BUS}.
-     * 
+     * @see PlayerKnowledge#performResearch(IResearch, Knowledge)
      * @param player
      * @param research
      */
     public void performResearch(EntityPlayer player, IResearch research)
     {
-        Knowledge knowledge = TechnoMagiApi.getKnowledge(research.getKnowledge());
-        PlayerKnowledge playerKnowledge = PlayerKnowledge.get(player);
+        Knowledge knowledge = TechnomagiApi.getKnowledge(research.getKnowledge());
+        PlayerTechnomagi playerTechnomagi = EntityHelper.getPlayerTechnomagi(player);
 
-        if (playerKnowledge != null) {
-            // Verify that the knowledge and research is usable
-            if (playerKnowledge.canDiscover(knowledge) && playerKnowledge.canResearch(research)) {
-                int chance = research.getChance();
-
-                // Create and post the chance event, allowing the chance of
-                // research completing to be modified
-                ResearchChanceEvent chanceEvent = TechnoMagiHooks.researchChance(player, research, research.getChance());
-
-                if (rand.nextInt(chanceEvent.chance) == 0) {
-                    if (playerKnowledge.addResearch(research)) {
-                        int progress = research.getProgress();
-
-                        // TODO: Add pre knowledge progress event
-
-                        if (playerKnowledge.addKnowledgeProgress(knowledge.getName(), progress)) {
-                            // TODO: Add post knowledge progress event
-                        }
-                    }
-                }
-            }
+        if (playerTechnomagi != null) {
+            playerTechnomagi.performResearch(research, knowledge);
         }
     }
-
 }

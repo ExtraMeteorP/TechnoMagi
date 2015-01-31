@@ -55,7 +55,7 @@ public interface IResearch
      * 
      * @return
      */
-    public int getRepeatition();
+    public int getRepetition();
 
     /**
      * The unlocalised name, for translation.
