@@ -4,9 +4,12 @@ import java.util.Collection;
 
 import net.minecraft.util.ResourceLocation;
 
+import com.ollieread.technomagi.api.entity.EntityHandler;
 import com.ollieread.technomagi.api.knowledge.Knowledge;
 import com.ollieread.technomagi.api.knowledge.KnowledgeCategory;
 import com.ollieread.technomagi.api.knowledge.KnowledgeHandler;
+import com.ollieread.technomagi.api.knowledge.research.IResearch;
+import com.ollieread.technomagi.api.knowledge.research.Research;
 import com.ollieread.technomagi.api.specialisation.SpecialisationHandler;
 
 import cpw.mods.fml.common.eventhandler.EventBus;
@@ -42,15 +45,15 @@ public class TechnomagiApi
      * The event bus used for TechnoMagi events.
      */
     public final static EventBus EVENT_BUS = new EventBus();
+
     /**
-     * Knowledge handler.
+     * Handlers
      * 
-     * Handles all knowledge and research related activity.
-     * 
-     * @see KnowledgeHandler
+     * Handles things.
      */
     protected final static KnowledgeHandler HANDLER_KNOWLEDGE = new KnowledgeHandler();
     protected final static SpecialisationHandler HANDLER_SPECIALISATION = new SpecialisationHandler();
+    protected final static EntityHandler HANDLER_ENTITY = new EntityHandler();
 
     /**
      * Retrieve the knowledge handler.
@@ -63,9 +66,26 @@ public class TechnomagiApi
         return HANDLER_KNOWLEDGE;
     }
 
+    /**
+     * Retrieve the specialisation handler.
+     * 
+     * @see SpecialisationHandler
+     * @return
+     */
     public static SpecialisationHandler specialisation()
     {
         return HANDLER_SPECIALISATION;
+    }
+
+    /**
+     * Retrieve the entity handler
+     * 
+     * @see EntityHandler
+     * @return
+     */
+    public static EntityHandler entity()
+    {
+        return HANDLER_ENTITY;
     }
 
     /**
@@ -159,6 +179,52 @@ public class TechnomagiApi
     public static Collection<Knowledge> getKnowledge()
     {
         return knowledge().getKnowledge();
+    }
+
+    /**
+     * Create and add a basic piece of research.
+     * 
+     * This method returns an instance of {@link Research} which implements
+     * {@link IResearch} and saves creating your own classes. Since only the
+     * name is stored outside of the instance, this means you can configure the
+     * item further without having to worry about re-registering.
+     * 
+     * @see Research
+     * @param name
+     * @return
+     */
+    public Research addResearch(String name)
+    {
+        Research research = new Research(name);
+        addResearch(research);
+
+        return research;
+    }
+
+    /**
+     * Add an already created research item to the registry. Returns the object
+     * for further processing should it be required.
+     * 
+     * @see IResearch
+     * @see KnowledgeHandler#addResearch(IResearch)
+     * @param research
+     * @return
+     */
+    public IResearch addResearch(IResearch research)
+    {
+        return knowledge().addResearch(research);
+    }
+
+    /**
+     * Retrieve a piece of research by its name.
+     * 
+     * @see KnowledgeHandler#getResearch(String)
+     * @param name
+     * @return
+     */
+    public IResearch getResearch(String name)
+    {
+        return knowledge().getResearch(name);
     }
 
 }
