@@ -1,6 +1,18 @@
 package com.ollieread.technomagi.common.network;
 
+import com.ollieread.technomagi.Technomagi;
+import com.ollieread.technomagi.common.network.packets.MessageSyncTile;
+
+import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import cpw.mods.fml.relauncher.Side;
+
 public class PacketHandler
 {
+    public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(Technomagi.MODID.toLowerCase());
 
+    public static void init()
+    {
+        INSTANCE.registerMessage(MessageSyncTile.class, MessageSyncTile.class, 0, Side.CLIENT);
+    }
 }
