@@ -4,7 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 
 import com.ollieread.technomagi.api.TechnomagiApi;
 import com.ollieread.technomagi.api.entity.PlayerTechnomagi;
-import com.ollieread.technomagi.api.helpers.EntityHelper;
+import com.ollieread.technomagi.api.util.EntityHelper;
 
 import cpw.mods.fml.common.eventhandler.Event;
 
