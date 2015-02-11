@@ -9,6 +9,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
 
 import com.ollieread.technomagi.api.TechnomagiApi;
+import com.ollieread.technomagi.api.ability.PlayerAbilities;
 import com.ollieread.technomagi.api.event.KnowledgeEvent.Chance;
 import com.ollieread.technomagi.api.event.KnowledgeEvent.Progress.Pre;
 import com.ollieread.technomagi.api.event.TechnomagiHooks;
@@ -26,14 +27,16 @@ public class PlayerTechnomagi implements IExtendedEntityProperties
 
     protected PlayerKnowledge playerKnowledge;
     protected PlayerNanites playerNanites;
+    protected PlayerAbilities playerAbilities;
 
     protected Specialisation specialisation;
 
     public PlayerTechnomagi(EntityPlayer player)
     {
         this.player = player;
-        this.playerKnowledge = new PlayerKnowledge();
-        this.playerNanites = new PlayerNanites();
+        this.playerKnowledge = new PlayerKnowledge(this);
+        this.playerNanites = new PlayerNanites(this);
+        this.playerAbilities = new PlayerAbilities(this);
     }
 
     public static final void register(EntityPlayer player)
@@ -48,6 +51,21 @@ public class PlayerTechnomagi implements IExtendedEntityProperties
 
     @Override
     public void init(Entity entity, World world)
+    {
+
+    }
+
+    public void syncAbilites()
+    {
+
+    }
+
+    public void syncKnowledge()
+    {
+
+    }
+
+    public void syncNanites()
     {
 
     }
@@ -75,6 +93,13 @@ public class PlayerTechnomagi implements IExtendedEntityProperties
         NBTTagCompound nanitesCompound = new NBTTagCompound();
         playerNanites.saveNBTData(nanitesCompound);
         compound.setTag("Nanites", nanitesCompound);
+
+        /**
+         * save the players ability data.
+         */
+        NBTTagCompound abilityCompound = new NBTTagCompound();
+        playerAbilities.saveNBTData(abilityCompound);
+        compound.setTag("Abilities", abilityCompound);
     }
 
     @Override
@@ -98,6 +123,11 @@ public class PlayerTechnomagi implements IExtendedEntityProperties
          * Load the players nanite data.
          */
         playerKnowledge.loadNBTData(compound.getCompoundTag("Nanites"));
+
+        /**
+         * Load the players ability data.
+         */
+        playerAbilities.loadNBTData(compound.getCompoundTag("Abilities"));
     }
 
     public PlayerKnowledge knowledge()
@@ -110,6 +140,11 @@ public class PlayerTechnomagi implements IExtendedEntityProperties
         return playerNanites;
     }
 
+    public PlayerAbilities abilities()
+    {
+        return playerAbilities;
+    }
+
     public void setSpecialisation(Specialisation specialisation)
     {
         this.specialisation = specialisation;
@@ -118,6 +153,11 @@ public class PlayerTechnomagi implements IExtendedEntityProperties
     public boolean hasSpecialised()
     {
         return specialisation != null;
+    }
+
+    public EntityPlayer getPlayer()
+    {
+        return this.player;
     }
 
     /**
@@ -132,7 +172,7 @@ public class PlayerTechnomagi implements IExtendedEntityProperties
      * {@link IResearch#getChance()}, but can be modified outside of this using
      * {@link Chance} on the {@link TechnomagiApi.EVENT_BUS}.
      * 
-     * @param player
+     * @param technomagi
      * @param research
      */
     public void performResearch(IResearch research, Knowledge knowledge)
@@ -164,4 +204,5 @@ public class PlayerTechnomagi implements IExtendedEntityProperties
             }
         }
     }
+
 }
