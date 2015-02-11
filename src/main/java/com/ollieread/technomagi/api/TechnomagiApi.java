@@ -10,6 +10,7 @@ import com.ollieread.technomagi.api.knowledge.KnowledgeCategory;
 import com.ollieread.technomagi.api.knowledge.KnowledgeHandler;
 import com.ollieread.technomagi.api.knowledge.research.IResearch;
 import com.ollieread.technomagi.api.knowledge.research.Research;
+import com.ollieread.technomagi.api.scan.ScanHandler;
 import com.ollieread.technomagi.api.specialisation.SpecialisationHandler;
 
 import cpw.mods.fml.common.eventhandler.EventBus;
@@ -54,6 +55,7 @@ public class TechnomagiApi
     protected final static KnowledgeHandler HANDLER_KNOWLEDGE = new KnowledgeHandler();
     protected final static SpecialisationHandler HANDLER_SPECIALISATION = new SpecialisationHandler();
     protected final static EntityHandler HANDLER_ENTITY = new EntityHandler();
+    protected final static ScanHandler HANDLER_SCAN = new ScanHandler();
 
     /**
      * Retrieve the knowledge handler.
@@ -78,7 +80,7 @@ public class TechnomagiApi
     }
 
     /**
-     * Retrieve the entity handler
+     * Retrieve the entity handler.
      * 
      * @see EntityHandler
      * @return
@@ -86,6 +88,17 @@ public class TechnomagiApi
     public static EntityHandler entity()
     {
         return HANDLER_ENTITY;
+    }
+
+    /**
+     * Retrieve the scan handler.
+     * 
+     * @see ScanHandler
+     * @return
+     */
+    public static ScanHandler scan()
+    {
+        return HANDLER_SCAN;
     }
 
     /**
@@ -193,7 +206,7 @@ public class TechnomagiApi
      * @param name
      * @return
      */
-    public Research addResearch(String name)
+    public static Research addResearch(String name)
     {
         Research research = new Research(name);
         addResearch(research);
@@ -210,7 +223,7 @@ public class TechnomagiApi
      * @param research
      * @return
      */
-    public IResearch addResearch(IResearch research)
+    public static IResearch addResearch(IResearch research)
     {
         return knowledge().addResearch(research);
     }
@@ -222,7 +235,7 @@ public class TechnomagiApi
      * @param name
      * @return
      */
-    public IResearch getResearch(String name)
+    public static IResearch getResearch(String name)
     {
         return knowledge().getResearch(name);
     }
