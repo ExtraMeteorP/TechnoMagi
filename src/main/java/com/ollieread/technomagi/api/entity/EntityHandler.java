@@ -10,7 +10,7 @@ import com.ollieread.technomagi.api.entity.IEntityDescriptor.IEntityBrain;
 import com.ollieread.technomagi.api.entity.IEntityDescriptor.IEntityResearchNanites;
 import com.ollieread.technomagi.api.entity.IEntityDescriptor.IEntityRobot;
 import com.ollieread.technomagi.api.entity.IEntityDescriptor.IEntitySample;
-import com.ollieread.technomagi.api.helpers.EntityHelper;
+import com.ollieread.technomagi.api.util.EntityHelper;
 
 /**
  * Entity Handler
