@@ -19,7 +19,7 @@ public class Research implements IResearch
     @Override
     public String getName()
     {
-        return name;
+        return knowledge + "." + name;
     }
 
     public Research setChance(int chance)
@@ -64,7 +64,7 @@ public class Research implements IResearch
         return repeatition > 1;
     }
 
-    public Research setRepeatition(int repeatition)
+    public Research setRepetition(int repeatition)
     {
         this.repeatition = repeatition;
         return this;

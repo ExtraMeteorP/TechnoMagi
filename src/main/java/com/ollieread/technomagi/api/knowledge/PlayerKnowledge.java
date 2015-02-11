@@ -10,60 +10,24 @@ import java.util.concurrent.ConcurrentHashMap;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
+import com.ollieread.technomagi.api.TechnomagiApi;
+import com.ollieread.technomagi.api.entity.PlayerTechnomagi;
 import com.ollieread.technomagi.api.knowledge.research.IResearch;
+import com.ollieread.technomagi.api.knowledge.research.Researcher;
 
-public class PlayerKnowledge
+public class PlayerKnowledge extends Researcher
 {
 
-    protected List<String> researchComplete = new ArrayList<String>();
-    protected Map<String, Integer> researchRepetition = new ConcurrentHashMap<String, Integer>();
+    protected PlayerTechnomagi technomagi;
 
     protected List<String> knowledgeComplete = new ArrayList<String>();
     protected Map<String, Integer> knowledgeProgress = new ConcurrentHashMap<String, Integer>();
 
     private Random rand = new Random();
 
-    public PlayerKnowledge()
+    public PlayerKnowledge(PlayerTechnomagi technomagi)
     {
-    }
-
-    public boolean canResearch(IResearch research)
-    {
-        if (!knowledgeComplete.contains(research.getKnowledge())) {
-            if (!researchComplete.contains(research.getName())) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public int addResearch(IResearch research, int modifier)
-    {
-        String name = research.getName();
-        int repeat = research.getRepetition();
-
-        if (!researchComplete.contains(name)) {
-            if (repeat > 1) {
-                if (researchRepetition.containsKey(name)) {
-                    int currentRepeat = researchRepetition.get(name);
-                    currentRepeat++;
-
-                    if (currentRepeat == repeat) {
-                        researchRepetition.remove(name);
-                        researchComplete.add(name);
-                    } else {
-                        researchRepetition.put(name, currentRepeat);
-                    }
-                }
-            } else {
-                researchComplete.add(name);
-            }
-
-            return research.getProgress();
-        }
-
-        return 0;
+        this.technomagi = technomagi;
     }
 
     public boolean canDiscover(Knowledge knowledge)
@@ -81,6 +45,16 @@ public class PlayerKnowledge
         }
 
         return true;
+    }
+
+    @Override
+    public boolean canResearch(IResearch research)
+    {
+        if (canDiscover(TechnomagiApi.getKnowledge(research.getKnowledge())) && !researchComplete.contains(research.getName())) {
+            return true;
+        }
+
+        return false;
     }
 
     public boolean addKnowledgeProgress(String knowledge, int progress)
@@ -132,34 +106,10 @@ public class PlayerKnowledge
         return false;
     }
 
+    @Override
     public void saveNBTData(NBTTagCompound compound)
     {
-        /*
-         * Research Complete
-         */
-        NBTTagList completeResearch = new NBTTagList();
-
-        for (String research : this.researchComplete) {
-            NBTTagCompound tag = new NBTTagCompound();
-            tag.setString("Research", research);
-            completeResearch.appendTag(tag);
-        }
-
-        compound.setTag("ResearchComplete", completeResearch);
-
-        /*
-         * Research repetition
-         */
-        NBTTagList repeatResearch = new NBTTagList();
-
-        for (Entry<String, Integer> entry : this.researchRepetition.entrySet()) {
-            NBTTagCompound tag = new NBTTagCompound();
-            tag.setString("Research", entry.getKey());
-            tag.setInteger("Repeatition", entry.getValue());
-            repeatResearch.appendTag(tag);
-        }
-
-        compound.setTag("ResearchRepeatition", repeatResearch);
+        super.saveNBTData(compound);
 
         /*
          * Knowledge Complete
@@ -169,7 +119,7 @@ public class PlayerKnowledge
         for (String research : this.knowledgeComplete) {
             NBTTagCompound tag = new NBTTagCompound();
             tag.setString("Knowledge", research);
-            completeResearch.appendTag(tag);
+            completeKnowledge.appendTag(tag);
         }
 
         compound.setTag("KnowledgeComplete", completeKnowledge);
@@ -183,35 +133,16 @@ public class PlayerKnowledge
             NBTTagCompound tag = new NBTTagCompound();
             tag.setString("Knowledge", entry.getKey());
             tag.setInteger("Progress", entry.getValue());
-            repeatResearch.appendTag(tag);
+            progressKnowledge.appendTag(tag);
         }
 
         compound.setTag("KnowledgeProgress", progressKnowledge);
     }
 
+    @Override
     public void loadNBTData(NBTTagCompound compound)
     {
-        /*
-         * Research Complete
-         */
-        this.researchComplete = new ArrayList<String>();
-
-        NBTTagList completeResearch = compound.getTagList("ResearchComplete", compound.getId());
-
-        for (int i = 0; i < completeResearch.tagCount(); i++) {
-            this.researchComplete.add(compound.getString("Research"));
-        }
-
-        /*
-         * Research repetition
-         */
-        this.researchRepetition = new ConcurrentHashMap<String, Integer>();
-
-        NBTTagList repeatResearch = compound.getTagList("ResearchRepeatition", compound.getId());
-
-        for (int i = 0; i < repeatResearch.tagCount(); i++) {
-            this.researchRepetition.put(compound.getString("Research"), compound.getInteger("Repeatition"));
-        }
+        super.loadNBTData(compound);
 
         /*
          * Knowledge Complete
@@ -231,7 +162,7 @@ public class PlayerKnowledge
 
         NBTTagList progressKnowledge = compound.getTagList("KnowledgeProgress", compound.getId());
 
-        for (int i = 0; i < repeatResearch.tagCount(); i++) {
+        for (int i = 0; i < progressKnowledge.tagCount(); i++) {
             this.knowledgeProgress.put(compound.getString("Knowledge"), compound.getInteger("Progress"));
         }
     }

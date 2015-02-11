@@ -8,11 +8,14 @@ import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 
 import com.ollieread.technomagi.api.TechnomagiApi;
 import com.ollieread.technomagi.api.entity.PlayerTechnomagi;
-import com.ollieread.technomagi.api.helpers.EntityHelper;
 import com.ollieread.technomagi.api.knowledge.research.IResearch;
+import com.ollieread.technomagi.api.scan.ScanHandler;
+import com.ollieread.technomagi.api.util.EntityHelper;
+import com.ollieread.technomagi.api.util.ItemStackRepresentation;
 
 /**
  * Knowledge Handler
@@ -30,6 +33,10 @@ public class KnowledgeHandler
     protected static Map<String, Knowledge> knowledgeList = new LinkedHashMap<String, Knowledge>();
     protected static Map<String, List<String>> categoryKnowledgeList = new LinkedHashMap<String, List<String>>();
     protected static Map<String, IResearch> researchList = new LinkedHashMap<String, IResearch>();
+
+    protected static Map<ItemStackRepresentation, List<String>> craftingResearchList = new LinkedHashMap<ItemStackRepresentation, List<String>>();
+    protected static Map<ItemStackRepresentation, List<String>> smeltingResearchList = new LinkedHashMap<ItemStackRepresentation, List<String>>();
+    protected static Map<ItemStackRepresentation, List<String>> pickupResearchList = new LinkedHashMap<ItemStackRepresentation, List<String>>();
 
     protected Random rand = new Random();
 
@@ -190,6 +197,114 @@ public class KnowledgeHandler
     {
         if (researchList.containsKey(name)) {
             return researchList.get(name);
+        }
+
+        return null;
+    }
+
+    /**
+     * 
+     * @param stack
+     * @param research
+     */
+    public void mapCraftingResearch(ItemStack stack, String research)
+    {
+        if (!researchList.containsKey(research)) {
+            return;
+        }
+
+        ItemStackRepresentation representation = ScanHandler.getItemStackRepresentation(stack);
+
+        if (!craftingResearchList.containsKey(representation)) {
+            craftingResearchList.put(representation, new ArrayList<String>());
+        }
+
+        craftingResearchList.get(representation).add(research);
+    }
+
+    /**
+     * 
+     * @param stack
+     * @param research
+     */
+    public void mapSmeltingResearch(ItemStack stack, String research)
+    {
+        if (!researchList.containsKey(research)) {
+            return;
+        }
+
+        ItemStackRepresentation representation = ScanHandler.getItemStackRepresentation(stack);
+
+        if (!smeltingResearchList.containsKey(representation)) {
+            smeltingResearchList.put(representation, new ArrayList<String>());
+        }
+
+        smeltingResearchList.get(representation).add(research);
+    }
+
+    /**
+     * 
+     * @param stack
+     * @param research
+     */
+    public void mapPickupResearch(ItemStack stack, String research)
+    {
+        if (!researchList.containsKey(research)) {
+            return;
+        }
+
+        ItemStackRepresentation representation = ScanHandler.getItemStackRepresentation(stack);
+
+        if (!pickupResearchList.containsKey(representation)) {
+            pickupResearchList.put(representation, new ArrayList<String>());
+        }
+
+        pickupResearchList.get(representation).add(research);
+    }
+
+    /**
+     * 
+     * @param stack
+     * @return
+     */
+    public List<String> getCraftingResearch(ItemStack stack)
+    {
+        ItemStackRepresentation representation = ScanHandler.getItemStackRepresentation(stack);
+
+        if (craftingResearchList.containsKey(representation)) {
+            return craftingResearchList.get(representation);
+        }
+
+        return null;
+    }
+
+    /**
+     * 
+     * @param stack
+     * @return
+     */
+    public List<String> getSmeltingResearch(ItemStack stack)
+    {
+        ItemStackRepresentation representation = ScanHandler.getItemStackRepresentation(stack);
+
+        if (smeltingResearchList.containsKey(representation)) {
+            return smeltingResearchList.get(representation);
+        }
+
+        return null;
+    }
+
+    /**
+     * 
+     * @param stack
+     * @return
+     */
+    public List<String> getPickupResearch(ItemStack stack)
+    {
+        ItemStackRepresentation representation = ScanHandler.getItemStackRepresentation(stack);
+
+        if (pickupResearchList.containsKey(representation)) {
+            return pickupResearchList.get(representation);
         }
 
         return null;

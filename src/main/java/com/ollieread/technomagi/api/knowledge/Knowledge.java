@@ -70,9 +70,11 @@ public class Knowledge
         return this.tier;
     }
 
-    public void setTier(int tier)
+    public Knowledge setTier(int tier)
     {
         this.tier = tier;
+
+        return this;
     }
 
 }
