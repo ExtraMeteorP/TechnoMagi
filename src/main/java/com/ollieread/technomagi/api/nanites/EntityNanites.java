@@ -12,8 +12,9 @@ import net.minecraft.nbt.NBTTagList;
 
 import com.ollieread.technomagi.api.knowledge.Knowledge;
 import com.ollieread.technomagi.api.knowledge.research.IResearch;
+import com.ollieread.technomagi.api.knowledge.research.Researcher;
 
-public class EntityNanites
+public class EntityNanites extends Researcher
 {
 
     protected String owner = "";
@@ -267,53 +268,6 @@ public class EntityNanites
 
     /**
      * 
-     * @param research
-     * @return
-     */
-    public boolean canResearch(IResearch research)
-    {
-        if (!researchComplete.contains(research.getName())) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * 
-     * @param research
-     * @return
-     */
-    public boolean addResearch(IResearch research)
-    {
-        String name = research.getName();
-        int repeat = research.getRepetition();
-
-        if (!researchComplete.contains(name)) {
-            if (repeat > 1) {
-                if (researchRepetition.containsKey(name)) {
-                    int currentRepeat = researchRepetition.get(name);
-                    currentRepeat++;
-
-                    if (currentRepeat == repeat) {
-                        researchRepetition.remove(name);
-                        researchComplete.add(name);
-                    } else {
-                        researchRepetition.put(name, currentRepeat);
-                    }
-                }
-            } else {
-                researchComplete.add(name);
-            }
-
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * 
      * @param knowledge
      * @param progress
      * @return
@@ -342,7 +296,7 @@ public class EntityNanites
      * the research has been performed the maximum amount of times. It will also
      * automatically add knowledge progress.
      * 
-     * @param player
+     * @param technomagi
      * @param research
      */
     public void performResearch(IResearch research, Knowledge knowledge)
@@ -352,9 +306,9 @@ public class EntityNanites
             int chance = research.getChance();
 
             if (rand.nextInt(research.getChance()) == 0) {
-                if (addResearch(research)) {
-                    int progress = research.getProgress();
+                int progress = addResearch(research, 0);
 
+                if (progress > 0) {
                     // TODO Add pre knowledge progress event
 
                     if (addKnowledgeProgress(knowledge.getName(), progress)) {
@@ -365,6 +319,7 @@ public class EntityNanites
         }
     }
 
+    @Override
     public void saveNBTData(NBTTagCompound compound)
     {
         compound.setBoolean("Active", this.active);
@@ -430,6 +385,7 @@ public class EntityNanites
         compound.setTag("KnowledgeProgress", progressKnowledge);
     }
 
+    @Override
     public void loadNBTData(NBTTagCompound compound)
     {
         /*
