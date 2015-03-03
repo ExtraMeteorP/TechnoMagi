@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<content>
+	<section name="information">
+		<page>
+			<paragraph>
+				You have discovered the basics of the resources of this world, utilising this information you can craft
+				 basic items for usage in the construction of components and resources.
+			</paragraph>
+		</page>	
+	</section>
+	<section name="smelting">
+		<page>
+			<recipe alignment="center" type="furnace" output="item:Technomagi:resource:2" />
+			<recipe alignment="center" type="furnace" output="item:Technomagi:resource:3" />
+		</page>	
+	</section>
+	<section name="crafting">
+		<page>
+			<paragraph>
+				Rods are used in the creation of machines and devices, providing support for their structures.
+			</paragraph>
+			<recipe alignment="center" type="vanilla" output="item:Technomagi:resources:20" />
+			<recipe alignment="center" type="vanilla" output="item:Technomagi:resources:21" />
+			<recipe alignment="center" type="vanilla" output="item:Technomagi:resources:22" />
+			<recipe alignment="center" type="vanilla" output="item:Technomagi:resources:23" />
+			<recipe alignment="center" type="vanilla" output="item:Technomagi:resources:24" />
+			<paragraph>
+				Sheets are used in the creation of machines and devices, providing a cover and/or armour for the structures.
+			</paragraph>
+			<recipe alignment="center" type="vanilla" output="item:Technomagi:resources:25" />
+			<recipe alignment="center" type="vanilla" output="item:Technomagi:resources:26" />
+			<recipe alignment="center" type="vanilla" output="item:Technomagi:resources:27" />
+			<recipe alignment="center" type="vanilla" output="item:Technomagi:resources:28" />
+			<recipe alignment="center" type="vanilla" output="item:Technomagi:resources:29" />
+		</page>	
+	</section>
+</content>

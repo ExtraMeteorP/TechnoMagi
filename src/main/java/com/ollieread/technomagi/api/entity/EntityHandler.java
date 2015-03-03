@@ -6,19 +6,21 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.minecraft.entity.player.EntityPlayer;
+
 import com.ollieread.technomagi.api.entity.IEntityDescriptor.IEntityBrain;
 import com.ollieread.technomagi.api.entity.IEntityDescriptor.IEntityResearchNanites;
 import com.ollieread.technomagi.api.entity.IEntityDescriptor.IEntityRobot;
 import com.ollieread.technomagi.api.entity.IEntityDescriptor.IEntitySample;
-import com.ollieread.technomagi.api.util.EntityHelper;
+import com.ollieread.technomagi.util.EntityHelper;
 
 /**
  * Entity Handler
- * 
+ *
  * This handles the registration of entities. This does not replace normal
  * entity registration, this simply enables certain Technomagi specific features
  * for already registered entities.
- * 
+ *
  * @author ollieread
  *
  */
@@ -33,29 +35,29 @@ public class EntityHandler
 
     /**
      * Register an entity for features.
-     * 
+     *
      * The entity descriptor should should by default extend
      * {@link IEntityDescriptor} and should extend one or more of the companion
      * interfaces.
-     * 
+     *
      * {@link IEntityBrain} for entities that should drop brains when killed.
-     * 
+     *
      * {@link IEntitySample} for entities that can have blood samples taken.
      * This is used for target nanites.
-     * 
+     *
      * {@link IEntityResearchNanites} for entities that can have their own
      * internal nanites, allowing them to be monitored and collect
      * data/research.
-     * 
+     *
      * {@link IEntityRobot} for entities that have a robotic counterpart.
-     * 
+     *
      * @param descriptor
      */
     public void addEntity(IEntityDescriptor descriptor)
     {
-        if (!entityList.containsKey(descriptor.getEntity()) && !entityList.containsValue(descriptor)) {
-            entityList.put(descriptor.getEntity(), descriptor);
-            Class entityClass = descriptor.getClass();
+        if (!entityList.containsKey(descriptor.getEntityClass()) && !entityList.containsValue(descriptor)) {
+            entityList.put(descriptor.getEntityClass(), descriptor);
+            Class entityClass = descriptor.getEntityClass();
 
             if (descriptor instanceof IEntityBrain && !brainList.contains(entityClass)) {
                 brainList.add(entityClass);
@@ -86,9 +88,15 @@ public class EntityHandler
 
     public IEntityDescriptor getEntity(String entityName)
     {
-        Class entityClass = EntityHelper.getEntityClass(entityName);
+        Class entityClass = null;
 
-        if (entityList.containsKey(entityClass)) {
+        if (entityName.equalsIgnoreCase("player")) {
+            entityClass = EntityPlayer.class;
+        } else {
+            entityClass = EntityHelper.getEntityClass(entityName);
+        }
+
+        if (entityClass != null && entityList.containsKey(entityClass)) {
             return entityList.get(entityClass);
         }
 
@@ -118,6 +126,11 @@ public class EntityHandler
     public List<Class> getRobotEntities()
     {
         return robotList;
+    }
+
+    public static class DeadRegistry
+    {
+
     }
 
 }

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<content>
+	<section name="information">
+		<page>
+			<paragraph>
+				As an initiate of the Technomagi order, you find yourself thrown into an instance that has been long forgotten since 
+				the dawn of the order. Using your nanites powerful extrapolation capabilities, you must study your surroundings and 
+				attempt to survive here, filling your surroundings with the sorts of technology that you're familiar with.
+			</paragraph>
+			<paragraph multiplayer="true" specialisation="cleric">
+				As the cleric you have been given a base bit of research towards knowledge topics that fall under your realm of expertise. 
+				Your affinity with other technomages and organic creatures as a whole will shine through when you come to use abilities, items, 
+				recipes and other such things that are relevant to your choice of path.
+			</paragraph>
+			<paragraph multiplayer="true" specialisation="engineer">
+				As the engineer you have been given a base bit of research towards knowledge topics that fall under your realm of expertise. 
+				Your affinity with machines, devices and nanites shine through when you come to use abilities, items, 
+				recipes and other such things that are relevant to your choice of path.
+			</paragraph>
+			<paragraph multiplayer="true" specialisation="scholar">
+				As the scholar you have been given a base bit of research towards knowledge topics that fall under your realm of expertise. 
+				Your thirst for knowledge and information will shine through when you unlock knowledge or come to use abilities, items, 
+				recipes and other such things that are relevant to your choice of path.
+			</paragraph>
+			<paragraph multiplayer="true" specialisation="guardian">
+				As the guardian you have been given a base bit of research towards knowledge topics that fall under your realm of expertise. 
+				Your skills as a warrior and your desire to protect others will shine through when you come to use abilities, items, 
+				recipes and other such things that are relevant to your choice of path.
+			</paragraph>
+			<paragraph multiplayer="true" specialisation="shadow">
+				As the shadow you have been given a base bit of research towards knowledge topics that fall under your realm of expertise. 
+				Your affinity with the arcane will shine through when you come to use abilities, items, 
+				recipes and other such things that are relevant to your choice of path.
+			</paragraph>
+			<paragraph multiplayer="false">
+				
+			</paragraph>
+		</page>	
+	</section>
+	<section name="staff">
+		<page>
+			<paragraph>
+				To get started with your abilities you'll need to craft yourself a staff. Once you've crafted a basic staff, simply right click 
+				and your nanites will surge the staff, activating it.
+			</paragraph>
+			<paragraph multiplayer="false">
+				Since you have multiplayer mode disabled, you switch between the specialisation staffs by placing it on its own in the crafting bench.
+			</paragraph>
+			<recipe alignment="center" type="vanilla" output="item:Technomagi:staff_basic" />
+			<recipe alignment="center" type="vanilla" output="item:Technomagi:staff_cleric" multiplayer="false" />
+			<recipe alignment="center" type="vanilla" output="item:Technomagi:staff_scholar" multiplayer="false" />
+			<recipe alignment="center" type="vanilla" output="item:Technomagi:staff_guardian" multiplayer="false" />
+			<recipe alignment="center" type="vanilla" output="item:Technomagi:staff_engineer" multiplayer="false" />
+			<recipe alignment="center" type="vanilla" output="item:Technomagi:staff_shadow" multiplayer="false" />
+		</page>
+	</section>
+</content>

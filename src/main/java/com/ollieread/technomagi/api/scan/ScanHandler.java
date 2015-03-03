@@ -11,19 +11,21 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import scala.actors.threadpool.Arrays;
 
-import com.ollieread.technomagi.api.util.BlockRepresentation;
-import com.ollieread.technomagi.api.util.ItemStackRepresentation;
+import com.ollieread.technomagi.util.BlockRepresentation;
+import com.ollieread.technomagi.util.ItemStackRepresentation;
 
 /**
  * Handles the scanning registry.
- * 
+ *
  * @author ollieread
  *
  */
 public class ScanHandler
 {
 
-    protected Map<ItemStackRepresentation, List<String>> itemResearchMapping = new LinkedHashMap<ItemStackRepresentation, List<String>>();
+    protected Map<ItemStackRepresentation, List<String>> itemScanResearchMapping = new LinkedHashMap<ItemStackRepresentation, List<String>>();
+    protected Map<BlockRepresentation, List<String>> blockScanResearchMapping = new LinkedHashMap<BlockRepresentation, List<String>>();
+    protected Map<ItemStackRepresentation, List<String>> itemAnalyseResearchMapping = new LinkedHashMap<ItemStackRepresentation, List<String>>();
     protected Map<BlockRepresentation, IScanBlock> blockScanHandler = new LinkedHashMap<BlockRepresentation, IScanBlock>();
 
     protected List<ScanRepresentation> activeScanners = new ArrayList<ScanRepresentation>();
@@ -31,7 +33,7 @@ public class ScanHandler
     /**
      * Get an instance of {@link ItemStackRepresentation} for the provided
      * ItemStack.
-     * 
+     *
      * @param stack
      * @return
      */
@@ -43,7 +45,7 @@ public class ScanHandler
     /**
      * Get an instance of {@link ItemStackRepresentation} for the provided Item
      * and damage value.
-     * 
+     *
      * @param item
      * @param damage
      * @return
@@ -56,7 +58,7 @@ public class ScanHandler
     /**
      * Get an instance of {@link BlockRepresentation} for the provided
      * ItemStack.
-     * 
+     *
      * @param stack
      * @return
      */
@@ -68,7 +70,7 @@ public class ScanHandler
     /**
      * Get an instance of {@link BlockRepresentation} for the provided block and
      * metadata.
-     * 
+     *
      * @param block
      * @param metadata
      * @return
@@ -79,40 +81,106 @@ public class ScanHandler
     }
 
     /**
-     * 
+     *
      * @param item
      * @param research
      */
-    public void addItemStackScanMapping(ItemStackRepresentation item, String research)
+    public void addScanMapping(ItemStackRepresentation item, String research)
     {
-        if (!(itemResearchMapping.containsKey(item))) {
-            itemResearchMapping.put(item, new ArrayList<String>());
+        if (!(itemScanResearchMapping.containsKey(item))) {
+            itemScanResearchMapping.put(item, new ArrayList<String>());
         }
 
-        itemResearchMapping.get(item).add(research);
+        itemScanResearchMapping.get(item).add(research);
     }
 
     /**
-     * 
+     *
      * @param item
      * @param research
      */
-    public void addItemStackScanMapping(ItemStackRepresentation item, String[] research)
+    public void addScanMapping(ItemStackRepresentation item, String[] research)
     {
-        itemResearchMapping.put(item, Arrays.asList(research));
+        itemScanResearchMapping.put(item, Arrays.asList(research));
     }
 
-    public List<String> getItemStackScanMapping(ItemStackRepresentation item)
+    public List<String> getScanMapping(ItemStackRepresentation item)
     {
-        if (itemResearchMapping.containsKey(item)) {
-            return itemResearchMapping.get(item);
+        if (itemScanResearchMapping.containsKey(item)) {
+            return itemScanResearchMapping.get(item);
         }
 
         return new ArrayList<String>();
     }
 
     /**
-     * 
+     *
+     * @param item
+     * @param research
+     */
+    public void addScanMapping(BlockRepresentation item, String research)
+    {
+        if (!(blockScanResearchMapping.containsKey(item))) {
+            blockScanResearchMapping.put(item, new ArrayList<String>());
+        }
+
+        blockScanResearchMapping.get(item).add(research);
+    }
+
+    /**
+     *
+     * @param item
+     * @param research
+     */
+    public void addScanMapping(BlockRepresentation item, String[] research)
+    {
+        blockScanResearchMapping.put(item, Arrays.asList(research));
+    }
+
+    public List<String> getScanMapping(BlockRepresentation item)
+    {
+        if (blockScanResearchMapping.containsKey(item)) {
+            return blockScanResearchMapping.get(item);
+        }
+
+        return new ArrayList<String>();
+    }
+
+    /**
+     *
+     * @param item
+     * @param research
+     */
+    public void addAnalysisMapping(ItemStackRepresentation item, String research)
+    {
+        if (!(itemAnalyseResearchMapping.containsKey(item))) {
+            itemAnalyseResearchMapping.put(item, new ArrayList<String>());
+        }
+
+        itemAnalyseResearchMapping.get(item).add(research);
+    }
+
+    /**
+     *
+     * @param item
+     * @param research
+     */
+    public void addAnalysisMapping(ItemStackRepresentation item, String[] research)
+    {
+        itemAnalyseResearchMapping.put(item, Arrays.asList(research));
+    }
+
+    public List<String> getAnalysisMapping(ItemStackRepresentation item)
+    {
+        if (itemAnalyseResearchMapping.containsKey(item)) {
+            return itemAnalyseResearchMapping.get(item);
+        }
+
+        return new ArrayList<String>();
+    }
+
+    /**
+     *
      * @param block
      * @param scan
      */
@@ -122,7 +190,7 @@ public class ScanHandler
     }
 
     /**
-     * 
+     *
      * @param block
      * @return
      */
@@ -168,7 +236,7 @@ public class ScanHandler
     /**
      * This class represents a scanner. This is used to identify which blocks
      * are being watched for events.
-     * 
+     *
      * @author ollieread
      *
      */

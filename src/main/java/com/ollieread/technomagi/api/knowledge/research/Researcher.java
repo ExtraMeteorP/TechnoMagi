@@ -30,22 +30,27 @@ public class Researcher implements IResearcher
     {
         String name = research.getName();
         int repeat = research.getRepetition();
+        String parent = research.getParent();
 
         if (!researchComplete.contains(name)) {
-            if (repeat > 1) {
-                if (researchRepetition.containsKey(name)) {
-                    int currentRepeat = researchRepetition.get(name);
-                    currentRepeat++;
+            boolean flag = (parent == null || parent.isEmpty()) || (parent != null && !parent.isEmpty() && researchComplete.contains(parent));
 
-                    if (currentRepeat == repeat) {
-                        researchRepetition.remove(name);
-                        researchComplete.add(name);
-                    } else {
-                        researchRepetition.put(name, currentRepeat);
+            if (flag) {
+                if (repeat > 1) {
+                    if (researchRepetition.containsKey(name)) {
+                        int currentRepeat = researchRepetition.get(name);
+                        currentRepeat++;
+
+                        if (currentRepeat == repeat) {
+                            researchRepetition.remove(name);
+                            researchComplete.add(name);
+                        } else {
+                            researchRepetition.put(name, currentRepeat);
+                        }
                     }
+                } else {
+                    researchComplete.add(name);
                 }
-            } else {
-                researchComplete.add(name);
             }
 
             return research.getProgress();

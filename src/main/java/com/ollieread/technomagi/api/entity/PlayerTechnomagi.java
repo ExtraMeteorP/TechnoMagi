@@ -4,10 +4,12 @@ import java.util.Random;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
 
+import com.ollieread.technomagi.Technomagi;
 import com.ollieread.technomagi.api.TechnomagiApi;
 import com.ollieread.technomagi.api.ability.PlayerAbilities;
 import com.ollieread.technomagi.api.event.KnowledgeEvent.Chance;
@@ -18,6 +20,11 @@ import com.ollieread.technomagi.api.knowledge.PlayerKnowledge;
 import com.ollieread.technomagi.api.knowledge.research.IResearch;
 import com.ollieread.technomagi.api.nanites.PlayerNanites;
 import com.ollieread.technomagi.api.specialisation.Specialisation;
+import com.ollieread.technomagi.common.CommonProxy;
+import com.ollieread.technomagi.common.network.PacketHandler;
+import com.ollieread.technomagi.common.network.packets.MessageSyncPlayer;
+
+import cpw.mods.fml.relauncher.Side;
 
 public class PlayerTechnomagi implements IExtendedEntityProperties
 {
@@ -55,19 +62,32 @@ public class PlayerTechnomagi implements IExtendedEntityProperties
 
     }
 
-    public void syncAbilites()
+    public void sync()
     {
+        EntityPlayer player = getPlayer();
 
+        if (!player.worldObj.isRemote) {
+            PacketHandler.INSTANCE.sendTo(new MessageSyncPlayer(player), (EntityPlayerMP) player);
+        }
+
+        syncAbilities();
+        syncKnowledge();
+        syncNanites();
+    }
+
+    public void syncAbilities()
+    {
+        playerAbilities.sync();
     }
 
     public void syncKnowledge()
     {
-
+        playerKnowledge.sync();
     }
 
     public void syncNanites()
     {
-
+        playerNanites.sync();
     }
 
     @Override
@@ -122,12 +142,46 @@ public class PlayerTechnomagi implements IExtendedEntityProperties
         /**
          * Load the players nanite data.
          */
-        playerKnowledge.loadNBTData(compound.getCompoundTag("Nanites"));
+        playerNanites.loadNBTData(compound.getCompoundTag("Nanites"));
 
         /**
          * Load the players ability data.
          */
         playerAbilities.loadNBTData(compound.getCompoundTag("Abilities"));
+    }
+
+    public static void saveProxyData(EntityPlayer player)
+    {
+        PlayerTechnomagi technomage = PlayerTechnomagi.get(player);
+        NBTTagCompound savedData = new NBTTagCompound();
+        technomage.saveNBTData(savedData);
+
+        CommonProxy.storeEntityData(getSaveKey(player), savedData);
+    }
+
+    public static void loadProxyData(EntityPlayer player)
+    {
+        PlayerTechnomagi technomage = PlayerTechnomagi.get(player);
+        NBTTagCompound savedData = CommonProxy.getEntityData(getSaveKey(player));
+
+        if (savedData != null) {
+            technomage.loadNBTData(savedData);
+        }
+
+        technomage.sync();
+    }
+
+    public void copyFrom(PlayerTechnomagi technomage)
+    {
+        this.playerAbilities = technomage.playerAbilities;
+        this.playerKnowledge = technomage.playerKnowledge;
+        this.playerNanites = technomage.playerNanites;
+        this.specialisation = technomage.specialisation;
+    }
+
+    protected static String getSaveKey(EntityPlayer player)
+    {
+        return player.getCommandSenderName() + ":" + TechnomagiApi.IDENT_PLAYER;
     }
 
     public PlayerKnowledge knowledge()
@@ -148,11 +202,18 @@ public class PlayerTechnomagi implements IExtendedEntityProperties
     public void setSpecialisation(Specialisation specialisation)
     {
         this.specialisation = specialisation;
+        this.nanites().setActive(true);
+        sync();
     }
 
     public boolean hasSpecialised()
     {
         return specialisation != null;
+    }
+
+    public Specialisation getSpecialisation()
+    {
+        return this.specialisation;
     }
 
     public EntityPlayer getPlayer()
@@ -162,28 +223,35 @@ public class PlayerTechnomagi implements IExtendedEntityProperties
 
     /**
      * Perform a piece of research.
-     * 
+     *
      * This checks to make sure that the knowledge hasn't already been
      * discovered, the research hasn't already been performed and whether or not
      * the research has been performed the maximum amount of times. It will also
      * automatically add knowledge progress.
-     * 
+     *
      * The chance of research succeeding is denoted by
      * {@link IResearch#getChance()}, but can be modified outside of this using
      * {@link Chance} on the {@link TechnomagiApi.EVENT_BUS}.
-     * 
-     * @param technomagi
+     *
+     * @param technomage
      * @param research
      */
-    public void performResearch(IResearch research, Knowledge knowledge)
+    public boolean performResearch(IResearch research, Knowledge knowledge)
     {
+        Technomagi.debug("----");
+        Technomagi.debug("Attempting Research");
+        Technomagi.debug("Research: " + research.getName());
+        Technomagi.debug("Knowledge: " + knowledge.getName());
         // Verify that the knowledge and research is usable
         if (playerKnowledge.canDiscover(knowledge) && playerKnowledge.canResearch(research)) {
             int chance = research.getChance();
+            Technomagi.debug("Chance: " + chance);
 
             // Create and post the chance event, allowing the chance of
             // research completing to be modified
             Chance chanceEvent = TechnomagiHooks.researchChance(player, research, research.getChance());
+            Technomagi.debug("Modified Chance: " + chanceEvent.chance);
+
             if (rand.nextInt(chanceEvent.chance) == 0) {
                 Pre pre = TechnomagiHooks.preKnowledgeProgress(player, research, playerKnowledge.getKnowledgeProgress(research.getKnowledge()), research.getProgress());
 
@@ -196,13 +264,24 @@ public class PlayerTechnomagi implements IExtendedEntityProperties
                             nanites().increaseData(progress);
 
                             if (playerKnowledge.addKnowledgeProgress(knowledge.getName(), progress)) {
+                                Technomagi.debug("Research Unlocked");
                                 TechnomagiHooks.postKnowledgeProgress(player, research, playerKnowledge.getKnowledgeProgress(research.getKnowledge()), research.getProgress());
+                                return true;
                             }
                         }
                     }
                 }
             }
         }
+
+        return false;
+    }
+
+    public void update(Side side)
+    {
+        playerAbilities.update(side);
+        playerNanites.update(side);
+        playerKnowledge.update(side);
     }
 
 }

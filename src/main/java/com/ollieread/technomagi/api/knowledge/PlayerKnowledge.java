@@ -7,6 +7,8 @@ import java.util.Map.Entry;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
@@ -14,11 +16,15 @@ import com.ollieread.technomagi.api.TechnomagiApi;
 import com.ollieread.technomagi.api.entity.PlayerTechnomagi;
 import com.ollieread.technomagi.api.knowledge.research.IResearch;
 import com.ollieread.technomagi.api.knowledge.research.Researcher;
+import com.ollieread.technomagi.common.network.PacketHandler;
+import com.ollieread.technomagi.common.network.packets.MessageSyncPlayerKnowledge;
+
+import cpw.mods.fml.relauncher.Side;
 
 public class PlayerKnowledge extends Researcher
 {
 
-    protected PlayerTechnomagi technomagi;
+    protected PlayerTechnomagi technomage;
 
     protected List<String> knowledgeComplete = new ArrayList<String>();
     protected Map<String, Integer> knowledgeProgress = new ConcurrentHashMap<String, Integer>();
@@ -27,19 +33,17 @@ public class PlayerKnowledge extends Researcher
 
     public PlayerKnowledge(PlayerTechnomagi technomagi)
     {
-        this.technomagi = technomagi;
+        this.technomage = technomagi;
     }
 
     public boolean canDiscover(Knowledge knowledge)
     {
         if (!knowledgeComplete.contains(knowledge.getName())) {
-            List<String> prerequisites = knowledge.getPrerequisites();
+            String prerequisite = knowledge.getPrerequisite();
 
-            if (prerequisites != null) {
-                for (String prerequisite : prerequisites) {
-                    if (!knowledgeComplete.contains(prerequisite)) {
-                        return false;
-                    }
+            if (prerequisite != null) {
+                if (!knowledgeComplete.contains(prerequisite)) {
+                    return false;
                 }
             }
         }
@@ -73,6 +77,7 @@ public class PlayerKnowledge extends Researcher
                     return true;
                 } else {
                     knowledgeProgress.put(knowledge, current);
+                    sync();
 
                     return true;
                 }
@@ -95,10 +100,27 @@ public class PlayerKnowledge extends Researcher
         return 0;
     }
 
+    public boolean hasKnowledge(String knowledge)
+    {
+        return knowledgeComplete.contains(knowledge);
+    }
+
+    public boolean hasKnowledge(String[] knowledge)
+    {
+        for (int i = 0; i < knowledge.length; i++) {
+            if (!hasKnowledge(knowledge[i])) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public boolean addKnowledge(String knowledge)
     {
         if (!knowledgeComplete.contains(knowledge)) {
             knowledgeComplete.add(knowledge);
+            sync();
 
             return true;
         }
@@ -152,7 +174,7 @@ public class PlayerKnowledge extends Researcher
         NBTTagList completeKnowledge = compound.getTagList("KnowledgeComplete", compound.getId());
 
         for (int i = 0; i < completeKnowledge.tagCount(); i++) {
-            this.knowledgeComplete.add(compound.getString("Knowledge"));
+            this.knowledgeComplete.add(completeKnowledge.getCompoundTagAt(i).getString("Knowledge"));
         }
 
         /*
@@ -163,8 +185,22 @@ public class PlayerKnowledge extends Researcher
         NBTTagList progressKnowledge = compound.getTagList("KnowledgeProgress", compound.getId());
 
         for (int i = 0; i < progressKnowledge.tagCount(); i++) {
-            this.knowledgeProgress.put(compound.getString("Knowledge"), compound.getInteger("Progress"));
+            this.knowledgeProgress.put(progressKnowledge.getCompoundTagAt(i).getString("Knowledge"), progressKnowledge.getCompoundTagAt(i).getInteger("Progress"));
         }
+    }
+
+    public void sync()
+    {
+        EntityPlayer player = this.technomage.getPlayer();
+
+        if (!player.worldObj.isRemote) {
+            PacketHandler.INSTANCE.sendTo(new MessageSyncPlayerKnowledge(player), (EntityPlayerMP) player);
+        }
+    }
+
+    public void update(Side side)
+    {
+
     }
 
 }

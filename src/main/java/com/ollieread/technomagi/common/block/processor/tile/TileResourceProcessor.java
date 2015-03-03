@@ -9,9 +9,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import com.ollieread.technomagi.api.crafting.CraftingHandler;
+import com.ollieread.technomagi.api.crafting.CraftingHandler.ProcessorRecipes.ProcessorType;
 import com.ollieread.technomagi.api.crafting.IProcessorComponent;
 import com.ollieread.technomagi.api.crafting.IProcessorRecipe;
-import com.ollieread.technomagi.api.crafting.ProcessorRecipes.ProcessorType;
 import com.ollieread.technomagi.common.block.tile.ISideFacing;
 import com.ollieread.technomagi.common.block.tile.ITileProcessor;
 import com.ollieread.technomagi.common.block.tile.TileBase;
@@ -60,7 +60,7 @@ public abstract class TileResourceProcessor extends TileBase implements IInvento
                         progress.setMaxProgress((int) (((IProcessorComponent) componentStack.getItem()).getMaxDuration(componentStack) * modifier));
                     }
 
-                    currentRecipe = CraftingHandler.processor().findMatchingRecipe(((IProcessorComponent) componentStack.getItem()).getType(componentStack), inventory.getStackInSlot(2));
+                    currentRecipe = CraftingHandler.processor.find(((IProcessorComponent) componentStack.getItem()).getType(componentStack), inventory.getStackInSlot(2));
                     isProcessing = true;
                 }
 
@@ -92,7 +92,7 @@ public abstract class TileResourceProcessor extends TileBase implements IInvento
             IProcessorComponent component = ((IProcessorComponent) componentStack.getItem());
             ProcessorType type = component.getType(componentStack);
             int damage = component.getCurrentDamage(componentStack);
-            IProcessorRecipe recipe = CraftingHandler.processor().findMatchingRecipe(type, inputStack);
+            IProcessorRecipe recipe = CraftingHandler.processor.find(type, inputStack);
 
             if ((damage + recipe.getDamage(type)) <= component.getMaxDamage(componentStack)) {
                 ItemStack output = recipe.getOutput(type);
@@ -318,6 +318,7 @@ public abstract class TileResourceProcessor extends TileBase implements IInvento
             }
 
             setDirection(direction);
+            markDirty();
             break;
         }
     }

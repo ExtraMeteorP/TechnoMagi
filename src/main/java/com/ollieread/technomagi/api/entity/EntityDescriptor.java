@@ -5,7 +5,7 @@ import net.minecraft.entity.EntityLivingBase;
 /**
  * This is a base abstract class for simplicity, see {@link IEntityDescriptor}
  * for the companion classes and further information.
- * 
+ *
  * @author ollieread
  *
  */
@@ -22,7 +22,7 @@ public class EntityDescriptor implements IEntityDescriptor
     }
 
     @Override
-    public Class<? extends EntityLivingBase> getEntity()
+    public Class<? extends EntityLivingBase> getEntityClass()
     {
         return entityClass;
     }
@@ -49,6 +49,18 @@ public class EntityDescriptor implements IEntityDescriptor
     public boolean canBeMonitored()
     {
         return true;
+    }
+
+    @Override
+    public boolean canBeReanimated()
+    {
+        return false;
+    }
+
+    @Override
+    public Class<? extends EntityLivingBase> getReanimatedEntityClass()
+    {
+        return null;
     }
 
 }

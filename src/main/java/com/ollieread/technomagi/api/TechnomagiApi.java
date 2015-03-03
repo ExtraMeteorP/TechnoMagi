@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import net.minecraft.util.ResourceLocation;
 
+import com.ollieread.technomagi.api.ability.AbilityHandler;
 import com.ollieread.technomagi.api.entity.EntityHandler;
 import com.ollieread.technomagi.api.knowledge.Knowledge;
 import com.ollieread.technomagi.api.knowledge.KnowledgeCategory;
@@ -17,11 +18,11 @@ import cpw.mods.fml.common.eventhandler.EventBus;
 
 /**
  * TechnoMagi API
- * 
+ *
  * This class is here for simplicity, it provides a nice simple one stop shop
  * for registering items with the API as well as a nice way to interact with
  * said items, after they have been registered.
- * 
+ *
  * @author ollieread
  *
  */
@@ -31,8 +32,8 @@ public class TechnomagiApi
     /**
      * Prefixes for unlocalised names
      */
-    public final static String PREFIX_CATEGORY = "research.category";
-    public final static String PREFIX_KNOWLEDGE = "research.knowledge";
+    public final static String PREFIX_CATEGORY = "research.category.";
+    public final static String PREFIX_KNOWLEDGE = "research.knowledge.";
     public final static String PREFIX_RESEARCH = "research.";
     public final static String PREFIX_SPECIALISATION = "specialisation.";
 
@@ -49,17 +50,18 @@ public class TechnomagiApi
 
     /**
      * Handlers
-     * 
+     *
      * Handles things.
      */
     protected final static KnowledgeHandler HANDLER_KNOWLEDGE = new KnowledgeHandler();
     protected final static SpecialisationHandler HANDLER_SPECIALISATION = new SpecialisationHandler();
     protected final static EntityHandler HANDLER_ENTITY = new EntityHandler();
     protected final static ScanHandler HANDLER_SCAN = new ScanHandler();
+    protected final static AbilityHandler HANDLER_ABILITY = new AbilityHandler();
 
     /**
      * Retrieve the knowledge handler.
-     * 
+     *
      * @see KnowledgeHandler
      * @return The instance of KnowledgeHandler.
      */
@@ -70,7 +72,7 @@ public class TechnomagiApi
 
     /**
      * Retrieve the specialisation handler.
-     * 
+     *
      * @see SpecialisationHandler
      * @return
      */
@@ -81,7 +83,7 @@ public class TechnomagiApi
 
     /**
      * Retrieve the entity handler.
-     * 
+     *
      * @see EntityHandler
      * @return
      */
@@ -92,7 +94,7 @@ public class TechnomagiApi
 
     /**
      * Retrieve the scan handler.
-     * 
+     *
      * @see ScanHandler
      * @return
      */
@@ -102,8 +104,19 @@ public class TechnomagiApi
     }
 
     /**
+     * Retrieve the ability handler.
+     *
+     * @see AbilityHandler
+     * @return
+     */
+    public static AbilityHandler ability()
+    {
+        return HANDLER_ABILITY;
+    }
+
+    /**
      * Create and add a basic knowledge category.
-     * 
+     *
      * @param name The name for the knowledge category, which the category shall
      *        be referenced by here on out.
      * @param icon An instance of ResourceLocation pointing to the icon for the
@@ -117,7 +130,7 @@ public class TechnomagiApi
 
     /**
      * Add an already created knowledge category.
-     * 
+     *
      * @see KnowledgeHandler#addCategory(KnowledgeCategory)
      * @param category
      * @return
@@ -148,7 +161,7 @@ public class TechnomagiApi
 
     /**
      * Create and add a basic knowledge topic.
-     * 
+     *
      * @param name The name for the knowledge topic, which the knowledge shall
      *        be referenced by here on out.
      * @param icon An instance of ResourceLocation pointing to the icon for the
@@ -165,7 +178,7 @@ public class TechnomagiApi
 
     /**
      * Add an already created knowledge topic.
-     * 
+     *
      * @see KnowledgeHandler#addKnowledge(Knowledge)
      * @param knowledge
      * @return
@@ -196,19 +209,20 @@ public class TechnomagiApi
 
     /**
      * Create and add a basic piece of research.
-     * 
+     *
      * This method returns an instance of {@link Research} which implements
      * {@link IResearch} and saves creating your own classes. Since only the
      * name is stored outside of the instance, this means you can configure the
      * item further without having to worry about re-registering.
-     * 
+     *
      * @see Research
      * @param name
      * @return
      */
-    public static Research addResearch(String name)
+    public static Research addResearch(String name, String knowledge)
     {
         Research research = new Research(name);
+        research.setKnowledge(knowledge);
         addResearch(research);
 
         return research;
@@ -217,7 +231,7 @@ public class TechnomagiApi
     /**
      * Add an already created research item to the registry. Returns the object
      * for further processing should it be required.
-     * 
+     *
      * @see IResearch
      * @see KnowledgeHandler#addResearch(IResearch)
      * @param research
@@ -230,7 +244,7 @@ public class TechnomagiApi
 
     /**
      * Retrieve a piece of research by its name.
-     * 
+     *
      * @see KnowledgeHandler#getResearch(String)
      * @param name
      * @return

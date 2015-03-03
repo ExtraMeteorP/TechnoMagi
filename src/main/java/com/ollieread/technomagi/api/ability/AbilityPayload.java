@@ -14,10 +14,10 @@ import net.minecraftforge.fluids.IFluidBlock;
 /**
  * This is the payload set to the ability. It holds information regarding the
  * target, focus and various bits of information.
- * 
+ *
  * TODO Explore the possibility of having target updated as the cast goes on,
  * while storing previous target.
- * 
+ *
  * @author ollieread
  *
  */
@@ -28,7 +28,7 @@ public class AbilityPayload
      * Denotes the type of target for the cast. Some abilities require targets
      * of a specific type and others will do slightly different things dependant
      * on the type of target.
-     * 
+     *
      * @author ollieread
      *
      */
@@ -38,7 +38,7 @@ public class AbilityPayload
 
     /**
      * Denotes the result of the current cast action.
-     * 
+     *
      * @author ollieread
      *
      */
@@ -52,14 +52,14 @@ public class AbilityPayload
     public int duration;
     /**
      * The type of target for this cast.
-     * 
+     *
      * @see AbilityUseTarget
      */
     public AbilityUseTarget target;
     /**
      * The result of the current cast action. Defaults to
      * {@link AbilityResult#CONTINUE}, must specify otherwise.
-     * 
+     *
      * @see AbilityResult
      */
     public AbilityResult result;
@@ -176,7 +176,11 @@ public class AbilityPayload
             targetEntityLiving = (EntityLiving) Minecraft.getMinecraft().theWorld.getEntityByID(compound.getInteger("EntityLiving"));
             targetEntity = targetEntityLiving;
         } else if (compound.hasKey("Entity")) {
-            targetEntity = Minecraft.getMinecraft().theWorld.getEntityByID(compound.getInteger("Entity"));
+            int entityId = compound.getInteger("Entity");
+
+            if (entityId > -1) {
+                targetEntity = Minecraft.getMinecraft().theWorld.getEntityByID(entityId);
+            }
         }
 
         blockX = compound.getInteger("BlockX");

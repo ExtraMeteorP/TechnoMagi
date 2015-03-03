@@ -6,27 +6,32 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
+import com.ollieread.technomagi.api.TechnomagiApi;
 import com.ollieread.technomagi.api.ability.AbilityPayload.AbilityResult;
 import com.ollieread.technomagi.api.entity.PlayerTechnomagi;
 import com.ollieread.technomagi.api.event.AbilityCastEvent.Cast;
 import com.ollieread.technomagi.api.event.AbilityCastEvent.Start;
 import com.ollieread.technomagi.api.event.TechnomagiHooks;
+import com.ollieread.technomagi.common.network.PacketHandler;
+import com.ollieread.technomagi.common.network.packets.MessageSyncPlayerAbilities;
 
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.relauncher.Side;
 
 /**
- * 
+ *
  * @author ollieread
  *
  */
 public class PlayerAbilities
 {
-    protected PlayerTechnomagi technomagi;
+    protected PlayerTechnomagi technomage;
 
     protected List<IAbilityCast> abilityCastableList = new ArrayList<IAbilityCast>();
 
@@ -42,20 +47,20 @@ public class PlayerAbilities
 
     public PlayerAbilities(PlayerTechnomagi technomagi)
     {
-        this.technomagi = technomagi;
+        this.technomage = technomagi;
     }
 
     /**
      * Replace the current castable abilities. Typically fired when knowledge is
      * unlocked.
-     * 
+     *
      * @param castableAbilities
      */
     public void setCastableAbilities(List<IAbilityCast> castableAbilities)
     {
         abilityCastableList = castableAbilities;
 
-        if (abilityCastableList.size() > currentAbilityIndex) {
+        if (currentAbilityIndex >= abilityCastableList.size()) {
             currentAbilityIndex = -1;
         }
     }
@@ -65,11 +70,13 @@ public class PlayerAbilities
      */
     public void setPreviousAbility()
     {
-        if (currentAbilityIndex == 0) {
-            currentAbilityIndex = -1;
-        } else {
+        if (currentAbilityIndex >= 0) {
             currentAbilityIndex -= 1;
+        } else {
+            currentAbilityIndex = abilityCastableList.size() - 1;
         }
+
+        // sync();
     }
 
     /**
@@ -77,16 +84,18 @@ public class PlayerAbilities
      */
     public void setNextAbility()
     {
-        if (currentAbilityIndex == abilityCastableList.size()) {
+        currentAbilityIndex += 1;
+
+        if (currentAbilityIndex >= abilityCastableList.size()) {
             currentAbilityIndex = -1;
-        } else {
-            currentAbilityIndex += 1;
         }
+
+        // sync();
     }
 
     /**
      * Get the current ability index.
-     * 
+     *
      * @return
      */
     public int getCurrentAbilityIndex()
@@ -96,32 +105,52 @@ public class PlayerAbilities
 
     /**
      * Get the current ability.
-     * 
+     *
      * @return
      */
     public IAbilityCast getCurrentAbility()
     {
-        if (currentAbilityIndex != -1) {
-            return abilityCastableList.get(currentAbilityIndex);
-        }
-
-        return null;
+        return getAbility(currentAbilityIndex);
     }
 
     /**
      * Get an ability at the assigned index from the players currently available
      * abilities.
-     * 
+     *
      * @param index
      * @return
      */
     public IAbilityCast getAbility(int index)
     {
-        if (index > -1 && abilityCastableList.size() >= index) {
+        if (index > -1 && abilityCastableList.size() > index) {
             return abilityCastableList.get(index);
         }
 
         return null;
+    }
+
+    public List<IAbilityCast> getAbilitiesForDisplay()
+    {
+        int aOffset = 0;
+        int index = getCurrentAbilityIndex();
+        int end = (aOffset + 4) >= abilityCastableList.size() ? abilityCastableList.size() : aOffset + 4;
+        int s = -1;
+
+        if (index >= 0) {
+            if (index < aOffset) {
+                aOffset = index;
+            } else if (index > end) {
+                aOffset = index - 4;
+            }
+
+            if (end >= abilityCastableList.size()) {
+                end = abilityCastableList.size();
+            }
+
+            s = (index - aOffset) * 20;
+        }
+
+        return abilityCastableList.subList(aOffset, end);
     }
 
     public int getCastableAbilityMode(String name)
@@ -137,6 +166,7 @@ public class PlayerAbilities
     {
         if (!abilityData.containsKey(name)) {
             abilityData.put(name, data);
+            // sync();
             return data;
         }
 
@@ -156,90 +186,137 @@ public class PlayerAbilities
     {
         if (abilityData.containsKey(name)) {
             abilityData.remove(name);
+            // sync();
         }
     }
 
     public void resetAbilityData()
     {
         abilityData.clear();
+        sync();
     }
 
-    public IAbilityCast startCasting(PlayerTechnomagi technomage, ItemStack stack, AbilityPayload payload)
+    public void addCooldown(IAbilityCast ability, int cooldown)
+    {
+        abilityCastableCooldowns.put(ability.getName(), cooldown);
+        sync();
+    }
+
+    public int getCooldown(IAbilityCast ability)
+    {
+        if (abilityCastableCooldowns.containsKey(ability.getName())) {
+            return abilityCastableCooldowns.get(ability.getName());
+        }
+
+        return 0;
+    }
+
+    public boolean inCooldown(IAbilityCast ability)
+    {
+        return getCooldown(ability) > 0;
+    }
+
+    public boolean isCasting()
+    {
+        return abilityCastingPayload != null && currentCastingAbility != null;
+    }
+
+    public IAbilityCast startCasting(ItemStack stack, AbilityPayload payload)
     {
         if (stack != null && stack.getItem() instanceof IAbilityItem) {
             IAbilityItem abilityItem = (IAbilityItem) stack.getItem();
             IAbilityCast ability = null;
 
-            if (abilityItem.isAbilityLocked(stack)) {
-                ability = abilityItem.getLockedAbility(stack);
-            } else {
-                ability = getCurrentAbility();
-            }
-
-            abilityCastingPayload = payload;
-            payload.setAbilityItem(stack);
-            currentCastingAbility = ability;
-
-            if (ability != null && ability.canUse(technomage, abilityCastingPayload, getCastableAbilityMode(currentCastingAbility.getName()))) {
-                Start start = TechnomagiHooks.startCasting(technomage.getPlayer(), currentCastingAbility, abilityCastingPayload);
-
-                if (!start.isCanceled()) {
-                    technomage.getPlayer().setItemInUse(stack, currentCastingAbility.getMaxFocus(getCastableAbilityMode(currentCastingAbility.getName())));
-                    if (casting(technomage)) {
-                        return ability;
-                    } else {
-                        return null;
-                    }
+            if (abilityItem.canCast(stack)) {
+                if (abilityItem.isAbilityLocked(stack)) {
+                    ability = abilityItem.getLockedAbility(stack);
+                } else {
+                    ability = getCurrentAbility();
                 }
 
-                stopCasting(technomage, false);
+                abilityCastingPayload = payload;
+                payload.setAbilityItem(stack);
+                currentCastingAbility = ability;
+
+                if (ability != null && !inCooldown(ability) && ability.canUse(technomage, abilityCastingPayload, getCastableAbilityMode(currentCastingAbility.getName()))) {
+                    Start start = TechnomagiHooks.startCasting(technomage.getPlayer(), currentCastingAbility, abilityCastingPayload);
+
+                    if (!start.isCanceled()) {
+                        technomage.getPlayer().setItemInUse(stack, currentCastingAbility.getMaxFocus(getCastableAbilityMode(currentCastingAbility.getName())));
+
+                        if (casting()) {
+                            // sync();
+                            return ability;
+                        } else {
+                            return null;
+                        }
+                    }
+
+                    stopCasting(false);
+                }
             }
         }
 
         return null;
     }
 
-    public boolean casting(PlayerTechnomagi technomage)
+    public boolean casting()
     {
         if (abilityCastingPayload != null && currentCastingAbility != null) {
             abilityCastingPayload.duration += 1;
-            Cast cast = TechnomagiHooks.continueCasting(technomage.getPlayer(), currentCastingAbility, abilityCastingPayload);
             boolean flag = false;
 
-            if (!cast.isCanceled()) {
-                Result result = cast.getResult();
+            if (technomage.getPlayer().isUsingItem()) {
+                Cast cast = TechnomagiHooks.continueCasting(technomage.getPlayer(), currentCastingAbility, abilityCastingPayload);
 
-                if (result.equals(Result.ALLOW) || result.equals(Result.DEFAULT)) {
-                    currentCastingAbility.use(technomage, abilityCastingPayload, getCastableAbilityMode(currentCastingAbility.getName()));
-                    AbilityResult castingResult = abilityCastingPayload.result;
+                if (!cast.isCanceled()) {
+                    Result result = cast.getResult();
 
-                    if (!castingResult.equals(AbilityResult.CONTINUE)) {
-                        if (castingResult.equals(AbilityResult.COMPLETE)) {
-                            flag = true;
+                    if (result.equals(Result.ALLOW) || result.equals(Result.DEFAULT)) {
+                        int mode = getCastableAbilityMode(currentCastingAbility.getName());
+                        int maxFocus = currentCastingAbility.getMaxFocus(mode);
+
+                        if (abilityCastingPayload.duration > maxFocus) {
+                            flag = false;
+                        } else {
+                            currentCastingAbility.use(technomage, abilityCastingPayload, mode);
+                            AbilityResult castingResult = abilityCastingPayload.result;
+
+                            if (castingResult.equals(AbilityResult.HALT)) {
+                                flag = false;
+                            } else if (castingResult.equals(AbilityResult.COMPLETE)) {
+                                if (currentCastingAbility.getCooldown(mode) > 0) {
+                                    addCooldown(currentCastingAbility, currentCastingAbility.getCooldown(mode));
+                                }
+                                flag = true;
+                            } else {
+                                // sync();
+                                return true;
+                            }
                         }
-                    } else {
-                        return true;
                     }
                 }
             }
 
-            stopCasting(technomage, flag);
+            stopCasting(flag);
         }
 
         return false;
     }
 
-    public void stopCasting(PlayerTechnomagi technomage, boolean complete)
+    public void stopCasting(boolean complete)
     {
         if (abilityCastingPayload != null && currentCastingAbility != null) {
             currentCastingAbility.stoppedUsing(technomage, abilityCastingPayload, getCastableAbilityMode(currentCastingAbility.getName()));
             TechnomagiHooks.stopCasting(technomage.getPlayer(), currentCastingAbility, abilityCastingPayload, complete);
             currentCastingAbility = null;
             abilityCastingPayload = null;
+            technomage.getPlayer().stopUsingItem();
+            // sync();
         }
     }
 
-    public void update(PlayerTechnomagi technomage, Side side)
+    public void update(Side side)
     {
         if (side.equals(Side.SERVER)) {
             /**
@@ -266,7 +343,7 @@ public class PlayerAbilities
             }
         }
 
-        casting(technomage);
+        casting();
     }
 
     public void saveNBTData(NBTTagCompound compound)
@@ -390,5 +467,17 @@ public class PlayerAbilities
         } else {
             abilityCastingPayload = null;
         }
+
+        this.setCastableAbilities(TechnomagiApi.ability().getCastableAbilitiesFor(this.technomage));
     }
+
+    public void sync()
+    {
+        EntityPlayer player = this.technomage.getPlayer();
+
+        if (!player.worldObj.isRemote) {
+            PacketHandler.INSTANCE.sendTo(new MessageSyncPlayerAbilities(player), (EntityPlayerMP) player);
+        }
+    }
+
 }

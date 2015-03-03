@@ -5,9 +5,9 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
-import com.ollieread.technomagi.api.util.PacketHelper;
 import com.ollieread.technomagi.common.network.PacketHandler;
 import com.ollieread.technomagi.common.network.packets.MessageSyncTile;
+import com.ollieread.technomagi.util.PacketHelper;
 
 public class TileBase extends TileEntity
 {

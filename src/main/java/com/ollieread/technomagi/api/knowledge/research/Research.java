@@ -5,8 +5,9 @@ import com.ollieread.technomagi.api.TechnomagiApi;
 public class Research implements IResearch
 {
 
-    protected static String name;
-    protected static String knowledge;
+    protected String name;
+    protected String knowledge;
+    protected String parent;
     protected int chance;
     protected int progress;
     protected int repeatition = 1;
@@ -80,6 +81,18 @@ public class Research implements IResearch
     public String getUnlocalisedName()
     {
         return TechnomagiApi.PREFIX_RESEARCH + name;
+    }
+
+    public Research setParent(String parent)
+    {
+        this.parent = parent;
+        return this;
+    }
+
+    @Override
+    public String getParent()
+    {
+        return parent;
     }
 
 }

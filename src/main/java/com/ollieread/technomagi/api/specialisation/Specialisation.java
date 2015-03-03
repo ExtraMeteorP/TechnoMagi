@@ -1,5 +1,7 @@
 package com.ollieread.technomagi.api.specialisation;
 
+import net.minecraft.entity.ai.attributes.BaseAttributeMap;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 
 import com.ollieread.technomagi.api.TechnomagiApi;
@@ -33,4 +35,15 @@ public class Specialisation
     {
         return TechnomagiApi.PREFIX_SPECIALISATION + name;
     }
+
+    public void applyAttributes(BaseAttributeMap map)
+    {
+
+    }
+
+    public int modifyDamage(DamageSource damage, int amount)
+    {
+        return amount;
+    }
+
 }

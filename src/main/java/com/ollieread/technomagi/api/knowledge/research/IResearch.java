@@ -64,4 +64,12 @@ public interface IResearch
      */
     public String getUnlocalisedName();
 
+    /**
+     * The parent, as in the research that should be performed and completed,
+     * before this.
+     * 
+     * @return
+     */
+    public String getParent();
+
 }

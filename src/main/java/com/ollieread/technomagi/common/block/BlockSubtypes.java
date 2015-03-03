@@ -5,6 +5,8 @@ import java.util.List;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
@@ -67,6 +69,29 @@ public class BlockSubtypes extends BlockBase
     public int damageDropped(int metadata)
     {
         return metadata;
+    }
+
+    public int getDamageFromName(String name)
+    {
+        if (names != null) {
+            for (int i = 0; i < names.length; i++) {
+                if (names[i].equals(name)) {
+                    return i;
+                }
+            }
+        }
+
+        return 0;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, EntityPlayer player, List info, boolean advanced)
+    {
+    }
+
+    public EnumRarity getRarity(ItemStack stack)
+    {
+        return EnumRarity.common;
     }
 
 }

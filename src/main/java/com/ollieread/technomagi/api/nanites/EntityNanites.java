@@ -14,6 +14,8 @@ import com.ollieread.technomagi.api.knowledge.Knowledge;
 import com.ollieread.technomagi.api.knowledge.research.IResearch;
 import com.ollieread.technomagi.api.knowledge.research.Researcher;
 
+import cpw.mods.fml.relauncher.Side;
+
 public class EntityNanites extends Researcher
 {
 
@@ -23,18 +25,23 @@ public class EntityNanites extends Researcher
     protected boolean active = false;
     protected int nanites = 0;
     protected int data = 0;
-    protected int maxData = 100;
-    protected int maxNanites = 100;
+    protected int maxData = 0;
+    protected int maxNanites = 0;
+    protected float regenMultiplier = 0F;
+    protected int regenTicks = -1;
 
     protected List<String> researchComplete = new ArrayList<String>();
     protected Map<String, Integer> researchRepetition = new ConcurrentHashMap<String, Integer>();
     protected Map<String, Integer> knowledgeProgress = new ConcurrentHashMap<String, Integer>();
+
+    protected NaniteRegen regen;
 
     private Random rand = new Random();
 
     public EntityNanites(boolean isPlayer)
     {
         this.player = isPlayer;
+        this.regen = new NaniteRegen();
     }
 
     public void setActive(boolean active)
@@ -63,7 +70,7 @@ public class EntityNanites extends Researcher
     }
 
     /**
-     * 
+     *
      * @return
      */
     public int getData()
@@ -72,7 +79,7 @@ public class EntityNanites extends Researcher
     }
 
     /**
-     * 
+     *
      * @return
      */
     public int getNanites()
@@ -81,7 +88,7 @@ public class EntityNanites extends Researcher
     }
 
     /**
-     * 
+     *
      * @return
      */
     public int getMaxData()
@@ -90,7 +97,7 @@ public class EntityNanites extends Researcher
     }
 
     /**
-     * 
+     *
      * @return
      */
     public int getMaxNanites()
@@ -99,43 +106,77 @@ public class EntityNanites extends Researcher
     }
 
     /**
-     * 
+     *
      * @param data
      */
     public void setData(int data)
     {
         this.data = data;
+
+        if (this.player) {
+            ((PlayerNanites) this).sync();
+        }
     }
 
     /**
-     * 
+     *
      * @param nanites
      */
     public void setNanites(int nanites)
     {
         this.nanites = nanites;
+
+        if (this.player) {
+            ((PlayerNanites) this).sync();
+        }
     }
 
     /**
-     * 
+     *
      * @param max
      */
     public void setMaxData(int max)
     {
         this.maxData = max;
+
+        if (this.player) {
+            ((PlayerNanites) this).sync();
+        }
     }
 
     /**
-     * 
+     *
      * @param max
      */
     public void setMaxNanites(int max)
     {
         this.maxNanites = max;
+
+        if (this.player) {
+            ((PlayerNanites) this).sync();
+        }
+    }
+
+    public void setRegen(float regen)
+    {
+        this.regenMultiplier = regen;
+
+        if (this.player) {
+            ((PlayerNanites) this).sync();
+        }
+    }
+
+    public void setRegenTicks(int ticks)
+    {
+        this.regenTicks = ticks;
+
+        if (this.player) {
+            ((PlayerNanites) this).sync();
+        }
     }
 
     /**
-     * 
+     *
      * @param data
      * @return
      */
@@ -152,7 +193,7 @@ public class EntityNanites extends Researcher
     }
 
     /**
-     * 
+     *
      * @param data
      * @return
      */
@@ -169,7 +210,7 @@ public class EntityNanites extends Researcher
     }
 
     /**
-     * 
+     *
      * @param nanites
      * @return
      */
@@ -186,7 +227,7 @@ public class EntityNanites extends Researcher
     }
 
     /**
-     * 
+     *
      * @param nanites
      * @return
      */
@@ -203,7 +244,7 @@ public class EntityNanites extends Researcher
     }
 
     /**
-     * 
+     *
      * @param data
      * @return
      */
@@ -219,7 +260,7 @@ public class EntityNanites extends Researcher
     }
 
     /**
-     * 
+     *
      * @param data
      * @return
      */
@@ -235,7 +276,7 @@ public class EntityNanites extends Researcher
     }
 
     /**
-     * 
+     *
      * @param nanites
      * @return
      */
@@ -251,7 +292,7 @@ public class EntityNanites extends Researcher
     }
 
     /**
-     * 
+     *
      * @param nanites
      * @return
      */
@@ -267,7 +308,7 @@ public class EntityNanites extends Researcher
     }
 
     /**
-     * 
+     *
      * @param knowledge
      * @param progress
      * @return
@@ -276,11 +317,19 @@ public class EntityNanites extends Researcher
     {
         if (!knowledgeProgress.containsKey(knowledge)) {
             knowledgeProgress.put(knowledge, progress);
+
+            if (this.player) {
+                ((PlayerNanites) this).sync();
+            }
         } else {
             int current = knowledgeProgress.get(knowledge);
             current += progress;
 
             knowledgeProgress.put(knowledge, current);
+
+            if (this.player) {
+                ((PlayerNanites) this).sync();
+            }
 
             return true;
         }
@@ -290,13 +339,13 @@ public class EntityNanites extends Researcher
 
     /**
      * Perform a piece of research.
-     * 
+     *
      * This checks to make sure that the knowledge hasn't already been
      * discovered, the research hasn't already been performed and whether or not
      * the research has been performed the maximum amount of times. It will also
      * automatically add knowledge progress.
-     * 
-     * @param technomagi
+     *
+     * @param technomage
      * @param research
      */
     public void performResearch(IResearch research, Knowledge knowledge)
@@ -383,11 +432,34 @@ public class EntityNanites extends Researcher
         }
 
         compound.setTag("KnowledgeProgress", progressKnowledge);
+
+        this.regen.saveNBTData(compound);
     }
 
     @Override
     public void loadNBTData(NBTTagCompound compound)
     {
+        this.active = compound.getBoolean("Active");
+
+        /**
+         * Owner, this is only used for non player entities.
+         */
+        if (!player) {
+            this.owner = compound.getString("Owner");
+        }
+
+        /**
+         * Nanites
+         */
+        this.maxNanites = compound.getInteger("MaxNanites");
+        this.nanites = compound.getInteger("Nanites");
+
+        /**
+         * Data
+         */
+        this.maxData = compound.getInteger("MaxData");
+        this.data = compound.getInteger("Data");
+
         /*
          * Research Complete
          */
@@ -419,6 +491,26 @@ public class EntityNanites extends Researcher
 
         for (int i = 0; i < repeatResearch.tagCount(); i++) {
             this.knowledgeProgress.put(compound.getString("Knowledge"), compound.getInteger("Progress"));
+        }
+
+        this.regen.loadNBTData(compound);
+    }
+
+    public void update(Side side)
+    {
+        if (side.equals(Side.SERVER)) {
+            if (active) {
+                this.regen.regen(this.regenTicks, this.regenMultiplier, this);
+            }
+        }
+    }
+
+    public void sync()
+    {
+        if (this.player) {
+            ((PlayerNanites) this).sync();
+        } else {
+
         }
     }
 

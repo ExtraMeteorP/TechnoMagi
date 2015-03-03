@@ -112,11 +112,12 @@ public interface IAbilityCast
 
     /**
      * This method should switch ability modes, returning the new one.
-     * 
+     * @param technomage TODO
      * @param abilityMode The mode that the ability is currently in
+     * 
      * @return
      */
-    public int switchModes(int abilityMode);
+    public int switchModes(PlayerTechnomagi technomage, int abilityMode);
 
     /**
      * The type of ability.

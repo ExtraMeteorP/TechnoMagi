@@ -9,6 +9,8 @@ public class KnowledgeCategory
 
     protected String name;
     protected ResourceLocation icon;
+    public int x;
+    public int y;
 
     public KnowledgeCategory(String name, ResourceLocation icon)
     {
@@ -29,6 +31,12 @@ public class KnowledgeCategory
     public ResourceLocation getIcon()
     {
         return this.icon;
+    }
+
+    public void setLocation(int x, int y)
+    {
+        this.x = x;
+        this.y = y;
     }
 
 }

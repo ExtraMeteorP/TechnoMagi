@@ -1,17 +1,17 @@
 package com.ollieread.technomagi.api.ability;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.ollieread.technomagi.api.entity.PlayerTechnomagi;
 
 /**
  * The ability handler.
- * 
+ *
  * This is where abilities are registered and called.
- * 
+ *
  * @author ollieread
  *
  */
@@ -21,19 +21,19 @@ public class AbilityHandler
     /**
      * The type of the ability. Right now, the primary use for this, is for
      * region filters.
-     * 
+     *
      * @author ollieread
      *
      */
     public static enum AbilityType {
-        SELF, PLAYER, ENTITY, ITEM, BLOCK, INTERACTION
+        SELF, PLAYER, ENTITY, ENTITY_LIVING, ITEM, BLOCK, INTERACTION
     }
 
     protected static Map<String, IAbilityCast> abilityCastableList = new LinkedHashMap<String, IAbilityCast>();
 
     /**
-     * 
-     * 
+     *
+     *
      * @param ability
      * @return
      */
@@ -49,8 +49,8 @@ public class AbilityHandler
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @param name
      * @return
      */
@@ -64,14 +64,14 @@ public class AbilityHandler
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @param technomage
      * @return
      */
-    public Collection<IAbilityCast> getCastableAbilitiesFor(PlayerTechnomagi technomage)
+    public List<IAbilityCast> getCastableAbilitiesFor(PlayerTechnomagi technomage)
     {
-        Collection<IAbilityCast> abilitiesFor = new ArrayList<IAbilityCast>();
+        List<IAbilityCast> abilitiesFor = new ArrayList<IAbilityCast>();
 
         for (IAbilityCast ability : abilityCastableList.values()) {
             if (ability.isAvailable(technomage)) {

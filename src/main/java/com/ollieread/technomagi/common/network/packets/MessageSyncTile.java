@@ -5,14 +5,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 
 import com.ollieread.technomagi.Technomagi;
-import com.ollieread.technomagi.common.blocks.tiles.TileBase;
+import com.ollieread.technomagi.common.block.tile.TileBase;
 
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
-public class MessageSyncTile implements IMessage, IMessageHandler<MessageSyncTile, IMessage>
+public class MessageSyncTile implements IMessage
 {
     public NBTTagCompound data;
     public int x;
@@ -51,34 +51,37 @@ public class MessageSyncTile implements IMessage, IMessageHandler<MessageSyncTil
         buffer.writeInt(z);
     }
 
-    @Override
-    public IMessage onMessage(MessageSyncTile message, MessageContext ctx)
+    public static class Handler implements IMessageHandler<MessageSyncTile, IMessage>
     {
-        try {
-            TileEntity tile = Technomagi.proxy.getClientWorld().getTileEntity(message.x, message.y, message.z);
+        @Override
+        public IMessage onMessage(MessageSyncTile message, MessageContext ctx)
+        {
+            try {
+                TileEntity tile = Technomagi.proxy.getClientWorld().getTileEntity(message.x, message.y, message.z);
 
-            if (tile == null) {
-                System.out.println("TE vanished mid sync");
-                System.out.println(message.x + ":" + message.y + ":" + message.z);
+                if (tile == null) {
+                    System.out.println("TE vanished mid sync");
+                    System.out.println(message.x + ":" + message.y + ":" + message.z);
+                }
+
+                TileBase tileBasic = (TileBase) tile;
+
+                if (tileBasic != null) {
+                    tileBasic.readFromNBT(message.data);
+
+                    /*
+                     * if (tileBasic instanceof ITileEntityDisguisable) {
+                     * tileBasic.getWorldObj
+                     * ().markBlockRangeForRenderUpdate(message.x, message.y,
+                     * message.z, message.x, message.y, message.z); }
+                     */
+                }
+
+            } catch (NullPointerException e) {
+                e.printStackTrace();
             }
 
-            TileBase tileBasic = (TileBase) tile;
-
-            if (tileBasic != null) {
-                tileBasic.readFromNBT(message.data);
-
-                /*
-                 * if (tileBasic instanceof ITileEntityDisguisable) {
-                 * tileBasic.getWorldObj
-                 * ().markBlockRangeForRenderUpdate(message.x, message.y,
-                 * message.z, message.x, message.y, message.z); }
-                 */
-            }
-
-        } catch (NullPointerException e) {
-            e.printStackTrace();
+            return null;
         }
-
-        return null;
     }
 }

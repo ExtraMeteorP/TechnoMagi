@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<content>
+	<section name="cleric">
+		<page>
+			<paragraph>
+				The cleric path is one chosen by those who value life above all else.
+			</paragraph>
+			<paragraph>
+				Technomages who choose to follow the cleric path, are for the most part, empathetic, caring individuals, who accept the 
+				responsibility of the life of others without a second thought.
+			</paragraph>
+			<paragraph>
+				As a cleric you receive increased regenerative capabilities, allowing you to tend to the wounds and needs of others without 
+				worrying about yourself.
+			</paragraph>
+		</page>
+	</section>
+	<section name="scholar">
+		<page>
+			<paragraph>
+				The scholar path is one chosen by those who seek knowledge and understanding wherever they may be, and wherever 
+				that may take them.
+			</paragraph>
+			<paragraph>
+				Some scholars consider themselves to be the superior technomages, but a true scholar would know that they are 
+				simply a small part of a large machine, and without their fellow technomages, that large machine would fall apart.
+			</paragraph>
+			<paragraph>
+				As a scholar you receive a random research boost while collecting data on knowledge topics.
+			</paragraph>
+		</page>
+	</section>
+	<section name="guardian">
+		<page>
+			<paragraph>
+				The guardian path is one chosen by those who strive for strength in the pursuit of protecting others.
+			</paragraph>
+			<paragraph>
+				Guardians are the frontline of the technomage world, their job is to defend and protect their fellow technomages by 
+				putting their life on the line. For the most part, technomage warriors will if possible, seek an option that does not require fighting.
+			</paragraph>
+			<paragraph>
+				As a guardian you receive the ability to endure more physical damage compared to your fellow technomages.
+			</paragraph>
+		</page>
+	</section>
+	<section name="shadow">
+		<page>
+			<paragraph>
+				Sneaky sneaky
+			</paragraph>
+		</page>
+	</section>
+	<section name="engineer">
+		<page>
+			<paragraph>
+				They like stuff!
+			</paragraph>
+		</page>
+	</section>
+</content>

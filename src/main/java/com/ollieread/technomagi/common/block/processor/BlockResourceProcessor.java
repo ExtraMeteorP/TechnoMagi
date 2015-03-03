@@ -5,19 +5,19 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-import com.ollieread.technomagi.common.block.BlockBaseContainer;
+import com.ollieread.technomagi.common.block.BlockContainerSubtypes;
 import com.ollieread.technomagi.common.block.processor.tile.TileResourceProcessorBasic;
 import com.ollieread.technomagi.common.block.processor.tile.TileResourceProcessorElectric;
 import com.ollieread.technomagi.common.block.processor.tile.TileResourceProcessorNanites;
 
-public class BlockResourceProcessor extends BlockBaseContainer
+public class BlockResourceProcessor extends BlockContainerSubtypes
 {
 
     protected IInventory inventory;
 
     public BlockResourceProcessor(String name)
     {
-        super(name, Material.rock);
+        super(name, new String[] { "processor_basic", "processor_electric", "processor_nanites" }, Material.rock);
     }
 
     @Override

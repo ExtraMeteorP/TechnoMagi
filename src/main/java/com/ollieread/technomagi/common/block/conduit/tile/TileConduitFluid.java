@@ -14,15 +14,26 @@ public class TileConduitFluid extends TileBase implements IFluidHandler
 {
 
     protected FluidTank tank;
+    protected int ticks = 0;
+    protected int wait = 0;
 
     public TileConduitFluid()
     {
         tank = new FluidTank(0);
     }
 
-    public TileConduitFluid(int capacity)
+    public TileConduitFluid(int capacity, int wait)
     {
-        tank = new FluidTank(capacity);
+        this.tank = new FluidTank(capacity);
+        this.wait = wait;
+    }
+
+    @Override
+    public void updateEntity()
+    {
+        if (!worldObj.isRemote) {
+            ticks++;
+        }
     }
 
     @Override
@@ -32,6 +43,9 @@ public class TileConduitFluid extends TileBase implements IFluidHandler
 
         tank = new FluidTank(tag.getInteger("Capacity"));
         tank.readFromNBT(tag);
+
+        ticks = tag.getInteger("Ticks");
+        wait = tag.getInteger("Wait");
     }
 
     @Override
@@ -41,6 +55,9 @@ public class TileConduitFluid extends TileBase implements IFluidHandler
 
         tank.writeToNBT(tag);
         tag.setInteger("Capacity", tank.getCapacity());
+
+        tag.setInteger("Ticks", ticks);
+        tag.setInteger("Wait", wait);
     }
 
     /* IFluidHandler */

@@ -1,0 +1,174 @@
+# Controls
+
+
+# GUI
+gui.technomagi.specialisation=Choose Specialisation
+gui.technomagi.specialise.choose=Choose
+gui.technomagi.knowledge=Research Progress
+
+gui.technomagi.link.information=Information
+gui.technomagi.link.crafting=Crafting Recipes
+gui.technomagi.link.smelting=Smelting Recipes
+gui.technomagi.link.abilities=Abilities
+gui.technomagi.link.staff=Staves
+
+# Tabs
+itemGroup.tab.technomagi.blocks=Technomagi: Blocks
+itemGroup.tab.technomagi.items=Technomagi: Items
+itemGroup.tab.technomagi.entities=Technomagi: Entities
+
+# Specialisations
+specialisation.technomagi.scholar=Scholar
+specialisation.technomagi.cleric=Cleric
+specialisation.technomagi.guardian=Guardian
+specialisation.technomagi.engineer=Engineer
+specialisation.technomagi.shadow=Shadow
+
+# Knowledge Categories
+research.category.technomancy=Technomancy
+research.category.nanites=Nanites
+research.category.energies=Energies
+research.category.existence=Existence
+research.category.organics=Organics
+research.category.resources=Resources
+research.category.arcane=Arcane
+
+# Knowledge
+research.knowledge.basic_technomancy=Basic Technomancy
+research.knowledge.basic_machines=Basic Machines
+research.knowledge.exoskeleton=Exoskeleton
+research.knowledge.restoration=Restoration
+research.knowledge.restoration_living=Restoration: Living
+research.knowledge.restoration_physical=Restoration: Physical
+research.knowledge.technological_constructs=Technological Constructs
+research.knowledge.teleportation=Teleportation
+research.knowledge.teleportation_phase_jumping=Teleportation: Phase-Jumping
+research.knowledge.teleportation_substitution=Teleportation: Substitution
+research.knowledge.teleportation_zero_shift=Teleportation: Zero Shift
+research.knowledge.adaption=Adaptation
+research.knowledge.adaption_environment=Adaptation: Environmental
+research.knowledge.transmutation=Transmutation
+research.knowledge.advanced_machines=Advanced Machines
+research.knowledge.dimensional=Dimensional Travel
+
+research.knowledge.basic_nanites=Basic Nanites
+research.knowledge.mimcry=Mimcry
+research.knowledge.robotization=Robotization
+research.knowledge.targeted_nanites=Targeted Nanites
+
+research.knowledge.basic_energy=Basic Energy
+research.knowledge.electromagnetic_pockets=Electromagnetic Pockets
+research.knowledge.energy_heat=Energy: Heat
+research.knowledge.energy_life=Energy: Life
+research.knowledge.energy_light=Energy: Light
+research.knowledge.energy_polar_heat=Energy: Polar Heat
+research.knowledge.energy_polar_life=Energy: Polar Life
+research.knowledge.energy_polar_light=Energy: Polar Light
+research.knowledge.energy_polar_void=Energy: Polar Void
+research.knowledge.energy_void=Energy: Void
+research.knowledge.force_fields=Force Fields
+research.knowledge.imbuement=Imbuement
+research.knowledge.kinetic_energy=Kinetic Energy
+
+research.knowledge.basic_existence=Basic Existence
+research.knowledge.artificial_life=Artificial Life
+research.knowledge.automatons=Automatons
+research.knowledge.regeneration=Regeneration
+research.knowledge.regeneration_absorbing=Regeneration: Absorbing
+research.knowledge.regeneration_adaptive=Regeneration: Adaptive
+research.knowledge.regeneration_energy=Regeneration: Energy
+research.knowledge.stasis=Stasis
+
+research.knowledge.basic_organics=Basic Organics
+research.knowledge.organic_technology=Organic Technology
+research.knowledge.petrification=Petrification
+research.knowledge.technorganic_materials=Technorganic Materials
+research.knowledge.bionics=Bionics
+research.knowledge.dna_manipulation=DNA Manipulation
+
+research.knowledge.basic_resources=Basic Resources
+research.knowledge.ambient_resource_construction=Ambient Resource Construction
+research.knowledge.enhanced_crafting=Enhanced Crafting
+research.knowledge.etherium=Etherium
+research.knowledge.advanced_resources=Advanced Resources
+research.knowledge.better_resources=Better Resources
+research.knowledge.storage=Storage
+research.knowledge.liquids=Liquids
+research.knowledge.optimisation=Optimisation
+research.knowledge.resource_manipulation=Resource Manipulation
+
+research.knowledge.basic_arcane=Basic Arcane
+research.knowledge.progenitors=Progenitors
+research.knowledge.enchantment=Enchantments
+research.knowledge.brewing=Brewing
+
+# Abilities
+
+# Blocks
+tile.technomagi.resource.etherium_ore.name=Etherium Ore
+tile.technomagi.resource.voidstone.name=Stone
+tile.technomagi.resource.copper_ore.name=Copper Ore
+tile.technomagi.resource.aluminium_ore.name=Aluminium Ore
+
+tile.technomagi.scanner.position.name=Scanner: Monitoring
+tile.technomagi.scanner.area.name=Scanner: Area
+tile.technomagi.scanner.analysis.name=Scanner: Analysis
+
+tile.technomagi.conduit.power_basic.name=Power Conduit: Basic
+tile.technomagi.conduit.power_advanced.name=Power Conduit: Advanced
+tile.technomagi.conduit.power_elite.name=Power Conduit: Elite
+tile.technomagi.conduit.fluid_basic.name=Fluid Conduit: Basic
+tile.technomagi.conduit.fluid_advanced.name=Fluid Conduit: Advanced
+tile.technomagi.conduit.fluid_elite.name=Fluid Conduit: Elite
+tile.technomagi.conduit.item_basic.name=Item Conduit: Basic
+tile.technomagi.conduit.item_advanced.name=Item Conduit: Advanced
+tile.technomagi.conduit.item_elite.name=Item Conduit: Elite
+
+tile.technomagi.processor.processor_basic.name=Processor: Basic
+tile.technomagi.processor.processor_electric.name=Processor: Electric
+tile.technomagi.processor.processor_nanites.name=Processor: Nanite
+
+tile.technomagi.battery.name=Battery Unit
+
+# Items
+item.technomagi.resource.iron_dust.name=Iron Dust
+item.technomagi.resource.gold_dust.name=Gold Dust
+item.technomagi.resource.copper_dust.name=Copper Dust
+item.technomagi.resource.aluminium_dust.name=Aluminium Dust
+item.technomagi.resource.diamond_dust.name=Diamond Dust
+item.technomagi.resource.stone_dust.name=Ground Stone
+item.technomagi.resource.wood_dust.name=Wood Shavings
+item.technomagi.resource.etherium_dust.name=Etherium Dust
+item.technomagi.resource.nanite_iron_dust.name=Nanite Iron Dust
+item.technomagi.resource.copper_ingot.name=Copper Ingot
+item.technomagi.resource.aluminium_ingot.name=Aluminium Ingot
+item.technomagi.resource.nanite_iron_ingot.name=Nanite Iron Ingot
+item.technomagi.resource.iron_rod.name=Iron Rod
+item.technomagi.resource.gold_rod.name=Gold Rod
+item.technomagi.resource.diamond_rod.name=Diamond Rod
+item.technomagi.resource.iron_sheet.name=Iron Sheet
+item.technomagi.resource.gold_sheet.name=Gold Sheet
+item.technomagi.resource.diamond_sheet.name=Diamond Sheet
+item.technomagi.resource.nanite_iron_sheet.name=Nanite Iron Sheet
+item.technomagi.resource.fabric.name=Etherium Fabric
+
+item.technomagi.crystal.etherium.name=Etherium
+item.technomagi.crystal.void.name=Void Crystal
+item.technomagi.crystal.noughtite.name=Noughtite
+item.technomagi.crystal.relux.name=Relux
+item.technomagi.crystal.cimmerium.name=Cimmerium
+item.technomagi.crystal.calidite.name=Calidite
+item.technomagi.crystal.glacite.name=Glacite
+item.technomagi.crystal.verux.name=Verux
+item.technomagi.crystal.oblerite.name=Oblerite
+item.technomagi.crystal_charged.etherium.name=Etherium
+item.technomagi.crystal_charged.void.name=Void Crystal
+item.technomagi.crystal_charged.noughtite.name=Noughtite
+item.technomagi.crystal_charged.relux.name=Relux
+item.technomagi.crystal_charged.cimmerium.name=Cimmerium
+item.technomagi.crystal_charged.calidite.name=Calidite
+item.technomagi.crystal_charged.glacite.name=Glacite
+item.technomagi.crystal_charged.verux.name=Verux
+item.technomagi.crystal_charged.oblerite.name=Oblerite
+
+item.technomagi.interface.name=Nanite Interface

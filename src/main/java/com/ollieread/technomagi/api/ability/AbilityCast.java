@@ -3,10 +3,12 @@ package com.ollieread.technomagi.api.ability;
 import net.minecraft.item.EnumAction;
 import net.minecraft.util.ResourceLocation;
 
+import com.ollieread.technomagi.api.entity.PlayerTechnomagi;
+
 /**
  * This is an example implementation of {@link IAbilityCast}, and should be used
  * instead of implementing yourself, if at all possible.
- * 
+ *
  * @author ollieread
  *
  */
@@ -59,9 +61,9 @@ public abstract class AbilityCast implements IAbilityCast
     }
 
     @Override
-    public int switchModes(int abilityMode)
+    public int switchModes(PlayerTechnomagi technomage, int abilityMode)
     {
-        return 0;
+        return abilityMode;
     }
 
     @Override

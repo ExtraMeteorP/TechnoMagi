@@ -6,7 +6,7 @@ import java.util.Map;
 
 import net.minecraft.item.ItemStack;
 
-import com.ollieread.technomagi.api.crafting.ProcessorRecipes.ProcessorType;
+import com.ollieread.technomagi.api.crafting.CraftingHandler.ProcessorRecipes.ProcessorType;
 
 public class ProcessorRecipe implements IProcessorRecipe
 {
@@ -77,6 +77,12 @@ public class ProcessorRecipe implements IProcessorRecipe
         }
 
         return 0;
+    }
+
+    @Override
+    public boolean matches(ProcessorType type, ItemStack input)
+    {
+        return getInput(type).isItemEqual(input);
     }
 
 }

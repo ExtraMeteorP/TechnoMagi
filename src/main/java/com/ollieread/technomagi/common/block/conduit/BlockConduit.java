@@ -10,7 +10,7 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.IFluidHandler;
 import cofh.api.energy.IEnergyReceiver;
 
-import com.ollieread.technomagi.client.renderers.blocks.ConduitRenderer;
+import com.ollieread.technomagi.client.renderers.blocks.BlockConduitRenderer;
 import com.ollieread.technomagi.common.block.BlockContainerSubtypes;
 import com.ollieread.technomagi.common.block.conduit.tile.TileConduitFluid;
 import com.ollieread.technomagi.common.block.conduit.tile.TileConduitPower;
@@ -49,11 +49,11 @@ public class BlockConduit extends BlockContainerSubtypes
             case 2:
                 return new TileConduitPower(4096);
             case 3:
-                return new TileConduitFluid(FluidContainerRegistry.BUCKET_VOLUME * 10);
+                return new TileConduitFluid(FluidContainerRegistry.BUCKET_VOLUME * 10, 100);
             case 4:
-                return new TileConduitFluid(FluidContainerRegistry.BUCKET_VOLUME * 100);
+                return new TileConduitFluid(FluidContainerRegistry.BUCKET_VOLUME * 100, 50);
             case 5:
-                return new TileConduitFluid(FluidContainerRegistry.BUCKET_VOLUME * 1000);
+                return new TileConduitFluid(FluidContainerRegistry.BUCKET_VOLUME * 1000, 10);
         }
 
         return null;
@@ -97,7 +97,7 @@ public class BlockConduit extends BlockContainerSubtypes
     @Override
     public int getRenderType()
     {
-        return ConduitRenderer.id;
+        return BlockConduitRenderer.id;
     }
 
     @Override

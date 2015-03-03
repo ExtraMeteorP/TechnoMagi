@@ -1,6 +1,13 @@
 package com.ollieread.technomagi.api.entity;
 
-public class EntityRobot
+import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.world.World;
+
+public class EntityRobot extends EntityMob
 {
 
+    public EntityRobot(World world)
+    {
+        super(world);
+    }
 }

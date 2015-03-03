@@ -1,8 +1,5 @@
 package com.ollieread.technomagi.api.knowledge;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.util.ResourceLocation;
 
 import com.ollieread.technomagi.api.TechnomagiApi;
@@ -13,15 +10,16 @@ public class Knowledge
     protected String name;
     protected ResourceLocation icon;
     protected String category;
-    protected List<String> prerequisites;
+    protected String prerequisite;
     protected int tier = 0;
+    public int x;
+    public int y;
 
     public Knowledge(String name, ResourceLocation icon, String category)
     {
         this.name = name;
         this.icon = icon;
         this.category = category;
-        this.prerequisites = new ArrayList<String>();
     }
 
     public String getName()
@@ -44,23 +42,14 @@ public class Knowledge
         return this.category;
     }
 
-    public List<String> getPrerequisites()
+    public String getPrerequisite()
     {
-        return this.prerequisites;
+        return this.prerequisite;
     }
 
     public Knowledge addPrerequisite(String knowledge)
     {
-        if (!prerequisites.contains(knowledge)) {
-            prerequisites.add(knowledge);
-        }
-
-        return this;
-    }
-
-    public Knowledge setPrerequisites(List<String> prerequisites)
-    {
-        this.prerequisites = prerequisites;
+        prerequisite = knowledge;
 
         return this;
     }
@@ -75,6 +64,12 @@ public class Knowledge
         this.tier = tier;
 
         return this;
+    }
+
+    public void setLocation(int x, int y)
+    {
+        this.x = x;
+        this.y = y;
     }
 
 }

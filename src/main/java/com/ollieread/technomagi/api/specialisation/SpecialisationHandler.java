@@ -11,7 +11,7 @@ public class SpecialisationHandler
 
     /**
      * Register a specialisation.
-     * 
+     *
      * @param specialisation
      * @return
      */
@@ -34,7 +34,7 @@ public class SpecialisationHandler
         return null;
     }
 
-    public Collection<Specialisation> getSpecialisations(String name)
+    public Collection<Specialisation> getSpecialisations()
     {
         return specialisationList.values();
     }

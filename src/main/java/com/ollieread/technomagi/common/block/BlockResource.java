@@ -16,13 +16,13 @@ public class BlockResource extends BlockSubtypes
 
     public BlockResource(String name)
     {
-        super(name, new String[] { "etherium_ore", "voidstone", "copper_ore", "aluminium_ore" }, Material.rock);
+        super(name, new String[] { "etherium_ore", "voidstone", "copper_ore", "aluminium_ore", "copper_block", "aluminium_block" }, Material.rock);
     }
 
     @Override
     public Item getItemDropped(int meta, Random rand, int fortune)
     {
-        return meta == 0 ? Items.resource : Item.getItemFromBlock(this);
+        return meta == 0 ? Items.crystal : Item.getItemFromBlock(this);
     }
 
     @Override
