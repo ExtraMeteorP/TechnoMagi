@@ -17,29 +17,27 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.0"
-group= "com.yourname.modid" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "modid"
+ext.configFile = file "build.properties"
+
+configFile.withReader {
+    // Load config.  It shall from now be referenced as simply config or project.config
+    def prop = new Properties()
+    prop.load(it)
+    project.ext.config = new ConfigSlurper().parse prop
+}
+
+version = "${config.minecraft}-${config.version}.${System.getenv("BUILD_NUMBER")}"
+group= "com.ollieread.technomagi" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "Technomagi"
 
 minecraft {
-    version = "1.7.10-10.13.2.1230"
+    version = "${config.minecraft}-${config.forge}"
     runDir = "eclipse"
+    
+    replace "@VERSION@", project.version
 }
 
 dependencies {
-    // you may put jars on which you depend on in ./libs
-    // or you may define them like so..
-    //compile "some.group:artifact:version:classifier"
-    //compile "some.group:artifact:version"
-      
-    // real examples
-    //compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
-    //compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
-
-    // for more info...
-    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
-    // http://www.gradle.org/docs/current/userguide/dependency_management.html
-
 }
 
 processResources
@@ -61,3 +59,30 @@ processResources
         exclude 'mcmod.info'
     }
 }
+
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    classifier = 'deobf'
+}
+
+artifacts {
+    archives deobfJar 
+    archives jar
+}
+
+import org.ajoberstar.grgit.*
+
+ext.repo = Grgit.open(project.file('.'))
+
+version = "${config.version.major}.${config.version.minor}.${config.version.revis}.${System.getenv("BUILD_NUMBER") ?: 0}${config.version.stage ? "-${config.version.stage}" : ""}"
+
+task tagBuild << {
+    repo.tag.add {
+        name = version
+        message = "Build for ${version}"
+    }
+    
+    repo.push(tags: true)
+}
+
+build.dependsOn "deobfJar"
