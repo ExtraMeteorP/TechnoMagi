@@ -12,4 +12,9 @@ public class ResourceHelper
         return new ResourceLocation(Technomagi.MODID.toLowerCase(), "textures/" + path);
     }
 
+    public static String icon(String path)
+    {
+        return Technomagi.MODID.toLowerCase() + ":" + path;
+    }
+
 }

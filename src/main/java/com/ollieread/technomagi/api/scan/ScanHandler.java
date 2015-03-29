@@ -6,9 +6,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import scala.actors.threadpool.Arrays;
 
 import com.ollieread.technomagi.util.BlockRepresentation;
@@ -29,56 +26,6 @@ public class ScanHandler
     protected Map<BlockRepresentation, IScanBlock> blockScanHandler = new LinkedHashMap<BlockRepresentation, IScanBlock>();
 
     protected List<ScanRepresentation> activeScanners = new ArrayList<ScanRepresentation>();
-
-    /**
-     * Get an instance of {@link ItemStackRepresentation} for the provided
-     * ItemStack.
-     *
-     * @param stack
-     * @return
-     */
-    public static ItemStackRepresentation getItemStackRepresentation(ItemStack stack)
-    {
-        return new ItemStackRepresentation(stack);
-    }
-
-    /**
-     * Get an instance of {@link ItemStackRepresentation} for the provided Item
-     * and damage value.
-     *
-     * @param item
-     * @param damage
-     * @return
-     */
-    public static ItemStackRepresentation getItemStackRepresentation(Item item, int damage)
-    {
-        return getItemStackRepresentation(new ItemStack(item, 1, damage));
-    }
-
-    /**
-     * Get an instance of {@link BlockRepresentation} for the provided
-     * ItemStack.
-     *
-     * @param stack
-     * @return
-     */
-    public static BlockRepresentation getBlockRepresentation(ItemStack stack)
-    {
-        return new BlockRepresentation(Block.getBlockFromItem(stack.getItem()), stack.getItemDamage());
-    }
-
-    /**
-     * Get an instance of {@link BlockRepresentation} for the provided block and
-     * metadata.
-     *
-     * @param block
-     * @param metadata
-     * @return
-     */
-    public static BlockRepresentation getBlockRepresentation(Block block, int metadata)
-    {
-        return new BlockRepresentation(block, metadata);
-    }
 
     /**
      *

@@ -10,8 +10,8 @@ import net.minecraftforge.event.world.BlockEvent.PlaceEvent;
 import com.ollieread.technomagi.api.TechnomagiApi;
 import com.ollieread.technomagi.api.scan.IScanBlock;
 import com.ollieread.technomagi.api.scan.IScanTile;
-import com.ollieread.technomagi.api.scan.ScanHandler;
 import com.ollieread.technomagi.api.scan.ScanHandler.ScanRepresentation;
+import com.ollieread.technomagi.util.BlockHelper;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
@@ -27,7 +27,7 @@ public class ScanningEvents
                 IScanTile tile = scanner.getScanner();
 
                 if (tile != null) {
-                    IScanBlock block = TechnomagiApi.scan().getBlockScanHandler(ScanHandler.getBlockRepresentation(event.block, event.blockMetadata));
+                    IScanBlock block = TechnomagiApi.scan().getBlockScanHandler(BlockHelper.getBlockRepresentation(event.block, event.blockMetadata));
 
                     if (block != null) {
                         block.onBreak(tile, event.world, event.x, event.y, event.z, event.block, event.blockMetadata);
@@ -48,7 +48,7 @@ public class ScanningEvents
                 IScanTile tile = scanner.getScanner();
 
                 if (tile != null) {
-                    IScanBlock block = TechnomagiApi.scan().getBlockScanHandler(ScanHandler.getBlockRepresentation(event.block, event.blockMetadata));
+                    IScanBlock block = TechnomagiApi.scan().getBlockScanHandler(BlockHelper.getBlockRepresentation(event.block, event.blockMetadata));
 
                     if (block != null) {
                         block.onPlace(tile, event.world, event.x, event.y, event.z, event.block, event.blockMetadata);
@@ -71,7 +71,7 @@ public class ScanningEvents
                 if (tile != null) {
                     Block worldBlock = event.world.getBlock(event.x, event.y, event.z);
                     int metadata = event.world.getBlockMetadata(event.x, event.y, event.z);
-                    IScanBlock block = TechnomagiApi.scan().getBlockScanHandler(ScanHandler.getBlockRepresentation(worldBlock, metadata));
+                    IScanBlock block = TechnomagiApi.scan().getBlockScanHandler(BlockHelper.getBlockRepresentation(worldBlock, metadata));
 
                     if (block != null) {
                         if (event.action.equals(Action.LEFT_CLICK_BLOCK)) {
@@ -96,7 +96,7 @@ public class ScanningEvents
                 IScanTile tile = scanner.getScanner();
 
                 if (tile != null) {
-                    IScanBlock block = TechnomagiApi.scan().getBlockScanHandler(ScanHandler.getBlockRepresentation(event.block, event.blockMetadata));
+                    IScanBlock block = TechnomagiApi.scan().getBlockScanHandler(BlockHelper.getBlockRepresentation(event.block, event.blockMetadata));
 
                     if (block != null) {
                         block.onHarvest(tile, event.world, event.x, event.y, event.z, event.block, event.blockMetadata);

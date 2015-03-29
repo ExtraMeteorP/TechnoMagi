@@ -20,7 +20,7 @@ import org.lwjgl.opengl.GL12;
 
 import com.ollieread.technomagi.Technomagi;
 import com.ollieread.technomagi.client.gui.component.Component.ComponentOrientation;
-import com.ollieread.technomagi.client.gui.window.Window;
+import com.ollieread.technomagi.client.gui.window.abstracts.Window;
 
 public class GuiBuilder extends Gui
 {
@@ -161,7 +161,7 @@ public class GuiBuilder extends Gui
 
         if (p > 0) {
             int[] uv = t.getUV(ComponentOrientation.VERTICAL);
-            drawTexturedModalRect(x + 1, y + h - p + 1, uv[0], uv[1] - p, 3, p);
+            drawTexturedModalRect(x + 1, y + 1, uv[0], uv[1], 3, p);
         }
     }
 
@@ -174,8 +174,8 @@ public class GuiBuilder extends Gui
         GL11.glEnable(GL11.GL_BLEND);
         OpenGlHelper.glBlendFunc(770, 771, 1, 0);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        drawTexturedModalRect(x, y, 74, 90, w / 2, h);
-        drawTexturedModalRect(x + (w / 2), y, 176 - (w / 2), 90, w / 2, h);
+        drawTexturedModalRect(x, y, 0, 232, w / 2, h);
+        drawTexturedModalRect(x + (w / 2), y, 102 - (w / 2), 232, w / 2, h);
     }
 
     public void drawHorizontalProgressBarForeground(int x, int y, int w, ProgressType t, int p)
@@ -189,7 +189,7 @@ public class GuiBuilder extends Gui
 
         if (p > 0) {
             int[] uv = t.getUV(ComponentOrientation.HORIZONTAL);
-            drawTexturedModalRect(x, y + 1, uv[0], uv[1], p, 3);
+            drawTexturedModalRect(x + 1, y + 1, uv[0], uv[1], p, 3);
         }
     }
 
@@ -459,9 +459,9 @@ public class GuiBuilder extends Gui
     }
 
     public static enum ProgressType {
-        NANITES(181, 115, 75, 95),
-        DATA(184, 115, 75, 98),
-        ENERGY(187, 115, 75, 101);
+        NANITES(181, 15, 0, 237),
+        DATA(184, 15, 0, 240),
+        ENERGY(187, 15, 0, 243);
 
         protected int veritcalU;
         protected int veritcalV;

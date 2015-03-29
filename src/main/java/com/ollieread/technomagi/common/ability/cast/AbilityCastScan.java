@@ -18,7 +18,8 @@ import com.ollieread.technomagi.api.ability.AbilityPayload.AbilityResult;
 import com.ollieread.technomagi.api.ability.AbilityPayload.AbilityUseTarget;
 import com.ollieread.technomagi.api.entity.PlayerTechnomagi;
 import com.ollieread.technomagi.api.knowledge.research.IResearch;
-import com.ollieread.technomagi.api.scan.ScanHandler;
+import com.ollieread.technomagi.util.BlockHelper;
+import com.ollieread.technomagi.util.ItemStackHelper;
 import com.ollieread.technomagi.util.PlayerHelper;
 
 public class AbilityCastScan extends AbilityCast
@@ -45,10 +46,10 @@ public class AbilityCastScan extends AbilityCast
 
         if (payload.target.equals(AbilityUseTarget.BLOCK)) {
             World world = technomage.getPlayer().worldObj;
-            flag = !TechnomagiApi.scan().getScanMapping(ScanHandler.getBlockRepresentation(world.getBlock(payload.blockX, payload.blockY, payload.blockZ), world.getBlockMetadata(payload.blockX, payload.blockY, payload.blockZ))).isEmpty();
+            flag = !TechnomagiApi.scan().getScanMapping(BlockHelper.getBlockRepresentation(world.getBlock(payload.blockX, payload.blockY, payload.blockZ), world.getBlockMetadata(payload.blockX, payload.blockY, payload.blockZ))).isEmpty();
         } else if (payload.target.equals(AbilityUseTarget.ENTITY_ITEM)) {
             stack = ((EntityItem) payload.targetEntity).getEntityItem();
-            flag = !TechnomagiApi.scan().getScanMapping(ScanHandler.getItemStackRepresentation(stack)).isEmpty();
+            flag = !TechnomagiApi.scan().getScanMapping(ItemStackHelper.getItemStackRepresentation(stack)).isEmpty();
         }
 
         return flag;
@@ -84,9 +85,9 @@ public class AbilityCastScan extends AbilityCast
             if (payload.target.equals(AbilityUseTarget.BLOCK)) {
                 Block block = world.getBlock(payload.blockX, payload.blockY, payload.blockZ);
                 int metadata = world.getBlockMetadata(payload.blockX, payload.blockY, payload.blockZ);
-                mapping = TechnomagiApi.scan().getScanMapping(ScanHandler.getBlockRepresentation(block, metadata));
+                mapping = TechnomagiApi.scan().getScanMapping(BlockHelper.getBlockRepresentation(block, metadata));
             } else if (payload.target.equals(AbilityUseTarget.ENTITY_ITEM)) {
-                mapping = TechnomagiApi.scan().getScanMapping(ScanHandler.getItemStackRepresentation(((EntityItem) payload.targetEntity).getEntityItem()));
+                mapping = TechnomagiApi.scan().getScanMapping(ItemStackHelper.getItemStackRepresentation(((EntityItem) payload.targetEntity).getEntityItem()));
             }
 
             if (mapping != null && !mapping.isEmpty()) {

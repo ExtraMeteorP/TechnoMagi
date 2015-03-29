@@ -13,9 +13,10 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.IChunkProvider;
 
 import com.ollieread.technomagi.api.electromagnetic.ElectromagneticPocket;
-import com.ollieread.technomagi.api.electromagnetic.ElectromagneticPocket.EnergyType;
 import com.ollieread.technomagi.api.electromagnetic.ElectromagneticPocket.PocketSize;
 import com.ollieread.technomagi.api.electromagnetic.ElectromagneticPocketManager;
+import com.ollieread.technomagi.api.electromagnetic.EnergyHandler;
+import com.ollieread.technomagi.api.electromagnetic.EnergyHandler.EnergyType;
 import com.ollieread.technomagi.common.block.electromagnetic.tile.TileElectromagnetic;
 
 import cpw.mods.fml.common.IWorldGenerator;
@@ -123,7 +124,7 @@ public class TechnomagiElectromagneticGen implements IWorldGenerator
                                             }
 
                                             BiomeGenBase biome = world.getWorldChunkManager().getBiomeGenAt(xCoord, zCoord);
-                                            EnergyType newType = EnergyType.values()[rand.nextInt(EnergyType.values().length)];
+                                            EnergyHandler.EnergyType newType = EnergyHandler.EnergyType.values()[rand.nextInt(EnergyHandler.EnergyType.values().length)];
 
                                             world.setBlock(xCoord, yCoord, zCoord, this.pocketBlock, 0, 2);
 

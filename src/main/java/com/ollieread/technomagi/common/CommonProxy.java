@@ -10,9 +10,11 @@ import net.minecraftforge.common.MinecraftForge;
 
 import com.ollieread.technomagi.api.TechnomagiApi;
 import com.ollieread.technomagi.api.entity.PlayerTechnomagi;
+import com.ollieread.technomagi.client.gui.GuiWindowContainer;
 import com.ollieread.technomagi.client.gui.GuiWindowScreen;
 import com.ollieread.technomagi.client.gui.window.WindowKnowledge;
 import com.ollieread.technomagi.client.gui.window.WindowSpecialisation;
+import com.ollieread.technomagi.common.block.tile.ITileGui;
 import com.ollieread.technomagi.common.event.handler.AbilityEvents;
 import com.ollieread.technomagi.common.event.handler.ElectromagneticPocketEvents;
 import com.ollieread.technomagi.common.event.handler.EntityEvents;
@@ -27,6 +29,7 @@ public class CommonProxy implements IGuiHandler
 {
 
     public static int GUI_TECHNOMAGE = 0;
+    public static int GUI_TILE = 1;
 
     public void init()
     {
@@ -92,6 +95,14 @@ public class CommonProxy implements IGuiHandler
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
     {
+        if (ID == GUI_TILE) {
+            ITileGui tile = (ITileGui) world.getTileEntity(x, y, z);
+
+            if (tile != null) {
+                return tile.getContainer(player);
+            }
+        }
+
         return null;
     }
 
@@ -107,6 +118,12 @@ public class CommonProxy implements IGuiHandler
                 } else {
                     return new GuiWindowScreen(new WindowKnowledge(technomage, null));
                 }
+            }
+        } else if (ID == GUI_TILE) {
+            ITileGui tile = (ITileGui) world.getTileEntity(x, y, z);
+
+            if (tile != null) {
+                return new GuiWindowContainer(tile.getWindow(player), tile.getContainer(player));
             }
         }
 
@@ -126,6 +143,10 @@ public class CommonProxy implements IGuiHandler
     }
 
     public void updateOverlay()
+    {
+    }
+
+    public void updateContent()
     {
     }
 

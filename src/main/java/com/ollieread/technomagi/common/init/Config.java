@@ -9,7 +9,9 @@ public class Config
 
     public static Configuration config;
 
+    // Categories
     public static String CATEGORY_GENERAL = "General";
+    public static String CATEGORY_TELEPORTER = "Teleporter";
     public static String CATEGORY_ENTITY = "Entity";
     public static String CATEGORY_ABILITY = "Ability";
     public static String CATEGORY_MACHINE = "Machine";
@@ -21,6 +23,11 @@ public class Config
     public static boolean creativeKnowledge;
     public static boolean creativeKnowledgeAll;
     public static boolean multiplayerMode;
+
+    // Teleporters
+    public static int elevatorLength;
+    public static int elevatorBlockJump;
+
     // Entity
     public static int robotCow;
     public static int robotZombie;
@@ -42,7 +49,11 @@ public class Config
         creativeKnowledgeAll = config.getBoolean("creativeKnowledgeAll", CATEGORY_GENERAL, false, "Whether or not to allow giving all knowledge from creative");
         multiplayerMode = config.getBoolean("multiplayerMode", CATEGORY_GENERAL, true, "Whether or not to apply class bias for multiplayer, best to leave on");
 
-        // Entities
+        // Teleporter Config
+        elevatorLength = config.getInt("elevatorLength", CATEGORY_TELEPORTER, 100, 3, 256, "The maximum length that the elevators can be from each other");
+        elevatorBlockJump = config.getInt("elevatorBlockJump", CATEGORY_TELEPORTER, 20, 0, 256, "The amount of solid blocks the elevator can jump");
+
+        // Entity Config
         robotCow = config.getInt("robotCow", CATEGORY_ENTITY, 1, 1, 100, "Robot cow ID");
         robotZombie = config.getInt("robotZombie", CATEGORY_ENTITY, 2, 1, 100, "Robot zombie ID");
         robotCreeper = config.getInt("robotCreeper", CATEGORY_ENTITY, 3, 1, 100, "Robot creeper ID");
@@ -53,5 +64,4 @@ public class Config
 
         config.save();
     }
-
 }

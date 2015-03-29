@@ -84,7 +84,7 @@ public class ComponentButton extends Component
     {
         x += getOffsetX();
         y += getOffsetY();
-        boolean flag = active || hover;
+        boolean flag = active ? true : hover;
 
         if (type.equals(ButtonType.DEFAULT)) {
             builder.bindTexture();

@@ -55,6 +55,11 @@ public class PlayerHelper
         return technomage != null && technomage.hasSpecialised();
     }
 
+    public static boolean hasKnowledge(EntityPlayer player, String knowledge)
+    {
+        return hasKnowledge(player, TechnomagiApi.getKnowledge(knowledge));
+    }
+
     public static boolean hasKnowledge(EntityPlayer player, Knowledge knowledge)
     {
         PlayerTechnomagi technomage = getTechnomagi(player);

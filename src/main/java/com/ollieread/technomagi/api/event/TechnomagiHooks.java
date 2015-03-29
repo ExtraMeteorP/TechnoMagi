@@ -8,8 +8,9 @@ import net.minecraft.world.ChunkPosition;
 import com.ollieread.technomagi.api.TechnomagiApi;
 import com.ollieread.technomagi.api.ability.AbilityPayload;
 import com.ollieread.technomagi.api.ability.IAbilityCast;
-import com.ollieread.technomagi.api.electromagnetic.ElectromagneticPocket.EnergyType;
 import com.ollieread.technomagi.api.electromagnetic.ElectromagneticPocket.PocketSize;
+import com.ollieread.technomagi.api.electromagnetic.EnergyHandler;
+import com.ollieread.technomagi.api.electromagnetic.EnergyHandler.EnergyType;
 import com.ollieread.technomagi.api.event.ElectromagneticPocketEvent.ExposeBlock;
 import com.ollieread.technomagi.api.event.ElectromagneticPocketEvent.ExposeEntity;
 import com.ollieread.technomagi.api.event.ElectromagneticPocketEvent.ExposeItem;
@@ -73,7 +74,7 @@ public class TechnomagiHooks
         TechnomagiApi.EVENT_BUS.post(new AbilityCastEvent.Stop(player, ability, payload, complete));
     }
 
-    public static ElectromagneticPocketEvent.ExposeEntity electromagneticPocketEntity(TileElectromagnetic tile, EntityLivingBase entity, EnergyType type, PocketSize size, boolean negative, float modifier, float amount, boolean first)
+    public static ElectromagneticPocketEvent.ExposeEntity electromagneticPocketEntity(TileElectromagnetic tile, EntityLivingBase entity, EnergyHandler.EnergyType type, PocketSize size, boolean negative, float modifier, float amount, boolean first)
     {
         ExposeEntity event = new ElectromagneticPocketEvent.ExposeEntity(tile, entity, type, size, negative, modifier, amount, first);
         TechnomagiApi.EVENT_BUS.post(event);
@@ -81,7 +82,7 @@ public class TechnomagiHooks
         return event;
     }
 
-    public static ElectromagneticPocketEvent.ExposeItem electromagneticPocketItem(TileElectromagnetic tile, EntityItem item, EnergyType type, PocketSize size, boolean negative, float modifier, float amount)
+    public static ElectromagneticPocketEvent.ExposeItem electromagneticPocketItem(TileElectromagnetic tile, EntityItem item, EnergyHandler.EnergyType type, PocketSize size, boolean negative, float modifier, float amount)
     {
         ExposeItem event = new ElectromagneticPocketEvent.ExposeItem(tile, item, type, size, negative, modifier, amount);
         TechnomagiApi.EVENT_BUS.post(event);
@@ -89,7 +90,7 @@ public class TechnomagiHooks
         return event;
     }
 
-    public static ElectromagneticPocketEvent.ExposeBlock electromagneticPocketBlock(TileElectromagnetic tile, ChunkPosition block, EnergyType type, PocketSize size, boolean negative, float modifier, float amount)
+    public static ElectromagneticPocketEvent.ExposeBlock electromagneticPocketBlock(TileElectromagnetic tile, ChunkPosition block, EnergyHandler.EnergyType type, PocketSize size, boolean negative, float modifier, float amount)
     {
         ExposeBlock event = new ElectromagneticPocketEvent.ExposeBlock(tile, block, type, size, negative, modifier, amount);
         TechnomagiApi.EVENT_BUS.post(event);

@@ -39,7 +39,7 @@ public class TileTeleporterFixed extends TileTeleporter
 
             if (tile instanceof TileTeleporterFixed) {
                 if (((TileTeleporterFixed) tile).canUse(player, !incoming)) {
-                    TeleportHelper.teleportPlayerToTeleporter(player, tile.xCoord, tile.yCoord, tile.zCoord, false);
+                    TeleportHelper.teleportEntityToTeleporter(player, tile.xCoord, tile.yCoord, tile.zCoord, false);
                     break;
                 }
             }

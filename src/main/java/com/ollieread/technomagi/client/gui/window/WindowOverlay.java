@@ -10,6 +10,7 @@ import com.ollieread.technomagi.client.gui.component.Component;
 import com.ollieread.technomagi.client.gui.component.ComponentProgress;
 import com.ollieread.technomagi.client.gui.component.ComponentSelector;
 import com.ollieread.technomagi.client.gui.component.ComponentVerticalList;
+import com.ollieread.technomagi.client.gui.window.abstracts.Window;
 import com.ollieread.technomagi.util.PlayerHelper;
 
 public class WindowOverlay extends Window

@@ -17,6 +17,7 @@ import com.ollieread.technomagi.client.gui.component.ComponentKnowledge;
 import com.ollieread.technomagi.client.gui.component.ComponentKnowledgeGrid;
 import com.ollieread.technomagi.client.gui.component.ComponentTab;
 import com.ollieread.technomagi.client.gui.component.IClickHandler;
+import com.ollieread.technomagi.client.gui.window.abstracts.WindowTabbed;
 import com.ollieread.technomagi.util.ResourceHelper;
 
 public class WindowKnowledge extends WindowTabbed implements IClickHandler
@@ -56,7 +57,6 @@ public class WindowKnowledge extends WindowTabbed implements IClickHandler
         ComponentKnowledgeGrid grid = new ComponentKnowledgeGrid(243, 208);
         grid.setBackground(ResourceHelper.texture("gui/knowledge.png")).setPadding(6, 6);
         this.addComponent("hex_grid", grid);
-        this.updateContent();
     }
 
     @Override
@@ -123,6 +123,7 @@ public class WindowKnowledge extends WindowTabbed implements IClickHandler
             if (((ComponentKnowledge) component).isActive()) {
                 String name = component.getName();
                 builder.instance.currentWindow = new WindowKnowledgeInfo(this.technomage, this.activeTab, name);
+                builder.instance.currentWindow.updateContent();
             }
         }
     }

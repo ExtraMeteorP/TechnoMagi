@@ -41,34 +41,17 @@ public class ElectromagneticPocket
         }
     }
 
-    /**
-     * The types of energy, along with their conversion to RF values.
-     *
-     * @author ollieread
-     *
-     */
-    public static enum EnergyType {
-        LIFE(1.5F), LIGHT(0.25F), VOID(3F), HEAT(2F);
-
-        public final float conversion;
-
-        private EnergyType(float conversion)
-        {
-            this.conversion = conversion;
-        }
-    }
-
     public ChunkCoordinates coordinates;
     public int dimension;
     public boolean negative;
     public PocketSize size;
-    public EnergyType type;
+    public EnergyHandler.EnergyType type;
 
     public ElectromagneticPocket()
     {
     }
 
-    public ElectromagneticPocket(int dimension, int x, int y, int z, PocketSize size, EnergyType type, boolean negative)
+    public ElectromagneticPocket(int dimension, int x, int y, int z, PocketSize size, EnergyHandler.EnergyType type, boolean negative)
     {
         this.dimension = dimension;
         this.coordinates = new ChunkCoordinates(x, y, z);
@@ -96,7 +79,7 @@ public class ElectromagneticPocket
         coordinates = new ChunkCoordinates(compound.getInteger("PosX"), compound.getInteger("PosY"), compound.getInteger("PosZ"));
         negative = compound.getBoolean("Negative");
         size = PocketSize.values()[compound.getInteger("Size")];
-        type = EnergyType.values()[compound.getInteger("Type")];
+        type = EnergyHandler.EnergyType.values()[compound.getInteger("Type")];
     }
 
 }

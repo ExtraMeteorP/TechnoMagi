@@ -15,8 +15,9 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.ChunkPosition;
 
-import com.ollieread.technomagi.api.electromagnetic.ElectromagneticPocket.EnergyType;
 import com.ollieread.technomagi.api.electromagnetic.ElectromagneticPocket.PocketSize;
+import com.ollieread.technomagi.api.electromagnetic.EnergyHandler;
+import com.ollieread.technomagi.api.electromagnetic.EnergyHandler.EnergyType;
 import com.ollieread.technomagi.api.event.ElectromagneticPocketEvent.ExposeBlock;
 import com.ollieread.technomagi.api.event.ElectromagneticPocketEvent.ExposeEntity;
 import com.ollieread.technomagi.api.event.ElectromagneticPocketEvent.ExposeItem;
@@ -29,7 +30,7 @@ import cpw.mods.fml.common.eventhandler.Event.Result;
 public class TileElectromagnetic extends TileBase
 {
 
-    protected EnergyType type;
+    protected EnergyHandler.EnergyType type;
     protected PocketSize size;
     protected int radius;
     protected int volume;
@@ -38,6 +39,9 @@ public class TileElectromagnetic extends TileBase
     protected boolean negative;
     protected Random rand = new Random();
     protected int ticks = 0;
+    protected int maxTicks = 200;
+    protected int cycle = 0;
+    protected List<ChunkPosition> blocks;
 
     protected List<String> exposedPlayers = new ArrayList<String>();
 
@@ -45,7 +49,7 @@ public class TileElectromagnetic extends TileBase
     {
     }
 
-    public void set(EnergyType type, int radius, boolean negative)
+    public void set(EnergyHandler.EnergyType type, int radius, boolean negative)
     {
         this.type = type;
         this.radius = radius;
@@ -54,29 +58,37 @@ public class TileElectromagnetic extends TileBase
         this.volume = (int) Math.ceil((4.0 / 3) * Math.PI * Math.pow(radius, 3));
         this.energyLevel = 100 * volume;
         this.regenSpeed = (radius / 4) * 20;
+        this.blocks = GenerationHelper.getSphere(Vec3.createVectorHelper(xCoord, yCoord, zCoord), worldObj, radius, radius, radius, true);
     }
 
     @Override
     public void updateEntity()
     {
         if (!worldObj.isRemote) {
-            /*
-             * int chance = size.maxRadius / 8;
-             * 
-             * if (rand.nextInt(chance) == 0) { expose(); }
-             * 
-             * ticks++;
-             * 
-             * if (ticks >= regenSpeed) { regen(); }
-             */
+            ticks++;
+
+            if (ticks >= maxTicks) {
+                if (cycle == 0) {
+                    exposeBlocks();
+                    cycle++;
+                } else if (cycle == 1) {
+                    exposeEntities();
+                    cycle++;
+                } else if (cycle == 2) {
+                    exposeItems();
+                    cycle = 0;
+                }
+
+                ticks = 0;
+            }
         }
     }
 
-    private void expose()
+    /**
+     * Here we expose the living entities within range, including players.
+     */
+    private void exposeEntities()
     {
-        /**
-         * Here we expose the living entities within range, including players.
-         */
         List<EntityLivingBase> entities = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, getAABB());
         List<String> newPlayers = new ArrayList<String>();
 
@@ -117,11 +129,14 @@ public class TileElectromagnetic extends TileBase
         }
 
         exposedPlayers = newPlayers;
+    }
 
-        /**
-         * Affect the items. Certain items exposed to certain energies will do
-         * certain things. I appreciate how vague that is, but tough titties.
-         */
+    /**
+     * Affect the items. Certain items exposed to certain energies will do
+     * certain things. I appreciate how vague that is, but tough titties.
+     */
+    private void exposeItems()
+    {
         List<EntityItem> itemList = worldObj.getEntitiesWithinAABB(EntityItem.class, getAABB());
 
         for (EntityItem item : itemList) {
@@ -138,14 +153,15 @@ public class TileElectromagnetic extends TileBase
                 }
             }
         }
+    }
 
-        /**
-         * Affect the environment surround the pocket, rather than just provide
-         * a list of all blocks within the aoe, we select a random number based
-         * on the pockets radius. Minimum amount being r/4 and maximum being
-         * (r/4)*2
-         */
-        List<ChunkPosition> blocks = GenerationHelper.getSphere(Vec3.createVectorHelper(xCoord, yCoord, zCoord), worldObj, radius, radius, radius, true);
+    /**
+     * Affect the environment surround the pocket, rather than just provide a
+     * list of all blocks within the aoe, we select a random number based on the
+     * pockets radius. Minimum amount being r/4 and maximum being (r/4)*2
+     */
+    private void exposeBlocks()
+    {
         int affected = (radius / 4) + rand.nextInt(Math.max(radius / 4, 1));
         List<ChunkPosition> affectedBlocks = new ArrayList<ChunkPosition>();
 
@@ -235,7 +251,7 @@ public class TileElectromagnetic extends TileBase
     {
         super.readFromNBT(compound);
 
-        this.type = EnergyType.values()[compound.getInteger("Type")];
+        this.type = EnergyHandler.EnergyType.values()[compound.getInteger("Type")];
         this.radius = compound.getInteger("Radius");
         this.size = PocketSize.getPocketSize(radius);
 
@@ -256,6 +272,10 @@ public class TileElectromagnetic extends TileBase
         for (int i = 0; i < playerList.tagCount(); i++) {
             exposedPlayers.add(playerList.getCompoundTagAt(i).getString("Player"));
         }
+
+        if (blocks == null || blocks.isEmpty()) {
+            this.blocks = GenerationHelper.getSphere(Vec3.createVectorHelper(xCoord, yCoord, zCoord), worldObj, radius, radius, radius, true);
+        }
     }
 
     public boolean isNegative()
@@ -263,7 +283,7 @@ public class TileElectromagnetic extends TileBase
         return negative;
     }
 
-    public EnergyType getType()
+    public EnergyHandler.EnergyType getType()
     {
         return type;
     }
@@ -293,6 +313,7 @@ public class TileElectromagnetic extends TileBase
         this.size = PocketSize.getPocketSize(radius);
         this.volume = (int) Math.ceil((4.0 / 3) * Math.PI * Math.pow(radius, 3));
         this.regenSpeed = (radius / 4) * 20;
+        this.blocks = GenerationHelper.getSphere(Vec3.createVectorHelper(xCoord, yCoord, zCoord), worldObj, radius, radius, radius, true);
     }
 
     public void modifyEnergyLevel(int amount)

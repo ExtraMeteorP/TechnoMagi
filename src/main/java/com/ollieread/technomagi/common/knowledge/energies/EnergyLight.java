@@ -6,6 +6,7 @@ import com.ollieread.technomagi.api.TechnomagiApi;
 import com.ollieread.technomagi.api.knowledge.Knowledge;
 import com.ollieread.technomagi.api.knowledge.research.Research;
 import com.ollieread.technomagi.common.knowledge.Energies;
+import com.ollieread.technomagi.util.BlockHelper;
 import com.ollieread.technomagi.util.ItemStackHelper;
 import com.ollieread.technomagi.util.ResourceHelper;
 
@@ -59,11 +60,11 @@ public class EnergyLight extends Knowledge
     {
         TechnomagiApi.knowledge().mapCraftingResearch(ItemStackHelper.block("torch"), craftTorch.getName());
 
-        TechnomagiApi.scan().addScanMapping(TechnomagiApi.scan().getBlockRepresentation(Blocks.red_flower, -1), scanFlower.getName());
-        TechnomagiApi.scan().addAnalysisMapping(TechnomagiApi.scan().getItemStackRepresentation(ItemStackHelper.block("red_flower", 1, -1)), analyseFlower.getName());
-        TechnomagiApi.scan().addScanMapping(TechnomagiApi.scan().getBlockRepresentation(Blocks.fire, 0), scanFire.getName());
-        TechnomagiApi.scan().addScanMapping(TechnomagiApi.scan().getBlockRepresentation(Blocks.glowstone, 0), scanGlowstone.getName());
-        TechnomagiApi.scan().addAnalysisMapping(TechnomagiApi.scan().getItemStackRepresentation(ItemStackHelper.item("glowstone_dust", 1, -1)), analyseGlowstoneDust.getName());
+        TechnomagiApi.scan().addScanMapping(BlockHelper.getBlockRepresentation(Blocks.red_flower, -1), scanFlower.getName());
+        TechnomagiApi.scan().addAnalysisMapping(ItemStackHelper.getItemStackRepresentation(ItemStackHelper.block("red_flower", 1, -1)), analyseFlower.getName());
+        TechnomagiApi.scan().addScanMapping(BlockHelper.getBlockRepresentation(Blocks.fire, 0), scanFire.getName());
+        TechnomagiApi.scan().addScanMapping(BlockHelper.getBlockRepresentation(Blocks.glowstone, 0), scanGlowstone.getName());
+        TechnomagiApi.scan().addAnalysisMapping(ItemStackHelper.getItemStackRepresentation(ItemStackHelper.item("glowstone_dust", 1, -1)), analyseGlowstoneDust.getName());
     }
 
 }

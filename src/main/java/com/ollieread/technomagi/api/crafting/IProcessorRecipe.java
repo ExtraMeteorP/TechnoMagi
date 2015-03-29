@@ -19,4 +19,6 @@ public interface IProcessorRecipe
 
     public boolean matches(ProcessorType type, ItemStack input);
 
+    public int getMinTier(ProcessorType type);
+
 }

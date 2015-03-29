@@ -68,13 +68,9 @@ public class MessageSyncTile implements IMessage
 
                 if (tileBasic != null) {
                     tileBasic.readFromNBT(message.data);
-
-                    /*
-                     * if (tileBasic instanceof ITileEntityDisguisable) {
-                     * tileBasic.getWorldObj
-                     * ().markBlockRangeForRenderUpdate(message.x, message.y,
-                     * message.z, message.x, message.y, message.z); }
-                     */
+                    tileBasic.getWorldObj().markBlockForUpdate(message.x, message.y, message.z);
+                    // tileBasic.getWorldObj().func_147479_m(message.x,
+                    // message.y, message.z);
                 }
 
             } catch (NullPointerException e) {

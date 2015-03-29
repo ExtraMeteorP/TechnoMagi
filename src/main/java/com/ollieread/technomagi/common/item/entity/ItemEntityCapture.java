@@ -99,7 +99,7 @@ public class ItemEntityCapture extends ItemEntityBase
                     info.add("Undead: " + EnumChatFormatting.ITALIC + (descriptor.isUndead() ? "Yes" : "No"));
                 }
             } else {
-                info.add("Press " + EnumChatFormatting.DARK_AQUA + "SHIFT" + EnumChatFormatting.GRAY + " for more details.");
+                info.add("Hold " + EnumChatFormatting.DARK_AQUA + "SHIFT" + EnumChatFormatting.GRAY + " for more details.");
             }
         }
     }

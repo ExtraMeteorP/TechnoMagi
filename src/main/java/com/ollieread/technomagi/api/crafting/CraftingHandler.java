@@ -14,7 +14,8 @@ import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 
-import com.ollieread.technomagi.api.electromagnetic.ElectromagneticPocket.EnergyType;
+import com.ollieread.technomagi.api.electromagnetic.EnergyHandler;
+import com.ollieread.technomagi.api.electromagnetic.EnergyHandler.EnergyType;
 import com.ollieread.technomagi.api.knowledge.Knowledge;
 import com.ollieread.technomagi.common.recipes.FurnaceElectromagneticRecipe;
 import com.ollieread.technomagi.util.ItemStackHelper;
@@ -329,9 +330,15 @@ public class CraftingHandler
 
         public IProcessorRecipe find(ProcessorType type, ItemStack input)
         {
-            for (IProcessorRecipe recipe : recipes) {
-                if (recipe.getInput(type).isItemEqual(input)) {
-                    return recipe;
+            if (input != null) {
+                for (IProcessorRecipe recipe : recipes) {
+                    ItemStack input2 = recipe.getInput(type);
+
+                    if (input2 != null) {
+                        if (input2.isItemEqual(input)) {
+                            return recipe;
+                        }
+                    }
                 }
             }
 
@@ -349,7 +356,7 @@ public class CraftingHandler
             this.actions.add(recipe);
         }
 
-        public IElectromagneticActionItem findMatchingAction(EnergyType type, boolean negative, ItemStack input)
+        public IElectromagneticActionItem findMatchingAction(EnergyHandler.EnergyType type, boolean negative, ItemStack input)
         {
             for (IElectromagneticActionItem recipe : actions) {
                 if (recipe.getInput(type, negative).isItemEqual(input)) {
@@ -357,7 +364,7 @@ public class CraftingHandler
                 }
             }
 
-            if (type.equals(EnergyType.HEAT) && !negative) {
+            if (type.equals(EnergyHandler.EnergyType.HEAT) && !negative) {
                 ItemStack output = furnace.findOutput(input);
 
                 if (output != null) {

@@ -14,7 +14,8 @@ import net.minecraft.world.World;
 import com.ollieread.technomagi.api.TechnomagiApi;
 import com.ollieread.technomagi.api.crafting.CraftingHandler;
 import com.ollieread.technomagi.api.crafting.IElectromagneticActionItem;
-import com.ollieread.technomagi.api.electromagnetic.ElectromagneticPocket.EnergyType;
+import com.ollieread.technomagi.api.electromagnetic.EnergyHandler;
+import com.ollieread.technomagi.api.electromagnetic.EnergyHandler.EnergyType;
 import com.ollieread.technomagi.api.event.ElectromagneticPocketEvent.ExposeBlock;
 import com.ollieread.technomagi.api.event.ElectromagneticPocketEvent.ExposeEntity;
 import com.ollieread.technomagi.api.event.ElectromagneticPocketEvent.ExposeItem;
@@ -38,7 +39,7 @@ public class ElectromagneticPocketEvents
     @SubscribeEvent
     public void onExposeEntity(ExposeEntity event)
     {
-        if (event.type.equals(EnergyType.LIFE)) {
+        if (event.type.equals(EnergyHandler.EnergyType.LIFE)) {
             if ((event.entity.getMaxHealth() - event.entity.getHealth()) < event.amount) {
                 event.amount = event.entity.getMaxHealth() - event.entity.getHealth();
             }
@@ -54,7 +55,7 @@ public class ElectromagneticPocketEvents
                 event.entity.heal(event.amount);
                 event.setResult(Result.ALLOW);
             }
-        } else if (event.type.equals(EnergyType.LIGHT)) {
+        } else if (event.type.equals(EnergyHandler.EnergyType.LIGHT)) {
             if (event.entity instanceof EntityPlayer) {
                 event.setResult(Result.ALLOW);
             }
@@ -72,12 +73,12 @@ public class ElectromagneticPocketEvents
                     event.setResult(Result.ALLOW);
                 }
             }
-        } else if (event.type.equals(EnergyType.VOID)) {
+        } else if (event.type.equals(EnergyHandler.EnergyType.VOID)) {
             if (event.negative) {
                 event.entity.addPotionEffect(new PotionEffect(PotionTechnomagi.voidSickness.id, (int) (60 * event.amount), (int) event.amount));
                 event.setResult(Result.ALLOW);
             }
-        } else if (event.type.equals(EnergyType.HEAT)) {
+        } else if (event.type.equals(EnergyHandler.EnergyType.HEAT)) {
             if (event.negative) {
                 if (event.entity.attackEntityFrom(DamageSourceTechnomagi.frostDamage, event.amount)) {
                     event.setResult(Result.ALLOW);
@@ -93,13 +94,13 @@ public class ElectromagneticPocketEvents
             if (event.entity instanceof EntityPlayer) {
                 TechnomagiApi.knowledge().performResearch(event.entity, ElectromagneticPockets.exposedToPocket);
 
-                if (event.type.equals(EnergyType.LIFE)) {
+                if (event.type.equals(EnergyHandler.EnergyType.LIFE)) {
                     TechnomagiApi.knowledge().performResearch(event.entity, ElectromagneticPockets.exposedToLifePocket);
-                } else if (event.type.equals(EnergyType.LIGHT)) {
+                } else if (event.type.equals(EnergyHandler.EnergyType.LIGHT)) {
                     TechnomagiApi.knowledge().performResearch(event.entity, ElectromagneticPockets.exposedToLightPocket);
-                } else if (event.type.equals(EnergyType.VOID)) {
+                } else if (event.type.equals(EnergyHandler.EnergyType.VOID)) {
                     TechnomagiApi.knowledge().performResearch(event.entity, ElectromagneticPockets.exposedToVoidPocket);
-                } else if (event.type.equals(EnergyType.HEAT)) {
+                } else if (event.type.equals(EnergyHandler.EnergyType.HEAT)) {
                     TechnomagiApi.knowledge().performResearch(event.entity, ElectromagneticPockets.exposedToHeatPocket);
                 }
             } else {
@@ -107,13 +108,13 @@ public class ElectromagneticPocketEvents
 
                 for (EntityPlayer player : players) {
                     if (player.canEntityBeSeen(event.entity)) {
-                        if (event.type.equals(EnergyType.LIFE)) {
+                        if (event.type.equals(EnergyHandler.EnergyType.LIFE)) {
                             TechnomagiApi.knowledge().performResearch(player, EnergyLife.witnessEntityExposure);
-                        } else if (event.type.equals(EnergyType.LIGHT)) {
+                        } else if (event.type.equals(EnergyHandler.EnergyType.LIGHT)) {
                             TechnomagiApi.knowledge().performResearch(player, EnergyLight.witnessEntityExposure);
-                        } else if (event.type.equals(EnergyType.VOID)) {
+                        } else if (event.type.equals(EnergyHandler.EnergyType.VOID)) {
                             TechnomagiApi.knowledge().performResearch(player, EnergyVoid.witnessEntityExposure);
-                        } else if (event.type.equals(EnergyType.HEAT)) {
+                        } else if (event.type.equals(EnergyHandler.EnergyType.HEAT)) {
                             TechnomagiApi.knowledge().performResearch(player, EnergyHeat.witnessEntityExposure);
                         }
                     }
@@ -150,25 +151,25 @@ public class ElectromagneticPocketEvents
                                     TechnomagiApi.knowledge().performResearch(player, Resources.etherium.etheriumExposed);
                                 }
 
-                                if (event.type.equals(EnergyType.HEAT)) {
+                                if (event.type.equals(EnergyHandler.EnergyType.HEAT)) {
                                     TechnomagiApi.knowledge().performResearch(player, EnergyHeat.witnessItemExposure);
 
                                     if (input.isItemEqual(ItemStackHelper.itemSubtype(Items.resource, "etherium", 1))) {
                                         TechnomagiApi.knowledge().performResearch(player, EnergyHeat.etheriumExposed);
                                     }
-                                } else if (event.type.equals(EnergyType.LIGHT)) {
+                                } else if (event.type.equals(EnergyHandler.EnergyType.LIGHT)) {
                                     TechnomagiApi.knowledge().performResearch(player, EnergyLight.witnessItemExposure);
 
                                     if (input.isItemEqual(ItemStackHelper.itemSubtype(Items.resource, "etherium", 1))) {
                                         TechnomagiApi.knowledge().performResearch(player, EnergyLight.etheriumExposed);
                                     }
-                                } else if (event.type.equals(EnergyType.LIFE)) {
+                                } else if (event.type.equals(EnergyHandler.EnergyType.LIFE)) {
                                     TechnomagiApi.knowledge().performResearch(player, EnergyLife.witnessItemExposure);
 
                                     if (input.isItemEqual(ItemStackHelper.itemSubtype(Items.resource, "etherium", 1))) {
                                         TechnomagiApi.knowledge().performResearch(player, EnergyLife.etheriumExposed);
                                     }
-                                } else if (event.type.equals(EnergyType.VOID)) {
+                                } else if (event.type.equals(EnergyHandler.EnergyType.VOID)) {
                                     TechnomagiApi.knowledge().performResearch(player, EnergyVoid.witnessItemExposure);
 
                                     if (input.isItemEqual(ItemStackHelper.itemSubtype(Items.resource, "etherium", 1))) {

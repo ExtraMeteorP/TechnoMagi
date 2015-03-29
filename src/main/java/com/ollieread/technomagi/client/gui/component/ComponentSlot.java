@@ -3,7 +3,7 @@ package com.ollieread.technomagi.client.gui.component;
 public class ComponentSlot extends Component
 {
 
-    public ComponentSlot(int width, int height)
+    public ComponentSlot()
     {
         super(20, 20);
     }

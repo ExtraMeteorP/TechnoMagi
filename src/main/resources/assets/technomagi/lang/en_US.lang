@@ -5,6 +5,10 @@
 gui.technomagi.specialisation=Choose Specialisation
 gui.technomagi.specialise.choose=Choose
 gui.technomagi.knowledge=Research Progress
+gui.technomagi.battery=Powercell
+gui.technomagi.basic_generator=Furnace Generator
+gui.technomagi.processor.basic=Processor: Basic
+gui.technomagi.processor.electric=Processor: Electric
 
 gui.technomagi.link.information=Information
 gui.technomagi.link.crafting=Crafting Recipes
@@ -124,11 +128,12 @@ tile.technomagi.conduit.item_basic.name=Item Conduit: Basic
 tile.technomagi.conduit.item_advanced.name=Item Conduit: Advanced
 tile.technomagi.conduit.item_elite.name=Item Conduit: Elite
 
-tile.technomagi.processor.processor_basic.name=Processor: Basic
-tile.technomagi.processor.processor_electric.name=Processor: Electric
-tile.technomagi.processor.processor_nanites.name=Processor: Nanite
+tile.technomagi.processor.basic.name=Processor: Basic
+tile.technomagi.processor.electric.name=Processor: Electric
+tile.technomagi.processor.nanite.name=Processor: Nanite
 
-tile.technomagi.battery.name=Battery Unit
+tile.technomagi.battery.name=Powercell
+tile.technomagi.basic_generator.name=Furnace Generator
 
 # Items
 item.technomagi.resource.iron_dust.name=Iron Dust
@@ -172,3 +177,12 @@ item.technomagi.crystal_charged.verux.name=Verux
 item.technomagi.crystal_charged.oblerite.name=Oblerite
 
 item.technomagi.interface.name=Nanite Interface
+
+item.technomagi.components.iron_grinding.name=Grinding Head
+item.technomagi.components.diamond_grinding.name=Diamond Grinding Head
+item.technomagi.components.iron_saw.name=Saw
+item.technomagi.components.diamond_saw.name=Diamond Saw
+item.technomagi.components.stone_furnace_bed.name=Stone Furnace Bed
+item.technomagi.components.heating_element.name=Heating Element
+item.technomagi.components.stone_rolling.name=Stone Rollers
+item.technomagi.components.iron_rolling.name=Iron Rollers

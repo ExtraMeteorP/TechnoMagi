@@ -1,6 +1,11 @@
 package com.ollieread.technomagi.common.block.conduit;
 
+import java.util.List;
+
 import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
@@ -43,11 +48,11 @@ public class BlockConduit extends BlockContainerSubtypes
     {
         switch (metadata) {
             case 0:
-                return new TileConduitPower(512);
+                return new TileConduitPower(128);
             case 1:
-                return new TileConduitPower(2048);
+                return new TileConduitPower(512);
             case 2:
-                return new TileConduitPower(4096);
+                return new TileConduitPower(2048);
             case 3:
                 return new TileConduitFluid(FluidContainerRegistry.BUCKET_VOLUME * 10, 100);
             case 4:
@@ -65,7 +70,7 @@ public class BlockConduit extends BlockContainerSubtypes
         return metadata;
     }
 
-    public boolean canConnectTo(IBlockAccess world, int x, int y, int z, ForgeDirection direction)
+    public static boolean canConnectTo(IBlockAccess world, int x, int y, int z, ForgeDirection direction)
     {
         TileEntity tile = world.getTileEntity(x + direction.offsetX, y + direction.offsetY, z + direction.offsetZ);
 
@@ -145,6 +150,15 @@ public class BlockConduit extends BlockContainerSubtypes
         }
 
         setBlockBounds(minX, minY, minZ, maxX, maxY, maxZ);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void getSubBlocks(Item item, CreativeTabs tab, List list)
+    {
+        for (int i = 3; i < names.length; i++) {
+            list.add(new ItemStack(item, 1, i));
+        }
     }
 
 }

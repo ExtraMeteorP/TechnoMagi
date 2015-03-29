@@ -11,7 +11,7 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import com.ollieread.technomagi.client.models.ModelBattery;
-import com.ollieread.technomagi.common.block.battery.tile.TileBattery;
+import com.ollieread.technomagi.common.block.energy.tile.TileBattery;
 import com.ollieread.technomagi.common.init.Blocks;
 import com.ollieread.technomagi.util.ResourceHelper;
 

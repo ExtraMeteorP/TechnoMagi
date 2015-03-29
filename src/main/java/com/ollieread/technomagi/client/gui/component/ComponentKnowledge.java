@@ -59,7 +59,7 @@ public class ComponentKnowledge extends Component
         x += offsetX;
         y += offsetY;
 
-        boolean flag = hover ? hover : highlight;
+        boolean flag = highlight ? highlight : hover;
 
         if (flag) {
             if (active) {

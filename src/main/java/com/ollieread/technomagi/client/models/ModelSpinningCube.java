@@ -43,10 +43,6 @@ public class ModelSpinningCube extends ModelBase
         GL11.glRotatef(60.0F, 0.7071F, 0.0F, 0.7071F);
         GL11.glRotatef(p_78088_3_, 0.0F, 1.0F, 0.0F);
         this.glass.render(p_78088_7_);
-        GL11.glScalef(f6, f6, f6);
-        GL11.glRotatef(60.0F, 0.7071F, 0.0F, 0.7071F);
-        GL11.glRotatef(p_78088_3_, 0.0F, 1.0F, 0.0F);
-        this.cube.render(p_78088_7_);
         GL11.glPopMatrix();
     }
 }

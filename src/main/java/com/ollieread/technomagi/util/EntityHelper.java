@@ -2,10 +2,12 @@ package com.ollieread.technomagi.util;
 
 import java.util.Map;
 
+import net.minecraft.block.Block;
 import net.minecraft.command.IEntitySelector;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 
 import com.ollieread.technomagi.api.TechnomagiApi;
@@ -96,6 +98,40 @@ public class EntityHelper
     public static boolean canSeeBlock(EntityLivingBase entity, int x, int y, int z)
     {
         return entity.worldObj.rayTraceBlocks(Vec3.createVectorHelper(entity.posX, entity.posY + entity.getEyeHeight(), entity.posZ), Vec3.createVectorHelper(x, y, z)) == null;
+    }
+
+    public static boolean isStoodOn(EntityLivingBase entity, Block block)
+    {
+        return isStoodOn(entity, block, -1);
+    }
+
+    public static boolean isStoodOn(EntityLivingBase entity, Block block, int metadata)
+    {
+        if (getBlockStoodOn(entity) == block) {
+            if (metadata == -1 || metadata == getBlockStoodOnMetadata(entity)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static Block getBlockStoodOn(EntityLivingBase entity)
+    {
+        int x = MathHelper.floor_double(entity.posX);
+        int y = MathHelper.floor_double(entity.posY) - 1;
+        int z = MathHelper.floor_double(entity.posZ);
+
+        return entity.worldObj.getBlock(x, y, z);
+    }
+
+    public static int getBlockStoodOnMetadata(EntityLivingBase entity)
+    {
+        int x = MathHelper.floor_double(entity.posX);
+        int y = MathHelper.floor_double(entity.posY) - 1;
+        int z = MathHelper.floor_double(entity.posZ);
+
+        return entity.worldObj.getBlockMetadata(x, y, z);
     }
 
     public static class EntitySelectorPotion implements IEntitySelector

@@ -5,9 +5,9 @@ import net.minecraft.init.Blocks;
 import com.ollieread.technomagi.api.TechnomagiApi;
 import com.ollieread.technomagi.api.knowledge.Knowledge;
 import com.ollieread.technomagi.api.knowledge.research.Research;
-import com.ollieread.technomagi.api.scan.ScanHandler;
 import com.ollieread.technomagi.common.init.Items;
 import com.ollieread.technomagi.common.knowledge.Resources;
+import com.ollieread.technomagi.util.BlockHelper;
 import com.ollieread.technomagi.util.ItemStackHelper;
 import com.ollieread.technomagi.util.ResourceHelper;
 
@@ -75,29 +75,29 @@ public class AdvancedResources extends Knowledge
 
     public void mappings()
     {
-        TechnomagiApi.scan().addScanMapping(ScanHandler.getBlockRepresentation(Blocks.gold_ore, 0), scanGoldOre.getName());
-        TechnomagiApi.scan().addScanMapping(ScanHandler.getBlockRepresentation(Blocks.diamond_ore, 0), scanDiamondOre.getName());
-        TechnomagiApi.scan().addScanMapping(ScanHandler.getBlockRepresentation(Blocks.obsidian, 0), scanObsidian.getName());
-        TechnomagiApi.scan().addScanMapping(ScanHandler.getBlockRepresentation(com.ollieread.technomagi.common.init.Blocks.resource, 3), scanAluminiumOre.getName());
+        TechnomagiApi.scan().addScanMapping(BlockHelper.getBlockRepresentation(Blocks.gold_ore, 0), scanGoldOre.getName());
+        TechnomagiApi.scan().addScanMapping(BlockHelper.getBlockRepresentation(Blocks.diamond_ore, 0), scanDiamondOre.getName());
+        TechnomagiApi.scan().addScanMapping(BlockHelper.getBlockRepresentation(Blocks.obsidian, 0), scanObsidian.getName());
+        TechnomagiApi.scan().addScanMapping(BlockHelper.getBlockRepresentation(com.ollieread.technomagi.common.init.Blocks.resource, 3), scanAluminiumOre.getName());
 
         TechnomagiApi.knowledge().mapMiningResearch(Blocks.gold_ore, 0, mineGoldOre.getName());
         TechnomagiApi.knowledge().mapMiningResearch(Blocks.diamond_ore, 0, mineDiamondOre.getName());
         TechnomagiApi.knowledge().mapMiningResearch(Blocks.obsidian, 0, mineObsidian.getName());
         TechnomagiApi.knowledge().mapMiningResearch(com.ollieread.technomagi.common.init.Blocks.resource, 3, mineAluminiumOre.getName());
 
-        TechnomagiApi.scan().addAnalysisMapping(ScanHandler.getItemStackRepresentation(ItemStackHelper.block("gold_ore")), analyseGoldOre.getName());
-        TechnomagiApi.scan().addAnalysisMapping(ScanHandler.getItemStackRepresentation(ItemStackHelper.block("obsidian")), analyseObsidian.getName());
-        TechnomagiApi.scan().addAnalysisMapping(ScanHandler.getItemStackRepresentation(ItemStackHelper.item("diamond")), analyseDiamond.getName());
-        TechnomagiApi.scan().addAnalysisMapping(ScanHandler.getItemStackRepresentation(ItemStackHelper.blockSubtype(com.ollieread.technomagi.common.init.Blocks.resource, "aluminium_ore", 1)), analyseAluminiumOre.getName());
+        TechnomagiApi.scan().addAnalysisMapping(ItemStackHelper.getItemStackRepresentation(ItemStackHelper.block("gold_ore")), analyseGoldOre.getName());
+        TechnomagiApi.scan().addAnalysisMapping(ItemStackHelper.getItemStackRepresentation(ItemStackHelper.block("obsidian")), analyseObsidian.getName());
+        TechnomagiApi.scan().addAnalysisMapping(ItemStackHelper.getItemStackRepresentation(ItemStackHelper.item("diamond")), analyseDiamond.getName());
+        TechnomagiApi.scan().addAnalysisMapping(ItemStackHelper.getItemStackRepresentation(ItemStackHelper.blockSubtype(com.ollieread.technomagi.common.init.Blocks.resource, "aluminium_ore", 1)), analyseAluminiumOre.getName());
 
         TechnomagiApi.knowledge().mapSmeltingResearch(ItemStackHelper.item("gold_ingot"), smeltGoldIngot.getName());
         TechnomagiApi.knowledge().mapSmeltingResearch(ItemStackHelper.itemSubtype(Items.resource, "aluminium_ingot", 1), smeltAluminiumIngot.getName());
 
-        TechnomagiApi.scan().addAnalysisMapping(ScanHandler.getItemStackRepresentation(ItemStackHelper.item("gold_ingot")), analyseGoldIngot.getName());
-        TechnomagiApi.scan().addAnalysisMapping(ScanHandler.getItemStackRepresentation(ItemStackHelper.itemSubtype(com.ollieread.technomagi.common.init.Items.resource, "aluminium_ingot", 1)), analyseAluminiumIngot.getName());
+        TechnomagiApi.scan().addAnalysisMapping(ItemStackHelper.getItemStackRepresentation(ItemStackHelper.item("gold_ingot")), analyseGoldIngot.getName());
+        TechnomagiApi.scan().addAnalysisMapping(ItemStackHelper.getItemStackRepresentation(ItemStackHelper.itemSubtype(com.ollieread.technomagi.common.init.Items.resource, "aluminium_ingot", 1)), analyseAluminiumIngot.getName());
 
-        TechnomagiApi.scan().addScanMapping(ScanHandler.getBlockRepresentation(Blocks.gold_block, 0), scanGoldBlock.getName());
-        TechnomagiApi.scan().addScanMapping(ScanHandler.getBlockRepresentation(com.ollieread.technomagi.common.init.Blocks.resource, 5), scanAluminiumBlock.getName());
+        TechnomagiApi.scan().addScanMapping(BlockHelper.getBlockRepresentation(Blocks.gold_block, 0), scanGoldBlock.getName());
+        TechnomagiApi.scan().addScanMapping(BlockHelper.getBlockRepresentation(com.ollieread.technomagi.common.init.Blocks.resource, 5), scanAluminiumBlock.getName());
     }
 
 }

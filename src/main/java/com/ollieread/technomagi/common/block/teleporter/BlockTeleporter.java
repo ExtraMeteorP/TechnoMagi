@@ -22,7 +22,7 @@ public class BlockTeleporter extends BlockContainerSubtypes
 
     public BlockTeleporter(String name)
     {
-        super(name, new String[] {}, Material.iron);
+        super(name, new String[] { "fixed", "jumper", "bouncer", "interruptor", "deflector", "relocator", "beacon", "anchor" }, Material.iron);
     }
 
     @Override

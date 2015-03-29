@@ -5,7 +5,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 import com.ollieread.technomagi.api.crafting.IElectromagneticActionItem;
-import com.ollieread.technomagi.api.electromagnetic.ElectromagneticPocket.EnergyType;
+import com.ollieread.technomagi.api.electromagnetic.EnergyHandler;
+import com.ollieread.technomagi.api.electromagnetic.EnergyHandler.EnergyType;
 
 public class FurnaceElectromagneticRecipe implements IElectromagneticActionItem
 {
@@ -20,9 +21,9 @@ public class FurnaceElectromagneticRecipe implements IElectromagneticActionItem
     }
 
     @Override
-    public ItemStack getInput(EnergyType type, boolean negative)
+    public ItemStack getInput(EnergyHandler.EnergyType type, boolean negative)
     {
-        if (type.equals(EnergyType.HEAT) && !negative) {
+        if (type.equals(EnergyHandler.EnergyType.HEAT) && !negative) {
             return input;
         }
 
@@ -30,9 +31,9 @@ public class FurnaceElectromagneticRecipe implements IElectromagneticActionItem
     }
 
     @Override
-    public ItemStack getOutput(EnergyType type, boolean negative)
+    public ItemStack getOutput(EnergyHandler.EnergyType type, boolean negative)
     {
-        if (type.equals(EnergyType.HEAT) && !negative) {
+        if (type.equals(EnergyHandler.EnergyType.HEAT) && !negative) {
             return output;
         }
 
@@ -40,15 +41,15 @@ public class FurnaceElectromagneticRecipe implements IElectromagneticActionItem
     }
 
     @Override
-    public int getDuration(EnergyType type, boolean negative)
+    public int getDuration(EnergyHandler.EnergyType type, boolean negative)
     {
         return 0;
     }
 
     @Override
-    public int getCost(EnergyType type, boolean negative)
+    public int getCost(EnergyHandler.EnergyType type, boolean negative)
     {
-        if (type.equals(EnergyType.HEAT) && !negative) {
+        if (type.equals(EnergyHandler.EnergyType.HEAT) && !negative) {
             return 20;
         }
 
@@ -56,9 +57,9 @@ public class FurnaceElectromagneticRecipe implements IElectromagneticActionItem
     }
 
     @Override
-    public boolean perform(EnergyType type, boolean negative, World world, EntityItem item, int x, int y, int z)
+    public boolean perform(EnergyHandler.EnergyType type, boolean negative, World world, EntityItem item, int x, int y, int z)
     {
-        if (type.equals(EnergyType.HEAT) && !negative) {
+        if (type.equals(EnergyHandler.EnergyType.HEAT) && !negative) {
             return true;
         }
 

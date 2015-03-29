@@ -20,6 +20,7 @@ import com.ollieread.technomagi.common.init.Specialisations;
 import com.ollieread.technomagi.common.network.PacketHandler;
 import com.ollieread.technomagi.common.world.gen.TechnomagiElectromagneticGen;
 import com.ollieread.technomagi.common.world.gen.TechnomagiOreGen;
+import com.ollieread.technomagi.compat.Compat;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -31,7 +32,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-@Mod(modid = Technomagi.MODID, version = Technomagi.VERSION, dependencies = "")
+@Mod(modid = Technomagi.MODID, version = Technomagi.VERSION, dependencies = "required-after:CoFHAPI")
 public class Technomagi
 {
 
@@ -75,6 +76,9 @@ public class Technomagi
         Abilities.init();
 
         proxy.registerRenderers();
+
+        Compat.loaded();
+        Compat.pre();
     }
 
     @EventHandler
@@ -91,11 +95,14 @@ public class Technomagi
 
         GameRegistry.registerWorldGenerator(new TechnomagiElectromagneticGen(Blocks.electromagnetic, 1, 128), 4);
         // Config.loadImmuneBlocks();
+
+        Compat.init();
     }
 
     @EventHandler
     public void post(FMLPostInitializationEvent event)
     {
+        Compat.post();
     }
 
     public static void debug(String message)

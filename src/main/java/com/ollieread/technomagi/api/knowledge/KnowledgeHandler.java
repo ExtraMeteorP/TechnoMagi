@@ -16,9 +16,10 @@ import com.ollieread.technomagi.api.TechnomagiApi;
 import com.ollieread.technomagi.api.entity.EntityTechnomagi;
 import com.ollieread.technomagi.api.entity.PlayerTechnomagi;
 import com.ollieread.technomagi.api.knowledge.research.IResearch;
-import com.ollieread.technomagi.api.scan.ScanHandler;
+import com.ollieread.technomagi.util.BlockHelper;
 import com.ollieread.technomagi.util.BlockRepresentation;
 import com.ollieread.technomagi.util.EntityHelper;
+import com.ollieread.technomagi.util.ItemStackHelper;
 import com.ollieread.technomagi.util.ItemStackRepresentation;
 import com.ollieread.technomagi.util.PlayerHelper;
 
@@ -244,7 +245,7 @@ public class KnowledgeHandler
             return;
         }
 
-        BlockRepresentation representation = ScanHandler.getBlockRepresentation(block, metadata);
+        BlockRepresentation representation = BlockHelper.getBlockRepresentation(block, metadata);
 
         if (!miningResearchList.containsKey(representation)) {
             miningResearchList.put(representation, new ArrayList<String>());
@@ -264,7 +265,7 @@ public class KnowledgeHandler
             return;
         }
 
-        ItemStackRepresentation representation = ScanHandler.getItemStackRepresentation(stack);
+        ItemStackRepresentation representation = ItemStackHelper.getItemStackRepresentation(stack);
 
         if (!craftingResearchList.containsKey(representation)) {
             craftingResearchList.put(representation, new ArrayList<String>());
@@ -284,7 +285,7 @@ public class KnowledgeHandler
             return;
         }
 
-        ItemStackRepresentation representation = ScanHandler.getItemStackRepresentation(stack);
+        ItemStackRepresentation representation = ItemStackHelper.getItemStackRepresentation(stack);
 
         if (!smeltingResearchList.containsKey(representation)) {
             smeltingResearchList.put(representation, new ArrayList<String>());
@@ -304,7 +305,7 @@ public class KnowledgeHandler
             return;
         }
 
-        ItemStackRepresentation representation = ScanHandler.getItemStackRepresentation(stack);
+        ItemStackRepresentation representation = ItemStackHelper.getItemStackRepresentation(stack);
 
         if (!pickupResearchList.containsKey(representation)) {
             pickupResearchList.put(representation, new ArrayList<String>());
@@ -320,7 +321,7 @@ public class KnowledgeHandler
      */
     public List<String> getCraftingResearch(ItemStack stack)
     {
-        ItemStackRepresentation representation = ScanHandler.getItemStackRepresentation(stack);
+        ItemStackRepresentation representation = ItemStackHelper.getItemStackRepresentation(stack);
 
         if (craftingResearchList.containsKey(representation)) {
             return craftingResearchList.get(representation);
@@ -336,7 +337,7 @@ public class KnowledgeHandler
      */
     public List<String> getSmeltingResearch(ItemStack stack)
     {
-        ItemStackRepresentation representation = ScanHandler.getItemStackRepresentation(stack);
+        ItemStackRepresentation representation = ItemStackHelper.getItemStackRepresentation(stack);
 
         if (smeltingResearchList.containsKey(representation)) {
             return smeltingResearchList.get(representation);
@@ -352,7 +353,7 @@ public class KnowledgeHandler
      */
     public List<String> getPickupResearch(ItemStack stack)
     {
-        ItemStackRepresentation representation = ScanHandler.getItemStackRepresentation(stack);
+        ItemStackRepresentation representation = ItemStackHelper.getItemStackRepresentation(stack);
 
         if (pickupResearchList.containsKey(representation)) {
             return pickupResearchList.get(representation);
@@ -368,7 +369,7 @@ public class KnowledgeHandler
      */
     public List<String> getMiningResearch(Block block, int metadata)
     {
-        BlockRepresentation representation = ScanHandler.getBlockRepresentation(block, metadata);
+        BlockRepresentation representation = BlockHelper.getBlockRepresentation(block, metadata);
 
         if (miningResearchList.containsKey(representation)) {
             return miningResearchList.get(representation);

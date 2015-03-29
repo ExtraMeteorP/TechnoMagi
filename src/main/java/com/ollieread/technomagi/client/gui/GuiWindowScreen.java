@@ -4,7 +4,7 @@ import net.minecraft.client.gui.GuiScreen;
 
 import org.lwjgl.input.Mouse;
 
-import com.ollieread.technomagi.client.gui.window.Window;
+import com.ollieread.technomagi.client.gui.window.abstracts.Window;
 
 public class GuiWindowScreen extends GuiScreen
 {
@@ -13,6 +13,7 @@ public class GuiWindowScreen extends GuiScreen
     {
         GuiBuilder.instance.setGui(this);
         GuiBuilder.instance.setWindow(window);
+        window.updateContent();
     }
 
     @Override

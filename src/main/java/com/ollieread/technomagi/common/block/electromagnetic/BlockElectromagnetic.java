@@ -11,7 +11,8 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import com.ollieread.technomagi.Technomagi;
-import com.ollieread.technomagi.api.electromagnetic.ElectromagneticPocket.EnergyType;
+import com.ollieread.technomagi.api.electromagnetic.EnergyHandler;
+import com.ollieread.technomagi.api.electromagnetic.EnergyHandler.EnergyType;
 import com.ollieread.technomagi.common.block.BlockBaseContainer;
 import com.ollieread.technomagi.common.block.electromagnetic.tile.TileElectromagnetic;
 
@@ -47,7 +48,7 @@ public class BlockElectromagnetic extends BlockBaseContainer
         TileElectromagnetic tile = (TileElectromagnetic) world.getTileEntity(x, y, z);
 
         if (tile != null && tile.getType() != null) {
-            if (tile.getType().equals(EnergyType.LIGHT) && tile.isNegative()) {
+            if (tile.getType().equals(EnergyHandler.EnergyType.LIGHT) && tile.isNegative()) {
                 return 255;
             }
         }
@@ -61,7 +62,7 @@ public class BlockElectromagnetic extends BlockBaseContainer
         TileElectromagnetic tile = (TileElectromagnetic) world.getTileEntity(x, y, z);
 
         if (tile != null && tile.getType() != null) {
-            if (tile.getType().equals(EnergyType.LIGHT) && tile.isNegative()) {
+            if (tile.getType().equals(EnergyHandler.EnergyType.LIGHT) && tile.isNegative()) {
                 return 0;
             }
         }

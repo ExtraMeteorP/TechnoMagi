@@ -9,7 +9,7 @@ public class ComponentHeading extends Component
 
     public ComponentHeading(String text, int width)
     {
-        super(width, 25);
+        super(width, 18);
 
         this.text = text;
     }

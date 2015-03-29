@@ -4,7 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
 
-import com.ollieread.technomagi.common.block.extrapolator.BlockExtrapolator;
+import com.ollieread.technomagi.common.block.machine.BlockExtrapolator;
 import com.ollieread.technomagi.util.RenderHelper;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;

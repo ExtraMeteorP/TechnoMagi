@@ -6,6 +6,7 @@ import com.ollieread.technomagi.api.TechnomagiApi;
 import com.ollieread.technomagi.api.knowledge.Knowledge;
 import com.ollieread.technomagi.api.knowledge.research.Research;
 import com.ollieread.technomagi.common.knowledge.Resources;
+import com.ollieread.technomagi.util.BlockHelper;
 import com.ollieread.technomagi.util.ItemStackHelper;
 import com.ollieread.technomagi.util.ResourceHelper;
 
@@ -64,12 +65,12 @@ public class BasicResources extends Knowledge
         TechnomagiApi.knowledge().mapCraftingResearch(ItemStackHelper.block("planks"), craftPlanks.getName());
         TechnomagiApi.knowledge().mapCraftingResearch(ItemStackHelper.item("stick"), craftSticks.getName());
 
-        TechnomagiApi.scan().addScanMapping(TechnomagiApi.scan().getBlockRepresentation(Blocks.log, -1), scanLog.getName());
-        TechnomagiApi.scan().addScanMapping(TechnomagiApi.scan().getBlockRepresentation(Blocks.stone, 0), scanStone.getName());
+        TechnomagiApi.scan().addScanMapping(BlockHelper.getBlockRepresentation(Blocks.log, -1), scanLog.getName());
+        TechnomagiApi.scan().addScanMapping(BlockHelper.getBlockRepresentation(Blocks.stone, 0), scanStone.getName());
 
-        TechnomagiApi.scan().addAnalysisMapping(TechnomagiApi.scan().getItemStackRepresentation(ItemStackHelper.block("log")), scanLog.getName());
-        TechnomagiApi.scan().addAnalysisMapping(TechnomagiApi.scan().getItemStackRepresentation(ItemStackHelper.block("stone")), scanStone.getName());
-        TechnomagiApi.scan().addAnalysisMapping(TechnomagiApi.scan().getItemStackRepresentation(ItemStackHelper.block("cobblestone")), scanStone.getName());
+        TechnomagiApi.scan().addAnalysisMapping(ItemStackHelper.getItemStackRepresentation(ItemStackHelper.block("log")), scanLog.getName());
+        TechnomagiApi.scan().addAnalysisMapping(ItemStackHelper.getItemStackRepresentation(ItemStackHelper.block("stone")), scanStone.getName());
+        TechnomagiApi.scan().addAnalysisMapping(ItemStackHelper.getItemStackRepresentation(ItemStackHelper.block("cobblestone")), scanStone.getName());
     }
 
 }

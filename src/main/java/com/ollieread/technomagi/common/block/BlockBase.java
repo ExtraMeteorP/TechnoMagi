@@ -30,4 +30,10 @@ public class BlockBase extends Block
         return "tile.technomagi." + name;
     }
 
+    @Override
+    public int damageDropped(int metadata)
+    {
+        return metadata;
+    }
+
 }

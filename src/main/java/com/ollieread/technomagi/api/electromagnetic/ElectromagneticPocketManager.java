@@ -10,7 +10,7 @@ import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSavedData;
 
-import com.ollieread.technomagi.api.electromagnetic.ElectromagneticPocket.EnergyType;
+import com.ollieread.technomagi.api.electromagnetic.EnergyHandler.EnergyType;
 import com.ollieread.technomagi.common.block.electromagnetic.tile.TileElectromagnetic;
 
 public class ElectromagneticPocketManager extends WorldSavedData
@@ -77,7 +77,7 @@ public class ElectromagneticPocketManager extends WorldSavedData
         return null;
     }
 
-    public ElectromagneticPocket getNearestPocketOfType(int x, int y, int z, EnergyType type)
+    public ElectromagneticPocket getNearestPocketOfType(int x, int y, int z, EnergyHandler.EnergyType type)
     {
         ChunkCoordinates coords = new ChunkCoordinates(x, y, z);
         if (pockets != null && pockets.size() > 0) {
@@ -130,7 +130,7 @@ public class ElectromagneticPocketManager extends WorldSavedData
         return null;
     }
 
-    public ElectromagneticPocket getPocketForCoordsOfType(World world, int x, int y, int z, EnergyType type)
+    public ElectromagneticPocket getPocketForCoordsOfType(World world, int x, int y, int z, EnergyHandler.EnergyType type)
     {
         int dimension = world.provider.dimensionId;
         ChunkCoordinates coords = new ChunkCoordinates(x, y, z);

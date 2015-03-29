@@ -53,7 +53,7 @@ public class TileTeleporterJumper extends TileTeleporter implements ITileLink, I
         if (!incoming) {
             if (linked instanceof TileTeleporterJumper) {
                 if (((TileTeleporterJumper) linked).canUse(player, !incoming)) {
-                    TeleportHelper.teleportPlayerToTeleporter(player, linked.xCoord, linked.yCoord, linked.zCoord, true);
+                    TeleportHelper.teleportEntityToTeleporter(player, linked.xCoord, linked.yCoord, linked.zCoord, true);
                     energy.modifyEnergyStored(this.baseConsume);
                 }
             }

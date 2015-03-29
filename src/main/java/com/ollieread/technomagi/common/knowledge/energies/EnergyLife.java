@@ -6,8 +6,8 @@ import net.minecraftforge.common.EnumPlantType;
 import com.ollieread.technomagi.api.TechnomagiApi;
 import com.ollieread.technomagi.api.knowledge.Knowledge;
 import com.ollieread.technomagi.api.knowledge.research.Research;
-import com.ollieread.technomagi.api.scan.ScanHandler;
 import com.ollieread.technomagi.common.knowledge.Energies;
+import com.ollieread.technomagi.util.BlockHelper;
 import com.ollieread.technomagi.util.BlockRepresentation;
 import com.ollieread.technomagi.util.ItemStackHelper;
 import com.ollieread.technomagi.util.ItemStackRepresentation;
@@ -66,11 +66,11 @@ public class EnergyLife extends Knowledge
 
     public void mappings()
     {
-        TechnomagiApi.scan().addAnalysisMapping(ScanHandler.getItemStackRepresentation(ItemStackHelper.item("egg")), analyseEgg.getName());
+        TechnomagiApi.scan().addAnalysisMapping(ItemStackHelper.getItemStackRepresentation(ItemStackHelper.item("egg")), analyseEgg.getName());
         TechnomagiApi.scan().addAnalysisMapping(new ItemStackRepresentation.PlantRepresentation(EnumPlantType.Crop), analyseCrops.getName());
-        TechnomagiApi.scan().addAnalysisMapping(ScanHandler.getItemStackRepresentation(ItemStackHelper.block("sapling", 1, -1)), analyseSapling.getName());
+        TechnomagiApi.scan().addAnalysisMapping(ItemStackHelper.getItemStackRepresentation(ItemStackHelper.block("sapling", 1, -1)), analyseSapling.getName());
 
         TechnomagiApi.scan().addScanMapping(new BlockRepresentation.GrowableRepresentation(), scanCrops.getName());
-        TechnomagiApi.scan().addScanMapping(ScanHandler.getBlockRepresentation(Blocks.sapling, -1), scanSapling.getName());
+        TechnomagiApi.scan().addScanMapping(BlockHelper.getBlockRepresentation(Blocks.sapling, -1), scanSapling.getName());
     }
 }

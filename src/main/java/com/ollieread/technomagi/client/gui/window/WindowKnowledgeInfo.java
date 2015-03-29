@@ -22,6 +22,7 @@ import com.ollieread.technomagi.client.gui.component.IClickHandler;
 import com.ollieread.technomagi.client.gui.content.Content;
 import com.ollieread.technomagi.client.gui.content.ContentLoader;
 import com.ollieread.technomagi.client.gui.content.Section;
+import com.ollieread.technomagi.client.gui.window.abstracts.WindowTabbed;
 
 public class WindowKnowledgeInfo extends WindowTabbed implements IClickHandler
 {
@@ -67,8 +68,6 @@ public class WindowKnowledgeInfo extends WindowTabbed implements IClickHandler
         list.setBackground(true).setPadding(6, 9);
         list.setClickHandler(this);
         this.addComponent("link_list", list);
-
-        this.updateContent();
     }
 
     @Override
@@ -116,6 +115,7 @@ public class WindowKnowledgeInfo extends WindowTabbed implements IClickHandler
     {
         if (component instanceof ComponentTab) {
             builder.instance.currentWindow = new WindowKnowledge(this.technomage, component.getName());
+            builder.instance.currentWindow.updateContent();
         } else if (component instanceof ComponentButton) {
             ButtonType type = ((ComponentButton) component).getType();
 

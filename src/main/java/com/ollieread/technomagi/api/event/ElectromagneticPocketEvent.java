@@ -4,8 +4,9 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.world.ChunkPosition;
 
-import com.ollieread.technomagi.api.electromagnetic.ElectromagneticPocket.EnergyType;
 import com.ollieread.technomagi.api.electromagnetic.ElectromagneticPocket.PocketSize;
+import com.ollieread.technomagi.api.electromagnetic.EnergyHandler;
+import com.ollieread.technomagi.api.electromagnetic.EnergyHandler.EnergyType;
 import com.ollieread.technomagi.common.block.electromagnetic.tile.TileElectromagnetic;
 
 import cpw.mods.fml.common.eventhandler.Cancelable;
@@ -15,13 +16,13 @@ public class ElectromagneticPocketEvent extends Event
 {
 
     public final TileElectromagnetic pocket;
-    public final EnergyType type;
+    public final EnergyHandler.EnergyType type;
     public final PocketSize size;
     public final boolean negative;
     public float modifier;
     public float amount;
 
-    public ElectromagneticPocketEvent(TileElectromagnetic pocket, EnergyType type, PocketSize size, boolean negative, float modifier, float amount)
+    public ElectromagneticPocketEvent(TileElectromagnetic pocket, EnergyHandler.EnergyType type, PocketSize size, boolean negative, float modifier, float amount)
     {
         this.pocket = pocket;
         this.type = type;
@@ -38,7 +39,7 @@ public class ElectromagneticPocketEvent extends Event
         public final EntityLivingBase entity;
         public final boolean first;
 
-        public ExposeEntity(TileElectromagnetic pocket, EntityLivingBase entity, EnergyType type, PocketSize size, boolean negative, float modifier, float amount, boolean first)
+        public ExposeEntity(TileElectromagnetic pocket, EntityLivingBase entity, EnergyHandler.EnergyType type, PocketSize size, boolean negative, float modifier, float amount, boolean first)
         {
             super(pocket, type, size, negative, modifier, amount);
 
@@ -54,7 +55,7 @@ public class ElectromagneticPocketEvent extends Event
 
         public final EntityItem item;
 
-        public ExposeItem(TileElectromagnetic pocket, EntityItem item, EnergyType type, PocketSize size, boolean negative, float modifier, float amount)
+        public ExposeItem(TileElectromagnetic pocket, EntityItem item, EnergyHandler.EnergyType type, PocketSize size, boolean negative, float modifier, float amount)
         {
             super(pocket, type, size, negative, modifier, amount);
 
@@ -70,7 +71,7 @@ public class ElectromagneticPocketEvent extends Event
 
         public final ChunkPosition block;
 
-        public ExposeBlock(TileElectromagnetic pocket, ChunkPosition block, EnergyType type, PocketSize size, boolean negative, float modifier, float amount)
+        public ExposeBlock(TileElectromagnetic pocket, ChunkPosition block, EnergyHandler.EnergyType type, PocketSize size, boolean negative, float modifier, float amount)
         {
             super(pocket, type, size, negative, modifier, amount);
 

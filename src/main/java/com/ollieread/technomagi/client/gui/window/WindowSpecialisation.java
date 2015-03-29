@@ -20,6 +20,7 @@ import com.ollieread.technomagi.client.gui.content.Content;
 import com.ollieread.technomagi.client.gui.content.ContentLoader;
 import com.ollieread.technomagi.client.gui.content.Section;
 import com.ollieread.technomagi.client.gui.content.element.Element;
+import com.ollieread.technomagi.client.gui.window.abstracts.Window;
 import com.ollieread.technomagi.util.PlayerHelper;
 
 public class WindowSpecialisation extends Window implements IClickHandler
@@ -56,8 +57,6 @@ public class WindowSpecialisation extends Window implements IClickHandler
         ComponentButton specialiseButton = new ComponentButton(214, ButtonType.DEFAULT);
         specialiseButton.setText(StatCollector.translateToLocal("gui.technomagi.specialise.choose"));
         this.addComponent("specialise_button", specialiseButton).setOffset(0, 198).setClickHandler(this);
-
-        updateContent();
     }
 
     @Override

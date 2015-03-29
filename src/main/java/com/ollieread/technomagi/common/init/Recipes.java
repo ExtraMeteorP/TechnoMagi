@@ -15,6 +15,9 @@ import com.ollieread.technomagi.api.crafting.OreDictProcessorRecipe;
 import com.ollieread.technomagi.api.crafting.ProcessorRecipe;
 import com.ollieread.technomagi.util.ItemStackHelper;
 
+import cpw.mods.fml.common.IFuelHandler;
+import cpw.mods.fml.common.registry.GameRegistry;
+
 public class Recipes
 {
 
@@ -65,6 +68,9 @@ public class Recipes
 
         processor();
         electromagnetic();
+        energy();
+
+        GameRegistry.registerFuelHandler(new FuelHandler());
     }
 
     private static void processor()
@@ -88,26 +94,26 @@ public class Recipes
         ProcessorRecipe copperSheetRecipe = new OreDictProcessorRecipe(ItemStackHelper.itemSubtype(Items.resource, "copper_sheet", 1));
         ProcessorRecipe aluminiumSheetRecipe = new OreDictProcessorRecipe(ItemStackHelper.itemSubtype(Items.resource, "aluminium_sheet", 1));
 
-        ironOreRecipe.addOutput(ProcessorType.GRIND, ItemStackHelper.itemSubtype(Items.resource, "iron_dust", 2), 2, ItemStackHelper.item("cobblestone"), 8);
-        goldOreRecipe.addOutput(ProcessorType.GRIND, ItemStackHelper.itemSubtype(Items.resource, "gold_dust", 2), 1, ItemStackHelper.item("cobblestone"), 8);
-        diamondOreRecipe.addOutput(ProcessorType.GRIND, ItemStackHelper.itemSubtype(Items.resource, "diamond_dust", 2), 5, ItemStackHelper.item("cobblestone"), 8);
-        copperOreRecipe.addOutput(ProcessorType.GRIND, ItemStackHelper.itemSubtype(Items.resource, "copper_dust", 2), 2, ItemStackHelper.item("cobblestone"), 8);
-        aluminiumOreRecipe.addOutput(ProcessorType.GRIND, ItemStackHelper.itemSubtype(Items.resource, "aluminium_dust", 2), 1, ItemStackHelper.item("cobblestone"), 8);
+        ironOreRecipe.addOutput(ProcessorType.GRIND, ItemStackHelper.itemSubtype(Items.resource, "iron_dust", 2), 2, ItemStackHelper.itemSubtype(Items.resource, "stone_dust", 1), 8);
+        goldOreRecipe.addOutput(ProcessorType.GRIND, ItemStackHelper.itemSubtype(Items.resource, "gold_dust", 2), 1, ItemStackHelper.itemSubtype(Items.resource, "stone_dust", 1), 8);
+        diamondOreRecipe.addOutput(ProcessorType.GRIND, ItemStackHelper.itemSubtype(Items.resource, "diamond_dust", 2), 5, ItemStackHelper.itemSubtype(Items.resource, "stone_dust", 1), 8, 2);
+        copperOreRecipe.addOutput(ProcessorType.GRIND, ItemStackHelper.itemSubtype(Items.resource, "copper_dust", 2), 2, ItemStackHelper.itemSubtype(Items.resource, "stone_dust", 1), 8);
+        aluminiumOreRecipe.addOutput(ProcessorType.GRIND, ItemStackHelper.itemSubtype(Items.resource, "aluminium_dust", 2), 1, ItemStackHelper.itemSubtype(Items.resource, "stone_dust", 1), 8);
 
         ironIngotRecipe.addOutput(ProcessorType.GRIND, ItemStackHelper.itemSubtype(Items.resource, "iron_dust", 1), 2, null, 0);
         goldIngotRecipe.addOutput(ProcessorType.GRIND, ItemStackHelper.itemSubtype(Items.resource, "gold_dust", 1), 1, null, 0);
-        diamondRecipe.addOutput(ProcessorType.GRIND, ItemStackHelper.itemSubtype(Items.resource, "diamond_dust", 1), 5, null, 0);
+        diamondRecipe.addOutput(ProcessorType.GRIND, ItemStackHelper.itemSubtype(Items.resource, "diamond_dust", 1), 5, null, 0, 2);
         copperIngotRecipe.addOutput(ProcessorType.GRIND, ItemStackHelper.itemSubtype(Items.resource, "copper_dust", 1), 2, null, 0);
         aluminiumIngotRecipe.addOutput(ProcessorType.GRIND, ItemStackHelper.itemSubtype(Items.resource, "aluminium_dust", 1), 1, null, 0);
         ironIngotRecipe.addOutput(ProcessorType.ROLL, ItemStackHelper.itemSubtype(Items.resource, "iron_sheet", 2), 2, null, 0);
         goldIngotRecipe.addOutput(ProcessorType.ROLL, ItemStackHelper.itemSubtype(Items.resource, "gold_sheet", 2), 1, null, 0);
-        diamondRecipe.addOutput(ProcessorType.ROLL, ItemStackHelper.itemSubtype(Items.resource, "diamond_sheet", 2), 5, null, 0);
+        diamondRecipe.addOutput(ProcessorType.ROLL, ItemStackHelper.itemSubtype(Items.resource, "diamond_sheet", 2), 5, null, 0, 2);
         copperIngotRecipe.addOutput(ProcessorType.ROLL, ItemStackHelper.itemSubtype(Items.resource, "copper_sheet", 2), 2, null, 0);
         aluminiumIngotRecipe.addOutput(ProcessorType.ROLL, ItemStackHelper.itemSubtype(Items.resource, "aluminium_sheet", 2), 1, null, 0);
 
         ironSheetRecipe.addOutput(ProcessorType.ROLL, ItemStackHelper.itemSubtype(Items.resource, "iron_rod", 2), 2, null, 0);
         goldSheetRecipe.addOutput(ProcessorType.ROLL, ItemStackHelper.itemSubtype(Items.resource, "gold_rod", 2), 1, null, 0);
-        diamondSheetRecipe.addOutput(ProcessorType.ROLL, ItemStackHelper.itemSubtype(Items.resource, "diamond_rod", 2), 5, null, 0);
+        diamondSheetRecipe.addOutput(ProcessorType.ROLL, ItemStackHelper.itemSubtype(Items.resource, "diamond_rod", 2), 5, null, 0, 2);
         copperSheetRecipe.addOutput(ProcessorType.ROLL, ItemStackHelper.itemSubtype(Items.resource, "copper_rod", 2), 2, null, 0);
         aluminiumSheetRecipe.addOutput(ProcessorType.ROLL, ItemStackHelper.itemSubtype(Items.resource, "aluminium_rod", 2), 1, null, 0);
 
@@ -131,9 +137,9 @@ public class Recipes
             logRecipe.addOutput(ProcessorType.SAW, ItemStackHelper.block("planks", 6, i), 3, ItemStackHelper.itemSubtype(Items.resource, "wood_dust", 1), 8);
             logRecipe.addOutput(ProcessorType.BURN, ItemStackHelper.item("coal", 2, 1), 1, null, 0);
             ProcessorRecipe woodRecipe = new ProcessorRecipe(ItemStackHelper.block("planks", 1, i));
-            logRecipe.addOutput(ProcessorType.SAW, ItemStackHelper.block("wooden_slab", 3, i), 2, ItemStackHelper.itemSubtype(Items.resource, "wood_dust", 1), 8);
+            woodRecipe.addOutput(ProcessorType.SAW, ItemStackHelper.block("wooden_slab", 3, i), 2, ItemStackHelper.itemSubtype(Items.resource, "wood_dust", 1), 8);
             ProcessorRecipe slabRecipe = new ProcessorRecipe(ItemStackHelper.block("wooden_slab", 1, i));
-            logRecipe.addOutput(ProcessorType.SAW, ItemStackHelper.item("stick", 4), 1, ItemStackHelper.itemSubtype(Items.resource, "wood_dust", 1), 8);
+            slabRecipe.addOutput(ProcessorType.SAW, ItemStackHelper.item("stick", 4), 1, ItemStackHelper.itemSubtype(Items.resource, "wood_dust", 1), 8);
 
             CraftingHandler.processor.add(logRecipe);
             CraftingHandler.processor.add(woodRecipe);
@@ -143,6 +149,28 @@ public class Recipes
 
     private static void electromagnetic()
     {
+
+    }
+
+    private static void energy()
+    {
+
+    }
+
+    public static class FuelHandler implements IFuelHandler
+    {
+
+        @Override
+        public int getBurnTime(ItemStack fuel)
+        {
+            if (fuel.isItemEqual(ItemStackHelper.itemSubtype(Items.resource, "wood_dust", 1))) {
+                return 100;
+            } else if (fuel.isItemEqual(ItemStackHelper.itemSubtype(Items.crystalCharged, "calidite", 1))) {
+                return 1000;
+            }
+
+            return 0;
+        }
 
     }
 

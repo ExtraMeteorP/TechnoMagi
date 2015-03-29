@@ -28,8 +28,8 @@ public class ComponentVerticalList extends ComponentCollection
         this.scrolling = scrolling;
         int x = (width - buttonUp.getWidth()) - (paddingX * 2) - 4;
         int y = (height - buttonUp.getHeight()) - (paddingY * 2) - 4;
-        buttonUp.setOffset(x, (paddingY * 2) + 4).setParent(this);
-        buttonDown.setActive(true).setOffset(x, y).setParent(this);
+        buttonUp.setEnabled(true).setOffset(x, (paddingY * 2) + 4).setParent(this);
+        buttonDown.setEnabled(true).setActive(true).setOffset(x, y).setParent(this);
     }
 
     public ComponentVerticalList setBackground(boolean background)

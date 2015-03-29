@@ -9,7 +9,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import com.ollieread.technomagi.common.init.Items;
 import com.ollieread.technomagi.util.ItemNBTHelper;
+import com.ollieread.technomagi.util.ItemStackHelper;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -67,9 +69,13 @@ public class ItemCrystalCharged extends ItemSubtypes
     {
         ItemStack copied = stack.copy();
 
-        setEnergy(copied, getEnergy(copied) - 5);
-
-        return copied;
+        if (getEnergy(copied) > 5) {
+            setEnergy(copied, getEnergy(copied) - 5);
+            return copied;
+        } else {
+            String type = this.getName(stack.getItemDamage());
+            return ItemStackHelper.itemSubtype(Items.resource, type + "_dust", 1);
+        }
     }
 
     @Override

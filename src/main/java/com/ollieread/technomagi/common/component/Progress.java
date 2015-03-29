@@ -13,6 +13,11 @@ public class Progress
         this.maxProgress = maxProgress;
     }
 
+    public void setProgress(int progress)
+    {
+        this.progress = progress;
+    }
+
     public void incrementProgress()
     {
         this.progress++;

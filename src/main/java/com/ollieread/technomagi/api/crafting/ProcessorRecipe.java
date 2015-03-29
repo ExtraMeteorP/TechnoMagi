@@ -12,6 +12,7 @@ public class ProcessorRecipe implements IProcessorRecipe
 {
 
     protected ItemStack input;
+    protected Map<ProcessorType, Integer> minTier = new LinkedHashMap<ProcessorType, Integer>();
     protected Map<ProcessorType, ItemStack> output = new EnumMap<ProcessorType, ItemStack>(ProcessorType.class);
     protected Map<ProcessorType, ItemStack> byProduct = new EnumMap<ProcessorType, ItemStack>(ProcessorType.class);
     protected Map<ProcessorType, Integer> byProductChance = new LinkedHashMap<ProcessorType, Integer>();
@@ -24,6 +25,11 @@ public class ProcessorRecipe implements IProcessorRecipe
 
     public void addOutput(ProcessorType type, ItemStack output, int damage, ItemStack byProduct, int byProductChance)
     {
+        addOutput(type, output, damage, byProduct, byProductChance, 1);
+    }
+
+    public void addOutput(ProcessorType type, ItemStack output, int damage, ItemStack byProduct, int byProductChance, int tier)
+    {
         this.output.put(type, output);
         this.damage.put(type, damage);
 
@@ -31,6 +37,8 @@ public class ProcessorRecipe implements IProcessorRecipe
             this.byProduct.put(type, byProduct);
             this.byProductChance.put(type, byProductChance);
         }
+
+        this.minTier.put(type, tier);
     }
 
     @Override
@@ -77,6 +85,11 @@ public class ProcessorRecipe implements IProcessorRecipe
         }
 
         return 0;
+    }
+
+    public int getMinTier(ProcessorType type)
+    {
+        return minTier.get(type);
     }
 
     @Override

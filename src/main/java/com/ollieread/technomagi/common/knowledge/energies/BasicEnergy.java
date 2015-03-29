@@ -6,6 +6,7 @@ import com.ollieread.technomagi.api.TechnomagiApi;
 import com.ollieread.technomagi.api.knowledge.Knowledge;
 import com.ollieread.technomagi.api.knowledge.research.Research;
 import com.ollieread.technomagi.common.knowledge.Energies;
+import com.ollieread.technomagi.util.BlockHelper;
 import com.ollieread.technomagi.util.ItemStackHelper;
 import com.ollieread.technomagi.util.ResourceHelper;
 
@@ -43,11 +44,11 @@ public class BasicEnergy extends Knowledge
     public void mappings()
     {
         // Add scan and analysis mappings
-        TechnomagiApi.scan().addScanMapping(TechnomagiApi.scan().getBlockRepresentation(Blocks.redstone_ore, 0), scanRedstoneOre.getName());
-        TechnomagiApi.scan().addAnalysisMapping(TechnomagiApi.scan().getItemStackRepresentation(ItemStackHelper.item("redstone_ore")), analyseRedstoneOre.getName());
-        TechnomagiApi.scan().addAnalysisMapping(TechnomagiApi.scan().getItemStackRepresentation(ItemStackHelper.item("redstone")), analyseRedstoneDust.getName());
-        TechnomagiApi.scan().addScanMapping(TechnomagiApi.scan().getBlockRepresentation(Blocks.redstone_block, 0), scanRedstoneBlock.getName());
-        TechnomagiApi.scan().addAnalysisMapping(TechnomagiApi.scan().getItemStackRepresentation(ItemStackHelper.item("redstone_block")), analyseRedstoneBlock.getName());
+        TechnomagiApi.scan().addScanMapping(BlockHelper.getBlockRepresentation(Blocks.redstone_ore, 0), scanRedstoneOre.getName());
+        TechnomagiApi.scan().addAnalysisMapping(ItemStackHelper.getItemStackRepresentation(ItemStackHelper.item("redstone_ore")), analyseRedstoneOre.getName());
+        TechnomagiApi.scan().addAnalysisMapping(ItemStackHelper.getItemStackRepresentation(ItemStackHelper.item("redstone")), analyseRedstoneDust.getName());
+        TechnomagiApi.scan().addScanMapping(BlockHelper.getBlockRepresentation(Blocks.redstone_block, 0), scanRedstoneBlock.getName());
+        TechnomagiApi.scan().addAnalysisMapping(ItemStackHelper.getItemStackRepresentation(ItemStackHelper.item("redstone_block")), analyseRedstoneBlock.getName());
         // Add event mappings
         TechnomagiApi.knowledge().mapCraftingResearch(ItemStackHelper.block("redstone_block"), craftRedstoneBlock.getName());
         TechnomagiApi.knowledge().mapMiningResearch(Blocks.lit_redstone_ore, 0, mineRedstoneOre.getName());
