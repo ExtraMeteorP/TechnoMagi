@@ -135,6 +135,8 @@ tile.technomagi.processor.nanite.name=Processor: Nanite
 tile.technomagi.battery.name=Powercell
 tile.technomagi.basic_generator.name=Furnace Generator
 
+tile.technomagi.inert.name=Inert Block
+
 # Items
 item.technomagi.resource.iron_dust.name=Iron Dust
 item.technomagi.resource.gold_dust.name=Gold Dust

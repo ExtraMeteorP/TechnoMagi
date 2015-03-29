@@ -5,6 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
 import com.ollieread.technomagi.common.block.BlockContainerSubtypes;
+import com.ollieread.technomagi.common.block.BlockInert;
 import com.ollieread.technomagi.common.block.BlockResource;
 import com.ollieread.technomagi.common.block.BlockSubtypes;
 import com.ollieread.technomagi.common.block.conduit.BlockConduit;
@@ -30,6 +31,7 @@ import com.ollieread.technomagi.common.block.world.BlockNaniteFarmland;
 import com.ollieread.technomagi.common.item.block.ItemBlockBase;
 import com.ollieread.technomagi.common.item.block.ItemBlockBattery;
 import com.ollieread.technomagi.common.item.block.ItemBlockConduit;
+import com.ollieread.technomagi.common.item.block.ItemBlockInert;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -46,6 +48,7 @@ public class Blocks
     public static Block battery;
     public static Block basicGenerator;
     public static Block elevator;
+    public static Block inert;
 
     public static void init()
     {
@@ -63,6 +66,7 @@ public class Blocks
         battery = new BlockBattery("battery").setLightLevel(8F).setHardness(3.5F);
         basicGenerator = new BlockBasicGenerator("basic_generator").setLightLevel(10F).setHardness(3.5F);
         elevator = new BlockElevator("elevator").setHardness(3.5F);
+        inert = new BlockInert("inert").setHardness(3.5F);
 
         // Register Blocks
         GameRegistry.registerBlock(resource, ItemBlockBase.class, "resource");
@@ -75,6 +79,7 @@ public class Blocks
         GameRegistry.registerBlock(battery, ItemBlockBattery.class, "battery");
         GameRegistry.registerBlock(basicGenerator, "basic_generator");
         GameRegistry.registerBlock(elevator, "teleporter");
+        GameRegistry.registerBlock(inert, ItemBlockInert.class, "inert");
 
         // Register TileEntities
         GameRegistry.registerTileEntity(TileScanner.class, "scanner_tile");
