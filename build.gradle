@@ -26,7 +26,7 @@ configFile.withReader {
     project.ext.config = new ConfigSlurper().parse prop
 }
 
-version = "${config.minecraft}-${config.version}.${System.getenv("BUILD_NUMBER")}"
+version = "${config.version}.${System.getenv("BUILD_NUMBER")}${System.getenv("BUILD_TYPE") ? "-${System.getenv("BUILD_TYPE")}" : ""}"
 group= "com.ollieread.technomagi" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Technomagi"
 
@@ -74,11 +74,9 @@ import org.ajoberstar.grgit.*
 
 ext.repo = Grgit.open(project.file('.'))
 
-version = "${config.version.major}.${config.version.minor}.${config.version.revis}.${System.getenv("BUILD_NUMBER") ?: 0}${config.version.stage ? "-${config.version.stage}" : ""}"
-
 task tagBuild << {
     repo.tag.add {
-        name = version
+        name = project.version
         message = "Build for ${version}"
     }
     
