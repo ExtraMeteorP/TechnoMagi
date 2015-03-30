@@ -102,7 +102,7 @@ public class TileResourceProcessorElectric extends TileResourceProcessor impleme
     @Override
     public boolean canConnectEnergy(ForgeDirection from)
     {
-        return from.equals(ForgeDirection.DOWN) || from.equals(this.getDirection().getOpposite());
+        return from != null && (from.equals(ForgeDirection.DOWN) || (this.getDirection() != null && from.equals(this.getDirection().getOpposite())));
     }
 
     @Override

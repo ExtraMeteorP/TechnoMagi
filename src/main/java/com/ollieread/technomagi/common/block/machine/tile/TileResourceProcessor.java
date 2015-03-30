@@ -95,7 +95,7 @@ public abstract class TileResourceProcessor extends TileBase implements IInvento
                 int damage = component.getCurrentDamage(componentStack);
                 IProcessorRecipe recipe = CraftingHandler.processor.find(type, inputStack);
 
-                if (recipe != null && recipe.getOutput(type) != null && recipe.getMinTier(type) >= tier && (damage + recipe.getDamage(type)) <= component.getMaxDamage(componentStack)) {
+                if (recipe != null && recipe.getOutput(type) != null && recipe.getMinTier(type) <= tier && (damage + recipe.getDamage(type)) <= component.getMaxDamage(componentStack)) {
                     ItemStack output = recipe.getOutput(type);
                     ItemStack currentOutput = inventory.getStackInSlot(getOutputSlot());
 
@@ -215,7 +215,9 @@ public abstract class TileResourceProcessor extends TileBase implements IInvento
     {
         super.writeToNBT(compound);
 
-        compound.setInteger("Direction", direction.ordinal());
+        if (direction != null) {
+            compound.setInteger("Direction", direction.ordinal());
+        }
         compound.setFloat("Modifier", modifier);
 
         NBTTagCompound inventoryCompound = new NBTTagCompound();
@@ -234,7 +236,9 @@ public abstract class TileResourceProcessor extends TileBase implements IInvento
     {
         super.readFromNBT(compound);
 
-        direction = ForgeDirection.values()[compound.getInteger("Direction")];
+        if (compound.hasKey("Direction")) {
+            direction = ForgeDirection.values()[compound.getInteger("Direction")];
+        }
         modifier = compound.getFloat("Modifier");
 
         inventory.readFromNBT(compound.getCompoundTag("Inventory"));
