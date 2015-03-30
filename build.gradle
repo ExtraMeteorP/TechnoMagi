@@ -70,17 +70,4 @@ artifacts {
     archives jar
 }
 
-import org.ajoberstar.grgit.*
-
-ext.repo = Grgit.open(project.file('.'))
-
-task tagBuild << {
-    repo.tag.add {
-        name = project.version
-        message = "Build for ${version}"
-    }
-    
-    repo.push(tags: true)
-}
-
 build.dependsOn "deobfJar"
