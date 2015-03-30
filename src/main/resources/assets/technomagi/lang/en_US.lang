@@ -137,6 +137,12 @@ tile.technomagi.basic_generator.name=Furnace Generator
 
 tile.technomagi.inert.name=Inert Block
 
+tile.technomagi.hardlight.name=Hardlight Block
+tile.technomagi.hardlight_slab.name=Hardlight Slab
+tile.technomagi.hardlight_platform.name=Hardlight Platform
+tile.technomagi.hardlight_fence.name=Hardlight Fence
+tile.technomagi.hardlight_pane.name=Hardlight Pane
+
 # Items
 item.technomagi.resource.iron_dust.name=Iron Dust
 item.technomagi.resource.gold_dust.name=Gold Dust

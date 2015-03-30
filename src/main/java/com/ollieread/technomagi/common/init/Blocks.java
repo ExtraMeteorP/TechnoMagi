@@ -25,6 +25,11 @@ import com.ollieread.technomagi.common.block.machine.tile.TileResourceProcessorE
 import com.ollieread.technomagi.common.block.machine.tile.TileResourceProcessorNanite;
 import com.ollieread.technomagi.common.block.scanner.BlockScanner;
 import com.ollieread.technomagi.common.block.scanner.tile.TileScanner;
+import com.ollieread.technomagi.common.block.structure.BlockHardlight;
+import com.ollieread.technomagi.common.block.structure.BlockHardlightFence;
+import com.ollieread.technomagi.common.block.structure.BlockHardlightPane;
+import com.ollieread.technomagi.common.block.structure.BlockHardlightPlatform;
+import com.ollieread.technomagi.common.block.structure.BlockHardlightSlab;
 import com.ollieread.technomagi.common.block.teleporter.BlockElevator;
 import com.ollieread.technomagi.common.block.teleporter.tile.TileElevator;
 import com.ollieread.technomagi.common.block.world.BlockNaniteFarmland;
@@ -49,6 +54,11 @@ public class Blocks
     public static Block basicGenerator;
     public static Block elevator;
     public static Block inert;
+    public static Block hardlight;
+    public static Block hardlightSlab;
+    public static Block hardlightPlatform;
+    public static Block hardlightFence;
+    public static Block hardlightPane;
 
     public static void init()
     {
@@ -67,6 +77,11 @@ public class Blocks
         basicGenerator = new BlockBasicGenerator("basic_generator").setLightLevel(10F).setHardness(3.5F);
         elevator = new BlockElevator("elevator").setHardness(3.5F);
         inert = new BlockInert("inert").setHardness(3.5F);
+        hardlight = new BlockHardlight("hardlight");
+        hardlightSlab = new BlockHardlightSlab("hardlight_slab");
+        hardlightPlatform = new BlockHardlightPlatform("hardlight_platform");
+        hardlightFence = new BlockHardlightFence("hardlight_fence");
+        hardlightPane = new BlockHardlightPane("hardlight_pane");
 
         // Register Blocks
         GameRegistry.registerBlock(resource, ItemBlockBase.class, "resource");
@@ -80,6 +95,11 @@ public class Blocks
         GameRegistry.registerBlock(basicGenerator, "basic_generator");
         GameRegistry.registerBlock(elevator, "teleporter");
         GameRegistry.registerBlock(inert, ItemBlockInert.class, "inert");
+        GameRegistry.registerBlock(hardlight, "hardlight");
+        GameRegistry.registerBlock(hardlightSlab, "hardlight_slab");
+        GameRegistry.registerBlock(hardlightPlatform, "hardlight_platform");
+        GameRegistry.registerBlock(hardlightFence, "hardlight_fence");
+        GameRegistry.registerBlock(hardlightPane, "hardlight_pane");
 
         // Register TileEntities
         GameRegistry.registerTileEntity(TileScanner.class, "scanner_tile");
