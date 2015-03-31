@@ -1,9 +1,9 @@
 package com.ollieread.technomagi.common.event.handler;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.MathHelper;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.player.PlayerUseItemEvent;
-import thaumcraft.codechicken.lib.math.MathHelper;
 
 import com.ollieread.technomagi.api.entity.PlayerTechnomagi;
 import com.ollieread.technomagi.api.event.TechnomagiEvent;
