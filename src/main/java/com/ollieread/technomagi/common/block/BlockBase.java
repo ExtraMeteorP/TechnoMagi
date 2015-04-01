@@ -16,6 +16,7 @@ public class BlockBase extends Block
         super(material);
 
         this.name = name;
+        this.setBlockTextureName(getTexturePath(name));
         this.setCreativeTab(TechnomagiTabs.blocks);
     }
 
