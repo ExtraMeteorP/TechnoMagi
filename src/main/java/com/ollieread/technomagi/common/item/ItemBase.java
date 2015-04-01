@@ -25,7 +25,7 @@ public class ItemBase extends Item
 
     public String getTexturePath(String name)
     {
-        return Technomagi.MODID.toLowerCase() + ":" + name;
+        return Technomagi.MODID.toLowerCase() + ":" + name.replace('.', '/');
     }
 
     @Override
