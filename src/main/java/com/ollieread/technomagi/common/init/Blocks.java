@@ -17,6 +17,8 @@ import com.ollieread.technomagi.common.block.energy.BlockBasicGenerator;
 import com.ollieread.technomagi.common.block.energy.BlockBattery;
 import com.ollieread.technomagi.common.block.energy.tile.TileBasicGenerator;
 import com.ollieread.technomagi.common.block.energy.tile.TileBattery;
+import com.ollieread.technomagi.common.block.fluid.BlockAmnioticFluid;
+import com.ollieread.technomagi.common.block.fluid.BlockEnrichedFluid;
 import com.ollieread.technomagi.common.block.machine.BlockExtrapolator;
 import com.ollieread.technomagi.common.block.machine.BlockResourceProcessor;
 import com.ollieread.technomagi.common.block.machine.tile.TileExtrapolator;
@@ -36,6 +38,7 @@ import com.ollieread.technomagi.common.block.world.BlockNaniteFarmland;
 import com.ollieread.technomagi.common.item.block.ItemBlockBase;
 import com.ollieread.technomagi.common.item.block.ItemBlockBattery;
 import com.ollieread.technomagi.common.item.block.ItemBlockConduit;
+import com.ollieread.technomagi.common.item.block.ItemBlockFluid;
 import com.ollieread.technomagi.common.item.block.ItemBlockInert;
 
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -59,6 +62,8 @@ public class Blocks
     public static Block hardlightPlatform;
     public static Block hardlightFence;
     public static Block hardlightPane;
+    public static Block amnioticFluid;
+    public static Block enrichedFluid;
 
     public static void init()
     {
@@ -82,6 +87,8 @@ public class Blocks
         hardlightPlatform = new BlockHardlightPlatform("hardlight_platform");
         hardlightFence = new BlockHardlightFence("hardlight_fence");
         hardlightPane = new BlockHardlightPane("hardlight_pane");
+        amnioticFluid = new BlockAmnioticFluid("amniotic_fluid");
+        enrichedFluid = new BlockEnrichedFluid("enriched_fluid");
 
         // Register Blocks
         GameRegistry.registerBlock(resource, ItemBlockBase.class, "resource");
@@ -100,6 +107,8 @@ public class Blocks
         GameRegistry.registerBlock(hardlightPlatform, "hardlight_platform");
         GameRegistry.registerBlock(hardlightFence, "hardlight_fence");
         GameRegistry.registerBlock(hardlightPane, "hardlight_pane");
+        GameRegistry.registerBlock(amnioticFluid, ItemBlockFluid.class, "amniotic_fluid");
+        GameRegistry.registerBlock(enrichedFluid, ItemBlockFluid.class, "enriched_fluid");
 
         // Register TileEntities
         GameRegistry.registerTileEntity(TileScanner.class, "scanner_tile");

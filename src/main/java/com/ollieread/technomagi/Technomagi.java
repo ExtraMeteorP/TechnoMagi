@@ -12,6 +12,7 @@ import com.ollieread.technomagi.common.init.Blocks;
 import com.ollieread.technomagi.common.init.Config;
 import com.ollieread.technomagi.common.init.Dimensions;
 import com.ollieread.technomagi.common.init.Entities;
+import com.ollieread.technomagi.common.init.Fluids;
 import com.ollieread.technomagi.common.init.Items;
 import com.ollieread.technomagi.common.init.Potions;
 import com.ollieread.technomagi.common.init.Progression;
@@ -64,6 +65,7 @@ public class Technomagi
 
         Entities.init();
 
+        Fluids.init();
         Items.init();
         Blocks.init();
         Recipes.init();
