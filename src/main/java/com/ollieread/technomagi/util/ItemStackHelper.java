@@ -1,5 +1,6 @@
 package com.ollieread.technomagi.util;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +24,6 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import org.apache.commons.lang3.ArrayUtils;
 
-import scala.actors.threadpool.Arrays;
 import cofh.api.energy.IEnergyContainerItem;
 
 import com.ollieread.technomagi.api.TechnomagiApi;
@@ -369,6 +369,15 @@ public class ItemStackHelper
         public boolean isItemStackApplicable(ItemStack stack)
         {
             return ItemStackHelper.getFuelValue(stack) > 0;
+        }
+    };
+
+    public static ISlotApplicable resultSlot = new ISlotApplicable()
+    {
+        @Override
+        public boolean isItemStackApplicable(ItemStack stack)
+        {
+            return false;
         }
     };
 
