@@ -2,11 +2,10 @@ package com.ollieread.technomagi.api.scan;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import scala.actors.threadpool.Arrays;
 
 import com.ollieread.technomagi.util.BlockRepresentation;
 import com.ollieread.technomagi.util.ItemStackRepresentation;
