@@ -97,7 +97,7 @@ public class EntityTechnomagi implements IExtendedEntityProperties
      */
     public boolean performResearch(IResearch research, Knowledge knowledge)
     {
-        if (entityNanites.hasOwner() && entityNanites.canResearch(research)) {
+        if (entityNanites != null && entityNanites.hasOwner() && entityNanites.canResearch(research)) {
             int chance = research.getChance();
 
             if (rand.nextInt(chance) == 0) {
