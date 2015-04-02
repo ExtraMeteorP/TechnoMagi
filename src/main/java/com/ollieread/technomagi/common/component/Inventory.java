@@ -77,7 +77,7 @@ public class Inventory implements IInventory
                 itemstack = inventoryContents[slot].splitStack(amount);
 
                 if (inventoryContents[slot].stackSize == 0) {
-                    inventoryContents[slot] = null;
+                    inventoryContents[slot] = inventoryContents[slot].getItem().getContainerItem(inventoryContents[slot]);
                 }
 
                 markDirty();
