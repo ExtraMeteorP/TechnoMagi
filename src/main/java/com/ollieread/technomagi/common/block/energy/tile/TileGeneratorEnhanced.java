@@ -8,6 +8,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import cofh.lib.util.helpers.EnergyHelper;
 
 import com.ollieread.technomagi.client.gui.window.abstracts.Window;
+import com.ollieread.technomagi.common.block.tile.ITileProcessor;
 import com.ollieread.technomagi.common.component.Inventory;
 import com.ollieread.technomagi.common.component.Progress;
 import com.ollieread.technomagi.util.ItemStackHelper;
@@ -15,7 +16,7 @@ import com.ollieread.technomagi.util.ItemStackHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class TileGeneratorEnhanced extends TileGenerator
+public class TileGeneratorEnhanced extends TileGenerator implements ITileProcessor
 {
 
     protected Inventory inventory;
@@ -75,25 +76,9 @@ public class TileGeneratorEnhanced extends TileGenerator
     }
 
     @Override
-    public ForgeDirection[] getValidDirections()
-    {
-        if (direction != null) {
-            return new ForgeDirection[] { direction.getOpposite() };
-        }
-
-        return new ForgeDirection[] {};
-    }
-
-    @Override
     public boolean canProcess()
     {
         return (this.getMaxEnergyStored(null) - (this.getEnergyStored(null) - perTick)) > perTick && progress.getProgress() > 0;
-    }
-
-    @Override
-    public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate)
-    {
-        return 0;
     }
 
     @Override
@@ -141,14 +126,6 @@ public class TileGeneratorEnhanced extends TileGenerator
     {
         super.writeToNBT(compound);
 
-        if (direction != null) {
-            compound.setInteger("Direction", direction.ordinal());
-        }
-
-        NBTTagCompound inventoryCompound = new NBTTagCompound();
-        inventory.writeToNBT(inventoryCompound);
-        compound.setTag("Inventory", inventoryCompound);
-
         NBTTagCompound progressCompound = new NBTTagCompound();
         progress.writeToNBT(progressCompound);
         compound.setTag("Progress", progressCompound);
@@ -160,115 +137,15 @@ public class TileGeneratorEnhanced extends TileGenerator
     public void readFromNBT(NBTTagCompound compound)
     {
         super.readFromNBT(compound);
-
-        if (compound.hasKey("Direction")) {
-            direction = ForgeDirection.values()[compound.getInteger("Direction")];
-        }
-
-        inventory.readFromNBT(compound.getCompoundTag("Inventory"));
         progress.readFromNBT(compound.getCompoundTag("Progress"));
 
         isProcessing = compound.getBoolean("Processing");
     }
 
     @Override
-    public int getSizeInventory()
-    {
-        return inventory.getSizeInventory();
-    }
-
-    @Override
-    public ItemStack getStackInSlot(int slot)
-    {
-        return inventory.getStackInSlot(slot);
-    }
-
-    @Override
-    public ItemStack decrStackSize(int slot, int amount)
-    {
-        return inventory.decrStackSize(slot, amount);
-    }
-
-    @Override
-    public ItemStack getStackInSlotOnClosing(int slot)
-    {
-        return inventory.getStackInSlot(slot);
-    }
-
-    @Override
-    public void setInventorySlotContents(int slot, ItemStack stack)
-    {
-        inventory.setInventorySlotContents(slot, stack);
-    }
-
-    @Override
-    public String getInventoryName()
-    {
-        return inventory.getInventoryName();
-    }
-
-    @Override
-    public boolean hasCustomInventoryName()
-    {
-        return inventory.hasCustomInventoryName();
-    }
-
-    @Override
-    public int getInventoryStackLimit()
-    {
-        return inventory.getInventoryStackLimit();
-    }
-
-    @Override
-    public boolean isUseableByPlayer(EntityPlayer player)
-    {
-        return inventory.isUseableByPlayer(player);
-    }
-
-    @Override
-    public void openInventory()
-    {
-        inventory.openInventory();
-    }
-
-    @Override
-    public void closeInventory()
-    {
-        inventory.closeInventory();
-    }
-
-    @Override
     public boolean isItemValidForSlot(int slot, ItemStack stack)
     {
         return slot == 0 ? ItemStackHelper.fuelSlot.isItemStackApplicable(stack) : ItemStackHelper.energyContainerSlot.isItemStackApplicable(stack);
-    }
-
-    @Override
-    public void setDirection(ForgeDirection direction)
-    {
-        this.direction = direction;
-    }
-
-    @Override
-    public ForgeDirection getDirection()
-    {
-        return direction;
-    }
-
-    @Override
-    public void rotate()
-    {
-        ForgeDirection[] directions = ForgeDirection.VALID_DIRECTIONS;
-
-        for (ForgeDirection direction : directions) {
-            if (direction.equals(getDirection()) || direction.equals(ForgeDirection.UP) || direction.equals(ForgeDirection.DOWN)) {
-                continue;
-            }
-
-            setDirection(direction);
-            markDirty();
-            break;
-        }
     }
 
     @Override
