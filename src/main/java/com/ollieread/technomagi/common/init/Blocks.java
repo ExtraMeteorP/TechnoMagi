@@ -17,6 +17,7 @@ import com.ollieread.technomagi.common.block.energy.BlockBattery;
 import com.ollieread.technomagi.common.block.energy.BlockGenerator;
 import com.ollieread.technomagi.common.block.energy.tile.TileBattery;
 import com.ollieread.technomagi.common.block.energy.tile.TileGeneratorBasic;
+import com.ollieread.technomagi.common.block.energy.tile.TileGeneratorEnhanced;
 import com.ollieread.technomagi.common.block.fluid.BlockAmnioticFluid;
 import com.ollieread.technomagi.common.block.fluid.BlockEnrichedFluid;
 import com.ollieread.technomagi.common.block.machine.BlockExtrapolator;
@@ -121,6 +122,7 @@ public class Blocks
         GameRegistry.registerTileEntity(TileExtrapolator.class, "extrapolator");
         GameRegistry.registerTileEntity(TileBattery.class, "battery");
         GameRegistry.registerTileEntity(TileGeneratorBasic.class, "basic_generator");
+        GameRegistry.registerTileEntity(TileGeneratorEnhanced.class, "enhanced_generator");
         GameRegistry.registerTileEntity(TileElevator.class, "teleporter");
 
         // Register with the ore dictionary
