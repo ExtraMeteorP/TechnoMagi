@@ -51,7 +51,8 @@ public class AbilityEvents
                             payload = new AbilityPayload(0, null, mouse.entityHit, mouse.blockX, mouse.blockY, mouse.blockZ, mouse.sideHit);
                         }
                     } else {
-                        payload = new AbilityPayload(0, null, null, mouse.blockX, mouse.blockY, mouse.blockZ, mouse.sideHit);
+                        Block block = world.getBlock(event.x, event.y, event.z);
+                        payload = new AbilityPayload(0, block, null, event.x, event.y, event.z, event.face);
                     }
 
                     technomage.abilities().startCasting(heldStack, payload);
