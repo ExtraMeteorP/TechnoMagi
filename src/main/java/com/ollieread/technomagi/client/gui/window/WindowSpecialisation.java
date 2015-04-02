@@ -55,6 +55,7 @@ public class WindowSpecialisation extends Window implements IClickHandler
         list.setClickHandler(this);
 
         ComponentButton specialiseButton = new ComponentButton(214, ButtonType.DEFAULT);
+        specialiseButton.setEnabled(true);
         specialiseButton.setText(StatCollector.translateToLocal("gui.technomagi.specialise.choose"));
         this.addComponent("specialise_button", specialiseButton).setOffset(0, 198).setClickHandler(this);
     }
