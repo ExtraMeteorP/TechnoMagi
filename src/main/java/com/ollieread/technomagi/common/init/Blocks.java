@@ -13,10 +13,10 @@ import com.ollieread.technomagi.common.block.conduit.tile.TileConduitFluid;
 import com.ollieread.technomagi.common.block.conduit.tile.TileConduitPower;
 import com.ollieread.technomagi.common.block.electromagnetic.BlockElectromagnetic;
 import com.ollieread.technomagi.common.block.electromagnetic.tile.TileElectromagnetic;
-import com.ollieread.technomagi.common.block.energy.BlockBasicGenerator;
 import com.ollieread.technomagi.common.block.energy.BlockBattery;
-import com.ollieread.technomagi.common.block.energy.tile.TileBasicGenerator;
+import com.ollieread.technomagi.common.block.energy.BlockGenerator;
 import com.ollieread.technomagi.common.block.energy.tile.TileBattery;
+import com.ollieread.technomagi.common.block.energy.tile.TileGeneratorBasic;
 import com.ollieread.technomagi.common.block.fluid.BlockAmnioticFluid;
 import com.ollieread.technomagi.common.block.fluid.BlockEnrichedFluid;
 import com.ollieread.technomagi.common.block.machine.BlockExtrapolator;
@@ -54,7 +54,7 @@ public class Blocks
     public static Block naniteFarmland;
     public static Block extrapolator;
     public static Block battery;
-    public static Block basicGenerator;
+    public static BlockContainerSubtypes generator;
     public static Block elevator;
     public static Block inert;
     public static Block hardlight;
@@ -79,7 +79,7 @@ public class Blocks
         naniteFarmland = new BlockNaniteFarmland("nanite_farmland");
         extrapolator = new BlockExtrapolator("extrapolator");
         battery = new BlockBattery("battery").setLightLevel(8F).setHardness(3.5F);
-        basicGenerator = new BlockBasicGenerator("basic_generator").setLightLevel(10F).setHardness(3.5F);
+        generator = new BlockGenerator("generator");
         elevator = new BlockElevator("elevator").setHardness(3.5F);
         inert = new BlockInert("inert").setHardness(3.5F);
         hardlight = new BlockHardlight("hardlight");
@@ -99,7 +99,7 @@ public class Blocks
         GameRegistry.registerBlock(naniteFarmland, "nanite_farmland");
         GameRegistry.registerBlock(extrapolator, "extrapolator");
         GameRegistry.registerBlock(battery, ItemBlockBattery.class, "battery");
-        GameRegistry.registerBlock(basicGenerator, "basic_generator");
+        GameRegistry.registerBlock(generator, ItemBlockInert.class, "generator");
         GameRegistry.registerBlock(elevator, "teleporter");
         GameRegistry.registerBlock(inert, ItemBlockInert.class, "inert");
         GameRegistry.registerBlock(hardlight, "hardlight");
@@ -120,7 +120,7 @@ public class Blocks
         GameRegistry.registerTileEntity(TileResourceProcessorNanite.class, "processor_nanite");
         GameRegistry.registerTileEntity(TileExtrapolator.class, "extrapolator");
         GameRegistry.registerTileEntity(TileBattery.class, "battery");
-        GameRegistry.registerTileEntity(TileBasicGenerator.class, "basic_generator");
+        GameRegistry.registerTileEntity(TileGeneratorBasic.class, "basic_generator");
         GameRegistry.registerTileEntity(TileElevator.class, "teleporter");
 
         // Register with the ore dictionary

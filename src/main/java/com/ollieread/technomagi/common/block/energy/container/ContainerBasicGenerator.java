@@ -7,7 +7,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
 import com.ollieread.technomagi.client.gui.GuiBuilder;
-import com.ollieread.technomagi.common.block.energy.tile.TileBasicGenerator;
+import com.ollieread.technomagi.common.block.energy.tile.TileGeneratorBasic;
 import com.ollieread.technomagi.common.inventory.ContainerTechnomagi;
 import com.ollieread.technomagi.common.inventory.SlotApplicable;
 import com.ollieread.technomagi.util.ItemStackHelper;
@@ -18,12 +18,12 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ContainerBasicGenerator extends ContainerTechnomagi
 {
 
-    public TileBasicGenerator tile;
+    public TileGeneratorBasic tile;
     public int lastEnergy;
     public int lastMaxProgress;
     public int lastProgress;
 
-    public ContainerBasicGenerator(IInventory playerInventory, TileBasicGenerator tile)
+    public ContainerBasicGenerator(IInventory playerInventory, TileGeneratorBasic tile)
     {
         this.tile = tile;
 

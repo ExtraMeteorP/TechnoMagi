@@ -21,7 +21,7 @@ import com.ollieread.technomagi.util.ItemStackHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class TileBasicGenerator extends TileEnergy implements IInventory, ITileProcessor, ISideFacing, ITileGui
+public class TileGeneratorBasic extends TileEnergy implements IInventory, ITileProcessor, ISideFacing, ITileGui
 {
 
     protected Inventory inventory;
@@ -30,7 +30,7 @@ public class TileBasicGenerator extends TileEnergy implements IInventory, ITileP
     protected Progress progress = new Progress();
     protected boolean isProcessing = false;
 
-    public TileBasicGenerator()
+    public TileGeneratorBasic()
     {
         super(2048, 10, 10);
 

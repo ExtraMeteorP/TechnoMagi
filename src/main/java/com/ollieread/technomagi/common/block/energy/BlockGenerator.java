@@ -9,44 +9,62 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-import com.ollieread.technomagi.common.block.BlockBaseContainer;
-import com.ollieread.technomagi.common.block.energy.tile.TileBasicGenerator;
+import com.ollieread.technomagi.common.block.BlockContainerSubtypes;
+import com.ollieread.technomagi.common.block.energy.tile.TileGeneratorBasic;
+import com.ollieread.technomagi.common.block.energy.tile.TileGeneratorEnhanced;
 import com.ollieread.technomagi.util.ResourceHelper;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockBasicGenerator extends BlockBaseContainer
+public class BlockGenerator extends BlockContainerSubtypes
 {
 
     @SideOnly(Side.CLIENT)
-    protected IIcon sideIcon;
+    protected IIcon[] sideIcons;
     @SideOnly(Side.CLIENT)
-    protected IIcon onIcon;
+    protected IIcon[] onIcons;
     @SideOnly(Side.CLIENT)
-    protected IIcon offIcon;
+    protected IIcon[] offIcons;
     @SideOnly(Side.CLIENT)
-    protected IIcon backIcon;
+    protected IIcon[] backIcons;
 
-    public BlockBasicGenerator(String name)
+    public BlockGenerator(String name)
     {
-        super(name, Material.rock);
+        super(name, new String[] { "basic", "enhanced" }, Material.rock);
+
+        this.setLightLevel(10F).setHardness(3.5F);
     }
 
     @Override
     public TileEntity createNewTileEntity(World world, int metadata)
     {
-        return new TileBasicGenerator();
+        switch (metadata) {
+            case 0:
+                return new TileGeneratorBasic();
+            case 1:
+                return new TileGeneratorEnhanced();
+            default:
+                return null;
+        }
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister register)
     {
-        sideIcon = register.registerIcon(ResourceHelper.icon("machine/basic/generic_side"));
-        onIcon = register.registerIcon(ResourceHelper.icon("machine/basic/generator_on"));
-        offIcon = register.registerIcon(ResourceHelper.icon("machine/basic/generator_off"));
-        backIcon = register.registerIcon(ResourceHelper.icon("machine/basic/generator_back"));
+        sideIcons = new IIcon[this.names.length];
+        sideIcons[0] = register.registerIcon(ResourceHelper.icon("machine/basic/generic_side"));
+        sideIcons[1] = register.registerIcon(ResourceHelper.icon("machine/electric/generic_side"));
+        onIcons = new IIcon[this.names.length];
+        onIcons[0] = register.registerIcon(ResourceHelper.icon("machine/basic/generator_on"));
+        onIcons[1] = register.registerIcon(ResourceHelper.icon("machine/electric/generator_on"));
+        offIcons = new IIcon[this.names.length];
+        offIcons[0] = register.registerIcon(ResourceHelper.icon("machine/basic/generator_off"));
+        offIcons[1] = register.registerIcon(ResourceHelper.icon("machine/electric/generator_off"));
+        backIcons = new IIcon[this.names.length];
+        backIcons[0] = register.registerIcon(ResourceHelper.icon("machine/basic/generator_back"));
+        backIcons[1] = register.registerIcon(ResourceHelper.icon("machine/electric/generic_back"));
     }
 
     @Override
@@ -54,38 +72,38 @@ public class BlockBasicGenerator extends BlockBaseContainer
     public IIcon getIcon(int side, int metadata)
     {
         if (side == 0 || side == 1) {
-            return sideIcon;
+            return sideIcons[metadata];
         } else if (side == 4) {
-            return offIcon;
+            return offIcons[metadata];
         } else if (side == 5) {
-            return backIcon;
+            return backIcons[metadata];
         }
 
-        return sideIcon;
+        return sideIcons[metadata];
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side)
     {
-        TileBasicGenerator generator = (TileBasicGenerator) world.getTileEntity(x, y, z);
+        TileGeneratorBasic generator = (TileGeneratorBasic) world.getTileEntity(x, y, z);
 
         if (generator.getDirection() != null) {
             if (side == generator.getDirection().ordinal()) {
-                return generator.isProcessing() ? onIcon : offIcon;
+                return generator.isProcessing() ? onIcons[generator.getBlockMetadata()] : offIcons[generator.getBlockMetadata()];
             } else if (side == generator.getDirection().getOpposite().ordinal()) {
-                return backIcon;
+                return backIcons[generator.getBlockMetadata()];
             }
         }
 
-        return sideIcon;
+        return sideIcons[generator.getBlockMetadata()];
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(World world, int x, int y, int z, Random rand)
     {
-        TileBasicGenerator generator = (TileBasicGenerator) world.getTileEntity(x, y, z);
+        TileGeneratorBasic generator = (TileGeneratorBasic) world.getTileEntity(x, y, z);
 
         if (generator.isProcessing()) {
             int l = generator.getDirection().ordinal();
