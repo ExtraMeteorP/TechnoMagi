@@ -113,6 +113,8 @@ tile.technomagi.resource.etherium_ore.name=Etherium Ore
 tile.technomagi.resource.voidstone.name=Stone
 tile.technomagi.resource.copper_ore.name=Copper Ore
 tile.technomagi.resource.aluminium_ore.name=Aluminium Ore
+tile.technomagi.resource.copper_block.name=Aluminium Block
+tile.technomagi.resource.aluminium_block.name=Aluminium Block
 
 tile.technomagi.scanner.position.name=Scanner: Monitoring
 tile.technomagi.scanner.area.name=Scanner: Area
@@ -132,8 +134,15 @@ tile.technomagi.processor.basic.name=Processor: Basic
 tile.technomagi.processor.electric.name=Processor: Electric
 tile.technomagi.processor.nanite.name=Processor: Nanite
 
+tile.technomagi.nanite_farmland=Nanite Farmland
+
+tile.technomagi.extrapolator=Energy Extrapolator
+
 tile.technomagi.battery.name=Powercell
-tile.technomagi.basic_generator.name=Furnace Generator
+tile.technomagi.generator.basic.name=Generator: Basic
+tile.technomagi.generator.enhanced.name=Generator: Enhanced
+
+tile.technomagi.elevator=Elevator
 
 tile.technomagi.inert.name=Inert Block
 
@@ -142,6 +151,9 @@ tile.technomagi.hardlight_slab.name=Hardlight Slab
 tile.technomagi.hardlight_platform.name=Hardlight Platform
 tile.technomagi.hardlight_fence.name=Hardlight Fence
 tile.technomagi.hardlight_pane.name=Hardlight Pane
+
+tile.technomagi.amniotic_fluid=Amniotic Fluid
+tile.technomagi.enriched_fluid=Enriched Fluid
 
 # Items
 item.technomagi.resource.iron_dust.name=Iron Dust
