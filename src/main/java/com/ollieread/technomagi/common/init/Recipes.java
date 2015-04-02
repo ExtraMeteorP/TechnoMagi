@@ -82,23 +82,21 @@ public class Recipes
         ProcessorRecipe copperOreRecipe = new OreDictProcessorRecipe(ItemStackHelper.blockSubtype(Blocks.resource, "copper_ore", 1));
         ProcessorRecipe aluminiumOreRecipe = new OreDictProcessorRecipe(ItemStackHelper.blockSubtype(Blocks.resource, "aluminium_ore", 1));
 
-        ProcessorRecipe ironIngotRecipe = new ProcessorRecipe(ItemStackHelper.item("iron_ingot"));
-        ProcessorRecipe goldIngotRecipe = new ProcessorRecipe(ItemStackHelper.item("gold_ingot"));
-        ProcessorRecipe diamondRecipe = new ProcessorRecipe(ItemStackHelper.item("diamond"));
-        ProcessorRecipe copperIngotRecipe = new OreDictProcessorRecipe(ItemStackHelper.itemSubtype(Items.resource, "copper_ingot", 1));
-        ProcessorRecipe aluminiumIngotRecipe = new OreDictProcessorRecipe(ItemStackHelper.itemSubtype(Items.resource, "aluminium_ingot", 1));
-
-        ProcessorRecipe ironSheetRecipe = new OreDictProcessorRecipe(ItemStackHelper.itemSubtype(Items.resource, "iron_sheet", 1));
-        ProcessorRecipe goldSheetRecipe = new OreDictProcessorRecipe(ItemStackHelper.itemSubtype(Items.resource, "gold_sheet", 1));
-        ProcessorRecipe diamondSheetRecipe = new OreDictProcessorRecipe(ItemStackHelper.itemSubtype(Items.resource, "diamond_sheet", 1));
-        ProcessorRecipe copperSheetRecipe = new OreDictProcessorRecipe(ItemStackHelper.itemSubtype(Items.resource, "copper_sheet", 1));
-        ProcessorRecipe aluminiumSheetRecipe = new OreDictProcessorRecipe(ItemStackHelper.itemSubtype(Items.resource, "aluminium_sheet", 1));
-
         ironOreRecipe.addOutput(ProcessorType.GRIND, ItemStackHelper.itemSubtype(Items.resource, "iron_dust", 2), 2, ItemStackHelper.itemSubtype(Items.resource, "stone_dust", 1), 8);
         goldOreRecipe.addOutput(ProcessorType.GRIND, ItemStackHelper.itemSubtype(Items.resource, "gold_dust", 2), 1, ItemStackHelper.itemSubtype(Items.resource, "stone_dust", 1), 8);
         diamondOreRecipe.addOutput(ProcessorType.GRIND, ItemStackHelper.itemSubtype(Items.resource, "diamond_dust", 2), 5, ItemStackHelper.itemSubtype(Items.resource, "stone_dust", 1), 8, 2);
         copperOreRecipe.addOutput(ProcessorType.GRIND, ItemStackHelper.itemSubtype(Items.resource, "copper_dust", 2), 2, ItemStackHelper.itemSubtype(Items.resource, "stone_dust", 1), 8);
         aluminiumOreRecipe.addOutput(ProcessorType.GRIND, ItemStackHelper.itemSubtype(Items.resource, "aluminium_dust", 2), 1, ItemStackHelper.itemSubtype(Items.resource, "stone_dust", 1), 8);
+        ironOreRecipe.addOutput(ProcessorType.BURN, ItemStackHelper.item("iron_ingot", 1), 2, ItemStackHelper.itemSubtype(Items.resource, "stone_dust", 1), 8);
+        goldOreRecipe.addOutput(ProcessorType.BURN, ItemStackHelper.item("gold_ingot", 1), 1, ItemStackHelper.itemSubtype(Items.resource, "stone_dust", 1), 8);
+        copperOreRecipe.addOutput(ProcessorType.BURN, ItemStackHelper.itemSubtype(Items.resource, "copped_ingot", 1), 2, ItemStackHelper.itemSubtype(Items.resource, "stone_dust", 1), 8);
+        aluminiumOreRecipe.addOutput(ProcessorType.BURN, ItemStackHelper.itemSubtype(Items.resource, "aluminium_ingot", 1), 1, ItemStackHelper.itemSubtype(Items.resource, "stone_dust", 1), 8);
+
+        ProcessorRecipe ironIngotRecipe = new ProcessorRecipe(ItemStackHelper.item("iron_ingot"));
+        ProcessorRecipe goldIngotRecipe = new ProcessorRecipe(ItemStackHelper.item("gold_ingot"));
+        ProcessorRecipe diamondRecipe = new ProcessorRecipe(ItemStackHelper.item("diamond"));
+        ProcessorRecipe copperIngotRecipe = new OreDictProcessorRecipe(ItemStackHelper.itemSubtype(Items.resource, "copper_ingot", 1));
+        ProcessorRecipe aluminiumIngotRecipe = new OreDictProcessorRecipe(ItemStackHelper.itemSubtype(Items.resource, "aluminium_ingot", 1));
 
         ironIngotRecipe.addOutput(ProcessorType.GRIND, ItemStackHelper.itemSubtype(Items.resource, "iron_dust", 1), 2, null, 0);
         goldIngotRecipe.addOutput(ProcessorType.GRIND, ItemStackHelper.itemSubtype(Items.resource, "gold_dust", 1), 1, null, 0);
@@ -111,11 +109,27 @@ public class Recipes
         copperIngotRecipe.addOutput(ProcessorType.ROLL, ItemStackHelper.itemSubtype(Items.resource, "copper_sheet", 2), 2, null, 0);
         aluminiumIngotRecipe.addOutput(ProcessorType.ROLL, ItemStackHelper.itemSubtype(Items.resource, "aluminium_sheet", 2), 1, null, 0);
 
+        ProcessorRecipe ironSheetRecipe = new OreDictProcessorRecipe(ItemStackHelper.itemSubtype(Items.resource, "iron_sheet", 1));
+        ProcessorRecipe goldSheetRecipe = new OreDictProcessorRecipe(ItemStackHelper.itemSubtype(Items.resource, "gold_sheet", 1));
+        ProcessorRecipe diamondSheetRecipe = new OreDictProcessorRecipe(ItemStackHelper.itemSubtype(Items.resource, "diamond_sheet", 1));
+        ProcessorRecipe copperSheetRecipe = new OreDictProcessorRecipe(ItemStackHelper.itemSubtype(Items.resource, "copper_sheet", 1));
+        ProcessorRecipe aluminiumSheetRecipe = new OreDictProcessorRecipe(ItemStackHelper.itemSubtype(Items.resource, "aluminium_sheet", 1));
+
         ironSheetRecipe.addOutput(ProcessorType.ROLL, ItemStackHelper.itemSubtype(Items.resource, "iron_rod", 2), 2, null, 0);
         goldSheetRecipe.addOutput(ProcessorType.ROLL, ItemStackHelper.itemSubtype(Items.resource, "gold_rod", 2), 1, null, 0);
         diamondSheetRecipe.addOutput(ProcessorType.ROLL, ItemStackHelper.itemSubtype(Items.resource, "diamond_rod", 2), 5, null, 0, 2);
         copperSheetRecipe.addOutput(ProcessorType.ROLL, ItemStackHelper.itemSubtype(Items.resource, "copper_rod", 2), 2, null, 0);
         aluminiumSheetRecipe.addOutput(ProcessorType.ROLL, ItemStackHelper.itemSubtype(Items.resource, "aluminium_rod", 2), 1, null, 0);
+
+        ProcessorRecipe ironDustRecipe = new OreDictProcessorRecipe(ItemStackHelper.itemSubtype(Items.resource, "iron_dust", 1));
+        ProcessorRecipe goldDustRecipe = new OreDictProcessorRecipe(ItemStackHelper.itemSubtype(Items.resource, "iron_dust", 1));
+        ProcessorRecipe copperDustRecipe = new OreDictProcessorRecipe(ItemStackHelper.itemSubtype(Items.resource, "iron_dust", 1));
+        ProcessorRecipe aluminiumDustRecipe = new OreDictProcessorRecipe(ItemStackHelper.itemSubtype(Items.resource, "iron_dust", 1));
+
+        ironDustRecipe.addOutput(ProcessorType.BURN, ItemStackHelper.item("iron_ingot", 1), 2, null, 0);
+        goldDustRecipe.addOutput(ProcessorType.BURN, ItemStackHelper.item("gold_infor", 1), 2, null, 0);
+        copperDustRecipe.addOutput(ProcessorType.BURN, ItemStackHelper.itemSubtype(Items.resource, "copper_ingot", 1), 2, null, 0);
+        aluminiumDustRecipe.addOutput(ProcessorType.BURN, ItemStackHelper.itemSubtype(Items.resource, "aluminium_ingot", 1), 2, null, 0);
 
         CraftingHandler.processor.add(ironOreRecipe);
         CraftingHandler.processor.add(goldOreRecipe);
@@ -127,6 +141,14 @@ public class Recipes
         CraftingHandler.processor.add(diamondRecipe);
         CraftingHandler.processor.add(copperIngotRecipe);
         CraftingHandler.processor.add(aluminiumIngotRecipe);
+        CraftingHandler.processor.add(ironSheetRecipe);
+        CraftingHandler.processor.add(goldSheetRecipe);
+        CraftingHandler.processor.add(copperSheetRecipe);
+        CraftingHandler.processor.add(aluminiumSheetRecipe);
+        CraftingHandler.processor.add(ironDustRecipe);
+        CraftingHandler.processor.add(goldDustRecipe);
+        CraftingHandler.processor.add(copperDustRecipe);
+        CraftingHandler.processor.add(aluminiumDustRecipe);
 
         // Log and wood recipes
 
