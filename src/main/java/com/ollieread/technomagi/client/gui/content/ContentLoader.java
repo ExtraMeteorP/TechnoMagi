@@ -63,47 +63,61 @@ public class ContentLoader
     {
         try {
             InputStream resource = Loader.instance().activeModContainer().getMod().getClass().getResourceAsStream(path);
-            DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-            Document document = builder.parse(resource);
-            Node collection = document.getFirstChild();
 
-            if (collection.getNodeName().equals("content")) {
-                NodeList sections = collection.getChildNodes();
-                Content content = new Content();
+            if (resource != null) {
+                DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+                Document document = builder.parse(resource);
+                Node collection = document.getFirstChild();
 
-                for (int i = 0; i < sections.getLength(); i++) {
-                    Node sectionNode = sections.item(i);
+                if (collection.getNodeName().equals("content")) {
+                    NodeList sections = collection.getChildNodes();
+                    Content content = new Content();
 
-                    if (sectionNode.getNodeName().equals("section")) {
-                        String name = sectionNode.getAttributes().getNamedItem("name").getNodeValue();
-                        int pageCount = 0;
-                        Map<Integer, List<Element>> pageMap = new LinkedHashMap<Integer, List<Element>>();
-                        NodeList pages = sectionNode.getChildNodes();
-                        String prefix = "section_" + name;
+                    for (int i = 0; i < sections.getLength(); i++) {
+                        Node sectionNode = sections.item(i);
 
-                        for (int x = 0; x < pages.getLength(); x++) {
-                            Node page = pages.item(x);
+                        if (sectionNode.getNodeName().equals("section")) {
+                            String name = sectionNode.getAttributes().getNamedItem("name").getNodeValue();
+                            int pageCount = 0;
+                            Map<Integer, List<Element>> pageMap = new LinkedHashMap<Integer, List<Element>>();
+                            NodeList pages = sectionNode.getChildNodes();
+                            String prefix = "section_" + name;
 
-                            if (page.getNodeName().equals("page")) {
-                                pageMap.put(pageCount, getElements(prefix + "_" + x, page));
-                                pageCount++;
+                            for (int x = 0; x < pages.getLength(); x++) {
+                                Node page = pages.item(x);
+
+                                if (page.getNodeName().equals("page")) {
+                                    pageMap.put(pageCount, getElements(prefix + "_" + x, page));
+                                    pageCount++;
+                                }
                             }
+
+                            content.addSection(new Section(name, pageMap));
                         }
-
-                        content.addSection(new Section(name, pageMap));
                     }
-                }
 
-                return content;
+                    return content;
+                }
             }
         } catch (ParserConfigurationException e) {
-            e.printStackTrace();
+            if (Technomagi.debug) {
+                e.printStackTrace();
+            }
             return null;
         } catch (SAXException e) {
-            e.printStackTrace();
+            if (Technomagi.debug) {
+                e.printStackTrace();
+            }
             return null;
         } catch (IOException e) {
-            e.printStackTrace();
+            if (Technomagi.debug) {
+                e.printStackTrace();
+            }
+            return null;
+        } catch (IllegalArgumentException e) {
+            if (Technomagi.debug) {
+                e.printStackTrace();
+            }
             return null;
         }
 

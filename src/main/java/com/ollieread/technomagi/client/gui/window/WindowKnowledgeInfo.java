@@ -85,26 +85,29 @@ public class WindowKnowledgeInfo extends WindowTabbed implements IClickHandler
                 list.setScroll(0);
 
                 Content content = ContentLoader.get(knowledge.getName(), "/assets/" + Technomagi.MODID.toLowerCase() + "/content/" + activeTab + "/" + knowledge.getName() + ".xml");
-                Section section = null;
 
-                for (Section i : content.getSections()) {
-                    if (sectionName == null) {
-                        sectionName = i.getName();
-                        section = i;
+                if (content != null) {
+                    Section section = null;
+
+                    for (Section i : content.getSections()) {
+                        if (sectionName == null) {
+                            sectionName = i.getName();
+                            section = i;
+                        }
+
+                        ComponentButton button = new ComponentButton(links.getWidth() - (links.paddingX * 2), ButtonType.TEXT);
+                        button.setText(StatCollector.translateToLocal("gui.technomagi.link." + i.getName())).setEnabled(true).setClickHandler(this);
+
+                        if (sectionName.equals(i.getName())) {
+                            button.setActive(true);
+                            section = i;
+                        }
+                        links.addComponent(i.getName(), button);
                     }
 
-                    ComponentButton button = new ComponentButton(links.getWidth() - (links.paddingX * 2), ButtonType.TEXT);
-                    button.setText(StatCollector.translateToLocal("gui.technomagi.link." + i.getName())).setEnabled(true).setClickHandler(this);
-
-                    if (sectionName.equals(i.getName())) {
-                        button.setActive(true);
-                        section = i;
+                    if (section != null) {
+                        list.addElements(section.getElements(page));
                     }
-                    links.addComponent(i.getName(), button);
-                }
-
-                if (section != null) {
-                    list.addElements(section.getElements(page));
                 }
             }
         }
