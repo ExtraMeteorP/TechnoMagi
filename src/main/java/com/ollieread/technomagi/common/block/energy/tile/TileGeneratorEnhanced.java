@@ -2,16 +2,12 @@ package com.ollieread.technomagi.common.block.energy.tile;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import cofh.lib.util.helpers.EnergyHelper;
 
 import com.ollieread.technomagi.client.gui.window.abstracts.Window;
-import com.ollieread.technomagi.common.block.tile.ISideFacing;
-import com.ollieread.technomagi.common.block.tile.ITileGui;
-import com.ollieread.technomagi.common.block.tile.ITileProcessor;
 import com.ollieread.technomagi.common.component.Inventory;
 import com.ollieread.technomagi.common.component.Progress;
 import com.ollieread.technomagi.util.ItemStackHelper;
@@ -19,7 +15,7 @@ import com.ollieread.technomagi.util.ItemStackHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class TileGeneratorEnhanced extends TileEnergy implements IInventory, ITileProcessor, ISideFacing, ITileGui
+public class TileGeneratorEnhanced extends TileGenerator
 {
 
     protected Inventory inventory;
