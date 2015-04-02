@@ -274,6 +274,10 @@ public abstract class TileResourceProcessor extends TileBase implements IInvento
     @Override
     public void setInventorySlotContents(int slot, ItemStack stack)
     {
+        if (slot == getComponentSlot() || slot == getInputSlot()) {
+            this.progress.resetProgress();
+        }
+
         inventory.setInventorySlotContents(slot, stack);
     }
 
