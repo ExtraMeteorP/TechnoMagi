@@ -36,6 +36,7 @@ public class PlayerNanites extends EntityNanites
         return false;
     }
 
+    @Override
     public void sync()
     {
         EntityPlayer player = this.technomage.getPlayer();

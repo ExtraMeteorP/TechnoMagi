@@ -84,7 +84,7 @@ public abstract class TileResourceProcessor extends TileBase implements IInvento
     {
         ItemStack componentStack = inventory.getStackInSlot(getComponentSlot());
 
-        if (hasSufficientEnergy() && componentStack != null && componentStack.getItem() != null) {
+        if (hasSufficientEnergy() && componentStack != null && componentStack.getItem() != null && componentStack.getItem() instanceof IProcessorComponent) {
             IProcessorRecipe currentRecipe = CraftingHandler.processor.find(((IProcessorComponent) componentStack.getItem()).getType(componentStack), componentStack);
             ItemStack inputStack = inventory.getStackInSlot(getInputSlot());
 
