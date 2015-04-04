@@ -69,10 +69,6 @@ public class PlayerTechnomagi implements IExtendedEntityProperties
         if (!player.worldObj.isRemote) {
             PacketHandler.INSTANCE.sendTo(new MessageSyncPlayer(player), (EntityPlayerMP) player);
         }
-
-        syncAbilities();
-        syncKnowledge();
-        syncNanites();
     }
 
     public void syncAbilities()

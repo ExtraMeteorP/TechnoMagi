@@ -46,4 +46,32 @@ public class PlayerNanites extends EntityNanites
         }
     }
 
+    @Override
+    public boolean addKnowledgeProgress(String knowledge, int progress)
+    {
+        if (technomage.knowledge().hasKnowledge(knowledge)) {
+            if (!knowledgeProgress.containsKey(knowledge)) {
+                knowledgeProgress.put(knowledge, progress);
+            } else {
+                int current = knowledgeProgress.get(knowledge);
+                current += progress;
+
+                if (current >= 100) {
+                    knowledgeProgress.remove(knowledge);
+                    technomage.knowledge().addKnowledge(knowledge);
+                    technomage.sync();
+
+                    return true;
+                } else {
+                    knowledgeProgress.put(knowledge, current);
+                    technomage.sync();
+
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
 }
