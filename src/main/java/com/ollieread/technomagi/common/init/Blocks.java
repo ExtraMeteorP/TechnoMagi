@@ -33,6 +33,7 @@ import com.ollieread.technomagi.common.block.structure.BlockHardlightFence;
 import com.ollieread.technomagi.common.block.structure.BlockHardlightPane;
 import com.ollieread.technomagi.common.block.structure.BlockHardlightPlatform;
 import com.ollieread.technomagi.common.block.structure.BlockHardlightSlab;
+import com.ollieread.technomagi.common.block.structure.BlockStructure;
 import com.ollieread.technomagi.common.block.teleporter.BlockElevator;
 import com.ollieread.technomagi.common.block.teleporter.tile.TileElevator;
 import com.ollieread.technomagi.common.block.world.BlockNaniteFarmland;
@@ -65,6 +66,7 @@ public class Blocks
     public static Block hardlightPane;
     public static Block amnioticFluid;
     public static Block enrichedFluid;
+    public static BlockContainerSubtypes structure;
 
     public static void init()
     {
@@ -90,6 +92,7 @@ public class Blocks
         hardlightPane = new BlockHardlightPane("hardlight_pane");
         amnioticFluid = new BlockAmnioticFluid("amniotic_fluid");
         enrichedFluid = new BlockEnrichedFluid("enriched_fluid");
+        structure = new BlockStructure("structure");
 
         // Register Blocks
         GameRegistry.registerBlock(resource, ItemBlockBase.class, "resource");

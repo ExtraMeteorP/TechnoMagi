@@ -155,6 +155,9 @@ tile.technomagi.hardlight_pane.name=Hardlight Pane
 tile.technomagi.amniotic_fluid=Amniotic Fluid
 tile.technomagi.enriched_fluid=Enriched Fluid
 
+tile.technomagi.structure.platform=Platform
+tile.technomagi.structure.bridge=Bridge
+
 # Items
 item.technomagi.resource.iron_dust.name=Iron Dust
 item.technomagi.resource.gold_dust.name=Gold Dust
