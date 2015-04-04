@@ -337,6 +337,15 @@ public class EntityNanites extends Researcher
         return false;
     }
 
+    public int getKnowledgeProgress(String knowledge)
+    {
+        if (knowledgeProgress.containsKey(knowledge)) {
+            return knowledgeProgress.get(knowledge);
+        }
+
+        return 0;
+    }
+
     /**
      * Perform a piece of research.
      *

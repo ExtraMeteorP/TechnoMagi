@@ -259,9 +259,9 @@ public class PlayerTechnomagi implements IExtendedEntityProperties
                             nanites().decreaseNanites(progress);
                             nanites().increaseData(progress);
 
-                            if (playerKnowledge.addKnowledgeProgress(knowledge.getName(), progress)) {
+                            if (nanites().addKnowledgeProgress(knowledge.getName(), progress)) {
                                 Technomagi.debug("Research Unlocked");
-                                TechnomagiHooks.postKnowledgeProgress(player, research, playerKnowledge.getKnowledgeProgress(research.getKnowledge()), research.getProgress());
+                                TechnomagiHooks.postKnowledgeProgress(player, research, nanites().getKnowledgeProgress(research.getKnowledge()), research.getProgress());
                                 return true;
                             }
                         }
