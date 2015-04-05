@@ -241,7 +241,7 @@ public class ResearchEvents
         if (event.target instanceof EntityAnimal) {
             ItemStack heldItem = player.getHeldItem();
 
-            if (((EntityAnimal) event.target).isBreedingItem(heldItem)) {
+            if (heldItem != null && heldItem.getItem() != null && ((EntityAnimal) event.target).isBreedingItem(heldItem)) {
                 TechnomagiApi.knowledge().performResearch(player, Energies.energyLife.breedAnimals);
 
                 List<EntityLivingBase> entityList = event.entityLiving.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, getAABB((int) event.target.posX, (int) event.target.posY, (int) event.target.posZ));
