@@ -53,7 +53,7 @@ public class EntityPlayerDescriptor extends EntityDescriptor implements IEntityS
     @Override
     public float getNaniteRegen()
     {
-        return 0.25F;
+        return 0.075F;
     }
 
     @Override
