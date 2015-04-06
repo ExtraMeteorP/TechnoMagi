@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidFinite;
 
@@ -14,10 +15,17 @@ import com.ollieread.technomagi.common.init.Fluids;
 import com.ollieread.technomagi.common.misc.PotionTechnomagi;
 import com.ollieread.technomagi.common.tabs.TechnomagiTabs;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class BlockEnrichedFluid extends BlockFluidFinite
 {
 
     protected String name;
+    @SideOnly(Side.CLIENT)
+    protected IIcon flowingIcon;
+    @SideOnly(Side.CLIENT)
+    protected IIcon stillIcon;
 
     public BlockEnrichedFluid(String name)
     {
@@ -42,9 +50,16 @@ public class BlockEnrichedFluid extends BlockFluidFinite
     @Override
     public void registerBlockIcons(IIconRegister register)
     {
-        super.registerBlockIcons(register);
+        flowingIcon = register.registerIcon(getTexturePath("fluid/enriched_fluid_flowing"));
+        stillIcon = register.registerIcon(getTexturePath("fluid/enriched_fluid_still"));
 
-        Fluids.enriched.setIcons(this.blockIcon);
+        Fluids.enriched.setIcons(flowingIcon, stillIcon);
+    }
+
+    @Override
+    public IIcon getIcon(int side, int meta)
+    {
+        return side <= 1 ? stillIcon : flowingIcon;
     }
 
     @Override

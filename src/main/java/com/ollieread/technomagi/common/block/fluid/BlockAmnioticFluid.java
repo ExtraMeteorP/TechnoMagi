@@ -8,6 +8,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidFinite;
 
@@ -16,10 +17,17 @@ import com.ollieread.technomagi.common.init.Fluids;
 import com.ollieread.technomagi.common.tabs.TechnomagiTabs;
 import com.ollieread.technomagi.util.BlockHelper;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class BlockAmnioticFluid extends BlockFluidFinite
 {
 
     protected String name;
+    @SideOnly(Side.CLIENT)
+    protected IIcon flowingIcon;
+    @SideOnly(Side.CLIENT)
+    protected IIcon stillIcon;
 
     public BlockAmnioticFluid(String name)
     {
@@ -45,9 +53,16 @@ public class BlockAmnioticFluid extends BlockFluidFinite
     @Override
     public void registerBlockIcons(IIconRegister register)
     {
-        super.registerBlockIcons(register);
+        flowingIcon = register.registerIcon(getTexturePath("fluid/amniotic_fluid_flowing"));
+        stillIcon = register.registerIcon(getTexturePath("fluid/amniotic_fluid_still"));
 
-        Fluids.amniotic.setIcons(this.blockIcon);
+        Fluids.amniotic.setIcons(flowingIcon, stillIcon);
+    }
+
+    @Override
+    public IIcon getIcon(int side, int meta)
+    {
+        return side <= 1 ? stillIcon : flowingIcon;
     }
 
     @Override
