@@ -260,11 +260,12 @@ public class PlayerKnowledge extends Researcher
                     } else {
                         return;
                     }
+                } else {
+                    technomage.nanites().setData(0);
                 }
 
                 syncing = false;
                 syncTicks = 0;
-                // technomage.nanites().setData(0);
                 technomage.sync();
             }
         }

@@ -5,7 +5,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
 import com.ollieread.technomagi.common.block.BlockContainerSubtypes;
-import com.ollieread.technomagi.common.block.BlockInert;
 import com.ollieread.technomagi.common.block.BlockResource;
 import com.ollieread.technomagi.common.block.BlockSubtypes;
 import com.ollieread.technomagi.common.block.conduit.BlockConduit;
@@ -87,7 +86,6 @@ public class Blocks
         battery = new BlockBattery("battery").setLightLevel(8F).setHardness(3.5F);
         generator = new BlockGenerator("generator");
         elevator = new BlockElevator("elevator").setHardness(3.5F);
-        inert = new BlockInert("inert").setHardness(3.5F);
         hardlight = new BlockHardlight("hardlight");
         hardlightSlab = new BlockHardlightSlab("hardlight_slab");
         hardlightPlatform = new BlockHardlightPlatform("hardlight_platform");
@@ -96,7 +94,9 @@ public class Blocks
         amnioticFluid = new BlockAmnioticFluid("amniotic_fluid");
         enrichedFluid = new BlockEnrichedFluid("enriched_fluid");
         structure = new BlockStructure("structure");
+        structure.setHardness(3.5F);
         tank = new BlockTank("tank");
+        tank.setHardness(3.5F);
 
         // Register Blocks
         GameRegistry.registerBlock(resource, ItemBlockBase.class, "resource");

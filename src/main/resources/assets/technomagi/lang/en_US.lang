@@ -144,8 +144,6 @@ tile.technomagi.generator.enhanced.name=Generator: Enhanced
 
 tile.technomagi.elevator.name=Elevator
 
-tile.technomagi.inert.name=Inert Block
-
 tile.technomagi.hardlight.name=Hardlight Block
 tile.technomagi.hardlight_slab.name=Hardlight Slab
 tile.technomagi.hardlight_platform.name=Hardlight Platform
