@@ -120,6 +120,31 @@ public class PlayerHelper
         return false;
     }
 
+    public static boolean consumeHeldItem(EntityPlayer player)
+    {
+        if (!player.capabilities.isCreativeMode) {
+            for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
+                ItemStack slot = player.inventory.getCurrentItem();
+
+                if (slot != null) {
+                    slot.stackSize--;
+
+                    if (slot.stackSize <= 0) {
+                        slot = null;
+                    }
+
+                    player.inventory.setInventorySlotContents(i, slot);
+
+                    return true;
+                }
+            }
+        } else {
+            return true;
+        }
+
+        return false;
+    }
+
     public static void giveInventoryItem(EntityPlayer player, ItemStack stack)
     {
         if (!player.inventory.addItemStackToInventory(stack)) {

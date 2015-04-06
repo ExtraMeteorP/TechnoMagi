@@ -20,6 +20,8 @@ import com.ollieread.technomagi.common.block.energy.tile.TileGeneratorBasic;
 import com.ollieread.technomagi.common.block.energy.tile.TileGeneratorEnhanced;
 import com.ollieread.technomagi.common.block.fluid.BlockAmnioticFluid;
 import com.ollieread.technomagi.common.block.fluid.BlockEnrichedFluid;
+import com.ollieread.technomagi.common.block.fluid.BlockTank;
+import com.ollieread.technomagi.common.block.fluid.tile.TileTank;
 import com.ollieread.technomagi.common.block.machine.BlockFocuser;
 import com.ollieread.technomagi.common.block.machine.BlockResourceProcessor;
 import com.ollieread.technomagi.common.block.machine.tile.TileFocuser;
@@ -67,6 +69,7 @@ public class Blocks
     public static Block amnioticFluid;
     public static Block enrichedFluid;
     public static BlockContainerSubtypes structure;
+    public static BlockContainerSubtypes tank;
 
     public static void init()
     {
@@ -93,6 +96,7 @@ public class Blocks
         amnioticFluid = new BlockAmnioticFluid("amniotic_fluid");
         enrichedFluid = new BlockEnrichedFluid("enriched_fluid");
         structure = new BlockStructure("structure");
+        tank = new BlockTank("tank");
 
         // Register Blocks
         GameRegistry.registerBlock(resource, ItemBlockBase.class, "resource");
@@ -113,6 +117,7 @@ public class Blocks
         GameRegistry.registerBlock(hardlightPane, "hardlight_pane");
         GameRegistry.registerBlock(amnioticFluid, ItemBlockFluid.class, "amniotic_fluid");
         GameRegistry.registerBlock(enrichedFluid, ItemBlockFluid.class, "enriched_fluid");
+        GameRegistry.registerBlock(tank, ItemBlockBase.class, "tank");
 
         // Register TileEntities
         GameRegistry.registerTileEntity(TileScanner.class, "scanner_tile");
@@ -127,6 +132,7 @@ public class Blocks
         GameRegistry.registerTileEntity(TileGeneratorBasic.class, "basic_generator");
         GameRegistry.registerTileEntity(TileGeneratorEnhanced.class, "enhanced_generator");
         GameRegistry.registerTileEntity(TileElevator.class, "teleporter");
+        GameRegistry.registerTileEntity(TileTank.class, "tank");
 
         // Register with the ore dictionary
         OreDictionary.registerOre("oreEtherium", new ItemStack(resource, 1, 0));
