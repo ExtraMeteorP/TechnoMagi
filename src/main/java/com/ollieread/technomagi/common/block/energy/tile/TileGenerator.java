@@ -25,7 +25,11 @@ public abstract class TileGenerator extends TileEnergy implements IInventory, IS
     public TileGenerator(int capacity, int maxReceive, int maxExtract)
     {
         super(capacity, maxReceive, maxExtract);
+
+        createInventory();
     }
+
+    public abstract void createInventory();
 
     @Override
     public ForgeDirection[] getValidDirections()

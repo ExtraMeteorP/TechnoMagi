@@ -20,8 +20,18 @@ public class TileGeneratorBasic extends TileGenerator
     {
         super(2048, 10, 10);
 
-        inventory = new Inventory("basic_generator", 2);
         perTick = 2;
+    }
+
+    public TileGeneratorBasic(int capacity, int maxReceive, int maxExtract)
+    {
+        super(capacity, maxReceive, maxExtract);
+    }
+
+    @Override
+    public void createInventory()
+    {
+        inventory = new Inventory("basic_generator", 2);
     }
 
     @Override
