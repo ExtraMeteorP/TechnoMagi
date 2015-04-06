@@ -277,7 +277,12 @@ public class ResearchEvents
 
     public static AxisAlignedBB getAABB(double x, double y, double z)
     {
-        return AxisAlignedBB.getBoundingBox(x - 8, y - 8, z - 8, x + 8, y + 8, z + 8);
+        return getAABB(x, y, z, 8);
+    }
+
+    public static AxisAlignedBB getAABB(double x, double y, double z, int size)
+    {
+        return AxisAlignedBB.getBoundingBox(x - size, y - size, z - size, x + size, y + size, z + size);
     }
 
 }
