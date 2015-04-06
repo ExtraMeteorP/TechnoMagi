@@ -20,7 +20,7 @@ import com.ollieread.technomagi.client.renderers.tiles.TileBatteryRenderer;
 import com.ollieread.technomagi.client.renderers.tiles.TileExtrapolatorRenderer;
 import com.ollieread.technomagi.common.CommonProxy;
 import com.ollieread.technomagi.common.block.energy.tile.TileBattery;
-import com.ollieread.technomagi.common.block.machine.tile.TileExtrapolator;
+import com.ollieread.technomagi.common.block.machine.tile.TileFocuser;
 import com.ollieread.technomagi.common.init.Blocks;
 import com.ollieread.technomagi.common.init.Items;
 
@@ -54,7 +54,7 @@ public class ClientProxy extends CommonProxy
         RenderingRegistry.registerBlockHandler(BlockExtrapolatorRenderer.id, new BlockExtrapolatorRenderer());
         RenderingRegistry.registerBlockHandler(BlockHardlightPaneRenderer.id, new BlockHardlightPaneRenderer());
 
-        ClientRegistry.bindTileEntitySpecialRenderer(TileExtrapolator.class, new TileExtrapolatorRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileFocuser.class, new TileExtrapolatorRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileBattery.class, new TileBatteryRenderer());
 
         MinecraftForgeClient.registerItemRenderer(Items.fluidCapsule, new ItemFluidCapsuleRenderer());

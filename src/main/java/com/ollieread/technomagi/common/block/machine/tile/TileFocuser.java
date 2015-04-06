@@ -4,7 +4,7 @@ import net.minecraft.nbt.NBTTagCompound;
 
 import com.ollieread.technomagi.common.block.tile.TileBase;
 
-public class TileExtrapolator extends TileBase
+public class TileFocuser extends TileBase
 {
 
     public int innerRotation;

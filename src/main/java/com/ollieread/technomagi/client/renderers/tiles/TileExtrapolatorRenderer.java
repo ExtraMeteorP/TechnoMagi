@@ -11,7 +11,7 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import com.ollieread.technomagi.client.models.ModelSpinningCube;
-import com.ollieread.technomagi.common.block.machine.tile.TileExtrapolator;
+import com.ollieread.technomagi.common.block.machine.tile.TileFocuser;
 import com.ollieread.technomagi.common.init.Items;
 import com.ollieread.technomagi.util.ResourceHelper;
 
@@ -30,8 +30,8 @@ public class TileExtrapolatorRenderer extends TileEntitySpecialRenderer
     @Override
     public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float partialTicks)
     {
-        if (tile instanceof TileExtrapolator) {
-            TileExtrapolator extrapolator = (TileExtrapolator) tile;
+        if (tile instanceof TileFocuser) {
+            TileFocuser extrapolator = (TileFocuser) tile;
             int metadata = extrapolator.getBlockMetadata();
 
             if (extrapolator.isActivated()) {

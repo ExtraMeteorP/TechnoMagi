@@ -20,9 +20,9 @@ import com.ollieread.technomagi.common.block.energy.tile.TileGeneratorBasic;
 import com.ollieread.technomagi.common.block.energy.tile.TileGeneratorEnhanced;
 import com.ollieread.technomagi.common.block.fluid.BlockAmnioticFluid;
 import com.ollieread.technomagi.common.block.fluid.BlockEnrichedFluid;
-import com.ollieread.technomagi.common.block.machine.BlockExtrapolator;
+import com.ollieread.technomagi.common.block.machine.BlockFocuser;
 import com.ollieread.technomagi.common.block.machine.BlockResourceProcessor;
-import com.ollieread.technomagi.common.block.machine.tile.TileExtrapolator;
+import com.ollieread.technomagi.common.block.machine.tile.TileFocuser;
 import com.ollieread.technomagi.common.block.machine.tile.TileResourceProcessorBasic;
 import com.ollieread.technomagi.common.block.machine.tile.TileResourceProcessorElectric;
 import com.ollieread.technomagi.common.block.machine.tile.TileResourceProcessorNanite;
@@ -80,7 +80,7 @@ public class Blocks
         processor = new BlockResourceProcessor("processor");
         processor.setHardness(3.5F);
         naniteFarmland = new BlockNaniteFarmland("nanite_farmland");
-        extrapolator = new BlockExtrapolator("extrapolator");
+        extrapolator = new BlockFocuser("extrapolator");
         battery = new BlockBattery("battery").setLightLevel(8F).setHardness(3.5F);
         generator = new BlockGenerator("generator");
         elevator = new BlockElevator("elevator").setHardness(3.5F);
@@ -103,7 +103,7 @@ public class Blocks
         GameRegistry.registerBlock(naniteFarmland, "nanite_farmland");
         GameRegistry.registerBlock(extrapolator, "extrapolator");
         GameRegistry.registerBlock(battery, ItemBlockBattery.class, "battery");
-        GameRegistry.registerBlock(generator, ItemBlockInert.class, "generator");
+        GameRegistry.registerBlock(generator, ItemBlockBase.class, "generator");
         GameRegistry.registerBlock(elevator, "teleporter");
         GameRegistry.registerBlock(inert, ItemBlockInert.class, "inert");
         GameRegistry.registerBlock(hardlight, "hardlight");
@@ -122,7 +122,7 @@ public class Blocks
         GameRegistry.registerTileEntity(TileResourceProcessorBasic.class, "processor_basic");
         GameRegistry.registerTileEntity(TileResourceProcessorElectric.class, "processor_electric");
         GameRegistry.registerTileEntity(TileResourceProcessorNanite.class, "processor_nanite");
-        GameRegistry.registerTileEntity(TileExtrapolator.class, "extrapolator");
+        GameRegistry.registerTileEntity(TileFocuser.class, "extrapolator");
         GameRegistry.registerTileEntity(TileBattery.class, "battery");
         GameRegistry.registerTileEntity(TileGeneratorBasic.class, "basic_generator");
         GameRegistry.registerTileEntity(TileGeneratorEnhanced.class, "enhanced_generator");

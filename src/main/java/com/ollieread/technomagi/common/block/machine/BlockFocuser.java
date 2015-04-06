@@ -9,16 +9,16 @@ import net.minecraft.world.World;
 
 import com.ollieread.technomagi.client.renderers.blocks.BlockExtrapolatorRenderer;
 import com.ollieread.technomagi.common.block.BlockBaseContainer;
-import com.ollieread.technomagi.common.block.machine.tile.TileExtrapolator;
+import com.ollieread.technomagi.common.block.machine.tile.TileFocuser;
 import com.ollieread.technomagi.common.init.Items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockExtrapolator extends BlockBaseContainer
+public class BlockFocuser extends BlockBaseContainer
 {
 
-    public BlockExtrapolator(String name)
+    public BlockFocuser(String name)
     {
         super(name, Material.iron);
     }
@@ -26,7 +26,7 @@ public class BlockExtrapolator extends BlockBaseContainer
     @Override
     public TileEntity createNewTileEntity(World world, int metadata)
     {
-        return new TileExtrapolator();
+        return new TileFocuser();
     }
 
     @Override
