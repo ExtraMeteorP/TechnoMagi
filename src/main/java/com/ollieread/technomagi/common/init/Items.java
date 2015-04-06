@@ -10,6 +10,7 @@ import com.ollieread.technomagi.common.item.ItemDigitalTool;
 import com.ollieread.technomagi.common.item.ItemFluidCapsule;
 import com.ollieread.technomagi.common.item.ItemInterface;
 import com.ollieread.technomagi.common.item.ItemProcessorComponent;
+import com.ollieread.technomagi.common.item.ItemResearchStorage;
 import com.ollieread.technomagi.common.item.ItemResources;
 import com.ollieread.technomagi.common.item.ItemSubtypes;
 import com.ollieread.technomagi.common.item.entity.ItemEntityBrain;
@@ -49,6 +50,7 @@ public class Items
     public static Item fluidCapsule;
     public static ItemSubtypes processorComponent;
     public static ItemSubtypes energyCircuits;
+    public static ItemSubtypes researchStorage;
 
     public static void init()
     {
@@ -72,6 +74,7 @@ public class Items
         fluidCapsule = new ItemFluidCapsule("capsule");
         processorComponent = new ItemProcessorComponent("components");
         energyCircuits = new ItemCircuitPatterns("circuit");
+        researchStorage = new ItemResearchStorage("research_storage");
 
         // Register the items
         GameRegistry.registerItem(resource, "resources");
@@ -93,6 +96,7 @@ public class Items
         GameRegistry.registerItem(processorComponent, "components");
         GameRegistry.registerItem(digitalTool, "digital_tool");
         GameRegistry.registerItem(energyCircuits, "energy_circuits");
+        GameRegistry.registerItem(researchStorage, "research_storage");
 
         // Register with the ore dictionary
         OreDictionary.registerOre("dustIron", ItemStackHelper.itemSubtype(resource, "iron_dust", 1));
