@@ -2,6 +2,7 @@ package com.ollieread.technomagi.util;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 
 public class ItemNBTHelper
 {
@@ -80,6 +81,21 @@ public class ItemNBTHelper
     {
         if (has(stack, key)) {
             return getNBT(stack).getCompoundTag(key);
+        }
+
+        return null;
+    }
+
+    public static void setTagList(ItemStack stack, String key, NBTTagList list)
+    {
+        getNBT(stack).setTag(key, list);
+    }
+
+    public static NBTTagList getTagList(ItemStack stack, String key)
+    {
+        if (has(stack, key)) {
+            NBTTagCompound compound = getNBT(stack);
+            return getNBT(stack).getTagList(key, compound.getId());
         }
 
         return null;
