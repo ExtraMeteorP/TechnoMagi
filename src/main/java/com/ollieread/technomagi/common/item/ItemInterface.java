@@ -11,6 +11,7 @@ import net.minecraft.world.World;
 import com.ollieread.technomagi.Technomagi;
 import com.ollieread.technomagi.common.CommonProxy;
 import com.ollieread.technomagi.util.ItemNBTHelper;
+import com.ollieread.technomagi.util.PlayerHelper;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -71,7 +72,12 @@ public class ItemInterface extends ItemBase implements IItemPlayerLocked
         }
 
         if (isPlayer(stack, player)) {
-            player.openGui(Technomagi.instance, CommonProxy.GUI_TECHNOMAGE, world, (int) player.posX, (int) player.posY, (int) player.posZ);
+            if (player.isSneaking()) {
+                Technomagi.debug("Starting sync");
+                PlayerHelper.getKnowledge(player).toggleSyncing();
+            } else {
+                player.openGui(Technomagi.instance, CommonProxy.GUI_TECHNOMAGE, world, (int) player.posX, (int) player.posY, (int) player.posZ);
+            }
         }
 
         return stack;
@@ -96,6 +102,10 @@ public class ItemInterface extends ItemBase implements IItemPlayerLocked
 
             if (!playerName.equals(player.getCommandSenderName())) {
                 info.add(EnumChatFormatting.RED + "Locked");
+            } else {
+                if (PlayerHelper.getKnowledge(player).isSyncing()) {
+                    info.add(EnumChatFormatting.AQUA + "Syncing");
+                }
             }
         }
     }
