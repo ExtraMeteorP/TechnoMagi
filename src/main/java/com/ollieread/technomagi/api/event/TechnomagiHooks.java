@@ -10,12 +10,12 @@ import com.ollieread.technomagi.api.ability.AbilityPayload;
 import com.ollieread.technomagi.api.ability.IAbilityCast;
 import com.ollieread.technomagi.api.electromagnetic.ElectromagneticPocket.PocketSize;
 import com.ollieread.technomagi.api.electromagnetic.EnergyHandler;
-import com.ollieread.technomagi.api.electromagnetic.EnergyHandler.EnergyType;
 import com.ollieread.technomagi.api.event.ElectromagneticPocketEvent.ExposeBlock;
 import com.ollieread.technomagi.api.event.ElectromagneticPocketEvent.ExposeEntity;
 import com.ollieread.technomagi.api.event.ElectromagneticPocketEvent.ExposeItem;
 import com.ollieread.technomagi.api.event.KnowledgeEvent.Chance;
 import com.ollieread.technomagi.api.event.KnowledgeEvent.Progress;
+import com.ollieread.technomagi.api.knowledge.Knowledge;
 import com.ollieread.technomagi.api.knowledge.research.IResearch;
 import com.ollieread.technomagi.api.specialisation.Specialisation;
 import com.ollieread.technomagi.common.block.electromagnetic.tile.TileElectromagnetic;
@@ -49,6 +49,11 @@ public class TechnomagiHooks
     public static void postKnowledgeProgress(EntityPlayer entity, IResearch research, int current, int progress)
     {
         TechnomagiApi.EVENT_BUS.post(new Progress.Post(entity, research, current, progress));
+    }
+
+    public static void unlockedKnowledge(EntityPlayer player, Knowledge knowledge)
+    {
+        TechnomagiApi.EVENT_BUS.post(new KnowledgeEvent.Unlocked(player, knowledge));
     }
 
     public static AbilityCastEvent.Start startCasting(EntityPlayer player, IAbilityCast ability, AbilityPayload payload)

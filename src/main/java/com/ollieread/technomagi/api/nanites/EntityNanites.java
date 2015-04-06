@@ -1,7 +1,5 @@
 package com.ollieread.technomagi.api.nanites;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
@@ -30,8 +28,6 @@ public class EntityNanites extends Researcher
     protected float regenMultiplier = 0F;
     protected int regenTicks = -1;
 
-    protected List<String> researchComplete = new ArrayList<String>();
-    protected Map<String, Integer> researchRepetition = new ConcurrentHashMap<String, Integer>();
     protected Map<String, Integer> knowledgeProgress = new ConcurrentHashMap<String, Integer>();
 
     protected NaniteRegen regen;
@@ -316,7 +312,7 @@ public class EntityNanites extends Researcher
     public boolean addKnowledgeProgress(String knowledge, int progress)
     {
         if (!knowledgeProgress.containsKey(knowledge)) {
-            knowledgeProgress.put(knowledge, progress);
+            setKnowledgeProgress(knowledge, progress);
 
             if (this.player) {
                 ((PlayerNanites) this).sync();
@@ -325,7 +321,7 @@ public class EntityNanites extends Researcher
             int current = knowledgeProgress.get(knowledge);
             current += progress;
 
-            knowledgeProgress.put(knowledge, current);
+            setKnowledgeProgress(knowledge, current);
 
             if (this.player) {
                 ((PlayerNanites) this).sync();
@@ -337,6 +333,15 @@ public class EntityNanites extends Researcher
         return false;
     }
 
+    public void setKnowledgeProgress(String knowledge, int progress)
+    {
+        if (progress <= 0) {
+            knowledgeProgress.remove(knowledge);
+        } else {
+            knowledgeProgress.put(knowledge, progress);
+        }
+    }
+
     public int getKnowledgeProgress(String knowledge)
     {
         if (knowledgeProgress.containsKey(knowledge)) {
@@ -344,6 +349,11 @@ public class EntityNanites extends Researcher
         }
 
         return 0;
+    }
+
+    public Map<String, Integer> getKnowledgeProgress()
+    {
+        return knowledgeProgress;
     }
 
     /**
@@ -380,6 +390,8 @@ public class EntityNanites extends Researcher
     @Override
     public void saveNBTData(NBTTagCompound compound)
     {
+        super.saveNBTData(compound);
+
         compound.setBoolean("Active", this.active);
 
         /**
@@ -402,33 +414,6 @@ public class EntityNanites extends Researcher
         compound.setInteger("Data", this.data);
 
         /*
-         * Research Complete
-         */
-        NBTTagList completeResearch = new NBTTagList();
-
-        for (String research : this.researchComplete) {
-            NBTTagCompound tag = new NBTTagCompound();
-            tag.setString("Research", research);
-            completeResearch.appendTag(tag);
-        }
-
-        compound.setTag("ResearchComplete", completeResearch);
-
-        /*
-         * Research repetition
-         */
-        NBTTagList repeatResearch = new NBTTagList();
-
-        for (Entry<String, Integer> entry : this.researchRepetition.entrySet()) {
-            NBTTagCompound tag = new NBTTagCompound();
-            tag.setString("Research", entry.getKey());
-            tag.setInteger("Repeatition", entry.getValue());
-            repeatResearch.appendTag(tag);
-        }
-
-        compound.setTag("ResearchRepeatition", repeatResearch);
-
-        /*
          * Knowledge progress
          */
         NBTTagList progressKnowledge = new NBTTagList();
@@ -437,7 +422,7 @@ public class EntityNanites extends Researcher
             NBTTagCompound tag = new NBTTagCompound();
             tag.setString("Knowledge", entry.getKey());
             tag.setInteger("Progress", entry.getValue());
-            repeatResearch.appendTag(tag);
+            progressKnowledge.appendTag(tag);
         }
 
         compound.setTag("KnowledgeProgress", progressKnowledge);
@@ -448,6 +433,8 @@ public class EntityNanites extends Researcher
     @Override
     public void loadNBTData(NBTTagCompound compound)
     {
+        super.loadNBTData(compound);
+
         this.active = compound.getBoolean("Active");
 
         /**
@@ -470,36 +457,20 @@ public class EntityNanites extends Researcher
         this.data = compound.getInteger("Data");
 
         /*
-         * Research Complete
-         */
-        this.researchComplete = new ArrayList<String>();
-
-        NBTTagList completeResearch = compound.getTagList("ResearchComplete", compound.getId());
-
-        for (int i = 0; i < completeResearch.tagCount(); i++) {
-            this.researchComplete.add(compound.getString("Research"));
-        }
-
-        /*
-         * Research repetition
-         */
-        this.researchRepetition = new ConcurrentHashMap<String, Integer>();
-
-        NBTTagList repeatResearch = compound.getTagList("ResearchRepeatition", compound.getId());
-
-        for (int i = 0; i < repeatResearch.tagCount(); i++) {
-            this.researchRepetition.put(compound.getString("Research"), compound.getInteger("Repeatition"));
-        }
-
-        /*
          * Knowledge progress
          */
         this.knowledgeProgress = new ConcurrentHashMap<String, Integer>();
 
         NBTTagList progressKnowledge = compound.getTagList("KnowledgeProgress", compound.getId());
 
-        for (int i = 0; i < repeatResearch.tagCount(); i++) {
-            this.knowledgeProgress.put(compound.getString("Knowledge"), compound.getInteger("Progress"));
+        for (int i = 0; i < progressKnowledge.tagCount(); i++) {
+            NBTTagCompound c = progressKnowledge.getCompoundTagAt(i);
+            String knowledge = c.getString("Knowledge");
+            int progress = c.getInteger("Progress");
+
+            if (knowledge != null && progress > 0) {
+                this.knowledgeProgress.put(knowledge, progress);
+            }
         }
 
         this.regen.loadNBTData(compound);

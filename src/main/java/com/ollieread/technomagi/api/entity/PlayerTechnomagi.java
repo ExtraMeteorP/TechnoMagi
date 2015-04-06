@@ -239,7 +239,7 @@ public class PlayerTechnomagi implements IExtendedEntityProperties
         Technomagi.debug("Research: " + research.getName());
         Technomagi.debug("Knowledge: " + knowledge.getName());
         // Verify that the knowledge and research is usable
-        if (playerKnowledge.canDiscover(knowledge) && playerKnowledge.canResearch(research)) {
+        if (playerKnowledge.canResearch(research)) {
             int chance = research.getChance();
             Technomagi.debug("Chance: " + chance);
 

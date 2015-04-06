@@ -41,12 +41,14 @@ public class Researcher implements IResearcher
                         int currentRepeat = researchRepetition.get(name);
                         currentRepeat++;
 
-                        if (currentRepeat == repeat) {
+                        if (currentRepeat >= repeat) {
                             researchRepetition.remove(name);
                             researchComplete.add(name);
                         } else {
                             researchRepetition.put(name, currentRepeat);
                         }
+                    } else {
+                        researchRepetition.put(name, 1);
                     }
                 } else {
                     researchComplete.add(name);
@@ -99,7 +101,8 @@ public class Researcher implements IResearcher
         NBTTagList completeResearch = compound.getTagList("ResearchComplete", compound.getId());
 
         for (int i = 0; i < completeResearch.tagCount(); i++) {
-            this.researchComplete.add(compound.getString("Research"));
+            NBTTagCompound c = completeResearch.getCompoundTagAt(i);
+            this.researchComplete.add(c.getString("Research"));
         }
 
         /*
@@ -110,7 +113,8 @@ public class Researcher implements IResearcher
         NBTTagList repeatResearch = compound.getTagList("ResearchRepeatition", compound.getId());
 
         for (int i = 0; i < repeatResearch.tagCount(); i++) {
-            this.researchRepetition.put(compound.getString("Research"), compound.getInteger("Repeatition"));
+            NBTTagCompound c = repeatResearch.getCompoundTagAt(i);
+            this.researchRepetition.put(c.getString("Research"), c.getInteger("Repeatition"));
         }
     }
 

@@ -12,9 +12,10 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
+import com.ollieread.technomagi.Technomagi;
 import com.ollieread.technomagi.api.TechnomagiApi;
 import com.ollieread.technomagi.api.entity.PlayerTechnomagi;
-import com.ollieread.technomagi.api.knowledge.research.IResearch;
+import com.ollieread.technomagi.api.event.TechnomagiHooks;
 import com.ollieread.technomagi.api.knowledge.research.Researcher;
 import com.ollieread.technomagi.common.network.PacketHandler;
 import com.ollieread.technomagi.common.network.packets.MessageSyncPlayerKnowledge;
@@ -28,6 +29,9 @@ public class PlayerKnowledge extends Researcher
 
     protected List<String> knowledgeComplete = new ArrayList<String>();
     protected Map<String, Integer> knowledgeProgress = new ConcurrentHashMap<String, Integer>();
+
+    protected boolean syncing = false;
+    protected int syncTicks = 0;
 
     private Random rand = new Random();
 
@@ -51,16 +55,6 @@ public class PlayerKnowledge extends Researcher
         return true;
     }
 
-    @Override
-    public boolean canResearch(IResearch research)
-    {
-        if (canDiscover(TechnomagiApi.getKnowledge(research.getKnowledge())) && !researchComplete.contains(research.getName())) {
-            return true;
-        }
-
-        return false;
-    }
-
     public boolean addKnowledgeProgress(String knowledge, int progress)
     {
         if (!knowledgeComplete.contains(knowledge)) {
@@ -77,11 +71,12 @@ public class PlayerKnowledge extends Researcher
                     return true;
                 } else {
                     knowledgeProgress.put(knowledge, current);
-                    sync();
 
                     return true;
                 }
             }
+        } else {
+            Technomagi.debug("Complete Knowledge: " + knowledgeComplete);
         }
 
         return false;
@@ -120,6 +115,7 @@ public class PlayerKnowledge extends Researcher
     {
         if (!knowledgeComplete.contains(knowledge)) {
             knowledgeComplete.add(knowledge);
+            TechnomagiHooks.unlockedKnowledge(technomage.getPlayer(), TechnomagiApi.getKnowledge(knowledge));
             sync();
 
             return true;
@@ -132,6 +128,9 @@ public class PlayerKnowledge extends Researcher
     public void saveNBTData(NBTTagCompound compound)
     {
         super.saveNBTData(compound);
+
+        compound.setBoolean("Syncing", syncing);
+        compound.setInteger("SyncTicks", syncTicks);
 
         /*
          * Knowledge Complete
@@ -166,6 +165,9 @@ public class PlayerKnowledge extends Researcher
     {
         super.loadNBTData(compound);
 
+        syncing = compound.getBoolean("Syncing");
+        syncTicks = compound.getInteger("SyncTicks");
+
         /*
          * Knowledge Complete
          */
@@ -174,7 +176,8 @@ public class PlayerKnowledge extends Researcher
         NBTTagList completeKnowledge = compound.getTagList("KnowledgeComplete", compound.getId());
 
         for (int i = 0; i < completeKnowledge.tagCount(); i++) {
-            this.knowledgeComplete.add(completeKnowledge.getCompoundTagAt(i).getString("Knowledge"));
+            NBTTagCompound c = completeKnowledge.getCompoundTagAt(i);
+            this.knowledgeComplete.add(c.getString("Knowledge"));
         }
 
         /*
@@ -185,7 +188,8 @@ public class PlayerKnowledge extends Researcher
         NBTTagList progressKnowledge = compound.getTagList("KnowledgeProgress", compound.getId());
 
         for (int i = 0; i < progressKnowledge.tagCount(); i++) {
-            this.knowledgeProgress.put(progressKnowledge.getCompoundTagAt(i).getString("Knowledge"), progressKnowledge.getCompoundTagAt(i).getInteger("Progress"));
+            NBTTagCompound c = progressKnowledge.getCompoundTagAt(i);
+            this.knowledgeProgress.put(c.getString("Knowledge"), c.getInteger("Progress"));
         }
     }
 
@@ -198,9 +202,72 @@ public class PlayerKnowledge extends Researcher
         }
     }
 
+    public boolean isSyncing()
+    {
+        return syncing;
+    }
+
+    public void toggleSyncing()
+    {
+        if (syncing) {
+            syncing = false;
+        } else {
+            syncing = true;
+        }
+    }
+
     public void update(Side side)
     {
+        if (!technomage.getPlayer().worldObj.isRemote) {
 
+            if (syncing) {
+                Map<String, Integer> kp = technomage.nanites().getKnowledgeProgress();
+
+                if (kp != null && kp.size() > 0) {
+                    syncTicks++;
+
+                    if (syncTicks >= 40) {
+                        for (Entry<String, Integer> entry : kp.entrySet()) {
+                            String knowledge = entry.getKey();
+                            int progress = entry.getValue();
+
+                            if (knowledge == null) {
+                                break;
+                            }
+
+                            if (progress >= 5) {
+                                if (addKnowledgeProgress(knowledge, 5)) {
+                                    Technomagi.debug("Knowledge Progress: " + knowledgeProgress);
+                                    Technomagi.debug("Adding 5 progress for " + knowledge);
+                                    technomage.nanites().setKnowledgeProgress(knowledge, progress - 5);
+                                    technomage.nanites().decreaseData(5);
+                                    syncTicks = 0;
+                                    technomage.sync();
+                                    return;
+                                }
+                            } else {
+                                if (addKnowledgeProgress(knowledge, progress)) {
+                                    Technomagi.debug("Knowledge Progress: " + knowledgeProgress);
+                                    Technomagi.debug("Adding " + progress + " progress for " + knowledge);
+                                    technomage.nanites().setKnowledgeProgress(knowledge, progress);
+                                    technomage.nanites().decreaseData(progress);
+                                    syncTicks = 0;
+                                    technomage.sync();
+                                    return;
+                                }
+                            }
+                        }
+                    } else {
+                        return;
+                    }
+                }
+
+                syncing = false;
+                syncTicks = 0;
+                // technomage.nanites().setData(0);
+                technomage.sync();
+            }
+        }
     }
 
 }

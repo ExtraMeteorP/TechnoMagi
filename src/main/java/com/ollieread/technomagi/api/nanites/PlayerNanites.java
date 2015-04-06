@@ -49,7 +49,7 @@ public class PlayerNanites extends EntityNanites
     @Override
     public boolean addKnowledgeProgress(String knowledge, int progress)
     {
-        if (technomage.knowledge().hasKnowledge(knowledge)) {
+        if (!technomage.knowledge().hasKnowledge(knowledge)) {
             if (!knowledgeProgress.containsKey(knowledge)) {
                 knowledgeProgress.put(knowledge, progress);
             } else {
