@@ -134,15 +134,15 @@ tile.technomagi.processor.basic.name=Processor: Basic
 tile.technomagi.processor.electric.name=Processor: Electric
 tile.technomagi.processor.nanite.name=Processor: Nanite
 
-tile.technomagi.nanite_farmland=Nanite Farmland
+tile.technomagi.nanite_farmland.name=Nanite Farmland
 
-tile.technomagi.extrapolator=Energy Extrapolator
+tile.technomagi.extrapolator.name=Energy Extrapolator
 
 tile.technomagi.battery.name=Powercell
 tile.technomagi.generator.basic.name=Generator: Basic
 tile.technomagi.generator.enhanced.name=Generator: Enhanced
 
-tile.technomagi.elevator=Elevator
+tile.technomagi.elevator.name=Elevator
 
 tile.technomagi.inert.name=Inert Block
 
@@ -152,11 +152,11 @@ tile.technomagi.hardlight_platform.name=Hardlight Platform
 tile.technomagi.hardlight_fence.name=Hardlight Fence
 tile.technomagi.hardlight_pane.name=Hardlight Pane
 
-tile.technomagi.amniotic_fluid=Amniotic Fluid
-tile.technomagi.enriched_fluid=Enriched Fluid
+tile.technomagi.amniotic_fluid.name=Amniotic Fluid
+tile.technomagi.enriched_fluid.name=Enriched Fluid
 
-tile.technomagi.structure.platform=Platform
-tile.technomagi.structure.bridge=Bridge
+tile.technomagi.structure.platform.name=Platform
+tile.technomagi.structure.bridge.name=Bridge
 
 # Items
 item.technomagi.resource.iron_dust.name=Iron Dust
