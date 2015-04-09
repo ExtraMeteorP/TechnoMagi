@@ -17,7 +17,6 @@ import net.minecraft.world.ChunkPosition;
 
 import com.ollieread.technomagi.api.electromagnetic.ElectromagneticPocket.PocketSize;
 import com.ollieread.technomagi.api.electromagnetic.EnergyHandler;
-import com.ollieread.technomagi.api.electromagnetic.EnergyHandler.EnergyType;
 import com.ollieread.technomagi.api.event.ElectromagneticPocketEvent.ExposeBlock;
 import com.ollieread.technomagi.api.event.ElectromagneticPocketEvent.ExposeEntity;
 import com.ollieread.technomagi.api.event.ElectromagneticPocketEvent.ExposeItem;
@@ -65,21 +64,23 @@ public class TileElectromagnetic extends TileBase
     public void updateEntity()
     {
         if (!worldObj.isRemote) {
-            ticks++;
+            if (energyLevel > 0) {
+                ticks++;
 
-            if (ticks >= maxTicks) {
-                if (cycle == 0) {
-                    exposeBlocks();
-                    cycle++;
-                } else if (cycle == 1) {
-                    exposeEntities();
-                    cycle++;
-                } else if (cycle == 2) {
-                    exposeItems();
-                    cycle = 0;
+                if (ticks >= maxTicks) {
+                    if (cycle == 0) {
+                        exposeBlocks();
+                        cycle++;
+                    } else if (cycle == 1) {
+                        exposeEntities();
+                        cycle++;
+                    } else if (cycle == 2) {
+                        exposeItems();
+                        cycle = 0;
+                    }
+
+                    ticks = 0;
                 }
-
-                ticks = 0;
             }
         }
     }

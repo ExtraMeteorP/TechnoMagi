@@ -4,11 +4,12 @@ import net.minecraft.nbt.NBTTagCompound;
 
 import com.ollieread.technomagi.common.block.tile.TileBase;
 
-public class TileFocuser extends TileBase
+public class TileFauxPocket extends TileBase
 {
 
     public int innerRotation;
     protected boolean activated = true;
+    protected int energy;
 
     @Override
     public void writeToNBT(NBTTagCompound compound)

@@ -136,7 +136,7 @@ tile.technomagi.processor.nanite.name=Processor: Nanite
 
 tile.technomagi.nanite_farmland.name=Nanite Farmland
 
-tile.technomagi.extrapolator.name=Energy Extrapolator
+tile.technomagi.faux_pocket.name=Artificial Pocket
 
 tile.technomagi.battery.name=Powercell
 tile.technomagi.generator.basic.name=Generator: Basic

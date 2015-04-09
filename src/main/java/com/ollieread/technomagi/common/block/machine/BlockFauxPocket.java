@@ -7,18 +7,18 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-import com.ollieread.technomagi.client.renderers.blocks.BlockExtrapolatorRenderer;
+import com.ollieread.technomagi.client.renderers.blocks.BlockFauxPocketRenderer;
 import com.ollieread.technomagi.common.block.BlockBaseContainer;
-import com.ollieread.technomagi.common.block.machine.tile.TileFocuser;
+import com.ollieread.technomagi.common.block.machine.tile.TileFauxPocket;
 import com.ollieread.technomagi.common.init.Items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockFocuser extends BlockBaseContainer
+public class BlockFauxPocket extends BlockBaseContainer
 {
 
-    public BlockFocuser(String name)
+    public BlockFauxPocket(String name)
     {
         super(name, Material.iron);
     }
@@ -26,7 +26,7 @@ public class BlockFocuser extends BlockBaseContainer
     @Override
     public TileEntity createNewTileEntity(World world, int metadata)
     {
-        return new TileFocuser();
+        return new TileFauxPocket();
     }
 
     @Override
@@ -44,7 +44,7 @@ public class BlockFocuser extends BlockBaseContainer
     @Override
     public int getRenderType()
     {
-        return BlockExtrapolatorRenderer.id;
+        return BlockFauxPocketRenderer.id;
     }
 
     @Override
@@ -61,7 +61,7 @@ public class BlockFocuser extends BlockBaseContainer
             ItemStack stack = player.getHeldItem();
 
             if (stack != null && stack.getItem() != null) {
-                if (stack.getItem() == Items.crystal) {
+                if (stack.getItem() == Items.crystalCharged) {
                     if (!world.isRemote) {
                         world.setBlockMetadataWithNotify(x, y, z, stack.getItemDamage() + 1, 2);
                         stack.stackSize--;

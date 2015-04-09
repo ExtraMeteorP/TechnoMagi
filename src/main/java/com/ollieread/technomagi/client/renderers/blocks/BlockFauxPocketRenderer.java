@@ -4,13 +4,13 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
 
-import com.ollieread.technomagi.common.block.machine.BlockFocuser;
+import com.ollieread.technomagi.common.block.machine.BlockFauxPocket;
 import com.ollieread.technomagi.util.RenderHelper;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
-public class BlockExtrapolatorRenderer implements ISimpleBlockRenderingHandler
+public class BlockFauxPocketRenderer implements ISimpleBlockRenderingHandler
 {
 
     public static int id = RenderingRegistry.getNextAvailableRenderId();
@@ -53,7 +53,7 @@ public class BlockExtrapolatorRenderer implements ISimpleBlockRenderingHandler
     @Override
     public boolean renderWorldBlock(IBlockAccess blockaccess, int x, int y, int z, Block block, int modelId, RenderBlocks renderer)
     {
-        BlockFocuser extrapolator = (BlockFocuser) block;
+        BlockFauxPocket extrapolator = (BlockFauxPocket) block;
 
         renderer.setRenderBounds(unit, unit * 7, unit * 7, unit * 2, 1D - (unit * 7), 1D - (unit * 7));
         renderer.renderStandardBlock(block, x, y, z);

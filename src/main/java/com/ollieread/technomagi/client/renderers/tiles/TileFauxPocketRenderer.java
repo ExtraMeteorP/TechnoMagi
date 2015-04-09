@@ -11,17 +11,17 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import com.ollieread.technomagi.client.models.ModelSpinningCube;
-import com.ollieread.technomagi.common.block.machine.tile.TileFocuser;
+import com.ollieread.technomagi.common.block.machine.tile.TileFauxPocket;
 import com.ollieread.technomagi.common.init.Items;
 import com.ollieread.technomagi.util.ResourceHelper;
 
-public class TileExtrapolatorRenderer extends TileEntitySpecialRenderer
+public class TileFauxPocketRenderer extends TileEntitySpecialRenderer
 {
     private static final ResourceLocation texture = ResourceHelper.texture("models/spinngcube.png");
     private ModelSpinningCube model;
     protected float shadowSize;
 
-    public TileExtrapolatorRenderer()
+    public TileFauxPocketRenderer()
     {
         this.shadowSize = 0.5F;
         this.model = new ModelSpinningCube(0.0F, true);
@@ -30,8 +30,8 @@ public class TileExtrapolatorRenderer extends TileEntitySpecialRenderer
     @Override
     public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float partialTicks)
     {
-        if (tile instanceof TileFocuser) {
-            TileFocuser extrapolator = (TileFocuser) tile;
+        if (tile instanceof TileFauxPocket) {
+            TileFauxPocket extrapolator = (TileFauxPocket) tile;
             int metadata = extrapolator.getBlockMetadata();
 
             if (extrapolator.isActivated()) {
