@@ -128,7 +128,7 @@ public abstract class ItemEntityBase extends ItemBase
         if (entityName != null && !entityName.isEmpty()) {
             IEntityDescriptor descriptor = TechnomagiApi.entity().getEntity(entityName);
 
-            if (isEntityValid(stack, descriptor.getEntityClass())) {
+            if (descriptor != null && isEntityValid(stack, descriptor.getEntityClass())) {
                 String line = "";
 
                 if (descriptor.isUndead()) {
