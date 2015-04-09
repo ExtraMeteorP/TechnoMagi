@@ -21,9 +21,9 @@ import com.ollieread.technomagi.common.block.fluid.BlockAmnioticFluid;
 import com.ollieread.technomagi.common.block.fluid.BlockEnrichedFluid;
 import com.ollieread.technomagi.common.block.fluid.BlockTank;
 import com.ollieread.technomagi.common.block.fluid.tile.TileTank;
-import com.ollieread.technomagi.common.block.machine.BlockFocuser;
+import com.ollieread.technomagi.common.block.machine.BlockFauxPocket;
 import com.ollieread.technomagi.common.block.machine.BlockResourceProcessor;
-import com.ollieread.technomagi.common.block.machine.tile.TileFocuser;
+import com.ollieread.technomagi.common.block.machine.tile.TileFauxPocket;
 import com.ollieread.technomagi.common.block.machine.tile.TileResourceProcessorBasic;
 import com.ollieread.technomagi.common.block.machine.tile.TileResourceProcessorElectric;
 import com.ollieread.technomagi.common.block.machine.tile.TileResourceProcessorNanite;
@@ -42,7 +42,6 @@ import com.ollieread.technomagi.common.item.block.ItemBlockBase;
 import com.ollieread.technomagi.common.item.block.ItemBlockBattery;
 import com.ollieread.technomagi.common.item.block.ItemBlockConduit;
 import com.ollieread.technomagi.common.item.block.ItemBlockFluid;
-import com.ollieread.technomagi.common.item.block.ItemBlockInert;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -55,11 +54,10 @@ public class Blocks
     public static BlockContainerSubtypes conduit;
     public static BlockContainerSubtypes processor;
     public static Block naniteFarmland;
-    public static Block extrapolator;
+    public static Block fauxPocket;
     public static Block battery;
     public static BlockContainerSubtypes generator;
     public static Block elevator;
-    public static Block inert;
     public static Block hardlight;
     public static Block hardlightSlab;
     public static Block hardlightPlatform;
@@ -82,7 +80,7 @@ public class Blocks
         processor = new BlockResourceProcessor("processor");
         processor.setHardness(3.5F);
         naniteFarmland = new BlockNaniteFarmland("nanite_farmland");
-        extrapolator = new BlockFocuser("extrapolator");
+        fauxPocket = new BlockFauxPocket("faux_pocket");
         battery = new BlockBattery("battery").setLightLevel(8F).setHardness(3.5F);
         generator = new BlockGenerator("generator");
         elevator = new BlockElevator("elevator").setHardness(3.5F);
@@ -105,11 +103,10 @@ public class Blocks
         GameRegistry.registerBlock(conduit, ItemBlockConduit.class, "conduit");
         GameRegistry.registerBlock(processor, ItemBlockBase.class, "processor");
         GameRegistry.registerBlock(naniteFarmland, "nanite_farmland");
-        GameRegistry.registerBlock(extrapolator, "extrapolator");
+        GameRegistry.registerBlock(fauxPocket, "faux_pocket");
         GameRegistry.registerBlock(battery, ItemBlockBattery.class, "battery");
         GameRegistry.registerBlock(generator, ItemBlockBase.class, "generator");
         GameRegistry.registerBlock(elevator, "teleporter");
-        GameRegistry.registerBlock(inert, ItemBlockInert.class, "inert");
         GameRegistry.registerBlock(hardlight, "hardlight");
         GameRegistry.registerBlock(hardlightSlab, "hardlight_slab");
         GameRegistry.registerBlock(hardlightPlatform, "hardlight_platform");
@@ -127,7 +124,7 @@ public class Blocks
         GameRegistry.registerTileEntity(TileResourceProcessorBasic.class, "processor_basic");
         GameRegistry.registerTileEntity(TileResourceProcessorElectric.class, "processor_electric");
         GameRegistry.registerTileEntity(TileResourceProcessorNanite.class, "processor_nanite");
-        GameRegistry.registerTileEntity(TileFocuser.class, "extrapolator");
+        GameRegistry.registerTileEntity(TileFauxPocket.class, "faux_pocket");
         GameRegistry.registerTileEntity(TileBattery.class, "battery");
         GameRegistry.registerTileEntity(TileGeneratorBasic.class, "basic_generator");
         GameRegistry.registerTileEntity(TileGeneratorEnhanced.class, "enhanced_generator");
