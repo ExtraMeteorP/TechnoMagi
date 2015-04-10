@@ -2,6 +2,7 @@ package com.ollieread.technomagi.api.nanites;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.nbt.NBTTagCompound;
 
 import com.ollieread.technomagi.api.TechnomagiApi;
 import com.ollieread.technomagi.api.entity.IEntityDescriptor.IEntityResearchNanites;
@@ -72,6 +73,35 @@ public class PlayerNanites extends EntityNanites
         }
 
         return false;
+    }
+
+    @Override
+    public void loadNBTData(NBTTagCompound compound)
+    {
+        super.loadNBTData(compound);
+
+        /**
+         * This should hopefully get around the division by zero errors that we
+         * keep seeing. If it doesn't, I'm honestly out of ideas.
+         */
+
+        IEntityResearchNanites descriptor = (IEntityResearchNanites) TechnomagiApi.entity().getEntity(EntityPlayer.class);
+
+        if (this.maxData == 0) {
+            this.maxData = descriptor.getMaxData();
+        }
+
+        if (this.maxNanites == 0) {
+            this.maxNanites = descriptor.getMaxNanites();
+        }
+
+        if (this.regenMultiplier == 0F) {
+            this.regenMultiplier = descriptor.getNaniteRegen();
+        }
+
+        if (this.regenTicks == -1) {
+            this.regenTicks = descriptor.getNaniteRegenTicks();
+        }
     }
 
 }
