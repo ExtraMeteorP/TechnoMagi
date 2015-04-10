@@ -227,8 +227,10 @@ public class KnowledgeHandler
      */
     public IResearch getResearch(String name)
     {
-        if (researchList.containsKey(name)) {
-            return researchList.get(name);
+        if (name != null && !name.isEmpty()) {
+            if (researchList.containsKey(name)) {
+                return researchList.get(name);
+            }
         }
 
         return null;
