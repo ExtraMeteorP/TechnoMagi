@@ -3,6 +3,7 @@ package com.ollieread.technomagi.util;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 public class BlockHelper
@@ -61,6 +62,14 @@ public class BlockHelper
         }
 
         return false;
+    }
+
+    public static int getDistance(int x, int y, int z, int x2, int y2, int z2)
+    {
+        double d3 = x - x2;
+        double d4 = y - y2;
+        double d5 = z - z2;
+        return (int) MathHelper.sqrt_double(d3 * d3 + d4 * d4 + d5 * d5);
     }
 
 }
