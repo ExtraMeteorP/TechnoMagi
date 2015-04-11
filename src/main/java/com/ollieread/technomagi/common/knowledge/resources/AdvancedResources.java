@@ -7,17 +7,16 @@ import com.ollieread.technomagi.api.knowledge.Knowledge;
 import com.ollieread.technomagi.api.knowledge.research.Research;
 import com.ollieread.technomagi.common.init.Items;
 import com.ollieread.technomagi.common.knowledge.Resources;
-import com.ollieread.technomagi.util.BlockHelper;
 import com.ollieread.technomagi.util.ItemStackHelper;
 import com.ollieread.technomagi.util.ResourceHelper;
 
 public class AdvancedResources extends Knowledge
 {
 
-    public static Research scanGoldOre;
-    public static Research scanDiamondOre;
-    public static Research scanObsidian;
-    public static Research scanAluminiumOre;
+    // public static Research scanGoldOre;
+    // public static Research scanDiamondOre;
+    // public static Research scanObsidian;
+    // public static Research scanAluminiumOre;
 
     public static Research mineGoldOre;
     public static Research mineDiamondOre;
@@ -35,8 +34,8 @@ public class AdvancedResources extends Knowledge
     public static Research analyseGoldIngot;
     public static Research analyseAluminiumIngot;
 
-    public static Research scanGoldBlock;
-    public static Research scanAluminiumBlock;
+    // public static Research scanGoldBlock;
+    // public static Research scanAluminiumBlock;
 
     public AdvancedResources()
     {
@@ -48,37 +47,48 @@ public class AdvancedResources extends Knowledge
         // Register
         TechnomagiApi.addKnowledge(this);
 
-        scanGoldOre = TechnomagiApi.addResearch("scan_gold_ore", getName()).setProgress(2).setChance(4).setRepetition(3); // 6
-        scanDiamondOre = TechnomagiApi.addResearch("scan_diamond_ore", getName()).setProgress(2).setChance(4).setRepetition(3); // 6
-        scanObsidian = TechnomagiApi.addResearch("scan_obsidian", getName()).setProgress(2).setChance(4).setRepetition(3); // 6
-        scanAluminiumOre = TechnomagiApi.addResearch("scan_aluminium_ore", getName()).setProgress(2).setChance(4).setRepetition(3); // 6
+        // scanGoldOre = TechnomagiApi.addResearch("scan_gold_ore",
+        // getName()).setProgress(2).setChance(4).setRepetition(3); // 6
+        // scanDiamondOre = TechnomagiApi.addResearch("scan_diamond_ore",
+        // getName()).setProgress(2).setChance(4).setRepetition(3); // 6
+        // scanObsidian = TechnomagiApi.addResearch("scan_obsidian",
+        // getName()).setProgress(2).setChance(4).setRepetition(3); // 6
+        // scanAluminiumOre = TechnomagiApi.addResearch("scan_aluminium_ore",
+        // getName()).setProgress(2).setChance(4).setRepetition(3); // 6
 
-        mineGoldOre = TechnomagiApi.addResearch("mine_gold_ore", getName()).setProgress(2).setChance(4).setRepetition(2); // 4
-        mineDiamondOre = TechnomagiApi.addResearch("mine_diamond_ore", getName()).setProgress(2).setChance(4).setRepetition(2); // 4
-        mineObsidian = TechnomagiApi.addResearch("mine_obsidian", getName()).setProgress(2).setChance(4).setRepetition(2); // 4
-        mineAluminiumOre = TechnomagiApi.addResearch("mine_aluminium_ore", getName()).setProgress(2).setChance(4).setRepetition(2); // 4
+        mineGoldOre = TechnomagiApi.addResearch("mine_gold_ore", getName()).setProgress(2).setChance(8).setRepetition(3); // 6
+        mineDiamondOre = TechnomagiApi.addResearch("mine_diamond_ore", getName()).setProgress(2).setChance(4).setRepetition(3); // 6
+        mineObsidian = TechnomagiApi.addResearch("mine_obsidian", getName()).setProgress(2).setChance(6).setRepetition(3); // 6
+        mineAluminiumOre = TechnomagiApi.addResearch("mine_aluminium_ore", getName()).setProgress(2).setChance(10).setRepetition(3); // 6
 
         analyseGoldOre = TechnomagiApi.addResearch("analyse_gold_ore", getName()).setProgress(2).setChance(4).setRepetition(5); // 10
         analyseDiamond = TechnomagiApi.addResearch("analyse_diamond", getName()).setProgress(2).setChance(4).setRepetition(4); // 8
         analyseObsidian = TechnomagiApi.addResearch("analyse_obsidian", getName()).setProgress(2).setChance(4).setRepetition(4); // 8
         analyseAluminiumOre = TechnomagiApi.addResearch("analyse_aluminium_ore", getName()).setProgress(2).setChance(4).setRepetition(5); // 10
 
-        smeltGoldIngot = TechnomagiApi.addResearch("smelt_gold_ingot", getName()).setProgress(2).setChance(4).setRepetition(5); // 10
-        smeltAluminiumIngot = TechnomagiApi.addResearch("smelt_aluminium_ingot", getName()).setProgress(2).setChance(4).setRepetition(5); // 10
+        smeltGoldIngot = TechnomagiApi.addResearch("smelt_gold_ingot", getName()).setProgress(2).setChance(8).setRepetition(5); // 10
+        smeltAluminiumIngot = TechnomagiApi.addResearch("smelt_aluminium_ingot", getName()).setProgress(2).setChance(10).setRepetition(5); // 10
 
         analyseGoldIngot = TechnomagiApi.addResearch("analyse_gold_ingot", getName()).setProgress(2).setChance(4).setRepetition(5); // 10
         analyseAluminiumIngot = TechnomagiApi.addResearch("analyse_aluminium_ingot", getName()).setProgress(2).setChance(4).setRepetition(5); // 10
 
-        scanGoldBlock = TechnomagiApi.addResearch("scan_gold_block", getName()).setProgress(2).setChance(4).setRepetition(3); // 6
-        scanAluminiumBlock = TechnomagiApi.addResearch("scan_aluminium_block", getName()).setProgress(2).setChance(4).setRepetition(3); // 6
+        // scanGoldBlock = TechnomagiApi.addResearch("scan_gold_block",
+        // getName()).setProgress(2).setChance(4).setRepetition(3); // 6
+        // scanAluminiumBlock =
+        // TechnomagiApi.addResearch("scan_aluminium_block",
+        // getName()).setProgress(2).setChance(4).setRepetition(3); // 6
     }
 
     public void mappings()
     {
-        TechnomagiApi.scan().addScanMapping(BlockHelper.getBlockRepresentation(Blocks.gold_ore, 0), scanGoldOre.getName());
-        TechnomagiApi.scan().addScanMapping(BlockHelper.getBlockRepresentation(Blocks.diamond_ore, 0), scanDiamondOre.getName());
-        TechnomagiApi.scan().addScanMapping(BlockHelper.getBlockRepresentation(Blocks.obsidian, 0), scanObsidian.getName());
-        TechnomagiApi.scan().addScanMapping(BlockHelper.getBlockRepresentation(com.ollieread.technomagi.common.init.Blocks.resource, 3), scanAluminiumOre.getName());
+        // TechnomagiApi.scan().addScanMapping(BlockHelper.getBlockRepresentation(Blocks.gold_ore,
+        // 0), scanGoldOre.getName());
+        // TechnomagiApi.scan().addScanMapping(BlockHelper.getBlockRepresentation(Blocks.diamond_ore,
+        // 0), scanDiamondOre.getName());
+        // TechnomagiApi.scan().addScanMapping(BlockHelper.getBlockRepresentation(Blocks.obsidian,
+        // 0), scanObsidian.getName());
+        // TechnomagiApi.scan().addScanMapping(BlockHelper.getBlockRepresentation(com.ollieread.technomagi.common.init.Blocks.resource,
+        // 3), scanAluminiumOre.getName());
 
         TechnomagiApi.knowledge().mapMiningResearch(Blocks.gold_ore, 0, mineGoldOre.getName());
         TechnomagiApi.knowledge().mapMiningResearch(Blocks.diamond_ore, 0, mineDiamondOre.getName());
@@ -96,8 +106,10 @@ public class AdvancedResources extends Knowledge
         TechnomagiApi.scan().addAnalysisMapping(ItemStackHelper.getItemStackRepresentation(ItemStackHelper.item("gold_ingot")), analyseGoldIngot.getName());
         TechnomagiApi.scan().addAnalysisMapping(ItemStackHelper.getItemStackRepresentation(ItemStackHelper.itemSubtype(com.ollieread.technomagi.common.init.Items.resource, "aluminium_ingot", 1)), analyseAluminiumIngot.getName());
 
-        TechnomagiApi.scan().addScanMapping(BlockHelper.getBlockRepresentation(Blocks.gold_block, 0), scanGoldBlock.getName());
-        TechnomagiApi.scan().addScanMapping(BlockHelper.getBlockRepresentation(com.ollieread.technomagi.common.init.Blocks.resource, 5), scanAluminiumBlock.getName());
+        // TechnomagiApi.scan().addScanMapping(BlockHelper.getBlockRepresentation(Blocks.gold_block,
+        // 0), scanGoldBlock.getName());
+        // TechnomagiApi.scan().addScanMapping(BlockHelper.getBlockRepresentation(com.ollieread.technomagi.common.init.Blocks.resource,
+        // 5), scanAluminiumBlock.getName());
     }
 
 }

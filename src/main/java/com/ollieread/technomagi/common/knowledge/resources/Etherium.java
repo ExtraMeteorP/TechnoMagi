@@ -22,9 +22,9 @@ public class Etherium extends Knowledge
 
         TechnomagiApi.addKnowledge(this);
 
-        mineEtherium = TechnomagiApi.addResearch("mine_etherium", getName()).setProgress(10).setChance(3).setRepetition(8);
-        pickupEtherium = TechnomagiApi.addResearch("pickup_etherium", getName()).setProgress(2).setChance(3).setRepetition(5);
-        etheriumExposed = TechnomagiApi.addResearch("etherium_exposed", getName()).setProgress(5).setChance(8).setRepetition(2);
+        mineEtherium = TechnomagiApi.addResearch("mine_etherium", getName()).setProgress(4).setChance(11).setRepetition(10);
+        pickupEtherium = TechnomagiApi.addResearch("pickup_etherium", getName()).setProgress(4).setChance(3).setRepetition(10);
+        etheriumExposed = TechnomagiApi.addResearch("etherium_exposed", getName()).setProgress(10).setChance(8).setRepetition(2);
     }
 
     public void mappings()

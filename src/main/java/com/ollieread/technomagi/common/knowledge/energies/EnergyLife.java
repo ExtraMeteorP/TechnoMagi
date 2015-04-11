@@ -1,14 +1,11 @@
 package com.ollieread.technomagi.common.knowledge.energies;
 
-import net.minecraft.init.Blocks;
 import net.minecraftforge.common.EnumPlantType;
 
 import com.ollieread.technomagi.api.TechnomagiApi;
 import com.ollieread.technomagi.api.knowledge.Knowledge;
 import com.ollieread.technomagi.api.knowledge.research.Research;
 import com.ollieread.technomagi.common.knowledge.Energies;
-import com.ollieread.technomagi.util.BlockHelper;
-import com.ollieread.technomagi.util.BlockRepresentation;
 import com.ollieread.technomagi.util.ItemStackHelper;
 import com.ollieread.technomagi.util.ItemStackRepresentation;
 import com.ollieread.technomagi.util.ResourceHelper;
@@ -28,8 +25,8 @@ public class EnergyLife extends Knowledge
     public static Research analyseEgg;
     public static Research analyseCrops;
     public static Research analyseSapling;
-    public static Research scanCrops;
-    public static Research scanSapling;
+    // public static Research scanCrops;
+    // public static Research scanSapling;
     public static Research useBonemeal;
     public static Research witnessTreeGrow;
 
@@ -58,9 +55,11 @@ public class EnergyLife extends Knowledge
         analyseEgg = TechnomagiApi.addResearch("analyse_egg", getName()).setProgress(1).setChance(4).setRepetition(5); // 5
         analyseCrops = TechnomagiApi.addResearch("analyse_crops", getName()).setProgress(1).setChance(4).setRepetition(5); // 5
         analyseSapling = TechnomagiApi.addResearch("analyse_saplings", getName()).setProgress(1).setChance(4).setRepetition(5); // 5
-        scanCrops = TechnomagiApi.addResearch("scan_crops", getName()).setProgress(2).setChance(10).setRepetition(3); // 6
-        scanSapling = TechnomagiApi.addResearch("scan_sapling", getName()).setProgress(2).setChance(10).setRepetition(3); // 6
-        useBonemeal = TechnomagiApi.addResearch("use_bonemean", getName()).setProgress(1).setChance(8).setRepetition(6); // 6;
+        // scanCrops = TechnomagiApi.addResearch("scan_crops",
+        // getName()).setProgress(2).setChance(10).setRepetition(3); // 6
+        // scanSapling = TechnomagiApi.addResearch("scan_sapling",
+        // getName()).setProgress(2).setChance(10).setRepetition(3); // 6
+        useBonemeal = TechnomagiApi.addResearch("use_bonemeal", getName()).setProgress(1).setChance(8).setRepetition(6); // 6;
         witnessTreeGrow = TechnomagiApi.addResearch("witness_tree_grow", getName()).setProgress(4).setChance(4).setRepetition(2); // 8
     }
 
@@ -70,7 +69,9 @@ public class EnergyLife extends Knowledge
         TechnomagiApi.scan().addAnalysisMapping(new ItemStackRepresentation.PlantRepresentation(EnumPlantType.Crop), analyseCrops.getName());
         TechnomagiApi.scan().addAnalysisMapping(ItemStackHelper.getItemStackRepresentation(ItemStackHelper.block("sapling", 1, -1)), analyseSapling.getName());
 
-        TechnomagiApi.scan().addScanMapping(new BlockRepresentation.GrowableRepresentation(), scanCrops.getName());
-        TechnomagiApi.scan().addScanMapping(BlockHelper.getBlockRepresentation(Blocks.sapling, -1), scanSapling.getName());
+        // TechnomagiApi.scan().addScanMapping(new
+        // BlockRepresentation.GrowableRepresentation(), scanCrops.getName());
+        // TechnomagiApi.scan().addScanMapping(BlockHelper.getBlockRepresentation(Blocks.sapling,
+        // -1), scanSapling.getName());
     }
 }
