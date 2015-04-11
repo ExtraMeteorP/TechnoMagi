@@ -24,6 +24,7 @@ import com.ollieread.technomagi.common.block.energy.tile.TileBattery;
 import com.ollieread.technomagi.common.block.machine.tile.TileFauxPocket;
 import com.ollieread.technomagi.common.init.Blocks;
 import com.ollieread.technomagi.common.init.Items;
+import com.ollieread.technomagi.compat.CompatClientProxy;
 
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
@@ -31,6 +32,11 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class ClientProxy extends CommonProxy
 {
+
+    public ClientProxy()
+    {
+        compat = new CompatClientProxy();
+    }
 
     @Override
     public void init()
@@ -62,6 +68,7 @@ public class ClientProxy extends CommonProxy
         MinecraftForgeClient.registerItemRenderer(Items.fluidCapsule, new ItemFluidCapsuleRenderer());
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Blocks.battery), new ItemBatteryRenderer());
 
+        compat.registerRenderers();
     }
 
     @Override

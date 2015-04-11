@@ -21,6 +21,7 @@ import com.ollieread.technomagi.common.event.handler.EntityEvents;
 import com.ollieread.technomagi.common.event.handler.InitialisationEvents;
 import com.ollieread.technomagi.common.event.handler.ResearchEvents;
 import com.ollieread.technomagi.common.event.handler.ScanningEvents;
+import com.ollieread.technomagi.compat.CompatCommonProxy;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.IGuiHandler;
@@ -28,8 +29,15 @@ import cpw.mods.fml.common.network.IGuiHandler;
 public class CommonProxy implements IGuiHandler
 {
 
+    protected CompatCommonProxy compat;
+
     public static int GUI_TECHNOMAGE = 0;
     public static int GUI_TILE = 1;
+
+    public CommonProxy()
+    {
+        compat = new CompatCommonProxy();
+    }
 
     public void init()
     {
@@ -37,6 +45,7 @@ public class CommonProxy implements IGuiHandler
 
     public void registerRenderers()
     {
+        compat.registerEventHandlers();
     }
 
     public EntityPlayer getClientPlayer()
@@ -90,6 +99,8 @@ public class CommonProxy implements IGuiHandler
         // Ability handler
         MinecraftForge.EVENT_BUS.register(abilityHandler);
         TechnomagiApi.EVENT_BUS.register(abilityHandler);
+
+        compat.registerEventHandlers();
     }
 
     @Override
