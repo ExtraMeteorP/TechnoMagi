@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
+import com.ollieread.technomagi.Technomagi;
 import com.ollieread.technomagi.common.block.BlockContainerSubtypes;
 import com.ollieread.technomagi.common.block.BlockResource;
 import com.ollieread.technomagi.common.block.BlockSubtypes;
@@ -115,20 +116,20 @@ public class Blocks
         GameRegistry.registerBlock(tank, ItemBlockTank.class, "tank");
 
         // Register TileEntities
-        GameRegistry.registerTileEntity(TileElectromagnetic.class, "electromagnetic");
-        GameRegistry.registerTileEntity(TileConduitFluid.class, "conduit_fluid");
-        GameRegistry.registerTileEntity(TileConduitPower.class, "conduit_power");
-        GameRegistry.registerTileEntity(TileResourceProcessorBasic.class, "processor_basic");
-        GameRegistry.registerTileEntity(TileResourceProcessorElectric.class, "processor_electric");
-        GameRegistry.registerTileEntity(TileResourceProcessorNanite.class, "processor_nanite");
-        GameRegistry.registerTileEntity(TileFauxPocket.class, "faux_pocket");
-        GameRegistry.registerTileEntity(TileBattery.class, "battery");
-        GameRegistry.registerTileEntity(TileGeneratorBasic.class, "basic_generator");
-        GameRegistry.registerTileEntity(TileGeneratorEnhanced.class, "enhanced_generator");
-        GameRegistry.registerTileEntity(TileElevator.class, "teleporter");
-        GameRegistry.registerTileEntity(TileStructurePlatform.class, "platform");
-        GameRegistry.registerTileEntity(TileStructureBridge.class, "bridge");
-        GameRegistry.registerTileEntity(TileTank.class, "tank");
+        registerTileEntity(TileElectromagnetic.class, "electromagnetic");
+        registerTileEntity(TileConduitFluid.class, "conduit_fluid");
+        registerTileEntity(TileConduitPower.class, "conduit_power");
+        registerTileEntity(TileResourceProcessorBasic.class, "processor_basic");
+        registerTileEntity(TileResourceProcessorElectric.class, "processor_electric");
+        registerTileEntity(TileResourceProcessorNanite.class, "processor_nanite");
+        registerTileEntity(TileFauxPocket.class, "faux_pocket");
+        registerTileEntity(TileBattery.class, "battery");
+        registerTileEntity(TileGeneratorBasic.class, "basic_generator");
+        registerTileEntity(TileGeneratorEnhanced.class, "enhanced_generator");
+        registerTileEntity(TileElevator.class, "teleporter");
+        registerTileEntity(TileStructurePlatform.class, "platform");
+        registerTileEntity(TileStructureBridge.class, "bridge");
+        registerTileEntity(TileTank.class, "tank");
 
         // Register with the ore dictionary
         OreDictionary.registerOre("oreEtherium", new ItemStack(resource, 1, 0));
@@ -136,4 +137,10 @@ public class Blocks
         OreDictionary.registerOre("oreAluminium", new ItemStack(resource, 1, 3));
         OreDictionary.registerOre("oreAluminum", new ItemStack(resource, 1, 3));
     }
+
+    public static void registerTileEntity(Class teClass, String name)
+    {
+        GameRegistry.registerTileEntity(teClass, Technomagi.MODID + "." + name);
+    }
+
 }
