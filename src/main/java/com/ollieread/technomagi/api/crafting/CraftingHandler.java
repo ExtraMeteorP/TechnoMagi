@@ -15,7 +15,6 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 
 import com.ollieread.technomagi.api.electromagnetic.EnergyHandler;
-import com.ollieread.technomagi.api.electromagnetic.EnergyHandler.EnergyType;
 import com.ollieread.technomagi.api.knowledge.Knowledge;
 import com.ollieread.technomagi.common.recipes.FurnaceElectromagneticRecipe;
 import com.ollieread.technomagi.util.ItemStackHelper;
@@ -66,6 +65,64 @@ public class CraftingHandler
             if (result != null) {
                 recipes.add(CraftingManager.getInstance().addRecipe(result, items));
             }
+        }
+
+        public void add(String[] knowledge, ItemStack result, Object... items)
+        {
+            String s = "";
+            int i = 0;
+            int j = 0;
+            int k = 0;
+
+            if (items[i] instanceof String[]) {
+                String[] astring = ((String[]) items[i++]);
+
+                for (String s1 : astring) {
+                    ++k;
+                    j = s1.length();
+                    s = s + s1;
+                }
+            } else {
+                while (items[i] instanceof String) {
+                    String s2 = (String) items[i++];
+                    ++k;
+                    j = s2.length();
+                    s = s + s2;
+                }
+            }
+
+            HashMap hashmap;
+
+            for (hashmap = new HashMap(); i < items.length; i += 2) {
+                Character character = (Character) items[i];
+                ItemStack itemstack1 = null;
+
+                if (items[i + 1] instanceof Item) {
+                    itemstack1 = new ItemStack((Item) items[i + 1]);
+                } else if (items[i + 1] instanceof Block) {
+                    itemstack1 = new ItemStack((Block) items[i + 1], 1, 32767);
+                } else if (items[i + 1] instanceof ItemStack) {
+                    itemstack1 = (ItemStack) items[i + 1];
+                }
+
+                hashmap.put(character, itemstack1);
+            }
+
+            ItemStack[] aitemstack = new ItemStack[j * k];
+
+            for (int i1 = 0; i1 < j * k; ++i1) {
+                char c0 = s.charAt(i1);
+
+                if (hashmap.containsKey(Character.valueOf(c0))) {
+                    aitemstack[i1] = ((ItemStack) hashmap.get(Character.valueOf(c0))).copy();
+                } else {
+                    aitemstack[i1] = null;
+                }
+            }
+
+            ShapedKnowledgeDependantRecipe shapedrecipes = new ShapedKnowledgeDependantRecipe(j, k, aitemstack, result, knowledge);
+            CraftingManager.getInstance().getRecipeList().add(shapedrecipes);
+            recipes.add(shapedrecipes);
         }
 
         public IRecipe find(ItemStack result)
