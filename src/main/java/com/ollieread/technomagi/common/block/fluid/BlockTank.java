@@ -1,9 +1,12 @@
 package com.ollieread.technomagi.common.block.fluid;
 
+import java.util.ArrayList;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
@@ -16,6 +19,7 @@ import net.minecraftforge.fluids.FluidStack;
 import com.ollieread.technomagi.client.renderers.blocks.BlockTankRenderer;
 import com.ollieread.technomagi.common.block.BlockContainerSubtypes;
 import com.ollieread.technomagi.common.block.fluid.tile.TileTank;
+import com.ollieread.technomagi.common.item.block.ItemBlockTank;
 import com.ollieread.technomagi.util.PlayerHelper;
 
 import cpw.mods.fml.relauncher.Side;
@@ -104,10 +108,8 @@ public class BlockTank extends BlockContainerSubtypes
         TileTank tank = (TileTank) world.getTileEntity(x, y, z);
 
         if (stack.stackTagCompound != null) {
-            tank.readFromNBT(stack.stackTagCompound);
-            tank.xCoord = x;
-            tank.yCoord = y;
-            tank.zCoord = z;
+            tank.setCapacity(((ItemBlockTank) stack.getItem()).getCapacity(stack));
+            tank.fill(null, ((ItemBlockTank) stack.getItem()).getFluid(stack), true);
         }
 
         super.onBlockPlacedBy(world, x, y, z, entity, stack);
@@ -257,4 +259,22 @@ public class BlockTank extends BlockContainerSubtypes
 
         return false;
     }
+
+    @Override
+    public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune)
+    {
+        TileTank tank = (TileTank) world.getTileEntity(x, y, z);
+        ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
+
+        if (tank != null) {
+            Item item = getItemDropped(metadata, world.rand, fortune);
+            ItemStack stack = new ItemStack(getItemDropped(metadata, world.rand, fortune), 1, damageDropped(metadata));
+            ((ItemBlockTank) item).setCapacity(stack, tank.getCapacity());
+            ((ItemBlockTank) item).setFluid(stack, tank.getFluid());
+            ret.add(stack);
+        }
+
+        return ret;
+    }
+
 }
