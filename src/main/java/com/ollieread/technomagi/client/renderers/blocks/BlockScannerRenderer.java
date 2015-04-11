@@ -3,9 +3,7 @@ package com.ollieread.technomagi.client.renderers.blocks;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
-import net.minecraftforge.common.util.ForgeDirection;
 
-import com.ollieread.technomagi.common.block.scanner.tile.TileScanner;
 import com.ollieread.technomagi.util.RenderHelper;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
@@ -30,17 +28,18 @@ public class BlockScannerRenderer implements ISimpleBlockRenderingHandler
         double d = 0.25D;
         double d2 = d * 2;
 
-        TileScanner scanner = (TileScanner) world.getTileEntity(x, y, z);
-
-        if (scanner != null) {
-            ForgeDirection direction = scanner.getDirection();
-        }
-
-        renderer.setRenderBounds(d, 0, d, 1 - d, d, 1 - d);
-        renderer.renderStandardBlock(block, x, y, z);
-
-        renderer.setRenderBounds(d2, d, d2, 1 - d2, d2, 1 - d2);
-        renderer.renderStandardBlock(block, x, y, z);
+        /*
+         * TileScanner scanner = (TileScanner) world.getTileEntity(x, y, z);
+         * 
+         * if (scanner != null) { ForgeDirection direction =
+         * scanner.getDirection(); }
+         * 
+         * renderer.setRenderBounds(d, 0, d, 1 - d, d, 1 - d);
+         * renderer.renderStandardBlock(block, x, y, z);
+         * 
+         * renderer.setRenderBounds(d2, d, d2, 1 - d2, d2, 1 - d2);
+         * renderer.renderStandardBlock(block, x, y, z);
+         */
 
         return true;
     }
