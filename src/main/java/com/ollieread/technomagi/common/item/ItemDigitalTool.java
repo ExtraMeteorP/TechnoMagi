@@ -1,18 +1,19 @@
 package com.ollieread.technomagi.common.item;
 
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import cofh.api.item.IToolHammer;
+import net.minecraft.world.World;
 
 import com.ollieread.technomagi.common.block.tile.ISideFacing;
 import com.ollieread.technomagi.common.block.tile.ITileLink;
 import com.ollieread.technomagi.util.ItemNBTHelper;
+import com.ollieread.technomagi.util.PlayerHelper;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemDigitalTool extends ItemBase implements IToolHammer
+public class ItemDigitalTool extends ItemBase
 {
 
     public ItemDigitalTool(String name)
@@ -21,15 +22,7 @@ public class ItemDigitalTool extends ItemBase implements IToolHammer
     }
 
     @Override
-    public boolean isUsable(ItemStack stack, EntityLivingBase player, int x, int y, int z)
-    {
-        TileEntity tile = player.worldObj.getTileEntity(x, y, z);
-
-        return tile instanceof ISideFacing || tile instanceof ITileLink;
-    }
-
-    @Override
-    public void toolUsed(ItemStack stack, EntityLivingBase player, int x, int y, int z)
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
     {
         if (!player.worldObj.isRemote) {
             TileEntity tile = player.worldObj.getTileEntity(x, y, z);
@@ -54,11 +47,15 @@ public class ItemDigitalTool extends ItemBase implements IToolHammer
 
                                     if (!focusLink.isLinked()) {
                                         focusLink.setLink(x, y, z);
+                                        PlayerHelper.addChatMessage(player, "Linked: " + x + ":" + y + ":" + z);
+                                        return true;
                                     }
                                 }
                             }
                         } else {
                             setFocus(stack, x, y, z);
+                            PlayerHelper.addChatMessage(player, "Focused: " + x + ":" + y + ":" + z);
+                            return true;
                         }
                     }
                 }
@@ -69,9 +66,15 @@ public class ItemDigitalTool extends ItemBase implements IToolHammer
 
                 } else {
                     facing.rotate();
+                    return true;
                 }
+            } else {
+                resetFocus(stack);
+                PlayerHelper.addChatMessage(player, "Focus Reset");
             }
         }
+
+        return false;
     }
 
     public void setFocus(ItemStack stack, int x, int y, int z)
