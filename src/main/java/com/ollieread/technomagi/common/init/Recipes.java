@@ -13,6 +13,8 @@ import com.ollieread.technomagi.api.crafting.CraftingHandler;
 import com.ollieread.technomagi.api.crafting.CraftingHandler.ProcessorRecipes.ProcessorType;
 import com.ollieread.technomagi.api.crafting.OreDictProcessorRecipe;
 import com.ollieread.technomagi.api.crafting.ProcessorRecipe;
+import com.ollieread.technomagi.common.knowledge.Energies;
+import com.ollieread.technomagi.common.knowledge.Resources;
 import com.ollieread.technomagi.util.ItemStackHelper;
 
 import cpw.mods.fml.common.IFuelHandler;
@@ -65,6 +67,18 @@ public class Recipes
             CraftingHandler.vanilla.add(new ItemStack(Items.staffGuardian), "x", 'x', new ItemStack(Items.staffEngineer));
             CraftingHandler.vanilla.add(new ItemStack(Items.staffScholar), "x", 'x', new ItemStack(Items.staffGuardian));
         }
+
+        // Batteries
+        CraftingHandler.vanilla.add(new String[] { Energies.basicEnergy.getName() }, new ItemStack(Blocks.battery, 1, 0), " x ", "yzy", "yzy", 'x', ItemStackHelper.itemSubtype(Items.resource, "gold_rod", 1), 'y', ItemStackHelper.item("iron_ingot"), 'z', ItemStackHelper.block("redstone_block"));
+        CraftingHandler.vanilla.add(new String[] { Energies.basicEnergy.getName() }, new ItemStack(Blocks.battery, 1, 1), " x ", "yzy", "yzy", 'x', ItemStackHelper.itemSubtype(Items.resource, "gold_rod", 1), 'y', ItemStackHelper.itemSubtype(Items.resource, "aluminium_ingot", 1), 'z', new ItemStack(Blocks.battery, 1, 0));
+        CraftingHandler.vanilla.add(new String[] { Energies.basicEnergy.getName() }, new ItemStack(Blocks.battery, 1, 2), " x ", "yzy", "yzy", 'x', ItemStackHelper.itemSubtype(Items.resource, "gold_rod", 1), 'y', ItemStackHelper.itemSubtype(Items.resource, "nanite_iron_ingot", 1), 'z', new ItemStack(Blocks.battery, 1, 1));
+
+        // Generators
+
+        // Processors
+        CraftingHandler.vanilla.add(new String[] { Resources.basicResources.getName() }, ItemStackHelper.blockSubtype(Blocks.processor, "basic", 1), "xxx", "xyx", "xzx", 'x', ItemStackHelper.block("cobblestone"), 'y', ItemStackHelper.block("crafting_table"), 'z', ItemStackHelper.block("furnace"));
+        CraftingHandler.vanilla.add(new String[] { Resources.betterResources.getName(), Energies.basicEnergy.getName() }, ItemStackHelper.blockSubtype(Blocks.processor, "electric", 1), "xxx", "xyx", "xzx", 'x', ItemStackHelper.item("iron_ingot"), 'y', ItemStackHelper.blockSubtype(Blocks.processor, "basic", 1), 'z', new ItemStack(Blocks.battery, 1, 0));
+        CraftingHandler.vanilla.add(new String[] { Resources.advancedResources.getName(), Energies.basicEnergy.getName() }, ItemStackHelper.blockSubtype(Blocks.processor, "nanite", 1), "xxx", "xyx", "xzx", 'x', ItemStackHelper.itemSubtype(Items.resource, "nanite_iron_ingot", 1), 'y', ItemStackHelper.blockSubtype(Blocks.processor, "electric", 1), 'z', new ItemStack(Blocks.battery, 1, 1));
 
         processor();
         electromagnetic();
