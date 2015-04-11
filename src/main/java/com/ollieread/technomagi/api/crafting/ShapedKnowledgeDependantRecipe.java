@@ -20,19 +20,31 @@ import cpw.mods.fml.relauncher.ReflectionHelper;
 public class ShapedKnowledgeDependantRecipe extends ShapedRecipes
 {
 
-    private String knowledge;
+    private String[] knowledge = new String[] {};
 
-    public ShapedKnowledgeDependantRecipe(int width, int height, ItemStack[] items, ItemStack output, String knowledge)
+    public ShapedKnowledgeDependantRecipe(int width, int height, ItemStack[] items, ItemStack output, String[] knowledge)
     {
         super(width, height, items, output);
-        this.knowledge = knowledge;
+
+        if (knowledge != null) {
+            this.knowledge = knowledge;
+        }
     }
 
     @Override
     public boolean matches(InventoryCrafting inv, World world)
     {
         EntityPlayer player = findPlayer(inv);
-        return player != null && PlayerHelper.hasKnowledge(player, knowledge) && super.matches(inv, world);
+
+        if (player != null && super.matches(inv, world)) {
+            for (int i = 0; i < knowledge.length; i++) {
+                if (!PlayerHelper.hasKnowledge(player, knowledge[i])) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     // TODO: SRG names for non-dev environment
