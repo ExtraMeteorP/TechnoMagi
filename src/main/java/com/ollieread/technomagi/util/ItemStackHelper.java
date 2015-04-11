@@ -7,18 +7,12 @@ import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
-import net.minecraft.item.ItemTool;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -305,53 +299,7 @@ public class ItemStackHelper
 
     public static int getFuelValue(ItemStack stack)
     {
-        if (stack != null) {
-            Item item = stack.getItem();
-
-            if (item instanceof ItemBlock && Block.getBlockFromItem(item) != Blocks.air) {
-                Block block = Block.getBlockFromItem(item);
-
-                if (block == Blocks.wooden_slab) {
-                    return 150;
-                }
-
-                if (block.getMaterial() == Material.wood) {
-                    return 300;
-                }
-
-                if (block == Blocks.coal_block) {
-                    return 16000;
-                }
-            }
-
-            if (item instanceof ItemTool && ((ItemTool) item).getToolMaterialName().equals("WOOD")) {
-                return 200;
-            }
-            if (item instanceof ItemSword && ((ItemSword) item).getToolMaterialName().equals("WOOD")) {
-                return 200;
-            }
-            if (item instanceof ItemHoe && ((ItemHoe) item).getToolMaterialName().equals("WOOD")) {
-                return 200;
-            }
-            if (item == Items.stick) {
-                return 100;
-            }
-            if (item == Items.coal) {
-                return 1600;
-            }
-            if (item == Items.lava_bucket) {
-                return 20000;
-            }
-            if (item == Item.getItemFromBlock(Blocks.sapling)) {
-                return 100;
-            }
-            if (item == Items.blaze_rod) {
-                return 2400;
-            }
-            return GameRegistry.getFuelValue(stack);
-        }
-
-        return 0;
+        return TileEntityFurnace.getItemBurnTime(stack);
     }
 
     public static ISlotApplicable energyContainerSlot = new ISlotApplicable()
