@@ -10,6 +10,9 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+
+import com.ollieread.technomagi.common.tabs.TechnomagiTabs;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -27,6 +30,7 @@ public abstract class BlockContainerSubtypes extends BlockBaseContainer
 
         this.names = names;
         this.texturePrefix = name;
+        this.setCreativeTab(TechnomagiTabs.blocks);
     }
 
     public String getName(int metadata)
