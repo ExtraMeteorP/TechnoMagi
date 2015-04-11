@@ -68,7 +68,6 @@ public class Technomagi
         Fluids.init();
         Items.init();
         Blocks.init();
-        Recipes.init();
 
         Potions.init();
         Dimensions.init();
@@ -76,6 +75,8 @@ public class Technomagi
         Specialisations.init();
         Progression.init();
         Abilities.init();
+
+        Recipes.init();
 
         proxy.registerRenderers();
 
