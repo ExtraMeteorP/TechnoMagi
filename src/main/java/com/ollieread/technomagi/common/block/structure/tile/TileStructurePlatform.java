@@ -16,54 +16,43 @@ public class TileStructurePlatform extends TileStructure
     protected List<ChunkCoordinates> coords;
 
     @Override
-    public boolean isEnabled()
+    public void enable()
     {
-        return enabled;
+        if (!enabled) {
+            enabled = true;
+
+            coords = new ArrayList<ChunkCoordinates>();
+            int xStart = xCoord - 4;
+            int zStart = zCoord - 4;
+
+            for (int i = 0; i < 9; i++) {
+                for (int j = 0; j < 9; j++) {
+                    int x = xStart + i;
+                    int z = zStart + j;
+
+                    if (worldObj.isAirBlock(x, yCoord, z)) {
+                        worldObj.setBlock(x, yCoord, z, Blocks.hardlight);
+                        coords.add(new ChunkCoordinates(x, yCoord, z));
+                    }
+                }
+            }
+        }
     }
 
-    public void toggle()
+    @Override
+    public void disable()
     {
         if (enabled) {
             enabled = false;
-            disable();
-        } else {
-            enabled = true;
-            enable();
-        }
-    }
-
-    @Override
-    protected void enable()
-    {
-        coords = new ArrayList<ChunkCoordinates>();
-        int xStart = xCoord - 4;
-        int zStart = zCoord - 4;
-
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 0; j++) {
-                int x = xStart + i;
-                int z = zStart + j;
-
-                if (worldObj.isAirBlock(x, yCoord, z)) {
-                    worldObj.setBlock(x, yCoord, z, Blocks.hardlight);
-                    coords.add(new ChunkCoordinates(x, yCoord, z));
+            if (coords != null && coords.size() > 0) {
+                for (ChunkCoordinates coord : coords) {
+                    if (worldObj.getBlock(coord.posX, coord.posY, coord.posZ) instanceof BlockHardlight) {
+                        worldObj.setBlockToAir(coord.posX, coord.posY, coord.posZ);
+                    }
                 }
-            }
-        }
-    }
 
-    @Override
-    protected void disable()
-    {
-        if (coords != null && coords.size() > 0) {
-            for (ChunkCoordinates coord : coords) {
-                if (worldObj.getBlock(coord.posX, coord.posY, coord.posZ) instanceof BlockHardlight) {
-                    worldObj.setBlockToAir(coord.posX, coord.posY, coord.posZ);
-                    coords.remove(coord);
-                }
+                coords = new ArrayList<ChunkCoordinates>();
             }
-
-            coords = new ArrayList<ChunkCoordinates>();
         }
     }
 

@@ -6,6 +6,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 import com.ollieread.technomagi.common.block.BlockContainerSubtypes;
+import com.ollieread.technomagi.common.block.structure.tile.TileStructure;
 import com.ollieread.technomagi.common.block.structure.tile.TileStructureBridge;
 import com.ollieread.technomagi.common.block.structure.tile.TileStructurePlatform;
 
@@ -34,16 +35,35 @@ public class BlockStructure extends BlockContainerSubtypes
     public void onNeighborBlockChange(World world, int x, int y, int z, Block block)
     {
         if (!world.isRemote) {
-            if (world.isBlockIndirectlyGettingPowered(x, y, z)) {
-                TileEntity tile = world.getTileEntity(x, y, z);
+            TileEntity tile = world.getTileEntity(x, y, z);
 
-                if (tile instanceof TileStructurePlatform) {
-                    ((TileStructurePlatform) tile).toggle();
-                } else if (tile instanceof TileStructureBridge) {
-                    ((TileStructureBridge) tile).toggle(true);
+            if (tile instanceof TileStructure) {
+                TileStructure structure = (TileStructure) tile;
+                boolean flag = world.isBlockIndirectlyGettingPowered(x, y, z);
+
+                /**
+                 * If the structure is the bridge, we need to check that the
+                 * linked block is powered, otherwise shit really hits the fan
+                 * and we end up in spammy infinite loops.
+                 */
+                if (!flag && structure instanceof TileStructureBridge) {
+                    TileStructureBridge bridge = (TileStructureBridge) structure;
+
+                    if (bridge.isLinked()) {
+                        flag = world.isBlockIndirectlyGettingPowered(bridge.getLinkBridge().xCoord, bridge.getLinkBridge().yCoord, bridge.getLinkBridge().zCoord);
+                    }
+                }
+
+                if (flag) {
+                    if (!structure.isEnabled()) {
+                        structure.enable();
+                    }
+                } else {
+                    if (structure.isEnabled()) {
+                        structure.disable();
+                    }
                 }
             }
         }
     }
-
 }

@@ -27,14 +27,14 @@ import com.ollieread.technomagi.common.block.machine.tile.TileFauxPocket;
 import com.ollieread.technomagi.common.block.machine.tile.TileResourceProcessorBasic;
 import com.ollieread.technomagi.common.block.machine.tile.TileResourceProcessorElectric;
 import com.ollieread.technomagi.common.block.machine.tile.TileResourceProcessorNanite;
-import com.ollieread.technomagi.common.block.scanner.BlockScanner;
-import com.ollieread.technomagi.common.block.scanner.tile.TileScanner;
 import com.ollieread.technomagi.common.block.structure.BlockHardlight;
 import com.ollieread.technomagi.common.block.structure.BlockHardlightFence;
 import com.ollieread.technomagi.common.block.structure.BlockHardlightPane;
 import com.ollieread.technomagi.common.block.structure.BlockHardlightPlatform;
 import com.ollieread.technomagi.common.block.structure.BlockHardlightSlab;
 import com.ollieread.technomagi.common.block.structure.BlockStructure;
+import com.ollieread.technomagi.common.block.structure.tile.TileStructureBridge;
+import com.ollieread.technomagi.common.block.structure.tile.TileStructurePlatform;
 import com.ollieread.technomagi.common.block.teleporter.BlockElevator;
 import com.ollieread.technomagi.common.block.teleporter.tile.TileElevator;
 import com.ollieread.technomagi.common.block.world.BlockNaniteFarmland;
@@ -42,6 +42,7 @@ import com.ollieread.technomagi.common.item.block.ItemBlockBase;
 import com.ollieread.technomagi.common.item.block.ItemBlockBattery;
 import com.ollieread.technomagi.common.item.block.ItemBlockConduit;
 import com.ollieread.technomagi.common.item.block.ItemBlockFluid;
+import com.ollieread.technomagi.common.item.block.ItemBlockTank;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -50,7 +51,6 @@ public class Blocks
 
     public static BlockSubtypes resource;
     public static Block electromagnetic;
-    public static BlockContainerSubtypes scanner;
     public static BlockContainerSubtypes conduit;
     public static BlockContainerSubtypes processor;
     public static Block naniteFarmland;
@@ -73,8 +73,6 @@ public class Blocks
         resource = new BlockResource("resource");
         resource.setHardness(5.0F).setResistance(10.0F);
         electromagnetic = new BlockElectromagnetic("electromagnetic");
-        scanner = new BlockScanner("scanner");
-        scanner.setHardness(3.5F).setResistance(5.0F);
         conduit = new BlockConduit("conduit");
         conduit.setHardness(3.5F).setResistance(5.0F);
         processor = new BlockResourceProcessor("processor");
@@ -99,7 +97,6 @@ public class Blocks
         // Register Blocks
         GameRegistry.registerBlock(resource, ItemBlockBase.class, "resource");
         GameRegistry.registerBlock(electromagnetic, "electromagnetic");
-        GameRegistry.registerBlock(scanner, ItemBlockBase.class, "scanners");
         GameRegistry.registerBlock(conduit, ItemBlockConduit.class, "conduit");
         GameRegistry.registerBlock(processor, ItemBlockBase.class, "processor");
         GameRegistry.registerBlock(naniteFarmland, "nanite_farmland");
@@ -114,10 +111,10 @@ public class Blocks
         GameRegistry.registerBlock(hardlightPane, "hardlight_pane");
         GameRegistry.registerBlock(amnioticFluid, ItemBlockFluid.class, "amniotic_fluid");
         GameRegistry.registerBlock(enrichedFluid, ItemBlockFluid.class, "enriched_fluid");
-        GameRegistry.registerBlock(tank, ItemBlockBase.class, "tank");
+        GameRegistry.registerBlock(structure, ItemBlockBase.class, "structure");
+        GameRegistry.registerBlock(tank, ItemBlockTank.class, "tank");
 
         // Register TileEntities
-        GameRegistry.registerTileEntity(TileScanner.class, "scanner_tile");
         GameRegistry.registerTileEntity(TileElectromagnetic.class, "electromagnetic");
         GameRegistry.registerTileEntity(TileConduitFluid.class, "conduit_fluid");
         GameRegistry.registerTileEntity(TileConduitPower.class, "conduit_power");
@@ -129,6 +126,8 @@ public class Blocks
         GameRegistry.registerTileEntity(TileGeneratorBasic.class, "basic_generator");
         GameRegistry.registerTileEntity(TileGeneratorEnhanced.class, "enhanced_generator");
         GameRegistry.registerTileEntity(TileElevator.class, "teleporter");
+        GameRegistry.registerTileEntity(TileStructurePlatform.class, "platform");
+        GameRegistry.registerTileEntity(TileStructureBridge.class, "bridge");
         GameRegistry.registerTileEntity(TileTank.class, "tank");
 
         // Register with the ore dictionary

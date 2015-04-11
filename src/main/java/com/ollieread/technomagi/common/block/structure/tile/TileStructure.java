@@ -9,14 +9,17 @@ import com.ollieread.technomagi.common.block.tile.TileBase;
 public abstract class TileStructure extends TileBase implements ISideFacing
 {
 
-    protected boolean enabled;
+    protected boolean enabled = false;
     protected ForgeDirection direction;
 
-    public abstract boolean isEnabled();
+    public boolean isEnabled()
+    {
+        return enabled;
+    }
 
-    protected abstract void enable();
+    public abstract void enable();
 
-    protected abstract void disable();
+    public abstract void disable();
 
     @Override
     public void writeToNBT(NBTTagCompound compound)

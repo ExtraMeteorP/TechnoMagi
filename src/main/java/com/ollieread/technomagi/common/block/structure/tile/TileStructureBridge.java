@@ -1,12 +1,18 @@
 package com.ollieread.technomagi.common.block.structure.tile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChunkCoordinates;
+import net.minecraftforge.common.util.ForgeDirection;
 
+import com.ollieread.technomagi.common.block.structure.BlockHardlight;
 import com.ollieread.technomagi.common.block.tile.ITileLink;
+import com.ollieread.technomagi.common.init.Blocks;
+import com.ollieread.technomagi.util.BlockHelper;
 
 public class TileStructureBridge extends TileStructure implements ITileLink
 {
@@ -15,42 +21,60 @@ public class TileStructureBridge extends TileStructure implements ITileLink
     protected List<ChunkCoordinates> coords;
 
     @Override
-    public boolean isEnabled()
+    public void enable()
     {
-        return enabled;
-    }
+        if (!enabled && isLinked()) {
+            enabled = true;
+            TileStructureBridge bridge = getLinkBridge();
 
-    public void toggle(boolean clicked)
-    {
-        if (isLinked()) {
-            if (enabled) {
-                enabled = false;
+            if (!bridge.isEnabled()) {
+                coords = new ArrayList<ChunkCoordinates>();
+                bridge.enable();
+                int distance = BlockHelper.getDistance(xCoord, yCoord, zCoord, bridge.xCoord, bridge.yCoord, bridge.zCoord) - 1;
+                ForgeDirection direction = getDirection();
 
-                if (clicked) {
-                    getLinkBridge().toggle(false);
-                    disable();
+                for (int i = 1; i <= distance; i++) {
+                    int x = xCoord + (i * direction.offsetX);
+                    int y = yCoord + (i * direction.offsetY);
+                    int z = zCoord + (i * direction.offsetZ);
+
+                    if (worldObj.isAirBlock(x, y, z)) {
+                        worldObj.setBlock(x, y, z, Blocks.hardlight);
+                        coords.add(new ChunkCoordinates(x, y, z));
+                    } else {
+                        break;
+                    }
                 }
-            } else {
-                enabled = true;
 
-                if (clicked) {
-                    getLinkBridge().toggle(false);
-                    enable();
-                }
+                bridge.setCoords(coords);
             }
         }
     }
 
     @Override
-    protected void enable()
+    public void disable()
     {
+        if (enabled && isLinked()) {
+            enabled = false;
+            TileStructureBridge bridge = getLinkBridge();
 
+            if (bridge.isEnabled()) {
+                bridge.disable();
+
+                for (ChunkCoordinates coord : coords) {
+                    if (worldObj.getBlock(coord.posX, coord.posY, coord.posZ) instanceof BlockHardlight) {
+                        worldObj.setBlockToAir(coord.posX, coord.posY, coord.posZ);
+                    }
+                }
+
+                coords = new ArrayList<ChunkCoordinates>();
+            }
+        }
     }
 
-    @Override
-    protected void disable()
+    public void setCoords(List<ChunkCoordinates> coords)
     {
-
+        this.coords = coords;
     }
 
     @Override
@@ -60,6 +84,18 @@ public class TileStructureBridge extends TileStructure implements ITileLink
 
         if (link != null) {
             compound.setIntArray("Link", new int[] { link.posX, link.posY, link.posZ });
+        }
+
+        if (coords != null && coords.size() > 0) {
+            NBTTagList coordCompound = new NBTTagList();
+
+            for (ChunkCoordinates coord : coords) {
+                NBTTagCompound c = new NBTTagCompound();
+                c.setIntArray("Coord", new int[] { coord.posX, coord.posY, coord.posZ });
+                coordCompound.appendTag(c);
+            }
+
+            compound.setTag("Coords", coordCompound);
         }
     }
 
@@ -71,6 +107,17 @@ public class TileStructureBridge extends TileStructure implements ITileLink
         if (compound.hasKey("Link")) {
             int[] linkCoords = compound.getIntArray("Link");
             link = new ChunkCoordinates(linkCoords[0], linkCoords[1], linkCoords[2]);
+        }
+
+        if (compound.hasKey("Coords")) {
+            NBTTagList coordCompound = compound.getTagList("Coords", compound.getId());
+            coords = new ArrayList<ChunkCoordinates>();
+
+            for (int i = 0; i < coordCompound.tagCount(); i++) {
+                NBTTagCompound nbt = coordCompound.getCompoundTagAt(i);
+                int[] c = nbt.getIntArray("Coord");
+                coords.add(new ChunkCoordinates(c[0], c[1], c[2]));
+            }
         }
     }
 
@@ -87,7 +134,7 @@ public class TileStructureBridge extends TileStructure implements ITileLink
             TileEntity tile = worldObj.getTileEntity(x, y, z);
 
             if (tile != null && tile instanceof TileStructureBridge && ((TileStructureBridge) tile).getDirection().equals(getDirection().getOpposite())) {
-                return true;
+                return BlockHelper.getDistance(xCoord, yCoord, zCoord, tile.xCoord, tile.yCoord, tile.zCoord) <= getRange();
             }
         }
 
