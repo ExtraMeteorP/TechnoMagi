@@ -71,7 +71,7 @@ public class BlockAmnioticFluid extends BlockFluidFinite
         if (entity instanceof EntityLivingBase) {
             EntityLivingBase entityLiving = (EntityLivingBase) entity;
             if (world.rand.nextInt(50) == 0 && !entityLiving.isPotionActive(Potion.heal)) {
-                entityLiving.addPotionEffect(new PotionEffect(Potion.heal.id, 1, 1));
+                entityLiving.addPotionEffect(new PotionEffect(Potion.heal.id, 20, 1));
             }
 
             if (!entityLiving.isPotionActive(Potion.waterBreathing)) {
