@@ -29,7 +29,15 @@ public class BlockBattery extends BlockBaseContainer
     @Override
     public TileEntity createNewTileEntity(World world, int metadata)
     {
-        return metadata == 0 ? new TileBattery(6400, 500, 500) : new TileBattery(12800, 1024, 1024);
+        if (metadata == 0) {
+            return new TileBattery(3200, 250, 250);
+        } else if (metadata == 1) {
+            return new TileBattery(6400, 500, 500);
+        } else if (metadata == 2) {
+            return new TileBattery(12800, 1024, 1024);
+        }
+
+        return null;
     }
 
     @Override
@@ -110,6 +118,8 @@ public class BlockBattery extends BlockBaseContainer
         ItemStack stack = new ItemStack(item, 1, metadata);
 
         if (metadata == 0) {
+            ((ItemBlockBattery) item).configure(stack, 3200, 250, 250);
+        } else if (metadata == 1) {
             ((ItemBlockBattery) item).configure(stack, 6400, 500, 500);
         } else {
             ((ItemBlockBattery) item).configure(stack, 12800, 1024, 1024);

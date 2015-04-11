@@ -43,6 +43,8 @@ public class TileBatteryRenderer extends TileEntitySpecialRenderer
 
         if (machine.getBlockMetadata() == 0) {
             textureBattery = ResourceHelper.texture("models/battery.png");
+        } else if (machine.getBlockMetadata() == 1) {
+            textureBattery = ResourceHelper.texture("models/battery_aluminium.png");
         } else {
             textureBattery = ResourceHelper.texture("models/battery_nanite_iron.png");
         }
