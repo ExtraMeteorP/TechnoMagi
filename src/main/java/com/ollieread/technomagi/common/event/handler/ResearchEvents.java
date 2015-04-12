@@ -31,7 +31,10 @@ import net.minecraftforge.fluids.FluidRegistry;
 
 import com.ollieread.technomagi.api.TechnomagiApi;
 import com.ollieread.technomagi.api.entity.IEntityDescriptor;
+import com.ollieread.technomagi.api.event.KnowledgeEvent.Progress.Post;
+import com.ollieread.technomagi.api.event.KnowledgeEvent.Unlocked;
 import com.ollieread.technomagi.common.knowledge.Energies;
+import com.ollieread.technomagi.common.knowledge.nanites.BasicNanites;
 import com.ollieread.technomagi.util.EntityHelper;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -272,6 +275,24 @@ public class ResearchEvents
                     }
                 }
             }
+        }
+    }
+
+    @SubscribeEvent
+    public void onUnlockResearch(Post event)
+    {
+        if (!event.entityPlayer.worldObj.isRemote) {
+            if (event.research != BasicNanites.unlockResearch) {
+                TechnomagiApi.knowledge().performResearch(event.entityPlayer, BasicNanites.unlockResearch);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onUnlockKnowledge(Unlocked event)
+    {
+        if (!event.entityPlayer.worldObj.isRemote) {
+            TechnomagiApi.knowledge().performResearch(event.entityPlayer, BasicNanites.unlockKnowledge);
         }
     }
 
