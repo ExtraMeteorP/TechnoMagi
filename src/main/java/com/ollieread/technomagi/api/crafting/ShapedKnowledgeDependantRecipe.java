@@ -9,22 +9,22 @@ import net.minecraft.inventory.ContainerWorkbench;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.inventory.SlotCrafting;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.world.World;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import com.google.common.base.Throwables;
 import com.ollieread.technomagi.util.PlayerHelper;
 
 import cpw.mods.fml.relauncher.ReflectionHelper;
 
-public class ShapedKnowledgeDependantRecipe extends ShapedRecipes
+public class ShapedKnowledgeDependantRecipe extends ShapedOreRecipe
 {
 
     private String[] knowledge = new String[] {};
 
-    public ShapedKnowledgeDependantRecipe(int width, int height, ItemStack[] items, ItemStack output)
+    public ShapedKnowledgeDependantRecipe(ItemStack result, Object... recipe)
     {
-        super(width, height, items, output);
+        super(result, recipe);
     }
 
     public void setKnowledge(String[] knowledge)
@@ -32,6 +32,11 @@ public class ShapedKnowledgeDependantRecipe extends ShapedRecipes
         if (knowledge != null) {
             this.knowledge = knowledge;
         }
+    }
+
+    public String[] getKnowledge()
+    {
+        return this.knowledge;
     }
 
     @Override
@@ -45,15 +50,16 @@ public class ShapedKnowledgeDependantRecipe extends ShapedRecipes
                     return false;
                 }
             }
+
+            return true;
         }
 
-        return true;
+        return false;
     }
 
-    // TODO: SRG names for non-dev environment
-    private static final Field eventHandlerField = ReflectionHelper.findField(InventoryCrafting.class, "eventHandler");
-    private static final Field containerPlayerPlayerField = ReflectionHelper.findField(ContainerPlayer.class, "thePlayer");
-    private static final Field slotCraftingPlayerField = ReflectionHelper.findField(SlotCrafting.class, "thePlayer");
+    private static final Field eventHandlerField = ReflectionHelper.findField(InventoryCrafting.class, "eventHandler", "field_70465_c");
+    private static final Field containerPlayerPlayerField = ReflectionHelper.findField(ContainerPlayer.class, "thePlayer", "field_82862_h");
+    private static final Field slotCraftingPlayerField = ReflectionHelper.findField(SlotCrafting.class, "thePlayer", "field_75238_b");
 
     private static EntityPlayer findPlayer(InventoryCrafting inv)
     {

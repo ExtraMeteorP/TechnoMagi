@@ -36,10 +36,9 @@ public class ShapelessKnowledgeDependantRecipe extends ShapelessRecipes
         return player != null && PlayerHelper.hasKnowledge(player, knowledge) && super.matches(inv, world);
     }
 
-    // TODO: SRG names for non-dev environment
-    private static final Field eventHandlerField = ReflectionHelper.findField(InventoryCrafting.class, "eventHandler");
-    private static final Field containerPlayerPlayerField = ReflectionHelper.findField(ContainerPlayer.class, "thePlayer");
-    private static final Field slotCraftingPlayerField = ReflectionHelper.findField(SlotCrafting.class, "thePlayer");
+    private static final Field eventHandlerField = ReflectionHelper.findField(InventoryCrafting.class, "eventHandler", "field_70465_c");
+    private static final Field containerPlayerPlayerField = ReflectionHelper.findField(ContainerPlayer.class, "thePlayer", "field_82862_h");
+    private static final Field slotCraftingPlayerField = ReflectionHelper.findField(SlotCrafting.class, "thePlayer", "field_75238_b");
 
     private static EntityPlayer findPlayer(InventoryCrafting inv)
     {
