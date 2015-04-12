@@ -22,10 +22,13 @@ public class ShapedKnowledgeDependantRecipe extends ShapedRecipes
 
     private String[] knowledge = new String[] {};
 
-    public ShapedKnowledgeDependantRecipe(int width, int height, ItemStack[] items, ItemStack output, String[] knowledge)
+    public ShapedKnowledgeDependantRecipe(int width, int height, ItemStack[] items, ItemStack output)
     {
         super(width, height, items, output);
+    }
 
+    public void setKnowledge(String[] knowledge)
+    {
         if (knowledge != null) {
             this.knowledge = knowledge;
         }

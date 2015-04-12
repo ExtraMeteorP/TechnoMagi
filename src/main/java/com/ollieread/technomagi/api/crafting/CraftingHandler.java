@@ -120,9 +120,10 @@ public class CraftingHandler
                 }
             }
 
-            ShapedKnowledgeDependantRecipe shapedrecipes = new ShapedKnowledgeDependantRecipe(j, k, aitemstack, result, knowledge);
-            CraftingManager.getInstance().getRecipeList().add(shapedrecipes);
-            recipes.add(shapedrecipes);
+            ShapedKnowledgeDependantRecipe shapedrecipe = new ShapedKnowledgeDependantRecipe(j, k, aitemstack, result);
+            shapedrecipe.setKnowledge(knowledge);
+            GameRegistry.addRecipe(shapedrecipe);
+            recipes.add(shapedrecipe);
         }
 
         public IRecipe find(ItemStack result)
