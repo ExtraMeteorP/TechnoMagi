@@ -14,6 +14,7 @@ import com.ollieread.technomagi.api.crafting.CraftingHandler.ProcessorRecipes.Pr
 import com.ollieread.technomagi.api.crafting.OreDictProcessorRecipe;
 import com.ollieread.technomagi.api.crafting.ProcessorRecipe;
 import com.ollieread.technomagi.common.knowledge.Energies;
+import com.ollieread.technomagi.common.knowledge.Nanites;
 import com.ollieread.technomagi.common.knowledge.Resources;
 import com.ollieread.technomagi.util.ItemStackHelper;
 
@@ -68,9 +69,12 @@ public class Recipes
             CraftingHandler.vanilla.add(new ItemStack(Items.staffScholar), "x", 'x', new ItemStack(Items.staffGuardian));
         }
 
+        // Nanite Containers
+        CraftingHandler.vanilla.add(new String[] { Nanites.basicNanites.getName() }, new ItemStack(Items.entityNanites), " x ", "zyz", " z ", 'x', ItemStackHelper.itemSubtype(Items.crystal, "etherium", 1), 'y', ItemStackHelper.block("glass_pane"), 'z', ItemStackHelper.item("iron_ingot"));
+
         // Batteries
-        CraftingHandler.vanilla.add(new String[] { Energies.basicEnergy.getName() }, new ItemStack(Blocks.battery, 1, 0), " x ", "yzy", "yzy", 'x', ItemStackHelper.itemSubtype(Items.resource, "gold_rod", 1), 'y', ItemStackHelper.item("iron_ingot"), 'z', ItemStackHelper.block("redstone_block"));
-        CraftingHandler.vanilla.add(new String[] { Energies.basicEnergy.getName() }, new ItemStack(Blocks.battery, 1, 1), " x ", "yzy", "yzy", 'x', ItemStackHelper.itemSubtype(Items.resource, "gold_rod", 1), 'y', ItemStackHelper.itemSubtype(Items.resource, "aluminium_ingot", 1), 'z', new ItemStack(Blocks.battery, 1, 0));
+        CraftingHandler.vanilla.add(new String[] { Energies.basicEnergy.getName() }, new ItemStack(Blocks.battery, 1, 0), " x ", "yzy", "yzy", 'x', ItemStackHelper.itemSubtype(Items.resource, "iron_rod", 1), 'y', ItemStackHelper.item("iron_ingot"), 'z', ItemStackHelper.block("redstone_block"));
+        CraftingHandler.vanilla.add(new String[] { Energies.basicEnergy.getName() }, new ItemStack(Blocks.battery, 1, 1), " x ", "yzy", "yzy", 'x', ItemStackHelper.itemSubtype(Items.resource, "copper_rod", 1), 'y', ItemStackHelper.itemSubtype(Items.resource, "aluminium_ingot", 1), 'z', new ItemStack(Blocks.battery, 1, 0));
         CraftingHandler.vanilla.add(new String[] { Energies.basicEnergy.getName() }, new ItemStack(Blocks.battery, 1, 2), " x ", "yzy", "yzy", 'x', ItemStackHelper.itemSubtype(Items.resource, "gold_rod", 1), 'y', ItemStackHelper.itemSubtype(Items.resource, "nanite_iron_ingot", 1), 'z', new ItemStack(Blocks.battery, 1, 1));
 
         // Generators
