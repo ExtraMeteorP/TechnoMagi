@@ -103,4 +103,9 @@ public class Energies
         imbuement.mappings();
     }
 
+    public static void recipes()
+    {
+
+    }
+
 }

@@ -45,4 +45,9 @@ public class Arcane
 
     }
 
+    public static void recipes()
+    {
+
+    }
+
 }

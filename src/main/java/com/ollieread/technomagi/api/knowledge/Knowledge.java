@@ -72,4 +72,9 @@ public class Knowledge
         this.y = y;
     }
 
+    public void recipes()
+    {
+
+    }
+
 }

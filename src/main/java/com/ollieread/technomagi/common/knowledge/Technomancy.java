@@ -101,4 +101,9 @@ public class Technomancy
 
     }
 
+    public static void recipes()
+    {
+
+    }
+
 }

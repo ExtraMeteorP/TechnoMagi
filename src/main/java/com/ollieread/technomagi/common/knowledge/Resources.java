@@ -89,4 +89,10 @@ public class Resources
         optimisation.mappings();
         resourceManipulation.mappings();
     }
+
+    public static void recipes()
+    {
+
+    }
+
 }

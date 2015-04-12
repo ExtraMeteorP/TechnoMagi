@@ -15,4 +15,9 @@ public class BasicMachines extends Knowledge
         TechnomagiApi.addKnowledge(this);
     }
 
+    public void mappings()
+    {
+
+    }
+
 }
