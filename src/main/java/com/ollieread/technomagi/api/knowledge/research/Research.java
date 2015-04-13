@@ -8,7 +8,7 @@ public class Research implements IResearch
     protected String name;
     protected String knowledge;
     protected String parent;
-    protected int chance;
+    protected int chance = 1;
     protected int progress;
     protected int repeatition = 1;
 
