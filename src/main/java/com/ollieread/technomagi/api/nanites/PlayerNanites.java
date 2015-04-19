@@ -7,7 +7,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import com.ollieread.technomagi.api.TechnomagiApi;
 import com.ollieread.technomagi.api.entity.IEntityDescriptor.IEntityResearchNanites;
 import com.ollieread.technomagi.api.entity.PlayerTechnomagi;
-import com.ollieread.technomagi.api.knowledge.research.IResearch;
 import com.ollieread.technomagi.common.network.PacketHandler;
 import com.ollieread.technomagi.common.network.packets.MessageSyncPlayerNanites;
 
@@ -25,16 +24,6 @@ public class PlayerNanites extends EntityNanites
         this.maxNanites = descriptor.getMaxNanites();
         this.regenMultiplier = descriptor.getNaniteRegen();
         this.regenTicks = descriptor.getNaniteRegenTicks();
-    }
-
-    @Override
-    public boolean canResearch(IResearch research)
-    {
-        if (technomage.knowledge().canDiscover(TechnomagiApi.getKnowledge(research.getKnowledge())) && !researchComplete.contains(research.getName())) {
-            return true;
-        }
-
-        return false;
     }
 
     @Override
