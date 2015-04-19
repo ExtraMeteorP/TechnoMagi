@@ -26,7 +26,7 @@ configFile.withReader {
     project.ext.config = new ConfigSlurper().parse prop
 }
 
-version = "${config.version}.${System.getenv("BUILD_NUMBER")}${project.release != '' ? "-${config.release}" : ""}"
+version = "${config.version}.${System.getenv("BUILD_NUMBER")}${config.release != '' ? "-${config.release}" : ""}"
 group= "com.ollieread.technomagi" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Technomagi"
 
