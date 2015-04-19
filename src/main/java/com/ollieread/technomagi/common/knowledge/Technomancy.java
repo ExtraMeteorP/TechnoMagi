@@ -98,7 +98,22 @@ public class Technomancy
 
     public static void mappings()
     {
-
+        BasicTechnomancy.mappings();
+        basicMachines.mappings();
+        Exoskeleton.mappings();
+        Restoration.mappings();
+        RestorationLiving.mappings();
+        RestorationPhysical.mappings();
+        TechnologicalConstructs.mappings();
+        Adaption.mappings();
+        AdaptionEnvironment.mappings();
+        Teleportation.mappings();
+        TeleportationPhaseJumping.mappings();
+        TeleportationSubstitution.mappings();
+        TeleportationZeroShift.mappings();
+        Transmutation.mappings();
+        AdvancedMachines.mappings();
+        Dimensional.mappings();
     }
 
     public static void recipes()

@@ -15,4 +15,9 @@ public class Exoskeleton extends Knowledge
         TechnomagiApi.addKnowledge(this);
     }
 
+    public static void mappings()
+    {
+
+    }
+
 }

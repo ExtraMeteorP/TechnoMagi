@@ -15,4 +15,9 @@ public class Teleportation extends Knowledge
         TechnomagiApi.addKnowledge(this);
     }
 
+    public static void mappings()
+    {
+
+    }
+
 }

@@ -15,4 +15,9 @@ public class Transmutation extends Knowledge
         TechnomagiApi.addKnowledge(this);
     }
 
+    public static void mappings()
+    {
+
+    }
+
 }

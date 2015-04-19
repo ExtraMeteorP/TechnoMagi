@@ -15,4 +15,9 @@ public class TeleportationPhaseJumping extends Knowledge
         TechnomagiApi.addKnowledge(this);
     }
 
+    public static void mappings()
+    {
+
+    }
+
 }
