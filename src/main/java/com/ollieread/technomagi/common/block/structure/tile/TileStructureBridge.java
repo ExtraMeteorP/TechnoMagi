@@ -9,8 +9,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import com.ollieread.technomagi.api.tile.ITileLink;
 import com.ollieread.technomagi.common.block.structure.BlockHardlight;
-import com.ollieread.technomagi.common.block.tile.ITileLink;
 import com.ollieread.technomagi.common.init.Blocks;
 import com.ollieread.technomagi.util.BlockHelper;
 

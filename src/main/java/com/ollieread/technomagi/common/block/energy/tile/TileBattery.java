@@ -9,10 +9,10 @@ import net.minecraftforge.common.util.ForgeDirection;
 import cofh.api.energy.IEnergyContainerItem;
 import cofh.lib.util.helpers.EnergyHelper;
 
+import com.ollieread.technomagi.api.tile.ITileGui;
 import com.ollieread.technomagi.client.gui.window.WindowBattery;
 import com.ollieread.technomagi.client.gui.window.abstracts.Window;
 import com.ollieread.technomagi.common.block.energy.container.ContainerBattery;
-import com.ollieread.technomagi.common.block.tile.ITileGui;
 import com.ollieread.technomagi.common.component.Inventory;
 
 import cpw.mods.fml.relauncher.Side;

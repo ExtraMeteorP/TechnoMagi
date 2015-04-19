@@ -7,7 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
-import com.ollieread.technomagi.common.block.tile.ITilePlayerRestricted;
+import com.ollieread.technomagi.api.tile.ITilePlayerRestricted;
 import com.ollieread.technomagi.common.block.tile.TileBase;
 
 public abstract class TileTeleporter extends TileBase implements ITilePlayerRestricted

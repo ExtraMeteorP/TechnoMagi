@@ -8,7 +8,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyHandler;
 
-import com.ollieread.technomagi.common.block.tile.ITileLink;
+import com.ollieread.technomagi.api.tile.ITileLink;
 
 public class TileTeleporterBouncer extends TileTeleporterNetworked implements ITileLink, IEnergyHandler
 {

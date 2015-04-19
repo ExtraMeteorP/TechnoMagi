@@ -3,7 +3,7 @@ package com.ollieread.technomagi.common.block.structure.tile;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 
-import com.ollieread.technomagi.common.block.tile.ISideFacing;
+import com.ollieread.technomagi.api.tile.ISideFacing;
 import com.ollieread.technomagi.common.block.tile.TileBase;
 
 public abstract class TileStructure extends TileBase implements ISideFacing

@@ -11,15 +11,18 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import com.ollieread.technomagi.Technomagi;
-import com.ollieread.technomagi.common.block.tile.ISideFacing;
-import com.ollieread.technomagi.common.block.tile.ITileGui;
-import com.ollieread.technomagi.common.block.tile.ITilePlayerLocked;
-import com.ollieread.technomagi.common.block.tile.ITilePlayerOwned;
-import com.ollieread.technomagi.common.block.tile.ITilePlayerRestricted;
-import com.ollieread.technomagi.common.block.tile.ITileRetainsData;
+import com.ollieread.technomagi.api.knowledge.research.IResearcher;
+import com.ollieread.technomagi.api.tile.ISideFacing;
+import com.ollieread.technomagi.api.tile.ITileDisguisable;
+import com.ollieread.technomagi.api.tile.ITileGui;
+import com.ollieread.technomagi.api.tile.ITilePlayerLocked;
+import com.ollieread.technomagi.api.tile.ITilePlayerOwned;
+import com.ollieread.technomagi.api.tile.ITilePlayerRestricted;
+import com.ollieread.technomagi.api.tile.ITileRetainsData;
 import com.ollieread.technomagi.common.block.tile.TileBase;
 import com.ollieread.technomagi.common.tabs.TechnomagiTabs;
 import com.ollieread.technomagi.util.ItemNBTHelper;
+import com.ollieread.technomagi.util.PlayerHelper;
 
 public abstract class BlockBaseContainer extends BlockContainer
 {
@@ -80,6 +83,14 @@ public abstract class BlockBaseContainer extends BlockContainer
 
             ((ISideFacing) tile).setDirection(direction);
         }
+
+        if (tile instanceof IResearcher) {
+            if (entityLiving instanceof EntityPlayer) {
+                EntityPlayer player = (EntityPlayer) entityLiving;
+
+                ((IResearcher) tile).copyFrom(PlayerHelper.getKnowledge(player));
+            }
+        }
     }
 
     @Override
@@ -94,6 +105,12 @@ public abstract class BlockBaseContainer extends BlockContainer
         } else if (tile instanceof ITilePlayerLocked && ((ITilePlayerLocked) tile).isPlayerLocked()) {
             if (!((ITilePlayerLocked) tile).isPlayer(player)) {
                 return false;
+            }
+        }
+
+        if (tile instanceof ITileDisguisable && player.getHeldItem() != null) {
+            if (((ITileDisguisable) tile).setDisguiseBlock(player.getHeldItem())) {
+                return true;
             }
         }
 

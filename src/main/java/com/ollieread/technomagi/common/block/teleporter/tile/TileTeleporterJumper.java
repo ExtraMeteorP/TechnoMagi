@@ -9,7 +9,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyHandler;
 
-import com.ollieread.technomagi.common.block.tile.ITileLink;
+import com.ollieread.technomagi.api.tile.ITileLink;
 import com.ollieread.technomagi.util.TeleportHelper;
 
 public class TileTeleporterJumper extends TileTeleporter implements ITileLink, IEnergyHandler

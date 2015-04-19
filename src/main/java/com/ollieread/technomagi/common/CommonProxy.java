@@ -10,11 +10,11 @@ import net.minecraftforge.common.MinecraftForge;
 
 import com.ollieread.technomagi.api.TechnomagiApi;
 import com.ollieread.technomagi.api.entity.PlayerTechnomagi;
+import com.ollieread.technomagi.api.tile.ITileGui;
 import com.ollieread.technomagi.client.gui.GuiWindowContainer;
 import com.ollieread.technomagi.client.gui.GuiWindowScreen;
 import com.ollieread.technomagi.client.gui.window.WindowKnowledge;
 import com.ollieread.technomagi.client.gui.window.WindowSpecialisation;
-import com.ollieread.technomagi.common.block.tile.ITileGui;
 import com.ollieread.technomagi.common.event.handler.AbilityEvents;
 import com.ollieread.technomagi.common.event.handler.ElectromagneticPocketEvents;
 import com.ollieread.technomagi.common.event.handler.EntityEvents;

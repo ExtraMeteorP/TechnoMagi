@@ -7,9 +7,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import cofh.lib.util.helpers.EnergyHelper;
 
-import com.ollieread.technomagi.common.block.tile.ISideFacing;
-import com.ollieread.technomagi.common.block.tile.ITileGui;
-import com.ollieread.technomagi.common.block.tile.ITileProcessor;
+import com.ollieread.technomagi.api.tile.ISideFacing;
+import com.ollieread.technomagi.api.tile.ITileGui;
+import com.ollieread.technomagi.api.tile.ITileProcessor;
 import com.ollieread.technomagi.common.component.Inventory;
 import com.ollieread.technomagi.common.component.Progress;
 
