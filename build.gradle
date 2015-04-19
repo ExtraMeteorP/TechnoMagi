@@ -26,7 +26,7 @@ configFile.withReader {
     project.ext.config = new ConfigSlurper().parse prop
 }
 
-version = "${config.version}.${System.getenv("BUILD_NUMBER")}${System.getenv("BUILD_TYPE") ? "-${System.getenv("BUILD_TYPE")}" : ""}"
+version = "${config.version}.${System.getenv("BUILD_NUMBER")}${project.release != '' ? "-${config.release}" : ""}"
 group= "com.ollieread.technomagi" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Technomagi"
 
@@ -65,9 +65,45 @@ task deobfJar(type: Jar) {
     classifier = 'deobf'
 }
 
+import net.minecraftforge.gradle.delayed.*
+import net.minecraftforge.gradle.tasks.dev.ChangelogTask
+
+task createChangelog(type: ChangelogTask) {
+
+    if (System.getenv("BUILD_NUMBER") != null) {
+        def jobName = "${System.getenv("JOB_NAME")}"
+        
+        if (jobName?.trim()) {
+            jobName = "TechnoMagi"
+        }
+        
+        def buildNumber = "${System.getenv("BUILD_NUMBER")}"
+
+        setServerRoot(new DelayedString(project, "${System.getenv("jenkins_server")}"))
+        setJobName(new DelayedString(project, jobName.toString()))
+        setAuthName(new DelayedString(project, "${System.getenv("jenkins_user")}"))
+        setAuthPassword(new DelayedString(project, "${System.getenv("jenkins_pass")}"))
+        setTargetBuild({ buildNumber.toString() });
+        setOutput(new DelayedFile(project, 'build/libs/' + archivesBaseName + '-' + project.version + '-changelog.txt'));
+    }
+    
+}
+
+curse {
+    dependsOn 'deobfJar'
+
+    projectId = ${System.getenv("curse_projectid")}
+    apiKey = ${System.getenv("curse_key")}
+    changelog = project.hasProperty('changelog') ? project.changelog : ''
+    releaseType = "${config.release != "" ? "${project.release}" : "release"}"
+    addGameVersion config.minecraft
+
+    additionalArtifact deobfJar
+}
+
 artifacts {
     archives deobfJar 
     archives jar
 }
 
-build.dependsOn "deobfJar"
+build.dependsOn "deobfJar", "createChangelog"
