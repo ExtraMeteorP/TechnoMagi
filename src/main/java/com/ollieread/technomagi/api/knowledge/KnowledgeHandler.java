@@ -16,6 +16,7 @@ import com.ollieread.technomagi.api.TechnomagiApi;
 import com.ollieread.technomagi.api.entity.EntityTechnomagi;
 import com.ollieread.technomagi.api.entity.PlayerTechnomagi;
 import com.ollieread.technomagi.api.knowledge.research.IResearch;
+import com.ollieread.technomagi.api.knowledge.research.Research;
 import com.ollieread.technomagi.util.BlockHelper;
 import com.ollieread.technomagi.util.BlockRepresentation;
 import com.ollieread.technomagi.util.EntityHelper;
@@ -254,6 +255,11 @@ public class KnowledgeHandler
         }
 
         miningResearchList.get(representation).add(research);
+    }
+
+    public void mapCraftingResearch(ItemStack stack, Research research)
+    {
+        mapCraftingResearch(stack, research.toString());
     }
 
     /**
