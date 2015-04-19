@@ -95,4 +95,10 @@ public class Research implements IResearch
         return parent;
     }
 
+    @Override
+    public String toString()
+    {
+        return getName();
+    }
+
 }
