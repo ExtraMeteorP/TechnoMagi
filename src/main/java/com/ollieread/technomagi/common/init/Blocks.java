@@ -33,7 +33,10 @@ import com.ollieread.technomagi.common.block.structure.BlockHardlightFence;
 import com.ollieread.technomagi.common.block.structure.BlockHardlightPane;
 import com.ollieread.technomagi.common.block.structure.BlockHardlightPlatform;
 import com.ollieread.technomagi.common.block.structure.BlockHardlightSlab;
+import com.ollieread.technomagi.common.block.structure.BlockHardlightStairs;
+import com.ollieread.technomagi.common.block.structure.BlockShifted;
 import com.ollieread.technomagi.common.block.structure.BlockStructure;
+import com.ollieread.technomagi.common.block.structure.tile.TileShifted;
 import com.ollieread.technomagi.common.block.structure.tile.TileStructureBridge;
 import com.ollieread.technomagi.common.block.structure.tile.TileStructurePlatform;
 import com.ollieread.technomagi.common.block.teleporter.BlockElevator;
@@ -64,10 +67,12 @@ public class Blocks
     public static Block hardlightPlatform;
     public static Block hardlightFence;
     public static Block hardlightPane;
+    public static Block hardlightStairs;
     public static Block amnioticFluid;
     public static Block enrichedFluid;
     public static BlockContainerSubtypes structure;
     public static BlockContainerSubtypes tank;
+    public static Block shifted;
 
     public static void init()
     {
@@ -88,12 +93,14 @@ public class Blocks
         hardlightPlatform = new BlockHardlightPlatform("hardlight_platform");
         hardlightFence = new BlockHardlightFence("hardlight_fence");
         hardlightPane = new BlockHardlightPane("hardlight_pane");
+        hardlightStairs = new BlockHardlightStairs("hardlight_stairs");
         amnioticFluid = new BlockAmnioticFluid("amniotic_fluid");
         enrichedFluid = new BlockEnrichedFluid("enriched_fluid");
         structure = new BlockStructure("structure");
         structure.setHardness(3.5F);
         tank = new BlockTank("tank");
         tank.setHardness(3.5F);
+        shifted = new BlockShifted("shifted");
 
         // Register Blocks
         GameRegistry.registerBlock(resource, ItemBlockBase.class, "resource");
@@ -110,10 +117,12 @@ public class Blocks
         GameRegistry.registerBlock(hardlightPlatform, "hardlight_platform");
         GameRegistry.registerBlock(hardlightFence, "hardlight_fence");
         GameRegistry.registerBlock(hardlightPane, "hardlight_pane");
+        GameRegistry.registerBlock(hardlightStairs, "hardlight_stairs");
         GameRegistry.registerBlock(amnioticFluid, ItemBlockFluid.class, "amniotic_fluid");
         GameRegistry.registerBlock(enrichedFluid, ItemBlockFluid.class, "enriched_fluid");
         GameRegistry.registerBlock(structure, ItemBlockBase.class, "structure");
         GameRegistry.registerBlock(tank, ItemBlockTank.class, "tank");
+        GameRegistry.registerBlock(shifted, "shifted");
 
         // Register TileEntities
         registerTileEntity(TileElectromagnetic.class, "electromagnetic");
@@ -130,6 +139,7 @@ public class Blocks
         registerTileEntity(TileStructurePlatform.class, "platform");
         registerTileEntity(TileStructureBridge.class, "bridge");
         registerTileEntity(TileTank.class, "tank");
+        registerTileEntity(TileShifted.class, "shifted");
 
         // Register with the ore dictionary
         OreDictionary.registerOre("oreEtherium", new ItemStack(resource, 1, 0));

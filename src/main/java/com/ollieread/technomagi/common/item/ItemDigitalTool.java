@@ -5,8 +5,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-import com.ollieread.technomagi.common.block.tile.ISideFacing;
-import com.ollieread.technomagi.common.block.tile.ITileLink;
+import com.ollieread.technomagi.api.tile.ISideFacing;
+import com.ollieread.technomagi.api.tile.ITileLink;
 import com.ollieread.technomagi.util.ItemNBTHelper;
 import com.ollieread.technomagi.util.PlayerHelper;
 
