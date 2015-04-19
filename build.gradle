@@ -93,11 +93,10 @@ task createChangelog(type: ChangelogTask) {
 curse {
     dependsOn 'deobfJar'
 
-    projectId = ${System.getenv("curse_projectid")}
-    apiKey = ${System.getenv("curse_key")}
+    projectId = "${System.getenv("curse_projectid")}"
+    apiKey = "${System.getenv("curse_key")}"
     changelog = project.hasProperty('changelog') ? project.changelog : ''
     releaseType = "${config.release != "" ? "${project.release}" : "release"}"
-    addGameVersion config.minecraft
 
     additionalArtifact deobfJar
 }
