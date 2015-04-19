@@ -95,8 +95,8 @@ public class ComponentRecipe extends Component
                                     ItemStack item = items[i];
 
                                     if (item != null) {
-                                        int x2 = 12 + (r * 17);
-                                        int y2 = 17 + (c * 17);
+                                        int x2 = 12 + (r * 18);
+                                        int y2 = 17 + (c * 18);
                                         tooltips.put(new Integer[] { x2, y2 }, item);
                                         builder.drawItemStack(item, x + x2, y + y2, "" + (item.stackSize > 1 ? item.stackSize : ""));
                                     }
