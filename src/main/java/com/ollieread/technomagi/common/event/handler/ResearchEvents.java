@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockChest;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
@@ -12,6 +13,7 @@ import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
@@ -34,6 +36,7 @@ import com.ollieread.technomagi.api.entity.IEntityDescriptor;
 import com.ollieread.technomagi.api.event.KnowledgeEvent.Progress.Post;
 import com.ollieread.technomagi.api.event.KnowledgeEvent.Unlocked;
 import com.ollieread.technomagi.common.knowledge.Energies;
+import com.ollieread.technomagi.common.knowledge.Technomancy;
 import com.ollieread.technomagi.common.knowledge.nanites.BasicNanites;
 import com.ollieread.technomagi.util.EntityHelper;
 
@@ -58,6 +61,28 @@ public class ResearchEvents
                     }
                 }
             }
+
+            if (event.crafting.getItem() instanceof ItemBlock) {
+                Block craftedBlock = Block.getBlockFromItem(event.crafting.getItem());
+
+                if (craftedBlock != null) {
+                    /**
+                     * This means that crafting another mods chest will fire
+                     * this research.
+                     */
+                    if (craftedBlock instanceof BlockChest) {
+                        for (int i = 0; i < event.crafting.stackSize; i++) {
+                            if (TechnomagiApi.knowledge().performResearch(event.player, Technomancy.basicMachines.craftChest)) {
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+
+            /**
+             * @todo Add handling for crafting that takes a certain block/item
+             */
         }
     }
 
