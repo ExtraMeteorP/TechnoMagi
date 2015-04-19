@@ -61,6 +61,25 @@ public class Researcher implements IResearcher
         return 0;
     }
 
+    @Override
+    public void copyFrom(IResearcher research)
+    {
+        this.researchComplete = research.getCompleteResearch();
+        this.researchRepetition = research.getResearchRepetition();
+    }
+
+    @Override
+    public List<String> getCompleteResearch()
+    {
+        return this.researchComplete;
+    }
+
+    @Override
+    public Map<String, Integer> getResearchRepetition()
+    {
+        return this.researchRepetition;
+    }
+
     public void saveNBTData(NBTTagCompound compound)
     {
         /*
