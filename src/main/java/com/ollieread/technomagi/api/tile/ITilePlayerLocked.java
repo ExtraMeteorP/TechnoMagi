@@ -1,4 +1,4 @@
-package com.ollieread.technomagi.common.block.tile;
+package com.ollieread.technomagi.api.tile;
 
 public interface ITilePlayerLocked extends ITilePlayerOwned
 {
