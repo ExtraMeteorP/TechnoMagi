@@ -11,8 +11,9 @@ gui.technomagi.processor.basic=Processor: Basic
 gui.technomagi.processor.electric=Processor: Electric
 
 gui.technomagi.link.information=Information
-gui.technomagi.link.crafting=Crafting Recipes
-gui.technomagi.link.smelting=Smelting Recipes
+gui.technomagi.link.ingots=Ingots
+gui.technomagi.link.rods=Rods
+gui.technomagi.link.sheets=Sheets
 gui.technomagi.link.abilities=Abilities
 gui.technomagi.link.staff=Staves
 

@@ -3,18 +3,18 @@
 	<section name="information">
 		<page>
 			<paragraph>
-				You have discovered the basics of the resources of this world, utilising this information you can craft
+				You have discovered the basics of the resources of this world, by utilising this information you can craft
 				 basic items for usage in the construction of components and resources.
 			</paragraph>
 		</page>	
 	</section>
-	<section name="smelting">
+	<section name="ingots">
 		<page>
 			<recipe alignment="center" type="furnace" output="item:Technomagi:resource:2" />
 			<recipe alignment="center" type="furnace" output="item:Technomagi:resource:3" />
 		</page>	
 	</section>
-	<section name="crafting">
+	<section name="rods">
 		<page>
 			<paragraph>
 				Rods are used in the creation of machines and devices, providing support for their structures.
@@ -24,6 +24,10 @@
 			<recipe alignment="center" type="vanilla" output="item:Technomagi:resources:22" />
 			<recipe alignment="center" type="vanilla" output="item:Technomagi:resources:23" />
 			<recipe alignment="center" type="vanilla" output="item:Technomagi:resources:24" />
+		</page>	
+	</section>
+	<section name="sheets">
+		<page>
 			<paragraph>
 				Sheets are used in the creation of machines and devices, providing a cover and/or armour for the structures.
 			</paragraph>
