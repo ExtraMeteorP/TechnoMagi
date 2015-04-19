@@ -96,7 +96,7 @@ curse {
     projectId = "${System.getenv("curse_projectid")}"
     apiKey = "${System.getenv("curse_key")}"
     changelog = project.hasProperty('changelog') ? project.changelog : ''
-    releaseType = "${config.release != "" ? "${project.release}" : "release"}"
+    releaseType = "${config.release != "" ? "${config.release}" : "release"}"
 
     additionalArtifact deobfJar
 }
