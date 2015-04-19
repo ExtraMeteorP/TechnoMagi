@@ -11,6 +11,7 @@ import com.ollieread.technomagi.client.event.handler.MouseEvents;
 import com.ollieread.technomagi.client.gui.GuiBuilder;
 import com.ollieread.technomagi.client.gui.GuiTechnomagi;
 import com.ollieread.technomagi.client.renderers.blocks.BlockConduitRenderer;
+import com.ollieread.technomagi.client.renderers.blocks.BlockDisguisedRenderer;
 import com.ollieread.technomagi.client.renderers.blocks.BlockFauxPocketRenderer;
 import com.ollieread.technomagi.client.renderers.blocks.BlockHardlightPaneRenderer;
 import com.ollieread.technomagi.client.renderers.blocks.BlockScannerRenderer;
@@ -61,6 +62,7 @@ public class ClientProxy extends CommonProxy
         RenderingRegistry.registerBlockHandler(BlockFauxPocketRenderer.id, new BlockFauxPocketRenderer());
         RenderingRegistry.registerBlockHandler(BlockHardlightPaneRenderer.id, new BlockHardlightPaneRenderer());
         RenderingRegistry.registerBlockHandler(BlockTankRenderer.id, new BlockTankRenderer());
+        RenderingRegistry.registerBlockHandler(BlockDisguisedRenderer.id, new BlockDisguisedRenderer());
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileFauxPocket.class, new TileFauxPocketRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileBattery.class, new TileBatteryRenderer());
