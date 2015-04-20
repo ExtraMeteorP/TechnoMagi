@@ -26,7 +26,6 @@ public class Inventory implements IInventory
         for (int i = 0; i < getSizeInventory(); i++) {
             if (getStackInSlot(i) != null) {
                 NBTTagCompound tag = new NBTTagCompound();
-                tag.setByte("Slot", (byte) i);
                 getStackInSlot(i).writeToNBT(tag);
                 list.appendTag(tag);
             }
@@ -42,9 +41,9 @@ public class Inventory implements IInventory
 
         for (int i = 0; i < list.tagCount(); i++) {
             NBTTagCompound tag = list.getCompoundTagAt(i);
-            int slot = tag.getByte("Slot") & 255;
+            int slot = tag.getInteger("Slot");
 
-            if (slot >= 0 && slot < list.tagCount()) {
+            if (slot >= 0 && slot < getSizeInventory()) {
                 this.setInventorySlotContents(slot, ItemStack.loadItemStackFromNBT(tag));
             }
         }
