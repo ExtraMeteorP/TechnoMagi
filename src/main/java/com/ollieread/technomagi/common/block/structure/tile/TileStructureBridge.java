@@ -48,6 +48,8 @@ public class TileStructureBridge extends TileStructure implements ITileLink
 
                 bridge.setCoords(coords);
             }
+
+            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         }
     }
 
@@ -69,6 +71,8 @@ public class TileStructureBridge extends TileStructure implements ITileLink
 
                 coords = new ArrayList<ChunkCoordinates>();
             }
+
+            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         }
     }
 

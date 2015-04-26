@@ -36,6 +36,8 @@ public class TileStructurePlatform extends TileStructure
                     }
                 }
             }
+
+            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         }
     }
 
@@ -53,6 +55,8 @@ public class TileStructurePlatform extends TileStructure
 
                 coords = new ArrayList<ChunkCoordinates>();
             }
+
+            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         }
     }
 
