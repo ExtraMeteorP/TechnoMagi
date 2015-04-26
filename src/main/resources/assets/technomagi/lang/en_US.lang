@@ -9,6 +9,7 @@ gui.technomagi.battery=Powercell
 gui.technomagi.basic_generator=Furnace Generator
 gui.technomagi.processor.basic=Processor: Basic
 gui.technomagi.processor.electric=Processor: Electric
+gui.technomagi.cultivator=Nanite Cultivator
 
 gui.technomagi.link.information=Information
 gui.technomagi.link.ingots=Ingots
@@ -208,3 +209,6 @@ item.technomagi.components.stone_furnace_bed.name=Stone Furnace Bed
 item.technomagi.components.heating_element.name=Heating Element
 item.technomagi.components.stone_rolling.name=Stone Rollers
 item.technomagi.components.iron_rolling.name=Iron Rollers
+
+# Entities
+entity.player.name=Player

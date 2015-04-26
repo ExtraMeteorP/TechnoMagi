@@ -27,7 +27,7 @@ public class TeleportHelper
             z = (int) teleportEvent.targetZ;
         }
 
-        entity.setPositionAndUpdate(x, y, z);
+        entity.setPositionAndUpdate(x + 0.5D, y, z + 0.5D);
     }
 
     public static void teleportEntityToTeleporter(EntityLivingBase entity, int x, int y, int z, boolean event)
@@ -37,6 +37,7 @@ public class TeleportHelper
         if (teleporter != null && teleporter instanceof TileTeleporter) {
             teleportEntityTo(entity, x, y, z, event);
             ((TileTeleporter) teleporter).startCooldown(true);
+            SoundHelper.playSoundEffect(entity.worldObj, x, y + 1, z, "teleport", entity.worldObj.rand);
         }
     }
 
@@ -69,7 +70,8 @@ public class TeleportHelper
         }
 
         if (dx != -1 && dy != -1 && dz != -1) {
-            teleportEntityTo(entity, dx, dy, dz, true);
+            teleportEntityTo(entity, dx, dy + 1, dz, true);
+            SoundHelper.playSoundEffect(entity.worldObj, x, y + 1, z, "teleport", entity.worldObj.rand);
         }
     }
 
@@ -80,7 +82,7 @@ public class TeleportHelper
         int dz = -1;
 
         int blocks = 0;
-        y++;
+        y--;
 
         for (int i = 0; i < Config.elevatorLength; i++) {
             if ((y - i) == 0) {
@@ -106,7 +108,8 @@ public class TeleportHelper
         }
 
         if (dx != -1 && dy != -1 && dz != -1) {
-            teleportEntityTo(entity, dx, dy, dz, true);
+            teleportEntityTo(entity, dx, dy + 1, dz, true);
+            SoundHelper.playSoundEffect(entity.worldObj, x, y + 1, z, "teleport", entity.worldObj.rand);
         }
     }
 

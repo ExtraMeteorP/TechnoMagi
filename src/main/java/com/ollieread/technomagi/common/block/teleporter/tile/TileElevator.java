@@ -32,12 +32,16 @@ public class TileElevator extends TileBase
     @Override
     public void writeToNBT(NBTTagCompound compound)
     {
+        super.writeToNBT(compound);
+
         compound.setInteger("Cooldown", this.cooldown);
     }
 
     @Override
     public void readFromNBT(NBTTagCompound compound)
     {
+        super.readFromNBT(compound);
+
         this.cooldown = compound.getInteger("Cooldown");
     }
 
