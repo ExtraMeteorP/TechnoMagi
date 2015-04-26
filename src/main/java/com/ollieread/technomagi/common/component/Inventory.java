@@ -26,6 +26,7 @@ public class Inventory implements IInventory
         for (int i = 0; i < getSizeInventory(); i++) {
             if (getStackInSlot(i) != null) {
                 NBTTagCompound tag = new NBTTagCompound();
+                tag.setInteger("Slot", i);
                 getStackInSlot(i).writeToNBT(tag);
                 list.appendTag(tag);
             }
