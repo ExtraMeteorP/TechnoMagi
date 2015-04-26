@@ -44,6 +44,8 @@ public class TileShifted extends TileBase implements ITileDisguisable
     @Override
     public void writeToNBT(NBTTagCompound compound)
     {
+        super.writeToNBT(compound);
+
         NBTTagCompound disguiseCompound = new NBTTagCompound();
         disguise.writeToNBT(disguiseCompound);
         compound.setTag("Disguise", disguiseCompound);
@@ -52,6 +54,8 @@ public class TileShifted extends TileBase implements ITileDisguisable
     @Override
     public void readFromNBT(NBTTagCompound compound)
     {
+        super.readFromNBT(compound);
+
         NBTTagCompound disguiseCompound = compound.getCompoundTag("Disguise");
         disguise.readFromNBT(disguiseCompound);
     }
