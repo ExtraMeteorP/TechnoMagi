@@ -56,8 +56,7 @@ public class TileShifted extends TileBase implements ITileDisguisable
     {
         super.readFromNBT(compound);
 
-        NBTTagCompound disguiseCompound = compound.getCompoundTag("Disguise");
-        disguise.readFromNBT(disguiseCompound);
+        disguise.readFromNBT(compound.getCompoundTag("Disguise"));
     }
 
     @Override

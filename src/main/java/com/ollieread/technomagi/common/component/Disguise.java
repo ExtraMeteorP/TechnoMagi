@@ -54,8 +54,8 @@ public class Disguise implements ITileDisguisable
 
     public void readFromNBT(NBTTagCompound compound)
     {
-        if (compound.hasKey("id")) {
-            ItemStack.loadItemStackFromNBT(compound);
+        if (!compound.hasNoTags()) {
+            disguiseStack = ItemStack.loadItemStackFromNBT(compound);
         }
     }
 
