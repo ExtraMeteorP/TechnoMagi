@@ -5,8 +5,11 @@ import net.minecraftforge.client.event.MouseEvent;
 
 import com.ollieread.technomagi.Technomagi;
 import com.ollieread.technomagi.api.ability.IAbilityItem;
+import com.ollieread.technomagi.api.ability.PlayerAbilities;
 import com.ollieread.technomagi.api.entity.PlayerTechnomagi;
 import com.ollieread.technomagi.client.gui.GuiBuilder;
+import com.ollieread.technomagi.common.network.PacketHandler;
+import com.ollieread.technomagi.common.network.packets.MessageReleaseCasting;
 import com.ollieread.technomagi.util.PacketHelper;
 import com.ollieread.technomagi.util.PlayerHelper;
 
@@ -38,6 +41,15 @@ public class MouseEvents
                 // GuiTMOverlay.shouldDisplay = true;
                 Technomagi.proxy.updateOverlay();
                 event.setCanceled(true);
+            }
+        }
+
+        if (event.button == 1 && !event.buttonstate) {
+            PlayerAbilities abilities = PlayerHelper.getAbilities(player);
+
+            if (abilities != null && abilities.isCasting()) {
+                abilities.releaseCasting();
+                PacketHandler.INSTANCE.sendToServer(new MessageReleaseCasting());
             }
         }
     }

@@ -17,6 +17,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
 import com.ollieread.technomagi.api.TechnomagiApi;
+import com.ollieread.technomagi.api.ability.PlayerAbilities;
 import com.ollieread.technomagi.api.entity.PlayerTechnomagi;
 import com.ollieread.technomagi.api.event.TechnomagiHooks;
 import com.ollieread.technomagi.api.knowledge.Knowledge;
@@ -46,6 +47,11 @@ public class PlayerHelper
     public static PlayerNanites getNanites(EntityPlayer player)
     {
         return getTechnomagi(player).nanites();
+    }
+
+    public static PlayerAbilities getAbilities(EntityPlayer player)
+    {
+        return getTechnomagi(player).abilities();
     }
 
     public static boolean hasSpecialised(EntityPlayer player)

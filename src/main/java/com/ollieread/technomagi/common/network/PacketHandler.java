@@ -2,6 +2,7 @@ package com.ollieread.technomagi.common.network;
 
 import com.ollieread.technomagi.Technomagi;
 import com.ollieread.technomagi.common.network.packets.MessageChangeAbility;
+import com.ollieread.technomagi.common.network.packets.MessageReleaseCasting;
 import com.ollieread.technomagi.common.network.packets.MessageSpecialisation;
 import com.ollieread.technomagi.common.network.packets.MessageSyncEntity;
 import com.ollieread.technomagi.common.network.packets.MessageSyncPlayer;
@@ -30,5 +31,6 @@ public class PacketHandler
         INSTANCE.registerMessage(MessageSyncEntity.Handler.class, MessageSyncEntity.class, 6, Side.CLIENT);
         INSTANCE.registerMessage(MessageSpecialisation.Handler.class, MessageSpecialisation.class, 7, Side.SERVER);
         INSTANCE.registerMessage(MessageChangeAbility.Handler.class, MessageChangeAbility.class, 8, Side.SERVER);
+        INSTANCE.registerMessage(MessageReleaseCasting.Handler.class, MessageReleaseCasting.class, 9, Side.SERVER);
     }
 }

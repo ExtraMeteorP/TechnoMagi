@@ -45,6 +45,8 @@ public class PlayerAbilities
     protected AbilityPayload abilityCastingPayload = null;
     protected IAbilityCast currentCastingAbility = null;
 
+    protected boolean casting = false;
+
     public PlayerAbilities(PlayerTechnomagi technomagi)
     {
         this.technomage = technomagi;
@@ -218,11 +220,12 @@ public class PlayerAbilities
 
     public boolean isCasting()
     {
-        return abilityCastingPayload != null && currentCastingAbility != null;
+        return abilityCastingPayload != null && currentCastingAbility != null || casting;
     }
 
     public IAbilityCast startCasting(ItemStack stack, AbilityPayload payload)
     {
+        casting = true;
         if (stack != null && stack.getItem() instanceof IAbilityItem) {
             IAbilityItem abilityItem = (IAbilityItem) stack.getItem();
             IAbilityCast ability = null;
@@ -245,7 +248,6 @@ public class PlayerAbilities
                         technomage.getPlayer().setItemInUse(stack, currentCastingAbility.getMaxFocus(getCastableAbilityMode(currentCastingAbility.getName())));
 
                         if (casting()) {
-                            // sync();
                             return ability;
                         } else {
                             return null;
@@ -290,7 +292,6 @@ public class PlayerAbilities
                                 }
                                 flag = true;
                             } else {
-                                // sync();
                                 return true;
                             }
                         }
@@ -312,7 +313,7 @@ public class PlayerAbilities
             currentCastingAbility = null;
             abilityCastingPayload = null;
             technomage.getPlayer().stopUsingItem();
-            // sync();
+            sync();
         }
     }
 
@@ -346,12 +347,19 @@ public class PlayerAbilities
         casting();
     }
 
+    public void releaseCasting()
+    {
+        this.casting = false;
+    }
+
     public void saveNBTData(NBTTagCompound compound)
     {
         /**
          * Ability index.
          */
         compound.setInteger("Index", currentAbilityIndex);
+
+        compound.setBoolean("Casting", casting);
 
         /**
          * Ability castable cooldown.

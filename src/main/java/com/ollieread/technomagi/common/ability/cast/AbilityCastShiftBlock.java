@@ -13,12 +13,14 @@ import com.ollieread.technomagi.api.ability.AbilityPayload.AbilityResult;
 import com.ollieread.technomagi.api.ability.AbilityPayload.AbilityUseTarget;
 import com.ollieread.technomagi.api.entity.PlayerTechnomagi;
 import com.ollieread.technomagi.api.tile.ITileDisguisable;
+import com.ollieread.technomagi.common.block.structure.BlockShifted;
+import com.ollieread.technomagi.common.block.structure.tile.TileShifted;
 import com.ollieread.technomagi.common.init.Blocks;
 
 public class AbilityCastShiftBlock extends AbilityCast
 {
 
-    public final static int maxDuration = 10;
+    public final static int maxDuration = 1;
 
     public AbilityCastShiftBlock(String name, ResourceLocation icon)
     {
@@ -45,7 +47,17 @@ public class AbilityCastShiftBlock extends AbilityCast
         Block block = world.getBlock(payload.blockX, payload.blockY, payload.blockZ);
         int metadata = world.getBlockMetadata(payload.blockX, payload.blockY, payload.blockZ);
 
-        if (block.isNormalCube() && !block.hasTileEntity(metadata)) {
+        if (block instanceof BlockShifted) {
+            TileShifted shifted = (TileShifted) world.getTileEntity(payload.blockX, payload.blockY, payload.blockZ);
+
+            ItemStack disguise = shifted.getDisguise();
+
+            if (disguise != null && Block.getBlockFromItem(disguise.getItem()) != null) {
+                world.setBlock(payload.blockX, payload.blockY, payload.blockZ, Block.getBlockFromItem(disguise.getItem()), disguise.getItemDamage(), 2);
+                payload.setResult(AbilityResult.COMPLETE);
+                return;
+            }
+        } else if (block.isNormalCube() && !block.hasTileEntity(metadata)) {
             Item item = Item.getItemFromBlock(block);
 
             if (item != null) {
