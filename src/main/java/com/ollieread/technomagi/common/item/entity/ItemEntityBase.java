@@ -59,14 +59,19 @@ public abstract class ItemEntityBase extends ItemBase
     public void setEntity(ItemStack stack, Class entity)
     {
         if (entity.equals(EntityPlayer.class)) {
-            ItemNBTHelper.setString(stack, "Entity", "player");
+            setEntity(stack, "player");
         } else {
             String name = EntityHelper.getEntityName(entity);
 
             if (name != null) {
-                ItemNBTHelper.setString(stack, "Entity", name);
+                setEntity(stack, name);
             }
         }
+    }
+
+    public void setEntity(ItemStack stack, String entity)
+    {
+        ItemNBTHelper.setString(stack, "Entity", entity);
     }
 
     public void setPlayer(ItemStack stack, EntityPlayer player)
