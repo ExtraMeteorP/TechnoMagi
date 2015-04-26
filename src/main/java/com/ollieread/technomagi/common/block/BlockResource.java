@@ -3,7 +3,9 @@ package com.ollieread.technomagi.common.block;
 import java.util.Random;
 
 import net.minecraft.block.material.Material;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
 import com.ollieread.technomagi.common.init.Items;
@@ -23,6 +25,17 @@ public class BlockResource extends BlockSubtypes
     public Item getItemDropped(int meta, Random rand, int fortune)
     {
         return meta == 0 ? Items.crystal : Item.getItemFromBlock(this);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public IIcon getIcon(int side, int metadata)
+    {
+        if (this.getName(metadata).equals("voidstone")) {
+            return Blocks.stone.getIcon(side, 0);
+        }
+
+        return this.blockIcons[metadata];
     }
 
     @Override
