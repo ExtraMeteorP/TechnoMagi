@@ -100,14 +100,18 @@ public class BlockBattery extends BlockBaseContainer
     {
         list.add(createStackedBlock(0));
         list.add(createStackedBlock(1));
+        list.add(createStackedBlock(2));
 
         ItemStack fullBasic = createStackedBlock(0);
         ItemStack fullAdvanced = createStackedBlock(1);
+        ItemStack fullElite = createStackedBlock(2);
 
-        ((ItemBlockBattery) fullBasic.getItem()).setEnergyStored(fullBasic, 6400);
-        ((ItemBlockBattery) fullAdvanced.getItem()).setEnergyStored(fullAdvanced, 12800);
+        ((ItemBlockBattery) fullBasic.getItem()).setEnergyStored(fullBasic, 3200);
+        ((ItemBlockBattery) fullAdvanced.getItem()).setEnergyStored(fullAdvanced, 6400);
+        ((ItemBlockBattery) fullElite.getItem()).setEnergyStored(fullElite, 12800);
         list.add(fullBasic);
         list.add(fullAdvanced);
+        list.add(fullElite);
 
     }
 

@@ -40,6 +40,8 @@ public class ItemBatteryRenderer implements IItemRenderer
 
         if (item.getItemDamage() == 0) {
             textureBattery = ResourceHelper.texture("models/battery.png");
+        } else if (item.getItemDamage() == 1) {
+            textureBattery = ResourceHelper.texture("models/battery_aluminium.png");
         } else {
             textureBattery = ResourceHelper.texture("models/battery_nanite_iron.png");
         }
