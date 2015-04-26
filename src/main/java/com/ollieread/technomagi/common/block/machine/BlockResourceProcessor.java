@@ -67,8 +67,8 @@ public class BlockResourceProcessor extends BlockContainerSubtypes
         this.electricIcons[3] = register.registerIcon(ResourceHelper.icon("machine/electric/generic_back"));
 
         this.naniteIcons = new IIcon[4];
-        this.naniteIcons[0] = register.registerIcon(ResourceHelper.icon("machine/nanite/nanite_front"));
-        this.naniteIcons[1] = register.registerIcon(ResourceHelper.icon("machine/nanite/nanite_side"));
+        this.naniteIcons[0] = register.registerIcon(ResourceHelper.icon("machine/nanite/processor_front"));
+        this.naniteIcons[1] = register.registerIcon(ResourceHelper.icon("machine/nanite/processor_side"));
         this.naniteIcons[2] = register.registerIcon(ResourceHelper.icon("machine/nanite/generic_side"));
         this.naniteIcons[3] = register.registerIcon(ResourceHelper.icon("machine/nanite/generic_back"));
     }
