@@ -39,12 +39,12 @@ public class EntityEvents
 
             if (EntityHelper.isStoodOn(event.player, Blocks.elevator) && event.player.isSneaking()) {
                 int x = MathHelper.floor_double(event.player.posX);
-                int y = MathHelper.floor_double(event.player.posY);
+                int y = MathHelper.floor_double(event.player.posY) - 1;
                 int z = MathHelper.floor_double(event.player.posZ);
 
                 TileElevator elevator = (TileElevator) event.player.worldObj.getTileEntity(x, y, z);
 
-                if (!elevator.isOnCooldown()) {
+                if (elevator != null && !elevator.isOnCooldown()) {
                     TeleportHelper.teleportToElevatorBelow(event.player, x, y, z, true);
                 }
             }
@@ -96,12 +96,12 @@ public class EntityEvents
         if (!event.entityLiving.worldObj.isRemote) {
             if (EntityHelper.isStoodOn(event.entityLiving, Blocks.elevator)) {
                 int x = MathHelper.floor_double(event.entityLiving.posX);
-                int y = MathHelper.floor_double(event.entityLiving.posY);
+                int y = MathHelper.floor_double(event.entityLiving.posY) - 1;
                 int z = MathHelper.floor_double(event.entityLiving.posZ);
 
                 TileElevator elevator = (TileElevator) event.entityLiving.worldObj.getTileEntity(x, y, z);
 
-                if (!elevator.isOnCooldown()) {
+                if (elevator != null && !elevator.isOnCooldown()) {
                     TeleportHelper.teleportToElevatorAbove(event.entityLiving, x, y, z, true);
                 }
             }
