@@ -1,11 +1,8 @@
-package com.ollieread.technomagi.api.crafting;
+package com.ollieread.technomagi.api.electromagnetic;
 
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-
-import com.ollieread.technomagi.api.electromagnetic.EnergyHandler;
-import com.ollieread.technomagi.api.electromagnetic.EnergyHandler.EnergyType;
 
 public interface IElectromagneticActionItem
 {

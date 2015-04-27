@@ -15,6 +15,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 
 import com.ollieread.technomagi.api.electromagnetic.EnergyHandler;
+import com.ollieread.technomagi.api.electromagnetic.IElectromagneticActionItem;
 import com.ollieread.technomagi.api.knowledge.Knowledge;
 import com.ollieread.technomagi.common.recipes.FurnaceElectromagneticRecipe;
 import com.ollieread.technomagi.util.ItemStackHelper;
