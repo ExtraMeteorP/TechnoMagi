@@ -57,6 +57,8 @@ public class AbilityEvents
 
                     technomage.abilities().startCasting(heldStack, payload);
                 }
+            } else {
+                event.setCanceled(true);
             }
         }
     }
