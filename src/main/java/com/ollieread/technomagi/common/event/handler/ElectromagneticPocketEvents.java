@@ -13,8 +13,8 @@ import net.minecraft.world.World;
 
 import com.ollieread.technomagi.api.TechnomagiApi;
 import com.ollieread.technomagi.api.crafting.CraftingHandler;
-import com.ollieread.technomagi.api.crafting.IElectromagneticActionItem;
 import com.ollieread.technomagi.api.electromagnetic.EnergyHandler;
+import com.ollieread.technomagi.api.electromagnetic.IElectromagneticActionItem;
 import com.ollieread.technomagi.api.electromagnetic.EnergyHandler.EnergyType;
 import com.ollieread.technomagi.api.event.ElectromagneticPocketEvent.ExposeBlock;
 import com.ollieread.technomagi.api.event.ElectromagneticPocketEvent.ExposeEntity;

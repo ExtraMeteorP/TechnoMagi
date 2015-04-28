@@ -4,8 +4,8 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-import com.ollieread.technomagi.api.crafting.IElectromagneticActionItem;
 import com.ollieread.technomagi.api.electromagnetic.EnergyHandler;
+import com.ollieread.technomagi.api.electromagnetic.IElectromagneticActionItem;
 import com.ollieread.technomagi.api.electromagnetic.EnergyHandler.EnergyType;
 import com.ollieread.technomagi.util.ItemStackHelper;
 
