@@ -22,8 +22,11 @@ import com.ollieread.technomagi.common.block.fluid.BlockAmnioticFluid;
 import com.ollieread.technomagi.common.block.fluid.BlockEnrichedFluid;
 import com.ollieread.technomagi.common.block.fluid.BlockTank;
 import com.ollieread.technomagi.common.block.fluid.tile.TileTank;
+import com.ollieread.technomagi.common.block.machine.BlockCultivator;
 import com.ollieread.technomagi.common.block.machine.BlockFauxPocket;
 import com.ollieread.technomagi.common.block.machine.BlockResourceProcessor;
+import com.ollieread.technomagi.common.block.machine.tile.TileCultivatorBasic;
+import com.ollieread.technomagi.common.block.machine.tile.TileCultivatorElectric;
 import com.ollieread.technomagi.common.block.machine.tile.TileFauxPocket;
 import com.ollieread.technomagi.common.block.machine.tile.TileResourceProcessorBasic;
 import com.ollieread.technomagi.common.block.machine.tile.TileResourceProcessorElectric;
@@ -73,6 +76,7 @@ public class Blocks
     public static BlockContainerSubtypes structure;
     public static BlockContainerSubtypes tank;
     public static Block shifted;
+    public static BlockContainerSubtypes cultivator;
 
     public static void init()
     {
@@ -101,6 +105,7 @@ public class Blocks
         tank = new BlockTank("tank");
         tank.setHardness(3.5F);
         shifted = new BlockShifted("shifted");
+        cultivator = new BlockCultivator("cultivator");
 
         // Register Blocks
         GameRegistry.registerBlock(resource, ItemBlockBase.class, "resource");
@@ -123,6 +128,7 @@ public class Blocks
         GameRegistry.registerBlock(structure, ItemBlockBase.class, "structure");
         GameRegistry.registerBlock(tank, ItemBlockTank.class, "tank");
         GameRegistry.registerBlock(shifted, "shifted");
+        GameRegistry.registerBlock(cultivator, ItemBlockBase.class, "cultivator");
 
         // Register TileEntities
         registerTileEntity(TileElectromagnetic.class, "electromagnetic");
@@ -140,6 +146,8 @@ public class Blocks
         registerTileEntity(TileStructureBridge.class, "bridge");
         registerTileEntity(TileTank.class, "tank");
         registerTileEntity(TileShifted.class, "shifted");
+        registerTileEntity(TileCultivatorBasic.class, "cultivator_basic");
+        registerTileEntity(TileCultivatorElectric.class, "cultivator_electric");
 
         // Register with the ore dictionary
         OreDictionary.registerOre("oreEtherium", new ItemStack(resource, 1, 0));

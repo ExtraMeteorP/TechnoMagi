@@ -80,6 +80,11 @@ public class EntityTechnomagi implements IExtendedEntityProperties
 
     }
 
+    public EntityNanites nanites()
+    {
+        return entityNanites;
+    }
+
     /**
      * Perform a piece of research.
      *
