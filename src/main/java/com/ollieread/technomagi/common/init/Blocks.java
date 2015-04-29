@@ -8,9 +8,6 @@ import com.ollieread.technomagi.Technomagi;
 import com.ollieread.technomagi.common.block.BlockContainerSubtypes;
 import com.ollieread.technomagi.common.block.BlockResource;
 import com.ollieread.technomagi.common.block.BlockSubtypes;
-import com.ollieread.technomagi.common.block.conduit.BlockConduit;
-import com.ollieread.technomagi.common.block.conduit.tile.TileConduitFluid;
-import com.ollieread.technomagi.common.block.conduit.tile.TileConduitPower;
 import com.ollieread.technomagi.common.block.electromagnetic.BlockElectromagnetic;
 import com.ollieread.technomagi.common.block.electromagnetic.tile.TileElectromagnetic;
 import com.ollieread.technomagi.common.block.energy.BlockBattery;
@@ -47,7 +44,6 @@ import com.ollieread.technomagi.common.block.teleporter.tile.TileElevator;
 import com.ollieread.technomagi.common.block.world.BlockNaniteFarmland;
 import com.ollieread.technomagi.common.item.block.ItemBlockBase;
 import com.ollieread.technomagi.common.item.block.ItemBlockBattery;
-import com.ollieread.technomagi.common.item.block.ItemBlockConduit;
 import com.ollieread.technomagi.common.item.block.ItemBlockFluid;
 import com.ollieread.technomagi.common.item.block.ItemBlockTank;
 
@@ -58,7 +54,7 @@ public class Blocks
 
     public static BlockSubtypes resource;
     public static Block electromagnetic;
-    public static BlockContainerSubtypes conduit;
+    // public static BlockContainerSubtypes conduit;
     public static BlockContainerSubtypes processor;
     public static Block naniteFarmland;
     public static Block fauxPocket;
@@ -81,12 +77,10 @@ public class Blocks
     public static void init()
     {
         resource = new BlockResource("resource");
-        resource.setHardness(5.0F).setResistance(10.0F);
         electromagnetic = new BlockElectromagnetic("electromagnetic");
-        conduit = new BlockConduit("conduit");
-        conduit.setHardness(3.5F).setResistance(5.0F);
+        // conduit = new BlockConduit("conduit");
+        // conduit.setHardness(3.5F).setResistance(5.0F);
         processor = new BlockResourceProcessor("processor");
-        processor.setHardness(3.5F);
         naniteFarmland = new BlockNaniteFarmland("nanite_farmland");
         fauxPocket = new BlockFauxPocket("faux_pocket");
         battery = new BlockBattery("battery").setLightLevel(8F).setHardness(3.5F);
@@ -101,16 +95,15 @@ public class Blocks
         amnioticFluid = new BlockAmnioticFluid("amniotic_fluid");
         enrichedFluid = new BlockEnrichedFluid("enriched_fluid");
         structure = new BlockStructure("structure");
-        structure.setHardness(3.5F);
         tank = new BlockTank("tank");
-        tank.setHardness(3.5F);
         shifted = new BlockShifted("shifted");
         cultivator = new BlockCultivator("cultivator");
 
         // Register Blocks
         GameRegistry.registerBlock(resource, ItemBlockBase.class, "resource");
         GameRegistry.registerBlock(electromagnetic, "electromagnetic");
-        GameRegistry.registerBlock(conduit, ItemBlockConduit.class, "conduit");
+        // GameRegistry.registerBlock(conduit, ItemBlockConduit.class,
+        // "conduit");
         GameRegistry.registerBlock(processor, ItemBlockBase.class, "processor");
         GameRegistry.registerBlock(naniteFarmland, "nanite_farmland");
         GameRegistry.registerBlock(fauxPocket, "faux_pocket");
@@ -132,8 +125,8 @@ public class Blocks
 
         // Register TileEntities
         registerTileEntity(TileElectromagnetic.class, "electromagnetic");
-        registerTileEntity(TileConduitFluid.class, "conduit_fluid");
-        registerTileEntity(TileConduitPower.class, "conduit_power");
+        // registerTileEntity(TileConduitFluid.class, "conduit_fluid");
+        // registerTileEntity(TileConduitPower.class, "conduit_power");
         registerTileEntity(TileResourceProcessorBasic.class, "processor_basic");
         registerTileEntity(TileResourceProcessorElectric.class, "processor_electric");
         registerTileEntity(TileResourceProcessorNanite.class, "processor_nanite");

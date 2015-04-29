@@ -19,6 +19,9 @@ public class BlockResource extends BlockSubtypes
     public BlockResource(String name)
     {
         super(name, new String[] { "etherium_ore", "voidstone", "copper_ore", "aluminium_ore", "copper_block", "aluminium_block" }, Material.rock);
+
+        this.setHardness(5.0F);
+        this.setResistance(10.0F);
     }
 
     @Override

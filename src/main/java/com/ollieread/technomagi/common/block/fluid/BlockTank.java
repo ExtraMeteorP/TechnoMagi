@@ -31,6 +31,8 @@ public class BlockTank extends BlockContainerSubtypes
     public BlockTank(String name)
     {
         super(name, new String[] { "basic", "enhanced" }, Material.iron);
+
+        this.setHardness(3.5F);
     }
 
     @Override

@@ -34,6 +34,8 @@ public class BlockResourceProcessor extends BlockContainerSubtypes
     public BlockResourceProcessor(String name)
     {
         super(name, new String[] { "basic", "electric", "nanite" }, Material.rock);
+
+        this.setHardness(3.5F);
     }
 
     @Override
