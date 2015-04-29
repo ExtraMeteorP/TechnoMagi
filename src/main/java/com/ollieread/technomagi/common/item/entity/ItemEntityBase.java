@@ -124,6 +124,11 @@ public abstract class ItemEntityBase extends ItemBase
         return false;
     }
 
+    public boolean isEmpty(ItemStack stack)
+    {
+        return getEntity(stack).isEmpty();
+    }
+
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List info, boolean advanced)
