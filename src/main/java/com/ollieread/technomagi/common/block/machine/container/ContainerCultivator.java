@@ -4,8 +4,9 @@ import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 
-import com.ollieread.technomagi.client.gui.GuiBuilder;
+import com.ollieread.technomagi.Technomagi;
 import com.ollieread.technomagi.common.block.machine.tile.TileCultivator;
+import com.ollieread.technomagi.common.block.machine.tile.TileCultivatorElectric;
 import com.ollieread.technomagi.common.inventory.ContainerTechnomagi;
 
 import cpw.mods.fml.relauncher.Side;
@@ -28,13 +29,16 @@ public class ContainerCultivator extends ContainerTechnomagi
         addSlotToContainer(new Slot(tile, 2, 7, 80));
         addSlotToContainer(new Slot(tile, 3, 137, 80));
 
-        addPlayerSlots(playerInventory, 0, 95);
+        if (!(tile instanceof TileCultivatorElectric)) {
+            addPlayerSlots(playerInventory, 0, 95);
+        }
     }
 
     @Override
     public void addCraftingToCrafters(ICrafting crafting)
     {
         super.addCraftingToCrafters(crafting);
+
         crafting.sendProgressBarUpdate(this, 0, tile.getNanites());
         crafting.sendProgressBarUpdate(this, 1, tile.getSample());
         crafting.sendProgressBarUpdate(this, 2, tile.getCultivated());
@@ -74,17 +78,17 @@ public class ContainerCultivator extends ContainerTechnomagi
 
         if (i == 0) {
             tile.setNanites(v);
-            GuiBuilder.instance.currentWindow.updateContent();
+            Technomagi.proxy.updateContent();
         }
 
         if (i == 1) {
             tile.setSample(v);
-            GuiBuilder.instance.currentWindow.updateContent();
+            Technomagi.proxy.updateContent();
         }
 
         if (i == 2) {
             tile.setCultivated(v);
-            GuiBuilder.instance.currentWindow.updateContent();
+            Technomagi.proxy.updateContent();
         }
     }
 

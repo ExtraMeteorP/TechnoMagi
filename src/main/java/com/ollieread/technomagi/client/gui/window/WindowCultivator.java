@@ -22,7 +22,7 @@ public class WindowCultivator extends WindowContainer
 
         this.setContainer(container);
         this.setPadding(5, 5);
-        this.setHeading(StatCollector.translateToLocal("gui.technomagi.cultivator"));
+        this.setHeading(StatCollector.translateToLocal("gui.technomagi.cultivator.basic"));
         this.setHasInventory(true);
         this.setBackground(true);
 

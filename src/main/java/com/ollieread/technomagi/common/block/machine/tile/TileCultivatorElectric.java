@@ -2,9 +2,19 @@ package com.ollieread.technomagi.common.block.machine.tile;
 
 import java.util.Arrays;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyHandler;
+
+import com.ollieread.technomagi.client.gui.window.WindowCultivatorElectric;
+import com.ollieread.technomagi.client.gui.window.abstracts.Window;
+import com.ollieread.technomagi.common.block.machine.container.ContainerCultivatorElectric;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class TileCultivatorElectric extends TileCultivator implements IEnergyHandler
 {
@@ -22,7 +32,12 @@ public class TileCultivatorElectric extends TileCultivator implements IEnergyHan
         consumeNanites = 2;
         consumeSample = 2;
 
-        energy = new EnergyStorage(3200, 10, 0);
+        createEnergyStorage();
+    }
+
+    protected void createEnergyStorage()
+    {
+        this.energy = new EnergyStorage(3200, 10, 0);
     }
 
     @Override
@@ -112,6 +127,48 @@ public class TileCultivatorElectric extends TileCultivator implements IEnergyHan
     public void setMaxExtract(int maxExtract)
     {
         this.energy.setMaxExtract(maxExtract);
+    }
+
+    public void setEnergyStored(int energy)
+    {
+        this.energy.setEnergyStored(energy);
+    }
+
+    public void modifyEnergyStored(int energy)
+    {
+        this.energy.modifyEnergyStored(energy);
+    }
+
+    @Override
+    public Container getContainer(EntityPlayer player)
+    {
+        return new ContainerCultivatorElectric(player.inventory, this);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public Window getWindow(EntityPlayer player)
+    {
+        return new WindowCultivatorElectric((ContainerCultivatorElectric) getContainer(player));
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound compound)
+    {
+        super.writeToNBT(compound);
+
+        NBTTagCompound energyCompound = new NBTTagCompound();
+        this.energy.writeToNBT(energyCompound);
+        compound.setTag("Energy", energyCompound);
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound compound)
+    {
+        super.readFromNBT(compound);
+
+        createEnergyStorage();
+        this.energy.readFromNBT(compound.getCompoundTag("Energy"));
     }
 
 }

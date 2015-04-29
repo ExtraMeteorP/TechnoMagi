@@ -47,16 +47,16 @@ public class BlockCultivator extends BlockContainerSubtypes
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister register)
     {
-        this.basicIcons = new IIcon[4];
+        this.basicIcons = new IIcon[2];
         this.basicIcons[0] = register.registerIcon(ResourceHelper.icon("machine/basic/cultivator_front"));
         this.basicIcons[1] = register.registerIcon(ResourceHelper.icon("machine/basic/generic_side"));
 
-        this.electricIcons = new IIcon[4];
+        this.electricIcons = new IIcon[3];
         this.electricIcons[0] = register.registerIcon(ResourceHelper.icon("machine/electric/cultivator_front"));
         this.electricIcons[1] = register.registerIcon(ResourceHelper.icon("machine/electric/generic_side"));
         this.electricIcons[2] = register.registerIcon(ResourceHelper.icon("machine/electric/generic_back"));
 
-        this.naniteIcons = new IIcon[4];
+        this.naniteIcons = new IIcon[3];
         this.naniteIcons[0] = register.registerIcon(ResourceHelper.icon("machine/nanite/cultivator_front"));
         this.naniteIcons[1] = register.registerIcon(ResourceHelper.icon("machine/nanite/generic_side"));
         this.naniteIcons[2] = register.registerIcon(ResourceHelper.icon("machine/nanite/generic_back"));
@@ -78,7 +78,7 @@ public class BlockCultivator extends BlockContainerSubtypes
             if (side == 4) {
                 return this.electricIcons[0];
             } else if (side == 5) {
-                return this.electricIcons[3];
+                return this.electricIcons[2];
             }
 
             return this.electricIcons[1];
@@ -86,7 +86,7 @@ public class BlockCultivator extends BlockContainerSubtypes
             if (side == 4) {
                 return this.naniteIcons[0];
             } else if (side == 5) {
-                return this.naniteIcons[3];
+                return this.naniteIcons[2];
             }
 
             return this.naniteIcons[1];
@@ -101,7 +101,7 @@ public class BlockCultivator extends BlockContainerSubtypes
 
         if (metadata == 0) {
             if (side == 0 || side == 1) {
-                return this.basicIcons[3];
+                return this.basicIcons[1];
             } else {
                 TileCultivator tile = (TileCultivator) world.getTileEntity(x, y, z);
 
