@@ -105,6 +105,7 @@ public abstract class TileGenerator extends TileEnergy implements IInventory, IS
         if (compound.hasKey("Direction")) {
             direction = ForgeDirection.values()[compound.getInteger("Direction")];
         }
+        inventory.readFromNBT(compound.getCompoundTag("Inventory"));
         progress.readFromNBT(compound.getCompoundTag("Progress"));
 
         isProcessing = compound.getBoolean("Processing");
