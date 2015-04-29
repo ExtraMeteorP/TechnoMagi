@@ -71,6 +71,10 @@ public abstract class TileGenerator extends TileEnergy implements IInventory, IS
                     }
                 }
             }
+
+            if (isProcessing()) {
+                sync();
+            }
         }
 
         super.updateEntity();

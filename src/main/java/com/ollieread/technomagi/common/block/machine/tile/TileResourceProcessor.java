@@ -76,6 +76,10 @@ public abstract class TileResourceProcessor extends TileBase implements IInvento
                     progress.resetProgress();
                 }
             }
+
+            if (isProcessing) {
+                sync();
+            }
         }
     }
 
