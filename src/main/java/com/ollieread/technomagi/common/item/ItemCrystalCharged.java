@@ -22,6 +22,8 @@ public class ItemCrystalCharged extends ItemSubtypes
     public ItemCrystalCharged(String name)
     {
         super(name, new String[] { "etherium", "void", "noughtite", "relux", "cimmerium", "calidite", "glacite", "verux", "oblerite" });
+
+        this.setMaxStackSize(1);
     }
 
     @Override
