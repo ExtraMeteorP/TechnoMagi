@@ -32,6 +32,7 @@ public class ItemDigitalTool extends ItemBase
 
                 if (player.isSneaking()) {
                     link.removeLink();
+                    PlayerHelper.addChatMessage(player, "Link Removed");
                 } else {
                     if (!link.isLinked()) {
                         if (hasFocus(stack)) {
@@ -68,13 +69,29 @@ public class ItemDigitalTool extends ItemBase
                     facing.rotate();
                     return true;
                 }
-            } else {
-                resetFocus(stack);
-                PlayerHelper.addChatMessage(player, "Focus Reset");
             }
         }
 
         return false;
+    }
+
+    @Override
+    public boolean doesSneakBypassUse(World world, int x, int y, int z, EntityPlayer player)
+    {
+        return true;
+    }
+
+    @Override
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    {
+        if (!player.worldObj.isRemote) {
+            if (player.isSneaking()) {
+                resetFocus(stack);
+                PlayerHelper.addChatMessage(player, "Focus cleared");
+            }
+        }
+
+        return stack;
     }
 
     public void setFocus(ItemStack stack, int x, int y, int z)
