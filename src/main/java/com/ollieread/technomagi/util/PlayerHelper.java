@@ -168,7 +168,7 @@ public class PlayerHelper
         for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
             ItemStack slot = player.inventory.getStackInSlot(i);
 
-            if (slot != null && slot.isItemEqual(stack)) {
+            if (slot != null && slot.isItemEqual(stack) && ItemStack.areItemStackTagsEqual(slot, stack)) {
                 return slot;
             }
         }
