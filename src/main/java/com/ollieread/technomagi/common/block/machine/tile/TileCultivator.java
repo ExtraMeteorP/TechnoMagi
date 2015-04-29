@@ -47,6 +47,7 @@ public abstract class TileCultivator extends TileBase implements ISideFacing, IT
 
     protected float modifier = 1F;
     protected float increasePer = 0F;
+    protected int chance = 1;
 
     protected int consumeNanites = 1;
     protected int consumeSample = 1;
@@ -75,10 +76,12 @@ public abstract class TileCultivator extends TileBase implements ISideFacing, IT
 
         int increase = (int) (Math.max((5 * modifier), 1) + (currentCultivated * increasePer));
 
-        if ((currentCultivated + increase) <= maxCultivated) {
-            currentCultivated += increase;
-        } else {
-            currentCultivated = maxCultivated;
+        if (worldObj.rand.nextInt(chance) == 0) {
+            if ((currentCultivated + increase) <= maxCultivated) {
+                currentCultivated += increase;
+            } else {
+                currentCultivated = maxCultivated;
+            }
         }
 
         if (currentNanites == 0) {

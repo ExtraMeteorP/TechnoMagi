@@ -15,6 +15,7 @@ public class TileCultivatorBasic extends TileCultivator
         consumeNanites = 5;
         consumeSample = 5;
         modifier = 0.5F;
+        chance = 6;
     }
 
     @Override

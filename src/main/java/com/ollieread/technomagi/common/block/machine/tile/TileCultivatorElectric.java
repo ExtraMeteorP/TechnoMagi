@@ -31,6 +31,7 @@ public class TileCultivatorElectric extends TileCultivator implements IEnergyHan
         maxCultivated = 400;
         consumeNanites = 2;
         consumeSample = 2;
+        chance = 3;
 
         createEnergyStorage();
     }
