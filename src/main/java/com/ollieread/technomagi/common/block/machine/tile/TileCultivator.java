@@ -172,27 +172,27 @@ public abstract class TileCultivator extends TileBase implements ISideFacing, IT
             } else {
                 if (naniteDescriptor.isUndead()) {
                     if (sampleDescriptor.isUndead()) {
-                        progress.setMaxProgress(50);
+                        progress.setMaxProgress(100);
                         increasePer = 0.05F;
                     } else {
-                        progress.setMaxProgress(100);
+                        progress.setMaxProgress(200);
                         increasePer = 0.025F;
                     }
                 } else {
                     if (naniteDescriptor.isMonster()) {
                         if (sampleDescriptor.isMonster()) {
-                            progress.setMaxProgress(50);
+                            progress.setMaxProgress(100);
                             increasePer = 0.05F;
                         } else {
-                            progress.setMaxProgress(100);
+                            progress.setMaxProgress(200);
                             increasePer = 0.025F;
                         }
                     } else {
                         if (sampleDescriptor.isMonster()) {
-                            progress.setMaxProgress(125);
+                            progress.setMaxProgress(250);
                             increasePer = 0.025F;
                         } else {
-                            progress.setMaxProgress(50);
+                            progress.setMaxProgress(100);
                             increasePer = 0.05F;
                         }
                     }
