@@ -229,6 +229,11 @@ public class TileElectromagnetic extends TileBase
     {
         super.writeToNBT(compound);
 
+        if (type == null) {
+            worldObj.setBlockToAir(xCoord, yCoord, zCoord);
+            return;
+        }
+
         compound.setInteger("Type", type.ordinal());
         compound.setInteger("Radius", radius);
         compound.setInteger("EnergyLevel", energyLevel);
