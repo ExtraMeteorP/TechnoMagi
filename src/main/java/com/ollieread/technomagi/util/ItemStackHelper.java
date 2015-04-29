@@ -23,11 +23,13 @@ import cofh.api.energy.IEnergyContainerItem;
 import com.ollieread.technomagi.api.TechnomagiApi;
 import com.ollieread.technomagi.api.entity.IEntityDescriptor;
 import com.ollieread.technomagi.api.entity.IEntityDescriptor.IEntityBrain;
+import com.ollieread.technomagi.api.entity.IEntityDescriptor.IEntitySample;
 import com.ollieread.technomagi.common.block.BlockContainerSubtypes;
 import com.ollieread.technomagi.common.block.BlockSubtypes;
 import com.ollieread.technomagi.common.inventory.SlotApplicable.ISlotApplicable;
 import com.ollieread.technomagi.common.item.ItemSubtypes;
 import com.ollieread.technomagi.common.item.entity.ItemEntityBrain;
+import com.ollieread.technomagi.common.item.entity.ItemEntitySample;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -212,6 +214,29 @@ public class ItemStackHelper
             item.setEntity(stack, entityClass);
             item.setMaxLife(stack, maxLife);
             item.setLife(stack, maxLife);
+
+            return stack;
+        }
+
+        return null;
+    }
+
+    public static ItemStack sample(Class<? extends EntityLivingBase> entityClass)
+    {
+        if (entityClass != null) {
+            IEntityDescriptor descriptor = TechnomagiApi.entity().getEntity(entityClass);
+
+            if (descriptor != null && descriptor instanceof IEntitySample) {
+                ItemEntitySample item = (ItemEntitySample) com.ollieread.technomagi.common.init.Items.entitySample;
+                ItemStack stack = new ItemStack(item, 1, 0);
+                item.setEntity(stack, entityClass);
+
+                return stack;
+            }
+        } else {
+            ItemEntitySample item = (ItemEntitySample) com.ollieread.technomagi.common.init.Items.entitySample;
+            ItemStack stack = new ItemStack(item, 1, 0);
+            stack.stackTagCompound = new NBTTagCompound();
 
             return stack;
         }
