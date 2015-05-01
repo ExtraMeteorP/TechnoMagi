@@ -55,7 +55,7 @@ public class ItemStackHelper
             ItemStack key = i.next();
 
             if (nbt) {
-                if (ItemStack.areItemStacksEqual(key, stack)) {
+                if (key.isItemEqual(key) && ItemStack.areItemStackTagsEqual(key, stack)) {
                     return true;
                 }
             } else {
@@ -74,7 +74,7 @@ public class ItemStackHelper
             ItemStack key = i.next();
 
             if (nbt) {
-                if (ItemStack.areItemStacksEqual(key, stack)) {
+                if (key.isItemEqual(key) && ItemStack.areItemStackTagsEqual(key, stack)) {
                     return true;
                 }
             } else {
@@ -93,7 +93,7 @@ public class ItemStackHelper
             ItemStack entry = i.next();
 
             if (nbt) {
-                if (ItemStack.areItemStacksEqual(entry, stack)) {
+                if (entry.isItemEqual(entry) && ItemStack.areItemStackTagsEqual(entry, stack)) {
                     return true;
                 }
             } else {
