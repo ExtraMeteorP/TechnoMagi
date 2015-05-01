@@ -9,7 +9,11 @@ gui.technomagi.battery=Powercell
 gui.technomagi.basic_generator=Furnace Generator
 gui.technomagi.processor.basic=Processor: Basic
 gui.technomagi.processor.electric=Processor: Electric
-gui.technomagi.cultivator=Nanite Cultivator
+gui.technomagi.cultivator.basic=Nanite Cultivator: Basic
+gui.technomagi.cultivator.electric=Nanite Cultivator: Electric
+gui.technomagi.analyser=Analyser
+gui.technomagi.generator.basic=Generator: Basic
+gui.technomagi.generator.enhanced=Generator: Enhanced
 
 gui.technomagi.link.information=Information
 gui.technomagi.link.ingots=Ingots
@@ -118,20 +122,6 @@ tile.technomagi.resource.aluminium_ore.name=Aluminium Ore
 tile.technomagi.resource.copper_block.name=Aluminium Block
 tile.technomagi.resource.aluminium_block.name=Aluminium Block
 
-tile.technomagi.scanner.position.name=Scanner: Monitoring
-tile.technomagi.scanner.area.name=Scanner: Area
-tile.technomagi.scanner.analysis.name=Scanner: Analysis
-
-tile.technomagi.conduit.power_basic.name=Power Conduit: Basic
-tile.technomagi.conduit.power_advanced.name=Power Conduit: Advanced
-tile.technomagi.conduit.power_elite.name=Power Conduit: Elite
-tile.technomagi.conduit.fluid_basic.name=Fluid Conduit: Basic
-tile.technomagi.conduit.fluid_advanced.name=Fluid Conduit: Advanced
-tile.technomagi.conduit.fluid_elite.name=Fluid Conduit: Elite
-tile.technomagi.conduit.item_basic.name=Item Conduit: Basic
-tile.technomagi.conduit.item_advanced.name=Item Conduit: Advanced
-tile.technomagi.conduit.item_elite.name=Item Conduit: Elite
-
 tile.technomagi.processor.basic.name=Processor: Basic
 tile.technomagi.processor.electric.name=Processor: Electric
 tile.technomagi.processor.nanite.name=Processor: Nanite
@@ -151,12 +141,21 @@ tile.technomagi.hardlight_slab.name=Hardlight Slab
 tile.technomagi.hardlight_platform.name=Hardlight Platform
 tile.technomagi.hardlight_fence.name=Hardlight Fence
 tile.technomagi.hardlight_pane.name=Hardlight Pane
+tile.technomagi.hardlight_stairs.name=Hardlight Stairs
 
 tile.technomagi.amniotic_fluid.name=Amniotic Fluid
 tile.technomagi.enriched_fluid.name=Enriched Fluid
 
 tile.technomagi.structure.platform.name=Platform
 tile.technomagi.structure.bridge.name=Bridge
+
+tile.technomagi.cultivator.basic.name=Nanite Cultivator: Basic
+tile.technomagi.cultivator.electric.name=Nanite Cultivator: Electric
+
+tile.technomagi.analyser.name=Analyser
+
+tile.technomagi.tank.basic.name=Fluid Storage: Basic
+tile.technomagi.tank.enhanced.name=Fluid Storage: Enhanced
 
 # Items
 item.technomagi.resource.iron_dust.name=Iron Dust
@@ -167,6 +166,14 @@ item.technomagi.resource.diamond_dust.name=Diamond Dust
 item.technomagi.resource.stone_dust.name=Ground Stone
 item.technomagi.resource.wood_dust.name=Wood Shavings
 item.technomagi.resource.etherium_dust.name=Etherium Dust
+item.technomagi.resource.void_dust.name=Void Dust
+item.technomagi.resource.noughtite_dust.name=Noughtite Dust
+item.technomagi.resource.relux_dust.name=Relux Dust
+item.technomagi.resource.cimmerium_dust.name=Cimmerium Dust
+item.technomagi.resource.calidite_dust.name=Calidite Dust
+item.technomagi.resource.glacite_dust.name=Glacite Dust
+item.technomagi.resource.verux_dust.name=Verux Dust
+item.technomagi.resource.oblerite_dust.name=Oblerite Dust
 item.technomagi.resource.nanite_iron_dust.name=Nanite Iron Dust
 item.technomagi.resource.copper_ingot.name=Copper Ingot
 item.technomagi.resource.aluminium_ingot.name=Aluminium Ingot
@@ -174,9 +181,13 @@ item.technomagi.resource.nanite_iron_ingot.name=Nanite Iron Ingot
 item.technomagi.resource.iron_rod.name=Iron Rod
 item.technomagi.resource.gold_rod.name=Gold Rod
 item.technomagi.resource.diamond_rod.name=Diamond Rod
+item.technomagi.resource.copper_rod.name=Copper Rod
+item.technomagi.resource.aluminium_rod.name=Aluminium Rod
 item.technomagi.resource.iron_sheet.name=Iron Sheet
 item.technomagi.resource.gold_sheet.name=Gold Sheet
 item.technomagi.resource.diamond_sheet.name=Diamond Sheet
+item.technomagi.resource.copper_sheet.name=Copper Sheet
+item.technomagi.resource.aluminium_sheet.name=Aluminium Sheet
 item.technomagi.resource.nanite_iron_sheet.name=Nanite Iron Sheet
 item.technomagi.resource.fabric.name=Etherium Fabric
 
@@ -209,6 +220,42 @@ item.technomagi.components.stone_furnace_bed.name=Stone Furnace Bed
 item.technomagi.components.heating_element.name=Heating Element
 item.technomagi.components.stone_rolling.name=Stone Rollers
 item.technomagi.components.iron_rolling.name=Iron Rollers
+
+item.technomagi.staff_basic.name=Basic Staff
+item.technomagi.staff_cleric.name=The Clerics Staff
+item.technomagi.staff_engineer.name=The Engineers Tool
+item.technomagi.staff_guardian.name=The Guardians Sword
+item.technomagi.staff_scholar.name=The Scholars Scepter
+item.technomagi.staff_shadow.name=The Shadows Blade
+
+item.technomagi.capsule.name=Fluid Capsule
+
+item.technomagi.digital_tool.name=Digital Tool
+
+item.technomagi.circuit.name=Energy Circuit
+item.technomagi.circuit.etherium.name=Energy Circuit: Etherium
+item.technomagi.circuit.void.name=Energy Circuit: Void
+item.technomagi.circuit.noughtite.name=Energy Circuit: Noughtite
+item.technomagi.circuit.relux.name=Energy Circuit: Relux
+item.technomagi.circuit.cimmerium.name=Energy Circuit: Cimmerium
+item.technomagi.circuit.calidite.name=Energy Circuit: Calidite
+item.technomagi.circuit.glacite.name=Energy Circuit: Glacite
+item.technomagi.circuit.verux.name=Energy Circuit: Verux
+item.technomagi.circuit.oblerite.name=Energy Circuit: Oblerite
+
+item.technomagi.brain.name=Brain
+item.technomagi.brain_preserved.name=Brain: Preserved
+
+item.technomagi.capture.name=Temporary Organism Stasis Device: Pocket Edition
+item.technomagi.capture.reusable.name=Reusable Organism Stasis Device: Pocket Edition
+
+item.technomagi.nanites.name=Nanite Container
+
+item.technomagi.sample.name=Organism Fluid Sample
+
+item.technomagi.sample_extractor.name=Organism Fluid Sample Extractor.
+
+item.technomagi.research_storage.name=Portable Data Drive
 
 # Entities
 entity.player.name=Player

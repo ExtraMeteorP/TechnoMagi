@@ -2,6 +2,7 @@ package com.ollieread.technomagi.common.item.staff;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import cofh.api.item.IToolHammer;
 
@@ -43,6 +44,12 @@ public class ItemStaffEngineer extends ItemStaffAbility implements IToolHammer
     public void resetFocus(ItemStack stack)
     {
         ItemNBTHelper.removeKey(stack, "Focus");
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack)
+    {
+        return EnumRarity.epic;
     }
 
     public boolean hasFocus(ItemStack stack)

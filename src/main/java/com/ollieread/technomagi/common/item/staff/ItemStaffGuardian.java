@@ -2,6 +2,7 @@ package com.ollieread.technomagi.common.item.staff;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EntityDamageSource;
 
@@ -28,6 +29,12 @@ public class ItemStaffGuardian extends ItemStaffAbility
         }
 
         return true;
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack)
+    {
+        return EnumRarity.epic;
     }
 
 }

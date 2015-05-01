@@ -2,6 +2,7 @@ package com.ollieread.technomagi.common.item.staff;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -31,6 +32,12 @@ public class ItemStaffShadow extends ItemStaffAbility
         }
 
         return true;
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack)
+    {
+        return EnumRarity.epic;
     }
 
 }

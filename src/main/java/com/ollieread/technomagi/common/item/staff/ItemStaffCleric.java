@@ -2,6 +2,7 @@ package com.ollieread.technomagi.common.item.staff;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -57,4 +58,11 @@ public class ItemStaffCleric extends ItemStaffAbility
 
         return false;
     }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack)
+    {
+        return EnumRarity.epic;
+    }
+
 }

@@ -3,11 +3,14 @@ package com.ollieread.technomagi.common.item.entity;
 import java.util.List;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.IBossDisplayData;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
@@ -31,7 +34,7 @@ public class ItemEntityCapture extends ItemEntityBase
 {
 
     @SideOnly(Side.CLIENT)
-    public IIcon itemOverlayIcon;
+    public IIcon[] itemIcons;
 
     public ItemEntityCapture(String name)
     {
@@ -39,6 +42,42 @@ public class ItemEntityCapture extends ItemEntityBase
 
         this.setHasSubtypes(true);
         this.setMaxStackSize(64);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister register)
+    {
+        itemIcons = new IIcon[4];
+        itemIcons[0] = register.registerIcon(getTexturePath("capture"));
+        itemIcons[1] = register.registerIcon(getTexturePath("capture/full"));
+        itemIcons[2] = register.registerIcon(getTexturePath("capture/reusable"));
+        itemIcons[3] = register.registerIcon(getTexturePath("capture/reusable_full"));
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public IIcon getIconIndex(ItemStack stack)
+    {
+        if (stack.getItemDamage() == 0) {
+            if (hasEntity(stack)) {
+                return itemIcons[1];
+            }
+
+            return itemIcons[0];
+        } else {
+            if (hasEntity(stack)) {
+                return itemIcons[3];
+            }
+
+            return itemIcons[2];
+        }
+    }
+
+    @Override
+    public IIcon getIcon(ItemStack stack, int pass)
+    {
+        return getIconIndex(stack);
     }
 
     @Override
@@ -112,7 +151,7 @@ public class ItemEntityCapture extends ItemEntityBase
                 IEntityDescriptor descriptor = TechnomagiApi.entity().getEntity(entity.getClass());
 
                 if (descriptor != null && descriptor.canBeCaptured()) {
-                    ItemStack newStack = new ItemStack(this, 1, 1);
+                    ItemStack newStack = new ItemStack(this, 1, stack.getItemDamage());
                     newStack.stackTagCompound = new NBTTagCompound();
                     setEntity(newStack, entity);
                     player.inventory.addItemStackToInventory(newStack);
@@ -147,13 +186,34 @@ public class ItemEntityCapture extends ItemEntityBase
                             world.spawnEntityInWorld(entityLiving);
                         }
 
-                        stack.stackSize--;
+                        if (stack.getItemDamage() == 1) {
+                            ItemNBTHelper.resetNBT(stack);
+                        } else {
+                            stack.stackSize--;
+                        }
                     }
                 }
             }
         }
 
         return stack;
+    }
+
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @Override
+    public void getSubItems(Item item, CreativeTabs tab, List list)
+    {
+        ItemStack emptyStack1 = new ItemStack(item, 1, 0);
+        ItemStack emptyStack2 = new ItemStack(item, 1, 1);
+
+        list.add(emptyStack1);
+        list.add(emptyStack2);
+    }
+
+    @Override
+    public String getUnlocalizedName(ItemStack stack)
+    {
+        return "item.technomagi." + this.name + (stack.getItemDamage() == 1 ? ".reusable" : "");
     }
 
 }

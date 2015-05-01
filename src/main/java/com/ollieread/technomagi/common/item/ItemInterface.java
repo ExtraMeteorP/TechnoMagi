@@ -9,6 +9,7 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 
 import com.ollieread.technomagi.Technomagi;
+import com.ollieread.technomagi.api.item.IItemPlayerLocked;
 import com.ollieread.technomagi.common.CommonProxy;
 import com.ollieread.technomagi.util.ItemNBTHelper;
 import com.ollieread.technomagi.util.PlayerHelper;
