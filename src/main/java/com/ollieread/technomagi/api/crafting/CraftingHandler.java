@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -124,6 +125,17 @@ public class CraftingHandler
             return null;
         }
 
+        public ItemStack findInput(ItemStack output)
+        {
+            for (Entry<ItemStack, ItemStack> input : smeltingList.entrySet()) {
+                if (output.isItemEqual(input.getValue()) && ItemStack.areItemStackTagsEqual(output, input.getValue())) {
+                    return input.getKey();
+                }
+            }
+
+            return null;
+        }
+
         public ItemStack findOutput(ItemStack input)
         {
             if (ItemStackHelper.containsKey(smeltingList, input, true)) {
@@ -150,7 +162,7 @@ public class CraftingHandler
 
         public boolean isVanilla(ItemStack input)
         {
-            return !ItemStackHelper.containsKey(smeltingList, input, true);
+            return !ItemStackHelper.containsKey(smeltingList, input, true) && ItemStackHelper.containsValue(smeltingList, input, true);
         }
 
     }

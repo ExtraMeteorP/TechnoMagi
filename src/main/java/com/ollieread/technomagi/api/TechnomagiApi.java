@@ -5,14 +5,18 @@ import java.util.Collection;
 import net.minecraft.util.ResourceLocation;
 
 import com.ollieread.technomagi.api.ability.AbilityHandler;
+import com.ollieread.technomagi.api.crafting.CraftingHandler;
+import com.ollieread.technomagi.api.electromagnetic.EnergyHandler;
 import com.ollieread.technomagi.api.entity.EntityHandler;
 import com.ollieread.technomagi.api.knowledge.Knowledge;
 import com.ollieread.technomagi.api.knowledge.KnowledgeCategory;
 import com.ollieread.technomagi.api.knowledge.KnowledgeHandler;
 import com.ollieread.technomagi.api.knowledge.research.IResearch;
 import com.ollieread.technomagi.api.knowledge.research.Research;
+import com.ollieread.technomagi.api.nanites.NaniteHandler;
 import com.ollieread.technomagi.api.scan.ScanHandler;
 import com.ollieread.technomagi.api.specialisation.SpecialisationHandler;
+import com.ollieread.technomagi.api.time.TimeHandler;
 
 import cpw.mods.fml.common.eventhandler.EventBus;
 
@@ -58,6 +62,10 @@ public class TechnomagiApi
     protected final static EntityHandler HANDLER_ENTITY = new EntityHandler();
     protected final static ScanHandler HANDLER_SCAN = new ScanHandler();
     protected final static AbilityHandler HANDLER_ABILITY = new AbilityHandler();
+    protected final static CraftingHandler HANDLER_CRAFTING = new CraftingHandler();
+    protected final static EnergyHandler HANDLER_ENERGY = new EnergyHandler();
+    protected final static NaniteHandler HANDLER_NANITE = new NaniteHandler();
+    protected final static TimeHandler HANDLER_TIME = new TimeHandler();
 
     /**
      * Retrieve the knowledge handler.
@@ -112,6 +120,26 @@ public class TechnomagiApi
     public static AbilityHandler ability()
     {
         return HANDLER_ABILITY;
+    }
+
+    public static CraftingHandler crafting()
+    {
+        return HANDLER_CRAFTING;
+    }
+
+    public static EnergyHandler energy()
+    {
+        return HANDLER_ENERGY;
+    }
+
+    public static NaniteHandler nanite()
+    {
+        return HANDLER_NANITE;
+    }
+
+    public static TimeHandler time()
+    {
+        return HANDLER_TIME;
     }
 
     /**

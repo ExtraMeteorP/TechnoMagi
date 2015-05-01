@@ -31,10 +31,9 @@ public class TimeHandler
     /**
      * Add a time shift transformer mapping for an item/block.
      *
-     * @param representation
      * @param transformer
      */
-    public void addTimeShift(ItemStackRepresentation representation, ITimeShiftTransformer transformer)
+    public void addTimeShift(ITimeShiftTransformer transformer)
     {
         if (timeShifts.contains(transformer)) {
             timeShifts.add(transformer);
