@@ -214,6 +214,11 @@ public abstract class TileResourceProcessor extends TileBase implements IInvento
         return progress.getMaxProgress() > 0 ? progress.getProgress() * scale / progress.getMaxProgress() : 0;
     }
 
+    public int getProgressPercentage()
+    {
+        return progress.getMaxProgress() > 0 ? progress.getProgress() / (progress.getMaxProgress() / 100) : 0;
+    }
+
     @Override
     public void writeToNBT(NBTTagCompound compound)
     {
