@@ -164,6 +164,11 @@ public class PlayerAbilities
         return 0;
     }
 
+    public AbilityPayload getAbilityPayload()
+    {
+        return abilityCastingPayload;
+    }
+
     public IAbilityData addAbilityData(String name, IAbilityData data)
     {
         if (!abilityData.containsKey(name)) {

@@ -2,6 +2,7 @@ package com.ollieread.technomagi.util;
 
 import java.util.List;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -13,10 +14,13 @@ import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
+import com.ollieread.technomagi.Technomagi;
 import com.ollieread.technomagi.api.TechnomagiApi;
+import com.ollieread.technomagi.api.ability.AbilityPayload;
 import com.ollieread.technomagi.api.ability.PlayerAbilities;
 import com.ollieread.technomagi.api.entity.PlayerTechnomagi;
 import com.ollieread.technomagi.api.event.TechnomagiHooks;
@@ -232,12 +236,13 @@ public class PlayerHelper
         List<Entity> entityList = world.getEntitiesWithinAABBExcludingEntity(player, player.boundingBox.addCoord(vecLook.xCoord * reachDistance, vecLook.yCoord * reachDistance, vecLook.zCoord * reachDistance).expand(f, f, f));
 
         for (Entity entity : entityList) {
-            float collision = entity.getCollisionBorderSize();
+            float collision = 0.5F;
+
             AxisAlignedBB boundingBox = entity.boundingBox.expand(collision, collision, collision);
             MovingObjectPosition movingobjectposition = boundingBox.calculateIntercept(vecPosition, vecEntity1);
 
             if (boundingBox.isVecInside(vecPosition)) {
-                if (reachDistance3 <= 0) {
+                if (reachDistance3 >= 0.0D) {
                     pointedEntity = entity;
                     vecEntity2 = movingobjectposition == null ? vecLook : movingobjectposition.hitVec;
                     reachDistance3 = 0.0D;
@@ -248,14 +253,38 @@ public class PlayerHelper
                 if (reachDistance4 < reachDistance3 || reachDistance3 == 0.0D) {
                     pointedEntity = entity;
                     vecEntity2 = movingobjectposition.hitVec;
+                    reachDistance3 = reachDistance4;
                 }
             }
         }
 
         if (pointedEntity != null) {
+            Technomagi.debug("-----");
+            Technomagi.debug("Pointed entity: " + pointedEntity);
             return new MovingObjectPosition(pointedEntity, vecEntity2);
         }
 
         return blockHit;
     }
+
+    public static AbilityPayload getAbilityPayload(World world, EntityPlayer player, int x, int y, int z, int face)
+    {
+        MovingObjectPosition mouse = PlayerHelper.getMovingObjectPosition(world, player, true);
+        AbilityPayload payload = null;
+
+        if (mouse != null) {
+            if (mouse.typeOfHit.equals(MovingObjectType.BLOCK)) {
+                Block block = world.getBlock(mouse.blockX, mouse.blockY, mouse.blockZ);
+                payload = new AbilityPayload(0, block, null, mouse.blockX, mouse.blockY, mouse.blockZ, mouse.sideHit);
+            } else if (mouse.typeOfHit.equals(MovingObjectType.ENTITY)) {
+                payload = new AbilityPayload(0, null, mouse.entityHit, mouse.blockX, mouse.blockY, mouse.blockZ, mouse.sideHit);
+            }
+        } else {
+            Block block = world.getBlock(x, y, z);
+            payload = new AbilityPayload(0, block, null, x, y, z, face);
+        }
+
+        return payload;
+    }
+
 }

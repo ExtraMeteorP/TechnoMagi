@@ -193,4 +193,34 @@ public class AbilityPayload
         }
     }
 
+    @Override
+    public boolean equals(Object object)
+    {
+        if (object instanceof AbilityPayload) {
+            AbilityPayload payload = (AbilityPayload) object;
+
+            if (payload.target.equals(this.target)) {
+                if (payload.target.equals(AbilityUseTarget.ENTITY) || payload.target.equals(AbilityUseTarget.ENTITY_ITEM)) {
+                    if (payload.targetEntity.equals(this.targetEntity)) {
+                        return true;
+                    }
+                } else if (payload.target.equals(AbilityUseTarget.ENTITY_LIVING)) {
+                    if (payload.targetEntityLiving.equals(this.targetEntityLiving)) {
+                        return true;
+                    }
+                } else if (payload.target.equals(AbilityUseTarget.PLAYER)) {
+                    if (payload.targetPlayer.equals(this.targetPlayer)) {
+                        return true;
+                    }
+                } else {
+                    if (payload.blockX == this.blockX && payload.blockY == this.blockY && payload.blockZ == this.blockZ && payload.sideHit == this.sideHit) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
 }
