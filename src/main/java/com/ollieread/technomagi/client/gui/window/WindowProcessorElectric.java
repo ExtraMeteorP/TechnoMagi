@@ -40,7 +40,7 @@ public class WindowProcessorElectric extends WindowContainer
         ComponentProgress component = (ComponentProgress) this.getComponent("progress");
         component.setPercentage(((ContainerProcessorElectric) container).tile.getProgressScaled(113));
         List<String> tooltip = new ArrayList<String>();
-        tooltip.add(EnumChatFormatting.AQUA + "" + ((ContainerProcessorElectric) container).tile.getProgress() + "/" + ((ContainerProcessorElectric) container).tile.getMaxProgress());
+        tooltip.add(EnumChatFormatting.AQUA + "" + ((ContainerProcessorElectric) container).tile.getProgressPercentage() + "%");
         component.setTooltip(tooltip);
 
         component = (ComponentProgress) this.getComponent("energy");

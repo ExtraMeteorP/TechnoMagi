@@ -11,6 +11,7 @@ import com.ollieread.technomagi.client.gui.component.ComponentProgress;
 import com.ollieread.technomagi.client.gui.component.ComponentSlot;
 import com.ollieread.technomagi.client.gui.window.abstracts.WindowContainer;
 import com.ollieread.technomagi.common.block.energy.container.ContainerBasicGenerator;
+import com.ollieread.technomagi.common.block.energy.tile.TileGeneratorEnhanced;
 
 public class WindowBasicGenerator extends WindowContainer
 {
@@ -21,7 +22,7 @@ public class WindowBasicGenerator extends WindowContainer
 
         this.setContainer(container);
         this.setPadding(5, 5);
-        this.setHeading(StatCollector.translateToLocal("gui.technomagi.basic_generator"));
+        this.setHeading(StatCollector.translateToLocal("gui.technomagi.generator." + (container.tile instanceof TileGeneratorEnhanced ? "enhanced" : "basic")));
         this.setHasInventory(true);
         this.setBackground(true);
 
@@ -37,7 +38,7 @@ public class WindowBasicGenerator extends WindowContainer
         ComponentProgress component = (ComponentProgress) this.getComponent("progress");
         component.setPercentage(((ContainerBasicGenerator) container).tile.getProgressScaled(113));
         List<String> tooltip = new ArrayList<String>();
-        tooltip.add(EnumChatFormatting.RED + "" + ((ContainerBasicGenerator) container).tile.getProgress() + "/" + ((ContainerBasicGenerator) container).tile.getMaxProgress());
+        tooltip.add(EnumChatFormatting.RED + "" + ((ContainerBasicGenerator) container).tile.getProgressPercentage() + "%");
         component.setTooltip(tooltip);
 
         component = (ComponentProgress) this.getComponent("energy");
