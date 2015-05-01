@@ -1,6 +1,5 @@
 package com.ollieread.technomagi.common.event.handler;
 
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
@@ -25,11 +24,6 @@ public class AbilityEvents
     @SubscribeEvent
     public void interact(PlayerInteractEvent event)
     {
-        /*
-         * Technomagi.debug("Action: " + event.action); Technomagi.debug("X: " +
-         * event.x); Technomagi.debug("Y: " + event.y); Technomagi.debug("Z: " +
-         * event.z); Technomagi.debug("Server: " + !event.world.isRemote);
-         */
         EntityPlayer player = event.entityPlayer;
 
         if (PlayerHelper.hasSpecialised(player)) {
@@ -41,23 +35,20 @@ public class AbilityEvents
                 if (heldStack != null && heldStack.getItem() instanceof IAbilityItem && ((IAbilityItem) heldStack.getItem()).canCast(heldStack)) {
                     World world = player.worldObj;
                     MovingObjectPosition mouse = PlayerHelper.getMovingObjectPosition(technomage.getPlayer().worldObj, technomage.getPlayer(), true);
-                    AbilityPayload payload = null;
+                    AbilityPayload payload = PlayerHelper.getAbilityPayload(technomage.getPlayer().worldObj, technomage.getPlayer(), event.x, event.y, event.z, event.face);
 
-                    if (mouse != null) {
-                        if (mouse.typeOfHit.equals(MovingObjectType.BLOCK)) {
-                            Block block = world.getBlock(mouse.blockX, mouse.blockY, mouse.blockZ);
-                            payload = new AbilityPayload(0, block, null, mouse.blockX, mouse.blockY, mouse.blockZ, mouse.sideHit);
-                        } else if (mouse.typeOfHit.equals(MovingObjectType.ENTITY)) {
-                            payload = new AbilityPayload(0, null, mouse.entityHit, mouse.blockX, mouse.blockY, mouse.blockZ, mouse.sideHit);
-                        }
-                    } else {
-                        Block block = world.getBlock(event.x, event.y, event.z);
-                        payload = new AbilityPayload(0, block, null, event.x, event.y, event.z, event.face);
+                    if (payload != null) {
+                        technomage.abilities().startCasting(heldStack, payload);
                     }
-
-                    technomage.abilities().startCasting(heldStack, payload);
                 }
             } else {
+                AbilityPayload payload = PlayerHelper.getAbilityPayload(technomage.getPlayer().worldObj, technomage.getPlayer(), event.x, event.y, event.z, event.face);
+                AbilityPayload currentPayload = technomage.abilities().getAbilityPayload();
+
+                if (payload != null && currentPayload != null && !currentPayload.equals(payload)) {
+                    technomage.abilities().stopCasting(false);
+                }
+
                 event.setCanceled(true);
             }
         }
