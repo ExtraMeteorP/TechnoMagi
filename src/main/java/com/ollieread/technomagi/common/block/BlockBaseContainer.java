@@ -4,6 +4,7 @@ import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
@@ -46,6 +47,11 @@ public abstract class BlockBaseContainer extends BlockContainer
     public int damageDropped(int metadata)
     {
         return metadata;
+    }
+
+    public EnumRarity getItemRarity(int metadata)
+    {
+        return EnumRarity.common;
     }
 
     @Override
@@ -128,6 +134,8 @@ public abstract class BlockBaseContainer extends BlockContainer
 
         return false;
     }
+
+    public abstract void registerTiles();
 
     @Override
     public String getUnlocalizedName()

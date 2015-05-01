@@ -14,6 +14,7 @@ import net.minecraft.world.World;
 import com.ollieread.technomagi.common.block.BlockBaseContainer;
 import com.ollieread.technomagi.common.block.energy.tile.TileBattery;
 import com.ollieread.technomagi.common.item.block.ItemBlockBattery;
+import com.ollieread.technomagi.util.BlockHelper;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -24,6 +25,9 @@ public class BlockBattery extends BlockBaseContainer
     public BlockBattery(String name)
     {
         super(name, Material.iron);
+
+        this.setLightLevel(8F);
+        this.setHardness(3.5F);
     }
 
     @Override
@@ -38,6 +42,12 @@ public class BlockBattery extends BlockBaseContainer
         }
 
         return null;
+    }
+
+    @Override
+    public void registerTiles()
+    {
+        BlockHelper.registerTileEntity(TileBattery.class, "battery");
     }
 
     @Override

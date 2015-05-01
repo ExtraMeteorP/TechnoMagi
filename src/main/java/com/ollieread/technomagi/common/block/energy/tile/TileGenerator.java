@@ -149,6 +149,11 @@ public abstract class TileGenerator extends TileEnergy implements IInventory, IS
         return progress.getMaxProgress() > 0 ? progress.getProgress() * scale / progress.getMaxProgress() : 0;
     }
 
+    public int getProgressPercentage()
+    {
+        return progress.getMaxProgress() > 0 ? progress.getProgress() / (progress.getMaxProgress() / 100) : 0;
+    }
+
     @Override
     public int getSizeInventory()
     {

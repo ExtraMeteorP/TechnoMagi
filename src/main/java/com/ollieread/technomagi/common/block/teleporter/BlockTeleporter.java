@@ -50,6 +50,12 @@ public class BlockTeleporter extends BlockContainerSubtypes
     }
 
     @Override
+    public void registerTiles()
+    {
+
+    }
+
+    @Override
     public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int metadata)
     {
         if (!world.isRemote) {

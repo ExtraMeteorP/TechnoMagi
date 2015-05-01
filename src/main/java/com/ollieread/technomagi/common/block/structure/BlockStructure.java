@@ -12,6 +12,7 @@ import com.ollieread.technomagi.common.block.BlockContainerSubtypes;
 import com.ollieread.technomagi.common.block.structure.tile.TileStructure;
 import com.ollieread.technomagi.common.block.structure.tile.TileStructureBridge;
 import com.ollieread.technomagi.common.block.structure.tile.TileStructurePlatform;
+import com.ollieread.technomagi.util.BlockHelper;
 import com.ollieread.technomagi.util.ResourceHelper;
 
 import cpw.mods.fml.relauncher.Side;
@@ -26,6 +27,8 @@ public class BlockStructure extends BlockContainerSubtypes
     public BlockStructure(String name)
     {
         super(name, new String[] { "platform", "bridge" }, Material.iron);
+
+        this.setHardness(3.5F);
     }
 
     @Override
@@ -39,6 +42,13 @@ public class BlockStructure extends BlockContainerSubtypes
             default:
                 return null;
         }
+    }
+
+    @Override
+    public void registerTiles()
+    {
+        BlockHelper.registerTileEntity(TileStructurePlatform.class, "platform");
+        BlockHelper.registerTileEntity(TileStructureBridge.class, "bridge");
     }
 
     @Override

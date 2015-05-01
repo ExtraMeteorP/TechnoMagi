@@ -14,6 +14,7 @@ import net.minecraft.world.World;
 import com.ollieread.technomagi.client.renderers.blocks.BlockDisguisedRenderer;
 import com.ollieread.technomagi.common.block.BlockBaseContainer;
 import com.ollieread.technomagi.common.block.structure.tile.TileShifted;
+import com.ollieread.technomagi.util.BlockHelper;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -33,6 +34,12 @@ public class BlockShifted extends BlockBaseContainer
     public TileEntity createNewTileEntity(World world, int metadata)
     {
         return new TileShifted();
+    }
+
+    @Override
+    public void registerTiles()
+    {
+        BlockHelper.registerTileEntity(TileShifted.class, "shifted");
     }
 
     @Override

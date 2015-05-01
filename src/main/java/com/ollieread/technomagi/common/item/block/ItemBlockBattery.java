@@ -127,7 +127,7 @@ public class ItemBlockBattery extends ItemBlockBase implements IEnergyContainerI
     @Override
     public EnumRarity getRarity(ItemStack stack)
     {
-        return stack.getItemDamage() == 0 ? EnumRarity.common : EnumRarity.uncommon;
+        return stack.getItemDamage() == 0 ? EnumRarity.common : (stack.getItemDamage() == 1 ? EnumRarity.uncommon : EnumRarity.rare);
     }
 
     @Override

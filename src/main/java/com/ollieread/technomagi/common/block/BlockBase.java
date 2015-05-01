@@ -2,6 +2,7 @@ package com.ollieread.technomagi.common.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.item.EnumRarity;
 
 import com.ollieread.technomagi.Technomagi;
 import com.ollieread.technomagi.common.tabs.TechnomagiTabs;
@@ -35,6 +36,11 @@ public class BlockBase extends Block
     public int damageDropped(int metadata)
     {
         return metadata;
+    }
+
+    public EnumRarity getItemRarity(int metadata)
+    {
+        return EnumRarity.common;
     }
 
 }

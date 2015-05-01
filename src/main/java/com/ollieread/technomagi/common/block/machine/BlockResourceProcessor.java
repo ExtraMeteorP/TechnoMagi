@@ -5,6 +5,7 @@ import java.util.Random;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
@@ -15,6 +16,7 @@ import com.ollieread.technomagi.common.block.machine.tile.TileResourceProcessor;
 import com.ollieread.technomagi.common.block.machine.tile.TileResourceProcessorBasic;
 import com.ollieread.technomagi.common.block.machine.tile.TileResourceProcessorElectric;
 import com.ollieread.technomagi.common.block.machine.tile.TileResourceProcessorNanite;
+import com.ollieread.technomagi.util.BlockHelper;
 import com.ollieread.technomagi.util.ResourceHelper;
 
 import cpw.mods.fml.relauncher.Side;
@@ -50,6 +52,20 @@ public class BlockResourceProcessor extends BlockContainerSubtypes
         }
 
         return null;
+    }
+
+    @Override
+    public EnumRarity getItemRarity(int metadata)
+    {
+        return metadata == 0 ? EnumRarity.common : (metadata == 1 ? EnumRarity.uncommon : EnumRarity.rare);
+    }
+
+    @Override
+    public void registerTiles()
+    {
+        BlockHelper.registerTileEntity(TileResourceProcessorBasic.class, "processor_basic");
+        BlockHelper.registerTileEntity(TileResourceProcessorElectric.class, "processor_electric");
+        BlockHelper.registerTileEntity(TileResourceProcessorNanite.class, "processor_nanite");
     }
 
     @Override

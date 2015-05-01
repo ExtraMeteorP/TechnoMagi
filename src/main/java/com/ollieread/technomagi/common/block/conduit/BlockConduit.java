@@ -65,6 +65,12 @@ public class BlockConduit extends BlockContainerSubtypes
     }
 
     @Override
+    public void registerTiles()
+    {
+
+    }
+
+    @Override
     public int damageDropped(int metadata)
     {
         return metadata;

@@ -42,6 +42,11 @@ public abstract class BlockContainerSubtypes extends BlockBaseContainer
         return null;
     }
 
+    public EnumRarity getItemRarity(int metadata)
+    {
+        return EnumRarity.common;
+    }
+
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister register)

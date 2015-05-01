@@ -1,10 +1,13 @@
 package com.ollieread.technomagi.common.item.block;
 
 import net.minecraft.block.Block;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
+import com.ollieread.technomagi.common.block.BlockBase;
+import com.ollieread.technomagi.common.block.BlockBaseContainer;
 import com.ollieread.technomagi.common.block.BlockContainerSubtypes;
 import com.ollieread.technomagi.common.block.BlockSubtypes;
 
@@ -53,6 +56,18 @@ public class ItemBlockBase extends ItemBlock
         }
 
         return getUnlocalizedName();
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack)
+    {
+        if (this.block instanceof BlockBase) {
+            return ((BlockBase) this.block).getItemRarity(stack.getItemDamage());
+        } else if (this.block instanceof BlockBaseContainer) {
+            return ((BlockBaseContainer) this.block).getItemRarity(stack.getItemDamage());
+        }
+
+        return super.getRarity(stack);
     }
 
 }

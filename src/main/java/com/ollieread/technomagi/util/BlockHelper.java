@@ -6,6 +6,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
+import com.ollieread.technomagi.Technomagi;
+
+import cpw.mods.fml.common.registry.GameRegistry;
+
 public class BlockHelper
 {
 
@@ -70,6 +74,11 @@ public class BlockHelper
         double d4 = y - y2;
         double d5 = z - z2;
         return (int) MathHelper.sqrt_double(d3 * d3 + d4 * d4 + d5 * d5);
+    }
+
+    public static void registerTileEntity(Class teClass, String name)
+    {
+        GameRegistry.registerTileEntity(teClass, Technomagi.MODID + "." + name);
     }
 
 }

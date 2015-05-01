@@ -6,6 +6,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -20,6 +21,7 @@ import com.ollieread.technomagi.client.renderers.blocks.BlockTankRenderer;
 import com.ollieread.technomagi.common.block.BlockContainerSubtypes;
 import com.ollieread.technomagi.common.block.fluid.tile.TileTank;
 import com.ollieread.technomagi.common.item.block.ItemBlockTank;
+import com.ollieread.technomagi.util.BlockHelper;
 import com.ollieread.technomagi.util.PlayerHelper;
 
 import cpw.mods.fml.relauncher.Side;
@@ -39,6 +41,18 @@ public class BlockTank extends BlockContainerSubtypes
     public TileEntity createNewTileEntity(World world, int metadata)
     {
         return new TileTank(metadata);
+    }
+
+    @Override
+    public void registerTiles()
+    {
+        BlockHelper.registerTileEntity(TileTank.class, "tank");
+    }
+
+    @Override
+    public EnumRarity getItemRarity(int metadata)
+    {
+        return metadata == 0 ? EnumRarity.common : (metadata == 1 ? EnumRarity.uncommon : EnumRarity.rare);
     }
 
     @Override

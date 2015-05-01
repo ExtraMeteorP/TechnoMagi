@@ -11,6 +11,7 @@ import com.ollieread.technomagi.client.renderers.blocks.BlockFauxPocketRenderer;
 import com.ollieread.technomagi.common.block.BlockBaseContainer;
 import com.ollieread.technomagi.common.block.machine.tile.TileFauxPocket;
 import com.ollieread.technomagi.common.init.Items;
+import com.ollieread.technomagi.util.BlockHelper;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -27,6 +28,12 @@ public class BlockFauxPocket extends BlockBaseContainer
     public TileEntity createNewTileEntity(World world, int metadata)
     {
         return new TileFauxPocket();
+    }
+
+    @Override
+    public void registerTiles()
+    {
+        BlockHelper.registerTileEntity(TileFauxPocket.class, "faux_pocket");
     }
 
     @Override

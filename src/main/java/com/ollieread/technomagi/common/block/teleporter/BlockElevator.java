@@ -8,6 +8,7 @@ import net.minecraft.world.World;
 
 import com.ollieread.technomagi.common.block.BlockBaseContainer;
 import com.ollieread.technomagi.common.block.teleporter.tile.TileElevator;
+import com.ollieread.technomagi.util.BlockHelper;
 import com.ollieread.technomagi.util.ResourceHelper;
 
 import cpw.mods.fml.relauncher.Side;
@@ -22,12 +23,21 @@ public class BlockElevator extends BlockBaseContainer
     public BlockElevator(String name)
     {
         super(name, Material.iron);
+
+        this.setHardness(3.5F);
+        this.setResistance(5.0F);
     }
 
     @Override
     public TileEntity createNewTileEntity(World world, int metadata)
     {
         return new TileElevator();
+    }
+
+    @Override
+    public void registerTiles()
+    {
+        BlockHelper.registerTileEntity(TileElevator.class, "elevator");
     }
 
     @Override

@@ -4,30 +4,20 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
-import com.ollieread.technomagi.Technomagi;
+import com.ollieread.technomagi.common.block.BlockBaseContainer;
 import com.ollieread.technomagi.common.block.BlockContainerSubtypes;
 import com.ollieread.technomagi.common.block.BlockResource;
 import com.ollieread.technomagi.common.block.BlockSubtypes;
 import com.ollieread.technomagi.common.block.electromagnetic.BlockElectromagnetic;
-import com.ollieread.technomagi.common.block.electromagnetic.tile.TileElectromagnetic;
 import com.ollieread.technomagi.common.block.energy.BlockBattery;
 import com.ollieread.technomagi.common.block.energy.BlockGenerator;
-import com.ollieread.technomagi.common.block.energy.tile.TileBattery;
-import com.ollieread.technomagi.common.block.energy.tile.TileGeneratorBasic;
-import com.ollieread.technomagi.common.block.energy.tile.TileGeneratorEnhanced;
 import com.ollieread.technomagi.common.block.fluid.BlockAmnioticFluid;
 import com.ollieread.technomagi.common.block.fluid.BlockEnrichedFluid;
 import com.ollieread.technomagi.common.block.fluid.BlockTank;
-import com.ollieread.technomagi.common.block.fluid.tile.TileTank;
 import com.ollieread.technomagi.common.block.machine.BlockCultivator;
 import com.ollieread.technomagi.common.block.machine.BlockFauxPocket;
 import com.ollieread.technomagi.common.block.machine.BlockResourceProcessor;
-import com.ollieread.technomagi.common.block.machine.tile.TileCultivatorBasic;
-import com.ollieread.technomagi.common.block.machine.tile.TileCultivatorElectric;
-import com.ollieread.technomagi.common.block.machine.tile.TileFauxPocket;
-import com.ollieread.technomagi.common.block.machine.tile.TileResourceProcessorBasic;
-import com.ollieread.technomagi.common.block.machine.tile.TileResourceProcessorElectric;
-import com.ollieread.technomagi.common.block.machine.tile.TileResourceProcessorNanite;
+import com.ollieread.technomagi.common.block.research.BlockAnalyser;
 import com.ollieread.technomagi.common.block.structure.BlockHardlight;
 import com.ollieread.technomagi.common.block.structure.BlockHardlightFence;
 import com.ollieread.technomagi.common.block.structure.BlockHardlightPane;
@@ -36,11 +26,7 @@ import com.ollieread.technomagi.common.block.structure.BlockHardlightSlab;
 import com.ollieread.technomagi.common.block.structure.BlockHardlightStairs;
 import com.ollieread.technomagi.common.block.structure.BlockShifted;
 import com.ollieread.technomagi.common.block.structure.BlockStructure;
-import com.ollieread.technomagi.common.block.structure.tile.TileShifted;
-import com.ollieread.technomagi.common.block.structure.tile.TileStructureBridge;
-import com.ollieread.technomagi.common.block.structure.tile.TileStructurePlatform;
 import com.ollieread.technomagi.common.block.teleporter.BlockElevator;
-import com.ollieread.technomagi.common.block.teleporter.tile.TileElevator;
 import com.ollieread.technomagi.common.block.world.BlockNaniteFarmland;
 import com.ollieread.technomagi.common.item.block.ItemBlockBase;
 import com.ollieread.technomagi.common.item.block.ItemBlockBattery;
@@ -53,14 +39,14 @@ public class Blocks
 {
 
     public static BlockSubtypes resource;
-    public static Block electromagnetic;
+    public static BlockBaseContainer electromagnetic;
     // public static BlockContainerSubtypes conduit;
     public static BlockContainerSubtypes processor;
     public static Block naniteFarmland;
-    public static Block fauxPocket;
-    public static Block battery;
+    public static BlockBaseContainer fauxPocket;
+    public static BlockBaseContainer battery;
     public static BlockContainerSubtypes generator;
-    public static Block elevator;
+    public static BlockBaseContainer elevator;
     public static Block hardlight;
     public static Block hardlightSlab;
     public static Block hardlightPlatform;
@@ -71,8 +57,9 @@ public class Blocks
     public static Block enrichedFluid;
     public static BlockContainerSubtypes structure;
     public static BlockContainerSubtypes tank;
-    public static Block shifted;
+    public static BlockBaseContainer shifted;
     public static BlockContainerSubtypes cultivator;
+    public static BlockBaseContainer analyser;
 
     public static void init()
     {
@@ -83,9 +70,9 @@ public class Blocks
         processor = new BlockResourceProcessor("processor");
         naniteFarmland = new BlockNaniteFarmland("nanite_farmland");
         fauxPocket = new BlockFauxPocket("faux_pocket");
-        battery = new BlockBattery("battery").setLightLevel(8F).setHardness(3.5F);
+        battery = new BlockBattery("battery");
         generator = new BlockGenerator("generator");
-        elevator = new BlockElevator("elevator").setHardness(3.5F);
+        elevator = new BlockElevator("elevator");
         hardlight = new BlockHardlight("hardlight");
         hardlightSlab = new BlockHardlightSlab("hardlight_slab");
         hardlightPlatform = new BlockHardlightPlatform("hardlight_platform");
@@ -98,6 +85,7 @@ public class Blocks
         tank = new BlockTank("tank");
         shifted = new BlockShifted("shifted");
         cultivator = new BlockCultivator("cultivator");
+        analyser = new BlockAnalyser("analyser");
 
         // Register Blocks
         GameRegistry.registerBlock(resource, ItemBlockBase.class, "resource");
@@ -122,25 +110,20 @@ public class Blocks
         GameRegistry.registerBlock(tank, ItemBlockTank.class, "tank");
         GameRegistry.registerBlock(shifted, "shifted");
         GameRegistry.registerBlock(cultivator, ItemBlockBase.class, "cultivator");
+        GameRegistry.registerBlock(analyser, "analyser");
 
         // Register TileEntities
-        registerTileEntity(TileElectromagnetic.class, "electromagnetic");
-        // registerTileEntity(TileConduitFluid.class, "conduit_fluid");
-        // registerTileEntity(TileConduitPower.class, "conduit_power");
-        registerTileEntity(TileResourceProcessorBasic.class, "processor_basic");
-        registerTileEntity(TileResourceProcessorElectric.class, "processor_electric");
-        registerTileEntity(TileResourceProcessorNanite.class, "processor_nanite");
-        registerTileEntity(TileFauxPocket.class, "faux_pocket");
-        registerTileEntity(TileBattery.class, "battery");
-        registerTileEntity(TileGeneratorBasic.class, "basic_generator");
-        registerTileEntity(TileGeneratorEnhanced.class, "enhanced_generator");
-        registerTileEntity(TileElevator.class, "teleporter");
-        registerTileEntity(TileStructurePlatform.class, "platform");
-        registerTileEntity(TileStructureBridge.class, "bridge");
-        registerTileEntity(TileTank.class, "tank");
-        registerTileEntity(TileShifted.class, "shifted");
-        registerTileEntity(TileCultivatorBasic.class, "cultivator_basic");
-        registerTileEntity(TileCultivatorElectric.class, "cultivator_electric");
+        electromagnetic.registerTiles();
+        processor.registerTiles();
+        fauxPocket.registerTiles();
+        battery.registerTiles();
+        generator.registerTiles();
+        elevator.registerTiles();
+        structure.registerTiles();
+        tank.registerTiles();
+        shifted.registerTiles();
+        cultivator.registerTiles();
+        analyser.registerTiles();
 
         // Register with the ore dictionary
         OreDictionary.registerOre("oreEtherium", new ItemStack(resource, 1, 0));
@@ -148,10 +131,4 @@ public class Blocks
         OreDictionary.registerOre("oreAluminium", new ItemStack(resource, 1, 3));
         OreDictionary.registerOre("oreAluminum", new ItemStack(resource, 1, 3));
     }
-
-    public static void registerTileEntity(Class teClass, String name)
-    {
-        GameRegistry.registerTileEntity(teClass, Technomagi.MODID + "." + name);
-    }
-
 }

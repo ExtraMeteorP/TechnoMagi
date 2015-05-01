@@ -4,6 +4,7 @@ import java.util.Random;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
@@ -13,6 +14,7 @@ import com.ollieread.technomagi.common.block.BlockContainerSubtypes;
 import com.ollieread.technomagi.common.block.energy.tile.TileGenerator;
 import com.ollieread.technomagi.common.block.energy.tile.TileGeneratorBasic;
 import com.ollieread.technomagi.common.block.energy.tile.TileGeneratorEnhanced;
+import com.ollieread.technomagi.util.BlockHelper;
 import com.ollieread.technomagi.util.ResourceHelper;
 
 import cpw.mods.fml.relauncher.Side;
@@ -48,6 +50,19 @@ public class BlockGenerator extends BlockContainerSubtypes
             default:
                 return null;
         }
+    }
+
+    @Override
+    public EnumRarity getItemRarity(int metadata)
+    {
+        return metadata == 0 ? EnumRarity.common : (metadata == 1 ? EnumRarity.uncommon : EnumRarity.rare);
+    }
+
+    @Override
+    public void registerTiles()
+    {
+        BlockHelper.registerTileEntity(TileGeneratorBasic.class, "basic_generator");
+        BlockHelper.registerTileEntity(TileGeneratorEnhanced.class, "enhanced_generator");
     }
 
     @Override

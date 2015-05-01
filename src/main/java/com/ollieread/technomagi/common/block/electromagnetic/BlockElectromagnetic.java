@@ -12,9 +12,9 @@ import net.minecraft.world.World;
 
 import com.ollieread.technomagi.Technomagi;
 import com.ollieread.technomagi.api.electromagnetic.EnergyHandler;
-import com.ollieread.technomagi.api.electromagnetic.EnergyHandler.EnergyType;
 import com.ollieread.technomagi.common.block.BlockBaseContainer;
 import com.ollieread.technomagi.common.block.electromagnetic.tile.TileElectromagnetic;
+import com.ollieread.technomagi.util.BlockHelper;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -33,6 +33,12 @@ public class BlockElectromagnetic extends BlockBaseContainer
     public TileEntity createNewTileEntity(World world, int metadata)
     {
         return new TileElectromagnetic();
+    }
+
+    @Override
+    public void registerTiles()
+    {
+        BlockHelper.registerTileEntity(TileElectromagnetic.class, "electromagnetic");
     }
 
     @Override

@@ -21,4 +21,10 @@ public class BlockConstruct extends BlockBaseContainer
         return new TileConstruct();
     }
 
+    @Override
+    public void registerTiles()
+    {
+
+    }
+
 }
