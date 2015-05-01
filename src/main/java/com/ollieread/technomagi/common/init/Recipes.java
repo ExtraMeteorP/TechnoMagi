@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 
 import com.ollieread.technomagi.Technomagi;
+import com.ollieread.technomagi.api.TechnomagiApi;
 import com.ollieread.technomagi.api.crafting.CraftingHandler;
 import com.ollieread.technomagi.api.crafting.CraftingHandler.ProcessorRecipes.ProcessorType;
 import com.ollieread.technomagi.api.crafting.OreDictProcessorRecipe;
@@ -16,6 +17,9 @@ import com.ollieread.technomagi.api.crafting.ProcessorRecipe;
 import com.ollieread.technomagi.common.knowledge.Energies;
 import com.ollieread.technomagi.common.knowledge.Nanites;
 import com.ollieread.technomagi.common.knowledge.Resources;
+import com.ollieread.technomagi.common.recipes.EtheriumElectromagneticRecipe;
+import com.ollieread.technomagi.common.recipes.FurnaceTimeShiftTransformer;
+import com.ollieread.technomagi.common.recipes.GunpowderElectromagneticRecipe;
 import com.ollieread.technomagi.util.ItemStackHelper;
 
 import cpw.mods.fml.common.IFuelHandler;
@@ -87,6 +91,7 @@ public class Recipes
         processor();
         electromagnetic();
         energy();
+        time();
 
         GameRegistry.registerFuelHandler(new FuelHandler());
     }
@@ -189,12 +194,22 @@ public class Recipes
 
     private static void electromagnetic()
     {
-
+        TechnomagiApi.crafting().electromagnetic.addAction(new EtheriumElectromagneticRecipe());
+        // TechnomagiApi.crafting().electromagnetic.addAction(new
+        // FurnaceElectromagneticRecipe());
+        TechnomagiApi.crafting().electromagnetic.addAction(new GunpowderElectromagneticRecipe());
     }
 
     private static void energy()
     {
 
+    }
+
+    private static void time()
+    {
+        // This basically maps all of the furnace recipes to be available
+        // dynamically, as time shifts.
+        TechnomagiApi.time().addTimeShift(new FurnaceTimeShiftTransformer());
     }
 
     public static class FuelHandler implements IFuelHandler
