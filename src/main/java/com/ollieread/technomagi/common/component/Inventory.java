@@ -66,26 +66,17 @@ public class Inventory implements IInventory
     public ItemStack decrStackSize(int slot, int amount)
     {
         if (inventoryContents[slot] != null) {
-            ItemStack itemstack;
+            ItemStack itemstack = inventoryContents[slot].splitStack(amount);
 
-            if (inventoryContents[slot].stackSize <= amount) {
-                itemstack = inventoryContents[slot];
-                inventoryContents[slot] = null;
-                markDirty();
-                return itemstack;
-            } else {
-                itemstack = inventoryContents[slot].splitStack(amount);
-
-                if (inventoryContents[slot].stackSize == 0) {
-                    inventoryContents[slot] = inventoryContents[slot].getItem().getContainerItem(inventoryContents[slot]);
-                }
-
-                markDirty();
-                return itemstack;
+            if (inventoryContents[slot].stackSize == 0) {
+                inventoryContents[slot] = inventoryContents[slot].getItem().getContainerItem(inventoryContents[slot]);
             }
-        } else {
-            return null;
+
+            markDirty();
+            return itemstack;
         }
+
+        return null;
     }
 
     @Override
