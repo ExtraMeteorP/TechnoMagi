@@ -9,6 +9,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
+import com.ollieread.technomagi.api.TechnomagiApi;
+
 public class Researcher implements IResearcher
 {
 
@@ -64,8 +66,22 @@ public class Researcher implements IResearcher
     @Override
     public void copyFrom(IResearcher research)
     {
-        this.researchComplete = research.getCompleteResearch();
-        this.researchRepetition = research.getResearchRepetition();
+        List<String> complete = research.getCompleteResearch();
+        Map<String, Integer> repeatition = research.getResearchRepetition();
+
+        for (Entry<String, Integer> entry : repeatition.entrySet()) {
+            if (!this.getCompleteResearch().contains(entry.getKey()) && this.researchRepetition.containsKey(entry.getKey())) {
+                this.researchRepetition.put(entry.getKey(), this.researchRepetition.get(entry.getKey()) + entry.getValue());
+            }
+        }
+
+        for (String entry : complete) {
+            IResearch iresearch = TechnomagiApi.knowledge().getResearch(entry);
+
+            if (!this.getCompleteResearch().contains(entry) && iresearch != null) {
+                addResearch(iresearch, 0);
+            }
+        }
     }
 
     @Override
