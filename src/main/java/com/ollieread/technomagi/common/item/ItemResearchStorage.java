@@ -25,7 +25,7 @@ public class ItemResearchStorage extends ItemSubtypes
 
     public ItemResearchStorage(String name)
     {
-        super(name, new String[] { "basic" });
+        super(name, new String[] { "basic", "advanced" });
     }
 
     public ItemResearchStorage setCapacity(ItemStack stack, int capacity)
@@ -117,16 +117,20 @@ public class ItemResearchStorage extends ItemSubtypes
     {
         int capacity = getCapacity(stack);
         int total = getTotal(stack);
-        list.add(total + "/" + capacity);
+        list.add((total == -1 ? 0 : total) + "/" + capacity);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List list)
     {
-        ItemStack stack = new ItemStack(item, 1);
-        setCapacity(stack, 100);
-        list.add(stack);
+        ItemStack stack1 = new ItemStack(item, 1, 0);
+        setCapacity(stack1, 50);
+        list.add(stack1);
+
+        ItemStack stack2 = new ItemStack(item, 1, 1);
+        setCapacity(stack2, 100);
+        list.add(stack2);
     }
 
     @Override

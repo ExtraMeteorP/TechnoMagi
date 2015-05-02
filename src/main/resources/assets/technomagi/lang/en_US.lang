@@ -255,7 +255,8 @@ item.technomagi.sample.name=Organism Fluid Sample
 
 item.technomagi.sample_extractor.name=Organism Fluid Sample Extractor.
 
-item.technomagi.research_storage.name=Portable Data Drive
+item.technomagi.research_storage.basic.name=Portable Data Drive: Basic
+item.technomagi.research_storage.advanced.name=Portable Data Drive: Advanced
 
 # Entities
 entity.player.name=Player
