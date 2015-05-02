@@ -2,6 +2,7 @@ package com.ollieread.technomagi.common.block.research.tile;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -10,6 +11,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 
 import com.ollieread.technomagi.Technomagi;
 import com.ollieread.technomagi.api.TechnomagiApi;
@@ -22,6 +24,8 @@ import com.ollieread.technomagi.api.knowledge.research.Researcher;
 import com.ollieread.technomagi.api.tile.ITileGui;
 import com.ollieread.technomagi.api.tile.ITilePlayerLocked;
 import com.ollieread.technomagi.api.tile.ITileProcessor;
+import com.ollieread.technomagi.api.tile.ITileResearcher;
+import com.ollieread.technomagi.api.tile.ITileRetainsData;
 import com.ollieread.technomagi.client.gui.window.WindowAnalyser;
 import com.ollieread.technomagi.client.gui.window.abstracts.Window;
 import com.ollieread.technomagi.common.block.research.container.ContainerAnalyser;
@@ -31,7 +35,7 @@ import com.ollieread.technomagi.common.component.Progress;
 import com.ollieread.technomagi.util.ItemStackHelper;
 import com.ollieread.technomagi.util.PlayerHelper;
 
-public class TileAnalyser extends TileBase implements IInventory, ITilePlayerLocked, ITileProcessor, IResearcher, ITileGui
+public class TileAnalyser extends TileBase implements IInventory, ITilePlayerLocked, ITileProcessor, ITileResearcher, ITileGui, ITileRetainsData
 {
 
     protected Inventory inventory = new Inventory("analyse", 3);
@@ -68,8 +72,10 @@ public class TileAnalyser extends TileBase implements IInventory, ITilePlayerLoc
 
                                 if (r != null) {
                                     if (canResearch(r) && technomage.knowledge().canDiscover(TechnomagiApi.getKnowledge(r.getKnowledge()))) {
-                                        research = mapping;
-                                        progress.setMaxProgress(2400);
+                                        if ((data + r.getProgress()) <= maxData) {
+                                            research = mapping;
+                                            progress.setMaxProgress(2400);
+                                        }
                                     }
                                 }
                             }
@@ -98,7 +104,7 @@ public class TileAnalyser extends TileBase implements IInventory, ITilePlayerLoc
     public boolean canProcess()
     {
         EntityPlayer playerEntity = this.getPlayerEntity();
-        return playerEntity != null && progress.getMaxProgress() > 0 && research != null;
+        return playerEntity != null && progress.getMaxProgress() > 0 && data < maxData && research != null;
     }
 
     @Override
@@ -118,7 +124,11 @@ public class TileAnalyser extends TileBase implements IInventory, ITilePlayerLoc
             if (rand.nextInt(chanceEvent.chance) == 0) {
                 if (researchData.containsKey(research)) {
                     researchData.put(research, researchData.get(research) + iresearch.getProgress());
+                } else {
+                    researchData.put(research, iresearch.getProgress());
                 }
+
+                data += iresearch.getProgress();
             }
         }
 
@@ -376,6 +386,19 @@ public class TileAnalyser extends TileBase implements IInventory, ITilePlayerLoc
         if (research != null && !research.isEmpty()) {
             compound.setString("Research", research);
         }
+
+        if (researchData.size() > 0) {
+            NBTTagList researchDataList = new NBTTagList();
+
+            for (Entry<String, Integer> entry : researchData.entrySet()) {
+                NBTTagCompound tag = new NBTTagCompound();
+                tag.setString("Research", entry.getKey());
+                tag.setInteger("Data", entry.getValue());
+                researchDataList.appendTag(tag);
+            }
+
+            compound.setTag("ResearchData", researchDataList);
+        }
     }
 
     @Override
@@ -394,6 +417,20 @@ public class TileAnalyser extends TileBase implements IInventory, ITilePlayerLoc
         if (compound.hasKey("Research")) {
             research = compound.getString("Research");
         }
+
+        data = 0;
+
+        if (compound.hasKey("ResearchData")) {
+            researchData = new ConcurrentHashMap<String, Integer>();
+
+            NBTTagList repeatResearch = compound.getTagList("ResearchData", compound.getId());
+
+            for (int i = 0; i < repeatResearch.tagCount(); i++) {
+                NBTTagCompound c = repeatResearch.getCompoundTagAt(i);
+                researchData.put(c.getString("Research"), c.getInteger("Data"));
+                data += c.getInteger("Data");
+            }
+        }
     }
 
     @Override
@@ -406,6 +443,29 @@ public class TileAnalyser extends TileBase implements IInventory, ITilePlayerLoc
     public Window getWindow(EntityPlayer player)
     {
         return new WindowAnalyser(((ContainerAnalyser) getContainer(player)));
+    }
+
+    @Override
+    public NBTTagCompound getRetainedData()
+    {
+        NBTTagCompound compound = new NBTTagCompound();
+        writeToNBT(compound);
+        return compound;
+    }
+
+    @Override
+    public void setRetainedData(NBTTagCompound compound)
+    {
+        readFromNBT(compound);
+    }
+
+    @Override
+    public void resetResearch()
+    {
+        researchData = new ConcurrentHashMap<String, Integer>();
+        data = 0;
+        researcher = new Researcher();
+        sync();
     }
 
 }
