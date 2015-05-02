@@ -150,7 +150,7 @@ public class Recipes
         ProcessorRecipe aluminiumDustRecipe = new OreDictProcessorRecipe(ItemStackHelper.itemSubtype(Items.resource, "iron_dust", 1));
 
         ironDustRecipe.addOutput(ProcessorType.BURN, ItemStackHelper.item("iron_ingot", 1), 2, null, 0);
-        goldDustRecipe.addOutput(ProcessorType.BURN, ItemStackHelper.item("gold_infor", 1), 2, null, 0);
+        goldDustRecipe.addOutput(ProcessorType.BURN, ItemStackHelper.item("gold_ingot", 1), 2, null, 0);
         copperDustRecipe.addOutput(ProcessorType.BURN, ItemStackHelper.itemSubtype(Items.resource, "copper_ingot", 1), 2, null, 0);
         aluminiumDustRecipe.addOutput(ProcessorType.BURN, ItemStackHelper.itemSubtype(Items.resource, "aluminium_ingot", 1), 2, null, 0);
 
