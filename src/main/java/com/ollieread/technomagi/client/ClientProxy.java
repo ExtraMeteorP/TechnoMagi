@@ -10,6 +10,7 @@ import net.minecraftforge.common.MinecraftForge;
 import com.ollieread.technomagi.client.event.handler.MouseEvents;
 import com.ollieread.technomagi.client.gui.GuiBuilder;
 import com.ollieread.technomagi.client.gui.GuiTechnomagi;
+import com.ollieread.technomagi.client.renderers.blocks.BlockAnalyserRenderer;
 import com.ollieread.technomagi.client.renderers.blocks.BlockConduitRenderer;
 import com.ollieread.technomagi.client.renderers.blocks.BlockDisguisedRenderer;
 import com.ollieread.technomagi.client.renderers.blocks.BlockFauxPocketRenderer;
@@ -18,11 +19,13 @@ import com.ollieread.technomagi.client.renderers.blocks.BlockScannerRenderer;
 import com.ollieread.technomagi.client.renderers.blocks.BlockTankRenderer;
 import com.ollieread.technomagi.client.renderers.items.ItemBatteryRenderer;
 import com.ollieread.technomagi.client.renderers.items.ItemFluidCapsuleRenderer;
+import com.ollieread.technomagi.client.renderers.tiles.TileAnalyserRenderer;
 import com.ollieread.technomagi.client.renderers.tiles.TileBatteryRenderer;
 import com.ollieread.technomagi.client.renderers.tiles.TileFauxPocketRenderer;
 import com.ollieread.technomagi.common.CommonProxy;
 import com.ollieread.technomagi.common.block.energy.tile.TileBattery;
 import com.ollieread.technomagi.common.block.machine.tile.TileFauxPocket;
+import com.ollieread.technomagi.common.block.research.tile.TileAnalyser;
 import com.ollieread.technomagi.common.init.Blocks;
 import com.ollieread.technomagi.common.init.Items;
 import com.ollieread.technomagi.compat.CompatClientProxy;
@@ -63,9 +66,11 @@ public class ClientProxy extends CommonProxy
         RenderingRegistry.registerBlockHandler(BlockHardlightPaneRenderer.id, new BlockHardlightPaneRenderer());
         RenderingRegistry.registerBlockHandler(BlockTankRenderer.id, new BlockTankRenderer());
         RenderingRegistry.registerBlockHandler(BlockDisguisedRenderer.id, new BlockDisguisedRenderer());
+        RenderingRegistry.registerBlockHandler(BlockAnalyserRenderer.id, new BlockAnalyserRenderer());
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileFauxPocket.class, new TileFauxPocketRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileBattery.class, new TileBatteryRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileAnalyser.class, new TileAnalyserRenderer());
 
         MinecraftForgeClient.registerItemRenderer(Items.fluidCapsule, new ItemFluidCapsuleRenderer());
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Blocks.battery), new ItemBatteryRenderer());
