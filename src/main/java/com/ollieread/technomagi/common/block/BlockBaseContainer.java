@@ -4,10 +4,12 @@ import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -23,6 +25,7 @@ import com.ollieread.technomagi.api.tile.ITileRetainsData;
 import com.ollieread.technomagi.common.block.tile.TileBase;
 import com.ollieread.technomagi.common.tabs.TechnomagiTabs;
 import com.ollieread.technomagi.util.ItemNBTHelper;
+import com.ollieread.technomagi.util.ItemStackHelper;
 import com.ollieread.technomagi.util.PlayerHelper;
 
 public abstract class BlockBaseContainer extends BlockContainer
@@ -36,6 +39,7 @@ public abstract class BlockBaseContainer extends BlockContainer
 
         this.name = name;
         this.setCreativeTab(TechnomagiTabs.blocks);
+        this.setBlockTextureName(getTexturePath(name));
     }
 
     public String getTexturePath(String name)
@@ -52,6 +56,42 @@ public abstract class BlockBaseContainer extends BlockContainer
     public EnumRarity getItemRarity(int metadata)
     {
         return EnumRarity.common;
+    }
+
+    @Override
+    public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int metadata)
+    {
+        if (!world.isRemote) {
+            TileEntity tile = world.getTileEntity(x, y, z);
+
+            if (tile instanceof ITileRetainsData) {
+                ItemStack stack = new ItemStack(getItem(world, x, y, z));
+                ItemNBTHelper.setCompound(stack, "RetainedData", ((ITileRetainsData) tile).getRetainedData());
+                ItemStackHelper.dropBlockAsItem(world, x, y, z, stack);
+            } else if (tile instanceof IInventory) {
+                IInventory inventory = (IInventory) tile;
+
+                for (int i = 0; i < inventory.getSizeInventory(); i++) {
+                    ItemStack istack = inventory.getStackInSlot(i);
+
+                    if (istack != null) {
+                        ItemStackHelper.dropBlockAsItem(world, x, y, z, istack);
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onBlockDestroyedByExplosion(World world, int x, int y, int z, Explosion explosion)
+    {
+
+    }
+
+    @Override
+    public void onBlockExploded(World world, int x, int y, int z, Explosion explosion)
+    {
+
     }
 
     @Override
