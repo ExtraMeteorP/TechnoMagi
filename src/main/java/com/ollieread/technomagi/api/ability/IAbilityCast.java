@@ -117,7 +117,7 @@ public interface IAbilityCast
      * 
      * @return
      */
-    public int switchModes(PlayerTechnomagi technomage, int abilityMode);
+    public int cycleMode(PlayerTechnomagi technomage, int abilityMode);
 
     /**
      * The type of ability.

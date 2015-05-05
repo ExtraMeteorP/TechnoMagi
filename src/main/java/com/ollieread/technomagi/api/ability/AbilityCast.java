@@ -61,7 +61,7 @@ public abstract class AbilityCast implements IAbilityCast
     }
 
     @Override
-    public int switchModes(PlayerTechnomagi technomage, int abilityMode)
+    public int cycleMode(PlayerTechnomagi technomage, int abilityMode)
     {
         return abilityMode;
     }
