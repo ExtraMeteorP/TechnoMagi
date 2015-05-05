@@ -23,6 +23,7 @@ public class Config
     public static boolean creativeKnowledge;
     public static boolean creativeKnowledgeAll;
     public static boolean multiplayerMode;
+    public static int abilityCount;
 
     // Teleporters
     public static int elevatorLength;
@@ -48,6 +49,7 @@ public class Config
         creativeKnowledge = config.getBoolean("creativeKnowledge", CATEGORY_GENERAL, false, "Whether or not to allow giving knowledge from creative");
         creativeKnowledgeAll = config.getBoolean("creativeKnowledgeAll", CATEGORY_GENERAL, false, "Whether or not to allow giving all knowledge from creative");
         multiplayerMode = config.getBoolean("multiplayerMode", CATEGORY_GENERAL, true, "Whether or not to apply class bias for multiplayer, best to leave on");
+        abilityCount = config.getInt("abilityCount", CATEGORY_GENERAL, 10, 5, 30, "How many abilities to display on the sidebar");
 
         // Teleporter Config
         elevatorLength = config.getInt("elevatorLength", CATEGORY_TELEPORTER, 100, 3, 256, "The maximum length that the elevators can be from each other");

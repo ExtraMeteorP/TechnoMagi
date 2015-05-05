@@ -3,12 +3,16 @@ package com.ollieread.technomagi.common;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
 import com.ollieread.technomagi.api.TechnomagiApi;
+import com.ollieread.technomagi.api.entity.EntityTechnomagi;
 import com.ollieread.technomagi.api.entity.PlayerTechnomagi;
 import com.ollieread.technomagi.api.tile.ITileGui;
 import com.ollieread.technomagi.client.gui.GuiWindowContainer;
@@ -21,7 +25,9 @@ import com.ollieread.technomagi.common.event.handler.EntityEvents;
 import com.ollieread.technomagi.common.event.handler.InitialisationEvents;
 import com.ollieread.technomagi.common.event.handler.ResearchEvents;
 import com.ollieread.technomagi.common.event.handler.ScanningEvents;
+import com.ollieread.technomagi.common.item.ItemInterface;
 import com.ollieread.technomagi.compat.CompatCommonProxy;
+import com.ollieread.technomagi.util.EntityHelper;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.IGuiHandler;
@@ -33,6 +39,7 @@ public class CommonProxy implements IGuiHandler
 
     public static int GUI_TECHNOMAGE = 0;
     public static int GUI_TILE = 1;
+    public static int GUI_ENTITY = 2;
 
     public CommonProxy()
     {
@@ -135,6 +142,24 @@ public class CommonProxy implements IGuiHandler
 
             if (tile != null) {
                 return new GuiWindowContainer(tile.getWindow(player), tile.getContainer(player));
+            }
+        } else if (ID == GUI_ENTITY) {
+            ItemStack held = player.getHeldItem();
+
+            if (held != null && held.getItem() instanceof ItemInterface) {
+                int entityId = ((ItemInterface) held.getItem()).getEntity(held);
+
+                if (entityId > -1) {
+                    Entity entity = world.getEntityByID(entityId);
+
+                    if (entity != null && entity instanceof EntityLivingBase) {
+                        EntityTechnomagi technomage = EntityHelper.getTechnomagi((EntityLivingBase) entity);
+
+                        if (technomage != null && technomage.nanites().getActive()) {
+
+                        }
+                    }
+                }
             }
         }
 

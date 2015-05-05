@@ -145,9 +145,9 @@ public class Recipes
         aluminiumSheetRecipe.addOutput(ProcessorType.ROLL, ItemStackHelper.itemSubtype(Items.resource, "aluminium_rod", 2), 1, null, 0);
 
         ProcessorRecipe ironDustRecipe = new OreDictProcessorRecipe(ItemStackHelper.itemSubtype(Items.resource, "iron_dust", 1));
-        ProcessorRecipe goldDustRecipe = new OreDictProcessorRecipe(ItemStackHelper.itemSubtype(Items.resource, "iron_dust", 1));
-        ProcessorRecipe copperDustRecipe = new OreDictProcessorRecipe(ItemStackHelper.itemSubtype(Items.resource, "iron_dust", 1));
-        ProcessorRecipe aluminiumDustRecipe = new OreDictProcessorRecipe(ItemStackHelper.itemSubtype(Items.resource, "iron_dust", 1));
+        ProcessorRecipe goldDustRecipe = new OreDictProcessorRecipe(ItemStackHelper.itemSubtype(Items.resource, "gold_dust", 1));
+        ProcessorRecipe copperDustRecipe = new OreDictProcessorRecipe(ItemStackHelper.itemSubtype(Items.resource, "copper_dust", 1));
+        ProcessorRecipe aluminiumDustRecipe = new OreDictProcessorRecipe(ItemStackHelper.itemSubtype(Items.resource, "aluminium_dust", 1));
 
         ironDustRecipe.addOutput(ProcessorType.BURN, ItemStackHelper.item("iron_ingot", 1), 2, null, 0);
         goldDustRecipe.addOutput(ProcessorType.BURN, ItemStackHelper.item("gold_ingot", 1), 2, null, 0);

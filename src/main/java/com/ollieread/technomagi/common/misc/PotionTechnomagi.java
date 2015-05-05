@@ -26,15 +26,16 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class PotionTechnomagi extends Potion
 {
 
-    public static final PotionTechnomagi voidSickness = new PotionTechnomagi("potion.tm.voidSickness", true, 8171462).setTexture("textures/abilities/void.png");
-    public static final PotionTechnomagi freezing = new PotionTechnomagi("potion.tm.freezing", true, 8171462).setTexture("textures/abilities/freezing.png");
-    public static final PotionTechnomagi burning = new PotionTechnomagi("potion.tm.burning", true, 81711462).setTexture("texutres/abilities/burning.png");
-    public static final PotionTechnomagi draining = new PotionTechnomagi("potion.tm.draining", true, 81711462).setTexture("textures/abilities/draining.png");
-    public static final PotionTechnomagi flight = new PotionTechnomagi("potion.tm.flight", true, 8171462).setTexture("textures/abilities/flight.png");
-    public static final PotionTechnomagi naniteRegeneration = new PotionTechnomagi("potion.tm.naniteRegeneration", true, 8171462).setTexture("textures/abilities/naniteRegeneration.png");
-    public static final PotionTechnomagi naniteDegeneration = new PotionTechnomagi("potion.tm.naniteDegeneration", true, 8171462).setTexture("textures/abilities/naniteDegeneration.png");
-    public static final PotionTechnomagi exposure = new PotionTechnomagi("potion.tm.exposure", true, 8171462).setTexture("textures/abilities/exposure.png");
-    public static final PotionTechnomagi shortcircuit = new PotionTechnomagi("potion.tm.shortcircuit", true, 8171462).setTexture("texture/abilities/shortcircuit.png");
+    public static final PotionTechnomagi voidSickness = new PotionTechnomagi("potion.technomage.voidSickness", true, 8171462).setTexture("textures/abilities/void.png");
+    public static final PotionTechnomagi freezing = new PotionTechnomagi("potion.technomage.freezing", true, 8171462).setTexture("textures/abilities/freezing.png");
+    public static final PotionTechnomagi burning = new PotionTechnomagi("potion.technomage.burning", true, 81711462).setTexture("texutres/abilities/burning.png");
+    public static final PotionTechnomagi draining = new PotionTechnomagi("potion.technomage.draining", true, 81711462).setTexture("textures/abilities/draining.png");
+    public static final PotionTechnomagi flight = new PotionTechnomagi("potion.technomage.flight", true, 8171462).setTexture("textures/abilities/flight.png");
+    public static final PotionTechnomagi naniteRegeneration = new PotionTechnomagi("potion.technomage.naniteRegeneration", true, 8171462).setTexture("textures/abilities/naniteRegeneration.png");
+    public static final PotionTechnomagi naniteDegeneration = new PotionTechnomagi("potion.technomage.naniteDegeneration", true, 8171462).setTexture("textures/abilities/naniteDegeneration.png");
+    public static final PotionTechnomagi exposure = new PotionTechnomagi("potion.technomage.exposure", true, 8171462).setTexture("textures/abilities/exposure.png");
+    public static final PotionTechnomagi shortcircuit = new PotionTechnomagi("potion.technomage.shortcircuit", true, 8171462).setTexture("texture/abilities/shortcircuit.png");
+    public static final PotionTechnomagi phased = new PotionTechnomagi("potion.technomage.phased", true, 8171462).setTexture("textures/abilities/phase_jump");
 
     private final Map modifiers = Maps.newHashMap();
     private int statusIconIndex = -1;

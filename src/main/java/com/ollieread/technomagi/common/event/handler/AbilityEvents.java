@@ -7,6 +7,7 @@ import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 
 import com.ollieread.technomagi.api.ability.AbilityPayload;
 import com.ollieread.technomagi.api.ability.IAbilityItem;
@@ -26,30 +27,32 @@ public class AbilityEvents
     {
         EntityPlayer player = event.entityPlayer;
 
-        if (PlayerHelper.hasSpecialised(player)) {
-            PlayerTechnomagi technomage = PlayerHelper.getTechnomagi(player);
+        if (!event.action.equals(Action.LEFT_CLICK_BLOCK)) {
+            if (PlayerHelper.hasSpecialised(player)) {
+                PlayerTechnomagi technomage = PlayerHelper.getTechnomagi(player);
 
-            if (!technomage.abilities().isCasting()) {
-                ItemStack heldStack = player.getHeldItem();
+                if (!technomage.abilities().isCasting()) {
+                    ItemStack heldStack = player.getHeldItem();
 
-                if (heldStack != null && heldStack.getItem() instanceof IAbilityItem && ((IAbilityItem) heldStack.getItem()).canCast(heldStack)) {
-                    World world = player.worldObj;
-                    MovingObjectPosition mouse = PlayerHelper.getMovingObjectPosition(technomage.getPlayer().worldObj, technomage.getPlayer(), true);
-                    AbilityPayload payload = PlayerHelper.getAbilityPayload(technomage.getPlayer().worldObj, technomage.getPlayer(), event.x, event.y, event.z, event.face);
+                    if (heldStack != null && heldStack.getItem() instanceof IAbilityItem && ((IAbilityItem) heldStack.getItem()).canCast(heldStack)) {
+                        World world = player.worldObj;
+                        MovingObjectPosition mouse = PlayerHelper.getMovingObjectPosition(technomage.getPlayer().worldObj, technomage.getPlayer(), true);
+                        AbilityPayload payload = PlayerHelper.getAbilityPayload(technomage.getPlayer().worldObj, technomage.getPlayer(), event.x, event.y, event.z, event.face);
 
-                    if (payload != null) {
-                        technomage.abilities().startCasting(heldStack, payload);
+                        if (payload != null) {
+                            technomage.abilities().startCasting(heldStack, payload);
+                        }
                     }
-                }
-            } else {
-                AbilityPayload payload = PlayerHelper.getAbilityPayload(technomage.getPlayer().worldObj, technomage.getPlayer(), event.x, event.y, event.z, event.face);
-                AbilityPayload currentPayload = technomage.abilities().getAbilityPayload();
+                } else {
+                    AbilityPayload payload = PlayerHelper.getAbilityPayload(technomage.getPlayer().worldObj, technomage.getPlayer(), event.x, event.y, event.z, event.face);
+                    AbilityPayload currentPayload = technomage.abilities().getAbilityPayload();
 
-                if (payload != null && currentPayload != null && !currentPayload.equals(payload)) {
-                    technomage.abilities().stopCasting(false);
-                }
+                    if (payload != null && currentPayload != null && !currentPayload.equals(payload)) {
+                        technomage.abilities().stopCasting(false);
+                    }
 
-                event.setCanceled(true);
+                    // event.setCanceled(true);
+                }
             }
         }
     }
