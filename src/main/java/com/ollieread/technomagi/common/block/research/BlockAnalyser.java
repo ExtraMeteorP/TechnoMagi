@@ -66,7 +66,7 @@ public class BlockAnalyser extends BlockBaseContainer
         if (analyser != null && analyser.isPlayer(player)) {
             PlayerKnowledge knowledge = PlayerHelper.getKnowledge(player);
 
-            if (player.getHeldItem().isItemEqual(new ItemStack(Items.personalInterface))) {
+            if (player.getHeldItem() != null && player.getHeldItem().isItemEqual(new ItemStack(Items.personalInterface))) {
                 if (!world.isRemote) {
                     PlayerTechnomagi technomage = PlayerHelper.getTechnomagi(player);
                     technomage.knowledge().copyFrom(analyser);
