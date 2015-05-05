@@ -11,6 +11,7 @@ import com.ollieread.technomagi.client.gui.component.ComponentProgress;
 import com.ollieread.technomagi.client.gui.component.ComponentSelector;
 import com.ollieread.technomagi.client.gui.component.ComponentVerticalList;
 import com.ollieread.technomagi.client.gui.window.abstracts.Window;
+import com.ollieread.technomagi.common.init.Config;
 import com.ollieread.technomagi.util.PlayerHelper;
 
 public class WindowOverlay extends Window
@@ -40,7 +41,8 @@ public class WindowOverlay extends Window
 
         if (component != null) {
             ComponentVerticalList abilityList = (ComponentVerticalList) component;
-            List<IAbilityCast> abilities = this.technomage.abilities().getAbilitiesForDisplay();
+            abilityList.clearComponents();
+            List<IAbilityCast> abilities = this.technomage.abilities().getAbilitiesForDisplay(Config.abilityCount);
             IAbilityCast current = this.technomage.abilities().getCurrentAbility();
 
             for (IAbilityCast ability : abilities) {
