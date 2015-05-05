@@ -26,6 +26,7 @@ import com.ollieread.technomagi.common.block.structure.BlockHardlightSlab;
 import com.ollieread.technomagi.common.block.structure.BlockHardlightStairs;
 import com.ollieread.technomagi.common.block.structure.BlockShifted;
 import com.ollieread.technomagi.common.block.structure.BlockStructure;
+import com.ollieread.technomagi.common.block.structure.BlockTilted;
 import com.ollieread.technomagi.common.block.teleporter.BlockElevator;
 import com.ollieread.technomagi.common.block.world.BlockNaniteFarmland;
 import com.ollieread.technomagi.common.item.block.ItemBlockBase;
@@ -58,6 +59,7 @@ public class Blocks
     public static BlockContainerSubtypes structure;
     public static BlockContainerSubtypes tank;
     public static BlockBaseContainer shifted;
+    public static BlockBaseContainer tilted;
     public static BlockContainerSubtypes cultivator;
     public static BlockBaseContainer analyser;
 
@@ -84,6 +86,7 @@ public class Blocks
         structure = new BlockStructure("structure");
         tank = new BlockTank("tank");
         shifted = new BlockShifted("shifted");
+        tilted = new BlockTilted("tilted");
         cultivator = new BlockCultivator("cultivator");
         analyser = new BlockAnalyser("analyser");
 
@@ -109,6 +112,7 @@ public class Blocks
         GameRegistry.registerBlock(structure, ItemBlockBase.class, "structure");
         GameRegistry.registerBlock(tank, ItemBlockTank.class, "tank");
         GameRegistry.registerBlock(shifted, "shifted");
+        GameRegistry.registerBlock(tilted, "tilted");
         GameRegistry.registerBlock(cultivator, ItemBlockBase.class, "cultivator");
         GameRegistry.registerBlock(analyser, "analyser");
 
@@ -122,6 +126,7 @@ public class Blocks
         structure.registerTiles();
         tank.registerTiles();
         shifted.registerTiles();
+        tilted.registerTiles();
         cultivator.registerTiles();
         analyser.registerTiles();
 
