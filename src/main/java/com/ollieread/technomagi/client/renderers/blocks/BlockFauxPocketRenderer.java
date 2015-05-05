@@ -20,6 +20,8 @@ public class BlockFauxPocketRenderer implements ISimpleBlockRenderingHandler
     public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer)
     {
         if (modelId == id) {
+            renderer.field_152631_f = true;
+
             renderer.setRenderBounds(0, unit * 7, unit * 7, unit, 1D - (unit * 7), 1D - (unit * 7));
             RenderHelper.renderStandardInvBlock(renderer, block, metadata);
             renderer.setRenderBounds(unit * 7, 0, unit * 7, 1D - (unit * 7), unit, 1D - (unit * 7));
@@ -47,6 +49,8 @@ public class BlockFauxPocketRenderer implements ISimpleBlockRenderingHandler
             RenderHelper.renderStandardInvBlock(renderer, block, metadata);
             renderer.setRenderBounds(unit * 5, unit * 5, unit * 14, 1D - (unit * 5), 1D - (unit * 5), unit * 15);
             RenderHelper.renderStandardInvBlock(renderer, block, metadata);
+
+            renderer.field_152631_f = false;
         }
     }
 
@@ -54,6 +58,8 @@ public class BlockFauxPocketRenderer implements ISimpleBlockRenderingHandler
     public boolean renderWorldBlock(IBlockAccess blockaccess, int x, int y, int z, Block block, int modelId, RenderBlocks renderer)
     {
         BlockFauxPocket extrapolator = (BlockFauxPocket) block;
+
+        renderer.field_152631_f = true;
 
         renderer.setRenderBounds(unit, unit * 7, unit * 7, unit * 2, 1D - (unit * 7), 1D - (unit * 7));
         renderer.renderStandardBlock(block, x, y, z);
@@ -82,6 +88,8 @@ public class BlockFauxPocketRenderer implements ISimpleBlockRenderingHandler
         renderer.renderStandardBlock(block, x, y, z);
         renderer.setRenderBounds(unit * 5, unit * 5, unit * 15, 1D - (unit * 5), 1D - (unit * 5), unit * 16);
         renderer.renderStandardBlock(block, x, y, z);
+
+        renderer.field_152631_f = false;
 
         return true;
     }
