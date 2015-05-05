@@ -68,4 +68,10 @@ public class AbilityCastRegenerate extends AbilityCast
         return 80;
     }
 
+    @Override
+    public int getMaxFocus(int abilityMode)
+    {
+        return 20;
+    }
+
 }

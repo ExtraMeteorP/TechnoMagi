@@ -135,7 +135,7 @@ public class AbilityCastScan extends AbilityCast
     @Override
     public int getCooldown(int abilityMode)
     {
-        return 60;
+        return 20;
     }
 
 }
