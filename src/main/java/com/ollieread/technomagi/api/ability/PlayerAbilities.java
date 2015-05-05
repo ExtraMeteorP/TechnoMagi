@@ -131,28 +131,35 @@ public class PlayerAbilities
         return null;
     }
 
-    public List<IAbilityCast> getAbilitiesForDisplay()
+    public List<IAbilityCast> getAbilitiesForDisplay(int count)
     {
-        int aOffset = 0;
-        int index = getCurrentAbilityIndex();
-        int end = (aOffset + 4) >= abilityCastableList.size() ? abilityCastableList.size() : aOffset + 4;
-        int s = -1;
+        List<IAbilityCast> abilityList = new ArrayList<IAbilityCast>();
 
-        if (index >= 0) {
-            if (index < aOffset) {
-                aOffset = index;
-            } else if (index > end) {
-                aOffset = index - 4;
+        if (abilityCastableList.size() > 0) {
+            int start = 0;
+            int end = count - 1;
+            int index = getCurrentAbilityIndex();
+
+            if (index > end) {
+                end = index;
+                start = index - (count - 1);
             }
 
-            if (end >= abilityCastableList.size()) {
-                end = abilityCastableList.size();
-            }
+            for (int i = 0; i < count; i++) {
+                if (i > end || (start + i) >= abilityCastableList.size()) {
+                    break;
+                }
 
-            s = (index - aOffset) * 20;
+                abilityList.add(abilityCastableList.get(start + i));
+            }
         }
 
-        return abilityCastableList.subList(aOffset, end);
+        return abilityList;
+    }
+
+    public void setCastableAbilityMode(String name, int mode)
+    {
+        abilityCastableModes.put(name, mode);
     }
 
     public int getCastableAbilityMode(String name)
@@ -221,6 +228,29 @@ public class PlayerAbilities
     public boolean inCooldown(IAbilityCast ability)
     {
         return getCooldown(ability) > 0;
+    }
+
+    public void cycleAbility(ItemStack stack)
+    {
+        if (stack != null && stack.getItem() instanceof IAbilityItem) {
+            IAbilityItem abilityItem = (IAbilityItem) stack.getItem();
+            IAbilityCast ability = null;
+
+            if (abilityItem.canCast(stack)) {
+                if (abilityItem.isAbilityLocked(stack)) {
+                    ability = abilityItem.getLockedAbility(stack);
+                } else {
+                    ability = getCurrentAbility();
+                }
+
+                int currentMode = getCastableAbilityMode(currentCastingAbility.getName());
+                int newMode = ability.cycleMode(this.technomage, currentMode);
+
+                if (newMode != currentMode) {
+                    setCastableAbilityMode(ability.getName(), newMode);
+                }
+            }
+        }
     }
 
     public boolean isCasting()
