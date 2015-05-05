@@ -113,6 +113,12 @@ research.knowledge.enchantment=Enchantments
 research.knowledge.brewing=Brewing
 
 # Abilities
+ability.cast.regenerate=Regenerate
+ability.cast.shift_block=Shift Block
+ability.cast.nanite_exchange.food_nanites=Exchange food for nanites
+ability.cast.nanite_exchange.nanites_food=Exchange nanites for food
+ability.cast.nanite_exchange.health_nanites=Exchange health for nanites
+ability.cast.nanite_exchange.nanites_health=Exchange nanites for health
 
 # Blocks
 tile.technomagi.resource.etherium_ore.name=Etherium Ore
@@ -260,3 +266,24 @@ item.technomagi.research_storage.advanced.name=Portable Data Drive: Advanced
 
 # Entities
 entity.player.name=Player
+
+# Potions
+potion.technomage.voidSickness=Void Sickness
+potion.technomage.freezing=Freezing
+potion.technomage.burning=Burning
+potion.technomage.draining=Drained
+potion.technomage.flight=Defy Gravity
+potion.technomage.naniteRegeneration=Nanite Overdrive
+potion.technomage.naniteDegeneration=Nanite Decay
+potion.technomage.exposure=Exposure Sickness
+potion.technomage.shortcircuit=Shortcircuit
+potion.technomage.phased=Out of Phase
+
+# Death
+death.attack.void=%1$s succumbed to the void
+death.attack.frost=%1$s froze to death
+death.attack.lifeforce=The lifeforce was drained from %1$s
+death.attack.nanite=%1$s was killed by their own nanites
+death.attack.dimensional=%1$s was destroyed by dimensional energy
+death.attack.electromagnetic=%1$s was destroyed by electromagnetic energy
+
