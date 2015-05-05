@@ -8,6 +8,7 @@ import com.ollieread.technomagi.api.ability.IAbilityItem;
 import com.ollieread.technomagi.api.ability.PlayerAbilities;
 import com.ollieread.technomagi.api.entity.PlayerTechnomagi;
 import com.ollieread.technomagi.client.gui.GuiBuilder;
+import com.ollieread.technomagi.client.gui.GuiTechnomagi;
 import com.ollieread.technomagi.common.network.PacketHandler;
 import com.ollieread.technomagi.common.network.packets.MessageReleaseCasting;
 import com.ollieread.technomagi.util.PacketHelper;
@@ -31,9 +32,11 @@ public class MouseEvents
 
                 if (dwheel < 0) {
                     technomage.abilities().setNextAbility();
+                    GuiTechnomagi.highlightTicks = 256;
                     PacketHelper.changeAbility(1);
                 } else {
                     technomage.abilities().setPreviousAbility();
+                    GuiTechnomagi.highlightTicks = 256;
                     PacketHelper.changeAbility(2);
                 }
 
