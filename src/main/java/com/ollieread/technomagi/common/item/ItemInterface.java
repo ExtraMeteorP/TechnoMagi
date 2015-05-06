@@ -101,7 +101,7 @@ public class ItemInterface extends ItemBase implements IItemPlayerLocked
             } else {
                 MovingObjectPosition mouse = PlayerHelper.getMovingObjectPosition(world, player, true);
 
-                if (mouse.typeOfHit.equals(MovingObjectType.ENTITY) && mouse.entityHit instanceof EntityLivingBase) {
+                if (mouse != null && mouse.typeOfHit.equals(MovingObjectType.ENTITY) && mouse.entityHit instanceof EntityLivingBase) {
                     EntityTechnomagi entity = EntityHelper.getTechnomagi((EntityLivingBase) mouse.entityHit);
 
                     if (entity != null && entity.nanites().getActive()) {
